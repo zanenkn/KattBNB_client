@@ -1,8 +1,9 @@
 import React from 'react'
+import './semantic/dist/semantic.min.css'
 
 function App() {
   return (
-    <div>
+    <div id='test'>
       Meow!
     </div>
   )
