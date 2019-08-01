@@ -30,6 +30,7 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^3.4.1"
+    "cypress": "^3.4.1",
+    "semantic-ui": "^2.4.2"
   }
 }
