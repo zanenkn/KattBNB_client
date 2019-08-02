@@ -5,3 +5,9 @@
 #test {
   color: red;
 }
+
+#navbar {
+  height: 10vh;
+  margin: auto;
+  background: #c90c61;
+}
