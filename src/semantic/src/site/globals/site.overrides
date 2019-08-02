@@ -10,8 +10,31 @@
   height: 10vh;
   margin: auto;
   background: #c90c61;
+  padding-left: 10vw;
+  padding-right: 10vw;
 }
 
 .navlink {
-  max-height: 2.5vw;
+  display: flex!important;
+  justify-content: flex-end!important;
+  padding: 0!important;
+  float: left;
+  margin: auto;
+}
+
+#hamburger {
+  float: right;
+  margin: auto;
+}
+
+.icon {
+  height: 4vh;
+}
+
+#navlinks {
+  display: flex;
+  justify-content: flex-end!important;
+  margin: auto;
+  padding-top: 0;
+  padding-bottom:0;
 }

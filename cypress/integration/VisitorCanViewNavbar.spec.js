@@ -9,6 +9,6 @@ describe('Visitor can view navbar', () => {
 	})
 
 	it('and see 4 navigational icons', () => {
-		cy.get('#navbar').children().should('have.length', 4)
+		cy.get('#navlinks').children().should('have.length', 4)
 	})
 })
