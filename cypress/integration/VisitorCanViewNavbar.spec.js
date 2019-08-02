@@ -1,0 +1,14 @@
+describe('Visitor can view navbar', () => {
+	beforeEach(function () {
+		cy.server()
+		cy.visit('http://localhost:3000/')
+	})
+	
+	it('and see hamburger menu', () => {
+		cy.get('div[id="hamburger"]').should('have.attr', 'svg')
+	})
+
+	it('and see 4 navigational icons', () => {
+		cy.get('#navbar').children().should('have.length', 4)
+	})
+})
