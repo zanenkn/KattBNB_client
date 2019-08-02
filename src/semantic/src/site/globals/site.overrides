@@ -11,3 +11,7 @@
   margin: auto;
   background: #c90c61;
 }
+
+.navlink {
+  max-height: 2.5vw;
+}

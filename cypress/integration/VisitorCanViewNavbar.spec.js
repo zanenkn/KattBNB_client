@@ -5,7 +5,7 @@ describe('Visitor can view navbar', () => {
 	})
 	
 	it('and see hamburger menu', () => {
-		cy.get('div[id="hamburger"]').should('have.attr', 'svg')
+		cy.get('#hamburger').should('be.visible')
 	})
 
 	it('and see 4 navigational icons', () => {
