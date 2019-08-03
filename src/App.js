@@ -1,4 +1,4 @@
-import React, {Component, createRef} from 'react'
+import React, { Component, createRef } from 'react'
 import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu'
@@ -23,6 +23,7 @@ class App extends Component {
           <Menu />
 
         </Sidebar.Pushable>
+
       </div>
     )
   }
