@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class Navbar extends Component {
   render() {
@@ -11,7 +12,7 @@ class Navbar extends Component {
           columns={2}
         >
           <Grid.Column style={{'padding': 0 }} id='hamburger' width={4}>
-              <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+              <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
           </Grid.Column>
 
           <Grid.Column style={{'padding': 0 }} width={12}>
@@ -37,4 +38,8 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar
+const mapStateToProps = state => ({
+  menuVisible: state.animation.menuVisible
+})
+
+export default connect(mapStateToProps)(Navbar)
