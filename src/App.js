@@ -10,20 +10,22 @@ class App extends Component {
   contextRef = createRef()
   render() {
     return (
-      <div ref={this.contextRef} style={{ 'min-height': '100vh' }} onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
+      <div ref={this.contextRef}>
         <Sticky context={this.contextRef}>
           <Navbar />
         </Sticky>
+        <div style={{ 'minHeight': '100vh' }} onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
 
-        <Sidebar.Pushable
-          as={Container}
-          id='app-content'
-          className='disable-scrollbars'
-        >
+          <Sidebar.Pushable
+            as={Container}
+            id='app-content'
+            className='disable-scrollbars'
+          >
 
-          <Search />
-          <Menu />
-        </Sidebar.Pushable>
+            <Search />
+            <Menu />
+          </Sidebar.Pushable>
+        </div>
       </div>
     )
   }
