@@ -9,7 +9,7 @@ class Menu extends Component {
         as={Segment}
         animation='overlay'
         direction='left'
-        visible={this.props.visible}
+        visible={this.props.menuVisible}
       >
       <h1>
         Menu, yo!
