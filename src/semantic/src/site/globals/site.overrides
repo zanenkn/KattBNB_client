@@ -2,6 +2,16 @@
          Site Overrides
 *******************************/
 
+.disable-scrollbars::-webkit-scrollbar {
+   width: 0px;
+   background: transparent; /* Chrome/Safari/Webkit */
+}
+
+.disable-scrollbars {
+ scrollbar-width: none; /* Firefox */
+ -ms-overflow-style: none;  /* IE 10+ */
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -52,6 +62,7 @@
   width: 100%;
 }
 
-#menu-wrapper {
-  height: 100%!important;
+#menu {
+  z-index: 4001;
 }
+

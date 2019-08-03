@@ -16,7 +16,8 @@ class App extends Component {
         </Sticky>
         <Sidebar.Pushable
           as={Container}
-          id='app-content'>
+          id='app-content'
+          className='disable-scrollbars'>
 
           <Search />
           <Menu />

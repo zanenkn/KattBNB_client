@@ -17,6 +17,7 @@ class Menu extends Component {
         animation='overlay'
         direction='left'
         visible={this.props.menuVisible}
+        
       >
         <Grid
           textAlign='center'
@@ -29,42 +30,35 @@ class Menu extends Component {
             Login
           </Header>
           <br></br>
-          <br></br>
 
           <Header>
             Sign up
           </Header>
-          <br></br>
           <br></br>
 
           <Header>
             About us
           </Header>
           <br></br>
-          <br></br>
 
           <Header>
             Legal
           </Header>
-          <br></br>
           <br></br>
 
           <Header>
             FAQ
           </Header>
           <br></br>
-          <br></br>
 
           <Header>
             Contact us
           </Header>
           <br></br>
-          <br></br>
 
           <Header>
             Blog
           </Header>
-          <br></br>
           <br></br>
 
           </Grid.Column>
