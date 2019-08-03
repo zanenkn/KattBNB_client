@@ -2,7 +2,7 @@ import React, {Component, createRef} from 'react'
 import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu'
-import {Container, Sticky, Sidebar } from 'semantic-ui-react'
+import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 
 class App extends Component {
   contextRef = createRef()
