@@ -16,8 +16,7 @@ class App extends Component {
         </Sticky>
         <Sidebar.Pushable
           as={Container}
-          id='app-content'
-          style={{'padding': '10vw' }}>
+          id='app-content'>
 
           <Search />
           <Menu/>

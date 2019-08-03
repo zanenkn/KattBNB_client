@@ -2,9 +2,9 @@
          Site Overrides
 *******************************/
 
-#test {
-  color: red;
-}
+/*******************************
+            NAVBAR
+*******************************/
 
 #navbar {
   height: 10vh;
@@ -37,4 +37,17 @@
   margin: auto;
   padding-top: 0;
   padding-bottom:0;
+}
+
+/*******************************
+            CONTENT
+*******************************/
+
+.content-wrapper {
+  margin: 10vw;
+}
+
+.app-content {
+  margin: 0 auto;
+  width: 100%;
 }
