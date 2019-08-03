@@ -2,9 +2,19 @@
          Site Overrides
 *******************************/
 
-#test {
-  color: red;
+.disable-scrollbars::-webkit-scrollbar {
+   width: 0px;
+   background: transparent; /* Chrome/Safari/Webkit */
 }
+
+.disable-scrollbars {
+ scrollbar-width: none; /* Firefox */
+ -ms-overflow-style: none;  /* IE 10+ */
+}
+
+/*******************************
+            NAVBAR
+*******************************/
 
 #navbar {
   height: 10vh;
@@ -37,4 +47,21 @@
   margin: auto;
   padding-top: 0;
   padding-bottom:0;
+}
+
+/*******************************
+            CONTENT
+*******************************/
+
+.content-wrapper {
+  margin: 10vw;
+}
+
+.app-content {
+  margin: 0 auto;
+  width: 100%;
+}
+
+#menu {
+  margin-top: 10vh!important;
 }
