@@ -4,23 +4,23 @@ import { connect } from 'react-redux'
 
 class Navbar extends Component {
   render() {
-    return(
+    return (
       <>
-        <Grid 
+        <Grid
           id='navbar'
           verticalAlign='middle'
           columns={2}
         >
-          <Grid.Column style={{'padding': 0 }} id='hamburger' width={4}>
-              <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+          <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
+            <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
           </Grid.Column>
 
-          <Grid.Column style={{'padding': 0 }} width={12}>
+          <Grid.Column style={{ 'padding': 0 }} width={12}>
             <Grid id='navlinks'>
               <Grid.Column className='navlink' width={4}>
                 <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" /></svg>
               </Grid.Column>
-              <Grid.Column  className='navlink' width={4}>
+              <Grid.Column className='navlink' width={4}>
                 <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M17 11v3l-3-3H8a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-1zm-3 2v2a2 2 0 0 1-2 2H6l-3 3v-3H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h2v3a4 4 0 0 0 4 4h6z" /></svg>
               </Grid.Column>
               <Grid.Column className='navlink' width={4}>

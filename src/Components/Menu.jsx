@@ -10,14 +10,14 @@ class Menu extends Component {
   }
 
   render() {
-    return(
+    return (
       <Sidebar
         id='menu'
         as={Segment}
         animation='overlay'
         direction='left'
         visible={this.props.menuVisible}
-        
+
       >
         <Grid
           textAlign='center'
@@ -26,44 +26,44 @@ class Menu extends Component {
         >
           <Grid.Column>
 
-          <Header>
-            Login
+            <Header>
+              Login
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            Sign up
+            <Header>
+              Sign up
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            About us
+            <Header>
+              About us
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            Legal
+            <Header>
+              Legal
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            FAQ
+            <Header>
+              FAQ
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            Contact us
+            <Header>
+              Contact us
           </Header>
-          <br></br>
+            <br></br>
 
-          <Header>
-            Blog
+            <Header>
+              Blog
           </Header>
-          <br></br>
+            <br></br>
 
           </Grid.Column>
         </Grid>
-     
+
       </Sidebar>
     )
   }

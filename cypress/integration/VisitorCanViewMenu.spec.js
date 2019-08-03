@@ -1,9 +1,9 @@
 describe('Visitor can view menu', () => {
   beforeEach(function () {
-		cy.server()
-		cy.visit('http://localhost:3000/')
+    cy.server()
+    cy.visit('http://localhost:3000/')
   })
-  
+
   it('and can toggle visibility by clicking on the hamburger', () => {
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()

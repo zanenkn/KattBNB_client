@@ -10,23 +10,27 @@ class App extends Component {
   contextRef = createRef()
   render() {
     return (
-      <div ref={this.contextRef}>
+      <div ref={this.contextRef} style={{ 'min-height': '100vh' }} onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
         <Sticky context={this.contextRef}>
           <Navbar />
         </Sticky>
+
         <Sidebar.Pushable
           as={Container}
           id='app-content'
-          className='disable-scrollbars'>
+          className='disable-scrollbars'
+        >
 
           <Search />
           <Menu />
-
         </Sidebar.Pushable>
-
       </div>
     )
   }
 }
 
-export default connect()(App)
+const mapStateToProps = state => ({
+  menuVisible: state.animation.menuVisible
+})
+
+export default connect(mapStateToProps)(App)
