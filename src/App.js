@@ -3,6 +3,7 @@ import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class App extends Component {
   contextRef = createRef()
@@ -29,4 +30,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App)
