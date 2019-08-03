@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { Sidebar, Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 class Menu extends Component {
+
+  handleMenuVisibilty = (e) => {
+    this.props.menuVisbilityHandler()
+  }
+
   render() {
     return(
       <Sidebar
@@ -19,4 +26,15 @@ class Menu extends Component {
   }
 }
 
-export default Menu
+const mapStateToProps = (state) => {
+  return {
+    menuVisible: state.animation.menuVisible
+  }
+}
+const mapDispatchToProps = {
+  menuVisbilityHandler: menuVisible => ({
+    type: 'CHANGE_VISIBILITY',
+    menuVisbible: menuVisible
+  })
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu))
