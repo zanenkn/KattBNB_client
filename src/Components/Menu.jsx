@@ -28,38 +28,31 @@ class Menu extends Component {
 
             <Header>
               Login
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               Sign up
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               About us
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               Legal
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               FAQ
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               Contact us
-          </Header>
-            <br></br>
+            </Header>
 
             <Header>
               Blog
-          </Header>
-            <br></br>
+            </Header>
 
           </Grid.Column>
         </Grid>
