@@ -51,3 +51,7 @@
   margin: 0 auto;
   width: 100%;
 }
+
+#menu-wrapper {
+  height: 100%!important;
+}

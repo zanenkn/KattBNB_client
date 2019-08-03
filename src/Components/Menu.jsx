@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Segment } from 'semantic-ui-react'
+import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -18,9 +18,58 @@ class Menu extends Component {
         direction='left'
         visible={this.props.menuVisible}
       >
-      <h1>
-        Menu, yo!
-      </h1>
+        <Grid
+          textAlign='center'
+          verticalAlign='middle'
+          id='menu-wrapper'
+        >
+          <Grid.Column>
+
+          <Header>
+            Login
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            Sign up
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            About us
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            Legal
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            FAQ
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            Contact us
+          </Header>
+          <br></br>
+          <br></br>
+
+          <Header>
+            Blog
+          </Header>
+          <br></br>
+          <br></br>
+
+          </Grid.Column>
+        </Grid>
+     
       </Sidebar>
     )
   }
