@@ -19,7 +19,7 @@ class App extends Component {
           id='app-content'>
 
           <Search />
-          <Menu/>
+          <Menu />
 
         </Sidebar.Pushable>
       </div>
