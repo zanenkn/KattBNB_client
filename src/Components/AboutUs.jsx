@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Sidebar } from 'semantic-ui-react';
+import { Sidebar } from 'semantic-ui-react'
 
 class AboutUs extends Component {
   render() {
