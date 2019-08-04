@@ -29,15 +29,21 @@ class Menu extends Component {
 
             <Header
               id='login'
+              as={Link}
+              to='/login'
             >
               Login
             </Header>
+            <br />
 
             <Header
               id='signup'
+              as={Link}
+              to='/sign-up'
             >
               Sign up
             </Header>
+            <br />
 
             <Header
               id='about'
@@ -46,27 +52,39 @@ class Menu extends Component {
             >
               About us
             </Header>
+            <br />
 
             <Header
               id='legal'
+              as={Link}
+              to='/legal'
             >
               Legal
             </Header>
+            <br />
 
             <Header
               id='faq'
+              as={Link}
+              to='faq'
             >
               FAQ
             </Header>
+            <br />
 
             <Header
               id='contact'
+              as={Link}
+              to='/contact-us'
             >
               Contact us
             </Header>
+            <br />
 
             <Header
               id='blog'
+              as={Link}
+              to='/blog'
             >
               Blog
             </Header>
