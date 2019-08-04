@@ -35,6 +35,8 @@ class Menu extends Component {
               Login
             </Header>
             <br />
+            <br />
+            <br />
 
             <Header
               id='signup'
@@ -43,6 +45,8 @@ class Menu extends Component {
             >
               Sign up
             </Header>
+            <br />
+            <br />
             <br />
 
             <Header
@@ -53,6 +57,8 @@ class Menu extends Component {
               About us
             </Header>
             <br />
+            <br />
+            <br />
 
             <Header
               id='legal'
@@ -61,6 +67,8 @@ class Menu extends Component {
             >
               Legal
             </Header>
+            <br />
+            <br />
             <br />
 
             <Header
@@ -71,6 +79,8 @@ class Menu extends Component {
               FAQ
             </Header>
             <br />
+            <br />
+            <br />
 
             <Header
               id='contact'
@@ -79,6 +89,8 @@ class Menu extends Component {
             >
               Contact us
             </Header>
+            <br />
+            <br />
             <br />
 
             <Header

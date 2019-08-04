@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Sidebar } from 'semantic-ui-react';
 
 class Login extends Component {
@@ -14,8 +13,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  menuVisible: state.animation.menuVisible
-})
-
-export default connect(mapStateToProps)(Login)
+export default Login
