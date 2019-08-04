@@ -18,87 +18,74 @@ class Menu extends Component {
         animation='overlay'
         direction='left'
         visible={this.props.menuVisible}
-
       >
         <Grid
-          textAlign='center'
           verticalAlign='middle'
-          id='menu-wrapper'
+          id='menu-grid'
         >
-          <Grid.Column>
+          <Grid.Column id='menu-grid-column'>
 
             <Header
               id='login'
+              className='menu-link'
               as={Link}
               to='/login'
             >
               Login
             </Header>
-            <br />
-            <br />
-            <br />
 
             <Header
               id='signup'
+              className='menu-link'
               as={Link}
               to='/sign-up'
             >
               Sign up
             </Header>
-            <br />
-            <br />
-            <br />
 
             <Header
               id='about'
+              className='menu-link'
               as={Link}
               to='/about-us'
             >
               About us
             </Header>
-            <br />
-            <br />
-            <br />
-
-            <Header
-              id='legal'
-              as={Link}
-              to='/legal'
-            >
-              Legal
-            </Header>
-            <br />
-            <br />
-            <br />
 
             <Header
               id='faq'
+              className='menu-link'
               as={Link}
               to='faq'
             >
               FAQ
             </Header>
-            <br />
-            <br />
-            <br />
 
             <Header
               id='contact'
+              className='menu-link'
               as={Link}
               to='/contact-us'
             >
               Contact us
             </Header>
-            <br />
-            <br />
-            <br />
 
             <Header
               id='blog'
+              className='menu-link'
               as={Link}
               to='/blog'
             >
               Blog
+            </Header>
+
+            <Header
+              id='legal'
+              className='menu-link'
+              as={Link}
+              to='/legal'
+            >
+              Legal
             </Header>
 
           </Grid.Column>
