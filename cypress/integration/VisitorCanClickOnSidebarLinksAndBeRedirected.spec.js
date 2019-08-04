@@ -9,36 +9,36 @@ describe('Visitor can click on sidebar links and be redirected', () => {
 
   it('to Login page', () => {
     cy.get('#login').click()
-    cy.contains('LOGIN PAGE')
+    cy.contains('Log in')
   })
 
   it('to Sign Up page', () => {
     cy.get('#signup').click()
-    cy.contains('SIGN UP PAGE')
+    cy.contains('Sign up')
   })
 
   it('to About Us page', () => {
     cy.get('#about').click()
-    cy.contains('ABOUT US')
+    cy.contains('About us')
   })
 
   it('to Legal page', () => {
     cy.get('#legal').click()
-    cy.contains('LEGAL PAGE')
+    cy.contains('Legal')
   })
 
   it('to FAQ page', () => {
     cy.get('#faq').click()
-    cy.contains('FAQ PAGE')
+    cy.contains('FAQ')
   })
 
   it('to Contact Us page', () => {
     cy.get('#contact').click()
-    cy.contains('CONTACT US PAGE')
+    cy.contains('Contact us')
   })
 
   it('to Blog page', () => {
     cy.get('#blog').click()
-    cy.contains('BLOG PAGE')
+    cy.contains('Blog')
   })
 })
