@@ -26,31 +26,45 @@ class Menu extends Component {
         >
           <Grid.Column>
 
-            <Header>
+            <Header
+              id='login'
+            >
               Login
             </Header>
 
-            <Header>
+            <Header
+              id='signup'
+            >
               Sign up
             </Header>
 
-            <Header>
+            <Header
+              id='about'
+            >
               About us
             </Header>
 
-            <Header>
+            <Header
+              id='legal'
+            >
               Legal
             </Header>
 
-            <Header>
+            <Header
+              id='faq'
+            >
               FAQ
             </Header>
 
-            <Header>
+            <Header
+              id='contact'
+            >
               Contact us
             </Header>
 
-            <Header>
+            <Header
+              id='blog'
+            >
               Blog
             </Header>
 
