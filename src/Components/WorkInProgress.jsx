@@ -3,11 +3,11 @@ import { Header, Segment, Icon, Container } from 'semantic-ui-react'
 
 const WIP = () => {
   return (
-    <Segment padded compact style={{'margin': 'auto', 'padding': '2rem', 'margin-top': '2rem'}} >
+    <Segment padded compact style={{ 'margin': 'auto', 'padding': '2rem', 'marginTop': '2rem' }} >
 
       <Header as='h4'>
         <Container padded>
-          <Icon loading name='cog' style={{'color': '#80808069', 'font-size': '3rem', 'margin-bottom': '1rem'}} />
+          <Icon loading name='cog' style={{ 'color': '#80808069', 'fontSize': '3rem', 'marginBottom': '1rem' }} />
         </Container>
         <Container text padded>
           This section is still a work in progress!
