@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Menu extends Component {
 
@@ -40,6 +41,8 @@ class Menu extends Component {
 
             <Header
               id='about'
+              as={Link}
+              to='/about-us'
             >
               About us
             </Header>
