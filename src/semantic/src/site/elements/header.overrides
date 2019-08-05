@@ -1,3 +1,8 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.header {
+  color: #c90c61;
+  text-align: center;
+}

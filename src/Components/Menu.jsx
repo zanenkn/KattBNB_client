@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Menu extends Component {
 
@@ -17,41 +18,74 @@ class Menu extends Component {
         animation='overlay'
         direction='left'
         visible={this.props.menuVisible}
-
       >
         <Grid
-          textAlign='center'
           verticalAlign='middle'
-          id='menu-wrapper'
+          id='menu-grid'
         >
-          <Grid.Column>
+          <Grid.Column id='menu-grid-column'>
 
-            <Header>
+            <Header
+              id='login'
+              className='menu-link'
+              as={Link}
+              to='/login'
+            >
               Login
             </Header>
 
-            <Header>
+            <Header
+              id='signup'
+              className='menu-link'
+              as={Link}
+              to='/sign-up'
+            >
               Sign up
             </Header>
 
-            <Header>
+            <Header
+              id='about'
+              className='menu-link'
+              as={Link}
+              to='/about-us'
+            >
               About us
             </Header>
 
-            <Header>
-              Legal
-            </Header>
-
-            <Header>
+            <Header
+              id='faq'
+              className='menu-link'
+              as={Link}
+              to='faq'
+            >
               FAQ
             </Header>
 
-            <Header>
+            <Header
+              id='contact'
+              className='menu-link'
+              as={Link}
+              to='/contact-us'
+            >
               Contact us
             </Header>
 
-            <Header>
+            <Header
+              id='blog'
+              className='menu-link'
+              as={Link}
+              to='/blog'
+            >
               Blog
+            </Header>
+
+            <Header
+              id='legal'
+              className='menu-link'
+              as={Link}
+              to='/legal'
+            >
+              Legal
             </Header>
 
           </Grid.Column>

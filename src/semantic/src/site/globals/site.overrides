@@ -62,6 +62,38 @@
   width: 100%;
 }
 
+p {
+  color: grey;
+  font-size: medium;
+}
+
+h4 {
+  color: grey!important;
+}
+
+/*******************************
+              MENU
+*******************************/
+
 #menu {
   margin-top: 10vh!important;
+}
+
+#menu-grid {
+  text-align: center;
+  height: 100%;
+  background: #ECECEC;
+}
+
+#menu-grid-column {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  padding-bottom: 7vh;
+}
+
+.menu-link {
+  color: #c90c61!important;
+  font-size: 1.5rem!important;
+  cursor: pointer;
 }
