@@ -4,8 +4,8 @@
 
 .ui.segment {
   position: relative;
-  background: #0000000f;
-  box-shadow: @boxShadow;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.2);
   margin: @margin;
   padding: @padding;
   border-radius: 0;

@@ -11,3 +11,6 @@
 .pushable:not(body) > .pusher:after {
   position: fixed;
 }
+.pushable {
+  overflow-x: visible
+}

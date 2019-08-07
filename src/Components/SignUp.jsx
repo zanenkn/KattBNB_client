@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header } from 'semantic-ui-react'
+import { Sidebar, Header, Segment } from 'semantic-ui-react'
 import WIP from './WorkInProgress'
 
 class SignUp extends Component {
@@ -11,6 +11,10 @@ class SignUp extends Component {
         </Header>
         
         <WIP />
+
+        <Segment>
+          lorem ipsum dolor
+        </Segment>
 
       </Sidebar.Pushable>
     )
