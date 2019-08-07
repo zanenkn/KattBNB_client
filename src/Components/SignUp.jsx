@@ -10,6 +10,17 @@ class SignUp extends Component {
     username: '',
     location: ''
   }
+
+  onChangeHandler = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleLocationChange = (e, { value }) => {
+    this.setState({ location: value })
+  }
+
   render() {
     return (
       <Sidebar.Pushable className='content-wrapper' >
