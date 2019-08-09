@@ -8,7 +8,9 @@ const config = {
     uid: 'uid'
   },
   userRegistrationAttributes: {
-    password_confirmation: 'password_confirmation'
+    password_confirmation: 'password_confirmation',
+    location: 'location',
+    nickname: 'nickname'
   },
 }
 

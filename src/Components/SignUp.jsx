@@ -9,7 +9,7 @@ class SignUp extends Component {
     email: '',
     password: '',
     password_confirmation: '',
-    username: '',
+    nickname: '',
     location: '',
     errors: ''
   }
@@ -32,14 +32,15 @@ class SignUp extends Component {
       password,
       password_confirmation,
       location,
-      username
+      nickname
     } = this.state
-    registerUser({ email, password, password_confirmation, location, username })
+    registerUser({ email, password, password_confirmation, location, nickname })
       .then(response => {
         console.log('yay')
         //setTimeout(function () { history.push('/') }, 3000)
       }).catch(error => {
         console.log('no')
+        console.log(error.response.data)
         this.setState({
           errors: error.response.data.errors.full_messages,
         })
@@ -77,7 +78,7 @@ class SignUp extends Component {
               placeholder="Repeat password"
             />
             <Form.Input
-              id="username"
+              id="nickname"
               value={this.state.username}
               onChange={this.onChangeHandler}
               placeholder="Username"
