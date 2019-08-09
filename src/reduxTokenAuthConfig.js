@@ -1,6 +1,6 @@
 import { generateAuthActions } from 'redux-token-auth'
 const production = ''
-const development = ''
+const development = 'http://localhost:3007/api/v1/auth'
 
 const config = {
   authUrl: development,

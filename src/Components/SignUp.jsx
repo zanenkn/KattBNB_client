@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment, Form, Button, Dropdown } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
+import { registerUser } from '../reduxTokenAuthConfig'
+import { connect } from 'react-redux'
 
 class SignUp extends Component {
   state = {
@@ -8,7 +10,8 @@ class SignUp extends Component {
     password: '',
     password_confirmation: '',
     username: '',
-    location: ''
+    location: '',
+    errors: ''
   }
 
   onChangeHandler = (e) => {
@@ -19,6 +22,28 @@ class SignUp extends Component {
 
   handleLocationChange = (e, { value }) => {
     this.setState({ location: value })
+  }
+
+  createUser = (e) => {
+    e.preventDefault();
+    const { history, registerUser } = this.props
+    const {
+      email,
+      password,
+      password_confirmation,
+      location,
+      username
+    } = this.state
+    registerUser({ email, password, password_confirmation, location, username })
+      .then(response => {
+        console.log('yay')
+        //setTimeout(function () { history.push('/') }, 3000)
+      }).catch(error => {
+        console.log('no')
+        this.setState({
+          errors: error.response.data.errors.full_messages,
+        })
+      })
   }
 
   render() {
@@ -77,4 +102,13 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.reduxTokenAuth.currentUser
+  }
+}
+export default connect(
+  mapStateToProps,
+  { registerUser },
+)(SignUp) 
+
