@@ -71,7 +71,7 @@ class SignUp extends Component {
               placeholder="Password"
             />
             <Form.Input
-              id="password_confirmation"
+              id="password-confirmation"
               type="password"
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}

@@ -13,22 +13,26 @@ describe('User can sign up', () => {
       response: 'fixture:successful_signup.json'
     })
     
-    cy.get('#hamburger').click()
-    cy.get('#sign-up-link').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
 
       let text = [
         ['#email', 'zane@mail.com'],
         ['#password', 'password'],
         ['#password-confirmation', 'password'],
-        ['#username', 'KittenPrincess']
-        ['#location', 'Göteborg']
+        ['#nickname', 'KittenPrincess']
         ]
         
       text.forEach(element => {
         cy.get(element[0]).type(element[1])
       })
     })
+
+    cy.get('#location').click()
+    cy.get('.visible > .selected > .text').click()
 
     cy.get('#sign-up-button').click()
     cy.contains('You have succesfully created an account!')
