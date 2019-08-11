@@ -54,7 +54,7 @@ class SignUp extends Component {
 
     if(this.state.error_display) {
       errorDisplay = (
-        <Message negative className='message'>
+        <Message negative >
         <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
         <ul id="message-error-list">
           {this.state.errors.map(error => (
@@ -72,6 +72,9 @@ class SignUp extends Component {
         </Header>
 
         <Segment className='whitebox'>
+
+        {errorDisplay}
+
           <Form id="signup-form">
             <Form.Input
               id="email"
@@ -113,8 +116,6 @@ class SignUp extends Component {
 
           <Button id="sign-up-button" onClick={this.createUser}>Sign up</Button>
         </Segment>
-
-        {errorDisplay}
 
       </Sidebar.Pushable>
     )
