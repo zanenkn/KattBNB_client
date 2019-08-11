@@ -12,7 +12,7 @@ class SignupSuccess extends Component {
 
         <Segment className='whitebox' textAlign='center'>
           <p>
-            Welcome, you have successfully signed up for KattBNB.com! You will need to confirm your email address in order to log in and start using our services. Just follow the steps in the email we have sent you to finalize the process.
+            Welcome, you have successfully signed up for KattBNB! You will need to confirm your email address in order to log in and start using our services. Just follow the steps in the email we have sent you to finalize the process.
           </p>
         </Segment>
       </Sidebar.Pushable>

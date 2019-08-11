@@ -12,6 +12,7 @@ class SignUp extends Component {
     nickname: '',
     location: '',
     errors: '',
+    url: 'http://localhost:3000/login',
     error_display: false
   }
 
@@ -33,9 +34,10 @@ class SignUp extends Component {
       password,
       password_confirmation,
       location,
-      nickname
+      nickname,
+      url
     } = this.state
-    registerUser({ email, password, password_confirmation, location, nickname })
+    registerUser({ email, password, password_confirmation, location, nickname, url })
       .then(() => {
         history.push('/signup-success')
       }).catch(error => {
