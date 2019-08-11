@@ -36,11 +36,9 @@ class SignUp extends Component {
       nickname
     } = this.state
     registerUser({ email, password, password_confirmation, location, nickname })
-      .then(response => {
-        console.log('yay')
+      .then(() => {
         history.push('/signup-success')
       }).catch(error => {
-        console.log('no')
         console.log(error.response.data)
         this.setState({
           errors: error.response.data.errors.full_messages,

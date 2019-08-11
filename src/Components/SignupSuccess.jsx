@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment } from 'semantic-ui-react'
-//import { connect } from 'react-redux'
 
 class SignupSuccess extends Component {
   render() {
