@@ -37,7 +37,7 @@ class SignUp extends Component {
     registerUser({ email, password, password_confirmation, location, nickname })
       .then(response => {
         console.log('yay')
-        //setTimeout(function () { history.push('/') }, 3000)
+        history.push('/signup-success')
       }).catch(error => {
         console.log('no')
         console.log(error.response.data)
@@ -71,7 +71,7 @@ class SignUp extends Component {
               placeholder="Password"
             />
             <Form.Input
-              id="password-confirmation"
+              id="password_confirmation"
               type="password"
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}
