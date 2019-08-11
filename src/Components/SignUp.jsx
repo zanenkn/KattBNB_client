@@ -12,7 +12,7 @@ class SignUp extends Component {
     nickname: '',
     location: '',
     errors: '',
-    url: 'http://localhost:3000/login',
+    url: 'http://kattbnb.netlify.com/login',
     error_display: false
   }
 

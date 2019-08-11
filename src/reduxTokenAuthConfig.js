@@ -3,7 +3,7 @@ const production = 'http://katt-bnb.herokuapp.com/api/v1/auth'
 const development = 'http://localhost:3007/api/v1/auth'
 
 const config = {
-  authUrl: development,
+  authUrl: production,
   userAttributes: {
     uid: 'uid'
   },
