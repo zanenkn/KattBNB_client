@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Segment, Form, Button, Dropdown } from 'semantic-ui-react'
+import { Sidebar, Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import { registerUser } from '../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
@@ -11,7 +11,8 @@ class SignUp extends Component {
     password_confirmation: '',
     nickname: '',
     location: '',
-    errors: ''
+    errors: '',
+    error_display: false
   }
 
   onChangeHandler = (e) => {
@@ -43,11 +44,26 @@ class SignUp extends Component {
         console.log(error.response.data)
         this.setState({
           errors: error.response.data.errors.full_messages,
+          error_display: true
         })
       })
   }
 
   render() {
+    let errorDisplay
+
+    if(this.state.error_display) {
+      errorDisplay = (
+        <Message negative>
+        <Message.Header textAlign='center'>Oh no!</Message.Header>
+        <ul id="message-error-list">
+          {this.state.errors.map(error => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      </Message>
+      )
+    }
     return (
       <Sidebar.Pushable className='content-wrapper' >
         
@@ -97,6 +113,8 @@ class SignUp extends Component {
 
           <Button id="sign-up-button" onClick={this.createUser}>Sign up</Button>
         </Segment>
+
+        {errorDisplay}
 
       </Sidebar.Pushable>
     )
