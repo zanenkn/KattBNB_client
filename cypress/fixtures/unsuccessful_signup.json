@@ -1,0 +1,35 @@
+{
+  "status": "error",
+  "data": {
+    "id": null,
+    "provider": "email",
+    "uid": "",
+    "allow_password_change": false,
+    "name": null,
+    "nickname": null,
+    "image": null,
+    "email": "george@",
+    "created_at": null,
+    "updated_at": null
+  },
+  "errors": {
+    "password_confirmation": [
+      "doesn't match Password"
+    ],
+    "password": [
+      "is too short (minimum is 6 characters)"
+    ],
+    "email": [
+      "is not an email"
+    ],
+    "location": [
+      "can't be blank"
+    ],
+    "full_messages": [
+      "Password confirmation doesn't match Password",
+      "Password is too short (minimum is 6 characters)",
+      "Email is not an email",
+      "Location can't be blank"
+    ]
+  }
+}
