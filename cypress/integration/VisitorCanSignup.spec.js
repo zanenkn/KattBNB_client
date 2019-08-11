@@ -22,7 +22,7 @@ describe('User can sign up', () => {
       let text = [
         ['#email', 'zane@mail.com'],
         ['#password', 'password'],
-        ['#password-confirmation', 'password'],
+        ['#password_confirmation', 'password'],
         ['#nickname', 'KittenPrincess']
         ]
         
@@ -35,7 +35,7 @@ describe('User can sign up', () => {
     cy.get('.visible > .selected > .text').click()
 
     cy.get('#sign-up-button').click()
-    cy.contains('You have succesfully created an account!')
+    cy.contains('Successful signup!')
   })
 
   it('and gets error message if email is not valid and/or passwords do not match', () => {
@@ -46,18 +46,19 @@ describe('User can sign up', () => {
       response: 'fixture:unsuccessful_signup.json',
     })
  
-    cy.get('#hamburger').click()
-    cy.get('#sign-up-link').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
 
       let text = [
-      ['#email', 'george@'],
-      ['#password', 'pass'],
-      ['#password-confirmation', 'password'],
-      ['#username', 'raptorf1'],
-      ['#location', '']
-      ]
-
+        ['#email', 'zane@mail'],
+        ['#password', 'pass'],
+        ['#password_confirmation', 'passw'],
+        ['#nickname', 'KittenPrincess']
+        ]
+        
       text.forEach(element => {
         cy.get(element[0]).type(element[1])
       })
@@ -72,8 +73,8 @@ describe('User can sign up', () => {
       "Location can't be blank",
       ]
 
-      text.forEach(post => {
-        cy.contains(post)
+      text.forEach(error => {
+        cy.contains(error)
       })
     })
 })
