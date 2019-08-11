@@ -54,8 +54,8 @@ class SignUp extends Component {
 
     if(this.state.error_display) {
       errorDisplay = (
-        <Message negative>
-        <Message.Header textAlign='center'>Oh no!</Message.Header>
+        <Message negative className='message'>
+        <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
         <ul id="message-error-list">
           {this.state.errors.map(error => (
             <li key={error}>{error}</li>
