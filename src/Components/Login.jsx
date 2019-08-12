@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment, Form, Message, Button } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { signInUser } from '../reduxTokenAuthConfig'
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
   state = {
@@ -9,17 +12,37 @@ class Login extends Component {
     error_display: false
   }
 
+  onChangeHandler = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { history, signInUser } = this.props
+    const {
+      email,
+      password
+    } = this.state
+    signInUser({ email, password })
+      .then(() => {
+        setTimeout(function () { history.push('/') }, 1000)
+      }).catch(error => {
+        this.setState({
+          error_display: true,
+          errors: error.response.data.errors[0]
+        })
+      })
+  }
+
   render() {
     let errorDisplay
 
     if(this.state.error_display) {
       errorDisplay = (
         <Message negative >
-          <ul id="message-error-list">
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
+          {this.state.errors}
         </Message>
       )
     }
@@ -35,21 +58,21 @@ class Login extends Component {
 
           {errorDisplay}
 
-          <Form id="login-form">
+          <Form id='login-form' onSubmit={this.onSubmit}>
             <Form.Input
-              id="email"
+              id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder="Email"
+              placeholder='Email'
             />
             <Form.Input
-              id="password"
-              type="password"
+              id='password'
+              type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder="Password"
+              placeholder='Password'
             />
-            <Button className="submit-button" id="log-in-button">Log in</Button>
+            <Button className='submit-button' id='log-in-button'>Log in</Button>
           </Form>
 
         </Segment>
@@ -59,4 +82,12 @@ class Login extends Component {
   }
 }
 
-export default Login
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.reduxTokenAuth.currentUser
+  }
+}
+const mapDispatchToProps = {
+  signInUser
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
