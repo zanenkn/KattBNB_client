@@ -9,10 +9,13 @@ Cypress.Commands.add('login', (fixture = {}, email, password, status) => {
     }
   })
   cy.visit('http://localhost:3000')
-  cy.get('#profile-icon').click()
+  cy.get('#hamburger').within(() => {
+    cy.get('.icon').click()
+  })
+  cy.get('#login').click()
   cy.get('#login-form').within(() => {
     cy.get('#email').type(email)
     cy.get('#password').type(password)
   })
-  cy.get('#login_form_button').click()
+  cy.get('.submit-button').click()
 })
