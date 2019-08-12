@@ -90,12 +90,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.reduxTokenAuth.currentUser
-  }
-}
-const mapDispatchToProps = {
-  signInUser
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(
+  null,
+  {signInUser},
+  )(Login)
