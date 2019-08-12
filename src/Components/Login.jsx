@@ -75,6 +75,14 @@ class Login extends Component {
             <Button className='submit-button' id='log-in-button'>Log in</Button>
           </Form>
 
+          <p style={{'textAlign': 'center', 'marginTop': '2rem'}}>
+            Not registered? 
+          <br></br>
+          <Header as={Link} to='sign-up' className='fake-link'>
+            Create an account!
+          </Header>  
+          </p>
+
         </Segment>
         
       </Sidebar.Pushable>

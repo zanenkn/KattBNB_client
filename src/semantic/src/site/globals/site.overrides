@@ -12,6 +12,16 @@
  -ms-overflow-style: none;  /* IE 10+ */
 }
 
+.fake-link {
+  color: #c90c61;
+  cursor: pointer!important;
+  font-size: inherit!important;
+}
+
+.fake-link:hover {
+  color: #bd0a5b!important;
+}
+
 /*******************************
             NAVBAR
 *******************************/
