@@ -71,6 +71,17 @@ h4 {
   color: grey!important;
 }
 
+.whitebox {
+  padding: 2rem!important;
+  margin-top: 2rem!important;
+}
+
+@media screen and (min-width: 700px) {
+  .whitebox {
+    width: 300px;
+  }
+}
+
 /*******************************
               MENU
 *******************************/
