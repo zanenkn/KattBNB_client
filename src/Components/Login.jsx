@@ -9,7 +9,8 @@ class Login extends Component {
     email: '',
     password: '',
     errors: '',
-    error_display: false
+    error_display: false,
+    success_display: false
   }
 
   onChangeHandler = (e) => {
@@ -27,7 +28,8 @@ class Login extends Component {
     } = this.state
     signInUser({ email, password })
       .then(() => {
-        setTimeout(function () { history.push('/') }, 1000)
+        this.setState({ success_display: true })
+        setTimeout(function () { history.push('/') }, 1500)
       }).catch(error => {
         this.setState({
           error_display: true,
@@ -38,11 +40,20 @@ class Login extends Component {
 
   render() {
     let errorDisplay
+    let successDisplay
 
     if(this.state.error_display) {
       errorDisplay = (
         <Message negative >
           {this.state.errors}
+        </Message>
+      )
+    }
+
+    if(this.state.success_display) {
+      successDisplay = (
+        <Message success>
+          <p>You have succesfully logged in! Please wait to be redirected.</p>
         </Message>
       )
     }
@@ -57,6 +68,7 @@ class Login extends Component {
         <Segment className='whitebox'>
 
           {errorDisplay}
+          {successDisplay}
 
           <Form id='login-form' onSubmit={this.onSubmit}>
             <Form.Input
