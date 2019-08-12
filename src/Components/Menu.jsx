@@ -3,11 +3,21 @@ import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { signOutUser } from '../reduxTokenAuthConfig'
 
 class Menu extends Component {
 
   handleMenuVisibilty = (e) => {
     this.props.menuVisbilityHandler()
+  }
+
+  signOut = (e) => {
+    e.preventDefault()
+    const { history, signOutUser } = this.props
+    signOutUser()
+      .then(() => {
+        history.push('/')
+      })
   }
 
   render() {
@@ -18,7 +28,7 @@ class Menu extends Component {
           id='signout'
           className='menu-link'
           as={Link}
-          to='/login'
+          onClick={this.signOut}
         >
           Sign Out
         </Header>
@@ -125,6 +135,7 @@ const mapDispatchToProps = {
   menuVisbilityHandler: menuVisible => ({
     type: 'CHANGE_VISIBILITY',
     menuVisbible: menuVisible
-  })
+  }),
+  signOutUser
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu))
