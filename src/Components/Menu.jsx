@@ -16,7 +16,7 @@ class Menu extends Component {
     const { history, signOutUser } = this.props
     signOutUser()
       .then(() => {
-        history.push('/')
+        history.push('/login')
       })
   }
 
@@ -131,6 +131,7 @@ const mapStateToProps = (state) => {
     currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
   }
 }
+
 const mapDispatchToProps = {
   menuVisbilityHandler: menuVisible => ({
     type: 'CHANGE_VISIBILITY',
@@ -138,4 +139,5 @@ const mapDispatchToProps = {
   }),
   signOutUser
 }
+
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu))
