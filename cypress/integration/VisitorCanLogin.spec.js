@@ -1,5 +1,3 @@
-import { Item } from "semantic-ui-react";
-
 describe('User can log in', () => {
   beforeEach(function () {
     cy.server()
