@@ -137,12 +137,7 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.reduxTokenAuth.currentUser
-  }
-}
 export default connect(
-  mapStateToProps,
+  null,
   { registerUser },
 )(SignUp)
