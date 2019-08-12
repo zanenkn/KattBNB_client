@@ -11,6 +11,41 @@ class Menu extends Component {
   }
 
   render() {
+    let userLinks
+    if (this.props.currentUserIn) {
+      userLinks = (
+        <Header
+          id='signout'
+          className='menu-link'
+          as={Link}
+          to='/login'
+        >
+          Sign Out
+        </Header>
+      )
+    } else {
+      userLinks = (
+        <>
+          <Header
+            id='login'
+            className='menu-link'
+            as={Link}
+            to='/login'
+          >
+            Login
+          </Header>
+
+          <Header
+            id='signup'
+            className='menu-link'
+            as={Link}
+            to='/sign-up'
+          >
+            Sign up
+          </Header>
+        </>
+      )
+    }
     return (
       <Sidebar
         id='menu'
@@ -25,23 +60,7 @@ class Menu extends Component {
         >
           <Grid.Column id='menu-grid-column'>
 
-            <Header
-              id='login'
-              className='menu-link'
-              as={Link}
-              to='/login'
-            >
-              Login
-            </Header>
-
-            <Header
-              id='signup'
-              className='menu-link'
-              as={Link}
-              to='/sign-up'
-            >
-              Sign up
-            </Header>
+            {userLinks}
 
             <Header
               id='about'
@@ -98,7 +117,8 @@ class Menu extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    menuVisible: state.animation.menuVisible
+    menuVisible: state.animation.menuVisible,
+    currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
   }
 }
 const mapDispatchToProps = {
