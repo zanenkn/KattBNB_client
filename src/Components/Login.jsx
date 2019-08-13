@@ -44,7 +44,7 @@ class Login extends Component {
 
     if(this.state.error_display) {
       errorDisplay = (
-        <Message negative >
+        <Message negative textAlign='center'>
           {this.state.errors}
         </Message>
       )
@@ -52,8 +52,8 @@ class Login extends Component {
 
     if(this.state.success_display) {
       successDisplay = (
-        <Message success>
-          <p>You have succesfully logged in! Please wait to be redirected.</p>
+        <Message success textAlign='center'>
+          You have succesfully logged in! Please wait to be redirected.
         </Message>
       )
     }

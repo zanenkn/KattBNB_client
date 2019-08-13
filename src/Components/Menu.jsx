@@ -25,12 +25,12 @@ class Menu extends Component {
     if (this.props.currentUserIn) {
       userLinks = (
         <Header
-          id='signout'
+          id='logout'
           className='menu-link'
           as={Link}
           onClick={this.signOut}
         >
-          Sign Out
+          Log out
         </Header>
       )
     } else {
@@ -42,7 +42,7 @@ class Menu extends Component {
             as={Link}
             to='/login'
           >
-            Login
+            Log in
           </Header>
 
           <Header

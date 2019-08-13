@@ -18,7 +18,7 @@ describe('User can sign out', () => {
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })
-    cy.get('#signout').click()
+    cy.get('#logout').click()
     cy.wait(1000)
     cy.contains('Log in')
   })
