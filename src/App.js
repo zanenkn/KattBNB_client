@@ -12,6 +12,7 @@ import Login from './Components/Login'
 import SignUp from './Components/SignUp'
 import SignupSuccess from './Components/SignupSuccess'
 import PasswordReset from './Components/PasswordReset'
+import ChangePassword from './Components/ChangePassword'
 import ScrollToTop from './Components/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -45,6 +46,7 @@ class App extends Component {
                 <Route exact path='/sign-up' component={SignUp}></Route>
                 <Route exact path='/signup-success' component={SignupSuccess}></Route>
                 <Route exact path='/password-reset' component={PasswordReset}></Route>
+                <Route exact path='/change-password' component={ChangePassword}></Route>
               </Switch>
             </ScrollToTop>
 

@@ -5,12 +5,12 @@ import axios from 'axios'
 
 class PasswordReset extends Component {
   state = {
-    email: '',
     errors: '',
     error_display: false,
     success_display: false,
     loading: false,
-    url: 'http://localhost:3000/change-password'
+    password: '',
+    password_confirmation: ''
   }
 
   onChangeHandler = (e) => {
@@ -19,15 +19,15 @@ class PasswordReset extends Component {
     })
   }
 
-  reset = (e) => {
+  change = (e) => {
     this.setState({ loading: true })
     e.preventDefault();
     const path = '/api/v1/auth/password'
     const payload = {
-      redirect_url: this.state.url,
-      email: this.state.email
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation
     }
-    axios.post(path, payload)
+    axios.put(path, payload)
       .then(() => {
         this.setState({
           success_display: true,
@@ -59,18 +59,18 @@ class PasswordReset extends Component {
     if (this.state.success_display) {
       successDisplay = (
         <Message success textAlign='center'>
-          Follow instructions (blindly) sent to your email.
+          YAY!!!
         </Message>
       )
     }
 
     if (this.state.loading) {
       submitButton = (
-        <Button className='submit-button' id='reset-pass-button' loading>Reset</Button>
+        <Button className='submit-button' id='change-pass-button' loading>Change Password</Button>
       )
     } else {
       submitButton = (
-        <Button className='submit-button' id='reset-pass-button' onClick={this.reset}>Reset</Button>
+        <Button className='submit-button' id='change-pass-button' onClick={this.change}>Change Password</Button>
       )
     }
 
@@ -78,7 +78,7 @@ class PasswordReset extends Component {
       <Sidebar.Pushable className='content-wrapper' >
 
         <Header as='h1'>
-          Request password reset
+          Change password
         </Header>
 
         <Segment className='whitebox'>
@@ -92,13 +92,22 @@ class PasswordReset extends Component {
 
           <Form>
             <Form.Input
-              id='email'
-              value={this.state.email}
+              id='password'
+              value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder='Email'
+              placeholder='Password'
+              type='password'
+            />
+
+            <Form.Input
+              id='password_confirmation'
+              value={this.state.password_confirmation}
+              onChange={this.onChangeHandler}
+              placeholder='Repeat password'
+              type='password'
               onKeyPress={event => {
                 if (event.key === "Enter") {
-                  this.reset(event)
+                  this.change(event)
                 }
               }}
             />
