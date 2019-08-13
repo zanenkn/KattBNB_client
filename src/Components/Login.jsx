@@ -103,6 +103,10 @@ class Login extends Component {
                 }
               }}
             />
+            <Header as={Link} to='password-reset' className='fake-link'>
+              Forgot your password?
+            </Header>
+
           </Form>
 
           {submitButton}
