@@ -125,6 +125,11 @@ class SignUp extends Component {
               options={LOCATION_OPTIONS}
               id="location"
               onChange={this.handleLocationChange}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.createUser(event)
+                }
+              }}
             />
           </Form>
 
