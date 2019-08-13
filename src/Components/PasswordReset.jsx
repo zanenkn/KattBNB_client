@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment, Form, Message, Button } from 'semantic-ui-react'
+import axios from 'axios'
+
 
 class PasswordReset extends Component {
   state = {
@@ -7,13 +9,38 @@ class PasswordReset extends Component {
     errors: '',
     error_display: false,
     success_display: false,
-    loading: false
+    loading: false,
+    url: 'http://localhost:3000/login'
   }
 
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
+  }
+
+  reset = (e) => {
+    this.setState({ loading: true })
+    e.preventDefault();
+    const path = '/api/v1/auth/password'
+    const payload = {
+      redirect_url: this.state.url,
+      email: this.state.email
+    }
+    axios.post(path, payload)
+      .then(() => {
+        this.setState({
+          success_display: true,
+          error_display: false
+        })
+      })
+      .catch(error => {
+        this.setState({
+          loading: false,
+          error_display: true,
+          errors: error.response.data.errors
+        })
+      })
   }
 
   render() {
@@ -43,7 +70,7 @@ class PasswordReset extends Component {
       )
     } else {
       submitButton = (
-        <Button className='submit-button' id='reset-pass-button' onClick={this.logInUser}>Reset</Button>
+        <Button className='submit-button' id='reset-pass-button' onClick={this.reset}>Reset</Button>
       )
     }
 
@@ -56,7 +83,7 @@ class PasswordReset extends Component {
 
         <Segment className='whitebox'>
 
-          <p style={{ 'textAlign': 'center'}}>
+          <p style={{ 'textAlign': 'center' }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
 
@@ -69,6 +96,11 @@ class PasswordReset extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.reset(event)
+                }
+              }}
             />
           </Form>
 

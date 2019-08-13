@@ -6,6 +6,13 @@ import { BrowserRouter } from 'react-router-dom'
 import configureStore from './state/store/configureStore'
 import * as serviceWorker from './serviceWorker'
 import { verifyCredentials } from './reduxTokenAuthConfig'
+import axios from 'axios'
+
+
+const development = 'http://localhost:3007'
+const production = 'https://katt-bnb.herokuapp.com'
+
+axios.defaults.baseURL = development
 
 const store = configureStore()
 verifyCredentials(store)
