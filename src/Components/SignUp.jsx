@@ -114,7 +114,7 @@ class SignUp extends Component {
               id="nickname"
               value={this.state.username}
               onChange={this.onChangeHandler}
-              placeholder="Username"
+              placeholder="Username / Nickname"
             />
             <Dropdown
               clearable
