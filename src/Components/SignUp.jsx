@@ -13,7 +13,8 @@ class SignUp extends Component {
     location: '',
     errors: '',
     url: 'https://kattbnb.netlify.com/login',
-    error_display: false
+    error_display: false,
+    loading: false
   }
 
   onChangeHandler = (e) => {
@@ -27,7 +28,8 @@ class SignUp extends Component {
   }
 
   createUser = (e) => {
-    e.preventDefault();
+    this.setState({ loading: true })
+    e.preventDefault()
     const { history, registerUser } = this.props
     const {
       email,
@@ -41,39 +43,51 @@ class SignUp extends Component {
       .then(() => {
         history.push('/signup-success')
       }).catch(error => {
-        console.log(error.response.data)
         this.setState({
           errors: error.response.data.errors.full_messages,
-          error_display: true
+          error_display: true,
+          loading: false
         })
       })
   }
 
   render() {
     let errorDisplay
+    let submitButton
 
-    if(this.state.error_display) {
+    if (this.state.error_display) {
       errorDisplay = (
         <Message negative >
-        <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
-        <ul id="message-error-list">
-          {this.state.errors.map(error => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      </Message>
+          <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
+          <ul id="message-error-list">
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
       )
     }
+
+    if (this.state.loading) {
+      submitButton = (
+        <Button id="sign-up-button" loading>Loading</Button>
+      )
+    } else {
+      submitButton = (
+        <Button id="sign-up-button" onClick={this.createUser}>Sign up</Button>
+      )
+    }
+
     return (
       <Sidebar.Pushable className='content-wrapper' >
-        
+
         <Header as='h1'>
           Sign up
         </Header>
 
         <Segment className='whitebox'>
 
-        {errorDisplay}
+          {errorDisplay}
 
           <Form id="signup-form">
             <Form.Input
@@ -106,7 +120,7 @@ class SignUp extends Component {
               clearable
               search
               selection
-              style={{'width': '100%'}}
+              style={{ 'width': '100%' }}
               placeholder="Select location"
               options={LOCATION_OPTIONS}
               id="location"
@@ -114,7 +128,8 @@ class SignUp extends Component {
             />
           </Form>
 
-          <Button id="sign-up-button" onClick={this.createUser}>Sign up</Button>
+          {submitButton}
+
         </Segment>
 
       </Sidebar.Pushable>
@@ -122,13 +137,7 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.reduxTokenAuth.currentUser
-  }
-}
 export default connect(
-  mapStateToProps,
+  null,
   { registerUser },
-)(SignUp) 
-
+)(SignUp)
