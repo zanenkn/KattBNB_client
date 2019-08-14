@@ -19,7 +19,6 @@ class PasswordReset extends Component {
       [e.target.id]: e.target.value
     })
   }
-  
 
   change = (e) => {
     this.setState({ loading: true })
@@ -30,15 +29,15 @@ class PasswordReset extends Component {
       password_confirmation: this.state.password_confirmation,
       uid: queryString.parse(this.props.location.search).uid,
       'access-token': queryString.parse(this.props.location.search).token,
-      client: queryString.parse(this.props.location.search).client  
+      client: queryString.parse(this.props.location.search).client
     }
-
     axios.put(path, payload)
       .then(() => {
         this.setState({
           success_display: true,
           error_display: false
         })
+        setTimeout(function () { window.location.replace('/login') }, 2000)
       })
       .catch(error => {
         this.setState({
