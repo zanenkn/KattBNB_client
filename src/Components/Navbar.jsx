@@ -7,6 +7,8 @@ class Navbar extends Component {
   render() {
 
     let userIcon
+    let hamburgerIcon
+
     if (this.props.currentUserIn) {
       userIcon = (
         <Grid.Column className='navlink' width={4}>
@@ -20,6 +22,21 @@ class Navbar extends Component {
         </Grid.Column>
       )
     }
+
+    if (this.props.menuVisible) {
+      hamburgerIcon = (
+        <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
+        </Grid.Column>
+      )
+    } else {
+      hamburgerIcon = (
+        <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+        </Grid.Column>
+      )
+    }
+
     return (
       <>
         <Grid
@@ -27,10 +44,7 @@ class Navbar extends Component {
           verticalAlign='middle'
           columns={2}
         >
-          <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
-            <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-          </Grid.Column>
-
+          {hamburgerIcon}
           <Grid.Column style={{ 'padding': 0 }} width={12}>
             <Grid id='navlinks'>
               <Grid.Column className='navlink' width={4} as={Link} to='/' onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
@@ -45,7 +59,6 @@ class Navbar extends Component {
               {userIcon}
             </Grid>
           </Grid.Column>
-
         </Grid>
       </>
     )
