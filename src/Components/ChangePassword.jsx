@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
+import queryString from 'query-string'
 
 
 class PasswordReset extends Component {
@@ -18,15 +19,20 @@ class PasswordReset extends Component {
       [e.target.id]: e.target.value
     })
   }
+  
 
   change = (e) => {
     this.setState({ loading: true })
-    e.preventDefault();
+    e.preventDefault()
     const path = '/api/v1/auth/password'
     const payload = {
       password: this.state.password,
-      password_confirmation: this.state.password_confirmation
+      password_confirmation: this.state.password_confirmation,
+      uid: queryString.parse(this.props.location.search).uid,
+      'access-token': queryString.parse(this.props.location.search).token,
+      client: queryString.parse(this.props.location.search).client  
     }
+
     axios.put(path, payload)
       .then(() => {
         this.setState({
