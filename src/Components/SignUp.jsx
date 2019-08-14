@@ -96,6 +96,11 @@ class SignUp extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder="Email"
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.createUser(event)
+                }
+              }}
             />
             <Form.Input
               required
@@ -104,6 +109,11 @@ class SignUp extends Component {
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder="Password"
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.createUser(event)
+                }
+              }}
             />
             <Form.Input
               required
@@ -112,6 +122,11 @@ class SignUp extends Component {
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}
               placeholder="Repeat password"
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.createUser(event)
+                }
+              }}
             />
             <Form.Input
               required
@@ -119,6 +134,11 @@ class SignUp extends Component {
               value={this.state.username}
               onChange={this.onChangeHandler}
               placeholder="Username / Nickname"
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.createUser(event)
+                }
+              }}
             />
             <Dropdown
               clearable

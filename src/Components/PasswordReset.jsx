@@ -19,7 +19,7 @@ class PasswordReset extends Component {
     })
   }
 
-  reset = (e) => {
+  resetPassword = (e) => {
     this.setState({ loading: true })
     e.preventDefault();
     const path = '/api/v1/auth/password'
@@ -70,7 +70,7 @@ class PasswordReset extends Component {
       )
     } else {
       submitButton = (
-        <Button className='submit-button' id='reset-pass-button' onClick={this.reset}>Reset</Button>
+        <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword}>Reset</Button>
       )
     }
 
@@ -99,7 +99,7 @@ class PasswordReset extends Component {
               placeholder='Email'
               onKeyPress={event => {
                 if (event.key === "Enter") {
-                  this.reset(event)
+                  this.resetPassword(event)
                 }
               }}
             />

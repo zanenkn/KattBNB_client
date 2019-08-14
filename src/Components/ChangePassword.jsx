@@ -20,7 +20,7 @@ class PasswordReset extends Component {
     })
   }
 
-  change = (e) => {
+  changePassword = (e) => {
     this.setState({ loading: true })
     e.preventDefault()
     const path = '/api/v1/auth/password'
@@ -75,7 +75,7 @@ class PasswordReset extends Component {
       )
     } else {
       submitButton = (
-        <Button className='submit-button' id='change-pass-button' onClick={this.change}>Change Password</Button>
+        <Button className='submit-button' id='change-pass-button' onClick={this.changePassword}>Change Password</Button>
       )
     }
 
@@ -103,6 +103,11 @@ class PasswordReset extends Component {
               onChange={this.onChangeHandler}
               placeholder='Password'
               type='password'
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.changePassword(event)
+                }
+              }}
             />
 
             <Form.Input
@@ -114,7 +119,7 @@ class PasswordReset extends Component {
               type='password'
               onKeyPress={event => {
                 if (event.key === "Enter") {
-                  this.change(event)
+                  this.changePassword(event)
                 }
               }}
             />

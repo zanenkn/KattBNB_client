@@ -91,6 +91,11 @@ class Login extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.logInUser(event)
+                }
+              }}
             />
             <Form.Input
               required
