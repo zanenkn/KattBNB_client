@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class SignupSuccess extends Component {
+
   render() {
+
+    if (this.props.currentUserIn) {
+      window.localStorage.clear()
+      setTimeout(function () { window.location.reload(true) }, 1000)
+    }
+
     return (
       <Sidebar.Pushable className='content-wrapper' >
 
@@ -20,4 +28,9 @@ class SignupSuccess extends Component {
   }
 }
 
-export default SignupSuccess
+
+const mapStateToProps = state => ({
+  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
+})
+
+export default connect(mapStateToProps)(SignupSuccess)
