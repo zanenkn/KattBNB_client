@@ -91,12 +91,14 @@ class SignUp extends Component {
 
           <Form id="signup-form">
             <Form.Input
+              required
               id="email"
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder="Email"
             />
             <Form.Input
+              required
               id="password"
               type="password"
               value={this.state.password}
@@ -104,6 +106,7 @@ class SignUp extends Component {
               placeholder="Password"
             />
             <Form.Input
+              required
               id="password_confirmation"
               type="password"
               value={this.state.password_confirmation}
@@ -111,6 +114,7 @@ class SignUp extends Component {
               placeholder="Repeat password"
             />
             <Form.Input
+              required
               id="nickname"
               value={this.state.username}
               onChange={this.onChangeHandler}

@@ -92,6 +92,7 @@ class PasswordReset extends Component {
 
           <Form>
             <Form.Input
+              required
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}

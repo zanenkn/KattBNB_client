@@ -97,6 +97,7 @@ class PasswordReset extends Component {
 
           <Form>
             <Form.Input
+              required
               id='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
@@ -105,6 +106,7 @@ class PasswordReset extends Component {
             />
 
             <Form.Input
+              required
               id='password_confirmation'
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}

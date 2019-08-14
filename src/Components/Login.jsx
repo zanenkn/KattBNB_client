@@ -86,12 +86,14 @@ class Login extends Component {
 
           <Form id='login-form'>
             <Form.Input
+              required
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
             />
             <Form.Input
+              required
               id='password'
               type='password'
               value={this.state.password}

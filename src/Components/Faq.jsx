@@ -9,7 +9,7 @@ class Faq extends Component {
         <Header as='h1'>
           FAQ
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>

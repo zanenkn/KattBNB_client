@@ -5,7 +5,7 @@ class SignupSuccess extends Component {
   render() {
     return (
       <Sidebar.Pushable className='content-wrapper' >
-        
+
         <Header as='h1'>
           Successful signup!
         </Header>
