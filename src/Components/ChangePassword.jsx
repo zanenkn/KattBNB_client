@@ -4,7 +4,7 @@ import axios from 'axios'
 import queryString from 'query-string'
 
 
-class PasswordReset extends Component {
+class ChangePassword extends Component {
   state = {
     errors: '',
     error_display: false,
@@ -43,8 +43,9 @@ class PasswordReset extends Component {
         this.setState({
           loading: false,
           error_display: true,
-          errors: error.response.data.errors
+          errors: error.response.data.errors.full_messages
         })
+        setTimeout(function () { window.location.replace('/password-reset') }, 3000)
       })
   }
 
@@ -55,8 +56,13 @@ class PasswordReset extends Component {
 
     if (this.state.error_display) {
       errorDisplay = (
-        <Message negative textAlign='center'>
-          {this.state.errors}
+        <Message negative >
+          <Message.Header textAlign='center'>Password change could not be completed because of following error(s):</Message.Header>
+          <ul id="message-error-list">
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
         </Message>
       )
     }
@@ -64,7 +70,7 @@ class PasswordReset extends Component {
     if (this.state.success_display) {
       successDisplay = (
         <Message success textAlign='center'>
-          YAY!!!
+          You have succesfully changed your password! Please wait to be redirected.
         </Message>
       )
     }
@@ -89,7 +95,7 @@ class PasswordReset extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Type in your new password twice in the fields below. If an error occurs you will be redirected and the process will begin anew.
           </p>
 
           {errorDisplay}
@@ -135,4 +141,4 @@ class PasswordReset extends Component {
   }
 }
 
-export default PasswordReset
+export default ChangePassword

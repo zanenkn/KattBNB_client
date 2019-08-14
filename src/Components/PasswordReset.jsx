@@ -29,10 +29,7 @@ class PasswordReset extends Component {
     }
     axios.post(path, payload)
       .then(() => {
-        this.setState({
-          success_display: true,
-          error_display: false
-        })
+        window.location.replace('/password-reset-success')
       })
       .catch(error => {
         this.setState({
@@ -45,21 +42,17 @@ class PasswordReset extends Component {
 
   render() {
     let errorDisplay
-    let successDisplay
     let submitButton
 
     if (this.state.error_display) {
       errorDisplay = (
-        <Message negative textAlign='center'>
-          {this.state.errors}
-        </Message>
-      )
-    }
-
-    if (this.state.success_display) {
-      successDisplay = (
-        <Message success textAlign='center'>
-          Follow instructions (blindly) sent to your email.
+        <Message negative >
+          <Message.Header textAlign='center'>Password reset could not be completed because of following error(s):</Message.Header>
+          <ul id="message-error-list">
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
         </Message>
       )
     }
@@ -84,11 +77,10 @@ class PasswordReset extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Fill in the email you registered with.
           </p>
 
           {errorDisplay}
-          {successDisplay}
 
           <Form>
             <Form.Input
