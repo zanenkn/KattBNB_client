@@ -23,6 +23,13 @@ class SignUp extends Component {
     })
   }
 
+  onChangeHandlerNickname = (e) => {
+    const lowerCaseNickname = e.target.value.toLowerCase()
+    this.setState({
+      nickname: lowerCaseNickname
+    })
+  }
+
   handleLocationChange = (e, { value }) => {
     this.setState({ location: value })
   }
@@ -132,7 +139,7 @@ class SignUp extends Component {
               required
               id="nickname"
               value={this.state.username}
-              onChange={this.onChangeHandler}
+              onChange={this.onChangeHandlerNickname}
               placeholder="Username / Nickname"
               onKeyPress={event => {
                 if (event.key === "Enter") {
