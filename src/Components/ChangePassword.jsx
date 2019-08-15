@@ -95,7 +95,7 @@ class ChangePassword extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            Type in your new password twice in the fields below. If an error occurs you will be redirected and the process will begin anew.
+            Type in your new password twice in the fields below. Minimum requirement is 6 characters. If an error occurs you will be redirected and the process will begin anew.
           </p>
 
           {errorDisplay}

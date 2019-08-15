@@ -94,6 +94,10 @@ class SignUp extends Component {
 
         <Segment className='whitebox'>
 
+          <p style={{ 'textAlign': 'center' }}>
+            Password must be at least 6 characters in length. Email and Username must be unique.
+          </p>
+
           {errorDisplay}
 
           <Form id="signup-form">
