@@ -41,6 +41,12 @@ class Login extends Component {
       })
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.logInUser(event)
+    }
+  }
+
   render() {
     let errorDisplay
     let successDisplay
@@ -91,11 +97,7 @@ class Login extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.logInUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
@@ -104,11 +106,7 @@ class Login extends Component {
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder='Password'
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.logInUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Header as={Link} to='password-reset' className='fake-link'>
               Forgot your password?

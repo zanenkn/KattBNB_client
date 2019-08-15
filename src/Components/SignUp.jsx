@@ -58,6 +58,12 @@ class SignUp extends Component {
       })
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.createUser(event)
+    }
+  }
+
   render() {
     let errorDisplay
     let submitButton
@@ -107,11 +113,7 @@ class SignUp extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder="Email"
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.createUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
@@ -120,11 +122,7 @@ class SignUp extends Component {
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder="Password"
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.createUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
@@ -133,11 +131,7 @@ class SignUp extends Component {
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}
               placeholder="Repeat password"
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.createUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
@@ -145,11 +139,7 @@ class SignUp extends Component {
               value={this.state.username}
               onChange={this.onChangeHandlerNickname}
               placeholder="Username / Nickname"
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.createUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
             <Dropdown
               clearable
@@ -160,11 +150,7 @@ class SignUp extends Component {
               options={LOCATION_OPTIONS}
               id="location"
               onChange={this.handleLocationChange}
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.createUser(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
           </Form>
 

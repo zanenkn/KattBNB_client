@@ -49,6 +49,12 @@ class ChangePassword extends Component {
       })
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.changePassword(event)
+    }
+  }
+
   render() {
     let errorDisplay
     let successDisplay
@@ -109,11 +115,7 @@ class ChangePassword extends Component {
               onChange={this.onChangeHandler}
               placeholder='Password'
               type='password'
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.changePassword(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
 
             <Form.Input
@@ -123,11 +125,7 @@ class ChangePassword extends Component {
               onChange={this.onChangeHandler}
               placeholder='Repeat password'
               type='password'
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.changePassword(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
           </Form>
 

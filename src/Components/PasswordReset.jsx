@@ -40,6 +40,12 @@ class PasswordReset extends Component {
       })
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.resetPassword(event)
+    }
+  }
+
   render() {
     let errorDisplay
     let submitButton
@@ -89,11 +95,7 @@ class PasswordReset extends Component {
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.resetPassword(event)
-                }
-              }}
+              onKeyPress={this.listenEnterKey}
             />
           </Form>
 
