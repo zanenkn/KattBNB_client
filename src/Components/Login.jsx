@@ -109,9 +109,9 @@ class Login extends Component {
               onKeyPress={this.listenEnterKey}
             />
             <div style={{'textAlign': 'right'}}>
-              <p id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
+              <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
                 Forgot your password?
-              </p>
+              </Header>
             </div>
 
           </Form>
