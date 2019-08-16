@@ -10,7 +10,7 @@ class PasswordReset extends Component {
     error_display: false,
     success_display: false,
     loading: false,
-    url: 'http://localhost:3000/change-password'
+    url: 'https://kattbnb.netlify.com/change-password'
   }
 
   onChangeHandler = (e) => {
