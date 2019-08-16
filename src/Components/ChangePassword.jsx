@@ -22,7 +22,7 @@ class ChangePassword extends Component {
 
   changePassword = (e) => {
     e.preventDefault()
-    if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6) {
+    if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
       this.setState({ loading: true })
       const path = '/api/v1/auth/password'
       const payload = {
@@ -47,6 +47,11 @@ class ChangePassword extends Component {
             errors: error.response.data.errors.full_messages
           })
         })
+    } else if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
+      this.setState({
+        errors: ["You should first visit the login page and click on the 'Forgot your password?' link"],
+        error_display: true
+      })
     } else {
       this.setState({
         errors: ['Check that both fields are an exact match with each other and that they consist of at least 6 characters'],
