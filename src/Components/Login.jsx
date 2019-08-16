@@ -10,7 +10,8 @@ class Login extends Component {
     password: '',
     errors: '',
     error_display: false,
-    success_display: false
+    success_display: false,
+    loading: false
   }
 
   onChangeHandler = (e) => {
@@ -19,7 +20,8 @@ class Login extends Component {
     })
   }
 
-  onSubmit = (e) => {
+  logInUser = (e) => {
+    this.setState({ loading: true })
     e.preventDefault();
     const { history, signInUser } = this.props
     const {
@@ -28,21 +30,29 @@ class Login extends Component {
     } = this.state
     signInUser({ email, password })
       .then(() => {
-        this.setState({ success_display: true })
+        this.setState({ success_display: true, error_display: false })
         setTimeout(function () { history.push('/') }, 1500)
       }).catch(error => {
         this.setState({
           error_display: true,
-          errors: error.response.data.errors[0]
+          errors: error.response.data.errors[0],
+          loading: false
         })
       })
+  }
+
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.logInUser(event)
+    }
   }
 
   render() {
     let errorDisplay
     let successDisplay
+    let submitButton
 
-    if(this.state.error_display) {
+    if (this.state.error_display) {
       errorDisplay = (
         <Message negative textAlign='center'>
           {this.state.errors}
@@ -50,7 +60,7 @@ class Login extends Component {
       )
     }
 
-    if(this.state.success_display) {
+    if (this.state.success_display) {
       successDisplay = (
         <Message success textAlign='center'>
           You have succesfully logged in! Please wait to be redirected.
@@ -58,9 +68,19 @@ class Login extends Component {
       )
     }
 
+    if (this.state.loading) {
+      submitButton = (
+        <Button className='submit-button' id='log-in-button' loading>Log in</Button>
+      )
+    } else {
+      submitButton = (
+        <Button className='submit-button' id='log-in-button' onClick={this.logInUser}>Log in</Button>
+      )
+    }
+
     return (
       <Sidebar.Pushable className='content-wrapper' >
-              
+
         <Header as='h1'>
           Log in
         </Header>
@@ -70,33 +90,44 @@ class Login extends Component {
           {errorDisplay}
           {successDisplay}
 
-          <Form id='login-form' onSubmit={this.onSubmit}>
+          <Form id='login-form'>
             <Form.Input
+              required
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder='Email'
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
+              required
               id='password'
               type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder='Password'
+              onKeyPress={this.listenEnterKey}
             />
-            <Button className='submit-button' id='log-in-button'>Log in</Button>
+            <div style={{'textAlign': 'right'}}>
+              <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
+                Forgot your password?
+              </Header>
+            </div>
+
           </Form>
 
-          <p style={{'textAlign': 'center', 'marginTop': '2rem'}}>
-            Not registered? 
+          {submitButton}
+
+          <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
+            Not registered?
           <br></br>
-          <Header as={Link} to='sign-up' className='fake-link'>
-            Create an account!
-          </Header>  
+            <Header as={Link} to='sign-up' className='fake-link'>
+              Create an account!
+            </Header>
           </p>
 
         </Segment>
-        
+
       </Sidebar.Pushable>
     )
   }
@@ -104,5 +135,5 @@ class Login extends Component {
 
 export default connect(
   null,
-  {signInUser},
-  )(Login)
+  { signInUser },
+)(Login)

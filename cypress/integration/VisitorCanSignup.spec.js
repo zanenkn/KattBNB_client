@@ -12,7 +12,7 @@ describe('User can sign up', () => {
       status: 200,
       response: 'fixture:successful_signup.json'
     })
-    
+
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })
@@ -24,8 +24,8 @@ describe('User can sign up', () => {
         ['#password', 'password'],
         ['#password_confirmation', 'password'],
         ['#nickname', 'KittenPrincess']
-        ]
-        
+      ]
+
       text.forEach(element => {
         cy.get(element[0]).type(element[1])
       })
@@ -45,7 +45,7 @@ describe('User can sign up', () => {
       status: 422,
       response: 'fixture:unsuccessful_signup.json',
     })
- 
+
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })
@@ -57,8 +57,8 @@ describe('User can sign up', () => {
         ['#password', 'pass'],
         ['#password_confirmation', 'passw'],
         ['#nickname', 'KittenPrincess']
-        ]
-        
+      ]
+
       text.forEach(element => {
         cy.get(element[0]).type(element[1])
       })
@@ -71,10 +71,10 @@ describe('User can sign up', () => {
       'Password is too short (minimum is 6 characters',
       'Email is not an email',
       "Location can't be blank",
-      ]
+    ]
 
-      text.forEach(error => {
-        cy.contains(error)
-      })
+    text.forEach(error => {
+      cy.contains(error)
     })
+  })
 })

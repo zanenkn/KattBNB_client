@@ -51,6 +51,12 @@ class SignUp extends Component {
       })
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.createUser(event)
+    }
+  }
+
   render() {
     let errorDisplay
     let submitButton
@@ -87,34 +93,46 @@ class SignUp extends Component {
 
         <Segment className='whitebox'>
 
+          <p style={{ 'textAlign': 'center' }}>
+            Password must be at least 6 characters in length. Email and Username must be unique.
+          </p>
+
           {errorDisplay}
 
           <Form id="signup-form">
             <Form.Input
+              required
               id="email"
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder="Email"
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
+              required
               id="password"
               type="password"
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder="Password"
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
+              required
               id="password_confirmation"
               type="password"
               value={this.state.password_confirmation}
               onChange={this.onChangeHandler}
               placeholder="Repeat password"
+              onKeyPress={this.listenEnterKey}
             />
             <Form.Input
+              required
               id="nickname"
               value={this.state.username}
               onChange={this.onChangeHandler}
-              placeholder="Username"
+              placeholder="Username / Nickname"
+              onKeyPress={this.listenEnterKey}
             />
             <Dropdown
               clearable
@@ -125,6 +143,7 @@ class SignUp extends Component {
               options={LOCATION_OPTIONS}
               id="location"
               onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKey}
             />
           </Form>
 

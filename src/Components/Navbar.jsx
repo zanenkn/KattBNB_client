@@ -5,6 +5,38 @@ import { Link } from 'react-router-dom'
 
 class Navbar extends Component {
   render() {
+
+    let userIcon
+    let hamburgerIcon
+
+    if (this.props.currentUserIn) {
+      userIcon = (
+        <Grid.Column className='navlink' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#000000' d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+        </Grid.Column>
+      )
+    } else {
+      userIcon = (
+        <Grid.Column className='navlink' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+        </Grid.Column>
+      )
+    }
+
+    if (this.props.menuVisible) {
+      hamburgerIcon = (
+        <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
+        </Grid.Column>
+      )
+    } else {
+      hamburgerIcon = (
+        <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
+          <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+        </Grid.Column>
+      )
+    }
+
     return (
       <>
         <Grid
@@ -12,10 +44,7 @@ class Navbar extends Component {
           verticalAlign='middle'
           columns={2}
         >
-          <Grid.Column style={{ 'padding': 0 }} id='hamburger' width={4}>
-            <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={() => this.props.dispatch({ type: 'CHANGE_VISIBILITY' })}><path fill='#FFFFFF' d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-          </Grid.Column>
-
+          {hamburgerIcon}
           <Grid.Column style={{ 'padding': 0 }} width={12}>
             <Grid id='navlinks'>
               <Grid.Column className='navlink' width={4} as={Link} to='/' onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
@@ -27,12 +56,9 @@ class Navbar extends Component {
               <Grid.Column className='navlink' width={4}>
                 <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
               </Grid.Column>
-              <Grid.Column className='navlink' width={4}>
-                <svg className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
-              </Grid.Column>
+              {userIcon}
             </Grid>
           </Grid.Column>
-
         </Grid>
       </>
     )
@@ -40,7 +66,8 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  menuVisible: state.animation.menuVisible
+  menuVisible: state.animation.menuVisible,
+  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
 })
 
 export default connect(mapStateToProps)(Navbar)

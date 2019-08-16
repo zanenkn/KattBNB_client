@@ -22,6 +22,18 @@
   color: #bd0a5b!important;
 }
 
+.fake-link-underlined {
+  color: #c90c61;
+  cursor: pointer!important;
+  font-size: small!important;
+  text-decoration: underline;
+  font-weight: normal!important;
+}
+
+.fake-link-underlined:hover {
+  color: #bd0a5b!important;
+}
+
 /*******************************
             NAVBAR
 *******************************/

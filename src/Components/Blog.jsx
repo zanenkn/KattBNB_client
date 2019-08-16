@@ -9,7 +9,7 @@ class Blog extends Component {
         <Header as='h1'>
           Blog
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>
