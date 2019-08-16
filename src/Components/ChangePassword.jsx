@@ -22,7 +22,7 @@ class ChangePassword extends Component {
 
   changePassword = (e) => {
     e.preventDefault()
-    if(this.state.password === this.state.password_confirmation && this.state.password.length >= 6) {
+    if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6) {
       this.setState({ loading: true })
       const path = '/api/v1/auth/password'
       const payload = {
@@ -46,11 +46,10 @@ class ChangePassword extends Component {
             error_display: true,
             errors: error.response.data.errors.full_messages
           })
-          //setTimeout(function () { window.location.replace('/password-reset') }, 3000)
         })
     } else {
       this.setState({
-        errors: ['You fucked up'],
+        errors: ['Check that both fields are an exact match with each other and that they consist of at least 6 characters'],
         error_display: true
       })
     }
@@ -108,7 +107,7 @@ class ChangePassword extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            Type in your new password twice in the fields below. Minimum requirement is 6 characters. If an error occurs you will be redirected and the process will begin anew.
+            Type in your new password twice in the fields below. Minimum requirement is 6 characters.
           </p>
 
           {errorDisplay}
