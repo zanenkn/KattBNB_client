@@ -21,32 +21,39 @@ class ChangePassword extends Component {
   }
 
   changePassword = (e) => {
-    this.setState({ loading: true })
     e.preventDefault()
-    const path = '/api/v1/auth/password'
-    const payload = {
-      password: this.state.password,
-      password_confirmation: this.state.password_confirmation,
-      uid: queryString.parse(this.props.location.search).uid,
-      'access-token': queryString.parse(this.props.location.search).token,
-      client: queryString.parse(this.props.location.search).client
+    if(this.state.password === this.state.password_confirmation && this.state.password.length >= 6) {
+      this.setState({ loading: true })
+      const path = '/api/v1/auth/password'
+      const payload = {
+        password: this.state.password,
+        password_confirmation: this.state.password_confirmation,
+        uid: queryString.parse(this.props.location.search).uid,
+        'access-token': queryString.parse(this.props.location.search).token,
+        client: queryString.parse(this.props.location.search).client
+      }
+      axios.put(path, payload)
+        .then(() => {
+          this.setState({
+            success_display: true,
+            error_display: false
+          })
+          setTimeout(function () { window.location.replace('/login') }, 2000)
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            error_display: true,
+            errors: error.response.data.errors.full_messages
+          })
+          //setTimeout(function () { window.location.replace('/password-reset') }, 3000)
+        })
+    } else {
+      this.setState({
+        errors: ['You fucked up'],
+        error_display: true
+      })
     }
-    axios.put(path, payload)
-      .then(() => {
-        this.setState({
-          success_display: true,
-          error_display: false
-        })
-        setTimeout(function () { window.location.replace('/login') }, 2000)
-      })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          error_display: true,
-          errors: error.response.data.errors.full_messages
-        })
-        setTimeout(function () { window.location.replace('/password-reset') }, 3000)
-      })
   }
 
   listenEnterKey = (event) => {
