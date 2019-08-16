@@ -20,7 +20,7 @@ class PasswordResetSuccess extends Component {
 
         <Segment className='whitebox' textAlign='center'>
           <p>
-            You have successfully requested a password reset! To continue, please follow carefully the instructions in your email account. Remember to check your spum/junk folder. You can now close this window.
+            You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email.
           </p>
         </Segment>
       </Sidebar.Pushable>
