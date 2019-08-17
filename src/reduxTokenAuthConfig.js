@@ -7,7 +7,9 @@ const development = 'http://localhost:3007/api/v1/auth'
 const config = {
   authUrl: development,
   userAttributes: {
-    uid: 'uid'
+    uid: 'uid',
+    location: 'location',
+    username: 'nickname'
   },
   userRegistrationAttributes: {
     password_confirmation: 'password_confirmation',
