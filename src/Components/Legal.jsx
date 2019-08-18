@@ -9,7 +9,7 @@ class Legal extends Component {
         <Header as='h1'>
           Legal
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>

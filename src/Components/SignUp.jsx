@@ -7,9 +7,9 @@ class SignUp extends Component {
     return (
       <Sidebar.Pushable className='content-wrapper' >
         <Header as='h1'>
-          Sign up
+          About us
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>

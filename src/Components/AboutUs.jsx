@@ -82,9 +82,6 @@ class AboutUs extends Component {
           None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
         </p>
 
-
-
-
       </Sidebar.Pushable>
     )
   }

@@ -9,7 +9,7 @@ class ContactUs extends Component {
         <Header as='h1'>
           Contact us
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>

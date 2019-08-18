@@ -3,7 +3,7 @@ import { Header, Segment, Icon, Container } from 'semantic-ui-react'
 
 const WIP = () => {
   return (
-    <Segment padded compact style={{ 'margin': 'auto', 'padding': '2rem', 'marginTop': '2rem' }} >
+    <Segment className='whitebox' >
 
       <Header as='h4'>
         <Container padded>
