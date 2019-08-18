@@ -8,7 +8,7 @@ class UserPage extends Component {
     let profile
     if (this.props.currentUserIn) {
       profile = (
-        <>
+        <div className='content-wrapper'>
           <Segment className='whitebox'>
             <Header as='h2'>
               Hi, {this.props.username}!
@@ -25,7 +25,7 @@ class UserPage extends Component {
               &nbsp;******
             </p>
           </Segment>
-        </>
+        </div>
       )
     } else {
       return <Redirect to='/login' />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Segment } from 'semantic-ui-react'
+import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class SignupSuccess extends Component {
@@ -12,7 +12,7 @@ class SignupSuccess extends Component {
     }
 
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
 
         <Header as='h1'>
           Successful signup!
@@ -23,7 +23,7 @@ class SignupSuccess extends Component {
             Welcome, you have successfully signed up for KattBNB! You will need to confirm your email address in order to log in and start using our services. To continue, please follow the instructions we have sent to your email.
           </p>
         </Segment>
-      </Sidebar.Pushable>
+      </div>
     )
   }
 }

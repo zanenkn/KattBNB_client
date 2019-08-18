@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Segment, Form, Message, Button } from 'semantic-ui-react'
+import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { signInUser } from '../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
@@ -79,7 +79,7 @@ class Login extends Component {
     }
 
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
 
         <Header as='h1'>
           Log in
@@ -128,7 +128,7 @@ class Login extends Component {
 
         </Segment>
 
-      </Sidebar.Pushable>
+      </div>
     )
   }
 }

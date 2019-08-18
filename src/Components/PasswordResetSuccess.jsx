@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Segment } from 'semantic-ui-react'
+import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class PasswordResetSuccess extends Component {
@@ -12,7 +12,7 @@ class PasswordResetSuccess extends Component {
     }
 
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
 
         <Header as='h1'>
           Successful password reset request!
@@ -23,7 +23,7 @@ class PasswordResetSuccess extends Component {
             You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email.
           </p>
         </Segment>
-      </Sidebar.Pushable>
+      </div>
     )
   }
 }
