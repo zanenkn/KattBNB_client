@@ -41,37 +41,42 @@ class UserPage extends Component {
   }
 
   updateLocation = (e) => {
-    this.setState({ loading: true })
-    e.preventDefault()
-    const path = '/api/v1/auth/'
-    const payload = {
-      current_password: this.state.password,
-      location: this.state.location,
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else {
+      this.setState({ loading: true })
+      e.preventDefault()
+      const path = '/api/v1/auth/'
+      const payload = {
+        current_password: this.state.password,
+        location: this.state.location,
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload)
+        .then(response => {
+          window.localStorage.setItem('client', response.headers.client)
+          window.localStorage.setItem('access-token', response.headers['access-token'])
+          window.localStorage.setItem('expiry', response.headers.expiry)
+          this.setState({
+            displayLocationForm: false,
+            location: response.data.data.location,
+            loading: false
+          })
+        })
+        .catch(error => {
+          window.localStorage.setItem('client', error.response.headers.client)
+          window.localStorage.setItem('access-token', error.response.headers['access-token'])
+          window.localStorage.setItem('expiry', error.response.headers.expiry)
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
     }
-    axios.put(path, payload)
-      .then(response => {
-        window.localStorage.setItem('client', response.headers.client)
-        window.localStorage.setItem('access-token', response.headers['access-token'])
-        window.localStorage.setItem('expiry', response.headers.expiry)
-        this.setState({
-          displayLocationForm: false,
-          location: response.data.data.location,
-          loading: false
-        })
-      })
-      .catch(error => {
-        window.localStorage.setItem('client', error.response.headers.client)
-        window.localStorage.setItem('access-token', error.response.headers['access-token'])
-        window.localStorage.setItem('expiry', error.response.headers.expiry)
-        this.setState({
-          loading: false,
-          errorDisplay: true,
-          errors: error.response.data.errors.full_messages
-        })
-      })
   }
 
 
