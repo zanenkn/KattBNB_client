@@ -15,9 +15,9 @@ class UserPage extends Component {
     errors: ''
   }
 
-  listenEnterKey = (event) => {
+  listenEnterKeyLocation = (event) => {
     if (event.key === "Enter") {
-      this.createUser(event)
+      this.updateLocation(event)
     }
   }
 
@@ -120,7 +120,7 @@ class UserPage extends Component {
               options={LOCATION_OPTIONS}
               id='location'
               onChange={this.handleLocationChange}
-              onKeyPress={this.listenEnterKey}
+              onKeyPress={this.listenEnterKeyLocation}
             />
 
             <Form.Input
@@ -130,7 +130,7 @@ class UserPage extends Component {
               type='password'
               onChange={this.onChangeHandler}
               placeholder='Your password'
-              onKeyPress={this.listenEnterKey}
+              onKeyPress={this.listenEnterKeyLocation}
             />
           </Form>
 
