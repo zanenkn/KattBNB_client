@@ -9,7 +9,7 @@ class AboutUs extends Component {
         <Header as='h1'>
           About us
         </Header>
-        
+
         <WIP />
 
       </Sidebar.Pushable>

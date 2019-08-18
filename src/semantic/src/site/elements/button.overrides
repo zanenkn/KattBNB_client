@@ -1,3 +1,17 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.button {
+  background: #c90c61;
+  color: white;
+  margin-top: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ui.button:hover {
+  background: #bd0a5b;
+  color: white;
+}

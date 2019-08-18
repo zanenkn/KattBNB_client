@@ -12,6 +12,28 @@
  -ms-overflow-style: none;  /* IE 10+ */
 }
 
+.fake-link {
+  color: #c90c61;
+  cursor: pointer!important;
+  font-size: inherit!important;
+}
+
+.fake-link:hover {
+  color: #bd0a5b!important;
+}
+
+.fake-link-underlined {
+  color: #c90c61;
+  cursor: pointer!important;
+  font-size: small!important;
+  text-decoration: underline;
+  font-weight: normal!important;
+}
+
+.fake-link-underlined:hover {
+  color: #bd0a5b!important;
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -69,6 +91,17 @@ p {
 
 h4 {
   color: grey!important;
+}
+
+.whitebox {
+  padding: 2rem!important;
+  margin-top: 2rem!important;
+}
+
+@media screen and (min-width: 700px) {
+  .whitebox {
+    width: 300px;
+  }
 }
 
 /*******************************
