@@ -22,6 +22,8 @@ class AboutUs extends Component {
         <p>
           We believe if things can be made less difficult, they should. And we believe problems are solved when people come together. That’s why we are building KattBNB - a platform where cat owners can meet cat sitters and booking a boarding for your cat is a breeze. Because hey, it should be.
         </p>
+        <Divider hidden />
+        <Divider hidden />
 
         <Header as='h2'>
           Us behind the scenes
