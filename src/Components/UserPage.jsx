@@ -32,7 +32,7 @@ class UserPage extends Component {
   }
 
   locationFormHandler = () => {
-    this.setState ({
+    this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       location: this.props.location,
       errorDisplay: false,
@@ -73,7 +73,7 @@ class UserPage extends Component {
         })
       })
   }
-  
+
 
   render() {
     let errorDisplay
@@ -106,37 +106,37 @@ class UserPage extends Component {
       )
     }
 
-    if(this.state.displayLocationForm) {
+    if (this.state.displayLocationForm) {
       locationForm = (
         <>
-        {errorDisplay}
-        <Form>
-          <Dropdown
-            clearable
-            search
-            selection
-            style={{ 'width': '100%' }}
-            placeholder="Select new location"
-            options={LOCATION_OPTIONS}
-            id='location'
-            onChange={this.handleLocationChange}
-            onKeyPress={this.listenEnterKey}
-          />
+          {errorDisplay}
+          <Form>
+            <Dropdown
+              clearable
+              search
+              selection
+              style={{ 'width': '100%' }}
+              placeholder="Select new location"
+              options={LOCATION_OPTIONS}
+              id='location'
+              onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKey}
+            />
 
-          <Form.Input
-            required
-            id='password'
-            value={this.state.password}
-            type='password'
-            onChange={this.onChangeHandler}
-            placeholder='Your password'
-            onKeyPress={this.listenEnterKey}
-          />
-        </Form>
+            <Form.Input
+              required
+              id='password'
+              value={this.state.password}
+              type='password'
+              onChange={this.onChangeHandler}
+              placeholder='Your password'
+              onKeyPress={this.listenEnterKey}
+            />
+          </Form>
 
-        {locationSubmitButton}
+          {locationSubmitButton}
 
-        <Button id="location-cancel-button" onClick={this.locationFormHandler.bind(this)}>Close</Button>
+          <Button id="location-cancel-button" onClick={this.locationFormHandler.bind(this)}>Close</Button>
 
         </>
 
@@ -151,6 +151,9 @@ class UserPage extends Component {
             </Header>
           <p>
             This is your profile. Here you can update your location, picture and password.
+          </p>
+          <p>
+            <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" /></svg>            &nbsp;{this.props.email}
           </p>
           <p id='user-location'>
             <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
@@ -176,7 +179,8 @@ class UserPage extends Component {
 
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
-  location: state.reduxTokenAuth.currentUser.attributes.location
+  location: state.reduxTokenAuth.currentUser.attributes.location,
+  email: state.reduxTokenAuth.currentUser.attributes.uid
 })
 
 export default connect(mapStateToProps)(UserPage)
