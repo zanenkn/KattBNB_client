@@ -65,13 +65,15 @@ describe('User can view her profile page', () => {
       method: 'PUT',
       url: 'http://localhost:3007/api/v1/auth/password',
       status: 422,
-      response: 'fixture:unsuccessful_password_change2.json',
+      response: 'fixture:unsuccessful_password_change_user_page.json',
     })
-    cy.get('#change-link-password').click()
-    cy.get('#current-password').type('passwordD')
-    cy.get('#password').type('SeCuReP@SsWoR')
-    cy.get('#password-confirmation').type('SeCuReP@SsWoRd')
-    cy.get('#change-pass-button').click()
-    cy.contains('GET YOUR SHIT TOGETHER MAN!')
+    cy.get('#change-password-link').click()
+    cy.get('#current_password').type('passwordD')
+    cy.get('#new_password').type('SeCuReP@SsWoR')
+    cy.get('#new_password_confirmation').type('SeCuReP@SsWoRd')
+    cy.get('#password-submit-button').click()
+    cy.contains("Password confirmation doesn't match Password")
+    cy.contains('Password is too short (minimum is 6 characters)')
+    cy.contains('Current password is invalid')
   })
 })
