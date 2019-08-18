@@ -21,7 +21,7 @@ class PasswordReset extends Component {
 
   resetPassword = (e) => {
     this.setState({ loading: true })
-    e.preventDefault();
+    e.preventDefault()
     const path = '/api/v1/auth/password'
     const payload = {
       redirect_url: this.state.url,

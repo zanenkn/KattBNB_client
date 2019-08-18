@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
+import axios from 'axios'
 
 class UserPage extends Component {
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
     password: '',
-    location: ''
+    location: this.props.location,
+    loading: false,
+    errorDisplay: false,
+    errors: ''
   }
 
   listenEnterKey = (event) => {
@@ -29,17 +33,68 @@ class UserPage extends Component {
 
   locationFormHandler = () => {
     this.setState ({
-      displayLocationForm: !this.state.displayLocationForm
+      displayLocationForm: !this.state.displayLocationForm,
+      location: this.props.location,
+      errorDisplay: false,
+      password: ''
     })
+  }
+
+  updateLocation = (e) => {
+    this.setState({ loading: true })
+    e.preventDefault()
+    const path = '/api/v1/auth/'
+    const payload = {
+      current_password: this.state.password,
+      location: this.state.location,
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token')
+    }
+    axios.put(path, payload)
+      .then(response => {
+        window.localStorage.setItem('client', response.headers.client)
+        window.localStorage.setItem('access-token', response.headers['access-token'])
+        window.localStorage.setItem('expiry', response.headers.expiry)
+        this.setState({
+          displayLocationForm: false,
+          location: response.data.data.location,
+          loading: false
+        })
+      })
+      .catch(error => {
+        window.localStorage.setItem('client', error.response.headers.client)
+        window.localStorage.setItem('access-token', error.response.headers['access-token'])
+        window.localStorage.setItem('expiry', error.response.headers.expiry)
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: error.response.data.errors.full_messages
+        })
+      })
   }
   
 
   render() {
+    let errorDisplay
 
     let locationForm
     let locationSubmitButton
 
     let passwordForm
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <Message.Header textAlign='center'>Location could not be updated because of following error(s):</Message.Header>
+          <ul id="message-error-list">
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
 
     if (this.state.loading) {
       locationSubmitButton = (
@@ -47,13 +102,14 @@ class UserPage extends Component {
       )
     } else {
       locationSubmitButton = (
-        <Button id="location-submit-button" >Change location</Button>
+        <Button id="location-submit-button" onClick={this.updateLocation}>Change location</Button>
       )
     }
 
     if(this.state.displayLocationForm) {
       locationForm = (
         <>
+        {errorDisplay}
         <Form>
           <Dropdown
             clearable
@@ -98,7 +154,7 @@ class UserPage extends Component {
           </p>
           <p>
             <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
-            &nbsp;{this.props.location}
+            &nbsp;{this.state.location}
           </p>
           <Header id='change-location-link' onClick={this.locationFormHandler.bind(this)} className='fake-link-underlined' >
             Change
