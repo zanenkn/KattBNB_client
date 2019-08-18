@@ -50,14 +50,14 @@ describe('User can view her profile page', () => {
       method: 'PUT',
       url: 'http://localhost:3007/api/v1/auth/password',
       status: 200,
-      response: 'fixture:successful_password_change2.json',
+      response: 'fixture:successful_password_change_user_page.json',
     })
     cy.get('#change-password-link').click()
-    cy.get('#current-password').type('password')
-    cy.get('#password').type('SeCuReP@SsWoRd')
-    cy.get('#password-confirmation').type('SeCuReP@SsWoRd')
-    cy.get('#change-pass-button').click()
-    cy.contains('You have succesfully changed your password! Wait to be redirected.')
+    cy.get('#current_password').type('password')
+    cy.get('#new_password').type('SeCuReP@SsWoRd')
+    cy.get('#new_password_confirmation').type('SeCuReP@SsWoRd')
+    cy.get('#password-submit-button').click()
+    cy.contains('Log in')
   })
 
   it('and unsuccessfully tries to change password', () => {
