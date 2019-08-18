@@ -10,6 +10,9 @@ class UserPage extends Component {
     displayPasswordForm: false,
     password: '',
     location: this.props.location,
+    current_password: '',
+    new_password: '',
+    new_password_confirmation: '',
     loading: false,
     errorDisplay: false,
     errors: ''
@@ -37,6 +40,16 @@ class UserPage extends Component {
       location: this.props.location,
       errorDisplay: false,
       password: ''
+    })
+  }
+
+  passwordFormHandler = () => {
+    this.setState({
+      displayPasswordForm: !this.state.displayPasswordForm,
+      errorDisplay: false,
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: ''
     })
   }
 
@@ -144,6 +157,48 @@ class UserPage extends Component {
           <Button id="location-cancel-button" onClick={this.locationFormHandler.bind(this)}>Close</Button>
 
         </>
+      )
+    }
+
+    if (this.state.displayPasswordForm) {
+      passwordForm = (
+        <>
+          {errorDisplay}
+          <Form>
+            <Form.Input
+              required
+              id='current_password'
+              value={this.state.current_password}
+              type='password'
+              onChange={this.onChangeHandler}
+              placeholder='Current password'
+              onKeyPress={this.listenEnterKeyLocation}
+            />
+            <Form.Input
+              required
+              id='new_password'
+              value={this.state.new_password}
+              type='password'
+              onChange={this.onChangeHandler}
+              placeholder='New password'
+              onKeyPress={this.listenEnterKeyLocation}
+            />
+            <Form.Input
+              required
+              id='new_password_confirmation'
+              value={this.state.new_password_confirmation}
+              type='password'
+              onChange={this.onChangeHandler}
+              placeholder='New password again'
+              onKeyPress={this.listenEnterKeyLocation}
+            />
+          </Form>
+
+          {locationSubmitButton}
+
+          <Button id="location-cancel-button" onClick={this.passwordFormHandler.bind(this)}>Close</Button>
+
+        </>
 
       )
     }
@@ -158,7 +213,8 @@ class UserPage extends Component {
             This is your profile. Here you can update your location, picture and password.
           </p>
           <p>
-            <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" /></svg>            &nbsp;{this.props.email}
+            <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" /></svg>
+            &nbsp;{this.props.email}
           </p>
           <p id='user-location'>
             <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
@@ -172,9 +228,10 @@ class UserPage extends Component {
             <svg height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" /></svg>
             &nbsp;******
           </p>
-          <Header id='change-password-link' className='fake-link-underlined' >
+          <Header id='change-password-link' onClick={this.passwordFormHandler.bind(this)} className='fake-link-underlined' >
             Change
           </Header>
+          {passwordForm}
         </Segment>
       </div>
     )
