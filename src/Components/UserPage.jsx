@@ -24,6 +24,12 @@ class UserPage extends Component {
     }
   }
 
+  listenEnterKeyPassword = (event) => {
+    if (event.key === "Enter") {
+      this.updatePassword(event)
+    }
+  }
+
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value
@@ -92,6 +98,44 @@ class UserPage extends Component {
     }
   }
 
+  updatePassword = (e) => {
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else {
+      this.setState({ loading: true })
+      e.preventDefault()
+      const path = '/api/v1/auth/password'
+      const payload = {
+        current_password: this.state.current_password,
+        password: this.state.new_password,
+        password_confirmation: this.state.new_password_confirmation,
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload)
+        .then(() => {
+          this.setState({
+            displayPasswordForm: false,
+            loading: false
+          })
+          window.location.replace('/login')
+          window.localStorage.clear()
+        })
+        .catch(error => {
+          window.localStorage.setItem('client', error.response.headers.client)
+          window.localStorage.setItem('access-token', error.response.headers['access-token'])
+          window.localStorage.setItem('expiry', error.response.headers.expiry)
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    }
+  }
+
 
   render() {
     let errorDisplay
@@ -100,6 +144,7 @@ class UserPage extends Component {
     let locationSubmitButton
 
     let passwordForm
+    let passwordSubmitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -121,6 +166,16 @@ class UserPage extends Component {
     } else {
       locationSubmitButton = (
         <Button id="location-submit-button" onClick={this.updateLocation}>Change location</Button>
+      )
+    }
+
+    if (this.state.loading) {
+      passwordSubmitButton = (
+        <Button id="password-submit-button" loading>Change password</Button>
+      )
+    } else {
+      passwordSubmitButton = (
+        <Button id="password-submit-button" onClick={this.updatePassword}>Change password</Button>
       )
     }
 
@@ -172,7 +227,7 @@ class UserPage extends Component {
               type='password'
               onChange={this.onChangeHandler}
               placeholder='Current password'
-              onKeyPress={this.listenEnterKeyLocation}
+              onKeyPress={this.listenEnterKeyPassword}
             />
             <Form.Input
               required
@@ -181,7 +236,7 @@ class UserPage extends Component {
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password'
-              onKeyPress={this.listenEnterKeyLocation}
+              onKeyPress={this.listenEnterKeyPassword}
             />
             <Form.Input
               required
@@ -190,11 +245,11 @@ class UserPage extends Component {
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password again'
-              onKeyPress={this.listenEnterKeyLocation}
+              onKeyPress={this.listenEnterKeyPassword}
             />
           </Form>
 
-          {locationSubmitButton}
+          {passwordSubmitButton}
 
           <Button id="location-cancel-button" onClick={this.passwordFormHandler.bind(this)}>Close</Button>
 
