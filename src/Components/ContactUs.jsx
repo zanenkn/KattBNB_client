@@ -28,7 +28,7 @@ class ContactUs extends Component {
                     <Form.Input
                       type='email'
                       required
-                      name='name'
+                      name='email'
                       placeholder='Your email address'
                     />
                     <TextArea
