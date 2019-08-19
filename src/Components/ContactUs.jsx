@@ -17,7 +17,12 @@ class ContactUs extends Component {
                 <>
                   <p>Fill in this form to send me a message. We will get back to you as soon as we read it!</p>
 
-                  <Form>
+                  <input type='text' placeholder="Your name" name='name' required />
+                  <input type='email' placeholder="Your email address" name='email' required />
+                  <textarea placeholder="Your message" name='message' required />
+                  <button className="button">Send</button>
+
+                  {/* <Form>
                     <Form.Input
                       type='text'
                       required
@@ -37,7 +42,7 @@ class ContactUs extends Component {
                       placeholder='Your message'
                     />
                   </Form>
-                  <Button className='submit-button'>Send</Button>
+                  <Button className='submit-button'>Send</Button> */}
                   {/* <div>
                     <input type='text' placeholder="Your name" name='name' required />
                     <input type='email' placeholder="Your email address" name='email' required />
