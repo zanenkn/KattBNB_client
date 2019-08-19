@@ -149,7 +149,7 @@ class UserPage extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>Location could not be updated because of following error(s):</Message.Header>
+          <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
           <ul id="message-error-list">
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
