@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-react'
+import { Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-react'
 import NetlifyForm from 'react-netlify-form'
 
 class ContactUs extends Component {
   render() {
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
         <Header as='h1'>
           Contact us
         </Header>
@@ -52,9 +52,9 @@ class ContactUs extends Component {
                     </>
                   }
                   {success &&
-                    <p>
+                    <p style={{'textAlign': 'center'}}>
                       Thank you for your message!
-                  </p>
+                    </p>
                   }
                 </>
               )}
@@ -62,7 +62,7 @@ class ContactUs extends Component {
           </Form>
         </Segment>
 
-      </Sidebar.Pushable>
+      </div>
     )
   }
 }
