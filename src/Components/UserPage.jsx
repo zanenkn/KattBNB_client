@@ -144,6 +144,27 @@ class UserPage extends Component {
     }
   }
 
+  destroyAccount = () => {
+    if (window.confirm('Do you really want to delete your account?')) {
+      const path = '/api/v1/auth'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.delete(path, { headers: headers })
+        .then(() => {
+          window.localStorage.clear()
+          window.alert('Your account was succesfully deleted!')
+          window.location.replace('/')
+        })
+        .catch(() => {
+          window.alert('There was a problem deleting your account! Please login and try again.')
+          window.localStorage.clear()
+          window.location.replace('/login')
+        })
+    }
+  }
 
 
   render() {
@@ -300,6 +321,9 @@ class UserPage extends Component {
             Change
           </Header>
           {passwordForm}
+          <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' >
+            Delete your account!
+          </Header>
         </Segment>
       </div>
     )
