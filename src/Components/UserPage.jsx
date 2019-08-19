@@ -43,6 +43,7 @@ class UserPage extends Component {
   locationFormHandler = () => {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
+      displayPasswordForm: false,
       location: this.props.location,
       errorDisplay: false,
       password: ''
@@ -52,6 +53,7 @@ class UserPage extends Component {
   passwordFormHandler = () => {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
+      displayLocationForm: false,
       errorDisplay: false,
       current_password: '',
       new_password: '',

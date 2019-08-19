@@ -48,7 +48,7 @@ class AboutUs extends Component {
           <Image style={{ 'margin': 'auto' }} src='george.png' size='small'></Image>
         </div>
         <Header style={{ 'marginBottom': 0 }}>
-          <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>Giorgos Tomaras</a>
+          <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>George Tomaras</a>
         </Header>
         <Header as='h4' style={{ 'marginTop': 0 }}>
           CTO and web developer
