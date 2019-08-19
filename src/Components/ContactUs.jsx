@@ -56,11 +56,11 @@ class ContactUs extends Component {
                 </>
               }
               {success && 
-                <>
-                <Message success textAlign='center'>
+                <p>
+               
                   Thank you for your message!
-                </Message>
-                </>
+        
+                </p>
               }
             </>
           )}
