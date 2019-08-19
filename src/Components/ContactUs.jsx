@@ -10,14 +10,14 @@ class ContactUs extends Component {
           Contact us
         </Header>
 
-        <NetlifyForm name='contact'>
+        <NetlifyForm name='contact-us'>
           {({ error, success }) => (
             <>
               {!success &&
                 <>
                   <p>Fill in this form to send me a message. We will get back to you as soon as we read it!</p>
 
-                  <Form id='login-form'>
+                  <Form>
                     <Form.Input
                       type='text'
                       required
