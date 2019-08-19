@@ -24,7 +24,9 @@ class Menu extends Component {
         window.localStorage.clear()
         window.location.replace('/login')
       })
-      .catch(error => { })
+      .catch(() => {
+        window.location.replace('/login')
+      })
   }
 
   render() {
