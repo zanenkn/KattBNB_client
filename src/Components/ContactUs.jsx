@@ -16,8 +16,6 @@ class ContactUs extends Component {
               {!success &&
                 <>
                   <p>Fill in this form to send me a message. We will get back to you as soon as we read it!</p>
-
-                  
                   
                     <Form.Input
                       as='input'
@@ -50,15 +48,19 @@ class ContactUs extends Component {
                   </div> */}
                 </>
               }
-              {error &&
+              {error && 
+                <>
                 <Message negative textAlign='center'>
                   Your information was not sent. Please try again later.
                 </Message>
+                </>
               }
-              {success &&
+              {success && 
+                <>
                 <Message success textAlign='center'>
                   Thank you for your message!
-               </Message>
+                </Message>
+                </>
               }
             </>
           )}
