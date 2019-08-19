@@ -104,7 +104,7 @@ class UserPage extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else {
+    } else if (this.state.new_password === this.state.new_password_confirmation && this.state.new_password.length >= 6) {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/password'
@@ -135,8 +135,14 @@ class UserPage extends Component {
             errors: error.response.data.errors.full_messages
           })
         })
+    } else {
+      this.setState({
+        errorDisplay: true,
+        errors: ["Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters"]
+      })
     }
   }
+
 
 
   render() {
