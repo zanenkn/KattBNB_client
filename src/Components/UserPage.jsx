@@ -86,6 +86,7 @@ class UserPage extends Component {
             location: response.data.data.location,
             loading: false
           })
+          setTimeout(function () { alert('Location succesfully changed!') }, 1000)
         })
         .catch(error => {
           window.localStorage.setItem('client', error.response.headers.client)
@@ -260,6 +261,10 @@ class UserPage extends Component {
           {passwordSubmitButton}
 
           <Button id="location-cancel-button" onClick={this.passwordFormHandler.bind(this)}>Close</Button>
+
+          <p>
+            Upon successful update you will be redirected back to login.
+          </p>
 
         </>
 
