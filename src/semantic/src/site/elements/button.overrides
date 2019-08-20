@@ -15,3 +15,11 @@
   background: #bd0a5b;
   color: white;
 }
+
+.ui.secondary.button {
+  background-color: #C0C0C0;
+}
+
+.ui.secondary.button:hover {
+  background-color: grey;
+}
