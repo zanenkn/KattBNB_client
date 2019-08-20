@@ -74,4 +74,15 @@ describe('User can view her profile page', () => {
     cy.get('#password-submit-button').click()
     cy.contains("Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters")
   })
+
+  it('and successfully deletes her account', () => {
+    cy.route({
+      method: 'DELETE',
+      url: 'http://localhost:3007/api/v1/auth',
+      status: 200,
+      response: 'fixture:successful_account_deletion.json',
+    })
+    cy.get('#delete-account-link').click()
+    cy.contains('Lorem ipsum dolor')
+  })
 })

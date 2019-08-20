@@ -146,6 +146,10 @@ class UserPage extends Component {
   }
 
   destroyAccount = () => {
+    this.setState({
+      displayLocationForm: false,
+      displayPasswordForm: false
+    })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
       const headers = {

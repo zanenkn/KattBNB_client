@@ -8,7 +8,7 @@ class SignupSuccess extends Component {
 
     if (this.props.currentUserIn) {
       window.localStorage.clear()
-      setTimeout(function () { window.location.reload(true) }, 1000)
+      setTimeout(function () { window.location.reload(true) }, 500)
     }
 
     return (
