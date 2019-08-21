@@ -12,13 +12,13 @@ class Navbar extends Component {
     if (this.props.currentUserIn) {
       userIcon = (
         <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
-          <svg id='user-icon' className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#000000' d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+          <svg id='user-icon' className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM7 6v2a3 3 0 1 0 6 0V6a3 3 0 1 0-6 0zm-3.65 8.44a8 8 0 0 0 13.3 0 15.94 15.94 0 0 0-13.3 0z"/></svg>
         </Grid.Column>
       )
     } else {
       userIcon = (
         <Grid.Column className='navlink' width={4} as={Link} to='/login'>
-          <svg id='user-icon' className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+          <svg id='user-icon' className='icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill='#FFFFFF' d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm0,19a9,9,0,1,1,9-9A9,9,0,0,1,10,19Z"/><path fill='#FFFFFF' d="M10,11a3,3,0,0,0,3-3V6a3,3,0,0,0-3-3A3,3,0,0,0,7,6V8A3,3,0,0,0,10,11Z"/><path fill='#FFFFFF' d="M3.3,14.4a7.94,7.94,0,0,0,11.1,2.2,7.68,7.68,0,0,0,2.2-2.2A16.23,16.23,0,0,0,3.3,14.4Z"/></svg>
         </Grid.Column>
       )
     }
