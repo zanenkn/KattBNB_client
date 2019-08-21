@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Image, Divider } from 'semantic-ui-react'
+import { Header, Image, Divider } from 'semantic-ui-react'
 
 class AboutUs extends Component {
   render() {
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
         <Header as='h1'>
           About us
         </Header>
-        
+
         <Header as='h2' >
           The idea of KattBNB
         </Header>
@@ -30,45 +30,45 @@ class AboutUs extends Component {
         </Header>
 
         <div>
-          <Image style={{'margin': 'auto' }} src='zane.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='zane.png' size='small'></Image>
         </div>
-        <Header style={{'marginBottom': 0}}>
+        <Header style={{ 'marginBottom': 0 }}>
           <a href='https://www.linkedin.com/in/zane-neikena' target='_blank' rel='noopener noreferrer'>Zane Neikena</a>
         </Header>
-        <Header as='h4' style={{'marginTop': 0}}>
+        <Header as='h4' style={{ 'marginTop': 0 }}>
           CEO and web developer
         </Header>
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           Driving force behind the idea on the good days and crying force on the other ones
         </p>
         <Divider hidden />
         <Divider hidden />
 
         <div>
-          <Image style={{'margin': 'auto' }} src='george.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='george.png' size='small'></Image>
         </div>
-        <Header style={{'marginBottom': 0}}>
-          <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>Giorgos Tomaras</a>
+        <Header style={{ 'marginBottom': 0 }}>
+          <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>George Tomaras</a>
         </Header>
-        <Header as='h4' style={{'marginTop': 0}}>
+        <Header as='h4' style={{ 'marginTop': 0 }}>
           CTO and web developer
         </Header>
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           Greek god of coding, the million dollar combo of stubbornness and patience
         </p>
         <Divider hidden />
         <Divider hidden />
 
         <div>
-          <Image style={{'margin': 'auto' }} src='felix.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='felix.png' size='small'></Image>
         </div>
-        <Header style={{'marginBottom': 0}}>
+        <Header style={{ 'marginBottom': 0 }}>
           <a href='https://www.linkedin.com/in/felix-bonnier-90b4561/' target='_blank' rel='noopener noreferrer'>Felix Bonnier</a>
         </Header>
-        <Header as='h4' style={{'marginTop': 0}}>
+        <Header as='h4' style={{ 'marginTop': 0 }}>
           Advisor in business development
         </Header>
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           Felix tells us what to do when we don’t know what to do
         </p>
         <Divider hidden />
@@ -82,7 +82,7 @@ class AboutUs extends Component {
           None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
         </p>
 
-      </Sidebar.Pushable>
+      </div>
     )
   }
 }

@@ -14,15 +14,28 @@ import SignupSuccess from './Components/SignupSuccess'
 import PasswordReset from './Components/PasswordReset'
 import ChangePassword from './Components/ChangePassword'
 import PasswordResetSuccess from './Components/PasswordResetSuccess'
+import UserPage from './Components/UserPage'
 import ScrollToTop from './Components/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-dom'
+import { Redirect, Switch, Route } from 'react-router-dom'
 
 
 class App extends Component {
   contextRef = createRef()
+
   render() {
+    let userPageRoute
+    if (this.props.currentUserIn) {
+      userPageRoute = (
+        <Route exact path='/user-page' component={UserPage}></Route>
+      )
+    } else {
+      userPageRoute = (
+        <Redirect to='/login' />
+      )
+    }
+
     return (
       <div ref={this.contextRef}>
         <Sticky context={this.contextRef}>
@@ -49,6 +62,7 @@ class App extends Component {
                 <Route exact path='/password-reset' component={PasswordReset}></Route>
                 <Route exact path='/change-password' component={ChangePassword}></Route>
                 <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+                {userPageRoute}
               </Switch>
             </ScrollToTop>
 
@@ -61,7 +75,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  menuVisible: state.animation.menuVisible
+  menuVisible: state.animation.menuVisible,
+  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
 })
 
 export default connect(mapStateToProps)(App)

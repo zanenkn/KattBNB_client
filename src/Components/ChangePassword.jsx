@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Header, Segment, Form, Message, Button } from 'semantic-ui-react'
+import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import queryString from 'query-string'
 
@@ -103,7 +103,7 @@ class ChangePassword extends Component {
     }
 
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
 
         <Header as='h1'>
           Change password
@@ -144,7 +144,7 @@ class ChangePassword extends Component {
 
         </Segment>
 
-      </Sidebar.Pushable>
+      </div>
 
     )
   }

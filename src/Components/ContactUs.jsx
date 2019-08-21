@@ -16,13 +16,13 @@ class ContactUs extends Component {
               {({ error, success }) => (
                 <>
                   {error &&
-                    <Message negative style={{'textAlign': 'center'}}>
+                    <Message negative style={{ 'textAlign': 'center' }}>
                       Your information was not sent. Please try again later.
                     </Message>
                   }
                   {!success &&
                     <>
-                      <p style={{'textAlign': 'center'}}>Fill in this form to send us a message. We will get back to you as soon as we read it!</p>
+                      <p style={{ 'textAlign': 'center' }}>Fill in this form to send us a message. We will get back to you as soon as we read it!</p>
 
                       <Form.Input
                         as='input'
@@ -30,7 +30,7 @@ class ContactUs extends Component {
                         required
                         name='name'
                         placeholder='Your name'
-                        style={{'marginBottom': '1rem'}}
+                        style={{ 'marginBottom': '1rem' }}
                       />
 
                       <Form.Input
@@ -39,7 +39,7 @@ class ContactUs extends Component {
                         required
                         name='email'
                         placeholder='Your email address'
-                        style={{'marginBottom': '1rem'}}
+                        style={{ 'marginBottom': '1rem' }}
                       />
                       <TextArea
                         as='textarea'
@@ -52,7 +52,7 @@ class ContactUs extends Component {
                     </>
                   }
                   {success &&
-                    <p style={{'textAlign': 'center'}}>
+                    <p style={{ 'textAlign': 'center' }}>
                       Thank you for your message!
                     </p>
                   }
