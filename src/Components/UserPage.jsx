@@ -196,21 +196,21 @@ class UserPage extends Component {
 
     if (this.state.loading) {
       locationSubmitButton = (
-        <Button id="location-submit-button" style={{ 'marginTop': '1rem' }} loading>Change</Button>
+        <Button id="location-submit-button" loading>Change</Button>
       )
     } else {
       locationSubmitButton = (
-        <Button id="location-submit-button" style={{ 'marginTop': '1rem' }} onClick={this.updateLocation}>Change</Button>
+        <Button id="location-submit-button" onClick={this.updateLocation}>Change</Button>
       )
     }
 
     if (this.state.loading) {
       passwordSubmitButton = (
-        <Button id="password-submit-button" style={{ 'marginTop': '1rem' }} loading>Change</Button>
+        <Button id="password-submit-button" loading>Change</Button>
       )
     } else {
       passwordSubmitButton = (
-        <Button id="password-submit-button" style={{ 'marginTop': '1rem' }} onClick={this.updatePassword}>Change</Button>
+        <Button id="password-submit-button" onClick={this.updatePassword}>Change</Button>
       )
     }
 
@@ -242,9 +242,9 @@ class UserPage extends Component {
             />
           </Form>
 
-          <div style={{ 'display': 'flex', 'flex-direction': 'row', 'justify-content': 'space-evenly', 'margin-bottom': '2em' }}>
+          <div className='button-wrapper'>
             <div >
-              <Button secondary id="location-cancel-button" style={{ 'marginTop': '1rem' }} onClick={this.locationFormHandler.bind(this)}>Cancel</Button>
+              <Button secondary className="cancel-button" onClick={this.locationFormHandler.bind(this)}>Cancel</Button>
             </div>
             <div>
               {locationSubmitButton}
@@ -288,13 +288,13 @@ class UserPage extends Component {
             />
           </Form>
 
-          <p style={{ 'textAlign': 'center', 'margin': 'auto', 'fontSize': 'small', 'marginTop': '1rem' }}>
+          <p className='small-centered-paragraph'>
             Upon successful password change you will be redirected back to login.
           </p>
 
-          <div style={{ 'display': 'flex', 'flex-direction': 'row', 'justify-content': 'space-evenly', 'margin-bottom': '2em' }}>
+          <div className='button-wrapper'>
             <div >
-              <Button secondary id="location-cancel-button" style={{ 'marginTop': '1rem' }} onClick={this.passwordFormHandler.bind(this)}>Cancel</Button>
+              <Button secondary className="cancel-button" onClick={this.passwordFormHandler.bind(this)}>Cancel</Button>
             </div>
             <div>
               {passwordSubmitButton}
@@ -320,32 +320,30 @@ class UserPage extends Component {
               &nbsp;{this.props.email}
             </p>
 
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'margin-bottom': '1em' }}>
-
-              <p id='user-location' style={{ 'margin-top': 'auto', 'margin-bottom': 'auto' }}>
+            <div className='flexbox-row'>
+              <p id='user-location' className='top-bottom-margin-auto'>
                 <svg fill='grey' height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
                 &nbsp;{this.state.location}&nbsp;
-                </p>
+              </p>
 
-              <Header id='change-location-link' style={{ 'margin-top': 'auto', 'margin-bottom': 'auto' }} onClick={this.locationFormHandler.bind(this)} className='fake-link-underlined' >
+              <Header id='change-location-link' onClick={this.locationFormHandler.bind(this)} className='fake-link-underlined top-bottom-margin-auto'>
                 Change
-                </Header>
-
+              </Header>
             </div>
+
             <div>
               {locationForm}
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'margin-bottom': '1em' }}>
 
-              <p style={{ 'margin-top': 'auto', 'margin-bottom': 'auto' }}>
+            <div className='flexbox-row'>
+              <p className='top-bottom-margin-auto'>
                 <svg fill='grey' height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" /></svg>
                 &nbsp;******&nbsp;
               </p>
 
-              <Header id='change-password-link' style={{ 'margin-top': 'auto', 'margin-bottom': 'auto' }} onClick={this.passwordFormHandler.bind(this)} className='fake-link-underlined' >
+              <Header id='change-password-link' onClick={this.passwordFormHandler.bind(this)} className='fake-link-underlined top-bottom-margin-auto' >
                 Change
               </Header>
-
             </div>
 
             <div>
@@ -355,7 +353,7 @@ class UserPage extends Component {
           </div>
 
           <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' >
-            Delete your account!
+            Delete your account
           </Header>
 
         </Segment>
