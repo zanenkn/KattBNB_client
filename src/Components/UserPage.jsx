@@ -15,7 +15,14 @@ class UserPage extends Component {
     new_password_confirmation: '',
     loading: false,
     errorDisplay: false,
-    errors: ''
+    errors: '',
+    host_profile: []
+  }
+
+  componentDidMount() {
+    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
+      this.setState({ host_profile: response.data.host_profile })
+    })
   }
 
   listenEnterKeyLocation = (event) => {
@@ -181,6 +188,8 @@ class UserPage extends Component {
     let passwordForm
     let passwordSubmitButton
 
+    let hostProfile
+
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
@@ -304,6 +313,17 @@ class UserPage extends Component {
       )
     }
 
+    if(this.state.host_profile) {
+      hostProfile = (
+        'yay, you have a host profile'
+      )
+    } else {
+      hostProfile = (
+        <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
+      )  
+    }
+    
+
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
@@ -356,6 +376,8 @@ class UserPage extends Component {
             Delete your account
           </Header>
 
+          {hostProfile}
+
         </Segment>
       </div>
     )
@@ -366,7 +388,8 @@ class UserPage extends Component {
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   location: state.reduxTokenAuth.currentUser.attributes.location,
-  email: state.reduxTokenAuth.currentUser.attributes.uid
+  email: state.reduxTokenAuth.currentUser.attributes.uid,
+  id: state.reduxTokenAuth.currentUser.attributes.id
 })
 
 export default connect(mapStateToProps)(UserPage)
