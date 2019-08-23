@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import HostProfileForm from './HostProfileForm'
 import { connect } from 'react-redux'
 import { Header, Segment, Form, Dropdown, Button, Message } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
@@ -16,7 +17,8 @@ class UserPage extends Component {
     loading: false,
     errorDisplay: false,
     errors: '',
-    host_profile: []
+    host_profile: [],
+    host_profile_form: false
   }
 
   componentDidMount() {
@@ -65,6 +67,12 @@ class UserPage extends Component {
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
+    })
+  }
+
+  hostProfileFormHandler = () => {
+    this.setState({
+      host_profile_form: true
     })
   }
 
@@ -189,6 +197,7 @@ class UserPage extends Component {
     let passwordSubmitButton
 
     let hostProfile
+    let hostProfileForm
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -313,13 +322,26 @@ class UserPage extends Component {
       )
     }
 
+    if(this.state.host_profile_form === true ) {
+      hostProfileForm = (
+        <HostProfileForm />
+      )
+    } else {
+      hostProfileForm = (
+        <>
+          <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
+          <Button className='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
+        </>
+      )
+    }
+
     if(this.state.host_profile) {
       hostProfile = (
         'yay, you have a host profile'
       )
     } else {
       hostProfile = (
-        <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
+        hostProfileForm
       )  
     }
     
