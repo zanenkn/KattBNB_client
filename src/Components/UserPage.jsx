@@ -349,7 +349,7 @@ class UserPage extends Component {
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
-          <Header as='h2'>
+          <Header as='h1'>
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
