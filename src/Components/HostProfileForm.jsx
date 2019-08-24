@@ -20,12 +20,9 @@ class HostProfileForm extends Component {
     if (this.state.address_search === true) {
       addressSearch = (
         <>
-
           <Form.Group unstackable>
             <Form.Input
-
               width={12}
-
               label='Your full address'
               placeholder='Search..'
               required
