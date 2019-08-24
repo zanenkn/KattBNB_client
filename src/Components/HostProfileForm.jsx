@@ -15,7 +15,9 @@ class HostProfileForm extends Component {
     address: '',
     rate: '',
     addressError: '',
-    addressErrorDisplay: false
+    addressErrorDisplay: false,
+    maxCats: '',
+    supplement: ''
   }
 
   onChangeHandler = (e) => {
@@ -114,12 +116,36 @@ class HostProfileForm extends Component {
           {addressSearch}
           <Form.Input
             label='Your rate'
+            type='number'
             placeholder='Your daily rate in kr/day'
             required
             id='rate'
             value={this.state.rate}
             onChange={this.onChangeHandler}
           />
+          <Form.Group
+            widths='equal'
+          >
+            <Form.Input
+              label='Max cats accepted'
+              type='number'
+              placeholder='Max amount'
+              required
+              id='maxCats'
+              value={this.state.maxCats}
+              onChange={this.onChangeHandler}
+            />
+
+            <Form.Input
+              label='Supplement'
+              type='number'
+              placeholder='+35kr/cat/day'
+              required
+              id='supplement'
+              value={this.state.supplement}
+              onChange={this.onChangeHandler}
+            />
+          </Form.Group>
         </Form>
       </div>
     )
