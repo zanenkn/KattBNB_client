@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
+import DayPicker, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+
 
 
 class HostProfileForm extends Component {
-  state = {
+  constructor(props) {
+    super(props);
+    this.handleDayClick = this.handleDayClick.bind(this);
+    this.state = {
+    selectedDays: [],
     description: '',
     user_input_address: '',
     address_search: true,
@@ -19,10 +24,13 @@ class HostProfileForm extends Component {
     rate: '',
     addressError: '',
     addressErrorDisplay: false,
+    errors: '',
+    onCreateErrorDisplay:false,
     maxCats: '',
     supplement: '',
-    availability: '[3458, 57389, 64890]',
-    startDate: new Date()
+    availability: '[3458, 57389, 64890]'
+    };
+
   }
 
   onChangeHandler = (e) => {
@@ -31,10 +39,17 @@ class HostProfileForm extends Component {
     })
   }
 
-  handleDateChange(date) {
-    this.setState({
-      startDate: date
-    })
+  handleDayClick(day, { selected }) {
+    const { selectedDays } = this.state;
+    if (selected) {
+      const selectedIndex = selectedDays.findIndex(selectedDay =>
+        DateUtils.isSameDay(selectedDay, day)
+      );
+      selectedDays.splice(selectedIndex, 1);
+    } else {
+      selectedDays.push(day);
+    }
+    this.setState({ selectedDays });
   }
 
   geolocationDataAddress = () => {
@@ -93,13 +108,16 @@ class HostProfileForm extends Component {
           })
         })
         .catch(error => {
+          //debugger
           window.localStorage.setItem('client', error.response.headers.client)
           window.localStorage.setItem('access-token', error.response.headers['access-token'])
           window.localStorage.setItem('expiry', error.response.headers.expiry)
+          //debugger
           this.setState({
             loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
+            errors: error.response.data.error,
+            onCreateErrorDisplay: true
+            
           })
         })
   }
@@ -107,6 +125,7 @@ class HostProfileForm extends Component {
   render() {
     let addressSearch
     let addressErrorMessage
+    let onCreateErrorMessage
 
     if (this.state.address_search === true) {
       addressSearch = (
@@ -145,6 +164,19 @@ class HostProfileForm extends Component {
       addressErrorMessage = (
         <Message negative >
           {this.state.addressError}
+        </Message>
+      )
+    }
+
+    if (this.state.onCreateErrorDisplay) {
+      onCreateErrorMessage = (
+        <Message negative >
+          <Message.Header>Host profile could not be saved because of following error(s):</Message.Header>
+          <ul>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
         </Message>
       )
     }
@@ -202,20 +234,16 @@ class HostProfileForm extends Component {
           </Form.Group>
         </Form>
 
+        <DayPicker 
+          selectedDays={this.state.selectedDays}
+          onDayClick={this.handleDayClick}
+        />
+
+        {onCreateErrorMessage}
+
         <Button onClick={this.createHostProfile}>
           Save
         </Button>
-
-
-        <DatePicker
-          dateFormat='yyyy/MM/dd'
-          todayButton={'Today'}
-          minDate={new Date()}
-   //       includeDates={[1567123200000, 1567209600000]}
-          selected={this.state.startDate}
-          onChange={this.handleDateChange.bind(this)}
-        />
-
 
 
       </div>
