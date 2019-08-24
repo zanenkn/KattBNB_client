@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Icon, Button } from 'semantic-ui-react'
+import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 
 
@@ -12,7 +12,10 @@ class HostProfileForm extends Component {
     longitude: '',
     lat: '',
     long: '',
-    address: ''
+    address: '',
+    rate: '',
+    addressError: '',
+    addressErrorDisplay: false
   }
 
   onChangeHandler = (e) => {
@@ -32,17 +35,22 @@ class HostProfileForm extends Component {
           lat: lat + 0.001,
           long: lng + 0.001,
           address: response.results[0].formatted_address,
-          address_search: false
+          address_search: false,
+          addressErrorDisplay: false
         })
       },
       error => {
-        this.setState({ messageVisible: true, errorMessage: true, errors: [error] })
+        this.setState({
+          addressErrorDisplay: true,
+          addressError: error.message
+        })
       }
     )
   }
 
   render() {
     let addressSearch
+    let addressErrorMessage
 
     if (this.state.address_search === true) {
       addressSearch = (
@@ -60,7 +68,7 @@ class HostProfileForm extends Component {
 
             <Button width={4} onClick={this.geolocationDataAddress.bind(this)} style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem' }}>
               <Icon
-                name='search'  
+                name='search'
               />
             </Button>
           </Form.Group>
@@ -74,6 +82,14 @@ class HostProfileForm extends Component {
             Change
           </p>
         </div>
+      )
+    }
+
+    if (this.state.addressErrorDisplay) {
+      addressErrorMessage = (
+        <Message negative >
+          {this.state.addressError}
+        </Message>
       )
     }
 
@@ -94,7 +110,16 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
+          {addressErrorMessage}
           {addressSearch}
+          <Form.Input
+            label='Your rate'
+            placeholder='Your daily rate in kr/day'
+            required
+            id='rate'
+            value={this.state.rate}
+            onChange={this.onChangeHandler}
+          />
         </Form>
       </div>
     )
