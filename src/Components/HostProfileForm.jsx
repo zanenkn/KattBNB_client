@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 
 class HostProfileForm extends Component {
@@ -17,12 +19,19 @@ class HostProfileForm extends Component {
     addressError: '',
     addressErrorDisplay: false,
     maxCats: '',
-    supplement: ''
+    supplement: '',
+    startDate: new Date()
   }
 
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value
+    })
+  }
+
+  handleDateChange(date) {
+    this.setState({
+      startDate: date
     })
   }
 
@@ -147,6 +156,19 @@ class HostProfileForm extends Component {
             />
           </Form.Group>
         </Form>
+
+
+        <DatePicker
+          dateFormat='yyyy/MM/dd'
+          todayButton={'Today'}
+          minDate={new Date()}
+   //       includeDates={[1567123200000, 1567209600000]}
+          selected={this.state.startDate}
+          onChange={this.handleDateChange.bind(this)}
+        />
+
+
+
       </div>
     )
   }
