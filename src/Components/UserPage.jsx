@@ -17,13 +17,13 @@ class UserPage extends Component {
     loading: false,
     errorDisplay: false,
     errors: '',
-    host_profile: [],
+    host_profile: '',
     host_profile_form: false
   }
 
   componentDidMount() {
     axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ host_profile: response.data.host_profile })
+      this.setState({ host_profile: response.data })
     })
   }
 
@@ -335,7 +335,7 @@ class UserPage extends Component {
       )
     }
 
-    if(this.state.host_profile) {
+    if(this.state.host_profile.length === 1) {
       hostProfile = (
         'yay, you have a host profile'
       )

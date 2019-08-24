@@ -23,9 +23,9 @@ class HostProfileForm extends Component {
 
           <Form.Group unstackable>
             <Form.Input
-              
+
               width={12}
-  
+
               label='Your full address'
               placeholder='Search..'
               required
@@ -34,18 +34,14 @@ class HostProfileForm extends Component {
               onChange={this.onChangeHandler}
             />
 
-            <Form.Button width={4} content='src' style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem'}} />
-              {/* <Icon
+            <Form.Button width={4} content='src' style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem' }}>
+              <Icon
 
                 name='search'
               //onClick={this.geolocationDataAddress.bind(this)}
-              /> */}
-
+              />
+            </Form.Button>
           </Form.Group>
-
-
-
-
         </>
       )
     } else {
@@ -75,11 +71,7 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
-
           {addressSearch}
-
-
-
         </Form>
       </div>
     )
