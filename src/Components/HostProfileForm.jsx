@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
+import axios from 'axios'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -20,6 +21,7 @@ class HostProfileForm extends Component {
     addressErrorDisplay: false,
     maxCats: '',
     supplement: '',
+    availability: '[3458, 57389, 64890]',
     startDate: new Date()
   }
 
@@ -57,6 +59,49 @@ class HostProfileForm extends Component {
         })
       }
     )
+  }
+
+  createHostProfile = (e) => {
+    e.preventDefault()
+      const path = '/api/v1/host_profiles'
+      const payload = {
+        description: this.state.description,
+        full_address: this.state.address,
+        price_per_day_1_cat: this.state.rate,
+        supplement_price_per_cat_per_day: this.state.supplement,
+        max_cats_accepted: this.state.maxCats,
+        availability: this.state.availability,
+        lat: this.state.lat,
+        long: this.state.long,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        user_id: this.props.user_id
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+
+      axios.post(path, payload, {headers: headers})
+        .then(response => {
+          window.localStorage.setItem('client', response.headers.client)
+          window.localStorage.setItem('access-token', response.headers['access-token'])
+          window.localStorage.setItem('expiry', response.headers.expiry)
+          this.setState({
+            loading: false
+          })
+        })
+        .catch(error => {
+          window.localStorage.setItem('client', error.response.headers.client)
+          window.localStorage.setItem('access-token', error.response.headers['access-token'])
+          window.localStorage.setItem('expiry', error.response.headers.expiry)
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
   }
 
   render() {
@@ -156,6 +201,10 @@ class HostProfileForm extends Component {
             />
           </Form.Group>
         </Form>
+
+        <Button onClick={this.createHostProfile}>
+          Save
+        </Button>
 
 
         <DatePicker

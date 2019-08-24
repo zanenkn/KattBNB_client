@@ -324,7 +324,8 @@ class UserPage extends Component {
 
     if(this.state.host_profile_form === true ) {
       hostProfileForm = (
-        <HostProfileForm />
+        <HostProfileForm
+        user_id={this.props.id} />
       )
     } else {
       hostProfileForm = (
