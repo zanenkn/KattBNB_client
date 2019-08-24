@@ -1,3 +1,35 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.form .required.field>.checkbox:after,
+.ui.form .required.field>label:after, 
+.ui.form .required.fields.grouped>label:after, 
+.ui.form .required.fields:not(.grouped)>.field>.checkbox:after, 
+.ui.form .required.fields:not(.grouped)>.field>label:after {
+  color: #c90c61
+}
+
+.ui.form .field > label {
+  color: grey;
+}
+
+.ui.form ::-webkit-input-placeholder {
+  font-style: italic;
+}
+.ui.form :-ms-input-placeholder {
+  font-style: italic;
+}
+.ui.form ::-moz-placeholder {
+  font-style: italic;
+}
+
+.ui.form :focus::-webkit-input-placeholder {
+  font-style: italic;
+}
+.ui.form :focus:-ms-input-placeholder {
+  font-style: italic;
+}
+.ui.form :focus::-moz-placeholder {
+  font-style: italic;
+}

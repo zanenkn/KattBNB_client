@@ -244,6 +244,8 @@ class HostProfileForm extends Component {
         </Form>
 
         <DayPicker
+          showWeekNumbers
+          firstDayOfWeek={1}
           selectedDays={this.state.selectedDays}
           onDayClick={this.handleDayClick}
         />
