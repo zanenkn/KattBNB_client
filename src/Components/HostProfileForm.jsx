@@ -138,25 +138,17 @@ class HostProfileForm extends Component {
 
     if (this.state.address_search === true) {
       addressSearch = (
-        <>
-          <Form.Group unstackable>
             <Form.Input
-              width={12}
               label='Your full address'
               placeholder='Search..'
               required
               id='user_input_address'
               value={this.state.user_input_address}
               onChange={this.onChangeHandler}
+              iconPosition='right'
+              icon={<Icon name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
             />
-
-            <Button width={4} onClick={this.geolocationDataAddress.bind(this)} style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem' }}>
-              <Icon
-                name='search'
-              />
-            </Button>
-          </Form.Group>
-        </>
+ 
       )
     } else {
       addressSearch = (

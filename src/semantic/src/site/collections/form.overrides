@@ -33,3 +33,7 @@
 .ui.form :focus::-moz-placeholder {
   font-style: italic;
 }
+
+.ui.input {
+  height: 3rem;
+}
