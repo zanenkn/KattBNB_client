@@ -1,17 +1,44 @@
 import React, { Component } from 'react'
-import { Header, Form, Grid, Icon, Button } from 'semantic-ui-react'
+import { Header, Form, Icon, Button } from 'semantic-ui-react'
+import Geocode from 'react-geocode'
+
 
 class HostProfileForm extends Component {
   state = {
     description: '',
     user_input_address: '',
-    address_search: true
+    address_search: true,
+    latitude: '',
+    longitude: '',
+    lat: '',
+    long: '',
+    address: ''
   }
 
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
+  }
+
+  geolocationDataAddress = () => {
+    Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
+    Geocode.fromAddress(this.state.user_input_address).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        this.setState({
+          latitude: lat,
+          longitude: lng,
+          lat: lat + 0.001,
+          long: lng + 0.001,
+          address: response.results[0].formatted_address,
+          address_search: false
+        })
+      },
+      error => {
+        this.setState({ messageVisible: true, errorMessage: true, errors: [error] })
+      }
+    )
   }
 
   render() {
@@ -31,21 +58,20 @@ class HostProfileForm extends Component {
               onChange={this.onChangeHandler}
             />
 
-            <Form.Button width={4} content='src' style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem' }}>
+            <Button width={4} onClick={this.geolocationDataAddress.bind(this)} style={{ 'margin-top': '1.7rem', 'padding-left': '1rem', 'padding-right': '1rem' }}>
               <Icon
-
-                name='search'
-              //onClick={this.geolocationDataAddress.bind(this)}
+                name='search'  
               />
-            </Form.Button>
+            </Button>
           </Form.Group>
         </>
       )
     } else {
       addressSearch = (
         <div className="change-address-link">
+          <p>{this.state.address}</p>
           <p className='address-change' onClick={() => { this.setState({ address_search: true }) }}>
-            Change location
+            Change
           </p>
         </div>
       )
