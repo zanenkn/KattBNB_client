@@ -8,6 +8,12 @@ describe('User can create a host profile', () => {
     })
   })
   it('successfully', () => {
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/host_profiles',
+      status: 200,
+      response: 'fixture:successful_host_profile_creation.json'
+    })
     cy.contains('You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.')
     cy.get('#create-host-profile-button').click()
     cy.get('#host-profile-form').within(() => {
@@ -15,7 +21,7 @@ describe('User can create a host profile', () => {
       let text = [
         ['#description', 'I hate people but I love cats! Nerd life chose me!'],
         ['#rate', '100'],
-        ['#max_cats', '3'],
+        ['#maxCats', '3'],
         ['#supplement', '35']
       ]
 
@@ -24,9 +30,17 @@ describe('User can create a host profile', () => {
       })
     })
 
-    cy.get('#address').type('Solståndsgatan 22')
+    cy.get('#user_input_address').type('Solståndsgatan 23')
     cy.get('#search').click()
+    cy.get('#host-profile-form > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(2)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(3)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(4)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(5)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(6)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(7)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(8)').click()
     cy.get('#save-host-profile-button').click()
-    cy.contains('Your host profile')
+    cy.contains('You have successfully created a host profile!')
   })
 })

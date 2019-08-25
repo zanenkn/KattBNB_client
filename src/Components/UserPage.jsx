@@ -20,7 +20,6 @@ class UserPage extends Component {
     host_profile: '',
     host_profile_form: false
   }
-
   componentDidMount() {
     axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ host_profile: response.data })
@@ -199,6 +198,8 @@ class UserPage extends Component {
     let hostProfile
     let hostProfileForm
 
+    let hostProfileSuccessMessage
+
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
@@ -331,7 +332,7 @@ class UserPage extends Component {
       hostProfileForm = (
         <>
           <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
-          <Button className='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
+          <Button id='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
         </>
       )
     }
@@ -346,10 +347,16 @@ class UserPage extends Component {
       )  
     }
     
+    if(this.state.hostProfileSuccessDisplay){
+      hostProfileSuccessMessage = (
+        'You have successfully created a host profile!'
+      )
+    }
 
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
+          {hostProfileSuccessMessage}
           <Header as='h1'>
             Hi, {this.props.username}!
           </Header>

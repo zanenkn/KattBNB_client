@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Header, Form, Icon, Button, Message, Divider } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
-import DayPicker, { DateUtils } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import DayPicker, { DateUtils } from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 
 
 
@@ -115,7 +115,8 @@ class HostProfileForm extends Component {
         window.localStorage.setItem('access-token', response.headers['access-token'])
         window.localStorage.setItem('expiry', response.headers.expiry)
         this.setState({
-          loading: false
+          loading: false,
+          hostProfileSuccessDisplay: true
         })
       })
       .catch(error => {
@@ -146,7 +147,7 @@ class HostProfileForm extends Component {
           value={this.state.user_input_address}
           onChange={this.onChangeHandler}
           iconPosition='right'
-          icon={<Icon name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
+          icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
         />
       )
     } else {
@@ -195,7 +196,7 @@ class HostProfileForm extends Component {
           Fill in this information about yourself and start hosting cats today!
         </p>
         <Divider hidden/>
-        <Form id='login-form'>
+        <Form id='host-profile-form'>
           <Form.TextArea
             label='About you'
             placeholder='Please write shortly about yourself and your experience with cats..'
