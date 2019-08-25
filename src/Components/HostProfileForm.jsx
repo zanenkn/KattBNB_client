@@ -40,7 +40,7 @@ class HostProfileForm extends Component {
   }
 
   convertAvailabilityDates() {
-    let availability = this.state.selectedDays.map(function(day) {
+    let availability = this.state.selectedDays.map(function (day) {
       return new Date(day).getTime()
     })
     this.setState({
@@ -138,24 +138,27 @@ class HostProfileForm extends Component {
 
     if (this.state.address_search === true) {
       addressSearch = (
-            <Form.Input
-              label='Your full address'
-              placeholder='Search..'
-              required
-              id='user_input_address'
-              value={this.state.user_input_address}
-              onChange={this.onChangeHandler}
-              iconPosition='right'
-              icon={<Icon name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
-            />
- 
+        <Form.Input
+          label='Your full address'
+          placeholder='Search..'
+          required
+          id='user_input_address'
+          value={this.state.user_input_address}
+          onChange={this.onChangeHandler}
+          iconPosition='right'
+          icon={<Icon name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
+        />
       )
     } else {
       addressSearch = (
-        <div className="change-address-link">
-          <p>{this.state.address}</p>
-          <p className='address-change' onClick={() => { this.setState({ address_search: true }) }}>
-            Change
+        <div className='required field'>
+          <label for="user_input_address">
+            Your full address
+          </label>
+          <p>{this.state.address}&nbsp;
+            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true }) }} className='fake-link-underlined'>
+              Not right?
+            </Header>
           </p>
         </div>
       )
