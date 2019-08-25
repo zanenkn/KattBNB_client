@@ -395,11 +395,11 @@ class UserPage extends Component {
 
           </div>
 
+          {hostProfile}
+
           <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' >
             Delete your account
           </Header>
-
-          {hostProfile}
 
         </Segment>
       </div>

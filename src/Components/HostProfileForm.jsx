@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
+import { Header, Form, Icon, Button, Message, Divider } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker';
@@ -187,12 +187,14 @@ class HostProfileForm extends Component {
 
     return (
       <div id='host-profile-form'>
+        <Divider hidden />
         <Header as='h2'>
           Create host profile
         </Header>
         <p className='small-centered-paragraph'>
           Fill in this information about yourself and start hosting cats today!
         </p>
+        <Divider hidden/>
         <Form id='login-form'>
           <Form.TextArea
             label='About you'
@@ -202,6 +204,9 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
+          <p className='small-left-paragraph'>
+            Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
+          </p>
           {addressErrorMessage}
           {addressSearch}
           <Form.Input
@@ -236,7 +241,10 @@ class HostProfileForm extends Component {
               onChange={this.onChangeHandler}
             />
           </Form.Group>
-        </Form>
+          <p className='small-left-paragraph'>
+          <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
+          </p>
+        
 
         <DayPicker
           showWeekNumbers
@@ -244,6 +252,7 @@ class HostProfileForm extends Component {
           selectedDays={this.state.selectedDays}
           onDayClick={this.handleDayClick}
         />
+        </Form>
 
         {onCreateErrorMessage}
 

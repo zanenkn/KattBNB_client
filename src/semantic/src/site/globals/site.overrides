@@ -149,6 +149,12 @@ h4 {
   margin-top: 1rem;
 }
 
+.small-left-paragraph {
+  text-align: left;
+  font-size: small;
+  margin-top: -0.5rem!important;
+}
+
 .flexbox-row {
   display: flex;
   flex-direction: row;
