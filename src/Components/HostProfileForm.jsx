@@ -114,9 +114,10 @@ class HostProfileForm extends Component {
         window.localStorage.setItem('client', response.headers.client)
         window.localStorage.setItem('access-token', response.headers['access-token'])
         window.localStorage.setItem('expiry', response.headers.expiry)
+        window.location.replace('/user-page')
+        window.alert('You have successfully created host profile!')
         this.setState({
-          loading: false,
-          hostProfileSuccessDisplay: true
+          loading: false
         })
       })
       .catch(error => {
@@ -257,7 +258,7 @@ class HostProfileForm extends Component {
 
         {onCreateErrorMessage}
 
-        <Button onClick={this.createHostProfile}>
+        <Button id='save-host-profile-button' onClick={this.createHostProfile}>
           Save
         </Button>
 

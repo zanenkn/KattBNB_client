@@ -32,7 +32,8 @@ class App extends Component {
       )
     } else {
       userPageRoute = (
-        <Redirect to='/login' />
+        <Route exact path='/login' component={Login}></Route>
+        //<Redirect to='/login' />
       )
     }
 

@@ -41,6 +41,9 @@ describe('User can create a host profile', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(7)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(8)').click()
     cy.get('#save-host-profile-button').click()
-    cy.contains('You have successfully created a host profile!')
+    
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('You have successfully created host profile!')
+    })
   })
 })

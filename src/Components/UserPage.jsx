@@ -339,19 +339,14 @@ class UserPage extends Component {
 
     if(this.state.host_profile.length === 1) {
       hostProfile = (
-        'yay, you have a host profile'
+        'Your host profile'
       )
     } else {
       hostProfile = (
         hostProfileForm
       )  
     }
-    
-    if(this.state.hostProfileSuccessDisplay){
-      hostProfileSuccessMessage = (
-        'You have successfully created a host profile!'
-      )
-    }
+  
 
     return (
       <div className='content-wrapper'>
