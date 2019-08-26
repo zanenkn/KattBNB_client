@@ -46,11 +46,11 @@ describe('User can create a host profile', () => {
     })
   })
 
-  it('successfully', () => {
+  it('unsuccessfully', () => {
     cy.route({
       method: 'POST',
       url: 'http://localhost:3007/api/v1/host_profiles',
-      status: 200,
+      status: 422,
       response: 'fixture:unsuccessful_host_profile_creation.json'
     })
     cy.contains('You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.')
