@@ -165,3 +165,9 @@ h4 {
   margin-top: auto!important;
   margin-bottom: auto!important;
 }
+
+@media screen and (min-width: 700px) {
+  .expanding-wrapper {
+    width: 600px;
+  }
+}

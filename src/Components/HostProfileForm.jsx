@@ -40,11 +40,11 @@ class HostProfileForm extends Component {
   }
 
   convertAvailabilityDates() {
-    let availability = this.state.selectedDays.map(function (day) {
+    let availableDates = this.state.selectedDays.map(function (day) {
       return new Date(day).getTime()
     })
     this.setState({
-      availability: JSON.stringify(availability)
+      availability: availableDates
     })
   }
 
@@ -189,7 +189,6 @@ class HostProfileForm extends Component {
 
     return (
       <div id='host-profile-form'>
-        <Divider hidden />
         <Header as='h2'>
           Create host profile
         </Header>
