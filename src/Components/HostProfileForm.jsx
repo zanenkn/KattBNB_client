@@ -61,6 +61,20 @@ class HostProfileForm extends Component {
     this.convertAvailabilityDates()
   }
 
+  generateRandomNumberLat = () => {
+    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
+    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
+    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
+    return parseFloat(resultNumber)
+  }
+
+  generateRandomNumberLong = () => {
+    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
+    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
+    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
+    return parseFloat(resultNumber)
+  }
+
   geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
     Geocode.fromAddress(this.state.user_input_address).then(
@@ -69,8 +83,8 @@ class HostProfileForm extends Component {
         this.setState({
           latitude: lat,
           longitude: lng,
-          lat: lat + 0.001,
-          long: lng + 0.001,
+          lat: lat - this.generateRandomNumberLat(),
+          long: lng + this.generateRandomNumberLong(),
           address: response.results[0].formatted_address,
           address_search: false,
           addressErrorDisplay: false
