@@ -155,7 +155,7 @@ class HostProfileForm extends Component {
     } else {
       addressSearch = (
         <div className='required field'>
-          <label for="user_input_address">
+          <label for='user_input_address'>
             Your full address
           </label>
           <p style={{'margin-bottom': '2rem'}}>
@@ -251,9 +251,9 @@ class HostProfileForm extends Component {
           </p>
 
           <div className='required field'>
-            <label for="user_input_address">
+            <label for='availability'>
               Availability
-          </label>
+            </label>
 
             <DayPicker
               showWeekNumbers
