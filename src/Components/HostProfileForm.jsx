@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { Header, Form, Icon, Button, Message, Divider } from 'semantic-ui-react'
+import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../style.css'
 
 
-
 class HostProfileForm extends Component {
   constructor(props) {
-    super(props);
-    this.handleDayClick = this.handleDayClick.bind(this);
+    super(props)
+    this.handleDayClick = this.handleDayClick.bind(this)
     this.state = {
       selectedDays: [],
       description: '',
@@ -29,8 +28,7 @@ class HostProfileForm extends Component {
       maxCats: '',
       supplement: '',
       availability: ''
-    };
-
+    }
   }
 
   onChangeHandler = (e) => {
@@ -43,7 +41,7 @@ class HostProfileForm extends Component {
     let availableDates = this.state.selectedDays.map(function (day) {
       return new Date(day).getTime()
     })
-    let sortedAvailableDates = availableDates.sort(function(a, b){return a-b})
+    let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
     this.setState({
       availability: sortedAvailableDates
     })
@@ -54,7 +52,7 @@ class HostProfileForm extends Component {
     if (selected) {
       const selectedIndex = selectedDays.findIndex(selectedDay =>
         DateUtils.isSameDay(selectedDay, day)
-      );
+      )
       selectedDays.splice(selectedIndex, 1);
     } else {
       selectedDays.push(day);
@@ -87,7 +85,6 @@ class HostProfileForm extends Component {
     )
   }
 
-
   createHostProfile = (e) => {
     e.preventDefault()
     const path = '/api/v1/host_profiles'
@@ -109,7 +106,6 @@ class HostProfileForm extends Component {
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-
     axios.post(path, payload, { headers: headers })
       .then(response => {
         window.localStorage.setItem('client', response.headers.client)
@@ -134,9 +130,11 @@ class HostProfileForm extends Component {
       })
   }
 
+
   render() {
     let addressSearch
     let addressErrorMessage
+
     let onCreateErrorMessage
 
     if (this.state.address_search === true) {
@@ -189,12 +187,13 @@ class HostProfileForm extends Component {
       )
     }
 
+
     return (
       <div id='host-profile-form'>
         <Header as='h2'>
           Create host profile
         </Header>
-        <p className='small-centered-paragraph' style={{'margin-bottom': '1rem'}}>
+        <p className='small-centered-paragraph' style={{ 'margin-bottom': '1rem' }}>
           Fill in this information about yourself and start hosting cats today!
         </p>
         <Form id='host-profile-form'>
@@ -206,13 +205,13 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
-          
+
           {addressErrorMessage}
           {addressSearch}
           <p className='small-left-paragraph'>
             Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
           </p>
-          
+
           <Form.Group
             widths='equal'
           >

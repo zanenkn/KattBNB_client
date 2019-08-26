@@ -5,6 +5,7 @@ import { Header, Segment, Form, Dropdown, Button, Message, Icon, Divider } from 
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 
+
 class UserPage extends Component {
   state = {
     displayLocationForm: false,
@@ -20,6 +21,7 @@ class UserPage extends Component {
     host_profile: '',
     host_profile_form: false
   }
+
   componentDidMount() {
     axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ host_profile: response.data })
@@ -330,7 +332,7 @@ class UserPage extends Component {
       )
     } else {
       hostProfileForm = (
-        <div style={{'max-width': '300px', 'margin': 'auto'}}>
+        <div style={{ 'max-width': '300px', 'margin': 'auto' }}>
           <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
           <Button id='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
         </div>
@@ -358,11 +360,11 @@ class UserPage extends Component {
           <p style={{ 'textAlign': 'center' }}>
             This is your profile. Here you can update your location, picture and password.
           </p>
-          <div style={{'display': 'table', 'margin': 'auto', 'padding-bottom': '1rem'}}>
-          <Icon.Group size='huge'>
-            <Icon circular inverted color='grey' name='user' style={{'opacity': '0.5'}} />
-            <Icon corner name='add' style={{ 'color': '#c90c61'}}/>
-          </Icon.Group>
+          <div style={{ 'display': 'table', 'margin': 'auto', 'padding-bottom': '1rem' }}>
+            <Icon.Group size='huge'>
+              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
+              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
+            </Icon.Group>
           </div>
 
           <div style={{ 'width': '100%', 'margin': 'auto' }}>
@@ -404,14 +406,14 @@ class UserPage extends Component {
           </div>
         </Segment>
 
-        <Divider hidden/>
+        <Divider hidden />
 
         <div className='expanding-wrapper'>
           {hostProfile}
         </div>
         <Divider hidden />
 
-        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{'color': 'silver', 'margin-bottom': '1rem'}} >
+        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'margin-bottom': '1rem' }} >
           Delete your account
         </Header>
 
