@@ -27,7 +27,8 @@ class HostProfileForm extends Component {
       onCreateErrorDisplay: false,
       maxCats: '',
       supplement: '',
-      availability: ''
+      availability: '',
+      loading: false
     }
   }
 
@@ -113,6 +114,7 @@ class HostProfileForm extends Component {
 
   createHostProfile = (e) => {
     e.preventDefault()
+    this.setState({ loading: true })
     const path = '/api/v1/host_profiles'
     const payload = {
       description: this.state.description,
@@ -137,10 +139,7 @@ class HostProfileForm extends Component {
         window.localStorage.setItem('client', response.headers.client)
         window.localStorage.setItem('access-token', response.headers['access-token'])
         window.localStorage.setItem('expiry', response.headers.expiry)
-        window.alert('You have successfully created host profile! Press OK to be redirected.')
-        this.setState({
-          loading: false
-        })
+        window.alert('You have successfully created your host profile! Press OK to be redirected.')
         setTimeout(function () { window.location.replace('/user-page') }, 1500)
       })
       .catch(error => {
@@ -161,6 +160,8 @@ class HostProfileForm extends Component {
     let addressErrorMessage
 
     let onCreateErrorMessage
+
+    let createHostProfileButton
 
     if (this.state.address_search === true) {
       addressSearch = (
@@ -210,6 +211,20 @@ class HostProfileForm extends Component {
             ))}
           </ul>
         </Message>
+      )
+    }
+
+    if (this.state.loading) {
+      createHostProfileButton = (
+        <Button id='save-host-profile-button' loading>
+          Save
+        </Button>
+      )
+    } else {
+      createHostProfileButton = (
+        <Button id='save-host-profile-button' onClick={this.createHostProfile}>
+          Save
+        </Button>
       )
     }
 
@@ -298,9 +313,7 @@ class HostProfileForm extends Component {
 
         {onCreateErrorMessage}
 
-        <Button id='save-host-profile-button' onClick={this.createHostProfile}>
-          Save
-        </Button>
+        {createHostProfileButton}
 
       </div>
     )
