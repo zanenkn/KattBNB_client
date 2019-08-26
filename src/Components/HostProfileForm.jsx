@@ -3,7 +3,7 @@ import { Header, Form, Icon, Button, Message, Divider } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import 'react-day-picker/lib/style.css'
+import '../style.css'
 
 
 
@@ -157,7 +157,8 @@ class HostProfileForm extends Component {
           <label for="user_input_address">
             Your full address
           </label>
-          <p>{this.state.address}&nbsp;
+          <p style={{'margin-bottom': '2rem'}}>
+            {this.state.address}&nbsp;
             <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true }) }} className='fake-link-underlined'>
               Not right?
             </Header>
@@ -195,7 +196,7 @@ class HostProfileForm extends Component {
         <p className='small-centered-paragraph'>
           Fill in this information about yourself and start hosting cats today!
         </p>
-        <Divider hidden/>
+        <Divider hidden />
         <Form id='host-profile-form'>
           <Form.TextArea
             label='About you'
@@ -210,18 +211,20 @@ class HostProfileForm extends Component {
           </p>
           {addressErrorMessage}
           {addressSearch}
-          <Form.Input
-            label='Your rate'
-            type='number'
-            placeholder='Your daily rate in kr/day'
-            required
-            id='rate'
-            value={this.state.rate}
-            onChange={this.onChangeHandler}
-          />
+          
           <Form.Group
             widths='equal'
           >
+            <Form.Input
+              label='Your rate'
+              type='number'
+              placeholder='Your daily rate in kr/day'
+              required
+              id='rate'
+              value={this.state.rate}
+              onChange={this.onChangeHandler}
+            />
+
             <Form.Input
               label='Max cats accepted'
               type='number'
@@ -243,16 +246,24 @@ class HostProfileForm extends Component {
             />
           </Form.Group>
           <p className='small-left-paragraph'>
-          <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
+            <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
           </p>
-        
 
-        <DayPicker
-          showWeekNumbers
-          firstDayOfWeek={1}
-          selectedDays={this.state.selectedDays}
-          onDayClick={this.handleDayClick}
-        />
+          <div className='required field'>
+            <label for="user_input_address">
+              Availability
+          </label>
+
+            <DayPicker
+              showWeekNumbers
+              firstDayOfWeek={1}
+              selectedDays={this.state.selectedDays}
+              onDayClick={this.handleDayClick}
+            />
+          </div>
+          <p className='small-centered-paragraph'>
+            Please mark the dates when you are available to host!
+          </p>
         </Form>
 
         {onCreateErrorMessage}
@@ -260,7 +271,6 @@ class HostProfileForm extends Component {
         <Button id='save-host-profile-button' onClick={this.createHostProfile}>
           Save
         </Button>
-
 
       </div>
     )

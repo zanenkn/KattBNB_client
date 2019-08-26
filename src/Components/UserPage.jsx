@@ -409,11 +409,11 @@ class UserPage extends Component {
         <div className='expanding-wrapper'>
           {hostProfile}
         </div>
+        <Divider hidden />
 
-        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' >
+        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{'color': 'silver', 'margin-bottom': '1rem'}} >
           Delete your account
         </Header>
-
 
       </div>
     )

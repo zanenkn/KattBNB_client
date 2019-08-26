@@ -76,7 +76,10 @@
 *******************************/
 
 .content-wrapper {
-  margin: 10vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 5vw;
+  margin-bottom: 0;
 }
 
 .app-content {
@@ -153,6 +156,7 @@ h4 {
   text-align: left;
   font-size: small;
   margin-top: -0.5rem!important;
+  margin-bottom: 2rem!important;
 }
 
 .flexbox-row {
@@ -164,6 +168,10 @@ h4 {
 .top-bottom-margin-auto {
   margin-top: auto!important;
   margin-bottom: auto!important;
+}
+
+.expanding-wrapper {
+  margin: auto;
 }
 
 @media screen and (min-width: 700px) {
