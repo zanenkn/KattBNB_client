@@ -158,7 +158,7 @@ class HostProfileForm extends Component {
           <label for='user_input_address'>
             Your full address
           </label>
-          <p style={{'margin-bottom': '2rem'}}>
+          <p>
             {this.state.address}&nbsp;
             <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true }) }} className='fake-link-underlined'>
               Not right?
@@ -194,10 +194,9 @@ class HostProfileForm extends Component {
         <Header as='h2'>
           Create host profile
         </Header>
-        <p className='small-centered-paragraph'>
+        <p className='small-centered-paragraph' style={{'margin-bottom': '1rem'}}>
           Fill in this information about yourself and start hosting cats today!
         </p>
-        <Divider hidden />
         <Form id='host-profile-form'>
           <Form.TextArea
             label='About you'
@@ -207,11 +206,12 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
+          
+          {addressErrorMessage}
+          {addressSearch}
           <p className='small-left-paragraph'>
             Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
           </p>
-          {addressErrorMessage}
-          {addressSearch}
           
           <Form.Group
             widths='equal'

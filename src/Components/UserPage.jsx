@@ -352,7 +352,7 @@ class UserPage extends Component {
       <div className='content-wrapper'>
         <Segment className='whitebox'>
           {hostProfileSuccessMessage}
-          <Header as='h1'>
+          <Header as='h2'>
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
