@@ -99,6 +99,18 @@ class HostProfileForm extends Component {
     )
   }
 
+  listenEnterKey = (event) => {
+    if (event.key === "Enter") {
+      this.createHostProfile(event)
+    }
+  }
+
+  listenEnterKeyAddress = (event) => {
+    if (event.key === "Enter") {
+      this.geolocationDataAddress(event)
+    }
+  }
+
   createHostProfile = (e) => {
     e.preventDefault()
     const path = '/api/v1/host_profiles'
@@ -160,8 +172,9 @@ class HostProfileForm extends Component {
           id='user_input_address'
           value={this.state.user_input_address}
           onChange={this.onChangeHandler}
+          onKeyPress={this.listenEnterKeyAddress}
           iconPosition='right'
-          icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} />}
+          icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} style={{ 'color': '#c90c61' }} />}
         />
       )
     } else {
@@ -218,6 +231,7 @@ class HostProfileForm extends Component {
             id='description'
             value={this.state.description}
             onChange={this.onChangeHandler}
+            onKeyPress={this.listenEnterKey}
           />
 
           {addressErrorMessage}
@@ -237,6 +251,7 @@ class HostProfileForm extends Component {
               id='rate'
               value={this.state.rate}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKey}
             />
 
             <Form.Input
@@ -247,6 +262,7 @@ class HostProfileForm extends Component {
               id='maxCats'
               value={this.state.maxCats}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKey}
             />
 
             <Form.Input
@@ -257,6 +273,7 @@ class HostProfileForm extends Component {
               id='supplement'
               value={this.state.supplement}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKey}
             />
           </Form.Group>
           <p className='small-left-paragraph'>
