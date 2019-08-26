@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import HostProfileForm from './HostProfileForm'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Icon, Divider } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
+
 
 class UserPage extends Component {
   state = {
@@ -15,7 +17,15 @@ class UserPage extends Component {
     new_password_confirmation: '',
     loading: false,
     errorDisplay: false,
-    errors: ''
+    errors: '',
+    host_profile: '',
+    host_profile_form: false
+  }
+
+  componentDidMount() {
+    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
+      this.setState({ host_profile: response.data })
+    })
   }
 
   listenEnterKeyLocation = (event) => {
@@ -58,6 +68,12 @@ class UserPage extends Component {
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
+    })
+  }
+
+  hostProfileFormHandler = () => {
+    this.setState({
+      host_profile_form: true
     })
   }
 
@@ -181,11 +197,16 @@ class UserPage extends Component {
     let passwordForm
     let passwordSubmitButton
 
+    let hostProfile
+    let hostProfileForm
+
+    let hostProfileSuccessMessage
+
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
-          <ul id="message-error-list">
+          <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
             ))}
@@ -196,21 +217,21 @@ class UserPage extends Component {
 
     if (this.state.loading) {
       locationSubmitButton = (
-        <Button id="location-submit-button" loading>Change</Button>
+        <Button id='location-submit-button' loading>Change</Button>
       )
     } else {
       locationSubmitButton = (
-        <Button id="location-submit-button" onClick={this.updateLocation}>Change</Button>
+        <Button id='location-submit-button' onClick={this.updateLocation}>Change</Button>
       )
     }
 
     if (this.state.loading) {
       passwordSubmitButton = (
-        <Button id="password-submit-button" loading>Change</Button>
+        <Button id='password-submit-button' loading>Change</Button>
       )
     } else {
       passwordSubmitButton = (
-        <Button id="password-submit-button" onClick={this.updatePassword}>Change</Button>
+        <Button id='password-submit-button' onClick={this.updatePassword}>Change</Button>
       )
     }
 
@@ -223,7 +244,7 @@ class UserPage extends Component {
               clearable
               search
               selection
-              placeholder="Select new location"
+              placeholder='Select new location'
               options={LOCATION_OPTIONS}
               id='location'
               style={{ 'margin-bottom': '1rem', 'width': '100%' }}
@@ -244,7 +265,7 @@ class UserPage extends Component {
 
           <div className='button-wrapper'>
             <div >
-              <Button secondary className="cancel-button" onClick={this.locationFormHandler.bind(this)}>Cancel</Button>
+              <Button secondary className='cancel-button' onClick={this.locationFormHandler.bind(this)}>Cancel</Button>
             </div>
             <div>
               {locationSubmitButton}
@@ -294,7 +315,7 @@ class UserPage extends Component {
 
           <div className='button-wrapper'>
             <div >
-              <Button secondary className="cancel-button" onClick={this.passwordFormHandler.bind(this)}>Cancel</Button>
+              <Button secondary className='cancel-button' onClick={this.passwordFormHandler.bind(this)}>Cancel</Button>
             </div>
             <div>
               {passwordSubmitButton}
@@ -304,25 +325,57 @@ class UserPage extends Component {
       )
     }
 
+    if (this.state.host_profile_form === true) {
+      hostProfileForm = (
+        <HostProfileForm
+          user_id={this.props.id} />
+      )
+    } else {
+      hostProfileForm = (
+        <div style={{ 'max-width': '300px', 'margin': 'auto' }}>
+          <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
+          <Button id='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
+        </div>
+      )
+    }
+
+    if (this.state.host_profile.length === 1) {
+      hostProfile = (
+        'Your host profile'
+      )
+    } else {
+      hostProfile = (
+        hostProfileForm
+      )
+    }
+
+
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
+          {hostProfileSuccessMessage}
           <Header as='h2'>
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
             This is your profile. Here you can update your location, picture and password.
           </p>
+          <div style={{ 'display': 'table', 'margin': 'auto', 'padding-bottom': '1rem' }}>
+            <Icon.Group size='huge'>
+              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
+              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
+            </Icon.Group>
+          </div>
 
           <div style={{ 'width': '100%', 'margin': 'auto' }}>
             <p>
-              <svg fill='grey' height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" /></svg>
+              <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
               &nbsp;{this.props.email}
             </p>
 
             <div className='flexbox-row'>
               <p id='user-location' className='top-bottom-margin-auto'>
-                <svg fill='grey' height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" /></svg>
+                <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
                 &nbsp;{this.state.location}&nbsp;
               </p>
 
@@ -337,7 +390,7 @@ class UserPage extends Component {
 
             <div className='flexbox-row'>
               <p className='top-bottom-margin-auto'>
-                <svg fill='grey' height='1rem' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" /></svg>
+                <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
                 &nbsp;******&nbsp;
               </p>
 
@@ -351,12 +404,19 @@ class UserPage extends Component {
             </div>
 
           </div>
-
-          <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' >
-            Delete your account
-          </Header>
-
         </Segment>
+
+        <Divider hidden />
+
+        <div className='expanding-wrapper'>
+          {hostProfile}
+        </div>
+        <Divider hidden />
+
+        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'margin-bottom': '1rem' }} >
+          Delete your account
+        </Header>
+
       </div>
     )
   }
@@ -366,7 +426,8 @@ class UserPage extends Component {
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   location: state.reduxTokenAuth.currentUser.attributes.location,
-  email: state.reduxTokenAuth.currentUser.attributes.uid
+  email: state.reduxTokenAuth.currentUser.attributes.uid,
+  id: state.reduxTokenAuth.currentUser.attributes.id
 })
 
 export default connect(mapStateToProps)(UserPage)

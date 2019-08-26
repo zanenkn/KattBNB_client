@@ -18,7 +18,7 @@ import UserPage from './Components/UserPage'
 import ScrollToTop from './Components/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Redirect, Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 
 class App extends Component {
@@ -32,7 +32,7 @@ class App extends Component {
       )
     } else {
       userPageRoute = (
-        <Redirect to='/login' />
+        <Route exact path='/login' component={Login}></Route>
       )
     }
 

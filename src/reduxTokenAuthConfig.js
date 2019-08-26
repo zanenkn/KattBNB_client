@@ -7,6 +7,7 @@ const development = 'http://localhost:3007/api/v1/auth'
 const config = {
   authUrl: production,
   userAttributes: {
+    id: 'id',
     uid: 'uid',
     location: 'location',
     username: 'nickname'

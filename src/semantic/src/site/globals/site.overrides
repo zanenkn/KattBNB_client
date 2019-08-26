@@ -76,7 +76,10 @@
 *******************************/
 
 .content-wrapper {
-  margin: 10vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 5vw;
+  margin-bottom: 0;
 }
 
 .app-content {
@@ -149,6 +152,13 @@ h4 {
   margin-top: 1rem;
 }
 
+.small-left-paragraph {
+  text-align: left;
+  font-size: small;
+  margin-top: -0.5rem!important;
+  margin-bottom: 2rem!important;
+}
+
 .flexbox-row {
   display: flex;
   flex-direction: row;
@@ -158,4 +168,14 @@ h4 {
 .top-bottom-margin-auto {
   margin-top: auto!important;
   margin-bottom: auto!important;
+}
+
+.expanding-wrapper {
+  margin: auto;
+}
+
+@media screen and (min-width: 700px) {
+  .expanding-wrapper {
+    width: 600px;
+  }
 }
