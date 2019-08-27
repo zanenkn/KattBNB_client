@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
+import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
 import { Header, Segment, Form, Dropdown, Button, Message, Icon, Divider } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
@@ -344,7 +345,7 @@ class UserPage extends Component {
 
     if (this.state.host_profile.length === 1) {
       hostProfile = (
-        'Your host profile'
+        <HostProfile id={this.state.host_profile[0].id} />
       )
     } else {
       hostProfile = (
