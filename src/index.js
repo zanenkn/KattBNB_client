@@ -12,7 +12,7 @@ import axios from 'axios'
 const development = 'http://localhost:3007'
 const production = 'https://katt-bnb.herokuapp.com'
 
-axios.defaults.baseURL = production
+axios.defaults.baseURL = development
 
 const store = configureStore()
 verifyCredentials(store)

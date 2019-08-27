@@ -1,0 +1,25 @@
+[
+  {
+    "id":1,
+    "description": "I hate people but I love cats! Nerd life chose me!",
+    "full_address": "Solvarvsgatan 32, 415 08 Göteborg, Sweden",
+    "price_per_day_1_cat":"100.0",
+    "supplement_price_per_cat_per_day":"35.0",
+    "max_cats_accepted":3,
+    "availability":[
+      1569232800000,
+      1569319200000,
+      1569405600000,
+      1569492000000,
+      1569578400000,
+      1569664800000,
+      1569751200000],
+    "lat":"57.7453888",
+    "long":"12.0282874",
+    "user":{
+      "id":1,
+      "location":"Stockholm",
+      "nickname":"GeorgeTheGreek"
+    }
+  }
+]
