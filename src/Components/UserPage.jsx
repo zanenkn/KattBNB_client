@@ -136,8 +136,7 @@ class UserPage extends Component {
       axios.put(path, payload)
         .then(() => {
           this.setState({
-            displayPasswordForm: false,
-            loading: false
+            displayPasswordForm: false
           })
           window.location.replace('/login')
           window.localStorage.clear()

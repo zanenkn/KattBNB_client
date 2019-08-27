@@ -139,7 +139,7 @@ class HostProfileForm extends Component {
         window.localStorage.setItem('client', response.headers.client)
         window.localStorage.setItem('access-token', response.headers['access-token'])
         window.localStorage.setItem('expiry', response.headers.expiry)
-        window.alert('You have successfully created your host profile! Press OK to be redirected.')
+        window.alert('You have successfully created your host profile! Click OK to be redirected.')
         setTimeout(function () { window.location.replace('/user-page') }, 1500)
       })
       .catch(error => {

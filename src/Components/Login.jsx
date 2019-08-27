@@ -22,7 +22,7 @@ class Login extends Component {
 
   logInUser = (e) => {
     this.setState({ loading: true })
-    e.preventDefault();
+    e.preventDefault()
     const { history, signInUser } = this.props
     const {
       email,
