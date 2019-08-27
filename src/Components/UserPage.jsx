@@ -268,7 +268,7 @@ class UserPage extends Component {
 
           <div className='button-wrapper'>
             <div >
-              <Button secondary className='cancel-button' onClick={this.locationFormHandler.bind(this)}>Cancel</Button>
+              <Button secondary className='cancel-button' onClick={this.locationFormHandler.bind(this)}>Close</Button>
             </div>
             <div>
               {locationSubmitButton}
@@ -317,8 +317,8 @@ class UserPage extends Component {
           </p>
 
           <div className='button-wrapper'>
-            <div >
-              <Button secondary className='cancel-button' onClick={this.passwordFormHandler.bind(this)}>Cancel</Button>
+            <div>
+              <Button secondary className='cancel-button' onClick={this.passwordFormHandler.bind(this)}>Close</Button>
             </div>
             <div>
               {passwordSubmitButton}
@@ -372,13 +372,13 @@ class UserPage extends Component {
 
           <div style={{ 'width': '100%', 'margin': 'auto' }}>
             <p>
-              <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
+              <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
               &nbsp;{this.props.email}
             </p>
 
             <div className='flexbox-row'>
               <p id='user-location' className='top-bottom-margin-auto'>
-                <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
+                <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
                 &nbsp;{this.state.location}&nbsp;
               </p>
 
@@ -393,7 +393,7 @@ class UserPage extends Component {
 
             <div className='flexbox-row'>
               <p className='top-bottom-margin-auto'>
-                <svg fill='grey' height='1rem' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
+                <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
                 &nbsp;******&nbsp;
               </p>
 
