@@ -26,13 +26,10 @@ class App extends Component {
 
   render() {
     let userPageRoute
+
     if (this.props.currentUserIn) {
       userPageRoute = (
         <Route exact path='/user-page' component={UserPage}></Route>
-      )
-    } else {
-      userPageRoute = (
-        <Route exact path='/login' component={Login}></Route>
       )
     }
 

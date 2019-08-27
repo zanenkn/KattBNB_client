@@ -54,6 +54,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
+      host_profile_form: false,
       location: this.props.location,
       errorDisplay: false,
       password: ''
@@ -64,6 +65,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
+      host_profile_form: false,
       errorDisplay: false,
       current_password: '',
       new_password: '',
@@ -73,7 +75,9 @@ class UserPage extends Component {
 
   hostProfileFormHandler = () => {
     this.setState({
-      host_profile_form: true
+      host_profile_form: true,
+      displayLocationForm: false,
+      displayPasswordForm: false
     })
   }
 
