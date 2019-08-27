@@ -22,9 +22,6 @@ class HostProfile extends Component {
     }
     axios.get(path, { headers: headers })
       .then(response => {
-        window.localStorage.setItem('client', response.headers.client)
-        window.localStorage.setItem('access-token', response.headers['access-token'])
-        window.localStorage.setItem('expiry', response.headers.expiry)
         this.setState({
           description: response.data.description,
           full_address: response.data.full_address,
@@ -35,9 +32,6 @@ class HostProfile extends Component {
         })
       })
       .catch(error => {
-        window.localStorage.setItem('client', error.response.headers.client)
-        window.localStorage.setItem('access-token', error.response.headers['access-token'])
-        window.localStorage.setItem('expiry', error.response.headers.expiry)
         this.setState({
           errorDisplay: true,
           errors: error.response.data.errors.full_messages
@@ -48,7 +42,7 @@ class HostProfile extends Component {
   render() {
     return (
       <>
-      {this.state.description}
+        {this.state.description}
       </>
     )
   }

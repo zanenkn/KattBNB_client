@@ -99,20 +99,14 @@ class UserPage extends Component {
       }
       axios.put(path, payload)
         .then(response => {
-          window.localStorage.setItem('client', response.headers.client)
-          window.localStorage.setItem('access-token', response.headers['access-token'])
-          window.localStorage.setItem('expiry', response.headers.expiry)
           this.setState({
             displayLocationForm: false,
             location: response.data.data.location,
             loading: false
           })
-          setTimeout(function () { alert('Location succesfully changed!') }, 1000)
+          window.alert('Location succesfully changed!')
         })
         .catch(error => {
-          window.localStorage.setItem('client', error.response.headers.client)
-          window.localStorage.setItem('access-token', error.response.headers['access-token'])
-          window.localStorage.setItem('expiry', error.response.headers.expiry)
           this.setState({
             loading: false,
             errorDisplay: true,
@@ -148,9 +142,6 @@ class UserPage extends Component {
           window.alert('Your password was successfully changed!')
         })
         .catch(error => {
-          window.localStorage.setItem('client', error.response.headers.client)
-          window.localStorage.setItem('access-token', error.response.headers['access-token'])
-          window.localStorage.setItem('expiry', error.response.headers.expiry)
           this.setState({
             loading: false,
             errorDisplay: true,

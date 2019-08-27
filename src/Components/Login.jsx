@@ -30,8 +30,11 @@ class Login extends Component {
     } = this.state
     signInUser({ email, password })
       .then(() => {
-        this.setState({ success_display: true, error_display: false })
-        setTimeout(function () { history.push('/') }, 1500)
+        this.setState({
+          success_display: true,
+          error_display: false
+        })
+        setTimeout(function () { history.push('/') }, 1000)
       }).catch(error => {
         this.setState({
           error_display: true,
@@ -108,7 +111,7 @@ class Login extends Component {
               placeholder='Password'
               onKeyPress={this.listenEnterKey}
             />
-            <div style={{'textAlign': 'right'}}>
+            <div style={{ 'textAlign': 'right' }}>
               <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
                 Forgot your password?
               </Header>

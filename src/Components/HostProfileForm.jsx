@@ -135,17 +135,11 @@ class HostProfileForm extends Component {
       'access-token': window.localStorage.getItem('access-token')
     }
     axios.post(path, payload, { headers: headers })
-      .then(response => {
-        window.localStorage.setItem('client', response.headers.client)
-        window.localStorage.setItem('access-token', response.headers['access-token'])
-        window.localStorage.setItem('expiry', response.headers.expiry)
+      .then(() => {
         window.alert('You have successfully created your host profile! Click OK to be redirected.')
-        setTimeout(function () { window.location.replace('/user-page') }, 1500)
+        setTimeout(function () { window.location.replace('/user-page') }, 500)
       })
       .catch(error => {
-        window.localStorage.setItem('client', error.response.headers.client)
-        window.localStorage.setItem('access-token', error.response.headers['access-token'])
-        window.localStorage.setItem('expiry', error.response.headers.expiry)
         this.setState({
           loading: false,
           errors: error.response.data.error,
