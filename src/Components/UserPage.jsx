@@ -353,7 +353,7 @@ class UserPage extends Component {
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
-            This is your basic profile. Here you can update your location, picture and password.
+            This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
           </p>
           <div style={{ 'display': 'table', 'margin': 'auto', 'padding-bottom': '1rem' }}>
             <Icon.Group size='huge'>

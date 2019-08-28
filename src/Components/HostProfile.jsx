@@ -50,7 +50,7 @@ class HostProfile extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            This is your host profile. Here you can update all your cat hosting information and settings.
+            This is your <strong> host </strong> profile. Here you can update all your cat hosting information and settings.
           </p>
 
           <div style={{ 'width': '100%', 'margin': 'auto' }}>

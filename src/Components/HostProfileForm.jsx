@@ -49,16 +49,16 @@ class HostProfileForm extends Component {
   }
 
   handleDayClick(day, { selected }) {
-    const { selectedDays } = this.state;
+    const { selectedDays } = this.state
     if (selected) {
       const selectedIndex = selectedDays.findIndex(selectedDay =>
         DateUtils.isSameDay(selectedDay, day)
       )
-      selectedDays.splice(selectedIndex, 1);
+      selectedDays.splice(selectedIndex, 1)
     } else {
-      selectedDays.push(day);
+      selectedDays.push(day)
     }
-    this.setState({ selectedDays });
+    this.setState({ selectedDays })
     this.convertAvailabilityDates()
   }
 
