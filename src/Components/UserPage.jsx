@@ -159,7 +159,8 @@ class UserPage extends Component {
   destroyAccount = () => {
     this.setState({
       displayLocationForm: false,
-      displayPasswordForm: false
+      displayPasswordForm: false,
+      host_profile_form: false
     })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
@@ -194,8 +195,6 @@ class UserPage extends Component {
 
     let hostProfile
     let hostProfileForm
-
-    let hostProfileSuccessMessage
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -336,7 +335,8 @@ class UserPage extends Component {
 
     if (this.state.host_profile.length === 1) {
       hostProfile = (
-        <HostProfile id={this.state.host_profile[0].id} />
+        <HostProfile
+          id={this.state.host_profile[0].id} />
       )
     } else {
       hostProfile = (
@@ -348,7 +348,6 @@ class UserPage extends Component {
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
-          {hostProfileSuccessMessage}
           <Header as='h2'>
             Hi, {this.props.username}!
           </Header>
