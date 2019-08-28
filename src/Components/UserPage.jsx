@@ -76,7 +76,7 @@ class UserPage extends Component {
 
   hostProfileFormHandler = () => {
     this.setState({
-      host_profile_form: true,
+      host_profile_form: !this.state.host_profile_form,
       displayLocationForm: false,
       displayPasswordForm: false
     })
@@ -322,7 +322,8 @@ class UserPage extends Component {
     if (this.state.host_profile_form === true) {
       hostProfileForm = (
         <HostProfileForm
-          user_id={this.props.id} />
+          user_id={this.props.id}
+          closeForm={this.hostProfileFormHandler.bind(this)} />
       )
     } else {
       hostProfileForm = (
