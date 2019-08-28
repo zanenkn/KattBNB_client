@@ -16,11 +16,11 @@ describe('User can view her host profile', () => {
 
   it('and see the saved information', () => {
     let text = [
-      ['#description', 'I hate people but I love cats! Nerd life chose me!'], 
-      ['#address', 'Solvarvsgatan 32, 415 08 Göteborg, Sweden'], 
-      ['#rate', '100 kr/day'], 
-      ['#maxCats', '3 cats'], 
-      ['#supplement', '35 kr/day per cat'] 
+      ['#description', 'I hate people but I love cats! Nerd life chose me!'],
+      ['#address', 'Solvarvsgatan 32, 415 08 Göteborg, Sweden'],
+      ['#rate', '100 kr/day'],
+      ['#maxCats', '3 cats'],
+      ['#supplement', '35 kr/day per cat']
     ]
 
     text.forEach(element => {
