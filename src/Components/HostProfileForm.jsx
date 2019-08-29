@@ -50,16 +50,18 @@ class HostProfileForm extends Component {
 
   handleDayClick(day, { selected }) {
     const { selectedDays } = this.state
-    if (selected) {
-      const selectedIndex = selectedDays.findIndex(selectedDay =>
-        DateUtils.isSameDay(selectedDay, day)
-      )
-      selectedDays.splice(selectedIndex, 1)
-    } else {
-      selectedDays.push(day)
+    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+      if (selected) {
+        const selectedIndex = selectedDays.findIndex(selectedDay =>
+          DateUtils.isSameDay(selectedDay, day)
+        )
+        selectedDays.splice(selectedIndex, 1)
+      } else {
+        selectedDays.push(day)
+      }
+      this.setState({ selectedDays })
+      this.convertAvailabilityDates()
     }
-    this.setState({ selectedDays })
-    this.convertAvailabilityDates()
   }
 
   generateRandomNumberLat = () => {
