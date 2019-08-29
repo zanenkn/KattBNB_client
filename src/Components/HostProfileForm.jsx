@@ -222,6 +222,8 @@ class HostProfileForm extends Component {
       )
     }
 
+    const today = new Date()
+
 
     return (
       <div id='host-profile-form'>
@@ -295,6 +297,7 @@ class HostProfileForm extends Component {
 
             <DayPicker
               showWeekNumbers
+              disabledDays={{ before: today }}
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               onDayClick={this.handleDayClick}
