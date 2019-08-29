@@ -25,7 +25,7 @@ describe('User can view her host profile', () => {
       ['#description', 'this is a description about me!!!!'],
       ['#address', 'Charles de Gaulle Airport'],
       ['#rate', '100 kr/day for 1 cat'],
-      ['#maxCats', 'Maximum cats 3'],
+      ['#maxCats', 'Maximum cats: 3'],
       ['#supplement', 'Extra 35 kr/day per cat']
     ]
 
@@ -33,8 +33,7 @@ describe('User can view her host profile', () => {
       cy.get(element[0]).contains(element[1])
     })
 
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week > .DayPicker-Day--selected:nth-child(7)').should('have.attr', 'aria-selected', 'true')
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week > .DayPicker-Day--selected:nth-child(6)').should('have.attr', 'aria-selected', 'true')
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(4) > .DayPicker-Day--selected').should('have.attr', 'aria-selected', 'true')
+    cy.get('.content-wrapper > .ui > div:nth-child(2) > .flexbox-row > div').click()
+    cy.contains('September 2019')
   })
 })
