@@ -94,7 +94,6 @@ class HostProfile extends Component {
                 dateFormat='yyyy/MM/dd'
                 placeholderText='Click to see your availability'
                 includeDates={this.state.availability}
-                fixedHeight
                 withPortal
               />
             </div>
