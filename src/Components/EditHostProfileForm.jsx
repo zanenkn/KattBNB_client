@@ -174,7 +174,7 @@ class EditHostProfileForm extends Component {
       )
     } else {
       addressSearch = (
-        <div className='required field'>
+        <div>
           <label for='user_input_address'>
             Your full address
           </label>
