@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Header } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
 
@@ -13,7 +13,8 @@ class HostProfile extends Component {
     supplement: '',
     availability: '',
     errors: '',
-    errorDisplay: false
+    errorDisplay: false,
+    editHostProfileForm: false
   }
 
   componentDidMount() {
@@ -42,6 +43,12 @@ class HostProfile extends Component {
       })
   }
 
+  toggleEditForm = () => {
+    this.setState({
+      editHostProfileForm: !this.state.editHostProfileForm
+    })
+  }
+
   render() {
 
     const rate = parseFloat(this.state.rate)
@@ -52,7 +59,7 @@ class HostProfile extends Component {
         <Segment className='whitebox'>
 
           <p style={{ 'textAlign': 'center' }}>
-            This is your <strong> host </strong> profile. Here you can update all your cat hosting information and settings.
+            This is your <strong> host </strong> profile. Here you can update all your cat hosting information.
           </p>
 
           <div style={{ 'width': '100%', 'margin': 'auto' }}>
@@ -97,8 +104,14 @@ class HostProfile extends Component {
                 withPortal
               />
             </div>
+            <Header id='change-host-profile-link' onClick={this.toggleEditForm} className='fake-link-underlined top-bottom-margin-auto' >
+              Change profile information
+            </Header>
           </div>
         </Segment>
+        <div className='expanding-wrapper'>
+          {}
+        </div>
       </div>
     )
   }
