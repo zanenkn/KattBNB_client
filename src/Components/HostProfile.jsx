@@ -59,7 +59,8 @@ class HostProfile extends Component {
 
     if (this.state.editHostProfileForm) {
       editForm = (
-        <EditHostProfileForm />
+        <EditHostProfileForm
+          closeForm={this.toggleEditForm.bind(this)} />
       )
     }
 

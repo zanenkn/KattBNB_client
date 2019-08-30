@@ -114,41 +114,41 @@ class EditHostProfileForm extends Component {
     }
   }
 
-  createHostProfile = (e) => {
-    e.preventDefault()
-    this.setState({ loading: true })
-    const path = '/api/v1/host_profiles'
-    const payload = {
-      description: this.state.description,
-      full_address: this.state.address,
-      price_per_day_1_cat: this.state.rate,
-      supplement_price_per_cat_per_day: this.state.supplement,
-      max_cats_accepted: this.state.maxCats,
-      availability: this.state.availability,
-      lat: this.state.lat,
-      long: this.state.long,
-      latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      user_id: this.props.user_id
-    }
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    axios.post(path, payload, { headers: headers })
-      .then(() => {
-        window.alert('You have successfully created your host profile! Click OK to be redirected.')
-        setTimeout(function () { window.location.replace('/user-page') }, 500)
-      })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          errors: error.response.data.error,
-          onCreateErrorDisplay: true
-        })
-      })
-  }
+  // createHostProfile = (e) => {
+  //   e.preventDefault()
+  //   this.setState({ loading: true })
+  //   const path = '/api/v1/host_profiles'
+  //   const payload = {
+  //     description: this.state.description,
+  //     full_address: this.state.address,
+  //     price_per_day_1_cat: this.state.rate,
+  //     supplement_price_per_cat_per_day: this.state.supplement,
+  //     max_cats_accepted: this.state.maxCats,
+  //     availability: this.state.availability,
+  //     lat: this.state.lat,
+  //     long: this.state.long,
+  //     latitude: this.state.latitude,
+  //     longitude: this.state.longitude,
+  //     user_id: this.props.user_id
+  //   }
+  //   const headers = {
+  //     uid: window.localStorage.getItem('uid'),
+  //     client: window.localStorage.getItem('client'),
+  //     'access-token': window.localStorage.getItem('access-token')
+  //   }
+  //   axios.post(path, payload, { headers: headers })
+  //     .then(() => {
+  //       window.alert('You have successfully created your host profile! Click OK to be redirected.')
+  //       setTimeout(function () { window.location.replace('/user-page') }, 500)
+  //     })
+  //     .catch(error => {
+  //       this.setState({
+  //         loading: false,
+  //         errors: error.response.data.error,
+  //         onCreateErrorDisplay: true
+  //       })
+  //     })
+  // }
 
 
   render() {
@@ -164,7 +164,6 @@ class EditHostProfileForm extends Component {
         <Form.Input
           label='Your full address'
           placeholder='Search..'
-          required
           id='user_input_address'
           value={this.state.user_input_address}
           onChange={this.onChangeHandler}
@@ -230,16 +229,15 @@ class EditHostProfileForm extends Component {
     return (
       <div id='host-profile-form'>
         <Header as='h2'>
-          Create host profile
+          Edit host profile
         </Header>
         <p className='small-centered-paragraph' style={{ 'margin-bottom': '1rem' }}>
-          Fill in this information about yourself and start hosting cats today!
+          Fill in only the fields you want to edit. Leave the rest blank.
         </p>
         <Form id='host-profile-form'>
           <Form.TextArea
             label='About you'
             placeholder='Please write shortly about yourself and your experience with cats..'
-            required
             id='description'
             value={this.state.description}
             onChange={this.onChangeHandler}
@@ -248,9 +246,7 @@ class EditHostProfileForm extends Component {
 
           {addressErrorMessage}
           {addressSearch}
-          <p className='small-left-paragraph'>
-            Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
-          </p>
+
 
           <Form.Group
             widths='equal'
@@ -259,7 +255,6 @@ class EditHostProfileForm extends Component {
               label='Your rate'
               type='number'
               placeholder='Your daily rate in kr/day'
-              required
               id='rate'
               value={this.state.rate}
               onChange={this.onChangeHandler}
@@ -270,7 +265,6 @@ class EditHostProfileForm extends Component {
               label='Max cats accepted'
               type='number'
               placeholder='Max amount'
-              required
               id='maxCats'
               value={this.state.maxCats}
               onChange={this.onChangeHandler}
@@ -281,18 +275,15 @@ class EditHostProfileForm extends Component {
               label='Supplement'
               type='number'
               placeholder='+35kr/cat/day'
-              required
               id='supplement'
               value={this.state.supplement}
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterKey}
             />
           </Form.Group>
-          <p className='small-left-paragraph'>
-            <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
-          </p>
 
-          <div className='required field'>
+
+          <div >
             <label for='availability'>
               Availability
             </label>
@@ -305,9 +296,7 @@ class EditHostProfileForm extends Component {
               onDayClick={this.handleDayClick}
             />
           </div>
-          <p className='small-centered-paragraph'>
-            Please mark the dates when you are available to host!
-          </p>
+
         </Form>
 
         {onCreateErrorMessage}
