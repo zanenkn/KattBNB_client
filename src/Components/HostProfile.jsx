@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Segment, Header } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
+import EditHostProfileForm from './EditHostProfileForm'
 
 class HostProfile extends Component {
   state = {
@@ -53,6 +54,14 @@ class HostProfile extends Component {
 
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
+
+    let editForm
+
+    if (this.state.editHostProfileForm) {
+      editForm = (
+        <EditHostProfileForm />
+      )
+    }
 
     return (
       <div className='content-wrapper'>
@@ -110,7 +119,7 @@ class HostProfile extends Component {
           </div>
         </Segment>
         <div className='expanding-wrapper'>
-          {}
+          {editForm}
         </div>
       </div>
     )
