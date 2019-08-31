@@ -117,37 +117,45 @@ class HostProfileForm extends Component {
   createHostProfile = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    const path = '/api/v1/host_profiles'
-    const payload = {
-      description: this.state.description,
-      full_address: this.state.address,
-      price_per_day_1_cat: this.state.rate,
-      supplement_price_per_cat_per_day: this.state.supplement,
-      max_cats_accepted: this.state.maxCats,
-      availability: this.state.availability,
-      lat: this.state.lat,
-      long: this.state.long,
-      latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      user_id: this.props.user_id
-    }
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    axios.post(path, payload, { headers: headers })
-      .then(() => {
-        window.alert('You have successfully created your host profile! Click OK to be redirected.')
-        setTimeout(function () { window.location.replace('/user-page') }, 500)
+    if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0.01) {
+      this.setState({
+        loading: false,
+        errors: ['Please check that all numeric fields are positive!'],
+        onCreateErrorDisplay: true
       })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          errors: error.response.data.error,
-          onCreateErrorDisplay: true
+    } else {
+      const path = '/api/v1/host_profiles'
+      const payload = {
+        description: this.state.description,
+        full_address: this.state.address,
+        price_per_day_1_cat: this.state.rate,
+        supplement_price_per_cat_per_day: this.state.supplement,
+        max_cats_accepted: this.state.maxCats,
+        availability: this.state.availability,
+        lat: this.state.lat,
+        long: this.state.long,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        user_id: this.props.user_id
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(() => {
+          window.alert('You have successfully created your host profile! Click OK to be redirected.')
+          setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
-      })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errors: error.response.data.error,
+            onCreateErrorDisplay: true
+          })
+        })
+    }
   }
 
 
@@ -181,7 +189,7 @@ class HostProfileForm extends Component {
           </label>
           <p>
             {this.state.address}&nbsp;
-            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true }) }} className='fake-link-underlined'>
+            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
               Not right?
             </Header>
           </p>
