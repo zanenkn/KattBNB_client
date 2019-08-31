@@ -68,7 +68,7 @@ describe('User can sign up', () => {
 
     let text = [
       "Password confirmation doesn't match Password",
-      'Password is too short (minimum is 6 characters',
+      'Password is too short (minimum is 6 characters)',
       'Email is not an email',
       "Location can't be blank",
     ]
