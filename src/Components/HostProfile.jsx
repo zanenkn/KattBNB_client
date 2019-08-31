@@ -54,8 +54,10 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      newDescription: this.state.description
+      newDescription: this.state.description,
+      errorDisplay: false
     })
+    this.props.closeLocPasForms()
   }
 
   updateDescription = (e) => {

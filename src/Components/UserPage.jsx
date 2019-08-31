@@ -82,6 +82,13 @@ class UserPage extends Component {
     })
   }
 
+  closeLocationAndPasswordForms = () => {
+    this.setState({
+      displayLocationForm: false,
+      displayPasswordForm: false
+    })
+  }
+
   updateLocation = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
@@ -337,7 +344,8 @@ class UserPage extends Component {
     if (this.state.host_profile.length === 1) {
       hostProfile = (
         <HostProfile
-          id={this.state.host_profile[0].id} />
+          id={this.state.host_profile[0].id}
+          closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)} />
       )
     } else {
       hostProfile = (

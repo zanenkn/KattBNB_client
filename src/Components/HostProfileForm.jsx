@@ -251,7 +251,6 @@ class HostProfileForm extends Component {
             id='description'
             value={this.state.description}
             onChange={this.onChangeHandler}
-            onKeyPress={this.listenEnterKey}
           />
 
           {addressErrorMessage}
