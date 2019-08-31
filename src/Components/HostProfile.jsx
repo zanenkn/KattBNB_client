@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Segment, Header } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
 
 class HostProfile extends Component {
   state = {
     description: '',
+    newDescription: '',
     full_address: '',
     rate: '',
     maxCats: '',
     supplement: '',
     availability: '',
     errors: '',
-    errorDisplay: false
+    errorDisplay: false,
+    editDescriptionForm: false
   }
 
   componentDidMount() {
@@ -31,7 +33,8 @@ class HostProfile extends Component {
           rate: response.data.price_per_day_1_cat,
           maxCats: response.data.max_cats_accepted,
           supplement: response.data.supplement_price_per_cat_per_day,
-          availability: response.data.availability
+          availability: response.data.availability,
+          newDescription: response.data.description
         })
       })
       .catch(error => {
@@ -42,7 +45,90 @@ class HostProfile extends Component {
       })
   }
 
+  onChangeHandler = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  descriptionFormHandler = () => {
+    this.setState({
+      editDescriptionForm: !this.state.editDescriptionForm,
+      newDescription: this.state.description
+    })
+  }
+
+  updateDescription = (e) => {
+    e.preventDefault()
+    if (this.state.newDescription !== '' && this.state.newDescription !== this.state.description) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        description: this.state.newDescription
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            errorDisplay: false
+          })
+          window.alert('Your description was succesfully updated!')
+          window.location.replace('/user-page')
+        })
+        .catch(error => {
+          this.setState({
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        errorDisplay: true,
+        errors: ['The field is blank or unchanged!']
+      })
+    }
+  }
+
   render() {
+
+    let editDescriptionForm
+    let errorDisplay
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
+
+    if (this.state.editDescriptionForm) {
+      editDescriptionForm = (
+        <>
+          <Form id='update-description'>
+            <Form.TextArea
+              required
+              id='newDescription'
+              value={this.state.newDescription}
+              onChange={this.onChangeHandler}
+            />
+            <div className='button-wrapper'>
+              <Button secondary id='description-close-button' onClick={this.descriptionFormHandler}>Close</Button>
+              <Button id='description-submit-button' onClick={this.updateDescription}>Change</Button>
+            </div>
+          </Form>
+          {errorDisplay}
+        </>
+      )
+    }
 
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
@@ -58,11 +144,13 @@ class HostProfile extends Component {
               <p id='description'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
                 &nbsp;{this.state.description}&nbsp;
-            </p>
-              <Header id='change-description-link' className='fake-link-underlined top-bottom-margin-auto' >
+              </p>
+              <Header id='change-description-link' onClick={this.descriptionFormHandler} className='fake-link-underlined top-bottom-margin-auto' >
                 Change
               </Header>
             </div>
+            {editDescriptionForm}
+
             <div className='flexbox-row'>
               <p id='address' className='top-bottom-margin-auto'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z" /></svg>
