@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Segment, Header } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
-import EditHostProfileForm from './EditHostProfileForm'
 
 class HostProfile extends Component {
   state = {
@@ -14,8 +13,7 @@ class HostProfile extends Component {
     supplement: '',
     availability: '',
     errors: '',
-    errorDisplay: false,
-    editHostProfileForm: false
+    errorDisplay: false
   }
 
   componentDidMount() {
@@ -44,31 +42,10 @@ class HostProfile extends Component {
       })
   }
 
-  toggleEditForm = () => {
-    this.setState({
-      editHostProfileForm: !this.state.editHostProfileForm
-    })
-  }
-
   render() {
 
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
-
-    let editForm
-
-    if (this.state.editHostProfileForm) {
-      editForm = (
-        <EditHostProfileForm
-          closeForm={this.toggleEditForm.bind(this)}
-          description={this.state.description}
-          address={this.state.full_address}
-          rate={this.state.rate}
-          maxCats={this.state.maxCats}
-          supplement={this.state.supplement}
-          availability={this.state.availability} />
-      )
-    }
 
     return (
       <div className='content-wrapper'>
@@ -120,14 +97,11 @@ class HostProfile extends Component {
                 withPortal
               />
             </div>
-            <Header id='change-host-profile-link' onClick={this.toggleEditForm} className='fake-link-underlined top-bottom-margin-auto' >
+            <Header id='change-host-profile-link' className='fake-link-underlined top-bottom-margin-auto' >
               Change profile information
             </Header>
           </div>
         </Segment>
-        <div className='expanding-wrapper'>
-          {editForm}
-        </div>
       </div>
     )
   }
