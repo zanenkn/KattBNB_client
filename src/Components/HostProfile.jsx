@@ -60,7 +60,13 @@ class HostProfile extends Component {
     if (this.state.editHostProfileForm) {
       editForm = (
         <EditHostProfileForm
-          closeForm={this.toggleEditForm.bind(this)} />
+          closeForm={this.toggleEditForm.bind(this)}
+          description={this.state.description}
+          address={this.state.full_address}
+          rate={this.state.rate}
+          maxCats={this.state.maxCats}
+          supplement={this.state.supplement}
+          availability={this.state.availability} />
       )
     }
 
