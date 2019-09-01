@@ -25,4 +25,10 @@ describe('User can view her host profile', () => {
     cy.get('#description-submit-button').click()
     cy.contains('The field is blank or unchanged!')
   })
+
+  it('and get an error message on max cats accepted update if update criteria are not met', () => {
+    cy.get('#change-maxCats-link').click()
+    cy.get('#maxCats-submit-button').click()
+    cy.contains('The field is blank or unchanged!')
+  })
 })

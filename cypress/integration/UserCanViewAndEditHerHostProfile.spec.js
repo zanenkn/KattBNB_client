@@ -54,4 +54,16 @@ describe('User can view her host profile', () => {
     })
     cy.contains('This is my new description!!!')
   })
+
+  it('and change her maximum accepted cats successfully', () => {
+    cy.contains('Maximum cats: 3').should('not.exist')
+    cy.get('#change-maxCats-link').click()
+    cy.get('#newMaxCats').clear()
+    cy.get('#newMaxCats').type('5')
+    cy.get('#maxCats-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your maximum amount of cats accepted was succesfully updated!')
+    })
+    cy.contains('Maximum cats: 5')
+  })
 })
