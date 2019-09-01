@@ -8,6 +8,9 @@ import axios from 'axios'
 
 
 class UserPage extends Component {
+
+  hostProfileElement = React.createRef()
+
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
@@ -60,6 +63,7 @@ class UserPage extends Component {
       errorDisplay: false,
       password: ''
     })
+    this.hostProfileElement.current.closeAllForms()
   }
 
   passwordFormHandler = () => {
@@ -73,6 +77,7 @@ class UserPage extends Component {
       new_password: '',
       new_password_confirmation: ''
     })
+    this.hostProfileElement.current.closeAllForms()
   }
 
   hostProfileFormHandler = () => {
@@ -351,7 +356,8 @@ class UserPage extends Component {
       hostProfile = (
         <HostProfile
           id={this.state.host_profile[0].id}
-          closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)} />
+          closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
+          ref={this.hostProfileElement} />
       )
     } else {
       hostProfile = (

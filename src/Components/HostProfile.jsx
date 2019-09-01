@@ -51,6 +51,15 @@ class HostProfile extends Component {
       })
   }
 
+  closeAllForms = () => {
+    this.setState({
+      editDescriptionForm: false,
+      editMaxCatsForm: false,
+      editRateForm: false,
+      editSupplementForm: false
+    })
+  }
+
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value
