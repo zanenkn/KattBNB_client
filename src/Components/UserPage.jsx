@@ -157,7 +157,7 @@ class UserPage extends Component {
           })
           window.location.replace('/login')
           window.localStorage.clear()
-          window.alert('Your password was successfully changed!')
+          window.alert('Your password was successfully changed! Please log in again.')
         })
         .catch(error => {
           this.setState({
@@ -231,17 +231,13 @@ class UserPage extends Component {
       locationSubmitButton = (
         <Button id='location-submit-button' loading>Change</Button>
       )
-    } else {
-      locationSubmitButton = (
-        <Button id='location-submit-button' onClick={this.updateLocation}>Change</Button>
-      )
-    }
-
-    if (this.state.loading) {
       passwordSubmitButton = (
         <Button id='password-submit-button' loading>Change</Button>
       )
     } else {
+      locationSubmitButton = (
+        <Button id='location-submit-button' onClick={this.updateLocation}>Change</Button>
+      )
       passwordSubmitButton = (
         <Button id='password-submit-button' onClick={this.updatePassword}>Change</Button>
       )
