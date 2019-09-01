@@ -75,10 +75,11 @@ class HostProfile extends Component {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
-            errorDisplay: false
+            errorDisplay: false,
+            description: this.state.newDescription,
+            editDescriptionForm: false
           })
           window.alert('Your description was succesfully updated!')
-          window.location.replace('/user-page')
         })
         .catch(error => {
           this.setState({
