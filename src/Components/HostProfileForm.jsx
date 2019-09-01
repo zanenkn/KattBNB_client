@@ -117,7 +117,7 @@ class HostProfileForm extends Component {
   createHostProfile = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0.01) {
+    if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
       this.setState({
         loading: false,
         errors: ['Please check that all numeric fields are positive!'],

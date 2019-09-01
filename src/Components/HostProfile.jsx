@@ -14,12 +14,14 @@ class HostProfile extends Component {
     maxCats: '',
     newMaxCats: '',
     supplement: '',
+    newSupplement: '',
     availability: '',
     errors: '',
     errorDisplay: false,
     editDescriptionForm: false,
     editMaxCatsForm: false,
-    editRateForm: false
+    editRateForm: false,
+    editSupplementForm: false
   }
 
   componentDidMount() {
@@ -61,7 +63,8 @@ class HostProfile extends Component {
       newDescription: this.state.description,
       errorDisplay: false,
       editMaxCatsForm: false,
-      editRateForm: false
+      editRateForm: false,
+      editSupplementForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -72,7 +75,8 @@ class HostProfile extends Component {
       newMaxCats: this.state.maxCats,
       errorDisplay: false,
       editDescriptionForm: false,
-      editRateForm: false
+      editRateForm: false,
+      editSupplementForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -83,7 +87,20 @@ class HostProfile extends Component {
       newRate: this.state.rate,
       errorDisplay: false,
       editDescriptionForm: false,
-      editMaxCatsForm: false
+      editMaxCatsForm: false,
+      editSupplementForm: false
+    })
+    this.props.closeLocPasForms()
+  }
+
+  supplementFormHandler = () => {
+    this.setState({
+      editSupplementForm: !this.state.editSupplementForm,
+      newSupplement: this.state.supplement,
+      errorDisplay: false,
+      editDescriptionForm: false,
+      editMaxCatsForm: false,
+      editRateForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -193,11 +210,47 @@ class HostProfile extends Component {
     }
   }
 
+  updateSupplement = (e) => {
+    e.preventDefault()
+    if (this.state.newSupplement !== '' && this.state.newSupplement !== this.state.supplement && this.state.newSupplement >= 0) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        supplement_price_per_cat_per_day: this.state.newSupplement
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            errorDisplay: false,
+            supplement: this.state.newSupplement,
+            editSupplementForm: false
+          })
+          window.alert('Your supplement rate for 1 cat was succesfully updated!')
+        })
+        .catch(error => {
+          this.setState({
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        errorDisplay: true,
+        errors: ['The field is blank, unchanged or the number is invalid!']
+      })
+    }
+  }
+
   render() {
 
     let editDescriptionForm
     let editMaxCatsForm
     let editRateForm
+    let editSupplementForm
     let errorDisplay
 
     if (this.state.errorDisplay) {
@@ -275,6 +328,27 @@ class HostProfile extends Component {
       )
     }
 
+    if (this.state.editSupplementForm) {
+      editSupplementForm = (
+        <>
+          <Form id='update-supplement'>
+            <Form.Input
+              required
+              type='number'
+              id='newSupplement'
+              value={this.state.newSupplement}
+              onChange={this.onChangeHandler}
+            />
+            <div className='button-wrapper'>
+              <Button secondary id='supplement-close-button' onClick={this.supplementFormHandler}>Close</Button>
+              <Button id='supplement-submit-button' onClick={this.updateSupplement}>Change</Button>
+            </div>
+          </Form>
+          {errorDisplay}
+        </>
+      )
+    }
+
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
 
@@ -330,10 +404,11 @@ class HostProfile extends Component {
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" /></svg>
                 &nbsp;Extra {supplement} kr/day per cat&nbsp;
               </p>
-              <Header id='change-supplement-link' className='fake-link-underlined top-bottom-margin-auto' >
+              <Header id='change-supplement-link' className='fake-link-underlined top-bottom-margin-auto' onClick={this.supplementFormHandler} >
                 Change
               </Header>
             </div>
+            {editSupplementForm}
             <div className='flexbox-row'>
               <p id='availability' className='top-bottom-margin-auto'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
