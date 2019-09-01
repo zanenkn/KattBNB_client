@@ -183,6 +183,12 @@ class HostProfile extends Component {
     }
   }
 
+  listenEnterMaxCatsUpdate = (event) => {
+    if (event.key === "Enter") {
+      this.updateMaxCats(event)
+    }
+  }
+
   updateRate = (e) => {
     e.preventDefault()
     if (this.state.newRate !== '' && this.state.newRate !== this.state.rate && this.state.newRate >= 0.01) {
@@ -218,6 +224,12 @@ class HostProfile extends Component {
     }
   }
 
+  listenEnterRateUpdate = (event) => {
+    if (event.key === "Enter") {
+      this.updateRate(event)
+    }
+  }
+
   updateSupplement = (e) => {
     e.preventDefault()
     if (this.state.newSupplement !== '' && this.state.newSupplement !== this.state.supplement && this.state.newSupplement >= 0) {
@@ -250,6 +262,12 @@ class HostProfile extends Component {
         errorDisplay: true,
         errors: ['The field is blank, unchanged or the number is invalid!']
       })
+    }
+  }
+
+  listenEnterSupplementUpdate = (event) => {
+    if (event.key === "Enter") {
+      this.updateSupplement(event)
     }
   }
 
@@ -304,6 +322,7 @@ class HostProfile extends Component {
               id='newMaxCats'
               value={this.state.newMaxCats}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterMaxCatsUpdate}
             />
             <div className='button-wrapper'>
               <Button secondary id='maxCats-close-button' onClick={this.maxCatsFormHandler}>Close</Button>
@@ -325,6 +344,7 @@ class HostProfile extends Component {
               id='newRate'
               value={this.state.newRate}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterRateUpdate}
             />
             <div className='button-wrapper'>
               <Button secondary id='rate-close-button' onClick={this.rateFormHandler}>Close</Button>
@@ -346,6 +366,7 @@ class HostProfile extends Component {
               id='newSupplement'
               value={this.state.newSupplement}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterSupplementUpdate}
             />
             <div className='button-wrapper'>
               <Button secondary id='supplement-close-button' onClick={this.supplementFormHandler}>Close</Button>
