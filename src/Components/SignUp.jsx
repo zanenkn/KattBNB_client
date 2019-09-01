@@ -41,6 +41,9 @@ class SignUp extends Component {
     } = this.state
     registerUser({ email, password, password_confirmation, location, nickname, url })
       .then(() => {
+        this.setState({
+          error_display: false
+        })
         history.push('/signup-success')
       }).catch(error => {
         this.setState({

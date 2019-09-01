@@ -80,13 +80,15 @@ class UserPage extends Component {
       host_profile_form: !this.state.host_profile_form,
       displayLocationForm: false,
       location: this.props.location,
-      displayPasswordForm: false
+      displayPasswordForm: false,
+      errorDisplay: false
     })
   }
 
   closeLocationAndPasswordForms = () => {
     this.setState({
       displayLocationForm: false,
+      location: this.props.location,
       displayPasswordForm: false
     })
   }
@@ -111,7 +113,8 @@ class UserPage extends Component {
           this.setState({
             displayLocationForm: false,
             location: response.data.data.location,
-            loading: false
+            loading: false,
+            errorDisplay: false
           })
           window.alert('Location succesfully changed!')
         })
@@ -144,7 +147,8 @@ class UserPage extends Component {
       axios.put(path, payload)
         .then(() => {
           this.setState({
-            displayPasswordForm: false
+            displayPasswordForm: false,
+            errorDisplay: false
           })
           window.location.replace('/login')
           window.localStorage.clear()

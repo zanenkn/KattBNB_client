@@ -59,7 +59,8 @@ describe('User can create a host profile', () => {
 
       let text = [
         ['#rate', '100'],
-        ['#maxCats', '3']
+        ['#maxCats', '3'],
+        ['#supplement', '250']
       ]
 
       text.forEach(element => {

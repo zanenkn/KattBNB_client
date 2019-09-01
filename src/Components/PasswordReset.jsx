@@ -29,6 +29,9 @@ class PasswordReset extends Component {
     }
     axios.post(path, payload)
       .then(() => {
+        this.setState({
+          error_display: false
+        })
         window.location.replace('/password-reset-success')
       })
       .catch(error => {

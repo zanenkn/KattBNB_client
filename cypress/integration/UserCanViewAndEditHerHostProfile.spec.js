@@ -33,7 +33,7 @@ describe('User can view her host profile', () => {
       cy.get(element[0]).contains(element[1])
     })
 
-    cy.get('.content-wrapper > .ui > div:nth-child(2) > .flexbox-row > div').click()
+    cy.get('.react-datepicker__input-container').click()
     cy.contains('September 2019')
   })
 })

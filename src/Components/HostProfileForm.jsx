@@ -145,6 +145,9 @@ class HostProfileForm extends Component {
       }
       axios.post(path, payload, { headers: headers })
         .then(() => {
+          this.setState({
+            onCreateErrorDisplay: false
+          })
           window.alert('You have successfully created your host profile! Click OK to be redirected.')
           setTimeout(function () { window.location.replace('/user-page') }, 500)
         })

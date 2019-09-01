@@ -25,7 +25,7 @@ class Menu extends Component {
         window.location.replace('/login')
       })
       .catch(() => {
-        window.location.replace('/login')
+        window.alert('There was a problem signing you out. Please try again in a minute')
       })
   }
 
