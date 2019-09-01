@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
+import { Divider, Header, Form, Button, Message } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
 
@@ -323,29 +323,29 @@ class HostProfile extends Component {
 
     if (this.state.loading) {
       descriptionFormSubmitButton = (
-        <Button loading id='description-submit-button'>Change</Button>
+        <Button loading id='description-submit-button' className='submit-button'>Change</Button>
       )
       maxCatsFormSubmitButton = (
-        <Button loading id='maxCats-submit-button'>Change</Button>
+        <Button loading id='maxCats-submit-button' className='submit-button'>Change</Button>
       )
       rateFormSubmitButton = (
-        <Button loading id='rate-submit-button'>Change</Button>
+        <Button loading id='rate-submit-button' className='submit-button'>Change</Button>
       )
       supplementFormSubmitButton = (
-        <Button loading id='supplement-submit-button'>Change</Button>
+        <Button loading id='supplement-submit-button' className='submit-button'>Change</Button>
       )
     } else {
       descriptionFormSubmitButton = (
-        <Button id='description-submit-button' onClick={this.updateDescription}>Change</Button>
+        <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Change</Button>
       )
       maxCatsFormSubmitButton = (
-        <Button id='maxCats-submit-button' onClick={this.updateMaxCats}>Change</Button>
+        <Button id='maxCats-submit-button' className='submit-button' onClick={this.updateMaxCats}>Change</Button>
       )
       rateFormSubmitButton = (
-        <Button id='rate-submit-button' onClick={this.updateRate}>Change</Button>
+        <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Change</Button>
       )
       supplementFormSubmitButton = (
-        <Button id='supplement-submit-button' onClick={this.updateSupplement}>Change</Button>
+        <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Change</Button>
       )
     }
 
@@ -359,11 +359,15 @@ class HostProfile extends Component {
               value={this.state.newDescription}
               onChange={this.onChangeHandler}
             />
-            <div className='button-wrapper'>
-              <Button secondary id='description-close-button' onClick={this.descriptionFormHandler}>Close</Button>
+          </Form>
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
+            </div>
+            <div>
               {descriptionFormSubmitButton}
             </div>
-          </Form>
+          </div>
           {errorDisplay}
         </>
       )
@@ -381,11 +385,15 @@ class HostProfile extends Component {
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterMaxCatsUpdate}
             />
-            <div className='button-wrapper'>
-              <Button secondary id='maxCats-close-button' onClick={this.maxCatsFormHandler}>Close</Button>
+          </Form>
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
+            </div>
+            <div>
               {maxCatsFormSubmitButton}
             </div>
-          </Form>
+          </div>
           {errorDisplay}
         </>
       )
@@ -403,11 +411,15 @@ class HostProfile extends Component {
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterRateUpdate}
             />
-            <div className='button-wrapper'>
-              <Button secondary id='rate-close-button' onClick={this.rateFormHandler}>Close</Button>
+          </Form>
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
+            </div>
+            <div>
               {rateFormSubmitButton}
             </div>
-          </Form>
+          </div>
           {errorDisplay}
         </>
       )
@@ -425,11 +437,15 @@ class HostProfile extends Component {
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterSupplementUpdate}
             />
-            <div className='button-wrapper'>
-              <Button secondary id='supplement-close-button' onClick={this.supplementFormHandler}>Close</Button>
+          </Form>
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
+            </div>
+            <div>
               {supplementFormSubmitButton}
             </div>
-          </Form>
+          </div>
           {errorDisplay}
         </>
       )
@@ -440,10 +456,14 @@ class HostProfile extends Component {
 
     return (
       <>
+        <Header as='h1'>
+          Your host profile
+        </Header>
         <p style={{ 'textAlign': 'center' }}>
           This is your <strong> host </strong> profile. Here you can update all your cat hosting information.
         </p>
 
+        <Divider hidden />
         <p id='description'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &nbsp;{this.state.description}&nbsp;

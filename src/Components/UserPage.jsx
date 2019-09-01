@@ -229,17 +229,17 @@ class UserPage extends Component {
 
     if (this.state.loading) {
       locationSubmitButton = (
-        <Button id='location-submit-button' loading>Change</Button>
+        <Button id='location-submit-button' className='submit-button' loading>Change</Button>
       )
       passwordSubmitButton = (
-        <Button id='password-submit-button' loading>Change</Button>
+        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
       )
     } else {
       locationSubmitButton = (
-        <Button id='location-submit-button' onClick={this.updateLocation}>Change</Button>
+        <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
       )
       passwordSubmitButton = (
-        <Button id='password-submit-button' onClick={this.updatePassword}>Change</Button>
+        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
       )
     }
 

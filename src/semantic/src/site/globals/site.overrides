@@ -103,7 +103,7 @@ h4 {
 
 @media screen and (min-width: 700px) {
   .whitebox {
-    width: 300px;
+    width: 560px;
   }
 }
 
@@ -141,7 +141,8 @@ h4 {
   margin-bottom: 2em;
 }
 
-#password-submit-button, #location-submit-button, .cancel-button {
+.submit-button, 
+.cancel-button {
   margin-top: 1rem!important;
 }
 
@@ -176,6 +177,6 @@ h4 {
 
 @media screen and (min-width: 700px) {
   .expanding-wrapper {
-    width: 600px;
+    width: 500px;
   }
 }
