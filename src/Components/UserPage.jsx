@@ -63,7 +63,7 @@ class UserPage extends Component {
       errorDisplay: false,
       password: ''
     })
-    this.hostProfileElement.current.closeAllForms()
+//    this.hostProfileElement.current.closeAllForms()
   }
 
   passwordFormHandler = () => {
@@ -77,7 +77,7 @@ class UserPage extends Component {
       new_password: '',
       new_password_confirmation: ''
     })
-    this.hostProfileElement.current.closeAllForms()
+//    this.hostProfileElement.current.closeAllForms()
   }
 
   hostProfileFormHandler = () => {
@@ -157,7 +157,7 @@ class UserPage extends Component {
           })
           window.location.replace('/login')
           window.localStorage.clear()
-          window.alert('Your password was successfully changed! Please log in again.')
+          window.alert('Your password was successfully changed!')
         })
         .catch(error => {
           this.setState({
