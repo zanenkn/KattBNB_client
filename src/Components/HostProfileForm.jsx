@@ -320,12 +320,8 @@ class HostProfileForm extends Component {
         {onCreateErrorMessage}
 
         <div className='button-wrapper'>
-          <div>
-            <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
-          </div>
-          <div>
-            {createHostProfileButton}
-          </div>
+          <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
+          {createHostProfileButton}
         </div>
 
       </div>
