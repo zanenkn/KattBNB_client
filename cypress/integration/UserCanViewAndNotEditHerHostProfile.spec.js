@@ -29,6 +29,6 @@ describe('User can view her host profile', () => {
   it('and get an error message on max cats accepted update if update criteria are not met', () => {
     cy.get('#change-maxCats-link').click()
     cy.get('#maxCats-submit-button').click()
-    cy.contains('The field is blank or unchanged!')
+    cy.contains('The field is blank, unchanged or the number is invalid!')
   })
 })

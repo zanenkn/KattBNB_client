@@ -110,7 +110,7 @@ class HostProfile extends Component {
 
   updateMaxCats = (e) => {
     e.preventDefault()
-    if (this.state.newMaxCats !== '' && this.state.newMaxCats !== this.state.maxCats) {
+    if (this.state.newMaxCats !== '' && this.state.newMaxCats !== this.state.maxCats && this.state.newMaxCats >= 1) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -124,7 +124,7 @@ class HostProfile extends Component {
         .then(() => {
           this.setState({
             errorDisplay: false,
-            maxCats: this.state.newMaxCats,
+            maxCats: Math.floor(this.state.newMaxCats),
             editMaxCatsForm: false
           })
           window.alert('Your maximum amount of cats accepted was succesfully updated!')
@@ -138,7 +138,7 @@ class HostProfile extends Component {
     } else {
       this.setState({
         errorDisplay: true,
-        errors: ['The field is blank or unchanged!']
+        errors: ['The field is blank, unchanged or the number is invalid!']
       })
     }
   }
