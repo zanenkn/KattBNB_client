@@ -56,7 +56,7 @@ describe('User can view her host profile', () => {
   })
 
   it('and change her maximum accepted cats successfully', () => {
-    cy.contains('Maximum cats: 3').should('not.exist')
+    cy.contains('Maximum cats: 5').should('not.exist')
     cy.get('#change-maxCats-link').click()
     cy.get('#newMaxCats').clear()
     cy.get('#newMaxCats').type('5')

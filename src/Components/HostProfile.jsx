@@ -10,6 +10,7 @@ class HostProfile extends Component {
     newDescription: '',
     full_address: '',
     rate: '',
+    newRate: '',
     maxCats: '',
     newMaxCats: '',
     supplement: '',
@@ -17,7 +18,8 @@ class HostProfile extends Component {
     errors: '',
     errorDisplay: false,
     editDescriptionForm: false,
-    editMaxCatsForm: false
+    editMaxCatsForm: false,
+    editRateForm: false
   }
 
   componentDidMount() {
@@ -58,7 +60,8 @@ class HostProfile extends Component {
       editDescriptionForm: !this.state.editDescriptionForm,
       newDescription: this.state.description,
       errorDisplay: false,
-      editMaxCatsForm: false
+      editMaxCatsForm: false,
+      editRateForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -68,7 +71,19 @@ class HostProfile extends Component {
       editMaxCatsForm: !this.state.editMaxCatsForm,
       newMaxCats: this.state.maxCats,
       errorDisplay: false,
-      editDescriptionForm: false
+      editDescriptionForm: false,
+      editRateForm: false
+    })
+    this.props.closeLocPasForms()
+  }
+
+  rateFormHandler = () => {
+    this.setState({
+      editRateForm: !this.state.editRateForm,
+      newRate: this.state.rate,
+      errorDisplay: false,
+      editDescriptionForm: false,
+      editMaxCatsForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -143,10 +158,46 @@ class HostProfile extends Component {
     }
   }
 
+  updateRate = (e) => {
+    e.preventDefault()
+    if (this.state.newRate !== '' && this.state.newRate !== this.state.rate && this.state.newRate >= 0.01) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        price_per_day_1_cat: this.state.newRate
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            errorDisplay: false,
+            rate: this.state.newRate,
+            editRateForm: false
+          })
+          window.alert('Your daily rate for 1 cat was succesfully updated!')
+        })
+        .catch(error => {
+          this.setState({
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        errorDisplay: true,
+        errors: ['The field is blank, unchanged or the number is invalid!']
+      })
+    }
+  }
+
   render() {
 
     let editDescriptionForm
     let editMaxCatsForm
+    let editRateForm
     let errorDisplay
 
     if (this.state.errorDisplay) {
@@ -203,6 +254,27 @@ class HostProfile extends Component {
       )
     }
 
+    if (this.state.editRateForm) {
+      editRateForm = (
+        <>
+          <Form id='update-rate'>
+            <Form.Input
+              required
+              type='number'
+              id='newRate'
+              value={this.state.newRate}
+              onChange={this.onChangeHandler}
+            />
+            <div className='button-wrapper'>
+              <Button secondary id='rate-close-button' onClick={this.rateFormHandler}>Close</Button>
+              <Button id='rate-submit-button' onClick={this.updateRate}>Change</Button>
+            </div>
+          </Form>
+          {errorDisplay}
+        </>
+      )
+    }
+
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
 
@@ -248,10 +320,11 @@ class HostProfile extends Component {
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M18 6V4H2v2h16zm0 4H2v6h16v-6zM0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm4 8h4v2H4v-2z" /></svg>
                 &nbsp;{rate} kr/day for 1 cat&nbsp;
               </p>
-              <Header id='change-rate-link' className='fake-link-underlined top-bottom-margin-auto' >
+              <Header id='change-rate-link' className='fake-link-underlined top-bottom-margin-auto' onClick={this.rateFormHandler}>
                 Change
               </Header>
             </div>
+            {editRateForm}
             <div className='flexbox-row'>
               <p id='supplement' className='top-bottom-margin-auto'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" /></svg>
