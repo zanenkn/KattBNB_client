@@ -18,6 +18,7 @@ class HostProfile extends Component {
     availability: '',
     errors: '',
     errorDisplay: false,
+    loading: false,
     editDescriptionForm: false,
     editMaxCatsForm: false,
     editRateForm: false,
@@ -115,6 +116,9 @@ class HostProfile extends Component {
 
   updateDescription = (e) => {
     e.preventDefault()
+    this.setState({
+      loading: true
+    })
     if (this.state.newDescription !== '' && this.state.newDescription !== this.state.description) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
@@ -128,6 +132,7 @@ class HostProfile extends Component {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
+            loading: false,
             errorDisplay: false,
             description: this.state.newDescription,
             editDescriptionForm: false
@@ -136,12 +141,14 @@ class HostProfile extends Component {
         })
         .catch(error => {
           this.setState({
+            loading: false,
             errorDisplay: true,
             errors: error.response.data.errors.full_messages
           })
         })
     } else {
       this.setState({
+        loading: false,
         errorDisplay: true,
         errors: ['The field is blank or unchanged!']
       })
@@ -150,6 +157,9 @@ class HostProfile extends Component {
 
   updateMaxCats = (e) => {
     e.preventDefault()
+    this.setState({
+      loading: true
+    })
     if (this.state.newMaxCats !== '' && this.state.newMaxCats !== this.state.maxCats && this.state.newMaxCats >= 1) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
@@ -163,6 +173,7 @@ class HostProfile extends Component {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
+            loading: false,
             errorDisplay: false,
             maxCats: Math.floor(this.state.newMaxCats),
             editMaxCatsForm: false
@@ -171,12 +182,14 @@ class HostProfile extends Component {
         })
         .catch(error => {
           this.setState({
+            loading: false,
             errorDisplay: true,
             errors: error.response.data.errors.full_messages
           })
         })
     } else {
       this.setState({
+        loading: false,
         errorDisplay: true,
         errors: ['The field is blank, unchanged or the number is invalid!']
       })
@@ -191,6 +204,9 @@ class HostProfile extends Component {
 
   updateRate = (e) => {
     e.preventDefault()
+    this.setState({
+      loading: true
+    })
     if (this.state.newRate !== '' && this.state.newRate !== this.state.rate && this.state.newRate >= 0.01) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
@@ -204,6 +220,7 @@ class HostProfile extends Component {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
+            loading: false,
             errorDisplay: false,
             rate: this.state.newRate,
             editRateForm: false
@@ -212,12 +229,14 @@ class HostProfile extends Component {
         })
         .catch(error => {
           this.setState({
+            loading: false,
             errorDisplay: true,
             errors: error.response.data.errors.full_messages
           })
         })
     } else {
       this.setState({
+        loading: false,
         errorDisplay: true,
         errors: ['The field is blank, unchanged or the number is invalid!']
       })
@@ -232,6 +251,9 @@ class HostProfile extends Component {
 
   updateSupplement = (e) => {
     e.preventDefault()
+    this.setState({
+      loading: true
+    })
     if (this.state.newSupplement !== '' && this.state.newSupplement !== this.state.supplement && this.state.newSupplement >= 0) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
@@ -245,6 +267,7 @@ class HostProfile extends Component {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
+            loading: false,
             errorDisplay: false,
             supplement: this.state.newSupplement,
             editSupplementForm: false
@@ -253,12 +276,14 @@ class HostProfile extends Component {
         })
         .catch(error => {
           this.setState({
+            loading: false,
             errorDisplay: true,
             errors: error.response.data.errors.full_messages
           })
         })
     } else {
       this.setState({
+        loading: false,
         errorDisplay: true,
         errors: ['The field is blank, unchanged or the number is invalid!']
       })
@@ -274,9 +299,13 @@ class HostProfile extends Component {
   render() {
 
     let editDescriptionForm
+    let descriptionFormSubmitButton
     let editMaxCatsForm
+    let maxCatsFormSubmitButton
     let editRateForm
+    let rateFormSubmitButton
     let editSupplementForm
+    let supplementFormSubmitButton
     let errorDisplay
 
     if (this.state.errorDisplay) {
@@ -292,6 +321,34 @@ class HostProfile extends Component {
       )
     }
 
+    if (this.state.loading) {
+      descriptionFormSubmitButton = (
+        <Button loading id='description-submit-button'>Change</Button>
+      )
+      maxCatsFormSubmitButton = (
+        <Button loading id='maxCats-submit-button'>Change</Button>
+      )
+      rateFormSubmitButton = (
+        <Button loading id='rate-submit-button'>Change</Button>
+      )
+      supplementFormSubmitButton = (
+        <Button loading id='supplement-submit-button'>Change</Button>
+      )
+    } else {
+      descriptionFormSubmitButton = (
+        <Button id='description-submit-button' onClick={this.updateDescription}>Change</Button>
+      )
+      maxCatsFormSubmitButton = (
+        <Button id='maxCats-submit-button' onClick={this.updateMaxCats}>Change</Button>
+      )
+      rateFormSubmitButton = (
+        <Button id='rate-submit-button' onClick={this.updateRate}>Change</Button>
+      )
+      supplementFormSubmitButton = (
+        <Button id='supplement-submit-button' onClick={this.updateSupplement}>Change</Button>
+      )
+    }
+
     if (this.state.editDescriptionForm) {
       editDescriptionForm = (
         <>
@@ -304,7 +361,7 @@ class HostProfile extends Component {
             />
             <div className='button-wrapper'>
               <Button secondary id='description-close-button' onClick={this.descriptionFormHandler}>Close</Button>
-              <Button id='description-submit-button' onClick={this.updateDescription}>Change</Button>
+              {descriptionFormSubmitButton}
             </div>
           </Form>
           {errorDisplay}
@@ -326,7 +383,7 @@ class HostProfile extends Component {
             />
             <div className='button-wrapper'>
               <Button secondary id='maxCats-close-button' onClick={this.maxCatsFormHandler}>Close</Button>
-              <Button id='maxCats-submit-button' onClick={this.updateMaxCats}>Change</Button>
+              {maxCatsFormSubmitButton}
             </div>
           </Form>
           {errorDisplay}
@@ -348,7 +405,7 @@ class HostProfile extends Component {
             />
             <div className='button-wrapper'>
               <Button secondary id='rate-close-button' onClick={this.rateFormHandler}>Close</Button>
-              <Button id='rate-submit-button' onClick={this.updateRate}>Change</Button>
+              {rateFormSubmitButton}
             </div>
           </Form>
           {errorDisplay}
@@ -370,7 +427,7 @@ class HostProfile extends Component {
             />
             <div className='button-wrapper'>
               <Button secondary id='supplement-close-button' onClick={this.supplementFormHandler}>Close</Button>
-              <Button id='supplement-submit-button' onClick={this.updateSupplement}>Change</Button>
+              {supplementFormSubmitButton}
             </div>
           </Form>
           {errorDisplay}
