@@ -40,7 +40,6 @@ class HostProfile extends Component {
           maxCats: response.data.max_cats_accepted,
           supplement: response.data.supplement_price_per_cat_per_day,
           availability: response.data.availability,
-          newDescription: response.data.description
         })
       })
       .catch(error => {
