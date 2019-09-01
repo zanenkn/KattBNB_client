@@ -31,4 +31,16 @@ describe('User can view her host profile', () => {
     cy.get('#maxCats-submit-button').click()
     cy.contains('The field is blank, unchanged or the number is invalid!')
   })
+
+  it('and get an error message on daily rate update if update criteria are not met', () => {
+    cy.get('#change-rate-link').click()
+    cy.get('#rate-submit-button').click()
+    cy.contains('The field is blank, unchanged or the number is invalid!')
+  })
+
+  it('and get an error message on supplement update if update criteria are not met', () => {
+    cy.get('#change-supplement-link').click()
+    cy.get('#supplement-submit-button').click()
+    cy.contains('The field is blank, unchanged or the number is invalid!')
+  })
 })

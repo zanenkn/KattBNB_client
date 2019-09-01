@@ -66,4 +66,28 @@ describe('User can view her host profile', () => {
     })
     cy.contains('Maximum cats: 5')
   })
+
+  it('and change her daily rate successfully', () => {
+    cy.contains('120 kr/day for 1 cat').should('not.exist')
+    cy.get('#change-rate-link').click()
+    cy.get('#newRate').clear()
+    cy.get('#newRate').type('120')
+    cy.get('#rate-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your daily rate for 1 cat was succesfully updated!')
+    })
+    cy.contains('120 kr/day for 1 cat')
+  })
+
+  it('and change her supplement rate successfully', () => {
+    cy.contains('Extra 20 kr/day per cat').should('not.exist')
+    cy.get('#change-supplement-link').click()
+    cy.get('#newSupplement').clear()
+    cy.get('#newSupplement').type('20')
+    cy.get('#supplement-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your supplement rate for 1 cat was succesfully updated!')
+    })
+    cy.contains('Extra 20 kr/day per cat')
+  })
 })
