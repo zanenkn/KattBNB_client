@@ -66,7 +66,8 @@ class HostProfile extends Component {
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
-      editSupplementForm: false
+      editSupplementForm: false,
+      editableCalendar: false
     })
   }
 
@@ -312,6 +313,12 @@ class HostProfile extends Component {
     }
   }
 
+  listenEnterSupplementUpdate = (event) => {
+    if (event.key === "Enter") {
+      this.updateSupplement(event)
+    }
+  }
+
   updateAvailability = (e) => {
     e.preventDefault()
     this.setState({
@@ -324,15 +331,12 @@ class HostProfile extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-
       const filteredAvailability = this.state.newAvailability.filter(function (value, index, arr) {
         return value > (new Date()).getTime()
       })
-
       const payload = {
         availability: filteredAvailability
       }
-
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
@@ -356,12 +360,6 @@ class HostProfile extends Component {
         errorDisplay: true,
         errors: ['There were no changes made in your availability!']
       })
-    }
-  }
-
-  listenEnterSupplementUpdate = (event) => {
-    if (event.key === "Enter") {
-      this.updateSupplement(event)
     }
   }
 
@@ -392,7 +390,6 @@ class HostProfile extends Component {
   }
 
 
-
   render() {
 
     let editDescriptionForm
@@ -404,8 +401,16 @@ class HostProfile extends Component {
     let editSupplementForm
     let supplementFormSubmitButton
     let availabilityFormSubmitButton
-    let errorDisplay
     let selectedDays
+    let calendar
+    const today = new Date()
+    let errorDisplay
+    const rate = parseFloat(this.state.rate)
+    const supplement = parseFloat(this.state.supplement)
+    
+    selectedDays = this.state.availability.map(function (date) {
+      return new Date(date)
+    })
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -554,24 +559,14 @@ class HostProfile extends Component {
           {errorDisplay}
         </>
       )
-    }
-
-    const rate = parseFloat(this.state.rate)
-    const supplement = parseFloat(this.state.supplement)
-
-    selectedDays = this.state.availability.map(function (date) {
-      return new Date(date)
-    })
-
-    let calendar
-    const today = new Date()
+    }    
 
     if (this.state.editableCalendar) {
       calendar = (
         <>
           <p>
             You can now update your availability dates:
-      </p>
+          </p>
           <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
             <DayPicker
               showWeekNumbers
@@ -592,7 +587,6 @@ class HostProfile extends Component {
             </div>
           </div>
           {errorDisplay}
-
         </>
       )
     } else {
@@ -608,6 +602,7 @@ class HostProfile extends Component {
         </div>
       )
     }
+
 
     return (
       <Segment className='whitebox'>
