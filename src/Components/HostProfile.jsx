@@ -84,10 +84,12 @@ class HostProfile extends Component {
       newMaxCats: '',
       newRate: '',
       newSupplement: '',
+      newAvailability: [],
       errorDisplay: false,
       editMaxCatsForm: false,
       editRateForm: false,
-      editSupplementForm: false
+      editSupplementForm: false,
+      editableCalendar: false
     })
     this.props.closeLocPasForms()
   }
@@ -99,10 +101,12 @@ class HostProfile extends Component {
       newDescription: '',
       newRate: '',
       newSupplement: '',
+      newAvailability: [],
       errorDisplay: false,
       editDescriptionForm: false,
       editRateForm: false,
-      editSupplementForm: false
+      editSupplementForm: false,
+      editableCalendar: false
     })
     this.props.closeLocPasForms()
   }
@@ -114,10 +118,12 @@ class HostProfile extends Component {
       newDescription: '',
       newMaxCats: '',
       newSupplement: '',
+      newAvailability: [],
       errorDisplay: false,
       editDescriptionForm: false,
       editMaxCatsForm: false,
-      editSupplementForm: false
+      editSupplementForm: false,
+      editableCalendar: false
     })
     this.props.closeLocPasForms()
   }
@@ -129,10 +135,29 @@ class HostProfile extends Component {
       newDescription: '',
       newMaxCats: '',
       newRate: '',
+      newAvailability: [],
       errorDisplay: false,
       editDescriptionForm: false,
       editMaxCatsForm: false,
-      editRateForm: false
+      editRateForm: false,
+      editableCalendar: false
+    })
+    this.props.closeLocPasForms()
+  }
+
+  availabilityFormHandler = () => {
+    this.setState({
+      editableCalendar: !this.state.editableCalendar,
+      newAvailability: this.state.availability,
+      newDescription: '',
+      newMaxCats: '',
+      newRate: '',
+      newSupplement: '',
+      errorDisplay: false,
+      editDescriptionForm: false,
+      editMaxCatsForm: false,
+      editRateForm: false,
+      editSupplementForm: false
     })
     this.props.closeLocPasForms()
   }
@@ -407,7 +432,7 @@ class HostProfile extends Component {
     let errorDisplay
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
-    
+
     selectedDays = this.state.availability.map(function (date) {
       return new Date(date)
     })
@@ -580,7 +605,7 @@ class HostProfile extends Component {
 
           <div className='button-wrapper'>
             <div>
-              <Button secondary id='availability-close-button' className='cancel-button' onClick={() => { this.setState({ editableCalendar: !this.state.editableCalendar }) }}>Close</Button>
+              <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
             <div>
               {availabilityFormSubmitButton}
@@ -662,7 +687,7 @@ class HostProfile extends Component {
         <p id='availability' style={{ 'margin-bottom': '0' }}>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
           &nbsp;Your availability&ensp;
-          <Header as='strong' id='change-availability-link' onClick={() => { this.setState({ editableCalendar: !this.state.editableCalendar }) }} className='fake-link-underlined' >
+          <Header as='strong' id='change-availability-link' onClick={this.availabilityFormHandler} className='fake-link-underlined' >
             Change
           </Header>
         </p>
