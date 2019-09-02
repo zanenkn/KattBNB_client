@@ -5,24 +5,31 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import '../style.css'
 
 class HostProfile extends Component {
-  state = {
-    description: '',
-    newDescription: '',
-    full_address: '',
-    rate: '',
-    newRate: '',
-    maxCats: '',
-    newMaxCats: '',
-    supplement: '',
-    newSupplement: '',
-    availability: [],
-    errors: '',
-    errorDisplay: false,
-    loading: false,
-    editDescriptionForm: false,
-    editMaxCatsForm: false,
-    editRateForm: false,
-    editSupplementForm: false
+  constructor(props) {
+    super(props)
+    this.handleDayClick = this.handleDayClick.bind(this)
+    this.state = {
+      description: '',
+      newDescription: '',
+      full_address: '',
+      rate: '',
+      newRate: '',
+      maxCats: '',
+      newMaxCats: '',
+      supplement: '',
+      newSupplement: '',
+      availability: [],
+      newAvailability: [],
+      selectedDays: [],
+      errors: '',
+      errorDisplay: false,
+      loading: false,
+      editDescriptionForm: false,
+      editMaxCatsForm: false,
+      editRateForm: false,
+      editSupplementForm: false,
+      editableCalendar: false
+    }
   }
 
   componentDidMount() {
@@ -40,7 +47,10 @@ class HostProfile extends Component {
           rate: response.data.price_per_day_1_cat,
           maxCats: response.data.max_cats_accepted,
           supplement: response.data.supplement_price_per_cat_per_day,
-          availability: response.data.availability
+          availability: response.data.availability,
+          selectedDays: response.data.availability.map(function (date) {
+            return new Date(date)
+          })
         })
       })
       .catch(error => {
@@ -308,6 +318,34 @@ class HostProfile extends Component {
     }
   }
 
+  convertAvailabilityDates() {
+    let availableDates = this.state.selectedDays.map(function (day) {
+      return new Date(day).getTime()
+    })
+    let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
+    this.setState({
+      newAvailability: sortedAvailableDates
+    })
+  }
+
+  handleDayClick(day, { selected }) {
+    const { selectedDays } = this.state
+    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+      if (selected) {
+        const selectedIndex = selectedDays.findIndex(selectedDay =>
+          DateUtils.isSameDay(selectedDay, day)
+        )
+        selectedDays.splice(selectedIndex, 1)
+      } else {
+        selectedDays.push(day)
+      }
+      this.setState({ selectedDays })
+      this.convertAvailabilityDates()
+    }
+  }
+
+
+
   render() {
 
     let editDescriptionForm
@@ -471,6 +509,34 @@ class HostProfile extends Component {
       return new Date(date)
     })
 
+    let calendar
+
+    if(this.state.editableCalendar) {
+      calendar = (
+      <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+        <DayPicker
+          showWeekNumbers
+          firstDayOfWeek={1}
+          selectedDays={this.state.selectedDays}
+          fromMonth={selectedDays[0]}
+          onDayClick={this.handleDayClick}
+        />
+      </div>
+      )
+    } else {
+      calendar = (
+      <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+        <DayPicker
+          showWeekNumbers
+          firstDayOfWeek={1}
+          selectedDays={selectedDays}
+          fromMonth={selectedDays[0]}
+          toMonth={selectedDays[selectedDays.length - 1]}
+        />
+      </div>
+      )
+    }
+
     return (
       <Segment className='whitebox'>
         <Header as='h1'>
@@ -529,19 +595,11 @@ class HostProfile extends Component {
         <p id='availability' style={{ 'margin-bottom': '0' }}>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
           &nbsp;Your availability&ensp;
-            <Header as='strong' id='change-availability-link' className='fake-link-underlined' >
+          <Header as='strong' id='change-availability-link' onClick={() => {this.setState({editableCalendar: !this.state.editableCalendar})}} className='fake-link-underlined' >
             Change
-            </Header>
+          </Header>
         </p>
-        <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
-          <DayPicker
-            showWeekNumbers
-            firstDayOfWeek={1}
-            selectedDays={selectedDays}
-            fromMonth={selectedDays[0]}
-            toMonth={selectedDays[selectedDays.length - 1]}
-          />
-        </div>
+        {calendar}
 
       </Segment>
     )
