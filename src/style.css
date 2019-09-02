@@ -73,8 +73,9 @@
 .DayPicker-Caption {
   display: table-caption;
   margin-bottom: 0.5em;
-  padding: 0 0.5em;
+  padding: 0 2em;
   text-align: left;
+  color: gray;
 }
 
 .DayPicker-Caption>div {
