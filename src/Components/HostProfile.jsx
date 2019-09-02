@@ -326,7 +326,7 @@ class HostProfile extends Component {
       }
 
       const filteredAvailability = this.state.newAvailability.filter(function (value, index, arr) {
-        return value > (new Date).getTime()
+        return value > (new Date()).getTime()
       })
 
       const payload = {

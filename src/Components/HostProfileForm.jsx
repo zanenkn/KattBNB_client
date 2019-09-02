@@ -302,8 +302,8 @@ class HostProfileForm extends Component {
             <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
           </p>
 
-          <div className='required field'>
-            <label for='availability'>
+          <div>
+            <label for='availability' style={{ 'color': 'grey', 'fontWeight': '700' }}>
               Availability
             </label>
 
