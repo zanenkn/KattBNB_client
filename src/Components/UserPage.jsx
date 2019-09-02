@@ -16,6 +16,7 @@ class UserPage extends Component {
     displayPasswordForm: false,
     password: '',
     location: this.props.location,
+    newLocation: this.props.location,
     current_password: '',
     new_password: '',
     new_password_confirmation: '',
@@ -51,7 +52,7 @@ class UserPage extends Component {
   }
 
   handleLocationChange = (e, { value }) => {
-    this.setState({ location: value })
+    this.setState({ newLocation: value })
   }
 
   locationFormHandlerNoProfile = () => {
@@ -59,7 +60,7 @@ class UserPage extends Component {
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
       host_profile_form: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       errorDisplay: false,
       password: '',
       current_password: '',
@@ -73,7 +74,7 @@ class UserPage extends Component {
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
       host_profile_form: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       errorDisplay: false,
       password: '',
       current_password: '',
@@ -87,7 +88,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       host_profile_form: false,
       errorDisplay: false,
       password: '',
@@ -101,7 +102,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       host_profile_form: false,
       errorDisplay: false,
       password: '',
@@ -116,7 +117,7 @@ class UserPage extends Component {
     this.setState({
       host_profile_form: !this.state.host_profile_form,
       displayLocationForm: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       displayPasswordForm: false,
       errorDisplay: false
     })
@@ -125,7 +126,7 @@ class UserPage extends Component {
   closeLocationAndPasswordForms = () => {
     this.setState({
       displayLocationForm: false,
-      location: this.props.location,
+      location: this.state.newLocation,
       displayPasswordForm: false,
       password: '',
       current_password: '',
@@ -144,7 +145,7 @@ class UserPage extends Component {
       const path = '/api/v1/auth/'
       const payload = {
         current_password: this.state.password,
-        location: this.state.location,
+        location: this.state.newLocation,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')

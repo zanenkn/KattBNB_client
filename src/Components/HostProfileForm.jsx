@@ -223,13 +223,13 @@ class HostProfileForm extends Component {
 
     if (this.state.loading) {
       createHostProfileButton = (
-        <Button id='save-host-profile-button' loading>
+        <Button id='save-host-profile-button' className='submit-button' loading>
           Save
         </Button>
       )
     } else {
       createHostProfileButton = (
-        <Button id='save-host-profile-button' onClick={this.createHostProfile}>
+        <Button id='save-host-profile-button' className='submit-button' onClick={this.createHostProfile}>
           Save
         </Button>
       )
@@ -323,8 +323,12 @@ class HostProfileForm extends Component {
         {onCreateErrorMessage}
 
         <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
-          {createHostProfileButton}
+          <div>
+            <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
+          </div>
+          <div>
+            {createHostProfileButton}
+          </div>
         </div>
 
       </div>
