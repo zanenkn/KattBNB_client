@@ -98,7 +98,11 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       location: this.props.location,
-      displayPasswordForm: false
+      displayPasswordForm: false,
+      password: '',
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: ''
     })
   }
 
