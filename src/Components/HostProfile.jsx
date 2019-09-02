@@ -312,6 +312,53 @@ class HostProfile extends Component {
     }
   }
 
+  updateAvailability = (e) => {
+    e.preventDefault()
+    this.setState({
+      loading: true
+    })
+    if (this.state.newAvailability !== this.state.availability) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+
+      const filteredAvailability = this.state.newAvailability.filter(function (value, index, arr) {
+        return value > (new Date).getTime()
+      })
+
+      const payload = {
+        availability: filteredAvailability
+      }
+
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            loading: false,
+            errorDisplay: false,
+            availability: this.state.newAvailability,
+            editableCalendar: false
+          })
+          window.alert('Your availability was succesfully updated!')
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['There were no changes made in your availability!']
+      })
+    }
+  }
+
   listenEnterSupplementUpdate = (event) => {
     if (event.key === "Enter") {
       this.updateSupplement(event)
@@ -356,6 +403,7 @@ class HostProfile extends Component {
     let rateFormSubmitButton
     let editSupplementForm
     let supplementFormSubmitButton
+    let availabilityFormSubmitButton
     let errorDisplay
     let selectedDays
 
@@ -385,6 +433,9 @@ class HostProfile extends Component {
       supplementFormSubmitButton = (
         <Button loading id='supplement-submit-button' className='submit-button'>Change</Button>
       )
+      availabilityFormSubmitButton = (
+        <Button loading id='availability-submit-button' className='submit-button'>Change</Button>
+      )
     } else {
       descriptionFormSubmitButton = (
         <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Change</Button>
@@ -397,6 +448,9 @@ class HostProfile extends Component {
       )
       supplementFormSubmitButton = (
         <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Change</Button>
+      )
+      availabilityFormSubmitButton = (
+        <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Change</Button>
       )
     }
 
@@ -510,30 +564,48 @@ class HostProfile extends Component {
     })
 
     let calendar
+    const today = new Date()
 
-    if(this.state.editableCalendar) {
+    if (this.state.editableCalendar) {
       calendar = (
-      <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
-        <DayPicker
-          showWeekNumbers
-          firstDayOfWeek={1}
-          selectedDays={this.state.selectedDays}
-          fromMonth={selectedDays[0]}
-          onDayClick={this.handleDayClick}
-        />
-      </div>
+        <>
+          <p>
+            You can now update your availability dates:
+      </p>
+          <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+            <DayPicker
+              showWeekNumbers
+              firstDayOfWeek={1}
+              selectedDays={this.state.selectedDays}
+              fromMonth={today}
+              disabledDays={{ before: today }}
+              onDayClick={this.handleDayClick}
+            />
+          </div>
+
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary id='availability-close-button' className='cancel-button' onClick={() => { this.setState({ editableCalendar: !this.state.editableCalendar }) }}>Close</Button>
+            </div>
+            <div>
+              {availabilityFormSubmitButton}
+            </div>
+          </div>
+          {errorDisplay}
+
+        </>
       )
     } else {
       calendar = (
-      <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
-        <DayPicker
-          showWeekNumbers
-          firstDayOfWeek={1}
-          selectedDays={selectedDays}
-          fromMonth={selectedDays[0]}
-          toMonth={selectedDays[selectedDays.length - 1]}
-        />
-      </div>
+        <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+          <DayPicker
+            showWeekNumbers
+            firstDayOfWeek={1}
+            selectedDays={selectedDays}
+            fromMonth={selectedDays[0]}
+            toMonth={selectedDays[selectedDays.length - 1]}
+          />
+        </div>
       )
     }
 
@@ -577,9 +649,9 @@ class HostProfile extends Component {
         <p id='rate'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M18 6V4H2v2h16zm0 4H2v6h16v-6zM0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm4 8h4v2H4v-2z" /></svg>
           &nbsp;{rate} kr/day for 1 cat&ensp;
-            <Header as='strong' id='change-rate-link' onClick={this.rateFormHandler} className='fake-link-underlined'>
+          <Header as='strong' id='change-rate-link' onClick={this.rateFormHandler} className='fake-link-underlined'>
             Change
-            </Header>
+          </Header>
         </p>
         {editRateForm}
 
@@ -595,7 +667,7 @@ class HostProfile extends Component {
         <p id='availability' style={{ 'margin-bottom': '0' }}>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
           &nbsp;Your availability&ensp;
-          <Header as='strong' id='change-availability-link' onClick={() => {this.setState({editableCalendar: !this.state.editableCalendar})}} className='fake-link-underlined' >
+          <Header as='strong' id='change-availability-link' onClick={() => { this.setState({ editableCalendar: !this.state.editableCalendar }) }} className='fake-link-underlined' >
             Change
           </Header>
         </p>
