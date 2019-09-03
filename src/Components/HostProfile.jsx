@@ -809,7 +809,7 @@ class HostProfile extends Component {
             </Header>
           </Divider>
 
-          <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+          <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem' }}>
             <DayPicker
               showWeekNumbers
               firstDayOfWeek={1}
@@ -821,10 +821,10 @@ class HostProfile extends Component {
           </div>
 
           <div className='button-wrapper' style={{ 'width': 'min-content', 'margin': 'auto' }}>
-            <div style={{ 'margin-right': '1rem' }}>
+            <div style={{ 'marginRight': '1rem' }}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div style={{ 'margin-left': '1rem' }}>
+            <div style={{ 'marginLeft': '1rem' }}>
               {availabilityFormSubmitButton}
             </div>
           </div>
@@ -833,7 +833,7 @@ class HostProfile extends Component {
       )
     } else {
       calendar = (
-        <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
+        <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem' }}>
           <DayPicker
             showWeekNumbers
             firstDayOfWeek={1}
@@ -875,7 +875,7 @@ class HostProfile extends Component {
             {addressErrorMessage}
 
             <Form.Input
-              style={{ 'margin-bottom': '2em' }}
+              style={{ 'marginBottom': '2em' }}
               placeholder='Search...'
               required
               id='user_input_address'
@@ -980,7 +980,7 @@ class HostProfile extends Component {
         </p>
         {editSupplementForm}
 
-        <p id='availability' style={{ 'margin-bottom': '0' }}>
+        <p id='availability' style={{ 'marginBottom': '0' }}>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
           &nbsp;Your availability&ensp;
           <Header as='strong' id='change-availability-link' onClick={this.availabilityFormHandler} className='fake-link-underlined' >

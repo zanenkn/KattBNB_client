@@ -243,7 +243,7 @@ class HostProfileForm extends Component {
         <Header as='h2'>
           Create host profile
         </Header>
-        <p className='small-centered-paragraph' style={{ 'margin-bottom': '1rem' }}>
+        <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
           Fill in this information about yourself and start hosting cats today!
         </p>
         <Form id='host-profile-form'>

@@ -299,7 +299,7 @@ class UserPage extends Component {
               placeholder='Select new location'
               options={LOCATION_OPTIONS}
               id='location'
-              style={{ 'margin-bottom': '1rem', 'width': '100%' }}
+              style={{ 'marginBottom': '1rem', 'width': '100%' }}
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKeyLocation}
             />
@@ -386,7 +386,7 @@ class UserPage extends Component {
       )
     } else {
       hostProfileForm = (
-        <div style={{ 'max-width': '300px', 'margin': 'auto' }}>
+        <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
           <p className='small-centered-paragraph'>You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.</p>
           <Button id='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)} >Create host profile</Button>
         </div>
@@ -416,7 +416,7 @@ class UserPage extends Component {
           <p style={{ 'textAlign': 'center' }}>
             This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
           </p>
-          <div style={{ 'display': 'table', 'margin': 'auto', 'padding-bottom': '1rem' }}>
+          <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
             <Icon.Group size='huge'>
               <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
               <Icon corner name='add' style={{ 'color': '#c90c61' }} />
@@ -453,7 +453,7 @@ class UserPage extends Component {
         {hostProfile}
         <Divider hidden />
 
-        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'margin-bottom': '1rem' }} >
+        <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
           Delete your account
         </Header>
 
