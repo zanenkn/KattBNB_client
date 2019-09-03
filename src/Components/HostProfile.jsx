@@ -482,6 +482,51 @@ class HostProfile extends Component {
     }
   }
 
+  updateAddress = (e) => {
+    e.preventDefault()
+    this.setState({
+      loading: true
+    })
+    if (this.state.newAddress !== '' && this.state.newAddress !== this.state.full_address) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        full_address: this.state.newAddress,
+        lat: this.state.lat,
+        long: this.state.long,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            loading: false,
+            errorDisplay: false,
+            full_address: this.state.newAddress,
+            editAddress: false
+          })
+          window.alert('Your address was succesfully updated!')
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['The field is blank or unchanged!']
+      })
+    }
+  }
+
 
   render() {
 
@@ -555,7 +600,7 @@ class HostProfile extends Component {
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
       addressFormSubmitButton = (
-        <Button id='address-submit-button' className='submit-button'>Save</Button>
+        <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
       )
     }
 
