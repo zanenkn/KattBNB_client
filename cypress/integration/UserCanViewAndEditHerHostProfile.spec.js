@@ -14,6 +14,12 @@ describe('User can view her host profile', () => {
       response: 'fixture:host_profile_individual.json'
     })
     cy.route({
+      method: 'GET',
+      url: 'https://maps.google.com/maps/api/geocode/json?address=arlanda%20airport&key=AIzaSyBocaDJSR80uzUcSvWfciq6at2729MC7kM',
+      status: 200,
+      response: 'fixture:successful_address_search.json'
+    })
+    cy.route({
       method: 'PATCH',
       url: 'http://localhost:3007/api/v1/host_profiles/1',
       status: 200,
@@ -103,5 +109,18 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your availability was succesfully updated!')
     })
+  })
+
+  it('and change her address successfully', () => {
+    cy.contains('Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden').should('not.exist')
+    cy.get('#change-address-link').click()
+    cy.get('#user_input_address').type('arlanda airport')
+    cy.get('#search').click()
+    cy.wait(1000)
+    cy.get('#address-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your address was succesfully updated!')
+    })
+    cy.contains('Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden')
   })
 })

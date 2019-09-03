@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "Stockholm Arlanda Airport",
+          "short_name": "Stockholm Arlanda Airport",
+          "types": [
+            "airport",
+            "establishment",
+            "point_of_interest",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Stockholm-Arlanda",
+          "short_name": "Stockholm-Arlanda",
+          "types": [
+            "postal_town"
+          ]
+        },
+        {
+          "long_name": "Stockholms län",
+          "short_name": "Stockholms län",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Sweden",
+          "short_name": "SE",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "190 45",
+          "short_name": "190 45",
+          "types": [
+            "postal_code"
+          ]
+        }
+      ],
+      "formatted_address": "Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden",
+      "geometry": {
+        "location": {
+          "lat": 59.6497622,
+          "lng": 17.9237807
+        },
+        "location_type": "GEOMETRIC_CENTER",
+        "viewport": {
+          "northeast": {
+            "lat": 59.65111118029151,
+            "lng": 17.9251296802915
+          },
+          "southwest": {
+            "lat": 59.64841321970849,
+            "lng": 17.9224317197085
+          }
+        }
+      },
+      "place_id": "ChIJ_YMtw2OdX0YRM1xOfqKV-FI",
+      "plus_code": {
+        "compound_code": "JWXF+WG Sigtuna N, Sweden",
+        "global_code": "9FFVJWXF+WG"
+      },
+      "types": [
+        "airport",
+        "establishment",
+        "point_of_interest",
+        "political"
+      ]
+    }
+  ],
+  "status": "OK"
+}

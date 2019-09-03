@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "address_components": [
+        {
+          "long_name": "Charles de Gaulle Airport",
+          "short_name": "Charles de Gaulle Airport",
+          "types": [
+            "airport",
+            "establishment",
+            "point_of_interest",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Roissy-en-France",
+          "short_name": "Roissy-en-France",
+          "types": [
+            "locality",
+            "political"
+          ]
+        },
+        {
+          "long_name": "Île-de-France",
+          "short_name": "Île-de-France",
+          "types": [
+            "administrative_area_level_1",
+            "political"
+          ]
+        },
+        {
+          "long_name": "France",
+          "short_name": "FR",
+          "types": [
+            "country",
+            "political"
+          ]
+        },
+        {
+          "long_name": "95700",
+          "short_name": "95700",
+          "types": [
+            "postal_code"
+          ]
+        }
+      ],
+      "formatted_address": "Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France",
+      "geometry": {
+        "location": {
+          "lat": 49.0096906,
+          "lng": 2.5479245
+        },
+        "location_type": "GEOMETRIC_CENTER",
+        "viewport": {
+          "northeast": {
+            "lat": 49.0110395802915,
+            "lng": 2.549273480291502
+          },
+          "southwest": {
+            "lat": 49.0083416197085,
+            "lng": 2.546575519708498
+          }
+        }
+      },
+      "place_id": "ChIJW89MjgM-5kcRLKZbL5jgKwQ",
+      "plus_code": {
+        "compound_code": "2G5X+V5 Roissy-en-France, France",
+        "global_code": "8FX42G5X+V5"
+      },
+      "types": [
+        "airport",
+        "establishment",
+        "point_of_interest",
+        "political"
+      ]
+    }
+  ],
+  "status": "OK"
+}
