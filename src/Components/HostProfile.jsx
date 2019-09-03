@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Divider, Header, Form, Button, Message, Segment } from 'semantic-ui-react'
+import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../style.css'
 
@@ -452,35 +452,35 @@ class HostProfile extends Component {
 
     if (this.state.loading) {
       descriptionFormSubmitButton = (
-        <Button loading id='description-submit-button' className='submit-button'>Change</Button>
+        <Button loading id='description-submit-button' className='submit-button'>Save</Button>
       )
       maxCatsFormSubmitButton = (
-        <Button loading id='maxCats-submit-button' className='submit-button'>Change</Button>
+        <Button loading id='maxCats-submit-button' className='submit-button'>Save</Button>
       )
       rateFormSubmitButton = (
-        <Button loading id='rate-submit-button' className='submit-button'>Change</Button>
+        <Button loading id='rate-submit-button' className='submit-button'>Save</Button>
       )
       supplementFormSubmitButton = (
-        <Button loading id='supplement-submit-button' className='submit-button'>Change</Button>
+        <Button loading id='supplement-submit-button' className='submit-button'>Save</Button>
       )
       availabilityFormSubmitButton = (
-        <Button loading id='availability-submit-button' className='submit-button'>Change</Button>
+        <Button loading id='availability-submit-button' className='submit-button'>Save</Button>
       )
     } else {
       descriptionFormSubmitButton = (
-        <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Change</Button>
+        <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Save</Button>
       )
       maxCatsFormSubmitButton = (
-        <Button id='maxCats-submit-button' className='submit-button' onClick={this.updateMaxCats}>Change</Button>
+        <Button id='maxCats-submit-button' className='submit-button' onClick={this.updateMaxCats}>Save</Button>
       )
       rateFormSubmitButton = (
-        <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Change</Button>
+        <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Save</Button>
       )
       supplementFormSubmitButton = (
-        <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Change</Button>
+        <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Save</Button>
       )
       availabilityFormSubmitButton = (
-        <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Change</Button>
+        <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
     }
 
@@ -589,9 +589,20 @@ class HostProfile extends Component {
     if (this.state.editableCalendar) {
       calendar = (
         <>
-          <p>
-            You can now update your availability dates:
+        
+          <p className='small-centered-paragraph'>
+            You can update your availability below by marking the dates when you are willing to host.
           </p>
+
+          <Divider horizontal>
+            <Header as='h2'>
+              <Icon   
+                name='angle down' 
+                style={{'color': '#c90c61', 'margin': 'auto'}}
+              />
+            </Header>
+          </Divider>
+ 
           <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
             <DayPicker
               showWeekNumbers
@@ -603,11 +614,11 @@ class HostProfile extends Component {
             />
           </div>
 
-          <div className='button-wrapper'>
-            <div>
+          <div className='button-wrapper' style={{'width': 'min-content', 'margin': 'auto'}}>
+            <div style={{'margin-right': '1rem'}}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div>
+            <div style={{'margin-left': '1rem'}}>
               {availabilityFormSubmitButton}
             </div>
           </div>
