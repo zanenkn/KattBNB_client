@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../style.css'
@@ -28,7 +29,15 @@ class HostProfile extends Component {
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      editableCalendar: false
+      editableCalendar: false,
+      editAddress: false,
+      addressSearch: false,
+      newAddress: '', 
+      lat: '',
+      long: '',
+      latitude: '',
+      longitude: '',
+      user_input_adress: ''
     }
   }
 
@@ -50,7 +59,8 @@ class HostProfile extends Component {
           availability: response.data.availability,
           selectedDays: response.data.availability.map(function (date) {
             return new Date(date)
-          })
+          }),
+          user_input_address: response.data.full_address
         })
       })
       .catch(error => {
@@ -67,7 +77,8 @@ class HostProfile extends Component {
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      editableCalendar: false
+      editableCalendar: false,
+      addressSearch: false
     })
   }
 
@@ -81,6 +92,25 @@ class HostProfile extends Component {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
       newDescription: this.state.description,
+      newMaxCats: '',
+      newRate: '',
+      newSupplement: '',
+      newAvailability: [],
+      errorDisplay: false,
+      editMaxCatsForm: false,
+      editRateForm: false,
+      editSupplementForm: false,
+      editableCalendar: false
+    })
+    this.props.closeLocPasForms()
+  }
+
+  addressFormHandler = () => {
+    this.setState({
+      editAddress: !this.state.editAddress,
+      addressSearch: true,
+      newAddress: this.state.full_address,
+      user_input_address: this.state.full_address,
       newMaxCats: '',
       newRate: '',
       newSupplement: '',
@@ -248,6 +278,44 @@ class HostProfile extends Component {
     if (event.key === "Enter") {
       this.updateMaxCats(event)
     }
+  }
+
+  generateRandomNumberLat = () => {
+    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
+    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
+    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
+    return parseFloat(resultNumber)
+  }
+
+  generateRandomNumberLong = () => {
+    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
+    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
+    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
+    return parseFloat(resultNumber)
+  }
+
+  geolocationDataAddress = () => {
+    Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
+    Geocode.fromAddress(this.state.user_input_address).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        this.setState({
+          latitude: lat,
+          longitude: lng,
+          lat: lat - this.generateRandomNumberLat(),
+          long: lng + this.generateRandomNumberLong(),
+          newAddress: response.results[0].formatted_address,
+          addressSearch: false,
+          addressErrorDisplay: false
+        })
+      },
+      error => {
+        this.setState({
+          addressErrorDisplay: true,
+          addressError: error.message
+        })
+      }
+    )
   }
 
   updateRate = (e) => {
@@ -426,6 +494,7 @@ class HostProfile extends Component {
     let editSupplementForm
     let supplementFormSubmitButton
     let availabilityFormSubmitButton
+    let addressFormSubmitButton
     let selectedDays
     let calendar
     const today = new Date()
@@ -466,6 +535,9 @@ class HostProfile extends Component {
       availabilityFormSubmitButton = (
         <Button loading id='availability-submit-button' className='submit-button'>Save</Button>
       )
+      addressFormSubmitButton = (
+        <Button loading id='address-submit-button' className='submit-button'>Save</Button>
+      )
     } else {
       descriptionFormSubmitButton = (
         <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Save</Button>
@@ -481,6 +553,9 @@ class HostProfile extends Component {
       )
       availabilityFormSubmitButton = (
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
+      )
+      addressFormSubmitButton = (
+        <Button id='address-submit-button' className='submit-button'>Save</Button>
       )
     }
 
@@ -639,6 +714,75 @@ class HostProfile extends Component {
       )
     }
 
+    let addressSearch
+
+    if (this.state.editAddress) {
+      if (this.state.addressSearch === true) {
+        addressSearch = (
+          <>
+            <p className='small-centered-paragraph'>
+              You can update your address below by entering and searching your new address.
+            </p>
+
+            <Divider horizontal>
+              <Header as='h2'>
+                <Icon   
+                  name='angle down' 
+                  style={{'color': '#c90c61', 'margin': 'auto'}}
+                />
+              </Header>
+            </Divider>
+
+            <Form.Input
+              style={{'margin-bottom': '2em'}}
+              placeholder='Search..'
+              required
+              id='user_input_address'
+              value={this.state.user_input_address}
+              onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKeyAddress}
+              iconPosition='right'
+              icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} style={{ 'color': '#c90c61' }} />}
+            />
+          </>
+        )
+      } else {
+        addressSearch = (
+          <>
+            <p className='small-centered-paragraph'>
+              You can update your address below by entering and searching your new address.
+            </p>
+
+            <Divider horizontal>
+              <Header as='h2'>
+                <Icon   
+                  name='angle down' 
+                  style={{'color': '#c90c61', 'margin': 'auto'}}
+                />
+              </Header>
+            </Divider>
+            <div className='required field'>
+              <p>
+                {this.state.newAddress}&nbsp;
+                <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, newAddress: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
+                  Not right?
+                </Header>
+              </p>
+            </div>
+            <div className='button-wrapper'>
+              <div>
+                <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
+              </div>
+              <div>
+                {addressFormSubmitButton}
+              </div>
+            </div>
+            {errorDisplay}
+          </>
+        )
+      }
+    }
+
 
     return (
       <Segment className='whitebox'>
@@ -663,10 +807,11 @@ class HostProfile extends Component {
         <p id='address'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z" /></svg>
           &nbsp;{this.state.full_address}&ensp;
-            <Header as='strong' id='change-address-link' className='fake-link-underlined'>
+            <Header as='strong' id='change-address-link' onClick={this.addressFormHandler} className='fake-link-underlined'>
             Change
             </Header>
         </p>
+        {addressSearch}
 
         <p id='maxCats'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236.62 236.62"><path d="M197.023,225.545c-1.145-9.533-11.68-10.614-17.805-9.958c-6.521-24.554,16.225-61.151,17.563-69.82c1.438-9.312-6.658-63.5-7.513-90.938C188.389,26.662,147.48-4.433,140.65,0.524c-6.768,7.484,9.748,17.585,1.054,26.245c-8.398,8.367-10.588,13.99-16.824,23.46c-15.976,24.255,27.318,24.558,27.318,24.558s-33.882,25.112-41.421,37.768c-6.943,11.656-9.854,24.696-18.232,35.688c-19.094,25.051-14.791,68.729-14.791,68.729s-36.17-11.839-16.264-53.133C76.643,132.406,84.107,86.02,50.016,97.95c-13.189,4.616,2.949,14.325,5.734,17.435c9.318,10.4,1.441,27.896-4.174,38.012c-15.037,27.091-20.496,55.475,11.154,72.978c14.063,7.776,33.055,9.7,52.17,9.982l48.64,0.14C179.564,237.294,197.689,234.298,197.023,225.545z" /></svg>
