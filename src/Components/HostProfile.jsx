@@ -32,7 +32,7 @@ class HostProfile extends Component {
       editableCalendar: false,
       editAddress: false,
       addressSearch: false,
-      newAddress: '', 
+      newAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -424,8 +424,8 @@ class HostProfile extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const filteredAvailability = this.state.newAvailability.filter(function (value, index, arr) {
-        return value > (new Date()).getTime()
+      const filteredAvailability = this.state.newAvailability.filter(function (value) {
+        return value > (new Date()).getTime() - 86400000
       })
       const payload = {
         availability: filteredAvailability
@@ -704,25 +704,25 @@ class HostProfile extends Component {
           {errorDisplay}
         </>
       )
-    }    
+    }
 
     if (this.state.editableCalendar) {
       calendar = (
         <>
-        
+
           <p className='small-centered-paragraph'>
             You can update your availability below by marking the dates when you are willing to host.
           </p>
 
           <Divider horizontal>
             <Header as='h2'>
-              <Icon   
-                name='angle down' 
-                style={{'color': '#c90c61', 'margin': 'auto'}}
+              <Icon
+                name='angle down'
+                style={{ 'color': '#c90c61', 'margin': 'auto' }}
               />
             </Header>
           </Divider>
- 
+
           <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem' }}>
             <DayPicker
               showWeekNumbers
@@ -734,11 +734,11 @@ class HostProfile extends Component {
             />
           </div>
 
-          <div className='button-wrapper' style={{'width': 'min-content', 'margin': 'auto'}}>
-            <div style={{'margin-right': '1rem'}}>
+          <div className='button-wrapper' style={{ 'width': 'min-content', 'margin': 'auto' }}>
+            <div style={{ 'margin-right': '1rem' }}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem'}}>
+            <div style={{ 'margin-left': '1rem' }}>
               {availabilityFormSubmitButton}
             </div>
           </div>
@@ -771,15 +771,15 @@ class HostProfile extends Component {
 
             <Divider horizontal>
               <Header as='h2'>
-                <Icon   
-                  name='angle down' 
-                  style={{'color': '#c90c61', 'margin': 'auto'}}
+                <Icon
+                  name='angle down'
+                  style={{ 'color': '#c90c61', 'margin': 'auto' }}
                 />
               </Header>
             </Divider>
 
             <Form.Input
-              style={{'margin-bottom': '2em'}}
+              style={{ 'margin-bottom': '2em' }}
               placeholder='Search..'
               required
               id='user_input_address'
@@ -800,9 +800,9 @@ class HostProfile extends Component {
 
             <Divider horizontal>
               <Header as='h2'>
-                <Icon   
-                  name='angle down' 
-                  style={{'color': '#c90c61', 'margin': 'auto'}}
+                <Icon
+                  name='angle down'
+                  style={{ 'color': '#c90c61', 'margin': 'auto' }}
                 />
               </Header>
             </Divider>
