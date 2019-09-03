@@ -290,7 +290,6 @@ class UserPage extends Component {
     if (this.state.displayLocationForm) {
       locationForm = (
         <>
-          {errorDisplay}
           <Form>
             <Dropdown
               clearable
@@ -315,6 +314,8 @@ class UserPage extends Component {
             />
           </Form>
 
+          {errorDisplay}
+
           <div className='button-wrapper'>
             <div >
               <Button secondary className='cancel-button' onClick={this.state.host_profile.length === 1 ? this.locationFormHandlerWithProfile.bind(this) : this.locationFormHandlerNoProfile.bind(this)}>Close</Button>
@@ -330,7 +331,6 @@ class UserPage extends Component {
     if (this.state.displayPasswordForm) {
       passwordForm = (
         <>
-          {errorDisplay}
           <Form style={{ 'display': 'table', 'margin': 'auto', 'width': 'min-content' }}>
             <Form.Input
               required
@@ -364,7 +364,7 @@ class UserPage extends Component {
             </p>
           </Form>
 
-
+          {errorDisplay}
 
           <div className='button-wrapper'>
             <div>

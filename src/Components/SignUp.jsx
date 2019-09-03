@@ -100,8 +100,6 @@ class SignUp extends Component {
             Password must be at least 6 characters in length. Email and Username must be unique.
           </p>
 
-          {errorDisplay}
-
           <Form id="signup-form">
             <Form.Input
               required
@@ -149,6 +147,8 @@ class SignUp extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
+
+          {errorDisplay}
 
           {submitButton}
 

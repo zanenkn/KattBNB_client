@@ -701,6 +701,7 @@ class HostProfile extends Component {
               onChange={this.onChangeHandler}
             />
           </Form>
+          {errorDisplay}
           <div className='button-wrapper'>
             <div>
               <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
@@ -709,7 +710,6 @@ class HostProfile extends Component {
               {descriptionFormSubmitButton}
             </div>
           </div>
-          {errorDisplay}
         </>
       )
     }
@@ -727,6 +727,7 @@ class HostProfile extends Component {
               onKeyPress={this.listenEnterMaxCatsUpdate}
             />
           </Form>
+          {errorDisplay}
           <div className='button-wrapper'>
             <div>
               <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
@@ -735,7 +736,6 @@ class HostProfile extends Component {
               {maxCatsFormSubmitButton}
             </div>
           </div>
-          {errorDisplay}
         </>
       )
     }
@@ -753,6 +753,7 @@ class HostProfile extends Component {
               onKeyPress={this.listenEnterRateUpdate}
             />
           </Form>
+          {errorDisplay}
           <div className='button-wrapper'>
             <div>
               <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
@@ -761,7 +762,6 @@ class HostProfile extends Component {
               {rateFormSubmitButton}
             </div>
           </div>
-          {errorDisplay}
         </>
       )
     }
@@ -779,6 +779,7 @@ class HostProfile extends Component {
               onKeyPress={this.listenEnterSupplementUpdate}
             />
           </Form>
+          {errorDisplay}
           <div className='button-wrapper'>
             <div>
               <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
@@ -787,7 +788,6 @@ class HostProfile extends Component {
               {supplementFormSubmitButton}
             </div>
           </div>
-          {errorDisplay}
         </>
       )
     }
@@ -819,7 +819,7 @@ class HostProfile extends Component {
               onDayClick={this.handleDayClick}
             />
           </div>
-
+          {errorDisplay}
           <div className='button-wrapper' style={{ 'width': 'min-content', 'margin': 'auto' }}>
             <div style={{ 'marginRight': '1rem' }}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
@@ -828,7 +828,6 @@ class HostProfile extends Component {
               {availabilityFormSubmitButton}
             </div>
           </div>
-          {errorDisplay}
         </>
       )
     } else {
@@ -910,6 +909,7 @@ class HostProfile extends Component {
                 </Header>
               </p>
             </div>
+            {errorDisplay}
             <div className='button-wrapper'>
               <div>
                 <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
@@ -918,7 +918,6 @@ class HostProfile extends Component {
                 {addressFormSubmitButton}
               </div>
             </div>
-            {errorDisplay}
           </>
         )
       }

@@ -115,9 +115,6 @@ class ChangePassword extends Component {
             Type in your new password twice in the fields below. Minimum requirement is 6 characters.
           </p>
 
-          {errorDisplay}
-          {successDisplay}
-
           <Form>
             <Form.Input
               required
@@ -139,6 +136,9 @@ class ChangePassword extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
+
+          {errorDisplay}
+          {successDisplay}
 
           {submitButton}
 

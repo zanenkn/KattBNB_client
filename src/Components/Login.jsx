@@ -90,9 +90,6 @@ class Login extends Component {
 
         <Segment className='whitebox'>
 
-          {errorDisplay}
-          {successDisplay}
-
           <Form id='login-form'>
             <Form.Input
               required
@@ -118,6 +115,9 @@ class Login extends Component {
             </div>
 
           </Form>
+
+          {errorDisplay}
+          {successDisplay}
 
           {submitButton}
 

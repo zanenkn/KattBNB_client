@@ -8,7 +8,6 @@ class PasswordReset extends Component {
     email: '',
     errors: '',
     error_display: false,
-    success_display: false,
     loading: false,
     url: 'https://kattbnb.netlify.com/change-password'
   }
@@ -89,8 +88,6 @@ class PasswordReset extends Component {
             Fill in the email you registered with.
           </p>
 
-          {errorDisplay}
-
           <Form>
             <Form.Input
               required
@@ -101,6 +98,8 @@ class PasswordReset extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
+
+          {errorDisplay}
 
           {submitButton}
 
