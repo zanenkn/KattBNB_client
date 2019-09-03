@@ -62,6 +62,7 @@ class UserPage extends Component {
       host_profile_form: false,
       location: this.state.newLocation,
       errorDisplay: false,
+      errors: '',
       password: '',
       current_password: '',
       new_password: '',
@@ -76,6 +77,7 @@ class UserPage extends Component {
       host_profile_form: false,
       location: this.state.newLocation,
       errorDisplay: false,
+      errors: '',
       password: '',
       current_password: '',
       new_password: '',
@@ -91,6 +93,7 @@ class UserPage extends Component {
       location: this.state.newLocation,
       host_profile_form: false,
       errorDisplay: false,
+      errors: '',
       password: '',
       current_password: '',
       new_password: '',
@@ -105,6 +108,7 @@ class UserPage extends Component {
       location: this.state.newLocation,
       host_profile_form: false,
       errorDisplay: false,
+      errors: '',
       password: '',
       current_password: '',
       new_password: '',
@@ -119,7 +123,8 @@ class UserPage extends Component {
       displayLocationForm: false,
       location: this.state.newLocation,
       displayPasswordForm: false,
-      errorDisplay: false
+      errorDisplay: false,
+      errors: ''
     })
   }
 
@@ -128,6 +133,8 @@ class UserPage extends Component {
       displayLocationForm: false,
       location: this.state.newLocation,
       displayPasswordForm: false,
+      errorDisplay: false,
+      errors: '',
       password: '',
       current_password: '',
       new_password: '',

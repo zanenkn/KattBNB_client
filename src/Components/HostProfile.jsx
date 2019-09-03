@@ -32,6 +32,8 @@ class HostProfile extends Component {
       editableCalendar: false,
       editAddress: false,
       addressSearch: false,
+      addressErrorDisplay: false,
+      addressError: '',
       newAddress: '',
       lat: '',
       long: '',
@@ -90,7 +92,11 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressErrorDisplay: false,
+      addressError: '',
+      errorDisplay: false,
+      errors: ''
     })
   }
 
@@ -110,6 +116,7 @@ class HostProfile extends Component {
       newAvailability: [],
       newAddress: '',
       errorDisplay: false,
+      errors: '',
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
@@ -120,7 +127,9 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -137,11 +146,14 @@ class HostProfile extends Component {
       newSupplement: '',
       newAvailability: [],
       errorDisplay: false,
+      errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      editableCalendar: false
+      editableCalendar: false,
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -156,6 +168,7 @@ class HostProfile extends Component {
       newAvailability: [],
       newAddress: '',
       errorDisplay: false,
+      errors: '',
       editDescriptionForm: false,
       editRateForm: false,
       editSupplementForm: false,
@@ -166,7 +179,9 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -181,6 +196,7 @@ class HostProfile extends Component {
       newAvailability: [],
       newAddress: '',
       errorDisplay: false,
+      errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editSupplementForm: false,
@@ -191,7 +207,9 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -206,6 +224,7 @@ class HostProfile extends Component {
       newAvailability: [],
       newAddress: '',
       errorDisplay: false,
+      errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
@@ -216,7 +235,9 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -231,6 +252,7 @@ class HostProfile extends Component {
       newSupplement: '',
       newAddress: '',
       errorDisplay: false,
+      errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
@@ -241,7 +263,9 @@ class HostProfile extends Component {
       lat: '',
       long: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      addressError: '',
+      addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
   }
@@ -605,6 +629,7 @@ class HostProfile extends Component {
     const today = new Date()
     let addressSearch
     let errorDisplay
+    let addressErrorMessage
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
 
@@ -820,6 +845,14 @@ class HostProfile extends Component {
       )
     }
 
+    if (this.state.addressErrorDisplay) {
+      addressErrorMessage = (
+        <Message negative >
+          {this.state.addressError}
+        </Message>
+      )
+    }
+
     if (this.state.editAddress) {
       if (this.state.addressSearch === true) {
         addressSearch = (
@@ -838,6 +871,8 @@ class HostProfile extends Component {
                 />
               </Header>
             </Divider>
+
+            {addressErrorMessage}
 
             <Form.Input
               style={{ 'margin-bottom': '2em' }}
