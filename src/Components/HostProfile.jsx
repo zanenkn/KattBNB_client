@@ -714,14 +714,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               {descriptionFormSubmitButton}
             </div>
           </div>
-          <Divider style={{'margin-bottom': '2rem'}} />
+          <Divider style={{'marginBottom': '2rem'}} />
         </>
       )
     }
@@ -745,14 +745,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               {maxCatsFormSubmitButton}
             </div>
           </div>
-          <Divider style={{'margin-bottom': '2rem'}} />
+          <Divider style={{'marginBottom': '2rem'}} />
         </>
       )
     }
@@ -776,14 +776,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               {rateFormSubmitButton}
             </div>
           </div>
-          <Divider style={{'margin-bottom': '2rem'}} />
+          <Divider style={{'marginBottom': '2rem'}} />
         </>
       )
     }
@@ -807,14 +807,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               {supplementFormSubmitButton}
             </div>
           </div>
-          <Divider style={{'margin-bottom': '2rem'}} />
+          <Divider style={{'marginBottom': '2rem'}} />
         </>
       )
     }
@@ -826,7 +826,7 @@ class HostProfile extends Component {
           <p className='small-centered-paragraph'>
             You can update your availability below by marking the dates when you are willing to host.
           </p>
-          <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem', 'margin-bottom': '-1rem'}}>
+          <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem'}}>
             <DayPicker
               showWeekNumbers
               firstDayOfWeek={1}
@@ -839,19 +839,19 @@ class HostProfile extends Component {
           {errorDisplay}
           
           <div className='button-wrapper'>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+            <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
               {availabilityFormSubmitButton}
             </div>
           </div>
-          <Divider style={{'margin-bottom': '2rem'}} />
+          <Divider style={{'marginBottom': '2rem'}} />
         </>
       )
     } else {
       calendar = (
-        <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem', 'margin-bottom': '-1rem'}}>
+        <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem'}}>
           <DayPicker
             showWeekNumbers
             firstDayOfWeek={1}
@@ -896,14 +896,14 @@ class HostProfile extends Component {
             </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+              <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
                 <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
               </div>
-              <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
+              <div style={{'marginLeft': '1rem', 'marginRight': '1rem'}}>
                 {addressFormSubmitButton}
               </div>
             </div>
-            <Divider style={{'margin-bottom': '2rem'}} />
+            <Divider style={{'marginBottom': '2rem'}} />
           </>
         )
       } else {
@@ -931,7 +931,7 @@ class HostProfile extends Component {
                 {addressFormSubmitButton}
               </div>
             </div>
-            <Divider style={{'margin-bottom': '2rem'}} />
+            <Divider style={{'marginBottom': '2rem'}} />
           </>
         )
       }
