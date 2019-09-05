@@ -685,14 +685,25 @@ class HostProfile extends Component {
       availabilityFormSubmitButton = (
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
-      addressFormSubmitButton = (
-        <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
-      )
+      if (this.state.user_input_address === this.state.newAddress) {
+        addressFormSubmitButton = (
+          <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
+        )
+      } else {
+        addressFormSubmitButton = (
+          <Button disabled id='address-submit-button' className='submit-button'>Save</Button>
+        )
+      }
     }
 
     if (this.state.editDescriptionForm) {
       editDescriptionForm = (
         <>
+          <Divider/>
+          <p className='small-centered-paragraph'>
+            Please tell us a little about yourself and your experience with cats. This will be displayed at the search.
+          </p>
+
           <Form id='update-description'>
             <Form.TextArea
               required
@@ -710,6 +721,7 @@ class HostProfile extends Component {
               {descriptionFormSubmitButton}
             </div>
           </div>
+          <Divider style={{'margin-bottom': '2rem'}} />
         </>
       )
     }
@@ -795,7 +807,6 @@ class HostProfile extends Component {
     if (this.state.editableCalendar) {
       calendar = (
         <>
-
           <p className='small-centered-paragraph'>
             You can update your availability below by marking the dates when you are willing to host.
           </p>
@@ -820,6 +831,7 @@ class HostProfile extends Component {
             />
           </div>
           {errorDisplay}
+          
           <div className='button-wrapper' style={{ 'width': 'min-content', 'margin': 'auto' }}>
             <div style={{ 'marginRight': '1rem' }}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
@@ -828,6 +840,7 @@ class HostProfile extends Component {
               {availabilityFormSubmitButton}
             </div>
           </div>
+          <Divider />
         </>
       )
     } else {
@@ -856,25 +869,14 @@ class HostProfile extends Component {
       if (this.state.addressSearch === true) {
         addressSearch = (
           <>
+            <Divider/>
             <p className='small-centered-paragraph'>
               You can update your address below by entering and searching your new address.
             </p>
 
-            <Divider horizontal>
-              <Header as='h2'>
-                <Icon
-                  link
-                  name='close'
-                  style={{ 'color': '#c90c61', 'margin': 'auto', 'fontSize': '1em' }}
-                  onClick={this.addressFormHandler}
-                />
-              </Header>
-            </Divider>
-
             {addressErrorMessage}
 
             <Form.Input
-              style={{ 'marginBottom': '2em' }}
               placeholder='Search...'
               required
               id='user_input_address'
@@ -884,23 +886,26 @@ class HostProfile extends Component {
               iconPosition='right'
               icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress} style={{ 'color': '#c90c61' }} />}
             />
+            {errorDisplay}
+            <div className='button-wrapper'>
+              <div>
+                <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
+              </div>
+              <div>
+                {addressFormSubmitButton}
+              </div>
+            </div>
+            <Divider style={{'margin-bottom': '2rem'}} />
           </>
         )
       } else {
         addressSearch = (
           <>
+            <Divider/>
             <p className='small-centered-paragraph'>
               You can update your address below by entering and searching your new address.
             </p>
 
-            <Divider horizontal>
-              <Header as='h2'>
-                <Icon
-                  name='angle down'
-                  style={{ 'color': '#c90c61', 'margin': 'auto' }}
-                />
-              </Header>
-            </Divider>
             <div className='required field'>
               <p>
                 {this.state.newAddress}&nbsp;
@@ -918,6 +923,7 @@ class HostProfile extends Component {
                 {addressFormSubmitButton}
               </div>
             </div>
+            <Divider style={{'margin-bottom': '2rem'}} />
           </>
         )
       }

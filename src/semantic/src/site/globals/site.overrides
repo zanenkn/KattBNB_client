@@ -144,7 +144,6 @@ h4 {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly; 
-  margin-bottom: 2em;
 }
 
 .submit-button, 
@@ -154,9 +153,9 @@ h4 {
 
 .small-centered-paragraph {
   text-align: center;
-  margin: auto;
   font-size: small;
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .small-left-paragraph {
