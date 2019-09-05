@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Icon, Divider } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
+import Avatar from 'react-avatar-edit'
 
 
 class UserPage extends Component {
@@ -24,7 +25,8 @@ class UserPage extends Component {
     errorDisplay: false,
     errors: '',
     host_profile: '',
-    host_profile_form: false
+    host_profile_form: false,
+    preview: null
   }
 
   componentDidMount() {
@@ -245,6 +247,21 @@ class UserPage extends Component {
     }
   }
 
+  onAvatarClose = () => {
+    this.setState({ preview: null })
+  }
+
+  onAvatarCrop = (preview) => {
+    this.setState({ preview })
+  }
+
+  onBeforeAvatarLoad = (elem) => {
+    if (elem.target.files[0].size > 5242880) {
+      alert('File is too big!')
+      elem.target.value = ''
+    }
+  }
+
 
   render() {
     let errorDisplay
@@ -417,10 +434,14 @@ class UserPage extends Component {
             This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
           </p>
           <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-            <Icon.Group size='huge'>
-              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
-              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
-            </Icon.Group>
+            <Avatar
+              width={390}
+              height={295}
+              onCrop={this.onAvatarCrop}
+              onClose={this.onAvatarClose}
+              onBeforeFileLoad={this.onBeforeAvatarLoad}
+            />
+            <img src={this.state.preview} alt="Preview" />
           </div>
 
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
