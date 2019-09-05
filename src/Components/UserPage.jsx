@@ -441,7 +441,6 @@ class UserPage extends Component {
               onClose={this.onAvatarClose}
               onBeforeFileLoad={this.onBeforeAvatarLoad}
             />
-            <img src={this.state.preview} alt="Preview" />
           </div>
 
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
