@@ -685,7 +685,7 @@ class HostProfile extends Component {
       availabilityFormSubmitButton = (
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
-      if (this.state.user_input_address === this.state.newAddress) {
+      if (this.state.full_address !== this.state.newAddress && this.state.newAddress !== '') {
         addressFormSubmitButton = (
           <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
         )
