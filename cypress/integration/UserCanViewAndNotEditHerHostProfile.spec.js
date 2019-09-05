@@ -56,10 +56,9 @@ describe('User can view her host profile', () => {
     cy.contains('There were no changes made in your availability!')
   })
 
-  it('and get an error message on address update if update criteria are not met', () => {
+  it('and get a disabled submit button on address update if update criteria are not met', () => {
     cy.get('#change-address-link').click()
     cy.get('#search').click()
-    cy.get('#address-submit-button').click()
-    cy.contains('The field is blank or unchanged!')
+    cy.get('#address-submit-button').should('have.class', 'disabled')
   })
 })
