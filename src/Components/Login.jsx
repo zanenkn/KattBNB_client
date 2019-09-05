@@ -9,8 +9,8 @@ class Login extends Component {
     email: '',
     password: '',
     errors: '',
-    error_display: false,
-    success_display: false,
+    errorDisplay: false,
+    successDisplay: false,
     loading: false
   }
 
@@ -31,13 +31,13 @@ class Login extends Component {
     signInUser({ email, password })
       .then(() => {
         this.setState({
-          success_display: true,
-          error_display: false
+          successDisplay: true,
+          errorDisplay: false
         })
         setTimeout(function () { history.push('/') }, 1000)
       }).catch(error => {
         this.setState({
-          error_display: true,
+          errorDisplay: true,
           errors: error.response.data.errors[0],
           loading: false
         })
@@ -55,7 +55,7 @@ class Login extends Component {
     let successDisplay
     let submitButton
 
-    if (this.state.error_display) {
+    if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative textAlign='center'>
           {this.state.errors}
@@ -63,7 +63,7 @@ class Login extends Component {
       )
     }
 
-    if (this.state.success_display) {
+    if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
           You have succesfully logged in! Please wait to be redirected.
