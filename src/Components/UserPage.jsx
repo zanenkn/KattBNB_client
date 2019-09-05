@@ -144,6 +144,41 @@ class UserPage extends Component {
     })
   }
 
+  updateAvatar = (e) => {
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else {
+      this.setState({ loading: true })
+      e.preventDefault()
+      const path = '/api/v1/auth/'
+      const payload = {
+        current_password: 'Password',
+        avatar: this.state.preview,
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload, {headers: headers})
+        .then(response => {
+          this.setState({
+            image: response.data.data.image,
+            loading: false,
+            errorDisplay: false
+          })
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    }
+  }
+
   updateLocation = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
@@ -441,6 +476,7 @@ class UserPage extends Component {
               onClose={this.onAvatarClose}
               onBeforeFileLoad={this.onBeforeAvatarLoad}
             />
+            <Button onClick={this.updateAvatar}>Save</Button>
           </div>
 
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
