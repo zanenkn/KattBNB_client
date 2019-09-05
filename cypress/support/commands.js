@@ -5,7 +5,7 @@ Cypress.Commands.add('login', (fixture = {}, email, password, status) => {
     status: status,
     response: fixture,
     headers: {
-      "uid": email,
+      'uid': email,
     }
   })
   cy.visit('http://localhost:3000')

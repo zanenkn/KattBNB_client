@@ -1,7 +1,7 @@
 import { generateAuthActions } from 'redux-token-auth'
 
 
-const production = 'https://katt-bnb.herokuapp.com/api/v1/auth'
+const production = `${process.env.REACT_APP_API_ENDPOINT}/api/v1/auth`
 const development = 'http://localhost:3007/api/v1/auth'
 
 const config = {
@@ -13,7 +13,7 @@ const config = {
     username: 'nickname'
   },
   userRegistrationAttributes: {
-    password_confirmation: 'password_confirmation',
+    passwordConfirmation: 'password_confirmation',
     location: 'location',
     nickname: 'nickname',
     url: 'confirm_success_url'
@@ -23,13 +23,11 @@ const config = {
 const {
   registerUser,
   signInUser,
-  signOutUser,
   verifyCredentials,
 } = generateAuthActions(config)
 
 export {
   registerUser,
   signInUser,
-  signOutUser,
   verifyCredentials,
 } 

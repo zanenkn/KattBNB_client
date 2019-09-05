@@ -22,7 +22,7 @@ describe('User can sign up', () => {
       let text = [
         ['#email', 'zane@mail.com'],
         ['#password', 'password'],
-        ['#password_confirmation', 'password'],
+        ['#passwordConfirmation', 'password'],
         ['#nickname', 'KittenPrincess']
       ]
 
@@ -55,7 +55,7 @@ describe('User can sign up', () => {
       let text = [
         ['#email', 'zane@mail'],
         ['#password', 'pass'],
-        ['#password_confirmation', 'passw'],
+        ['#passwordConfirmation', 'passw'],
         ['#nickname', 'KittenPrincess']
       ]
 
@@ -68,7 +68,7 @@ describe('User can sign up', () => {
 
     let text = [
       "Password confirmation doesn't match Password",
-      'Password is too short (minimum is 6 characters',
+      'Password is too short (minimum is 6 characters)',
       'Email is not an email',
       "Location can't be blank",
     ]

@@ -7,11 +7,11 @@ import queryString from 'query-string'
 class ChangePassword extends Component {
   state = {
     errors: '',
-    error_display: false,
-    success_display: false,
+    errorDisplay: false,
+    successDisplay: false,
     loading: false,
     password: '',
-    password_confirmation: ''
+    passwordConfirmation: ''
   }
 
   onChangeHandler = (e) => {
@@ -22,12 +22,12 @@ class ChangePassword extends Component {
 
   changePassword = (e) => {
     e.preventDefault()
-    if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
+    if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
       this.setState({ loading: true })
       const path = '/api/v1/auth/password'
       const payload = {
         password: this.state.password,
-        password_confirmation: this.state.password_confirmation,
+        password_confirmation: this.state.passwordConfirmation,
         uid: queryString.parse(this.props.location.search).uid,
         'access-token': queryString.parse(this.props.location.search).token,
         client: queryString.parse(this.props.location.search).client
@@ -35,33 +35,33 @@ class ChangePassword extends Component {
       axios.put(path, payload)
         .then(() => {
           this.setState({
-            success_display: true,
-            error_display: false
+            successDisplay: true,
+            errorDisplay: false
           })
           setTimeout(function () { window.location.replace('/login') }, 2000)
         })
         .catch(error => {
           this.setState({
             loading: false,
-            error_display: true,
+            errorDisplay: true,
             errors: error.response.data.errors.full_messages
           })
         })
-    } else if (this.state.password === this.state.password_confirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
+    } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
       this.setState({
         errors: ["You should first visit the login page and click on the 'Forgot your password?' link"],
-        error_display: true
+        errorDisplay: true
       })
     } else {
       this.setState({
         errors: ['Check that both fields are an exact match with each other and that they consist of at least 6 characters'],
-        error_display: true
+        errorDisplay: true
       })
     }
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.changePassword(event)
     }
   }
@@ -71,11 +71,11 @@ class ChangePassword extends Component {
     let successDisplay
     let submitButton
 
-    if (this.state.error_display) {
+    if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>Password change could not be completed because of following error(s):</Message.Header>
-          <ul id="message-error-list">
+          <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
             ))}
@@ -84,7 +84,7 @@ class ChangePassword extends Component {
       )
     }
 
-    if (this.state.success_display) {
+    if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
           You have succesfully changed your password! Please wait to be redirected.
@@ -115,9 +115,6 @@ class ChangePassword extends Component {
             Type in your new password twice in the fields below. Minimum requirement is 6 characters.
           </p>
 
-          {errorDisplay}
-          {successDisplay}
-
           <Form>
             <Form.Input
               required
@@ -131,14 +128,17 @@ class ChangePassword extends Component {
 
             <Form.Input
               required
-              id='password_confirmation'
-              value={this.state.password_confirmation}
+              id='passwordConfirmation'
+              value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
               placeholder='Repeat password'
               type='password'
               onKeyPress={this.listenEnterKey}
             />
           </Form>
+
+          {errorDisplay}
+          {successDisplay}
 
           {submitButton}
 

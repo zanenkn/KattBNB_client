@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "description": "this is a description about me!!!!",
+  "full_address": "Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France",
+  "price_per_day_1_cat": "100.0",
+  "supplement_price_per_cat_per_day": "35.0",
+  "max_cats_accepted": 3,
+  "availability": [
+    1569232800000,
+    1569319200000,
+    1569405600000,
+    1569492000000,
+    1569578400000,
+    1569664800000,
+    1569751200000
+  ],
+  "user": {
+    "id": 1,
+    "location": "Stockholm",
+    "nickname": "GeorgeTheGreek"
+  }
+}

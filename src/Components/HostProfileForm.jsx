@@ -49,17 +49,19 @@ class HostProfileForm extends Component {
   }
 
   handleDayClick(day, { selected }) {
-    const { selectedDays } = this.state;
-    if (selected) {
-      const selectedIndex = selectedDays.findIndex(selectedDay =>
-        DateUtils.isSameDay(selectedDay, day)
-      )
-      selectedDays.splice(selectedIndex, 1);
-    } else {
-      selectedDays.push(day);
+    const { selectedDays } = this.state
+    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+      if (selected) {
+        const selectedIndex = selectedDays.findIndex(selectedDay =>
+          DateUtils.isSameDay(selectedDay, day)
+        )
+        selectedDays.splice(selectedIndex, 1)
+      } else {
+        selectedDays.push(day)
+      }
+      this.setState({ selectedDays })
+      this.convertAvailabilityDates()
     }
-    this.setState({ selectedDays });
-    this.convertAvailabilityDates()
   }
 
   generateRandomNumberLat = () => {
@@ -115,43 +117,48 @@ class HostProfileForm extends Component {
   createHostProfile = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    const path = '/api/v1/host_profiles'
-    const payload = {
-      description: this.state.description,
-      full_address: this.state.address,
-      price_per_day_1_cat: this.state.rate,
-      supplement_price_per_cat_per_day: this.state.supplement,
-      max_cats_accepted: this.state.maxCats,
-      availability: this.state.availability,
-      lat: this.state.lat,
-      long: this.state.long,
-      latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      user_id: this.props.user_id
-    }
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    axios.post(path, payload, { headers: headers })
-      .then(response => {
-        window.localStorage.setItem('client', response.headers.client)
-        window.localStorage.setItem('access-token', response.headers['access-token'])
-        window.localStorage.setItem('expiry', response.headers.expiry)
-        window.alert('You have successfully created your host profile! Press OK to be redirected.')
-        setTimeout(function () { window.location.replace('/user-page') }, 1500)
+    if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
+      this.setState({
+        loading: false,
+        errors: ['Please check that all numeric fields are positive!'],
+        onCreateErrorDisplay: true
       })
-      .catch(error => {
-        window.localStorage.setItem('client', error.response.headers.client)
-        window.localStorage.setItem('access-token', error.response.headers['access-token'])
-        window.localStorage.setItem('expiry', error.response.headers.expiry)
-        this.setState({
-          loading: false,
-          errors: error.response.data.error,
-          onCreateErrorDisplay: true
+    } else {
+      const path = '/api/v1/host_profiles'
+      const payload = {
+        description: this.state.description,
+        full_address: this.state.address,
+        price_per_day_1_cat: this.state.rate,
+        supplement_price_per_cat_per_day: this.state.supplement,
+        max_cats_accepted: this.state.maxCats,
+        availability: this.state.availability,
+        lat: this.state.lat,
+        long: this.state.long,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        user_id: this.props.user_id
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({
+            onCreateErrorDisplay: false
+          })
+          window.alert('You have successfully created your host profile! Click OK to be redirected.')
+          setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
-      })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errors: error.response.data.error,
+            onCreateErrorDisplay: true
+          })
+        })
+    }
   }
 
 
@@ -185,7 +192,7 @@ class HostProfileForm extends Component {
           </label>
           <p>
             {this.state.address}&nbsp;
-            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true }) }} className='fake-link-underlined'>
+            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
               Not right?
             </Header>
           </p>
@@ -216,17 +223,19 @@ class HostProfileForm extends Component {
 
     if (this.state.loading) {
       createHostProfileButton = (
-        <Button id='save-host-profile-button' loading>
+        <Button id='save-host-profile-button' className='submit-button' loading>
           Save
         </Button>
       )
     } else {
       createHostProfileButton = (
-        <Button id='save-host-profile-button' onClick={this.createHostProfile}>
+        <Button id='save-host-profile-button' className='submit-button' onClick={this.createHostProfile}>
           Save
         </Button>
       )
     }
+
+    const today = new Date()
 
 
     return (
@@ -234,7 +243,7 @@ class HostProfileForm extends Component {
         <Header as='h2'>
           Create host profile
         </Header>
-        <p className='small-centered-paragraph' style={{ 'margin-bottom': '1rem' }}>
+        <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
           Fill in this information about yourself and start hosting cats today!
         </p>
         <Form id='host-profile-form'>
@@ -245,7 +254,6 @@ class HostProfileForm extends Component {
             id='description'
             value={this.state.description}
             onChange={this.onChangeHandler}
-            onKeyPress={this.listenEnterKey}
           />
 
           {addressErrorMessage}
@@ -294,13 +302,14 @@ class HostProfileForm extends Component {
             <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
           </p>
 
-          <div className='required field'>
-            <label for='availability'>
+          <div className='required field' >
+            <label for='availability' >
               Availability
             </label>
 
             <DayPicker
               showWeekNumbers
+              disabledDays={{ before: today }}
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               onDayClick={this.handleDayClick}
@@ -313,7 +322,14 @@ class HostProfileForm extends Component {
 
         {onCreateErrorMessage}
 
-        {createHostProfileButton}
+        <div className='button-wrapper'>
+          <div>
+            <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
+          </div>
+          <div>
+            {createHostProfileButton}
+          </div>
+        </div>
 
       </div>
     )

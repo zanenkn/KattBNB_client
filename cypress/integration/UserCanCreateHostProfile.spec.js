@@ -42,7 +42,7 @@ describe('User can create a host profile', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(8)').click()
     cy.get('#save-host-profile-button').click()
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('You have successfully created host profile!')
+      expect(str).to.equal('You have successfully created your host profile! Click OK to be redirected.')
     })
   })
 
@@ -59,7 +59,8 @@ describe('User can create a host profile', () => {
 
       let text = [
         ['#rate', '100'],
-        ['#maxCats', '3']
+        ['#maxCats', '3'],
+        ['#supplement', '250']
       ]
 
       text.forEach(element => {

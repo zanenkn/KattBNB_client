@@ -9,8 +9,8 @@ class Login extends Component {
     email: '',
     password: '',
     errors: '',
-    error_display: false,
-    success_display: false,
+    errorDisplay: false,
+    successDisplay: false,
     loading: false
   }
 
@@ -22,7 +22,7 @@ class Login extends Component {
 
   logInUser = (e) => {
     this.setState({ loading: true })
-    e.preventDefault();
+    e.preventDefault()
     const { history, signInUser } = this.props
     const {
       email,
@@ -30,11 +30,14 @@ class Login extends Component {
     } = this.state
     signInUser({ email, password })
       .then(() => {
-        this.setState({ success_display: true, error_display: false })
-        setTimeout(function () { history.push('/') }, 1500)
+        this.setState({
+          successDisplay: true,
+          errorDisplay: false
+        })
+        setTimeout(function () { history.push('/') }, 1000)
       }).catch(error => {
         this.setState({
-          error_display: true,
+          errorDisplay: true,
           errors: error.response.data.errors[0],
           loading: false
         })
@@ -42,7 +45,7 @@ class Login extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.logInUser(event)
     }
   }
@@ -52,7 +55,7 @@ class Login extends Component {
     let successDisplay
     let submitButton
 
-    if (this.state.error_display) {
+    if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative textAlign='center'>
           {this.state.errors}
@@ -60,7 +63,7 @@ class Login extends Component {
       )
     }
 
-    if (this.state.success_display) {
+    if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
           You have succesfully logged in! Please wait to be redirected.
@@ -87,9 +90,6 @@ class Login extends Component {
 
         <Segment className='whitebox'>
 
-          {errorDisplay}
-          {successDisplay}
-
           <Form id='login-form'>
             <Form.Input
               required
@@ -108,13 +108,16 @@ class Login extends Component {
               placeholder='Password'
               onKeyPress={this.listenEnterKey}
             />
-            <div style={{'textAlign': 'right'}}>
+            <div style={{ 'textAlign': 'right' }}>
               <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
                 Forgot your password?
               </Header>
             </div>
 
           </Form>
+
+          {errorDisplay}
+          {successDisplay}
 
           {submitButton}
 
