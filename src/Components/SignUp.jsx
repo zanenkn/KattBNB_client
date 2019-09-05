@@ -8,12 +8,12 @@ class SignUp extends Component {
   state = {
     email: '',
     password: '',
-    password_confirmation: '',
+    passwordConfirmation: '',
     nickname: '',
     location: '',
     errors: '',
     url: 'https://kattbnb.netlify.com/login',
-    error_display: false,
+    errorDisplay: false,
     loading: false
   }
 
@@ -34,28 +34,28 @@ class SignUp extends Component {
     const {
       email,
       password,
-      password_confirmation,
+      passwordConfirmation,
       location,
       nickname,
       url
     } = this.state
-    registerUser({ email, password, password_confirmation, location, nickname, url })
+    registerUser({ email, password, passwordConfirmation, location, nickname, url })
       .then(() => {
         this.setState({
-          error_display: false
+          errorDisplay: false
         })
         history.push('/signup-success')
       }).catch(error => {
         this.setState({
           errors: error.response.data.errors.full_messages,
-          error_display: true,
+          errorDisplay: true,
           loading: false
         })
       })
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.createUser(event)
     }
   }
@@ -64,11 +64,11 @@ class SignUp extends Component {
     let errorDisplay
     let submitButton
 
-    if (this.state.error_display) {
+    if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
-          <ul id="message-error-list">
+          <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
             ))}
@@ -79,11 +79,11 @@ class SignUp extends Component {
 
     if (this.state.loading) {
       submitButton = (
-        <Button id="sign-up-button" loading>Loading</Button>
+        <Button id='sign-up-button' loading>Loading</Button>
       )
     } else {
       submitButton = (
-        <Button id="sign-up-button" onClick={this.createUser}>Sign up</Button>
+        <Button id='sign-up-button' onClick={this.createUser}>Sign up</Button>
       )
     }
 
@@ -100,39 +100,39 @@ class SignUp extends Component {
             Password must be at least 6 characters in length. Email and Username must be unique.
           </p>
 
-          <Form id="signup-form">
+          <Form id='signup-form'>
             <Form.Input
               required
-              id="email"
+              id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder="Email"
+              placeholder='Email'
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
-              id="password"
-              type="password"
+              id='password'
+              type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder="Password"
+              placeholder='Password'
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
-              id="password_confirmation"
-              type="password"
-              value={this.state.password_confirmation}
+              id='passwordConfirmation'
+              type='password'
+              value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder="Repeat password"
+              placeholder='Repeat password'
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
               required
-              id="nickname"
+              id='nickname'
               value={this.state.username}
               onChange={this.onChangeHandler}
-              placeholder="Username / Nickname"
+              placeholder='Username / Nickname'
               onKeyPress={this.listenEnterKey}
             />
             <Dropdown
@@ -140,9 +140,9 @@ class SignUp extends Component {
               search
               selection
               style={{ 'width': '100%' }}
-              placeholder="Select location"
+              placeholder='Select location'
               options={LOCATION_OPTIONS}
-              id="location"
+              id='location'
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKey}
             />

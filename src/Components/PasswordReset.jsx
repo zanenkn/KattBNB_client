@@ -43,7 +43,7 @@ class PasswordReset extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.resetPassword(event)
     }
   }
@@ -56,7 +56,7 @@ class PasswordReset extends Component {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>Password reset could not be completed because of following error(s):</Message.Header>
-          <ul id="message-error-list">
+          <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
             ))}

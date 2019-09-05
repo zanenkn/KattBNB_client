@@ -45,7 +45,7 @@ class Login extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.logInUser(event)
     }
   }

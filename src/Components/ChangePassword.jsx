@@ -61,7 +61,7 @@ class ChangePassword extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.changePassword(event)
     }
   }
@@ -75,7 +75,7 @@ class ChangePassword extends Component {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>Password change could not be completed because of following error(s):</Message.Header>
-          <ul id="message-error-list">
+          <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
             ))}

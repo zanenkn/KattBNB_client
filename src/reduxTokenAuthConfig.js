@@ -13,7 +13,7 @@ const config = {
     username: 'nickname'
   },
   userRegistrationAttributes: {
-    password_confirmation: 'password_confirmation',
+    passwordConfirmation: 'password_confirmation',
     location: 'location',
     nickname: 'nickname',
     url: 'confirm_success_url'
