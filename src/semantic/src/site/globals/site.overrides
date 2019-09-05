@@ -143,7 +143,9 @@ h4 {
 .button-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly; 
+  justify-content: space-evenly;
+  width: min-content;
+  margin: auto;
 }
 
 .submit-button, 

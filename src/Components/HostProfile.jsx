@@ -714,10 +714,10 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
             </div>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               {descriptionFormSubmitButton}
             </div>
           </div>
@@ -729,7 +729,11 @@ class HostProfile extends Component {
     if (this.state.editMaxCatsForm) {
       editMaxCatsForm = (
         <>
-          <Form id='update-maxCats'>
+          <Divider />
+          <p className='small-centered-paragraph'>
+            Enter maximum number of cats from the same household you would like to host.
+          </p>
+          <Form id='update-maxCats' style={{'margin': 'auto', 'width': 'max-content'}}>
             <Form.Input
               required
               type='number'
@@ -741,13 +745,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
             </div>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               {maxCatsFormSubmitButton}
             </div>
           </div>
+          <Divider style={{'margin-bottom': '2rem'}} />
         </>
       )
     }
@@ -755,7 +760,11 @@ class HostProfile extends Component {
     if (this.state.editRateForm) {
       editRateForm = (
         <>
-          <Form id='update-rate'>
+          <Divider />
+          <p className='small-centered-paragraph'>
+            Enter how much you would like to get paid per day when hosting 1 cat.
+          </p>
+          <Form id='update-rate' style={{'margin': 'auto', 'width': 'max-content'}}>
             <Form.Input
               required
               type='number'
@@ -767,13 +776,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
             </div>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               {rateFormSubmitButton}
             </div>
           </div>
+          <Divider style={{'margin-bottom': '2rem'}} />
         </>
       )
     }
@@ -781,7 +791,11 @@ class HostProfile extends Component {
     if (this.state.editSupplementForm) {
       editSupplementForm = (
         <>
-          <Form id='update-supplement'>
+          <Divider/>
+          <p className='small-centered-paragraph'>
+            Enter how much you would like to get paid per an extra cat per day. 
+          </p>
+          <Form id='update-supplement' style={{'margin': 'auto', 'width': 'max-content'}}>
             <Form.Input
               required
               type='number'
@@ -793,13 +807,14 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
             </div>
-            <div>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               {supplementFormSubmitButton}
             </div>
           </div>
+          <Divider style={{'margin-bottom': '2rem'}} />
         </>
       )
     }
@@ -807,20 +822,11 @@ class HostProfile extends Component {
     if (this.state.editableCalendar) {
       calendar = (
         <>
+          <Divider/>
           <p className='small-centered-paragraph'>
             You can update your availability below by marking the dates when you are willing to host.
           </p>
-
-          <Divider horizontal>
-            <Header as='h2'>
-              <Icon
-                name='angle down'
-                style={{ 'color': '#c90c61', 'margin': 'auto' }}
-              />
-            </Header>
-          </Divider>
-
-          <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem' }}>
+          <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem', 'margin-bottom': '-1rem'}}>
             <DayPicker
               showWeekNumbers
               firstDayOfWeek={1}
@@ -832,20 +838,20 @@ class HostProfile extends Component {
           </div>
           {errorDisplay}
           
-          <div className='button-wrapper' style={{ 'width': 'min-content', 'margin': 'auto' }}>
-            <div style={{ 'marginRight': '1rem' }}>
+          <div className='button-wrapper'>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem' }}>
+            <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
               {availabilityFormSubmitButton}
             </div>
           </div>
-          <Divider />
+          <Divider style={{'margin-bottom': '2rem'}} />
         </>
       )
     } else {
       calendar = (
-        <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem' }}>
+        <div style={{ 'margin-right': '-2rem', 'margin-left': '-2rem', 'margin-bottom': '-1rem'}}>
           <DayPicker
             showWeekNumbers
             firstDayOfWeek={1}
@@ -875,23 +881,25 @@ class HostProfile extends Component {
             </p>
 
             {addressErrorMessage}
-
-            <Form.Input
-              placeholder='Search...'
-              required
-              id='user_input_address'
-              value={this.state.user_input_address}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterAddressSearch}
-              iconPosition='right'
-              icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress} style={{ 'color': '#c90c61' }} />}
-            />
+            <div style={{'margin': 'auto', 'display': 'table', 'width': '100%'}}>
+              <Form.Input
+                style={{'width': '100%'}}
+                placeholder='Search...'
+                required
+                id='user_input_address'
+                value={this.state.user_input_address}
+                onChange={this.onChangeHandler}
+                onKeyPress={this.listenEnterAddressSearch}
+                iconPosition='right'
+                icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress} style={{ 'color': '#c90c61' }} />}
+              />
+            </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div>
+              <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
                 <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
               </div>
-              <div>
+              <div style={{'margin-left': '1rem', 'margin-right': '1rem'}}>
                 {addressFormSubmitButton}
               </div>
             </div>
