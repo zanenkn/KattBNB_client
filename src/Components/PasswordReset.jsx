@@ -7,7 +7,7 @@ class PasswordReset extends Component {
   state = {
     email: '',
     errors: '',
-    error_display: false,
+    errorDisplay: false,
     loading: false,
     url: 'https://kattbnb.netlify.com/change-password'
   }
@@ -29,14 +29,14 @@ class PasswordReset extends Component {
     axios.post(path, payload)
       .then(() => {
         this.setState({
-          error_display: false
+          errorDisplay: false
         })
         window.location.replace('/password-reset-success')
       })
       .catch(error => {
         this.setState({
           loading: false,
-          error_display: true,
+          errorDisplay: true,
           errors: error.response.data.errors
         })
       })
@@ -52,7 +52,7 @@ class PasswordReset extends Component {
     let errorDisplay
     let submitButton
 
-    if (this.state.error_display) {
+    if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
           <Message.Header textAlign='center'>Password reset could not be completed because of following error(s):</Message.Header>
