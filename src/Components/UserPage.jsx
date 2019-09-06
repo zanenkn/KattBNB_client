@@ -352,6 +352,7 @@ class UserPage extends Component {
     let hostProfileForm
 
     let avatar
+    let avatarSubmitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -366,6 +367,28 @@ class UserPage extends Component {
       )
     }
 
+    if (this.state.loading) {
+      locationSubmitButton = (
+        <Button id='location-submit-button' className='submit-button' loading>Change</Button>
+      )
+      passwordSubmitButton = (
+        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
+      )
+      avatarSubmitButton = (
+        <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
+      )
+    } else {
+      locationSubmitButton = (
+        <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
+      )
+      passwordSubmitButton = (
+        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
+      )
+      avatarSubmitButton = (
+        <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
+      )
+    }
+
     if (this.state.displayAvatarForm) {
       avatar = (
         <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
@@ -376,7 +399,15 @@ class UserPage extends Component {
             onClose={this.onAvatarClose}
             onBeforeFileLoad={this.onBeforeAvatarLoad}
           />
-          <Button onClick={this.updateAvatar}>Save</Button>
+
+          <div className='button-wrapper'>
+            <div >
+              <Button secondary className='cancel-button' onClick={this.avatarFormHandler}>Close</Button>
+            </div>
+            <div>
+              {avatarSubmitButton}
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -394,22 +425,6 @@ class UserPage extends Component {
           </div>
         )
       }
-    }
-
-    if (this.state.loading) {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' loading>Change</Button>
-      )
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
-      )
-    } else {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
-      )
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
-      )
     }
 
     if (this.state.displayLocationForm) {
