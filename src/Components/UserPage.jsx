@@ -171,7 +171,6 @@ class UserPage extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-
       axios.put(path, payload)
         .then(response => {
           this.setState({
@@ -337,6 +336,7 @@ class UserPage extends Component {
 
     let avatar
     let avatarSubmitButton
+    let noAvatar
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -401,13 +401,9 @@ class UserPage extends Component {
           <img src={this.state.avatar} onClick={this.avatarFormHandler} />
         )
       } else {
+        noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=128&length=3&font-size=0.3&rounded=true&background=c8c8c8&color=c90c61&uppercase=false`
         avatar = (
-          <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-            <Icon.Group size='huge' onClick={this.avatarFormHandler}>
-              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
-              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
-            </Icon.Group>
-          </div>
+          <img src={noAvatar} onClick={this.avatarFormHandler} />
         )
       }
     }
