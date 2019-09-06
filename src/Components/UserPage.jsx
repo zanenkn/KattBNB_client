@@ -72,7 +72,6 @@ class UserPage extends Component {
       location: this.state.newLocation,
       errorDisplay: false,
       errors: '',
-      password: '',
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
@@ -87,7 +86,6 @@ class UserPage extends Component {
       location: this.state.newLocation,
       errorDisplay: false,
       errors: '',
-      password: '',
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
@@ -103,7 +101,6 @@ class UserPage extends Component {
       host_profile_form: false,
       errorDisplay: false,
       errors: '',
-      password: '',
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
@@ -118,7 +115,6 @@ class UserPage extends Component {
       host_profile_form: false,
       errorDisplay: false,
       errors: '',
-      password: '',
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
@@ -133,7 +129,10 @@ class UserPage extends Component {
       location: this.state.newLocation,
       displayPasswordForm: false,
       errorDisplay: false,
-      errors: ''
+      errors: '',
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: ''
     })
   }
 
@@ -144,7 +143,6 @@ class UserPage extends Component {
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
-      password: '',
       current_password: '',
       new_password: '',
       new_password_confirmation: ''
@@ -213,7 +211,12 @@ class UserPage extends Component {
             loading: false,
             errorDisplay: false
           })
-          window.alert('Location succesfully changed!')
+          if (this.state.host_profile.length === 1) {
+            window.alert('Location succesfully changed!')
+          } else {
+            window.alert('Location succesfully changed!')
+            window.location.reload(true)
+          }
         })
         .catch(error => {
           this.setState({
