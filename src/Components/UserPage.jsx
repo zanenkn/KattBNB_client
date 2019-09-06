@@ -37,8 +37,7 @@ class UserPage extends Component {
     if (this.state.host_profile.length === 1) {
       this.setState({
         location: this.state.host_profile[0]['user']['location'],
-        newLocation: this.state.host_profile[0]['user']['location'],
-        avatar: this.state.host_profile[0]['user']['avatar']
+        newLocation: this.state.host_profile[0]['user']['location']
       })
     }
   }
@@ -87,6 +86,8 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
+      displayAvatarForm: false,
+      preview: null,
       host_profile_form: false,
       newLocation: this.state.location,
       errorDisplay: false,
@@ -101,6 +102,8 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
+      displayAvatarForm: false,
+      preview: null,
       host_profile_form: false,
       newLocation: this.state.location,
       errorDisplay: false,
@@ -116,6 +119,8 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
+      displayAvatarForm: false,
+      preview: null,
       newLocation: this.state.location,
       host_profile_form: false,
       errorDisplay: false,
@@ -130,6 +135,8 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
+      displayAvatarForm: false,
+      preview: null,
       newLocation: this.state.location,
       host_profile_form: false,
       errorDisplay: false,
@@ -144,6 +151,8 @@ class UserPage extends Component {
   hostProfileFormHandler = () => {
     this.setState({
       host_profile_form: !this.state.host_profile_form,
+      displayAvatarForm: false,
+      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -157,6 +166,8 @@ class UserPage extends Component {
 
   closeLocationAndPasswordForms = () => {
     this.setState({
+      displayAvatarForm: false,
+      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -172,19 +183,24 @@ class UserPage extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
+    } else if (this.state.preview === null) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['You have selected no avatar!']
+      })
     } else {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/'
       const payload = {
-        avatar: this.state.preview
-      }
-      const headers = {
+        avatar: this.state.preview,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.put(path, payload, { headers: headers })
+
+      axios.put(path, payload)
         .then(response => {
           this.setState({
             avatar: response.data.data.avatar,
@@ -192,12 +208,8 @@ class UserPage extends Component {
             errorDisplay: false,
             displayAvatarForm: false
           })
-          if (this.state.host_profile.length === 1) {
-            window.alert('Avatar succesfully changed!')
-          } else {
-            window.alert('Avatar succesfully changed!')
-            window.location.reload(true)
-          }
+          window.alert('Avatar succesfully changed!')
+          window.location.reload(true)
 
         })
         .catch(error => {
@@ -399,6 +411,7 @@ class UserPage extends Component {
             onClose={this.onAvatarClose}
             onBeforeFileLoad={this.onBeforeAvatarLoad}
           />
+          {errorDisplay}
 
           <div className='button-wrapper'>
             <div >
