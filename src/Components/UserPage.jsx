@@ -16,7 +16,6 @@ class UserPage extends Component {
     displayLocationForm: false,
     displayPasswordForm: false,
     displayAvatarForm: false,
-    password: '',
     avatar: this.props.avatar,
     location: this.props.location,
     newLocation: this.props.location,
@@ -163,7 +162,7 @@ class UserPage extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.put(path, payload, {headers: headers})
+      axios.put(path, payload, { headers: headers })
         .then(response => {
           this.setState({
             image: response.data.data.image,
@@ -185,12 +184,17 @@ class UserPage extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
+    } else if (this.state.newLocation === this.state.location || this.state.newLocation === '') {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['No location selected or location is unchanged!']
+      })
     } else {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/'
       const payload = {
-        current_password: this.state.password,
         location: this.state.newLocation,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -312,6 +316,8 @@ class UserPage extends Component {
     let hostProfile
     let hostProfileForm
 
+    let avatar
+
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
@@ -325,12 +331,10 @@ class UserPage extends Component {
       )
     }
 
-    let avatar
-
     if (this.state.displayAvatarForm) {
-      avatar=(
+      avatar = (
         <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-        <Avatar
+          <Avatar
             width={390}
             height={295}
             onCrop={this.onAvatarCrop}
@@ -341,7 +345,7 @@ class UserPage extends Component {
         </div>
       )
     } else {
-      if(this.state.avatar !== '') {
+      if (this.state.avatar !== '') {
         avatar = (
           <img src={this.state.avatar} />
         )
@@ -389,15 +393,6 @@ class UserPage extends Component {
               onKeyPress={this.listenEnterKeyLocation}
             />
 
-            <Form.Input
-              required
-              id='password'
-              value={this.state.password}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder='Your password'
-              onKeyPress={this.listenEnterKeyLocation}
-            />
           </Form>
 
           {errorDisplay}

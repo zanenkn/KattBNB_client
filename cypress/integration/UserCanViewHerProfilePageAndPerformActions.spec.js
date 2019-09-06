@@ -22,7 +22,6 @@ describe('User can view her profile page', () => {
     cy.get('#change-location-link').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
-    cy.get('#password').type('password')
     cy.get('#location-submit-button').click()
     cy.wait(3000)
     cy.get('#user-location').within(() => {
@@ -30,7 +29,7 @@ describe('User can view her profile page', () => {
     })
   })
 
-  it('and does not change her location successfully cause of wrong password', () => {
+  it('and does not change her location successfully', () => {
     cy.route({
       method: 'PUT',
       url: 'http://localhost:3007/api/v1/auth',
@@ -40,9 +39,9 @@ describe('User can view her profile page', () => {
     cy.get('#change-location-link').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
-    cy.get('#password').type('pass')
+    cy.get('.ui > div > .ui > #location > .dropdown').click()
     cy.get('#location-submit-button').click()
-    cy.contains('Current password is invalid')
+    cy.contains('No location selected or location is unchanged!')
   })
 
   it('and change her password successfully', () => {
