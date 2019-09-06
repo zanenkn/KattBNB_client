@@ -85,6 +85,9 @@ class HostProfile extends Component {
       newSupplement: '',
       editableCalendar: false,
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       addressSearch: false,
       editAddress: false,
       newAddress: '',
@@ -114,6 +117,9 @@ class HostProfile extends Component {
       newRate: '',
       newSupplement: '',
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -145,6 +151,9 @@ class HostProfile extends Component {
       newRate: '',
       newSupplement: '',
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
@@ -166,6 +175,9 @@ class HostProfile extends Component {
       newRate: '',
       newSupplement: '',
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -194,6 +206,9 @@ class HostProfile extends Component {
       newMaxCats: '',
       newSupplement: '',
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -222,6 +237,9 @@ class HostProfile extends Component {
       newMaxCats: '',
       newRate: '',
       newAvailability: [],
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -246,6 +264,9 @@ class HostProfile extends Component {
     this.setState({
       editableCalendar: !this.state.editableCalendar,
       newAvailability: this.state.availability,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       newDescription: '',
       newMaxCats: '',
       newRate: '',

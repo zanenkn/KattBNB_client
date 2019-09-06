@@ -148,7 +148,7 @@ class HostProfileForm extends Component {
           this.setState({
             onCreateErrorDisplay: false
           })
-          window.alert('You have successfully created your host profile! Click OK to be redirected.')
+          window.alert('You have successfully created your host profile!')
           setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
         .catch(error => {
