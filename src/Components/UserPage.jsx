@@ -82,7 +82,7 @@ class UserPage extends Component {
     }
   }
 
-  locationFormHandlerNoProfile = () => {
+  locationFormHandler = () => {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
@@ -96,26 +96,12 @@ class UserPage extends Component {
       new_password: '',
       new_password_confirmation: ''
     })
+    if (this.state.host_profile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
   }
 
-  locationFormHandlerWithProfile = () => {
-    this.setState({
-      displayLocationForm: !this.state.displayLocationForm,
-      displayPasswordForm: false,
-      displayAvatarForm: false,
-      preview: null,
-      host_profile_form: false,
-      newLocation: this.state.location,
-      errorDisplay: false,
-      errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
-    })
-    this.hostProfileElement.current.closeAllForms()
-  }
-
-  passwordFormHandlerNoProfile = () => {
+  passwordFormHandler = () => {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
@@ -129,23 +115,9 @@ class UserPage extends Component {
       new_password: '',
       new_password_confirmation: ''
     })
-  }
-
-  passwordFormHandlerWithProfile = () => {
-    this.setState({
-      displayPasswordForm: !this.state.displayPasswordForm,
-      displayLocationForm: false,
-      displayAvatarForm: false,
-      preview: null,
-      newLocation: this.state.location,
-      host_profile_form: false,
-      errorDisplay: false,
-      errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
-    })
-    this.hostProfileElement.current.closeAllForms()
+    if (this.state.host_profile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
   }
 
   hostProfileFormHandler = () => {
@@ -462,7 +434,7 @@ class UserPage extends Component {
 
           <div className='button-wrapper'>
             <div >
-              <Button secondary className='cancel-button' onClick={this.state.host_profile.length === 1 ? this.locationFormHandlerWithProfile.bind(this) : this.locationFormHandlerNoProfile.bind(this)}>Close</Button>
+              <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
             </div>
             <div>
               {locationSubmitButton}
@@ -512,7 +484,7 @@ class UserPage extends Component {
 
           <div className='button-wrapper'>
             <div>
-              <Button secondary className='cancel-button' onClick={this.state.host_profile.length === 1 ? this.passwordFormHandlerWithProfile.bind(this) : this.passwordFormHandlerNoProfile.bind(this)}>Close</Button>
+              <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
             </div>
             <div>
               {passwordSubmitButton}
@@ -572,7 +544,7 @@ class UserPage extends Component {
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
               &nbsp;{this.state.location}&nbsp;
-              <Header as='strong' id='change-location-link' onClick={this.state.host_profile.length === 1 ? this.locationFormHandlerWithProfile.bind(this) : this.locationFormHandlerNoProfile.bind(this)} className='fake-link-underlined'>
+              <Header as='strong' id='change-location-link' onClick={this.locationFormHandler} className='fake-link-underlined'>
                 Change
               </Header>
             </p>
@@ -581,7 +553,7 @@ class UserPage extends Component {
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               &nbsp;******&nbsp;
-              <Header as='strong' id='change-password-link' onClick={this.state.host_profile.length === 1 ? this.passwordFormHandlerWithProfile.bind(this) : this.passwordFormHandlerNoProfile.bind(this)} className='fake-link-underlined'>
+              <Header as='strong' id='change-password-link' onClick={this.passwordFormHandler} className='fake-link-underlined'>
                 Change
               </Header>
             </p>
