@@ -187,9 +187,10 @@ class UserPage extends Component {
       axios.put(path, payload, { headers: headers })
         .then(response => {
           this.setState({
-            image: response.data.data.image,
+            avatar: response.data.data.avatar,
             loading: false,
-            errorDisplay: false
+            errorDisplay: false,
+            displayAvatarForm: false
           })
           if (this.state.host_profile.length === 1) {
             window.alert('Avatar succesfully changed!')
