@@ -69,7 +69,7 @@ class UserPage extends Component {
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
       host_profile_form: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
       current_password: '',
@@ -83,7 +83,7 @@ class UserPage extends Component {
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
       host_profile_form: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
       current_password: '',
@@ -97,7 +97,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       host_profile_form: false,
       errorDisplay: false,
       errors: '',
@@ -111,7 +111,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       host_profile_form: false,
       errorDisplay: false,
       errors: '',
@@ -126,7 +126,7 @@ class UserPage extends Component {
     this.setState({
       host_profile_form: !this.state.host_profile_form,
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
@@ -139,7 +139,7 @@ class UserPage extends Component {
   closeLocationAndPasswordForms = () => {
     this.setState({
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',

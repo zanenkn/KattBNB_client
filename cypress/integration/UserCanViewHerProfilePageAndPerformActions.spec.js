@@ -23,9 +23,8 @@ describe('User can view her profile page', () => {
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
     cy.get('#location-submit-button').click()
-    cy.wait(3000)
-    cy.get('#user-location').within(() => {
-      cy.contains('Arboga')
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Location succesfully changed!')
     })
   })
 
