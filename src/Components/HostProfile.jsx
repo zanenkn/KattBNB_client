@@ -3,7 +3,7 @@ import axios from 'axios'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import '../style.css'
+import '../react-day-picker.css'
 
 class HostProfile extends Component {
   constructor(props) {

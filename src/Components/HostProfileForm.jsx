@@ -3,7 +3,7 @@ import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import '../style.css'
+import '../react-day-picker.css'
 
 
 class HostProfileForm extends Component {
@@ -13,8 +13,8 @@ class HostProfileForm extends Component {
     this.state = {
       selectedDays: [],
       description: '',
-      user_input_address: '',
-      address_search: true,
+      userInputAddress: '',
+      addressSearch: true,
       latitude: '',
       longitude: '',
       lat: '',
@@ -80,7 +80,7 @@ class HostProfileForm extends Component {
 
   geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
-    Geocode.fromAddress(this.state.user_input_address).then(
+    Geocode.fromAddress(this.state.userInputAddress).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({
@@ -89,7 +89,7 @@ class HostProfileForm extends Component {
           lat: lat - this.generateRandomNumberLat(),
           long: lng + this.generateRandomNumberLong(),
           address: response.results[0].formatted_address,
-          address_search: false,
+          addressSearch: false,
           addressErrorDisplay: false
         })
       },
@@ -103,13 +103,13 @@ class HostProfileForm extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.createHostProfile(event)
     }
   }
 
   listenEnterKeyAddress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.geolocationDataAddress(event)
     }
   }
@@ -170,14 +170,14 @@ class HostProfileForm extends Component {
 
     let createHostProfileButton
 
-    if (this.state.address_search === true) {
+    if (this.state.addressSearch === true) {
       addressSearch = (
         <Form.Input
           label='Your full address'
           placeholder='Search..'
           required
-          id='user_input_address'
-          value={this.state.user_input_address}
+          id='userInputAddress'
+          value={this.state.userInputAddress}
           onChange={this.onChangeHandler}
           onKeyPress={this.listenEnterKeyAddress}
           iconPosition='right'
@@ -187,12 +187,12 @@ class HostProfileForm extends Component {
     } else {
       addressSearch = (
         <div className='required field'>
-          <label for='user_input_address'>
+          <label for='userInputAddress'>
             Your full address
           </label>
           <p>
             {this.state.address}&nbsp;
-            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ address_search: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
+            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
               Not right?
             </Header>
           </p>
