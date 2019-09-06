@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import Avatar from 'react-avatar-edit'
@@ -15,7 +15,9 @@ class UserPage extends Component {
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
+    displayAvatarForm: false,
     password: '',
+    avatar: this.props.avatar,
     location: this.props.location,
     newLocation: this.props.location,
     current_password: '',
@@ -323,6 +325,38 @@ class UserPage extends Component {
       )
     }
 
+    let avatar
+
+    if (this.state.displayAvatarForm) {
+      avatar=(
+        <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
+        <Avatar
+            width={390}
+            height={295}
+            onCrop={this.onAvatarCrop}
+            onClose={this.onAvatarClose}
+            onBeforeFileLoad={this.onBeforeAvatarLoad}
+          />
+          <Button onClick={this.updateAvatar}>Save</Button>
+        </div>
+      )
+    } else {
+      if(this.state.avatar !== '') {
+        avatar = (
+          <img src={this.state.avatar} />
+        )
+      } else {
+        avatar = (
+          <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
+            <Icon.Group size='huge'>
+              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
+              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
+            </Icon.Group>
+          </div>
+        )
+      }
+    }
+
     if (this.state.loading) {
       locationSubmitButton = (
         <Button id='location-submit-button' className='submit-button' loading>Change</Button>
@@ -468,16 +502,8 @@ class UserPage extends Component {
           <p style={{ 'textAlign': 'center' }}>
             This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
           </p>
-          <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-            <Avatar
-              width={390}
-              height={295}
-              onCrop={this.onAvatarCrop}
-              onClose={this.onAvatarClose}
-              onBeforeFileLoad={this.onBeforeAvatarLoad}
-            />
-            <Button onClick={this.updateAvatar}>Save</Button>
-          </div>
+
+          {avatar}
 
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
             <p>
@@ -523,7 +549,8 @@ const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   location: state.reduxTokenAuth.currentUser.attributes.location,
   email: state.reduxTokenAuth.currentUser.attributes.uid,
-  id: state.reduxTokenAuth.currentUser.attributes.id
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+  avatar: state.reduxTokenAuth.currentUser.attributes.avatar
 })
 
 export default connect(mapStateToProps)(UserPage)
