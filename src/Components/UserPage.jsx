@@ -37,7 +37,8 @@ class UserPage extends Component {
     if (this.state.host_profile.length === 1) {
       this.setState({
         location: this.state.host_profile[0]['user']['location'],
-        newLocation: this.state.host_profile[0]['user']['location']
+        newLocation: this.state.host_profile[0]['user']['location'],
+        avatar: this.state.host_profile[0]['user']['avatar']
       })
     }
   }
@@ -62,6 +63,24 @@ class UserPage extends Component {
 
   handleLocationChange = (e, { value }) => {
     this.setState({ newLocation: value })
+  }
+
+  avatarFormHandler = () => {
+    this.setState({
+      displayAvatarForm: !this.state.displayAvatarForm,
+      displayLocationForm: false,
+      displayPasswordForm: false,
+      host_profile_form: false,
+      newLocation: this.state.location,
+      errorDisplay: false,
+      errors: '',
+      current_password: '',
+      new_password: '',
+      new_password_confirmation: ''
+    })
+    if (this.state.host_profile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
   }
 
   locationFormHandlerNoProfile = () => {
@@ -172,6 +191,13 @@ class UserPage extends Component {
             loading: false,
             errorDisplay: false
           })
+          if (this.state.host_profile.length === 1) {
+            window.alert('Avatar succesfully changed!')
+          } else {
+            window.alert('Avatar succesfully changed!')
+            window.location.reload(true)
+          }
+
         })
         .catch(error => {
           this.setState({
@@ -353,14 +379,14 @@ class UserPage extends Component {
         </div>
       )
     } else {
-      if (this.state.avatar !== '') {
+      if (this.state.avatar !== null) {
         avatar = (
-          <img src={this.state.avatar} />
+          <img src={this.state.avatar} onClick={this.avatarFormHandler} />
         )
       } else {
         avatar = (
           <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-            <Icon.Group size='huge'>
+            <Icon.Group size='huge' onClick={this.avatarFormHandler}>
               <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
               <Icon corner name='add' style={{ 'color': '#c90c61' }} />
             </Icon.Group>
