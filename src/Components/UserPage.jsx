@@ -30,10 +30,16 @@ class UserPage extends Component {
     preview: null
   }
 
-  componentDidMount() {
-    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
+  async componentDidMount() {
+    await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ host_profile: response.data })
     })
+    if (this.state.host_profile.length === 1) {
+      this.setState({
+        location: this.state.host_profile[0]['user']['location'],
+        newLocation: this.state.host_profile[0]['user']['location']
+      })
+    }
   }
 
   listenEnterKeyLocation = (event) => {
@@ -154,8 +160,7 @@ class UserPage extends Component {
       e.preventDefault()
       const path = '/api/v1/auth/'
       const payload = {
-        current_password: 'Password',
-        avatar: this.state.preview,
+        avatar: this.state.preview
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),
