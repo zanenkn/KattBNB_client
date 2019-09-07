@@ -190,4 +190,5 @@ h4 {
 
 .avatar-popup-content {
   width: 270px!important;
+  font-size: initial;
 }

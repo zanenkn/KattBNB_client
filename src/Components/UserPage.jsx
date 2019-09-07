@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon, Container } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import Avatar from 'react-avatar-edit'
@@ -161,7 +161,6 @@ class UserPage extends Component {
         errorDisplay: true,
         errors: ['You have selected no avatar!']
       })
-      // this.closeModal()
     } else {
       this.setState({ loading: true })
       e.preventDefault()
@@ -312,7 +311,11 @@ class UserPage extends Component {
   }
 
   onAvatarCrop = (preview) => {
-    this.setState({ preview })
+    this.setState({ 
+      preview: preview,
+      errors: [],
+      errorDisplay: false
+    })
   }
 
   onBeforeAvatarLoad = (elem) => {
@@ -404,7 +407,7 @@ class UserPage extends Component {
               onClose={this.onAvatarClose}
               onBeforeFileLoad={this.onBeforeAvatarLoad}
             />
-            
+            {errorDisplay}
             <div>
               {avatarSubmitButton}
             </div>
@@ -412,7 +415,6 @@ class UserPage extends Component {
       
         </Popup>
       </Icon.Group>
-      {errorDisplay}
     </div>
     )
 
