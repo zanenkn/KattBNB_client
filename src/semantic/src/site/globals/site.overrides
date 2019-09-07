@@ -187,3 +187,7 @@ h4 {
     width: 500px;
   }
 }
+
+.avatar-popup-content {
+  width: 270px!important;
+}

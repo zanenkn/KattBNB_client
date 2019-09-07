@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon, Container } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import Avatar from 'react-avatar-edit'
-
+import Popup from 'reactjs-popup'
 
 class UserPage extends Component {
 
@@ -161,6 +161,7 @@ class UserPage extends Component {
         errorDisplay: true,
         errors: ['You have selected no avatar!']
       })
+      // this.closeModal()
     } else {
       this.setState({ loading: true })
       e.preventDefault()
@@ -337,7 +338,6 @@ class UserPage extends Component {
     let avatar
     let avatarSubmitButton
     let noAvatar
-    let displayAvatarForm
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -374,43 +374,45 @@ class UserPage extends Component {
       )
     }
 
-    if (this.state.displayAvatarForm) {
-      displayAvatarForm = (
-        <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-          <Avatar
-            width={320}
-            height={300}
-            onCrop={this.onAvatarCrop}
-            onClose={this.onAvatarClose}
-            onBeforeFileLoad={this.onBeforeAvatarLoad}
-          />
-          {errorDisplay}
 
-          <div className='button-wrapper'>
-            <div >
-              <Button secondary className='cancel-button' onClick={this.avatarFormHandler}>Close</Button>
-            </div>
-            <div>
-              {avatarSubmitButton}
-            </div>
-          </div>
-        </div>
-      )
-    } 
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`     
     avatar = (
     <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
       <Icon.Group size='big'>
         <Image src={this.state.avatar === null? noAvatar : this.state.avatar} size='small'></Image>
-        <Icon 
-          corner='bottom right' 
-          name='pencil alternate' 
-          circular 
-          style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-          onClick={this.avatarFormHandler} />
+        <Popup 
+          modal
+          className='avatar-popup'
+          trigger={
+            <Icon 
+              corner='bottom right' 
+              name='pencil alternate' 
+              circular 
+              style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+            />
+          }
+          position="top center"
+          closeOnDocumentClick={true}
+        >
+          <div style={{'margin': 'auto'}}>
+            <Avatar
+              width={260}
+              height={300}
+              imageWidth={260}
+              onCrop={this.onAvatarCrop}
+              onClose={this.onAvatarClose}
+              onBeforeFileLoad={this.onBeforeAvatarLoad}
+            />
+            
+            <div>
+              {avatarSubmitButton}
+            </div>
+          </div>
+      
+        </Popup>
       </Icon.Group>
-      {displayAvatarForm}
+      {errorDisplay}
     </div>
     )
 
