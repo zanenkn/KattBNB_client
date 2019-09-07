@@ -179,7 +179,6 @@ class UserPage extends Component {
             errorDisplay: false,
             displayAvatarForm: false
           })
-          window.alert('Avatar succesfully changed!')
           window.location.reload(true)
 
         })
@@ -429,7 +428,7 @@ class UserPage extends Component {
               placeholder='Select new location'
               options={LOCATION_OPTIONS}
               id='location'
-              style={{ 'marginBottom': '1rem', 'width': '100%' }}
+              style={{ 'width': '100%' }}
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKeyLocation}
             />
@@ -439,10 +438,10 @@ class UserPage extends Component {
           {errorDisplay}
 
           <div className='button-wrapper'>
-            <div >
+            <div className='single-button-container'>
               <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
             </div>
-            <div>
+            <div className='single-button-container'>
               {locationSubmitButton}
             </div>
           </div>
@@ -453,7 +452,7 @@ class UserPage extends Component {
     if (this.state.displayPasswordForm) {
       passwordForm = (
         <>
-          <Form style={{ 'display': 'table', 'margin': 'auto', 'width': 'min-content' }}>
+          <Form style={{'maxWidth': '194px'}}>
             <Form.Input
               required
               id='current_password'
@@ -489,10 +488,10 @@ class UserPage extends Component {
           {errorDisplay}
 
           <div className='button-wrapper'>
-            <div>
+            <div className='single-button-container'>
               <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
             </div>
-            <div>
+            <div className='single-button-container'>
               {passwordSubmitButton}
             </div>
           </div>

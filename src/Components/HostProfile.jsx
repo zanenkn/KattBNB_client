@@ -727,10 +727,10 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               {descriptionFormSubmitButton}
             </div>
           </div>
@@ -758,10 +758,10 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               {maxCatsFormSubmitButton}
             </div>
           </div>
@@ -789,10 +789,10 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               {rateFormSubmitButton}
             </div>
           </div>
@@ -820,10 +820,10 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               {supplementFormSubmitButton}
             </div>
           </div>
@@ -852,10 +852,10 @@ class HostProfile extends Component {
           {errorDisplay}
 
           <div className='button-wrapper'>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
             </div>
-            <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+            <div className='single-button-container'>
               {availabilityFormSubmitButton}
             </div>
           </div>
@@ -909,10 +909,10 @@ class HostProfile extends Component {
             </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+              <div className='single-button-container'>
                 <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
               </div>
-              <div style={{ 'marginLeft': '1rem', 'marginRight': '1rem' }}>
+              <div className='single-button-container'>
                 {addressFormSubmitButton}
               </div>
             </div>
@@ -937,10 +937,10 @@ class HostProfile extends Component {
             </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div>
+              <div className='single-button-container'>
                 <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
               </div>
-              <div>
+              <div className='single-button-container'>
                 {addressFormSubmitButton}
               </div>
             </div>
