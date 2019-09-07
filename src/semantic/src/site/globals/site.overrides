@@ -79,7 +79,7 @@
   margin-left: 10vw;
   margin-right: 10vw;
   margin-top: 5vw;
-  margin-bottom: 0;
+  margin-bottom: 10vw;
 }
 
 .app-content {
@@ -145,6 +145,7 @@ h4 {
   flex-direction: row;
   justify-content: space-evenly;
   margin: auto;
+  max-width: 194px;
 }
 
 .submit-button, 

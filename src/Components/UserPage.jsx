@@ -343,7 +343,7 @@ class UserPage extends Component {
 
     if (this.state.errorDisplay) {
       errorDisplay = (
-        <Message negative >
+        <Message negative style={{'width': 'inherit'}} >
           <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
@@ -376,8 +376,6 @@ class UserPage extends Component {
       )
     }
 
-
-
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`     
     avatar = (
     <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
@@ -405,9 +403,22 @@ class UserPage extends Component {
               onCrop={this.onAvatarCrop}
               onClose={this.onAvatarClose}
               onBeforeFileLoad={this.onBeforeAvatarLoad}
+              label={
+                <div style={{'display': 'flex', 'marginTop': '8rem'}}>
+                <Icon.Group>
+                  <Icon name='photo' size='huge' style={{'color': '#d8d8d8'}}/>
+                  <Icon 
+                    corner='bottom right' 
+                    name='add' 
+                    circular 
+                    style={{'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                  />
+                </Icon.Group>
+                </div>
+              }
             />
             {errorDisplay}
-            <div>
+            <div style={{'marginBottom': '1rem'}}>
               {avatarSubmitButton}
             </div>
           </div>
@@ -420,7 +431,8 @@ class UserPage extends Component {
     if (this.state.displayLocationForm) {
       locationForm = (
         <>
-          <Form>
+          <Divider/>
+          <Form style={{'maxWidth': '194px'}}>
             <Dropdown
               clearable
               search
@@ -432,19 +444,16 @@ class UserPage extends Component {
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKeyLocation}
             />
-
+            {errorDisplay}
           </Form>
 
-          {errorDisplay}
+          
 
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {locationSubmitButton}
-            </div>
+            <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
+            {locationSubmitButton}
           </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
     }
@@ -452,6 +461,7 @@ class UserPage extends Component {
     if (this.state.displayPasswordForm) {
       passwordForm = (
         <>
+          <Divider />
           <Form style={{'maxWidth': '194px'}}>
             <Form.Input
               required
@@ -480,21 +490,19 @@ class UserPage extends Component {
               placeholder='New password again'
               onKeyPress={this.listenEnterKeyPassword}
             />
-            <p className='small-centered-paragraph'>
+            <p className='small-centered-paragraph' style={{'marginBottom': '0'}}>
               Upon successful password change you will be redirected back to login.
             </p>
+            {errorDisplay}
           </Form>
 
-          {errorDisplay}
+          
 
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {passwordSubmitButton}
-            </div>
+            <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
+            {passwordSubmitButton}
           </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
     }
@@ -548,7 +556,7 @@ class UserPage extends Component {
 
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
-              &nbsp;{this.state.location}&nbsp;
+              &nbsp;{this.state.location}&ensp;
               <Header as='strong' id='change-location-link' onClick={this.locationFormHandler} className='fake-link-underlined'>
                 Change
               </Header>
@@ -557,7 +565,7 @@ class UserPage extends Component {
 
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
-              &nbsp;******&nbsp;
+              &nbsp;******&ensp;
               <Header as='strong' id='change-password-link' onClick={this.passwordFormHandler} className='fake-link-underlined'>
                 Change
               </Header>

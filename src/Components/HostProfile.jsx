@@ -727,12 +727,8 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {descriptionFormSubmitButton}
-            </div>
+            <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
+            {descriptionFormSubmitButton}
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
@@ -746,7 +742,7 @@ class HostProfile extends Component {
           <p className='small-centered-paragraph'>
             Enter maximum number of cats from the same household you would like to host.
           </p>
-          <Form id='update-maxCats' style={{ 'margin': 'auto', 'width': 'max-content' }}>
+          <Form id='update-maxCats' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
             <Form.Input
               required
               type='number'
@@ -758,12 +754,8 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {maxCatsFormSubmitButton}
-            </div>
+            <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
+            {maxCatsFormSubmitButton}
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
@@ -777,7 +769,7 @@ class HostProfile extends Component {
           <p className='small-centered-paragraph'>
             Enter how much you would like to get paid per day when hosting 1 cat.
           </p>
-          <Form id='update-rate' style={{ 'margin': 'auto', 'width': 'max-content' }}>
+          <Form id='update-rate' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
             <Form.Input
               required
               type='number'
@@ -789,12 +781,8 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {rateFormSubmitButton}
-            </div>
+            <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
+            {rateFormSubmitButton}
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
@@ -808,7 +796,7 @@ class HostProfile extends Component {
           <p className='small-centered-paragraph'>
             Enter how much you would like to get paid per an extra cat per day.
           </p>
-          <Form id='update-supplement' style={{ 'margin': 'auto', 'width': 'max-content' }}>
+          <Form id='update-supplement' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
             <Form.Input
               required
               type='number'
@@ -820,12 +808,8 @@ class HostProfile extends Component {
           </Form>
           {errorDisplay}
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {supplementFormSubmitButton}
-            </div>
+            <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
+            {supplementFormSubmitButton}
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
@@ -852,12 +836,8 @@ class HostProfile extends Component {
           {errorDisplay}
 
           <div className='button-wrapper'>
-            <div className='single-button-container'>
-              <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
-            </div>
-            <div className='single-button-container'>
-              {availabilityFormSubmitButton}
-            </div>
+            <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
+            {availabilityFormSubmitButton}
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
@@ -909,12 +889,8 @@ class HostProfile extends Component {
             </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div className='single-button-container'>
-                <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
-              </div>
-              <div className='single-button-container'>
-                {addressFormSubmitButton}
-              </div>
+              <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
+              {addressFormSubmitButton}
             </div>
             <Divider style={{ 'marginBottom': '2rem' }} />
           </>
@@ -928,7 +904,7 @@ class HostProfile extends Component {
             </p>
 
             <div className='required field'>
-              <p>
+              <p style={{ 'textAlign': 'center' }}>
                 {this.state.newAddress}&nbsp;
                 <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, newAddress: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
                   Not right?
@@ -937,12 +913,8 @@ class HostProfile extends Component {
             </div>
             {errorDisplay}
             <div className='button-wrapper'>
-              <div className='single-button-container'>
-                <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
-              </div>
-              <div className='single-button-container'>
-                {addressFormSubmitButton}
-              </div>
+              <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
+              {addressFormSubmitButton}
             </div>
             <Divider style={{ 'marginBottom': '2rem' }} />
           </>
