@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Icon } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import Avatar from 'react-avatar-edit'
@@ -337,6 +337,7 @@ class UserPage extends Component {
     let avatar
     let avatarSubmitButton
     let noAvatar
+    let displayAvatarForm
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -374,11 +375,11 @@ class UserPage extends Component {
     }
 
     if (this.state.displayAvatarForm) {
-      avatar = (
+      displayAvatarForm = (
         <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
           <Avatar
-            width={390}
-            height={295}
+            width={320}
+            height={300}
             onCrop={this.onAvatarCrop}
             onClose={this.onAvatarClose}
             onBeforeFileLoad={this.onBeforeAvatarLoad}
@@ -395,18 +396,23 @@ class UserPage extends Component {
           </div>
         </div>
       )
-    } else {
-      if (this.state.avatar !== null) {
-        avatar = (
-          <img src={this.state.avatar} onClick={this.avatarFormHandler} />
-        )
-      } else {
-        noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=128&length=3&font-size=0.3&rounded=true&background=c8c8c8&color=c90c61&uppercase=false`
-        avatar = (
-          <img src={noAvatar} onClick={this.avatarFormHandler} />
-        )
-      }
-    }
+    } 
+
+    noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`     
+    avatar = (
+    <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
+      <Icon.Group size='big'>
+        <Image src={this.state.avatar === null? noAvatar : this.state.avatar} size='small'></Image>
+        <Icon 
+          corner='bottom right' 
+          name='pencil alternate' 
+          circular 
+          style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+          onClick={this.avatarFormHandler} />
+      </Icon.Group>
+      {displayAvatarForm}
+    </div>
+    )
 
     if (this.state.displayLocationForm) {
       locationForm = (
@@ -526,7 +532,7 @@ class UserPage extends Component {
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
-            This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
+            This is your <strong> basic </strong> profile. Here you can update your avatar, location, and password.
           </p>
 
           {avatar}
