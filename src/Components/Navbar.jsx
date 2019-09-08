@@ -12,19 +12,11 @@ class Navbar extends Component {
 
     if (this.props.currentUserIn) {
       noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-      if (this.props.avatar !== null) {
-        userIcon = (
-          <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
-            <Image id='user-icon' src={this.props.avatar} size='mini'></Image>
-          </Grid.Column>
-        )
-      } else {
-        userIcon = (
-          <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
-            <Image id='user-icon' src={noAvatar} size='mini'></Image>
-          </Grid.Column>
-        )
-      }
+      userIcon = (
+        <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
+          <Image id='user-icon' src={this.props.avatar === null ? noAvatar : this.props.avatar} style={{'height': '5vh', 'width': '5vh', 'padding': '1px', 'border': 'white solid 2px', 'border-radius': '50%'}}></Image>
+        </Grid.Column>
+      )
     } else {
       userIcon = (
         <Grid.Column className='navlink' width={4} as={Link} to='/login'>
