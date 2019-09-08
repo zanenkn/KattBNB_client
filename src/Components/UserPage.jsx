@@ -383,7 +383,7 @@ class UserPage extends Component {
                 corner='bottom right'
                 name='pencil alternate'
                 circular
-                style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
               />
             }
             position='top center'
@@ -405,7 +405,7 @@ class UserPage extends Component {
                         corner='bottom right'
                         name='add'
                         circular
-                        style={{ 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                        style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
                       />
                     </Icon.Group>
                   </div>

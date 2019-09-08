@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -8,13 +8,23 @@ class Navbar extends Component {
 
     let userIcon
     let hamburgerIcon
+    let noAvatar
 
     if (this.props.currentUserIn) {
-      userIcon = (
-        <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
-          <svg id='user-icon' className='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='#FFFFFF' path d='M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM7 6v2a3 3 0 1 0 6 0V6a3 3 0 1 0-6 0zm-3.65 8.44a8 8 0 0 0 13.3 0 15.94 15.94 0 0 0-13.3 0z' /></svg>
-        </Grid.Column>
-      )
+      noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+      if (this.props.avatar !== null) {
+        userIcon = (
+          <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
+            <Image id='user-icon' src={this.props.avatar} size='mini'></Image>
+          </Grid.Column>
+        )
+      } else {
+        userIcon = (
+          <Grid.Column className='navlink' width={4} as={Link} to='/user-page'>
+            <Image id='user-icon' src={noAvatar} size='mini'></Image>
+          </Grid.Column>
+        )
+      }
     } else {
       userIcon = (
         <Grid.Column className='navlink' width={4} as={Link} to='/login'>
@@ -67,7 +77,9 @@ class Navbar extends Component {
 
 const mapStateToProps = state => ({
   menuVisible: state.animation.menuVisible,
-  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
+  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn,
+  avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
+  username: state.reduxTokenAuth.currentUser.attributes.username
 })
 
 export default connect(mapStateToProps)(Navbar)
