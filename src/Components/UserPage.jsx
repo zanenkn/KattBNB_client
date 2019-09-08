@@ -15,7 +15,6 @@ class UserPage extends Component {
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
-    displayAvatarForm: false,
     avatar: this.props.avatar,
     location: this.props.location,
     newLocation: this.props.location,
@@ -66,7 +65,6 @@ class UserPage extends Component {
 
   avatarFormHandler = () => {
     this.setState({
-      displayAvatarForm: !this.state.displayAvatarForm,
       displayLocationForm: false,
       displayPasswordForm: false,
       hostProfileForm: false,
@@ -87,7 +85,6 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
-      displayAvatarForm: false,
       preview: null,
       hostProfileForm: false,
       newLocation: this.state.location,
@@ -106,7 +103,6 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      displayAvatarForm: false,
       preview: null,
       newLocation: this.state.location,
       hostProfileForm: false,
@@ -124,7 +120,6 @@ class UserPage extends Component {
   hostProfileFormHandler = () => {
     this.setState({
       hostProfileForm: !this.state.hostProfileForm,
-      displayAvatarForm: false,
       preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
@@ -139,7 +134,6 @@ class UserPage extends Component {
 
   closeLocationAndPasswordForms = () => {
     this.setState({
-      displayAvatarForm: false,
       preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
@@ -177,11 +171,9 @@ class UserPage extends Component {
           this.setState({
             avatar: response.data.data.avatar,
             loading: false,
-            errorDisplay: false,
-            displayAvatarForm: false
+            errorDisplay: false
           })
           window.location.reload(true)
-
         })
         .catch(error => {
           this.setState({
@@ -283,8 +275,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
-      hostProfileForm: false,
-      displayAvatarForm: false
+      hostProfileForm: false
     })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
