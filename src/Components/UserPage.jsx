@@ -19,37 +19,37 @@ class UserPage extends Component {
     avatar: this.props.avatar,
     location: this.props.location,
     newLocation: this.props.location,
-    current_password: '',
-    new_password: '',
-    new_password_confirmation: '',
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: '',
     loading: false,
     errorDisplay: false,
     errors: '',
-    host_profile: '',
-    host_profile_form: false,
+    hostProfile: '',
+    hostProfileForm: false,
     preview: null
   }
 
   async componentDidMount() {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ host_profile: response.data })
+      this.setState({ hostProfile: response.data })
     })
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       this.setState({
-        location: this.state.host_profile[0]['user']['location'],
-        newLocation: this.state.host_profile[0]['user']['location']
+        location: this.state.hostProfile[0]['user']['location'],
+        newLocation: this.state.hostProfile[0]['user']['location']
       })
     }
   }
 
   listenEnterKeyLocation = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updateLocation(event)
     }
   }
 
   listenEnterKeyPassword = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updatePassword(event)
     }
   }
@@ -69,15 +69,15 @@ class UserPage extends Component {
       displayAvatarForm: !this.state.displayAvatarForm,
       displayLocationForm: false,
       displayPasswordForm: false,
-      host_profile_form: false,
+      hostProfileForm: false,
       newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
     }
   }
@@ -88,15 +88,15 @@ class UserPage extends Component {
       displayPasswordForm: false,
       displayAvatarForm: false,
       preview: null,
-      host_profile_form: false,
+      hostProfileForm: false,
       newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
     }
   }
@@ -108,21 +108,21 @@ class UserPage extends Component {
       displayAvatarForm: false,
       preview: null,
       newLocation: this.state.location,
-      host_profile_form: false,
+      hostProfileForm: false,
       errorDisplay: false,
       errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
     }
   }
 
   hostProfileFormHandler = () => {
     this.setState({
-      host_profile_form: !this.state.host_profile_form,
+      hostProfileForm: !this.state.hostProfileForm,
       displayAvatarForm: false,
       preview: null,
       displayLocationForm: false,
@@ -130,9 +130,9 @@ class UserPage extends Component {
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
   }
 
@@ -145,9 +145,9 @@ class UserPage extends Component {
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
   }
 
@@ -220,7 +220,7 @@ class UserPage extends Component {
             loading: false,
             errorDisplay: false
           })
-          if (this.state.host_profile.length === 1) {
+          if (this.state.hostProfile.length === 1) {
             window.alert('Location succesfully changed!')
           } else {
             window.alert('Location succesfully changed!')
@@ -241,14 +241,14 @@ class UserPage extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else if (this.state.new_password === this.state.new_password_confirmation && this.state.new_password.length >= 6) {
+    } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/password'
       const payload = {
-        current_password: this.state.current_password,
-        password: this.state.new_password,
-        password_confirmation: this.state.new_password_confirmation,
+        current_password: this.state.currentPassword,
+        password: this.state.newPassword,
+        password_confirmation: this.state.newPasswordConfirmation,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
@@ -282,7 +282,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
-      host_profile_form: false
+      hostProfileForm: false
     })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
@@ -465,8 +465,8 @@ class UserPage extends Component {
           <Form style={{ 'maxWidth': '194px' }}>
             <Form.Input
               required
-              id='current_password'
-              value={this.state.current_password}
+              id='currentPassword'
+              value={this.state.currentPassword}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='Current password'
@@ -474,8 +474,8 @@ class UserPage extends Component {
             />
             <Form.Input
               required
-              id='new_password'
-              value={this.state.new_password}
+              id='newPassword'
+              value={this.state.newPassword}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password'
@@ -483,8 +483,8 @@ class UserPage extends Component {
             />
             <Form.Input
               required
-              id='new_password_confirmation'
-              value={this.state.new_password_confirmation}
+              id='newPasswordConfirmation'
+              value={this.state.newPasswordConfirmation}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password again'
@@ -507,7 +507,7 @@ class UserPage extends Component {
       )
     }
 
-    if (this.state.host_profile_form === true) {
+    if (this.state.hostProfileForm === true) {
       hostProfileForm = (
         <HostProfileForm
           user_id={this.props.id}
@@ -522,10 +522,10 @@ class UserPage extends Component {
       )
     }
 
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       hostProfile = (
         <HostProfile
-          id={this.state.host_profile[0].id}
+          id={this.state.hostProfile[0].id}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )
