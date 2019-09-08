@@ -73,6 +73,7 @@ class UserPage extends Component {
       newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
+      preview: null,
       currentPassword: '',
       newPassword: '',
       newPasswordConfirmation: ''
@@ -282,7 +283,8 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
-      hostProfileForm: false
+      hostProfileForm: false,
+      displayAvatarForm: false
     })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
@@ -378,8 +380,8 @@ class UserPage extends Component {
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
     avatar = (
-      <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
-        <Icon.Group size='big'>
+      <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
+        <Icon.Group size='big' onClick={this.avatarFormHandler}>
           <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small'></Image>
           <Popup
             modal
@@ -392,7 +394,7 @@ class UserPage extends Component {
                 style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
               />
             }
-            position="top center"
+            position='top center'
             closeOnDocumentClick={true}
           >
             <div style={{ 'margin': 'auto' }}>
@@ -446,8 +448,6 @@ class UserPage extends Component {
             />
             {errorDisplay}
           </Form>
-
-
 
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
