@@ -61,4 +61,10 @@ describe('User can view her host profile', () => {
     cy.get('#search').click()
     cy.get('#address-submit-button').should('have.class', 'disabled')
   })
+
+  it('and get an error message on avatar update if update criteria are not met', () => {
+    cy.get('#add-avatar').click()
+    cy.get('#avatar-submit-button').click()
+    cy.contains('You have selected no avatar')
+  })
 })

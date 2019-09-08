@@ -379,6 +379,7 @@ class UserPage extends Component {
             className='avatar-popup'
             trigger={
               <Icon
+                id='add-avatar'
                 corner='bottom right'
                 name='pencil alternate'
                 circular
@@ -486,8 +487,6 @@ class UserPage extends Component {
             </p>
             {errorDisplay}
           </Form>
-
-
 
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
