@@ -1,5 +1,5 @@
 {
-  "error":[
+  "error": [
     "Description can't be blank",
     "Supplement price per cat per day can't be blank"
   ]

@@ -310,7 +310,7 @@ class UserPage extends Component {
   }
 
   onAvatarCrop = (preview) => {
-    this.setState({ 
+    this.setState({
       preview: preview,
       errors: [],
       errorDisplay: false
@@ -343,7 +343,7 @@ class UserPage extends Component {
 
     if (this.state.errorDisplay) {
       errorDisplay = (
-        <Message negative style={{'width': 'inherit'}} >
+        <Message negative style={{ 'width': 'inherit' }} >
           <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
@@ -376,63 +376,63 @@ class UserPage extends Component {
       )
     }
 
-    noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`     
+    noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
     avatar = (
-    <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
-      <Icon.Group size='big'>
-        <Image src={this.state.avatar === null? noAvatar : this.state.avatar} size='small'></Image>
-        <Popup 
-          modal
-          className='avatar-popup'
-          trigger={
-            <Icon 
-              corner='bottom right' 
-              name='pencil alternate' 
-              circular 
-              style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-            />
-          }
-          position="top center"
-          closeOnDocumentClick={true}
-        >
-          <div style={{'margin': 'auto'}}>
-            <Avatar
-              width={260}
-              height={300}
-              imageWidth={260}
-              onCrop={this.onAvatarCrop}
-              onClose={this.onAvatarClose}
-              onBeforeFileLoad={this.onBeforeAvatarLoad}
-              label={
-                <div style={{'display': 'flex', 'marginTop': '8rem'}}>
-                <Icon.Group>
-                  <Icon name='photo' size='huge' style={{'color': '#d8d8d8'}}/>
-                  <Icon 
-                    corner='bottom right' 
-                    name='add' 
-                    circular 
-                    style={{'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-                  />
-                </Icon.Group>
-                </div>
-              }
-            />
-            {errorDisplay}
-            <div style={{'marginBottom': '1rem'}}>
-              {avatarSubmitButton}
+      <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }}>
+        <Icon.Group size='big'>
+          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small'></Image>
+          <Popup
+            modal
+            className='avatar-popup'
+            trigger={
+              <Icon
+                corner='bottom right'
+                name='pencil alternate'
+                circular
+                style={{ 'marginBottom': '1rem', 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+              />
+            }
+            position="top center"
+            closeOnDocumentClick={true}
+          >
+            <div style={{ 'margin': 'auto' }}>
+              <Avatar
+                width={260}
+                height={300}
+                imageWidth={260}
+                onCrop={this.onAvatarCrop}
+                onClose={this.onAvatarClose}
+                onBeforeFileLoad={this.onBeforeAvatarLoad}
+                label={
+                  <div style={{ 'display': 'flex', 'marginTop': '8rem' }}>
+                    <Icon.Group>
+                      <Icon name='photo' size='huge' style={{ 'color': '#d8d8d8' }} />
+                      <Icon
+                        corner='bottom right'
+                        name='add'
+                        circular
+                        style={{ 'background-color': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                      />
+                    </Icon.Group>
+                  </div>
+                }
+              />
+              {errorDisplay}
+              <div style={{ 'marginBottom': '1rem' }}>
+                {avatarSubmitButton}
+              </div>
             </div>
-          </div>
-      
-        </Popup>
-      </Icon.Group>
-    </div>
+
+          </Popup>
+        </Icon.Group>
+      </div>
     )
 
     if (this.state.displayLocationForm) {
       locationForm = (
         <>
-          <Divider/>
-          <Form style={{'maxWidth': '194px'}}>
+          <Divider />
+          <Form style={{ 'maxWidth': '194px' }}>
             <Dropdown
               clearable
               search
@@ -447,7 +447,7 @@ class UserPage extends Component {
             {errorDisplay}
           </Form>
 
-          
+
 
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
@@ -462,7 +462,7 @@ class UserPage extends Component {
       passwordForm = (
         <>
           <Divider />
-          <Form style={{'maxWidth': '194px'}}>
+          <Form style={{ 'maxWidth': '194px' }}>
             <Form.Input
               required
               id='current_password'
@@ -490,13 +490,13 @@ class UserPage extends Component {
               placeholder='New password again'
               onKeyPress={this.listenEnterKeyPassword}
             />
-            <p className='small-centered-paragraph' style={{'marginBottom': '0'}}>
+            <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
               Upon successful password change you will be redirected back to login.
             </p>
             {errorDisplay}
           </Form>
 
-          
+
 
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
