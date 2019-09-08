@@ -12,7 +12,7 @@ class HostProfile extends Component {
     this.state = {
       description: '',
       newDescription: '',
-      full_address: '',
+      fullAddress: '',
       rate: '',
       newRate: '',
       maxCats: '',
@@ -39,7 +39,7 @@ class HostProfile extends Component {
       long: '',
       latitude: '',
       longitude: '',
-      user_input_address: ''
+      userInputAddress: ''
     }
   }
 
@@ -54,7 +54,7 @@ class HostProfile extends Component {
       .then(response => {
         this.setState({
           description: response.data.description,
-          full_address: response.data.full_address,
+          fullAddress: response.data.full_address,
           rate: response.data.price_per_day_1_cat,
           maxCats: response.data.max_cats_accepted,
           supplement: response.data.supplement_price_per_cat_per_day,
@@ -62,7 +62,7 @@ class HostProfile extends Component {
           selectedDays: response.data.availability.map(function (date) {
             return new Date(date)
           }),
-          user_input_address: response.data.full_address
+          userInputAddress: response.data.full_address
         })
       })
       .catch(error => {
@@ -91,7 +91,7 @@ class HostProfile extends Component {
       addressSearch: false,
       editAddress: false,
       newAddress: '',
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -129,7 +129,7 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -144,8 +144,8 @@ class HostProfile extends Component {
     this.setState({
       editAddress: !this.state.editAddress,
       addressSearch: true,
-      newAddress: this.state.full_address,
-      user_input_address: this.state.full_address,
+      newAddress: this.state.fullAddress,
+      userInputAddress: this.state.fullAddress,
       newDescription: '',
       newMaxCats: '',
       newRate: '',
@@ -187,7 +187,7 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -218,7 +218,7 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -249,7 +249,7 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -280,7 +280,7 @@ class HostProfile extends Component {
       editSupplementForm: false,
       addressSearch: false,
       editAddress: false,
-      user_input_address: '',
+      userInputAddress: '',
       lat: '',
       long: '',
       latitude: '',
@@ -374,7 +374,7 @@ class HostProfile extends Component {
   }
 
   listenEnterMaxCatsUpdate = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updateMaxCats(event)
     }
   }
@@ -421,7 +421,7 @@ class HostProfile extends Component {
   }
 
   listenEnterRateUpdate = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updateRate(event)
     }
   }
@@ -468,7 +468,7 @@ class HostProfile extends Component {
   }
 
   listenEnterSupplementUpdate = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updateSupplement(event)
     }
   }
@@ -566,7 +566,7 @@ class HostProfile extends Component {
         this.setState({
           loading: false,
           errorDisplay: false,
-          full_address: this.state.newAddress,
+          fullAddress: this.state.newAddress,
           editAddress: false
         })
         window.alert('Your address was succesfully updated!')
@@ -581,7 +581,7 @@ class HostProfile extends Component {
   }
 
   listenEnterAddressSearch = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.geolocationDataAddress(event)
     }
   }
@@ -602,7 +602,7 @@ class HostProfile extends Component {
 
   geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
-    Geocode.fromAddress(this.state.user_input_address).then(
+    Geocode.fromAddress(this.state.userInputAddress).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({
@@ -698,7 +698,7 @@ class HostProfile extends Component {
       availabilityFormSubmitButton = (
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
-      if (this.state.full_address !== this.state.newAddress && this.state.newAddress !== '') {
+      if (this.state.fullAddress !== this.state.newAddress && this.state.newAddress !== '') {
         addressFormSubmitButton = (
           <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
         )
@@ -879,8 +879,8 @@ class HostProfile extends Component {
                 style={{ 'width': '100%' }}
                 placeholder='Search...'
                 required
-                id='user_input_address'
-                value={this.state.user_input_address}
+                id='userInputAddress'
+                value={this.state.userInputAddress}
                 onChange={this.onChangeHandler}
                 onKeyPress={this.listenEnterAddressSearch}
                 iconPosition='right'
@@ -944,7 +944,7 @@ class HostProfile extends Component {
 
         <p id='address'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z" /></svg>
-          &nbsp;{this.state.full_address}&ensp;
+          &nbsp;{this.state.fullAddress}&ensp;
           <Header as='strong' id='change-address-link' onClick={this.addressFormHandler} className='fake-link-underlined'>
             Change
           </Header>
