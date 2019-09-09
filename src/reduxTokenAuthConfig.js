@@ -10,7 +10,8 @@ const config = {
     id: 'id',
     uid: 'uid',
     location: 'location',
-    username: 'nickname'
+    username: 'nickname',
+    avatar: 'avatar'
   },
   userRegistrationAttributes: {
     passwordConfirmation: 'password_confirmation',

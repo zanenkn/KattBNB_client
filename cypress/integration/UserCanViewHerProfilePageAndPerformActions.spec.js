@@ -22,15 +22,13 @@ describe('User can view her profile page', () => {
     cy.get('#change-location-link').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
-    cy.get('#password').type('password')
     cy.get('#location-submit-button').click()
-    cy.wait(3000)
-    cy.get('#user-location').within(() => {
-      cy.contains('Arboga')
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Location succesfully changed!')
     })
   })
 
-  it('and does not change her location successfully cause of wrong password', () => {
+  it('and does not change her location successfully', () => {
     cy.route({
       method: 'PUT',
       url: 'http://localhost:3007/api/v1/auth',
@@ -40,9 +38,9 @@ describe('User can view her profile page', () => {
     cy.get('#change-location-link').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
-    cy.get('#password').type('pass')
+    cy.get('.ui > div > .ui > #location > .dropdown').click()
     cy.get('#location-submit-button').click()
-    cy.contains('Current password is invalid')
+    cy.contains('No location selected or location is unchanged!')
   })
 
   it('and change her password successfully', () => {
@@ -53,9 +51,9 @@ describe('User can view her profile page', () => {
       response: 'fixture:successful_password_change_user_page.json',
     })
     cy.get('#change-password-link').click()
-    cy.get('#current_password').type('password')
-    cy.get('#new_password').type('SeCuReP@SsWoRd')
-    cy.get('#new_password_confirmation').type('SeCuReP@SsWoRd')
+    cy.get('#currentPassword').type('password')
+    cy.get('#newPassword').type('SeCuReP@SsWoRd')
+    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd')
     cy.get('#password-submit-button').click()
     cy.contains('Log in')
   })
@@ -68,9 +66,9 @@ describe('User can view her profile page', () => {
       response: 'fixture:unsuccessful_password_change_user_page.json',
     })
     cy.get('#change-password-link').click()
-    cy.get('#current_password').type('passwordD')
-    cy.get('#new_password').type('SeCuReP@SsWoR')
-    cy.get('#new_password_confirmation').type('SeCuReP@SsWoRd')
+    cy.get('#currentPassword').type('passwordD')
+    cy.get('#newPassword').type('SeCuReP@SsWoR')
+    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd')
     cy.get('#password-submit-button').click()
     cy.contains("Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters")
   })

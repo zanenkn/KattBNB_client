@@ -30,7 +30,7 @@ describe('User can create a host profile', () => {
       })
     })
 
-    cy.get('#user_input_address').type('Solståndsgatan 23')
+    cy.get('#userInputAddress').type('Solståndsgatan 23')
     cy.get('#search').click()
     cy.get('.required > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(2)').click()
@@ -42,7 +42,7 @@ describe('User can create a host profile', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(8)').click()
     cy.get('#save-host-profile-button').click()
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('You have successfully created your host profile! Click OK to be redirected.')
+      expect(str).to.equal('You have successfully created your host profile!')
     })
   })
 
@@ -68,7 +68,7 @@ describe('User can create a host profile', () => {
       })
     })
 
-    cy.get('#user_input_address').type('Solståndsgatan 23')
+    cy.get('#userInputAddress').type('Solståndsgatan 23')
     cy.get('#search').click()
     cy.get('.required > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(2)').click()

@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Icon, Divider } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
-
+import Avatar from 'react-avatar-edit'
+import Popup from 'reactjs-popup'
 
 class UserPage extends Component {
 
@@ -14,33 +15,40 @@ class UserPage extends Component {
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
-    password: '',
+    avatar: this.props.avatar,
     location: this.props.location,
     newLocation: this.props.location,
-    current_password: '',
-    new_password: '',
-    new_password_confirmation: '',
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: '',
     loading: false,
     errorDisplay: false,
     errors: '',
-    host_profile: '',
-    host_profile_form: false
+    hostProfile: '',
+    hostProfileForm: false,
+    preview: null
   }
 
-  componentDidMount() {
-    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ host_profile: response.data })
+  async componentDidMount() {
+    await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
+      this.setState({ hostProfile: response.data })
     })
+    if (this.state.hostProfile.length === 1) {
+      this.setState({
+        location: this.state.hostProfile[0]['user']['location'],
+        newLocation: this.state.hostProfile[0]['user']['location']
+      })
+    }
   }
 
   listenEnterKeyLocation = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updateLocation(event)
     }
   }
 
   listenEnterKeyPassword = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.updatePassword(event)
     }
   }
@@ -55,103 +63,143 @@ class UserPage extends Component {
     this.setState({ newLocation: value })
   }
 
-  locationFormHandlerNoProfile = () => {
+  avatarFormHandler = () => {
+    this.setState({
+      displayLocationForm: false,
+      displayPasswordForm: false,
+      hostProfileForm: false,
+      newLocation: this.state.location,
+      errorDisplay: false,
+      errors: '',
+      preview: null,
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
+    })
+    if (this.state.hostProfile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
+  }
+
+  locationFormHandler = () => {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
-      host_profile_form: false,
-      location: this.state.newLocation,
+      preview: null,
+      hostProfileForm: false,
+      newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
-      password: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
+    if (this.state.hostProfile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
   }
 
-  locationFormHandlerWithProfile = () => {
-    this.setState({
-      displayLocationForm: !this.state.displayLocationForm,
-      displayPasswordForm: false,
-      host_profile_form: false,
-      location: this.state.newLocation,
-      errorDisplay: false,
-      errors: '',
-      password: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
-    })
-    this.hostProfileElement.current.closeAllForms()
-  }
-
-  passwordFormHandlerNoProfile = () => {
+  passwordFormHandler = () => {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      location: this.state.newLocation,
-      host_profile_form: false,
+      preview: null,
+      newLocation: this.state.location,
+      hostProfileForm: false,
       errorDisplay: false,
       errors: '',
-      password: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
-  }
-
-  passwordFormHandlerWithProfile = () => {
-    this.setState({
-      displayPasswordForm: !this.state.displayPasswordForm,
-      displayLocationForm: false,
-      location: this.state.newLocation,
-      host_profile_form: false,
-      errorDisplay: false,
-      errors: '',
-      password: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
-    })
-    this.hostProfileElement.current.closeAllForms()
+    if (this.state.hostProfile.length === 1) {
+      this.hostProfileElement.current.closeAllForms()
+    }
   }
 
   hostProfileFormHandler = () => {
     this.setState({
-      host_profile_form: !this.state.host_profile_form,
+      hostProfileForm: !this.state.hostProfileForm,
+      preview: null,
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
-      errors: ''
+      errors: '',
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
   }
 
   closeLocationAndPasswordForms = () => {
     this.setState({
+      preview: null,
       displayLocationForm: false,
-      location: this.state.newLocation,
+      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
-      password: '',
-      current_password: '',
-      new_password: '',
-      new_password_confirmation: ''
+      currentPassword: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
     })
+  }
+
+  updateAvatar = (e) => {
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else if (this.state.preview === null) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['You have selected no avatar!']
+      })
+    } else {
+      this.setState({ loading: true })
+      e.preventDefault()
+      const path = '/api/v1/auth/'
+      const payload = {
+        avatar: this.state.preview,
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload)
+        .then(response => {
+          this.setState({
+            avatar: response.data.data.avatar,
+            loading: false,
+            errorDisplay: false
+          })
+          window.location.reload(true)
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    }
   }
 
   updateLocation = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
+    } else if (this.state.newLocation === this.state.location || this.state.newLocation === '') {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['No location selected or location is unchanged!']
+      })
     } else {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/'
       const payload = {
-        current_password: this.state.password,
         location: this.state.newLocation,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -165,7 +213,12 @@ class UserPage extends Component {
             loading: false,
             errorDisplay: false
           })
-          window.alert('Location succesfully changed!')
+          if (this.state.hostProfile.length === 1) {
+            window.alert('Location succesfully changed!')
+          } else {
+            window.alert('Location succesfully changed!')
+            window.location.reload(true)
+          }
         })
         .catch(error => {
           this.setState({
@@ -181,14 +234,14 @@ class UserPage extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else if (this.state.new_password === this.state.new_password_confirmation && this.state.new_password.length >= 6) {
+    } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/password'
       const payload = {
-        current_password: this.state.current_password,
-        password: this.state.new_password,
-        password_confirmation: this.state.new_password_confirmation,
+        current_password: this.state.currentPassword,
+        password: this.state.newPassword,
+        password_confirmation: this.state.newPasswordConfirmation,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
@@ -222,7 +275,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
-      host_profile_form: false
+      hostProfileForm: false
     })
     if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
@@ -245,6 +298,25 @@ class UserPage extends Component {
     }
   }
 
+  onAvatarClose = () => {
+    this.setState({ preview: null })
+  }
+
+  onAvatarCrop = (preview) => {
+    this.setState({
+      preview: preview,
+      errors: [],
+      errorDisplay: false
+    })
+  }
+
+  onBeforeAvatarLoad = (elem) => {
+    if (elem.target.files[0].size > 5242880) {
+      alert('File is too big!')
+      elem.target.value = ''
+    }
+  }
+
 
   render() {
     let errorDisplay
@@ -258,9 +330,13 @@ class UserPage extends Component {
     let hostProfile
     let hostProfileForm
 
+    let avatar
+    let avatarSubmitButton
+    let noAvatar
+
     if (this.state.errorDisplay) {
       errorDisplay = (
-        <Message negative >
+        <Message negative style={{ 'width': 'inherit' }} >
           <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
@@ -278,6 +354,9 @@ class UserPage extends Component {
       passwordSubmitButton = (
         <Button id='password-submit-button' className='submit-button' loading>Change</Button>
       )
+      avatarSubmitButton = (
+        <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
+      )
     } else {
       locationSubmitButton = (
         <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
@@ -285,12 +364,69 @@ class UserPage extends Component {
       passwordSubmitButton = (
         <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
       )
+      avatarSubmitButton = (
+        <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
+      )
     }
+
+    noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+    avatar = (
+      <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
+        <Icon.Group size='big' onClick={this.avatarFormHandler}>
+          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small'></Image>
+          <Popup
+            modal
+            className='avatar-popup'
+            trigger={
+              <Icon
+                id='add-avatar'
+                corner='bottom right'
+                name='pencil alternate'
+                circular
+                style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+              />
+            }
+            position='top center'
+            closeOnDocumentClick={true}
+          >
+            <div style={{ 'margin': 'auto' }}>
+              <Avatar
+                width={260}
+                height={300}
+                imageWidth={260}
+                onCrop={this.onAvatarCrop}
+                onClose={this.onAvatarClose}
+                onBeforeFileLoad={this.onBeforeAvatarLoad}
+                label={
+                  <div style={{ 'display': 'flex', 'marginTop': '8rem' }}>
+                    <Icon.Group>
+                      <Icon name='photo' size='huge' style={{ 'color': '#d8d8d8' }} />
+                      <Icon
+                        corner='bottom right'
+                        name='add'
+                        circular
+                        style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                      />
+                    </Icon.Group>
+                  </div>
+                }
+              />
+              {errorDisplay}
+              <div style={{ 'marginBottom': '1rem' }}>
+                {avatarSubmitButton}
+              </div>
+            </div>
+
+          </Popup>
+        </Icon.Group>
+      </div>
+    )
 
     if (this.state.displayLocationForm) {
       locationForm = (
         <>
-          <Form>
+          <Divider />
+          <Form style={{ 'maxWidth': '194px' }}>
             <Dropdown
               clearable
               search
@@ -298,32 +434,18 @@ class UserPage extends Component {
               placeholder='Select new location'
               options={LOCATION_OPTIONS}
               id='location'
-              style={{ 'marginBottom': '1rem', 'width': '100%' }}
+              style={{ 'width': '100%' }}
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKeyLocation}
             />
-
-            <Form.Input
-              required
-              id='password'
-              value={this.state.password}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder='Your password'
-              onKeyPress={this.listenEnterKeyLocation}
-            />
+            {errorDisplay}
           </Form>
 
-          {errorDisplay}
-
           <div className='button-wrapper'>
-            <div >
-              <Button secondary className='cancel-button' onClick={this.state.host_profile.length === 1 ? this.locationFormHandlerWithProfile.bind(this) : this.locationFormHandlerNoProfile.bind(this)}>Close</Button>
-            </div>
-            <div>
-              {locationSubmitButton}
-            </div>
+            <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
+            {locationSubmitButton}
           </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
     }
@@ -331,11 +453,12 @@ class UserPage extends Component {
     if (this.state.displayPasswordForm) {
       passwordForm = (
         <>
-          <Form style={{ 'display': 'table', 'margin': 'auto', 'width': 'min-content' }}>
+          <Divider />
+          <Form style={{ 'maxWidth': '194px' }}>
             <Form.Input
               required
-              id='current_password'
-              value={this.state.current_password}
+              id='currentPassword'
+              value={this.state.currentPassword}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='Current password'
@@ -343,8 +466,8 @@ class UserPage extends Component {
             />
             <Form.Input
               required
-              id='new_password'
-              value={this.state.new_password}
+              id='newPassword'
+              value={this.state.newPassword}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password'
@@ -352,33 +475,29 @@ class UserPage extends Component {
             />
             <Form.Input
               required
-              id='new_password_confirmation'
-              value={this.state.new_password_confirmation}
+              id='newPasswordConfirmation'
+              value={this.state.newPasswordConfirmation}
               type='password'
               onChange={this.onChangeHandler}
               placeholder='New password again'
               onKeyPress={this.listenEnterKeyPassword}
             />
-            <p className='small-centered-paragraph'>
+            <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
               Upon successful password change you will be redirected back to login.
             </p>
+            {errorDisplay}
           </Form>
 
-          {errorDisplay}
-
           <div className='button-wrapper'>
-            <div>
-              <Button secondary className='cancel-button' onClick={this.state.host_profile.length === 1 ? this.passwordFormHandlerWithProfile.bind(this) : this.passwordFormHandlerNoProfile.bind(this)}>Close</Button>
-            </div>
-            <div>
-              {passwordSubmitButton}
-            </div>
+            <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
+            {passwordSubmitButton}
           </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
     }
 
-    if (this.state.host_profile_form === true) {
+    if (this.state.hostProfileForm === true) {
       hostProfileForm = (
         <HostProfileForm
           user_id={this.props.id}
@@ -393,10 +512,10 @@ class UserPage extends Component {
       )
     }
 
-    if (this.state.host_profile.length === 1) {
+    if (this.state.hostProfile.length === 1) {
       hostProfile = (
         <HostProfile
-          id={this.state.host_profile[0].id}
+          id={this.state.hostProfile[0].id}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )
@@ -414,14 +533,10 @@ class UserPage extends Component {
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
-            This is your <strong> basic </strong> profile. Here you can update your location, picture and password.
+            This is your <strong> basic </strong> profile. Here you can update your avatar, location, and password.
           </p>
-          <div style={{ 'display': 'table', 'margin': 'auto', 'paddingBottom': '1rem' }}>
-            <Icon.Group size='huge'>
-              <Icon circular inverted color='grey' name='user' style={{ 'opacity': '0.5' }} />
-              <Icon corner name='add' style={{ 'color': '#c90c61' }} />
-            </Icon.Group>
-          </div>
+
+          {avatar}
 
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
             <p>
@@ -431,8 +546,8 @@ class UserPage extends Component {
 
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
-              &nbsp;{this.state.location}&nbsp;
-              <Header as='strong' id='change-location-link' onClick={this.state.host_profile.length === 1 ? this.locationFormHandlerWithProfile.bind(this) : this.locationFormHandlerNoProfile.bind(this)} className='fake-link-underlined'>
+              &nbsp;{this.state.location}&ensp;
+              <Header as='strong' id='change-location-link' onClick={this.locationFormHandler} className='fake-link-underlined'>
                 Change
               </Header>
             </p>
@@ -440,8 +555,8 @@ class UserPage extends Component {
 
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
-              &nbsp;******&nbsp;
-              <Header as='strong' id='change-password-link' onClick={this.state.host_profile.length === 1 ? this.passwordFormHandlerWithProfile.bind(this) : this.passwordFormHandlerNoProfile.bind(this)} className='fake-link-underlined'>
+              &nbsp;******&ensp;
+              <Header as='strong' id='change-password-link' onClick={this.passwordFormHandler} className='fake-link-underlined'>
                 Change
               </Header>
             </p>
@@ -467,7 +582,8 @@ const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   location: state.reduxTokenAuth.currentUser.attributes.location,
   email: state.reduxTokenAuth.currentUser.attributes.uid,
-  id: state.reduxTokenAuth.currentUser.attributes.id
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+  avatar: state.reduxTokenAuth.currentUser.attributes.avatar
 })
 
 export default connect(mapStateToProps)(UserPage)

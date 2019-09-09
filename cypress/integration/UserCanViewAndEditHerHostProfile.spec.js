@@ -114,8 +114,8 @@ describe('User can view her host profile', () => {
   it('and change her address successfully', () => {
     cy.contains('Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden').should('not.exist')
     cy.get('#change-address-link').click()
-    cy.get('#user_input_address').clear()
-    cy.get('#user_input_address').type('arlanda airport')
+    cy.get('#userInputAddress').clear()
+    cy.get('#userInputAddress').type('arlanda airport')
     cy.get('#search').click()
     cy.wait(1000)
     cy.get('#address-submit-button').click()
