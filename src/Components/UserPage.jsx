@@ -464,8 +464,8 @@ class UserPage extends Component {
                 <ReactAvatarEditor
                   ref={this.setEditorRef}
                   scale={parseFloat(this.state.scale)}
-                  width={this.state.width}
-                  height={this.state.height}
+                  width={200}
+                  height={200}
                   position={this.state.position}
                   onPositionChange={this.handlePositionChange}
                   rotate={parseFloat(this.state.rotate)}
@@ -490,14 +490,7 @@ class UserPage extends Component {
           step="0.01"
           defaultValue="1"
         />
-        <br />
-        {'Allow Scale < 1'}
-        <input
-          name="allowZoomOut"
-          type="checkbox"
-          onChange={this.handleAllowZoomOut}
-          checked={this.state.allowZoomOut}
-        />
+
         <br />
         Border radius:
         <input
@@ -510,49 +503,7 @@ class UserPage extends Component {
           defaultValue="0"
         />
         <br />
-        Avatar Width:
-        <input
-          name="width"
-          type="number"
-          onChange={this.handleWidth}
-          min="50"
-          max="400"
-          step="10"
-          value={this.state.width}
-        />
-        <br />
-        Avatar Height:
-        <input
-          name="height"
-          type="number"
-          onChange={this.handleHeight}
-          min="50"
-          max="400"
-          step="10"
-          value={this.state.height}
-        />
-        <br />
-        X Position:
-        <input
-          name="scale"
-          type="range"
-          onChange={this.handleXPosition}
-          min="0"
-          max="1"
-          step="0.01"
-          value={this.state.position.x}
-        />
-        <br />
-        Y Position:
-        <input
-          name="scale"
-          type="range"
-          onChange={this.handleYPosition}
-          min="0"
-          max="1"
-          step="0.01"
-          value={this.state.position.y}
-        />
+
         <br />
         Rotate:
         <button onClick={this.rotateLeft}>Left</button>
