@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
-import Avatar from 'react-avatar-edit'
+import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
 
 class UserPage extends Component {
@@ -26,7 +26,16 @@ class UserPage extends Component {
     errors: '',
     hostProfile: '',
     hostProfileForm: false,
-    preview: null
+
+    image: '',
+    allowZoomOut: false,
+    position: { x: 0.5, y: 0.5 },
+    scale: 1,
+    rotate: 0,
+    borderRadius: 0,
+    preview: null,
+    width: 200,
+    height: 200,
   }
 
   async componentDidMount() {
@@ -298,23 +307,84 @@ class UserPage extends Component {
     }
   }
 
-  onAvatarClose = () => {
-    this.setState({ preview: null })
+  // avatar handlers
+  handleNewImage = e => {
+    this.setState({ image: e.target.files[0] })
   }
 
-  onAvatarCrop = (preview) => {
+  handleSave = data => {
+    const img = this.editor.getImageScaledToCanvas().toDataURL()
+    const rect = this.editor.getCroppingRect()
+
     this.setState({
-      preview: preview,
-      errors: [],
-      errorDisplay: false
+      preview: img
     })
   }
 
-  onBeforeAvatarLoad = (elem) => {
-    if (elem.target.files[0].size > 5242880) {
-      alert('File is too big!')
-      elem.target.value = ''
-    }
+  handleScale = e => {
+    const scale = parseFloat(e.target.value)
+    this.setState({ scale })
+  }
+
+  handleAllowZoomOut = ({ target: { checked: allowZoomOut } }) => {
+    this.setState({ allowZoomOut })
+  }
+
+  rotateLeft = e => {
+    e.preventDefault()
+
+    this.setState({
+      rotate: this.state.rotate - 90,
+    })
+  }
+
+  rotateRight = e => {
+    e.preventDefault()
+    this.setState({
+      rotate: this.state.rotate + 90,
+    })
+  }
+
+  handleBorderRadius = e => {
+    const borderRadius = parseInt(e.target.value)
+    this.setState({ borderRadius })
+  }
+
+  handleXPosition = e => {
+    const x = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, x } })
+  }
+
+  handleYPosition = e => {
+    const y = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, y } })
+  }
+
+  handleWidth = e => {
+    const width = parseInt(e.target.value)
+    this.setState({ width })
+  }
+
+  handleHeight = e => {
+    const height = parseInt(e.target.value)
+    this.setState({ height })
+  }
+
+  logCallback(e) {
+    // eslint-disable-next-line
+    console.log('callback', e)
+  }
+
+  setEditorRef = editor => {
+    if (editor) this.editor = editor
+  }
+
+  handlePositionChange = position => {
+    this.setState({ position })
+  }
+
+  handleDrop = acceptedFiles => {
+    this.setState({ image: acceptedFiles[0] })
   }
 
 
@@ -373,7 +443,7 @@ class UserPage extends Component {
     avatar = (
       <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
         <Icon.Group size='big' onClick={this.avatarFormHandler}>
-          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small'></Image>
+          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small' style={{'borderRadius': '50%' }}></Image>
           <Popup
             modal
             className='avatar-popup'
@@ -389,33 +459,125 @@ class UserPage extends Component {
             position='top center'
             closeOnDocumentClick={true}
           >
-            <div style={{ 'margin': 'auto' }}>
-              <Avatar
-                width={260}
-                height={300}
-                imageWidth={260}
-                onCrop={this.onAvatarCrop}
-                onClose={this.onAvatarClose}
-                onBeforeFileLoad={this.onBeforeAvatarLoad}
-                label={
-                  <div style={{ 'display': 'flex', 'marginTop': '8rem' }}>
-                    <Icon.Group>
-                      <Icon name='photo' size='huge' style={{ 'color': '#d8d8d8' }} />
-                      <Icon
-                        corner='bottom right'
-                        name='add'
-                        circular
-                        style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-                      />
-                    </Icon.Group>
-                  </div>
-                }
-              />
-              {errorDisplay}
-              <div style={{ 'marginBottom': '1rem' }}>
-                {avatarSubmitButton}
+            <div>
+              <div>
+                <ReactAvatarEditor
+                  ref={this.setEditorRef}
+                  scale={parseFloat(this.state.scale)}
+                  width={this.state.width}
+                  height={this.state.height}
+                  position={this.state.position}
+                  onPositionChange={this.handlePositionChange}
+                  rotate={parseFloat(this.state.rotate)}
+                  borderRadius={this.state.width / (100 / this.state.borderRadius)}
+                  onLoadFailure={this.logCallback.bind(this, 'onLoadFailed')}
+                  onLoadSuccess={this.logCallback.bind(this, 'onLoadSuccess')}
+                  onImageReady={this.logCallback.bind(this, 'onImageReady')}
+                  image={this.state.image}
+                  className="editor-canvas"
+                />
               </div>
+              New File:
+        <input name="newImage" type="file" onChange={this.handleNewImage} />
+        <br />
+        Zoom:
+        <input
+          name="scale"
+          type="range"
+          onChange={this.handleScale}
+          min={this.state.allowZoomOut ? '0.1' : '1'}
+          max="2"
+          step="0.01"
+          defaultValue="1"
+        />
+        <br />
+        {'Allow Scale < 1'}
+        <input
+          name="allowZoomOut"
+          type="checkbox"
+          onChange={this.handleAllowZoomOut}
+          checked={this.state.allowZoomOut}
+        />
+        <br />
+        Border radius:
+        <input
+          name="scale"
+          type="range"
+          onChange={this.handleBorderRadius}
+          min="0"
+          max="50"
+          step="1"
+          defaultValue="0"
+        />
+        <br />
+        Avatar Width:
+        <input
+          name="width"
+          type="number"
+          onChange={this.handleWidth}
+          min="50"
+          max="400"
+          step="10"
+          value={this.state.width}
+        />
+        <br />
+        Avatar Height:
+        <input
+          name="height"
+          type="number"
+          onChange={this.handleHeight}
+          min="50"
+          max="400"
+          step="10"
+          value={this.state.height}
+        />
+        <br />
+        X Position:
+        <input
+          name="scale"
+          type="range"
+          onChange={this.handleXPosition}
+          min="0"
+          max="1"
+          step="0.01"
+          value={this.state.position.x}
+        />
+        <br />
+        Y Position:
+        <input
+          name="scale"
+          type="range"
+          onChange={this.handleYPosition}
+          min="0"
+          max="1"
+          step="0.01"
+          value={this.state.position.y}
+        />
+        <br />
+        Rotate:
+        <button onClick={this.rotateLeft}>Left</button>
+        <button onClick={this.rotateRight}>Right</button>
+        <br />
+        <br />
+        <input type="button" onClick={this.handleSave} value="Preview" />
+        <br />
+        {!!this.state.preview && (
+          <img
+            src={this.state.preview.img}
+            style={{
+              borderRadius: `${(Math.min(
+                this.state.preview.height,
+                this.state.preview.width
+              ) +
+                10) *
+                (this.state.preview.borderRadius / 2 / 100)}px`,
+            }}
+          />
+        )}
+ 
+              {avatarSubmitButton}
             </div>
+
 
           </Popup>
         </Icon.Group>
