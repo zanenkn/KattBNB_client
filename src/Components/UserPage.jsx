@@ -32,7 +32,7 @@ class UserPage extends Component {
     position: { x: 0.5, y: 0.5 },
     scale: 1,
     rotate: 0,
-    borderRadius: 0,
+    borderRadius: 50,
     preview: null,
     width: 200,
     height: 200,
@@ -307,10 +307,6 @@ class UserPage extends Component {
     }
   }
 
-  // avatar handlers
-  handleNewImage = e => {
-    this.setState({ image: e.target.files[0] })
-  }
 
   handleSave = data => {
     const img = this.editor.getImageScaledToCanvas().toDataURL()
@@ -321,13 +317,23 @@ class UserPage extends Component {
     })
   }
 
+  // avatar handlers
+  handleNewImage = e => {
+    this.setState({ image: e.target.files[0] })
+    this.handleSave()
+  }
+
+
+
   handleScale = e => {
     const scale = parseFloat(e.target.value)
     this.setState({ scale })
+    this.handleSave()
   }
 
   handleAllowZoomOut = ({ target: { checked: allowZoomOut } }) => {
     this.setState({ allowZoomOut })
+    this.handleSave()
   }
 
   rotateLeft = e => {
@@ -336,6 +342,7 @@ class UserPage extends Component {
     this.setState({
       rotate: this.state.rotate - 90,
     })
+    this.handleSave()
   }
 
   rotateRight = e => {
@@ -343,31 +350,37 @@ class UserPage extends Component {
     this.setState({
       rotate: this.state.rotate + 90,
     })
+    this.handleSave()
   }
 
   handleBorderRadius = e => {
     const borderRadius = parseInt(e.target.value)
     this.setState({ borderRadius })
+    this.handleSave()
   }
 
   handleXPosition = e => {
     const x = parseFloat(e.target.value)
     this.setState({ position: { ...this.state.position, x } })
+    this.handleSave()
   }
 
   handleYPosition = e => {
     const y = parseFloat(e.target.value)
     this.setState({ position: { ...this.state.position, y } })
+    this.handleSave()
   }
 
   handleWidth = e => {
     const width = parseInt(e.target.value)
     this.setState({ width })
+    this.handleSave()
   }
 
   handleHeight = e => {
     const height = parseInt(e.target.value)
     this.setState({ height })
+    this.handleSave()
   }
 
   logCallback(e) {
@@ -381,10 +394,12 @@ class UserPage extends Component {
 
   handlePositionChange = position => {
     this.setState({ position })
+    this.handleSave()
   }
 
   handleDrop = acceptedFiles => {
     this.setState({ image: acceptedFiles[0] })
+    this.handleSave()
   }
 
 
@@ -477,8 +492,7 @@ class UserPage extends Component {
                   className="editor-canvas"
                 />
               </div>
-              New File:
-        <input name="newImage" type="file" onChange={this.handleNewImage} />
+        <input type="file" onChange={this.handleNewImage}/>
         <br />
         Zoom:
         <input
@@ -492,17 +506,7 @@ class UserPage extends Component {
         />
 
         <br />
-        Border radius:
-        <input
-          name="scale"
-          type="range"
-          onChange={this.handleBorderRadius}
-          min="0"
-          max="50"
-          step="1"
-          defaultValue="0"
-        />
-        <br />
+
 
         <br />
         Rotate:
@@ -512,19 +516,6 @@ class UserPage extends Component {
         <br />
         <input type="button" onClick={this.handleSave} value="Preview" />
         <br />
-        {!!this.state.preview && (
-          <img
-            src={this.state.preview.img}
-            style={{
-              borderRadius: `${(Math.min(
-                this.state.preview.height,
-                this.state.preview.width
-              ) +
-                10) *
-                (this.state.preview.borderRadius / 2 / 100)}px`,
-            }}
-          />
-        )}
  
               {avatarSubmitButton}
             </div>
