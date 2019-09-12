@@ -28,14 +28,10 @@ class UserPage extends Component {
     hostProfileForm: false,
 
     image: '',
-    allowZoomOut: false,
     position: { x: 0.5, y: 0.5 },
     scale: 1,
     rotate: 0,
-    borderRadius: 50,
-    preview: null,
-    width: 200,
-    height: 200,
+    preview: null
   }
 
   async componentDidMount() {
@@ -155,22 +151,29 @@ class UserPage extends Component {
     })
   }
 
+  setEditorRef = editor => {
+    if (editor) this.editor = editor
+  }
+
   updateAvatar = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else if (this.state.preview === null) {
+    } else if (this.state.image === '') {
       this.setState({
         loading: false,
         errorDisplay: true,
         errors: ['You have selected no avatar!']
       })
     } else {
-      this.setState({ loading: true })
+
       e.preventDefault()
+      this.setState({ loading: true })
+      const img = this.editor.getImageScaledToCanvas().toDataURL()
+
       const path = '/api/v1/auth/'
       const payload = {
-        avatar: this.state.preview,
+        avatar: img,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
@@ -308,41 +311,16 @@ class UserPage extends Component {
   }
 
 
-  handleSave = data => {
-    const img = this.editor.getImageScaledToCanvas().toDataURL()
-    const rect = this.editor.getCroppingRect()
-
-    this.setState({
-      preview: img
-    })
-  }
-
   // avatar handlers
   handleNewImage = e => {
     this.setState({ image: e.target.files[0] })
-    this.handleSave()
-  }
-
-
-
-  handleScale = e => {
-    const scale = parseFloat(e.target.value)
-    this.setState({ scale })
-    this.handleSave()
-  }
-
-  handleAllowZoomOut = ({ target: { checked: allowZoomOut } }) => {
-    this.setState({ allowZoomOut })
-    this.handleSave()
   }
 
   rotateLeft = e => {
     e.preventDefault()
-
     this.setState({
       rotate: this.state.rotate - 90,
     })
-    this.handleSave()
   }
 
   rotateRight = e => {
@@ -350,56 +328,20 @@ class UserPage extends Component {
     this.setState({
       rotate: this.state.rotate + 90,
     })
-    this.handleSave()
-  }
-
-  handleBorderRadius = e => {
-    const borderRadius = parseInt(e.target.value)
-    this.setState({ borderRadius })
-    this.handleSave()
   }
 
   handleXPosition = e => {
     const x = parseFloat(e.target.value)
     this.setState({ position: { ...this.state.position, x } })
-    this.handleSave()
   }
 
   handleYPosition = e => {
     const y = parseFloat(e.target.value)
     this.setState({ position: { ...this.state.position, y } })
-    this.handleSave()
-  }
-
-  handleWidth = e => {
-    const width = parseInt(e.target.value)
-    this.setState({ width })
-    this.handleSave()
-  }
-
-  handleHeight = e => {
-    const height = parseInt(e.target.value)
-    this.setState({ height })
-    this.handleSave()
-  }
-
-  logCallback(e) {
-    // eslint-disable-next-line
-    console.log('callback', e)
-  }
-
-  setEditorRef = editor => {
-    if (editor) this.editor = editor
   }
 
   handlePositionChange = position => {
     this.setState({ position })
-    this.handleSave()
-  }
-
-  handleDrop = acceptedFiles => {
-    this.setState({ image: acceptedFiles[0] })
-    this.handleSave()
   }
 
 
@@ -458,7 +400,7 @@ class UserPage extends Component {
     avatar = (
       <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
         <Icon.Group size='big' onClick={this.avatarFormHandler}>
-          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small' style={{'borderRadius': '50%' }}></Image>
+          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
           <Popup
             modal
             className='avatar-popup'
@@ -478,49 +420,26 @@ class UserPage extends Component {
               <div>
                 <ReactAvatarEditor
                   ref={this.setEditorRef}
-                  scale={parseFloat(this.state.scale)}
-                  width={200}
-                  height={200}
+                  width={258}
+                  height={258}
                   position={this.state.position}
                   onPositionChange={this.handlePositionChange}
                   rotate={parseFloat(this.state.rotate)}
-                  borderRadius={this.state.width / (100 / this.state.borderRadius)}
-                  onLoadFailure={this.logCallback.bind(this, 'onLoadFailed')}
-                  onLoadSuccess={this.logCallback.bind(this, 'onLoadSuccess')}
-                  onImageReady={this.logCallback.bind(this, 'onImageReady')}
+                  borderRadius={129}
                   image={this.state.image}
-                  className="editor-canvas"
+                  className='editor-canvas'
                 />
               </div>
-        <input type="file" onChange={this.handleNewImage}/>
-        <br />
-        Zoom:
-        <input
-          name="scale"
-          type="range"
-          onChange={this.handleScale}
-          min={this.state.allowZoomOut ? '0.1' : '1'}
-          max="2"
-          step="0.01"
-          defaultValue="1"
-        />
+              <input type="file" onChange={this.handleNewImage} />
 
-        <br />
-
-
-        <br />
-        Rotate:
-        <button onClick={this.rotateLeft}>Left</button>
-        <button onClick={this.rotateRight}>Right</button>
-        <br />
-        <br />
-        <input type="button" onClick={this.handleSave} value="Preview" />
-        <br />
- 
+              {errorDisplay}
+              <div className='button-wrapper'>
+                <Button onClick={this.rotateRight}>
+                  rotate
+                </Button>
               {avatarSubmitButton}
+              </div>
             </div>
-
-
           </Popup>
         </Icon.Group>
       </div>
