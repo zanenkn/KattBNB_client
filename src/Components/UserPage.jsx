@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon, Input } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import ReactAvatarEditor from 'react-avatar-editor'
@@ -359,6 +359,7 @@ class UserPage extends Component {
 
     let avatar
     let avatarSubmitButton
+    let avatarRotateButton
     let noAvatar
 
     if (this.state.errorDisplay) {
@@ -384,6 +385,9 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
       )
+      avatarRotateButton = (
+        <Button id='avatar-rotate-button' className='submit-button' loading><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+      )
     } else {
       locationSubmitButton = (
         <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
@@ -394,6 +398,15 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
       )
+      if (this.state.image === null) {
+        avatarRotateButton = (
+          <Button className='submit-button' disabled><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+        )
+      } else {
+        avatarRotateButton = (
+          <Button className='submit-button' onClick={this.rotateRight}><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+        )
+      }
     }
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
@@ -430,14 +443,25 @@ class UserPage extends Component {
                   className='editor-canvas'
                 />
               </div>
-              <input type="file" onChange={this.handleNewImage} />
+              <div>
+                <label for="files">
+                  <Icon.Group>
+                    <Icon name='photo' size='big' style={{ 'color': '#d8d8d8' }} />
+                    <Icon
+                      corner='bottom right'
+                      name='add'
+                      circular
+                      style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                    />
+                  </Icon.Group>
+                </label>
+                <input id="files" style={{'visibility': 'hidden'}} onChange={this.handleNewImage} type="file"/>
+              </div>
 
               {errorDisplay}
               <div className='button-wrapper'>
-                <Button onClick={this.rotateRight}>
-                  rotate
-                </Button>
-              {avatarSubmitButton}
+                {avatarRotateButton}
+                {avatarSubmitButton}
               </div>
             </div>
           </Popup>
