@@ -359,7 +359,8 @@ class UserPage extends Component {
 
     let avatar
     let avatarSubmitButton
-    let avatarRotateButton
+    let avatarRotateRight
+    let avatarRotateLeft
     let noAvatar
 
     if (this.state.errorDisplay) {
@@ -385,8 +386,11 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
       )
-      avatarRotateButton = (
-        <Button id='avatar-rotate-button' className='submit-button' loading><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+      avatarRotateRight = (
+        <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+      )
+      avatarRotateLeft = (
+        <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
       )
     } else {
       locationSubmitButton = (
@@ -398,13 +402,19 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
       )
-      if (this.state.image === null) {
-        avatarRotateButton = (
-          <Button className='submit-button' disabled><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+      if (this.state.image === '') {
+        avatarRotateRight = (
+          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+        )
+        avatarRotateLeft = (
+          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
         )
       } else {
-        avatarRotateButton = (
-          <Button className='submit-button' onClick={this.rotateRight}><Icon name='redo alternate' style={{ 'margin': 'auto' }} /></Button>
+        avatarRotateRight = (
+          <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}} onClick={this.rotateRight}/>
+        )
+        avatarRotateLeft = (
+          <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}} onClick={this.rotateLeft}/>
         )
       }
     }
@@ -427,9 +437,10 @@ class UserPage extends Component {
               />
             }
             position='top center'
+            onClose={() => this.setState({image: ''})}
             closeOnDocumentClick={true}
           >
-            <div>
+            <div style={{'marginBottom': '1rem'}}>
               <div>
                 <ReactAvatarEditor
                   ref={this.setEditorRef}
@@ -443,24 +454,30 @@ class UserPage extends Component {
                   className='editor-canvas'
                 />
               </div>
-              <div>
-                <label for="files">
-                  <Icon.Group>
-                    <Icon name='photo' size='big' style={{ 'color': '#d8d8d8' }} />
-                    <Icon
-                      corner='bottom right'
-                      name='add'
-                      circular
-                      style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-                    />
-                  </Icon.Group>
-                </label>
-                <input id="files" style={{'visibility': 'hidden'}} onChange={this.handleNewImage} type="file"/>
+              <div className='button-wrapper' style={{'marginBottom': '1rem'}}>
+                <div>
+                  <label for="files">
+                    <Icon.Group>
+                      <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em' }} />
+                      <Icon
+                        corner='bottom right'
+                        name='add'
+                        style={{ 'textShadow': 'none', 'color': '#c90c61' }}
+                      />
+                    </Icon.Group>
+                  </label>
+                  <input id="files" style={{'display': 'none'}} onChange={this.handleNewImage} type="file"/>
+                </div>
+                <div>
+                  {avatarRotateLeft}
+                </div>
+                <div>
+                  {avatarRotateRight}
+                </div>
               </div>
 
               {errorDisplay}
               <div className='button-wrapper'>
-                {avatarRotateButton}
                 {avatarSubmitButton}
               </div>
             </div>
