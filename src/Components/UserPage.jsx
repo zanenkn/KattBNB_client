@@ -26,12 +26,10 @@ class UserPage extends Component {
     errors: '',
     hostProfile: '',
     hostProfileForm: false,
-
     image: '',
     position: { x: 0.5, y: 0.5 },
     scale: 1,
-    rotate: 0,
-    preview: null
+    rotate: 0
   }
 
   async componentDidMount() {
@@ -76,7 +74,9 @@ class UserPage extends Component {
       newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
-      preview: null,
+      image: '',
+      position: { x: 0.5, y: 0.5 },
+      rotate: 0,
       currentPassword: '',
       newPassword: '',
       newPasswordConfirmation: ''
@@ -90,7 +90,6 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
-      preview: null,
       hostProfileForm: false,
       newLocation: this.state.location,
       errorDisplay: false,
@@ -108,7 +107,6 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      preview: null,
       newLocation: this.state.location,
       hostProfileForm: false,
       errorDisplay: false,
@@ -125,7 +123,6 @@ class UserPage extends Component {
   hostProfileFormHandler = () => {
     this.setState({
       hostProfileForm: !this.state.hostProfileForm,
-      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -139,7 +136,6 @@ class UserPage extends Component {
 
   closeLocationAndPasswordForms = () => {
     this.setState({
-      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -166,11 +162,9 @@ class UserPage extends Component {
         errors: ['You have selected no avatar!']
       })
     } else {
-
       e.preventDefault()
       this.setState({ loading: true })
       const img = this.editor.getImageScaledToCanvas().toDataURL()
-
       const path = '/api/v1/auth/'
       const payload = {
         avatar: img,
@@ -310,10 +304,8 @@ class UserPage extends Component {
     }
   }
 
-
-  // avatar handlers
   handleNewImage = e => {
-    this.setState({ image: e.target.files[0] })
+    this.setState({ image: e.target.files[0], position: { x: 0.5, y: 0.5 }, errorDisplay: false, errors: [] })
   }
 
   rotateLeft = e => {
@@ -387,10 +379,10 @@ class UserPage extends Component {
         <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
       )
       avatarRotateRight = (
-        <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+        <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
       avatarRotateLeft = (
-        <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+        <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
     } else {
       locationSubmitButton = (
@@ -404,17 +396,17 @@ class UserPage extends Component {
       )
       if (this.state.image === '') {
         avatarRotateRight = (
-          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
         )
         avatarRotateLeft = (
-          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}}/>
+          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
         )
       } else {
         avatarRotateRight = (
-          <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}} onClick={this.rotateRight}/>
+          <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateRight} />
         )
         avatarRotateLeft = (
-          <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8'}} onClick={this.rotateLeft}/>
+          <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateLeft} />
         )
       }
     }
@@ -437,10 +429,9 @@ class UserPage extends Component {
               />
             }
             position='top center'
-            onClose={() => this.setState({image: ''})}
             closeOnDocumentClick={true}
           >
-            <div style={{'marginBottom': '1rem'}}>
+            <div style={{ 'marginBottom': '1rem' }}>
               <div>
                 <ReactAvatarEditor
                   ref={this.setEditorRef}
@@ -454,9 +445,9 @@ class UserPage extends Component {
                   className='editor-canvas'
                 />
               </div>
-              <div className='button-wrapper' style={{'marginBottom': '1rem'}}>
+              <div className='button-wrapper' style={{ 'marginBottom': '1rem' }}>
                 <div>
-                  <label for="files">
+                  <label for='files'>
                     <Icon.Group>
                       <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em' }} />
                       <Icon
@@ -466,7 +457,7 @@ class UserPage extends Component {
                       />
                     </Icon.Group>
                   </label>
-                  <input id="files" style={{'display': 'none'}} onChange={this.handleNewImage} type="file"/>
+                  <input id='files' style={{ 'display': 'none' }} onChange={this.handleNewImage} type='file' />
                 </div>
                 <div>
                   {avatarRotateLeft}
