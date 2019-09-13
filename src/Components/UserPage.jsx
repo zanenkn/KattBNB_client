@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
-import Avatar from 'react-avatar-edit'
+import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
 
 class UserPage extends Component {
@@ -26,7 +26,10 @@ class UserPage extends Component {
     errors: '',
     hostProfile: '',
     hostProfileForm: false,
-    preview: null
+    image: '',
+    position: { x: 0.5, y: 0.5 },
+    scale: 1,
+    rotate: 0
   }
 
   async componentDidMount() {
@@ -71,7 +74,9 @@ class UserPage extends Component {
       newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
-      preview: null,
+      image: '',
+      position: { x: 0.5, y: 0.5 },
+      rotate: 0,
       currentPassword: '',
       newPassword: '',
       newPasswordConfirmation: ''
@@ -85,7 +90,6 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
-      preview: null,
       hostProfileForm: false,
       newLocation: this.state.location,
       errorDisplay: false,
@@ -103,7 +107,6 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      preview: null,
       newLocation: this.state.location,
       hostProfileForm: false,
       errorDisplay: false,
@@ -120,7 +123,6 @@ class UserPage extends Component {
   hostProfileFormHandler = () => {
     this.setState({
       hostProfileForm: !this.state.hostProfileForm,
-      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -134,7 +136,6 @@ class UserPage extends Component {
 
   closeLocationAndPasswordForms = () => {
     this.setState({
-      preview: null,
       displayLocationForm: false,
       newLocation: this.state.location,
       displayPasswordForm: false,
@@ -146,22 +147,66 @@ class UserPage extends Component {
     })
   }
 
+  setEditorRef = editor => {
+    if (editor) this.editor = editor
+  }
+
+  handleNewImage = e => {
+    this.setState({ image: e.target.files[0], position: { x: 0.5, y: 0.5 }, errorDisplay: false, errors: [] })
+  }
+
+  rotateLeft = e => {
+    e.preventDefault()
+    this.setState({
+      rotate: this.state.rotate - 90,
+    })
+  }
+
+  rotateRight = e => {
+    e.preventDefault()
+    this.setState({
+      rotate: this.state.rotate + 90,
+    })
+  }
+
+  handleXPosition = e => {
+    const x = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, x } })
+  }
+
+  handleYPosition = e => {
+    const y = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, y } })
+  }
+
+  handlePositionChange = position => {
+    this.setState({ position })
+  }
+
   updateAvatar = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else if (this.state.preview === null) {
+    } else if (this.state.image === '') {
       this.setState({
         loading: false,
         errorDisplay: true,
         errors: ['You have selected no avatar!']
       })
-    } else {
-      this.setState({ loading: true })
+    } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['Please select a JPG, JPEG, PNG or GIF image file!']
+      })
+    }
+    else {
       e.preventDefault()
+      this.setState({ loading: true })
+      const img = this.editor.getImageScaledToCanvas().toDataURL()
       const path = '/api/v1/auth/'
       const payload = {
-        avatar: this.state.preview,
+        avatar: img,
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
@@ -298,25 +343,6 @@ class UserPage extends Component {
     }
   }
 
-  onAvatarClose = () => {
-    this.setState({ preview: null })
-  }
-
-  onAvatarCrop = (preview) => {
-    this.setState({
-      preview: preview,
-      errors: [],
-      errorDisplay: false
-    })
-  }
-
-  onBeforeAvatarLoad = (elem) => {
-    if (elem.target.files[0].size > 5242880) {
-      alert('File is too big!')
-      elem.target.value = ''
-    }
-  }
-
 
   render() {
     let errorDisplay
@@ -332,6 +358,8 @@ class UserPage extends Component {
 
     let avatar
     let avatarSubmitButton
+    let avatarRotateRight
+    let avatarRotateLeft
     let noAvatar
 
     if (this.state.errorDisplay) {
@@ -357,6 +385,12 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
       )
+      avatarRotateRight = (
+        <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
+      )
+      avatarRotateLeft = (
+        <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
+      )
     } else {
       locationSubmitButton = (
         <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
@@ -367,13 +401,28 @@ class UserPage extends Component {
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
       )
+      if (this.state.image === '') {
+        avatarRotateRight = (
+          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
+        )
+        avatarRotateLeft = (
+          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
+        )
+      } else {
+        avatarRotateRight = (
+          <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateRight} />
+        )
+        avatarRotateLeft = (
+          <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateLeft} />
+        )
+      }
     }
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
     avatar = (
       <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
         <Icon.Group size='big' onClick={this.avatarFormHandler}>
-          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small'></Image>
+          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
           <Popup
             modal
             className='avatar-popup'
@@ -389,34 +438,47 @@ class UserPage extends Component {
             position='top center'
             closeOnDocumentClick={true}
           >
-            <div style={{ 'margin': 'auto' }}>
-              <Avatar
-                width={260}
-                height={300}
-                imageWidth={260}
-                onCrop={this.onAvatarCrop}
-                onClose={this.onAvatarClose}
-                onBeforeFileLoad={this.onBeforeAvatarLoad}
-                label={
-                  <div style={{ 'display': 'flex', 'marginTop': '8rem' }}>
+            <div style={{ 'marginBottom': '1rem' }}>
+              <div>
+                <ReactAvatarEditor
+                  ref={this.setEditorRef}
+                  width={258}
+                  height={258}
+                  position={this.state.position}
+                  onPositionChange={this.handlePositionChange}
+                  rotate={parseFloat(this.state.rotate)}
+                  borderRadius={129}
+                  image={this.state.image}
+                  className='editor-canvas'
+                />
+              </div>
+              <div className='button-wrapper' style={{ 'marginBottom': '1rem' }}>
+                <div>
+                  <label for='files'>
                     <Icon.Group>
-                      <Icon name='photo' size='huge' style={{ 'color': '#d8d8d8' }} />
+                      <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em' }} />
                       <Icon
                         corner='bottom right'
                         name='add'
-                        circular
-                        style={{ 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                        style={{ 'textShadow': 'none', 'color': '#c90c61' }}
                       />
                     </Icon.Group>
-                  </div>
-                }
-              />
+                  </label>
+                  <input id='files' style={{ 'display': 'none' }} onChange={this.handleNewImage} type='file' />
+                </div>
+                <div>
+                  {avatarRotateLeft}
+                </div>
+                <div>
+                  {avatarRotateRight}
+                </div>
+              </div>
+
               {errorDisplay}
-              <div style={{ 'marginBottom': '1rem' }}>
+              <div className='button-wrapper'>
                 {avatarSubmitButton}
               </div>
             </div>
-
           </Popup>
         </Icon.Group>
       </div>

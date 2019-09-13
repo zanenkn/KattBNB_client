@@ -192,3 +192,9 @@ h4 {
   width: 270px!important;
   font-size: initial;
 }
+
+.editor-canvas {
+  width: 258px!important;
+  height: 258px!important;
+  margin-bottom: 1rem;
+}
