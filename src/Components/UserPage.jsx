@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import HostProfileForm from './HostProfileForm'
 import HostProfile from './HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon, Input } from 'semantic-ui-react'
+import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import ReactAvatarEditor from 'react-avatar-editor'
@@ -151,6 +151,38 @@ class UserPage extends Component {
     if (editor) this.editor = editor
   }
 
+  handleNewImage = e => {
+    this.setState({ image: e.target.files[0], position: { x: 0.5, y: 0.5 }, errorDisplay: false, errors: [] })
+  }
+
+  rotateLeft = e => {
+    e.preventDefault()
+    this.setState({
+      rotate: this.state.rotate - 90,
+    })
+  }
+
+  rotateRight = e => {
+    e.preventDefault()
+    this.setState({
+      rotate: this.state.rotate + 90,
+    })
+  }
+
+  handleXPosition = e => {
+    const x = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, x } })
+  }
+
+  handleYPosition = e => {
+    const y = parseFloat(e.target.value)
+    this.setState({ position: { ...this.state.position, y } })
+  }
+
+  handlePositionChange = position => {
+    this.setState({ position })
+  }
+
   updateAvatar = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
@@ -161,7 +193,14 @@ class UserPage extends Component {
         errorDisplay: true,
         errors: ['You have selected no avatar!']
       })
-    } else {
+    } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['Please select a JPG, JPEG, PNG or GIF image file!']
+      })
+    }
+    else {
       e.preventDefault()
       this.setState({ loading: true })
       const img = this.editor.getImageScaledToCanvas().toDataURL()
@@ -302,38 +341,6 @@ class UserPage extends Component {
           window.location.replace('/login')
         })
     }
-  }
-
-  handleNewImage = e => {
-    this.setState({ image: e.target.files[0], position: { x: 0.5, y: 0.5 }, errorDisplay: false, errors: [] })
-  }
-
-  rotateLeft = e => {
-    e.preventDefault()
-    this.setState({
-      rotate: this.state.rotate - 90,
-    })
-  }
-
-  rotateRight = e => {
-    e.preventDefault()
-    this.setState({
-      rotate: this.state.rotate + 90,
-    })
-  }
-
-  handleXPosition = e => {
-    const x = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, x } })
-  }
-
-  handleYPosition = e => {
-    const y = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, y } })
-  }
-
-  handlePositionChange = position => {
-    this.setState({ position })
   }
 
 
