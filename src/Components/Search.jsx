@@ -1,9 +1,22 @@
 import React, { Component } from 'react'
-import { Header, Form, Button } from 'semantic-ui-react'
+import { Header, Form, Button, Dropdown } from 'semantic-ui-react'
+import { LOCATION_OPTIONS } from '../Modules/locationData'
+
 
 class Search extends Component {
   state = {
+    location: ''
 
+  }
+
+  onChangeHandler = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleLocationChange = (e, { value }) => {
+    this.setState({ location: value })
   }
 
 
@@ -12,14 +25,35 @@ class Search extends Component {
 
     return (
       <div className='content-wrapper' >
-        <div id='host-profile-form'>
+        <div id='search-form'>
           <Header as='h2'>
-            Create host profile
+            Find a cat sitter!
           </Header>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-            Fill in this information about yourself and start hosting cats today!
+            Fill in the information below and find the appropriate person to take care of your cat while you're away!
           </p>
-          <Form id='host-profile-form'>
+          <Form id='search-form'>
+            <div className='required field' >
+              <label>
+                Where
+              </label>
+            </div>
+            <Dropdown
+              clearable
+              search
+              selection
+              placeholder='Choose your location'
+              options={LOCATION_OPTIONS}
+              id='location'
+              style={{ 'maxWidth': '194px' }}
+              onChange={this.handleLocationChange}
+            />
+
+
+
+
+
+
             <Form.TextArea
               label='About you'
               placeholder='Please write shortly about yourself and your experience with cats..'
