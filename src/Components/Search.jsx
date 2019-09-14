@@ -38,6 +38,36 @@ class Search extends Component {
 
   render() {
 
+    let checkOutCalendar
+
+    if (this.state.startDate === null) {
+      checkOutCalendar = (
+        <DatePicker
+          isClearable
+          withPortal
+          showWeekNumbers
+          disabled
+          dateFormat='yyyy/MM/dd'
+          placeholderText='Check-out'
+          selected={this.state.endDate}
+          onChange={this.handleEndDateChange}
+        />
+      )
+    } else {
+      checkOutCalendar = (
+        <DatePicker
+          isClearable
+          withPortal
+          showWeekNumbers
+          dateFormat='yyyy/MM/dd'
+          placeholderText='Check-out'
+          minDate={this.state.startDate.getTime() + 86400000}
+          selected={this.state.endDate}
+          onChange={this.handleEndDateChange}
+        />
+      )
+    }
+
 
     return (
       <div className='content-wrapper' >
@@ -80,18 +110,11 @@ class Search extends Component {
                 showWeekNumbers
                 dateFormat='yyyy/MM/dd'
                 placeholderText='Check-in'
+                minDate={new Date().getTime() + 86400000}
                 selected={this.state.startDate}
                 onChange={this.handleStartDateChange}
               />
-              <DatePicker
-                isClearable
-                withPortal
-                showWeekNumbers
-                dateFormat='yyyy/MM/dd'
-                placeholderText='Check-out'
-                selected={this.state.endDate}
-                onChange={this.handleEndDateChange}
-              />
+              {checkOutCalendar}
             </Form.Group>
             <br />
             <Form.Input
@@ -106,7 +129,7 @@ class Search extends Component {
           </Form>
           <div className='button-wrapper'>
             <div>
-              <Button secondary className='cancel-button' >Close</Button>
+              <Button className='submit-button'>Search</Button>
             </div>
             <div>
             </div>
