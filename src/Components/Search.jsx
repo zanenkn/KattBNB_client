@@ -7,8 +7,8 @@ import '../react-datepicker.css'
 
 class Search extends Component {
   state = {
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     location: '',
     cats: ''
   }
@@ -75,10 +75,20 @@ class Search extends Component {
               widths='equal'
             >
               <DatePicker
+                isClearable
+                withPortal
+                showWeekNumbers
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Check-in'
                 selected={this.state.startDate}
                 onChange={this.handleStartDateChange}
               />
               <DatePicker
+                isClearable
+                withPortal
+                showWeekNumbers
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Check-out'
                 selected={this.state.endDate}
                 onChange={this.handleEndDateChange}
               />
