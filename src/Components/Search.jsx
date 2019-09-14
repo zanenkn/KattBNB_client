@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { Header, Form, Button, Dropdown } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
+import DatePicker from 'react-datepicker'
+import '../react-datepicker.css'
 
 
 class Search extends Component {
   state = {
+    startDate: new Date(),
+    endDate: new Date(),
     location: ''
 
   }
@@ -17,6 +21,18 @@ class Search extends Component {
 
   handleLocationChange = (e, { value }) => {
     this.setState({ location: value })
+  }
+
+  handleStartDateChange = date => {
+    this.setState({
+      startDate: date
+    })
+  }
+
+  handleEndDateChange = date => {
+    this.setState({
+      endDate: date
+    })
   }
 
 
@@ -48,64 +64,25 @@ class Search extends Component {
               style={{ 'maxWidth': '194px' }}
               onChange={this.handleLocationChange}
             />
-
-
-
-
-
-
-            <Form.TextArea
-              label='About you'
-              placeholder='Please write shortly about yourself and your experience with cats..'
-              required
-              id='description'
-              value={this.state.description}
-              onChange={this.onChangeHandler}
-            />
-
-            <p className='small-left-paragraph'>
-              Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
-            </p>
-
+            <br />
+            <br />
+            <div className='required field' >
+              <label>
+                When
+              </label>
+            </div>
             <Form.Group
               widths='equal'
             >
-              <Form.Input
-                label='Your rate'
-                type='number'
-                placeholder='Your daily rate in kr/day'
-                required
-                id='rate'
-                value={this.state.rate}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleStartDateChange}
               />
-
-              <Form.Input
-                label='Max cats accepted'
-                type='number'
-                placeholder='Max amount'
-                required
-                id='maxCats'
-                value={this.state.maxCats}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
-              />
-
-              <Form.Input
-                label='Supplement'
-                type='number'
-                placeholder='+35kr/cat/day'
-                required
-                id='supplement'
-                value={this.state.supplement}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
+              <DatePicker
+                selected={this.state.endDate}
+                onChange={this.handleEndDateChange}
               />
             </Form.Group>
-            <p className='small-left-paragraph'>
-              <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
-            </p>
 
 
             <p className='small-centered-paragraph'>
