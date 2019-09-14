@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import { Header, Form, Button, Dropdown } from 'semantic-ui-react'
+import { Header, Form, Button, Dropdown, Message } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import DatePicker from 'react-datepicker'
 import '../react-datepicker.css'
+import axios from 'axios'
 
 
 class Search extends Component {
   state = {
+    errorDisplay: false,
+    errors: '',
+    loading: false,
     startDate: null,
     endDate: null,
     location: '',
@@ -35,10 +39,32 @@ class Search extends Component {
     })
   }
 
+  listenEnterKeySearch = (event) => {
+    if (event.key === 'Enter') {
+      this.search(event)
+    }
+  }
+
+  search = (e) => {
+    e.preventDefault()
+    this.setState({ loading: true })
+    if (this.state.cats <= 0 || this.state.cats % 1 != 0) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['Number of cats must be a whole positive number!']
+      })
+    }
+    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
+      this.setState({ hostProfile: response.data })
+    })
+  }
+
 
   render() {
 
     let checkOutCalendar
+    let errorDisplay
 
     if (this.state.startDate === null) {
       checkOutCalendar = (
@@ -68,6 +94,19 @@ class Search extends Component {
       )
     }
 
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <Message.Header>Search could not be performed because of following error(s):</Message.Header>
+          <ul>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
+
 
     return (
       <div className='content-wrapper' >
@@ -93,6 +132,7 @@ class Search extends Component {
               id='location'
               style={{ 'maxWidth': '194px' }}
               onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKeySearch}
             />
             <br />
             <br />
@@ -124,12 +164,14 @@ class Search extends Component {
               id='cats'
               value={this.state.cats}
               onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKeySearch}
               style={{ 'maxWidth': '194px' }}
             />
           </Form>
+          {errorDisplay}
           <div className='button-wrapper'>
             <div>
-              <Button className='submit-button'>Search</Button>
+              <Button className='submit-button' onClick={this.search}>Search</Button>
             </div>
             <div>
             </div>
