@@ -9,8 +9,8 @@ class Search extends Component {
   state = {
     startDate: new Date(),
     endDate: new Date(),
-    location: ''
-
+    location: '',
+    cats: ''
   }
 
   onChangeHandler = (e) => {
@@ -83,17 +83,20 @@ class Search extends Component {
                 onChange={this.handleEndDateChange}
               />
             </Form.Group>
-
-
-            <p className='small-centered-paragraph'>
-              Please mark the dates when you are available to host!
-            </p>
+            <br />
+            <Form.Input
+              label='Number of cats'
+              type='number'
+              required
+              id='cats'
+              value={this.state.cats}
+              onChange={this.onChangeHandler}
+              style={{ 'maxWidth': '194px' }}
+            />
           </Form>
-
-
           <div className='button-wrapper'>
             <div>
-              <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
+              <Button secondary className='cancel-button' >Close</Button>
             </div>
             <div>
             </div>
