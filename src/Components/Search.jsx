@@ -10,6 +10,7 @@ class Search extends Component {
   state = {
     errorDisplay: false,
     errors: '',
+    searchData: '',
     loading: false,
     startDate: null,
     endDate: null,
@@ -48,16 +49,39 @@ class Search extends Component {
   search = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    if (this.state.cats <= 0 || this.state.cats % 1 != 0) {
+    if (this.state.cats <= 0 || this.state.cats % 1 !== 0) {
       this.setState({
         loading: false,
         errorDisplay: true,
         errors: ['Number of cats must be a whole positive number!']
       })
+    } else if (this.state.location === '') {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['You must choose a location to continue!']
+      })
+    } else if (this.state.startDate === null || this.state.endDate === null) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['You must choose both check-in and check-out dates to continue!']
+      })
+    } else if (this.state.startDate !== null && this.state.endDate !== null) {
+      const start = this.state.startDate.getTime()
+      const end = this.state.endDate.getTime()
+      if (end < start) {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['Check-out date cannot be earlier than check-in date!']
+        })
+      } else {
+        axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
+          this.setState({ searchData: response.data })
+        })
+      }
     }
-    axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ hostProfile: response.data })
-    })
   }
 
 
