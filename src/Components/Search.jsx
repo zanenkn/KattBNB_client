@@ -164,7 +164,7 @@ class Search extends Component {
             Find a cat sitter!
           </Header>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-            Fill in the information below and find the appropriate person to take care of your cat while you're away!
+            Find the person to take care of your cat with a few clicks!
           </p>
           <Segment className='whitebox'>
             <Form id='search-form' style={{ 'textAlign': 'center' }}>
@@ -180,7 +180,6 @@ class Search extends Component {
                 placeholder='Choose your location'
                 options={LOCATION_OPTIONS}
                 id='location'
-                style={{ 'maxWidth': '194px' }}
                 onChange={this.handleLocationChange}
                 onKeyPress={this.listenEnterKeySearch}
               />
@@ -193,21 +192,22 @@ class Search extends Component {
               </div>
               <Form.Group
                 widths='equal'
-                style={{ 'maxWidth': '388px', 'display': 'inline-flex' }}
+                style={{ 'display': 'contents' }}
               >
-                <DatePicker
-                  isClearable
-                  withPortal
-                  showWeekNumbers
-                  dateFormat='yyyy/MM/dd'
-                  placeholderText='Check-in'
-                  minDate={new Date().getTime() + 86400000}
-                  selected={this.state.startDate}
-                  onChange={this.handleStartDateChange}
-                />
+                <div style={{ 'marginBottom': '5px' }}>
+                  <DatePicker
+                    isClearable
+                    withPortal
+                    showWeekNumbers
+                    dateFormat='yyyy/MM/dd'
+                    placeholderText='Check-in'
+                    minDate={new Date().getTime() + 86400000}
+                    selected={this.state.startDate}
+                    onChange={this.handleStartDateChange}
+                  />
+                </div>
                 {checkOutCalendar}
               </Form.Group>
-              <br />
               <br />
               <Form.Input
                 label='Number of cats'
@@ -217,7 +217,7 @@ class Search extends Component {
                 value={this.state.cats}
                 onChange={this.onChangeHandler}
                 onKeyPress={this.listenEnterKeySearch}
-                style={{ 'maxWidth': '194px' }}
+                style={{ 'maxWidth': '180px' }}
               />
             </Form>
             {errorDisplay}
