@@ -78,7 +78,12 @@ class Search extends Component {
         })
       } else {
         axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
-          this.setState({ searchData: response.data })
+          this.setState({
+            searchData: response.data,
+            loading: false,
+            errors: '',
+            errorDisplay: false
+          })
         })
       }
     }
@@ -89,6 +94,7 @@ class Search extends Component {
 
     let checkOutCalendar
     let errorDisplay
+    let searchButton
 
     if (this.state.startDate === null) {
       checkOutCalendar = (
@@ -128,6 +134,16 @@ class Search extends Component {
             ))}
           </ul>
         </Message>
+      )
+    }
+
+    if (this.state.loading) {
+      searchButton = (
+        <Button className='submit-button' loading>Search</Button>
+      )
+    } else {
+      searchButton = (
+        <Button className='submit-button' onClick={this.search}>Search</Button>
       )
     }
 
@@ -195,9 +211,7 @@ class Search extends Component {
           {errorDisplay}
           <div className='button-wrapper'>
             <div>
-              <Button className='submit-button' onClick={this.search}>Search</Button>
-            </div>
-            <div>
+              {searchButton}
             </div>
           </div>
         </div>
