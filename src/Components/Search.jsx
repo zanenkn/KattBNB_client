@@ -143,7 +143,7 @@ class Search extends Component {
       )
     } else {
       searchButton = (
-        <Button className='submit-button' onClick={this.search}>Search</Button>
+        <Button id='search-button' className='submit-button' onClick={this.search}>Search</Button>
       )
     }
 
