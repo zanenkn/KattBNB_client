@@ -193,7 +193,7 @@ class Search extends Component {
               </div>
               <Form.Group
                 widths='equal'
-                style={{ 'maxWidth': '250px' }}
+                style={{ 'maxWidth': '388px', 'display': 'inline-flex' }}
               >
                 <DatePicker
                   isClearable
@@ -207,6 +207,7 @@ class Search extends Component {
                 />
                 {checkOutCalendar}
               </Form.Group>
+              <br />
               <br />
               <Form.Input
                 label='Number of cats'
