@@ -95,6 +95,7 @@ class Search extends Component {
     let checkOutCalendar
     let errorDisplay
     let searchButton
+    let searchMessage
 
     if (this.state.startDate === null) {
       checkOutCalendar = (
@@ -144,6 +145,14 @@ class Search extends Component {
     } else {
       searchButton = (
         <Button id='search-button' className='submit-button' onClick={this.search}>Search</Button>
+      )
+    }
+
+    if (this.state.searchData !== '' && this.state.searchData.length === 0) {
+      searchMessage = (
+        <Header>
+          Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
+        </Header>
       )
     }
 
@@ -209,6 +218,7 @@ class Search extends Component {
             />
           </Form>
           {errorDisplay}
+          {searchMessage}
           <div className='button-wrapper'>
             <div>
               {searchButton}

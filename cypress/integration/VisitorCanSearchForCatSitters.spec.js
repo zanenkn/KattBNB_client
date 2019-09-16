@@ -43,4 +43,25 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.get('#search-button').click()
     cy.contains('Check-out date cannot be earlier than check-in date!')
   })
+
+  it('successfully, but there are no matching results', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Ale',
+      status: 200,
+      response: 'fixture:search_no_results.json'
+    })
+    cy.get('#cats').type('1')
+    cy.get('.content-wrapper > #search-form > #search-form > #location > .dropdown').click()
+    cy.get('#search-form > #search-form > #location > .visible > .selected').click()
+    cy.get('.content-wrapper > #search-form > #search-form > .equal > div:nth-child(1)').click()
+    cy.get('.equal > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation').click()
+    cy.get('.equal > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation--next').click()
+    cy.get('.equal > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation--next').click()
+    cy.get('.react-datepicker > .react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week > .react-datepicker__day--029').click()
+    cy.get('.content-wrapper > #search-form > #search-form > .equal > div:nth-child(2)').click()
+    cy.get('.react-datepicker > .react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week:nth-child(5) > .react-datepicker__day--004').click()
+    cy.get('#search-button').click()
+    cy.contains('Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.')
+  })
 })
