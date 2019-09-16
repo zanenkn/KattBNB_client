@@ -167,8 +167,8 @@ class Search extends Component {
             Fill in the information below and find the appropriate person to take care of your cat while you're away!
           </p>
           <Segment className='whitebox'>
-            <Form id='search-form'>
-              <div className='required field' >
+            <Form id='search-form' style={{ 'textAlign': 'center' }}>
+              <div className='required field'>
                 <label>
                   Where
               </label>
@@ -186,7 +186,7 @@ class Search extends Component {
               />
               <br />
               <br />
-              <div className='required field' >
+              <div className='required field'>
                 <label>
                   When
               </label>
