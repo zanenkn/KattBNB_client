@@ -32,6 +32,11 @@ class Search extends Component {
     this.setState({
       startDate: date
     })
+    if (date !== null) {
+      this.setState({
+        endDate: new Date(date.getTime() + 86400000)
+      })
+    }
   }
 
   handleEndDateChange = date => {
@@ -67,25 +72,15 @@ class Search extends Component {
         errorDisplay: true,
         errors: ['You must choose both check-in and check-out dates to continue!']
       })
-    } else if (this.state.startDate !== null && this.state.endDate !== null) {
-      const start = this.state.startDate.getTime()
-      const end = this.state.endDate.getTime()
-      if (end < start) {
+    } else {
+      axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
         this.setState({
+          searchData: response.data,
           loading: false,
-          errorDisplay: true,
-          errors: ['Check-out date cannot be earlier than check-in date!']
+          errors: '',
+          errorDisplay: false
         })
-      } else {
-        axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
-          this.setState({
-            searchData: response.data,
-            loading: false,
-            errors: '',
-            errorDisplay: false
-          })
-        })
-      }
+      })
     }
   }
 
