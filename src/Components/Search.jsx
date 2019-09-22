@@ -169,7 +169,7 @@ class Search extends Component {
             Find a cat sitter!
           </Header>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-            Find the person to take care of your cat with a few clicks!
+            Find the person to take care of your cat(s) with a few clicks!
           </p>
           <Segment className='whitebox'>
             <Form id='search-form' style={{ 'textAlign': 'center' }}>
