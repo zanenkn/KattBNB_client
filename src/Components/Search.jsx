@@ -36,6 +36,10 @@ class Search extends Component {
       this.setState({
         endDate: new Date(date.getTime() + 86400000)
       })
+    } else {
+      this.setState({
+        endDate: null
+      })
     }
   }
 
