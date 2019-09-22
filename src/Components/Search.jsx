@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import DatePicker from 'react-datepicker'
+import { registerLocale } from 'react-datepicker'
+import enGB from 'date-fns/locale/en-GB'
 import '../react-datepicker.css'
 import axios from 'axios'
+
+registerLocale('enGB', enGB)
 
 
 class Search extends Component {
@@ -103,6 +107,7 @@ class Search extends Component {
           withPortal
           showWeekNumbers
           disabled
+          locale='enGB'
           dateFormat='yyyy/MM/dd'
           placeholderText='Check-out'
           selected={this.state.endDate}
@@ -115,6 +120,7 @@ class Search extends Component {
           isClearable
           withPortal
           showWeekNumbers
+          locale='enGB'
           dateFormat='yyyy/MM/dd'
           placeholderText='Check-out'
           minDate={this.state.startDate.getTime() + 86400000}
@@ -198,6 +204,7 @@ class Search extends Component {
                     isClearable
                     withPortal
                     showWeekNumbers
+                    locale='enGB'
                     dateFormat='yyyy/MM/dd'
                     placeholderText='Check-in'
                     minDate={new Date().getTime() + 86400000}
