@@ -98,9 +98,13 @@ class Search extends Component {
     let errorDisplay
     let searchButton
     let searchMessage
+    let checkOutCalendar
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -133,9 +137,55 @@ class Search extends Component {
       )
     }
 
-    const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
+    if (this.state.from !== undefined) {
+      checkOutCalendar = (
+        <span className='InputFromTo-to'>
+          <DayPickerInput
+            ref={el => (this.to = el)}
+            value={to}
+            placeholder='Check-out'
+            format='LL'
+            formatDate={formatDate}
+            parseDate={parseDate}
+            dayPickerProps={{
+              selectedDays: [from, { from, to }],
+              disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
+              modifiers,
+              firstDayOfWeek: 1,
+              showWeekNumbers: true,
+              month: from,
+              fromMonth: from,
+              numberOfMonths: 1,
+            }}
+            onDayChange={this.handleToChange}
+          />
+        </span>
+      )
+    } else {
+      checkOutCalendar = (
+        <span className='InputFromTo-to' style={{ 'pointerEvents': 'none' }}>
+          <DayPickerInput
+            ref={el => (this.to = el)}
+            value={to}
+            placeholder='Check-out'
+            format='LL'
+            formatDate={formatDate}
+            parseDate={parseDate}
+            dayPickerProps={{
+              selectedDays: [from, { from, to }],
+              disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
+              modifiers,
+              firstDayOfWeek: 1,
+              showWeekNumbers: true,
+              month: from,
+              fromMonth: from,
+              numberOfMonths: 1,
+            }}
+            onDayChange={this.handleToChange}
+          />
+        </span>
+      )
+    }
 
 
     return (
@@ -188,27 +238,7 @@ class Search extends Component {
                   }}
                   onDayChange={this.handleFromChange}
                 />
-                <span className='InputFromTo-to'>
-                  <DayPickerInput
-                    ref={el => (this.to = el)}
-                    value={to}
-                    placeholder='Check-out'
-                    format='LL'
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    dayPickerProps={{
-                      selectedDays: [from, { from, to }],
-                      disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
-                      modifiers,
-                      firstDayOfWeek: 1,
-                      showWeekNumbers: true,
-                      month: from,
-                      fromMonth: from,
-                      numberOfMonths: 1,
-                    }}
-                    onDayChange={this.handleToChange}
-                  />
-                </span>
+                {checkOutCalendar}
               </div>
             </div>
 
