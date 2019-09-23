@@ -53,6 +53,15 @@ class Search extends Component {
     this.setState({ to }, this.showFromMonth)
   }
 
+  clearDates = () => {
+    this.setState({
+      from: undefined,
+      to: undefined,
+      errorDisplay: false,
+      errors: ''
+    })
+  }
+
   listenEnterKeySearch = (event) => {
     if (event.key === 'Enter') {
       this.search(event)
@@ -99,6 +108,7 @@ class Search extends Component {
     let searchButton
     let searchMessage
     let checkOutCalendar
+    let clear
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
@@ -163,7 +173,7 @@ class Search extends Component {
       )
     } else {
       checkOutCalendar = (
-        <span className='InputFromTo-to' style={{ 'pointerEvents': 'none' }}>
+        <span className='InputFromTo-to' style={{ 'display': 'none' }}>
           <DayPickerInput
             ref={el => (this.to = el)}
             value={to}
@@ -184,6 +194,12 @@ class Search extends Component {
             onDayChange={this.handleToChange}
           />
         </span>
+      )
+    }
+
+    if (this.state.from !== undefined && this.state.to !== undefined) {
+      clear = (
+        <Header as='h5' style={{ 'cursor': 'pointer', 'textAlign': 'right', 'marginTop': 0 }} onClick={this.clearDates}> Clear dates </Header>
       )
     }
 
@@ -240,6 +256,7 @@ class Search extends Component {
                 />
                 {checkOutCalendar}
               </div>
+              {clear}
             </div>
 
             <Form.Input
