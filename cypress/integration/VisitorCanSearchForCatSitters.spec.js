@@ -18,7 +18,8 @@ describe('Visitor can search for cat sitters on landing page', () => {
 
   it('and get an error message if check-in and check-out dates are not filled in', () => {
     cy.get('#cats').type('1')
-    cy.get('#search-form > .ui > #search-form > #location > .dropdown').click()
+    cy.get('.ui > #search-form > .required > #location > .default').click()
+    cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
     cy.get('#search-button').click()
     cy.contains('You must choose both check-in and check-out dates to continue!')
   })
@@ -26,20 +27,19 @@ describe('Visitor can search for cat sitters on landing page', () => {
   it('successfully, but there are no matching results', () => {
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Ale',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea',
       status: 200,
       response: 'fixture:search_no_results.json'
     })
     cy.get('#cats').type('1')
-    cy.get('#search-form > .ui > #search-form > #location > .dropdown').click()
-    cy.get('.ui > #search-form > #location > .visible > .selected').click()
-    cy.get('.ui > #search-form > .equal > div:nth-child(1) > div').click()
-    cy.get('div > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation').click()
-    cy.get('div > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation--next').click()
-    cy.get('div > div > .react-datepicker__portal > .react-datepicker > .react-datepicker__navigation--next').click()
-    cy.get('.react-datepicker > .react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week > .react-datepicker__day--031').click()
-    cy.get('#search-form > .ui > #search-form > .equal > div:nth-child(2)').click()
-    cy.get('.react-datepicker > .react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week > .react-datepicker__day--005').click()
+    cy.get('.ui > #search-form > .required > #location > .default').click()
+    cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
+    cy.get('#search-form > .required > .InputFromTo > .DayPickerInput > input').click()
+    cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(5) > .DayPicker-Day:nth-child(2)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').click()
     cy.get('#search-button').click()
     cy.contains('Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.')
   })
