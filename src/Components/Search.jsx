@@ -164,21 +164,20 @@ class Search extends Component {
 
     return (
       <div className='content-wrapper' >
-        <div id='search-form'>
-          <Header as='h2'>
-            Find a cat sitter!
-          </Header>
-          <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-            Find the person to take care of your cat(s) with a few clicks!
+        <Header as='h2'>
+          Find a cat sitter!
+        </Header>
+        <Segment className='whitebox'>
+          <p style={{ 'textAlign': 'center' }}>
+            Find the person to take care of your cat(s) while you're away!
           </p>
-          <Segment className='whitebox'>
-            <Form id='search-form' style={{ 'textAlign': 'center' }}>
-              <div className='required field'>
-                <label>
-                  Where
+          <Form id='search-form' style={{'margin': 'auto', 'maxWidth': '177px' }}>
+            <div className='required field'>
+              <label>
+                Where
               </label>
-              </div>
               <Dropdown
+                style={{'minWidth': '-webkit-fill-available'}}
                 clearable
                 search
                 selection
@@ -188,13 +187,12 @@ class Search extends Component {
                 onChange={this.handleLocationChange}
                 onKeyPress={this.listenEnterKeySearch}
               />
-              <br />
-              <br />
-              <div className='required field'>
-                <label>
-                  When
+            </div>
+            
+            <div className='required field'>
+              <label>
+                When
               </label>
-              </div>
               <Form.Group
                 widths='equal'
                 style={{ 'display': 'contents' }}
@@ -214,27 +212,27 @@ class Search extends Component {
                 </div>
                 {checkOutCalendar}
               </Form.Group>
-              <br />
-              <Form.Input
-                label='Number of cats'
-                type='number'
-                required
-                id='cats'
-                value={this.state.cats}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKeySearch}
-                style={{ 'maxWidth': '180px' }}
-              />
-            </Form>
-            {errorDisplay}
-            {searchMessage}
-          </Segment>
+            </div>
+
+            <Form.Input
+              label='Number of cats'
+              type='number'
+              required
+              id='cats'
+              value={this.state.cats}
+              onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKeySearch}
+              style={{ 'maxWidth': '180px' }}
+            />
+          </Form>
+          {errorDisplay}
+          {searchMessage}
           <div className='button-wrapper'>
             <div>
               {searchButton}
             </div>
           </div>
-        </div>
+        </Segment>
       </div>
     )
   }
