@@ -1,25 +1,30 @@
 import React, { Component } from 'react'
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
-import DatePicker from 'react-datepicker'
-import { registerLocale } from 'react-datepicker'
-import enGB from 'date-fns/locale/en-GB'
-import '../react-datepicker.css'
 import axios from 'axios'
-
-registerLocale('enGB', enGB)
+import moment from 'moment'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
+import '../react-day-picker-range.css'
+import { formatDate, parseDate } from 'react-day-picker/moment'
 
 
 class Search extends Component {
-  state = {
-    errorDisplay: false,
-    errors: '',
-    searchData: '',
-    loading: false,
-    startDate: null,
-    endDate: null,
-    location: '',
-    cats: ''
+  constructor(props) {
+    super(props)
+    this.handleFromChange = this.handleFromChange.bind(this)
+    this.handleToChange = this.handleToChange.bind(this)
+    this.state = {
+      errorDisplay: false,
+      errors: '',
+      searchData: '',
+      loading: false,
+      //startDate: null,
+      //endDate: null,
+      location: '',
+      cats: '',
+      from: undefined,
+      to: undefined
+    }
   }
 
   onChangeHandler = (e) => {
@@ -32,25 +37,44 @@ class Search extends Component {
     this.setState({ location: value })
   }
 
-  handleStartDateChange = date => {
-    this.setState({
-      startDate: date
-    })
-    if (date !== null) {
-      this.setState({
-        endDate: new Date(date.getTime() + 86400000)
-      })
-    } else {
-      this.setState({
-        endDate: null
-      })
+  // handleStartDateChange = date => {
+  //   this.setState({
+  //     startDate: date
+  //   })
+  //   if (date !== null) {
+  //     this.setState({
+  //       endDate: new Date(date.getTime() + 86400000)
+  //     })
+  //   } else {
+  //     this.setState({
+  //       endDate: null
+  //     })
+  //   }
+  // }
+
+  // handleEndDateChange = date => {
+  //   this.setState({
+  //     endDate: date
+  //   })
+  // }
+
+  showFromMonth() {
+    const { from, to } = this.state;
+    if (!from) {
+      return;
+    }
+    if (moment(to).diff(moment(from), 'months') < 2) {
+      this.to.getDayPicker().showMonth(from)
     }
   }
 
-  handleEndDateChange = date => {
-    this.setState({
-      endDate: date
-    })
+  handleFromChange(from) {
+    // Change the from date and focus the "to" input field
+    this.setState({ from });
+  }
+
+  handleToChange(to) {
+    this.setState({ to }, this.showFromMonth)
   }
 
   listenEnterKeySearch = (event) => {
@@ -95,40 +119,12 @@ class Search extends Component {
 
   render() {
 
-    let checkOutCalendar
     let errorDisplay
     let searchButton
     let searchMessage
 
-    if (this.state.startDate === null) {
-      checkOutCalendar = (
-        <DatePicker
-          isClearable
-          withPortal
-          showWeekNumbers
-          disabled
-          locale='enGB'
-          dateFormat='yyyy/MM/dd'
-          placeholderText='Check-out'
-          selected={this.state.endDate}
-          onChange={this.handleEndDateChange}
-        />
-      )
-    } else {
-      checkOutCalendar = (
-        <DatePicker
-          isClearable
-          withPortal
-          showWeekNumbers
-          locale='enGB'
-          dateFormat='yyyy/MM/dd'
-          placeholderText='Check-out'
-          minDate={this.state.startDate.getTime() + 86400000}
-          selected={this.state.endDate}
-          onChange={this.handleEndDateChange}
-        />
-      )
-    }
+    const { from, to } = this.state;
+    const modifiers = { start: from, end: to }
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -171,13 +167,13 @@ class Search extends Component {
           <p style={{ 'textAlign': 'center' }}>
             Find the person to take care of your cat(s) while you're away!
           </p>
-          <Form id='search-form' style={{'margin': 'auto', 'maxWidth': '177px' }}>
+          <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
             <div className='required field'>
               <label>
                 Where
               </label>
               <Dropdown
-                style={{'minWidth': '-webkit-fill-available'}}
+                style={{ 'minWidth': '-webkit-fill-available' }}
                 clearable
                 search
                 selection
@@ -188,54 +184,72 @@ class Search extends Component {
                 onKeyPress={this.listenEnterKeySearch}
               />
             </div>
-            
+
             <div className='required field'>
               <label>
                 When
               </label>
-              <Form.Group
-                widths='equal'
-                style={{ 'display': 'contents' }}
-              >
-                <div style={{ 'marginBottom': '5px' }}>
-                  <DatePicker
-                    isClearable
-                    withPortal
-                    showWeekNumbers
-                    locale='enGB'
-                    dateFormat='yyyy/MM/dd'
-                    placeholderText='Check-in'
-                    minDate={new Date().getTime() + 86400000}
-                    selected={this.state.startDate}
-                    onChange={this.handleStartDateChange}
+              <div className="InputFromTo">
+                <DayPickerInput
+                  value={from}
+                  placeholder="From"
+                  format="LL"
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  dayPickerProps={{
+                    selectedDays: [from, { from, to }],
+                    disabledDays: { after: to },
+                    toMonth: to,
+                    modifiers,
+                    numberOfMonths: 1,
+                    onDayClick: () => this.to.getInput().focus(),
+                  }}
+                  onDayChange={this.handleFromChange}
+                />
+                <span className="InputFromTo-to">
+                  <DayPickerInput
+                    ref={el => (this.to = el)}
+                    value={to}
+                    placeholder="To"
+                    format="LL"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    dayPickerProps={{
+                      selectedDays: [from, { from, to }],
+                      disabledDays: { before: from },
+                      modifiers,
+                      month: from,
+                      fromMonth: from,
+                      numberOfMonths: 1,
+                    }}
+                    onDayChange={this.handleToChange}
                   />
-                </div>
-                {checkOutCalendar}
-              </Form.Group>
-            </div>
+                </span>
+              </div>
+              </div>
 
-            <Form.Input
-              label='Number of cats'
-              type='number'
-              required
-              id='cats'
-              value={this.state.cats}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKeySearch}
-              style={{ 'maxWidth': '180px' }}
-            />
+              <Form.Input
+                label='Number of cats'
+                type='number'
+                required
+                id='cats'
+                value={this.state.cats}
+                onChange={this.onChangeHandler}
+                onKeyPress={this.listenEnterKeySearch}
+                style={{ 'maxWidth': '180px' }}
+              />
           </Form>
-          {errorDisplay}
-          {searchMessage}
-          <div className='button-wrapper'>
-            <div>
-              {searchButton}
+            {errorDisplay}
+            {searchMessage}
+            <div className='button-wrapper'>
+              <div>
+                {searchButton}
+              </div>
             </div>
-          </div>
         </Segment>
       </div>
-    )
-  }
-}
-
-export default Search
+        )
+      }
+    }
+    
+    export default Search
