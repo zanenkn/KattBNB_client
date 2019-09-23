@@ -133,6 +133,10 @@ class Search extends Component {
       )
     }
 
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
+
 
     return (
       <div className='content-wrapper' >
@@ -174,10 +178,12 @@ class Search extends Component {
                   parseDate={parseDate}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
-                    disabledDays: { after: to },
+                    disabledDays: { after: to, before: tomorrowDate },
                     toMonth: to,
                     modifiers,
                     numberOfMonths: 1,
+                    firstDayOfWeek: 1,
+                    showWeekNumbers: true,
                     onDayClick: () => this.to.getInput().focus(),
                   }}
                   onDayChange={this.handleFromChange}
@@ -192,8 +198,10 @@ class Search extends Component {
                     parseDate={parseDate}
                     dayPickerProps={{
                       selectedDays: [from, { from, to }],
-                      disabledDays: { before: from },
+                      disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
                       modifiers,
+                      firstDayOfWeek: 1,
+                      showWeekNumbers: true,
                       month: from,
                       fromMonth: from,
                       numberOfMonths: 1,
