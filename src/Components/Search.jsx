@@ -18,8 +18,6 @@ class Search extends Component {
       errors: '',
       searchData: '',
       loading: false,
-      //startDate: null,
-      //endDate: null,
       location: '',
       cats: '',
       from: undefined,
@@ -37,31 +35,10 @@ class Search extends Component {
     this.setState({ location: value })
   }
 
-  // handleStartDateChange = date => {
-  //   this.setState({
-  //     startDate: date
-  //   })
-  //   if (date !== null) {
-  //     this.setState({
-  //       endDate: new Date(date.getTime() + 86400000)
-  //     })
-  //   } else {
-  //     this.setState({
-  //       endDate: null
-  //     })
-  //   }
-  // }
-
-  // handleEndDateChange = date => {
-  //   this.setState({
-  //     endDate: date
-  //   })
-  // }
-
   showFromMonth() {
     const { from, to } = this.state;
     if (!from) {
-      return;
+      return
     }
     if (moment(to).diff(moment(from), 'months') < 2) {
       this.to.getDayPicker().showMonth(from)
@@ -69,8 +46,7 @@ class Search extends Component {
   }
 
   handleFromChange(from) {
-    // Change the from date and focus the "to" input field
-    this.setState({ from });
+    this.setState({ from })
   }
 
   handleToChange(to) {
@@ -98,7 +74,7 @@ class Search extends Component {
         errorDisplay: true,
         errors: ['You must choose a location to continue!']
       })
-    } else if (this.state.startDate === null || this.state.endDate === null) {
+    } else if (this.state.to === undefined || this.state.from === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
@@ -123,7 +99,7 @@ class Search extends Component {
     let searchButton
     let searchMessage
 
-    const { from, to } = this.state;
+    const { from, to } = this.state
     const modifiers = { start: from, end: to }
 
     if (this.state.errorDisplay) {
@@ -189,11 +165,11 @@ class Search extends Component {
               <label>
                 When
               </label>
-              <div className="InputFromTo">
+              <div className='InputFromTo'>
                 <DayPickerInput
                   value={from}
-                  placeholder="From"
-                  format="LL"
+                  placeholder='Check-in'
+                  format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
                   dayPickerProps={{
@@ -206,12 +182,12 @@ class Search extends Component {
                   }}
                   onDayChange={this.handleFromChange}
                 />
-                <span className="InputFromTo-to">
+                <span className='InputFromTo-to'>
                   <DayPickerInput
                     ref={el => (this.to = el)}
                     value={to}
-                    placeholder="To"
-                    format="LL"
+                    placeholder='Check-out'
+                    format='LL'
                     formatDate={formatDate}
                     parseDate={parseDate}
                     dayPickerProps={{
@@ -226,30 +202,30 @@ class Search extends Component {
                   />
                 </span>
               </div>
-              </div>
-
-              <Form.Input
-                label='Number of cats'
-                type='number'
-                required
-                id='cats'
-                value={this.state.cats}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKeySearch}
-                style={{ 'maxWidth': '180px' }}
-              />
-          </Form>
-            {errorDisplay}
-            {searchMessage}
-            <div className='button-wrapper'>
-              <div>
-                {searchButton}
-              </div>
             </div>
+
+            <Form.Input
+              label='Number of cats'
+              type='number'
+              required
+              id='cats'
+              value={this.state.cats}
+              onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKeySearch}
+              style={{ 'maxWidth': '180px' }}
+            />
+          </Form>
+          {errorDisplay}
+          {searchMessage}
+          <div className='button-wrapper'>
+            <div>
+              {searchButton}
+            </div>
+          </div>
         </Segment>
       </div>
-        )
-      }
-    }
-    
-    export default Search
+    )
+  }
+}
+
+export default Search
