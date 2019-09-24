@@ -81,6 +81,6 @@ describe('User can view her profile page', () => {
       response: 'fixture:successful_account_deletion.json',
     })
     cy.get('#delete-account-link').click()
-    cy.contains('Lorem ipsum dolor')
+    cy.contains('Find a cat sitter!')
   })
 })
