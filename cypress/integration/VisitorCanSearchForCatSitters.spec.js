@@ -34,7 +34,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.get('#cats').type('1')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
-    cy.get('#search-form > .required > .InputFromTo > .DayPickerInput > input').click()
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click()
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
