@@ -45,8 +45,9 @@ class Search extends Component {
     }
   }
 
-  handleFromChange(from) {
-    this.setState({ from })
+  async handleFromChange(from) {
+    await this.setState({ from })
+    this.to.getInput().focus()
   }
 
   handleToChange(to) {
@@ -107,7 +108,6 @@ class Search extends Component {
     let errorDisplay
     let searchButton
     let searchMessage
-    let checkOutCalendar
     let clear
 
     const { from, to } = this.state
@@ -147,64 +147,38 @@ class Search extends Component {
       )
     }
 
-    if (this.state.from !== undefined && this.state.to !== undefined) {
-      clear = (
-        <Header as='h5' style={{ 'cursor': 'pointer', 'textAlign': 'right', 'marginTop': 0 }} onClick={this.clearDates}> Clear dates </Header>
-      )
-    }
-
-
     return (
       <div className='content-wrapper' >
         <Header as='h2'>
           Find a cat sitter!
         </Header>
         <Segment className='whitebox'>
-          <p style={{ 'textAlign': 'center' }}>
-            Find the person to take care of your cat(s) while you're away!
-          </p>
           <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
-            <div className='required field'>
-              <label>
-                Where
-              </label>
-              <Dropdown
-                style={{ 'minWidth': '-webkit-fill-available' }}
-                clearable
-                search
-                selection
-                placeholder='Choose your location'
-                options={LOCATION_OPTIONS}
-                id='location'
-                onChange={this.handleLocationChange}
-                onKeyPress={this.listenEnterKeySearch}
-              />
-            </div>
-
-            <div className='required field'>
-              <label>
-                When
-              </label>
-              <div className='InputFromTo'>
-                <DayPickerInput
-                  value={from}
-                  placeholder='Check-in'
-                  format='LL'
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  dayPickerProps={{
-                    selectedDays: [from, { from, to }],
-                    disabledDays: { after: to, before: tomorrowDate },
-                    toMonth: to,
-                    modifiers,
-                    numberOfMonths: 1,
-                    firstDayOfWeek: 1,
-                    showWeekNumbers: true,
-                    onDayClick: () => this.to.getInput().focus(),
-                  }}
-                  onDayChange={this.handleFromChange}
-                />
-                <span className='InputFromTo-to'>
+              
+            <div className='required field' style={{'marginBottom': '0.5em'}}>
+                <label>
+                  When
+                </label>
+                <div className='InputFromTo'>
+                  <DayPickerInput
+                    value={from}
+                    placeholder='Check-in'
+                    format='LL'
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    dayPickerProps={{
+                      selectedDays: [from, { from, to }],
+                      disabledDays: { after: to, before: tomorrowDate },
+                      toMonth: to,
+                      modifiers,
+                      numberOfMonths: 1,
+                      firstDayOfWeek: 1,
+                      showWeekNumbers: true
+                    }}
+                    onDayChange={this.handleFromChange}
+                  />
+                </div>
+                <div className='InputFromTo' style={{'marginTop': '0.5em'}}>
                   <DayPickerInput
                     ref={el => (this.to = el)}
                     value={to}
@@ -225,20 +199,38 @@ class Search extends Component {
                     }}
                     onDayChange={this.handleToChange}
                   />
-                </span>
+                </div>
               </div>
-              {clear}
+              <div style={ (this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {} }>
+                <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> Clear dates </Header>
+              </div>
+            
+            <div className='required field' style={{'marginBottom': '1.5em'}}>
+              <label>
+                Where
+              </label>
+              <Dropdown
+                style={{ 'minWidth': '-webkit-fill-available' }}
+                clearable
+                search
+                selection
+                placeholder='Choose your location'
+                options={LOCATION_OPTIONS}
+                id='location'
+                onChange={this.handleLocationChange}
+                onKeyPress={this.listenEnterKeySearch}
+              />
             </div>
 
             <Form.Input
-              label='Number of cats'
+              label='For how many cats'
               type='number'
               required
               id='cats'
               value={this.state.cats}
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterKeySearch}
-              style={{ 'maxWidth': '180px' }}
+              style={{ 'maxWidth': '180px', 'height': '38px' }}
             />
           </Form>
           {errorDisplay}

@@ -1,6 +1,6 @@
 .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-  background-color: #f0f8ff !important;
-  color: #4a90e2;
+  background-color: #EAECEC !important;
+  color: #c90c61;
 }
 
 .InputFromTo .DayPicker-Day {
@@ -18,6 +18,8 @@
 }
 
 .InputFromTo .DayPickerInput-Overlay {
-  width: 250px;
+  width: 254px;
+  margin-left: -39px;
+  margin-top: 0.5em;
 }
 
