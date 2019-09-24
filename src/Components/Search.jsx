@@ -36,7 +36,7 @@ class Search extends Component {
   }
 
   showFromMonth() {
-    const { from, to } = this.state;
+    const { from, to } = this.state
     if (!from) {
       return
     }
@@ -108,7 +108,6 @@ class Search extends Component {
     let errorDisplay
     let searchButton
     let searchMessage
-    let clear
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
@@ -154,58 +153,58 @@ class Search extends Component {
         </Header>
         <Segment className='whitebox'>
           <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
-              
-            <div className='required field' style={{'marginBottom': '0.5em'}}>
-                <label>
-                  When
+
+            <div className='required field' style={{ 'marginBottom': '0.5em' }}>
+              <label>
+                When
                 </label>
-                <div className='InputFromTo'>
-                  <DayPickerInput
-                    value={from}
-                    placeholder='Check-in'
-                    format='LL'
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    dayPickerProps={{
-                      selectedDays: [from, { from, to }],
-                      disabledDays: { after: to, before: tomorrowDate },
-                      toMonth: to,
-                      modifiers,
-                      numberOfMonths: 1,
-                      firstDayOfWeek: 1,
-                      showWeekNumbers: true
-                    }}
-                    onDayChange={this.handleFromChange}
-                  />
-                </div>
-                <div className='InputFromTo' style={{'marginTop': '0.5em'}}>
-                  <DayPickerInput
-                    ref={el => (this.to = el)}
-                    value={to}
-                    placeholder='Check-out'
-                    format='LL'
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false }}
-                    dayPickerProps={{
-                      selectedDays: [from, { from, to }],
-                      disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
-                      modifiers,
-                      firstDayOfWeek: 1,
-                      showWeekNumbers: true,
-                      month: from,
-                      fromMonth: from,
-                      numberOfMonths: 1
-                    }}
-                    onDayChange={this.handleToChange}
-                  />
-                </div>
+              <div className='InputFromTo'>
+                <DayPickerInput
+                  value={from}
+                  placeholder='Check-in'
+                  format='LL'
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  dayPickerProps={{
+                    selectedDays: [from, { from, to }],
+                    disabledDays: { after: to, before: tomorrowDate },
+                    toMonth: to,
+                    modifiers,
+                    numberOfMonths: 1,
+                    firstDayOfWeek: 1,
+                    showWeekNumbers: true
+                  }}
+                  onDayChange={this.handleFromChange}
+                />
               </div>
-              <div style={ (this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {} }>
-                <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> Clear dates </Header>
+              <div className='InputFromTo' style={{ 'marginTop': '0.5em' }}>
+                <DayPickerInput
+                  ref={el => (this.to = el)}
+                  value={to}
+                  placeholder='Check-out'
+                  format='LL'
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false }}
+                  dayPickerProps={{
+                    selectedDays: [from, { from, to }],
+                    disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
+                    modifiers,
+                    firstDayOfWeek: 1,
+                    showWeekNumbers: true,
+                    month: from,
+                    fromMonth: from,
+                    numberOfMonths: 1
+                  }}
+                  onDayChange={this.handleToChange}
+                />
               </div>
-            
-            <div className='required field' style={{'marginBottom': '1.5em'}}>
+            </div>
+            <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
+              <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> Clear dates </Header>
+            </div>
+
+            <div className='required field' style={{ 'marginBottom': '1.5em' }}>
               <label>
                 Where
               </label>
