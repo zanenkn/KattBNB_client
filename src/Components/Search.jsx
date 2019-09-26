@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
@@ -143,6 +144,20 @@ class Search extends Component {
         <Header>
           Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
         </Header>
+      )
+    } else if (this.state.searchData.length > 0){
+      searchMessage = (
+      <Redirect to={{
+        pathname: '/search-results',
+        state: { 
+          from: this.state.from,
+          to: this.state.to,
+          cats: this.state.cats,
+          location: this.state.location,
+          searchData: this.state.searchData
+        }
+      }}
+      />
       )
     }
 
