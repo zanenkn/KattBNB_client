@@ -165,6 +165,7 @@ class Search extends Component {
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
+                  inputProps={{ readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
                     disabledDays: { after: to, before: tomorrowDate },
@@ -185,7 +186,7 @@ class Search extends Component {
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
-                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false }}
+                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
                     disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
