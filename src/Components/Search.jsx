@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
@@ -66,7 +65,7 @@ class Search extends Component {
     })
     this.props.history.push({
       pathname: '/search-results',
-      state: { 
+      state: {
         from: this.state.from,
         to: this.state.to,
         cats: this.state.cats,
