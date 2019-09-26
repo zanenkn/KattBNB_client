@@ -55,6 +55,27 @@ class Search extends Component {
     this.setState({ to }, this.showFromMonth)
   }
 
+  async searchAxiosCall() {
+    await axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
+      this.setState({
+        searchData: response.data,
+        loading: false,
+        errors: '',
+        errorDisplay: false
+      })
+    })
+    this.props.history.push({
+      pathname: '/search-results',
+      state: { 
+        from: this.state.from,
+        to: this.state.to,
+        cats: this.state.cats,
+        location: this.state.location,
+        searchData: this.state.searchData
+      }
+    })
+  }
+
   clearDates = () => {
     this.setState({
       from: undefined,
@@ -92,14 +113,7 @@ class Search extends Component {
         errors: ['You must choose both check-in and check-out dates to continue!']
       })
     } else {
-      axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
-        this.setState({
-          searchData: response.data,
-          loading: false,
-          errors: '',
-          errorDisplay: false
-        })
-      })
+      this.searchAxiosCall()
     }
   }
 
@@ -108,7 +122,6 @@ class Search extends Component {
 
     let errorDisplay
     let searchButton
-    let searchMessage
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
@@ -136,28 +149,6 @@ class Search extends Component {
     } else {
       searchButton = (
         <Button id='search-button' className='submit-button' onClick={this.search}>Search</Button>
-      )
-    }
-
-    if (this.state.searchData !== '' && this.state.searchData.length === 0) {
-      searchMessage = (
-        <Header>
-          Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
-        </Header>
-      )
-    } else if (this.state.searchData.length > 0){
-      searchMessage = (
-      <Redirect to={{
-        pathname: '/search-results',
-        state: { 
-          from: this.state.from,
-          to: this.state.to,
-          cats: this.state.cats,
-          location: this.state.location,
-          searchData: this.state.searchData
-        }
-      }}
-      />
       )
     }
 
@@ -249,7 +240,6 @@ class Search extends Component {
             />
           </Form>
           {errorDisplay}
-          {searchMessage}
           <div className='button-wrapper'>
             <div>
               {searchButton}
