@@ -26,24 +26,20 @@ class SearchResults extends Component {
 
 
   render() {
-    // let searchMessage
+    let searchMessage
 
-    // if (this.props.history.location.state === undefined) {
-    //   searchMessage = (
-    //     <Redirect to='/' />
-    //   )
-    // } else if (this.props.history.location.state.searchData.length === 0) {
-    //   searchMessage = (
-    //     <Header>
-    //       Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
-    //     </Header>
-    //   )
-    // }
+    if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length === 0) {
+      searchMessage = (
+        <Header>
+          Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
+        </Header>
+      )
+    }
 
 
     return (
       <>
-        yay!
+        {searchMessage}
       </>
     )
   }
