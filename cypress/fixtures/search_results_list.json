@@ -1,0 +1,68 @@
+[
+  {
+    "id": 3,
+    "price_per_day_1_cat": "100.0",
+    "supplement_price_per_cat_per_day": "120.0",
+    "max_cats_accepted": 1,
+    "availability": [
+      1572865200000,
+      1572951600000,
+      1573038000000,
+      1573124400000,
+      1573210800000,
+      1573297200000,
+      1573383600000
+    ],
+    "lat": "59.3111318",
+    "long": "18.0621578",
+    "user": {
+      "id": 3,
+      "location": "Stockholm",
+      "nickname": "zanzazan",
+      "avatar": ""
+    }
+  },
+  {
+    "id": 11,
+    "price_per_day_1_cat": "140.0",
+    "supplement_price_per_cat_per_day": "20.0",
+    "max_cats_accepted": 2,
+    "availability": [
+      1572865200000,
+      1572951600000,
+      1573038000000,
+      1573124400000,
+      1573210800000,
+      1573297200000,
+      1573383600000
+    ],
+    "lat": "59.3111318",
+    "long": "18.0621578",
+    "user": {
+      "id": 4,
+      "location": "Stockholm",
+      "nickname": "carla",
+      "avatar": ""
+    }
+  },
+  {
+    "id": 15,
+    "price_per_day_1_cat": "150.0",
+    "supplement_price_per_cat_per_day": "20.0",
+    "max_cats_accepted": 2,
+    "availability": [
+      1572865200000,
+      1572951600000,
+      1573038000000,
+      1573124400000
+    ],
+    "lat": "59.3111318",
+    "long": "18.0621578",
+    "user": {
+      "id": 7,
+      "location": "Stockholm",
+      "nickname": "felix",
+      "avatar": ""
+    }
+  }
+]
