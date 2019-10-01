@@ -849,6 +849,7 @@ class HostProfile extends Component {
             showWeekNumbers
             firstDayOfWeek={1}
             selectedDays={selectedDays}
+            month={selectedDays[0]}
             fromMonth={selectedDays[0]}
             toMonth={selectedDays[selectedDays.length - 1]}
           />
