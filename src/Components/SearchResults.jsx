@@ -69,7 +69,7 @@ class SearchResults extends Component {
 
     return (
       <>
-        <Grid style={{ 'height': '20vh', 'marginBottom': '2rem' }}>
+        <Grid style={{ 'height': '30vh'}}>
           <Grid.Row>
             <Grid.Column width={8}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'center' }}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Header } from 'semantic-ui-react'
+import { Container, Header, Grid, Image } from 'semantic-ui-react'
 
 class List extends Component {
   getBookingLength(checkIn, checkOut) {
@@ -37,17 +37,27 @@ class List extends Component {
             parseFloat(perDay) * parseFloat(this.getBookingLength(this.props.checkInDate, this.props.checkOutDate))
           )
 
+
+
           return (
-          <Container style={{'background': 'white', 'margin': '1rem'}} id={host.id}>
-            <Header>
-              {host.user.nickname}
-            </Header>
-            <p>
-              {perDay} kr/day
-            </p>
-            <p>
-              {total} kr total
-            </p>
+          <Container style={{'background': 'white', 'marginBottom': '2rem', 'padding': '1rem'}} id={host.id}>
+            <Grid>
+              <Grid.Column width={5}>
+                <Image src={host.user.avatar === null ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : host.user.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
+              </Grid.Column>
+
+              <Grid.Column width={11}>
+                <Header>
+                  {host.user.nickname}
+                </Header>
+                <p>
+                  {perDay} kr/day
+                </p>
+                <p>
+                  {total} kr total
+                </p>
+              </Grid.Column>
+            </Grid>
           </Container>
           )
         })
@@ -56,7 +66,7 @@ class List extends Component {
 
 
     return (
-      <Container style={{ 'background': '#ECECEC', 'height': '100vh' }}>
+      <Container style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem' }}>
         {searchMessage}
         {results}
         
