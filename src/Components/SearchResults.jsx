@@ -26,10 +26,46 @@ class SearchResults extends Component {
     }
   }
 
+  search(hosts, checkIn, checkOut) {
+    let booking = []
+    let startDate = Date.parse(checkIn.toString())
+    let stopDate = Date.parse(checkOut.toString())
+    let currentDate = startDate
+    while (currentDate <= stopDate) {
+      booking.push(currentDate)
+      currentDate = currentDate + 86400000
+    }
+    let availableHosts = []
+    hosts.map(host => {
+      let matcher = []
+      booking.map(date => {
+        if ((host.availability).includes(date)) {
+          matcher.push(date)
+        }
+      })
+      if (JSON.stringify(matcher) === JSON.stringify(booking)) {
+        availableHosts.push(host)
+      }
+    })
+    return availableHosts
+  }
+
+
   render() {
     let searchMessage
     let inDate = this.state.checkInDate.toString().slice(0, 15)
     let outDate = this.state.checkOutDate.toString().slice(0, 15)
+    let finalAvailableHosts = []
+
+    if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
+      let availableByDate = this.search(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
+      availableByDate.map(host => {
+        if (host.max_cats_accepted >= this.state.numberOfCats) {
+          finalAvailableHosts.push(host)
+        }
+      })
+    }
+
 
     return (
       <>
@@ -43,7 +79,7 @@ class SearchResults extends Component {
             </Grid.Column>
             <Grid.Column width={8}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'center' }}>
-                {this.state.searchDataLocation.length} results
+                {finalAvailableHosts.length} result(s)
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -65,13 +101,9 @@ class SearchResults extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
         {searchMessage}
-        <List 
-          searchDataLocation={this.state.searchDataLocation}
-          checkInDate={this.state.checkInDate}
-          checkOutDate={this.state.checkOutDate}
-          numberOfCats={this.state.numberOfCats}
+        <List
+          finalAvailableHosts={finalAvailableHosts}
         />
       </>
     )

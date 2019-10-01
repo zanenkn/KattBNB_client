@@ -45,7 +45,7 @@ describe('User can view her host profile', () => {
       cy.get(element[0]).contains(element[1])
     })
 
-    cy.contains('September 2019')
+    cy.contains('October 2019')
   })
 
   it('and change her description successfully', () => {

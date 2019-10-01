@@ -1,68 +1,48 @@
 [
   {
-    "id": 3,
+    "id": 2,
     "price_per_day_1_cat": "100.0",
-    "supplement_price_per_cat_per_day": "120.0",
-    "max_cats_accepted": 1,
-    "availability": [
-      1572865200000,
-      1572951600000,
-      1573038000000,
-      1573124400000,
-      1573210800000,
-      1573297200000,
-      1573383600000
-    ],
-    "lat": "59.3111318",
-    "long": "18.0621578",
-    "user": {
-      "id": 3,
-      "location": "Stockholm",
-      "nickname": "zanzazan",
-      "avatar": ""
-    }
-  },
-  {
-    "id": 11,
-    "price_per_day_1_cat": "140.0",
-    "supplement_price_per_cat_per_day": "20.0",
+    "supplement_price_per_cat_per_day": "15.0",
     "max_cats_accepted": 2,
     "availability": [
-      1572865200000,
-      1572951600000,
-      1573038000000,
-      1573124400000,
-      1573210800000,
-      1573297200000,
-      1573383600000
+      1570438800000,
+      1570525200000,
+      1570611600000,
+      1570698000000,
+      1570784400000,
+      1570870800000,
+      1570957200000
     ],
-    "lat": "59.3111318",
-    "long": "18.0621578",
+    "lat": "34.283898",
+    "long": "-118.718071",
     "user": {
-      "id": 4,
+      "id": 2,
       "location": "Stockholm",
       "nickname": "carla",
-      "avatar": ""
+      "avatar": null
     }
   },
   {
-    "id": 15,
+    "id": 1,
     "price_per_day_1_cat": "150.0",
-    "supplement_price_per_cat_per_day": "20.0",
-    "max_cats_accepted": 2,
+    "supplement_price_per_cat_per_day": "100.0",
+    "max_cats_accepted": 1,
     "availability": [
-      1572865200000,
-      1572951600000,
-      1573038000000,
-      1573124400000
+      1570438800000,
+      1570525200000,
+      1570611600000,
+      1570698000000,
+      1570784400000,
+      1570870800000,
+      1570957200000
     ],
-    "lat": "59.3111318",
-    "long": "18.0621578",
+    "lat": "40.6038027",
+    "long": "22.9633111",
     "user": {
-      "id": 7,
+      "id": 1,
       "location": "Stockholm",
-      "nickname": "felix",
-      "avatar": ""
+      "nickname": "boa",
+      "avatar": null
     }
   }
 ]
