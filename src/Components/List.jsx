@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Header } from 'semantic-ui-react'
 
 class List extends Component {
-  
+
   search(hosts, checkIn, checkOut) {
     let booking = []
     let startDate = Date.parse(checkIn.toString())
@@ -12,16 +12,15 @@ class List extends Component {
       booking.push(currentDate)
       currentDate = currentDate + 24*3600*1000
     }
-    
     let availableHosts = []
     hosts.map(host => {
       let matcher = []
       booking.map(date => {
-        if((host.availability).includes(date)) {
+        if ((host.availability).includes(date)) {
           matcher.push(date)
         }
       })
-      if(JSON.stringify(matcher) === JSON.stringify(booking)) {
+      if (JSON.stringify(matcher) === JSON.stringify(booking)) {
         availableHosts.push(host)
       }
     })
@@ -32,7 +31,6 @@ class List extends Component {
     let searchMessage
     let availableHosts = []
     let name
-    
 
     if (this.props.searchDataLocation !== '' && this.props.searchDataLocation.length === 0) {
       searchMessage = (
@@ -44,24 +42,19 @@ class List extends Component {
 
     if (this.props.searchDataLocation !== '' && this.props.searchDataLocation.length > 0) {
       let availableByDate = this.search(this.props.searchDataLocation, this.props.checkInDate, this.props.checkOutDate)
-
       availableByDate.map(host => {
         if (host.max_cats_accepted >= this.props.numberOfCats) {
           availableHosts.push(host)
         }
       })
-
       name = availableHosts[0].user.nickname
-
     }
 
-    
 
     return (
-      <Container style={{'background': '#ECECEC', 'height': '100vh'}}>
+      <Container style={{ 'background': '#ECECEC', 'height': '100vh' }}>
         {searchMessage}
         {name}
-
       </Container>
     )
   }

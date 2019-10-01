@@ -67,7 +67,7 @@ class SearchResults extends Component {
         </Grid>
 
         {searchMessage}
-        <List 
+        <List
           searchDataLocation={this.state.searchDataLocation}
           checkInDate={this.state.checkInDate}
           checkOutDate={this.state.checkOutDate}
