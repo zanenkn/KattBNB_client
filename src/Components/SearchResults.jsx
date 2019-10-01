@@ -104,6 +104,10 @@ class SearchResults extends Component {
         {searchMessage}
         <List
           finalAvailableHosts={finalAvailableHosts}
+          numberOfCats={this.state.numberOfCats}
+          booking={this.state.booking}
+          checkInDate={this.state.checkInDate}
+          checkOutDate={this.state.checkOutDate}
         />
       </>
     )
