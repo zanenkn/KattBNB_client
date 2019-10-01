@@ -857,6 +857,12 @@ class HostProfile extends Component {
       )
     }
 
+    if (this.state.editableCalendar === false && selectedDays.length === 0) {
+      calendar = (
+        <p>You have not selected any availability dates!</p>
+      )
+    }
+
     if (this.state.addressErrorDisplay) {
       addressErrorMessage = (
         <Message negative >
@@ -987,7 +993,6 @@ class HostProfile extends Component {
           </Header>
         </p>
         {calendar}
-
       </Segment>
     )
   }
