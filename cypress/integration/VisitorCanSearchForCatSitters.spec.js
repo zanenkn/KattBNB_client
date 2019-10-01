@@ -67,7 +67,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.contains('Dorotea')
     cy.contains('Mon Dec 23 2019')
     cy.contains('Tue Dec 31 2019')
-    cy.contains('0 results')
+    cy.contains('0 result(s)')
     cy.contains('15')
   })
 })
