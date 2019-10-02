@@ -8,8 +8,8 @@ class List extends Component {
     let stopDate = Date.parse(checkOut.toString())
     let currentDate = startDate
     while (currentDate <= stopDate) {
-        dateArray.push(currentDate)
-        currentDate = currentDate + 24*3600*1000
+      dateArray.push(currentDate)
+      currentDate = currentDate + 24*3600*1000
     }
     return dateArray.length
   }
@@ -42,19 +42,21 @@ class List extends Component {
           return (
           <Container style={{'background': 'white', 'marginBottom': '2rem', 'padding': '1rem'}} id={host.id}>
             <Grid>
-              <Grid.Column width={5}>
+              <Grid.Column width={5} style={{'paddingRight': '0'}}>
                 <Image src={host.user.avatar === null ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : host.user.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
               </Grid.Column>
 
               <Grid.Column width={11}>
-                <Header>
-                  {host.user.nickname}
-                </Header>
-                <p>
+                <Header as='h3' style={{'textAlign': 'left', 'marginBottom': '0', 'marginTop': '0.5rem' }}>
                   {perDay} kr/day
-                </p>
-                <p>
+                </Header>
+                <Header as='h5' style={{'textAlign': 'left', 'marginTop': '0'}}>
                   {total} kr total
+                </Header>
+                <p className='small-left-paragraph'>
+                  <strong>
+                    {host.user.nickname}  
+                  </strong>
                 </p>
               </Grid.Column>
             </Grid>

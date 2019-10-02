@@ -18,7 +18,7 @@ export const LOCATION_OPTIONS = [
   { "text": "Bollnä", "key": "Bollnä", "value": "Bollnä" },
   { "text": "Borgholm", "key": "Borgholm", "value": "Borgholm" },
   { "text": "Borlänge", "key": "Borlänge", "value": "Borlänge" },
-  { "text": "Borå", "key": "Borå", "value": "Borå" },
+  { "text": "Borås", "key": "Borås", "value": "Borås" },
   { "text": "Botkyrka", "key": "Botkyrka", "value": "Botkyrka" },
   { "text": "Boxholm", "key": "Boxholm", "value": "Boxholm" },
   { "text": "Bromölla", "key": "Bromölla", "value": "Bromölla" },
