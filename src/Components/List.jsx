@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Header, Grid, Image } from 'semantic-ui-react'
+import HostScore from './HostScore'
 
 class List extends Component {
   getBookingLength(checkIn, checkOut) {
@@ -40,24 +41,29 @@ class List extends Component {
 
 
           return (
-          <Container style={{'background': 'white', 'marginBottom': '2rem', 'padding': '1rem'}} id={host.id}>
-            <Grid>
-              <Grid.Column width={5} style={{'paddingRight': '0'}}>
-                <Image src={host.user.avatar === null ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : host.user.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
+          <Container style={{'background': 'white', 'marginBottom': '2rem', 'padding': '1.5rem' }} id={host.id}>
+            <Grid style={{'margin': '0'}}>
+              <Grid.Column width={5} style={{'padding': '0', 'margin': 'auto', 'verticalAlign': 'middle', 'display': 'table'}}>
+                <Image src={host.user.avatar === null ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : host.user.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
+                <HostScore />
               </Grid.Column>
 
-              <Grid.Column width={11}>
-                <Header as='h3' style={{'textAlign': 'left', 'marginBottom': '0', 'marginTop': '0.5rem' }}>
-                  {perDay} kr/day
-                </Header>
-                <Header as='h5' style={{'textAlign': 'left', 'marginTop': '0'}}>
-                  {total} kr total
-                </Header>
-                <p className='small-left-paragraph'>
-                  <strong>
-                    {host.user.nickname}  
-                  </strong>
-                </p>
+              <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
+                <div>
+                  <Header as='h3' style={{'textAlign': 'left', 'marginBottom': '0' }}>
+                    {perDay} kr/day
+                  </Header>
+                  <Header as='h5' style={{'textAlign': 'left', 'margin': '0'}}>
+                    {total} kr total
+                  </Header>
+                  <p style={{'fontSize': 'small', 'marginTop': '0.3rem'}} >
+                    <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z"/></svg>
+                    &ensp;
+                    <strong>
+                      {host.user.nickname}  
+                    </strong>
+                  </p>
+                </div>
               </Grid.Column>
             </Grid>
           </Container>
