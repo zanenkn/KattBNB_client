@@ -70,7 +70,7 @@ class SearchResults extends Component {
 
     return (
       <>
-        <Grid style={{ 'height': 'max-content', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem'}}>
+        <Grid style={{ 'height': '25vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'z-index': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)'}}>
           <Grid.Row columns='equal' style={{ 'padding': '0', 'marginBottom': '1rem' }}>
             <Grid.Column style={{ 'padding': '0' }}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'left' }}>

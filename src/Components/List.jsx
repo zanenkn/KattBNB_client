@@ -74,7 +74,7 @@ class List extends Component {
 
 
     return (
-      <Container style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem' }}>
+      <Container style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem', 'marginTop': '25vh' }}>
         {searchMessage}
         {results}
         
