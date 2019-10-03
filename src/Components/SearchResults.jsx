@@ -90,8 +90,6 @@ class SearchResults extends Component {
               </p>
             </Grid.Column>
           </Grid.Row>
-
-
           <Form style={{ 'padding': '0', 'width': '100%' }}>
             <Form.Group inline unstackable style={{ 'padding': '0', 'justifyContent': 'space-between', 'margin': 'auto' }}>
               <Form.Input
@@ -101,7 +99,6 @@ class SearchResults extends Component {
                 value={inDate}
                 icon={<Icon fitted name='arrow right' style={{ 'color': '#c90c61' }} />}
               />
-
               <Form.Input
                 iconPosition='left'
                 style={{ 'maxWidth': '125px', 'marginRight': '-1rem' }}
@@ -111,13 +108,11 @@ class SearchResults extends Component {
               />
             </Form.Group>
           </Form>
-
         </Grid>
         {searchMessage}
         <List
           finalAvailableHosts={finalAvailableHosts}
           numberOfCats={this.state.numberOfCats}
-          booking={this.state.booking}
           checkInDate={this.state.checkInDate}
           checkOutDate={this.state.checkOutDate}
         />
