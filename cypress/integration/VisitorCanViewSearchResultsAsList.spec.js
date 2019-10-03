@@ -30,7 +30,7 @@ describe('Visitor can view search results as a list', () => {
 
     cy.get('#3').within(() => {
       cy.contains('460 kr')
-    })    
+    })
   })
 
   it('and not see hosts that are not available', () => {

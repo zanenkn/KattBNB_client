@@ -70,7 +70,7 @@ class SearchResults extends Component {
 
     return (
       <>
-        <Grid style={{ 'height': '25vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'z-index': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)'}}>
+        <Grid style={{ 'height': '25vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
           <Grid.Row columns='equal' style={{ 'padding': '0', 'marginBottom': '1rem' }}>
             <Grid.Column style={{ 'padding': '0' }}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'left' }}>
@@ -92,22 +92,22 @@ class SearchResults extends Component {
           </Grid.Row>
 
 
-          <Form style={{'padding': '0', 'width': '100%'}}> 
-            <Form.Group inline unstackable style={{'padding': '0', 'justifyContent': 'space-between', 'margin': 'auto'}}>
+          <Form style={{ 'padding': '0', 'width': '100%' }}>
+            <Form.Group inline unstackable style={{ 'padding': '0', 'justifyContent': 'space-between', 'margin': 'auto' }}>
               <Form.Input
                 iconPosition='left'
-                style={{'maxWidth': '125px', 'marginRight': '-1rem' }}
+                style={{ 'maxWidth': '125px', 'marginRight': '-1rem' }}
                 readOnly
                 value={inDate}
-                icon={<Icon fitted name='arrow right' style={{ 'color': '#c90c61'}} />}
+                icon={<Icon fitted name='arrow right' style={{ 'color': '#c90c61' }} />}
               />
 
               <Form.Input
                 iconPosition='left'
-                style={{'maxWidth': '125px', 'marginRight': '-1rem'}}
+                style={{ 'maxWidth': '125px', 'marginRight': '-1rem' }}
                 readOnly
                 value={outDate}
-                icon={<Icon fitted name='arrow left' style={{ 'color': '#c90c61'}} />}
+                icon={<Icon fitted name='arrow left' style={{ 'color': '#c90c61' }} />}
               />
             </Form.Group>
           </Form>
