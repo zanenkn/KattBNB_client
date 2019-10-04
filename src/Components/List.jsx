@@ -39,7 +39,7 @@ class List extends Component {
           )
 
           return (
-            <Container style={{ 'background': 'white', 'marginBottom': '2rem', 'padding': '1.5rem' }} id={host.id} key={host.id}>
+            <div className='list-card' id={host.id} key={host.id}>
               <Grid style={{ 'margin': '0' }}>
                 <Grid.Column width={5} style={{ 'padding': '0', 'margin': 'auto', 'verticalAlign': 'middle', 'display': 'table' }}>
                   <Image src={host.user.avatar === null ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : host.user.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
@@ -63,7 +63,7 @@ class List extends Component {
                   </div>
                 </Grid.Column>
               </Grid>
-            </Container>
+            </div>
           )
         })
       )
