@@ -63,11 +63,15 @@ class Search extends Component {
         errorDisplay: false
       })
     })
+    let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
+    let msFrom = new Date(utcFrom).getTime()
+    let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
+    let msTo = new Date(utcTo).getTime()
     this.props.history.push({
       pathname: '/search-results',
       state: {
-        from: this.state.from,
-        to: this.state.to,
+        from: msFrom,
+        to: msTo,
         cats: this.state.cats,
         location: this.state.location,
         searchData: this.state.searchData

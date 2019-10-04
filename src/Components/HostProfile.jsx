@@ -478,7 +478,7 @@ class HostProfile extends Component {
     this.setState({
       loading: true
     })
-    if (this.state.newAvailability !== this.state.availability) {
+    if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.state.availability)) {
       const path = `/api/v1/host_profiles/${this.props.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -486,7 +486,9 @@ class HostProfile extends Component {
         'access-token': window.localStorage.getItem('access-token')
       }
       const filteredAvailability = this.state.newAvailability.filter(function (value) {
-        return value > (new Date()).getTime() - 86400000
+        let date = new Date()
+        let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+        return value > (new Date(utc)).getTime() - 86400000
       })
       const payload = {
         availability: filteredAvailability
@@ -519,7 +521,9 @@ class HostProfile extends Component {
 
   convertAvailabilityDates() {
     let availableDates = this.state.selectedDays.map(function (day) {
-      return new Date(day).getTime()
+      let date = new Date(day)
+      let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+      return new Date(utc).getTime()
     })
     let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
     this.setState({

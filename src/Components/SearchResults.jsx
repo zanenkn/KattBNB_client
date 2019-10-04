@@ -29,8 +29,8 @@ class SearchResults extends Component {
 
   search(hosts, checkIn, checkOut) {
     let booking = []
-    let startDate = Date.parse(checkIn.toString())
-    let stopDate = Date.parse(checkOut.toString())
+    let startDate = checkIn
+    let stopDate = checkOut
     let currentDate = startDate
     while (currentDate <= stopDate) {
       booking.push(currentDate)

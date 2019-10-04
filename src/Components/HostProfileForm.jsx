@@ -40,7 +40,9 @@ class HostProfileForm extends Component {
 
   convertAvailabilityDates() {
     let availableDates = this.state.selectedDays.map(function (day) {
-      return new Date(day).getTime()
+      let date = new Date(day)
+      let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+      return new Date(utc).getTime()
     })
     let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
     this.setState({
