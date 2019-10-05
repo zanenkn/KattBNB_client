@@ -70,7 +70,8 @@ class SearchResults extends Component {
 
     return (
       <>
-        <Grid style={{ 'height': '25vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+        <div style={{ 'height': '25vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '2rem', 'paddingTop': '2rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+          <Grid className='list-header'>
           <Grid.Row columns='equal' style={{ 'padding': '0', 'marginBottom': '1rem', 'alignItems': 'baseline' }}>
             <Grid.Column style={{ 'padding': '0' }}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'left' }}>
@@ -108,7 +109,8 @@ class SearchResults extends Component {
               />
             </Form.Group>
           </Form>
-        </Grid>
+          </Grid>
+        </div>
         {searchMessage}
         <List
           finalAvailableHosts={finalAvailableHosts}

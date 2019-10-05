@@ -222,3 +222,19 @@ h4 {
     padding: 2rem!important;
   }
 }
+
+.list-header {
+    margin-left: auto!important;
+    margin-right: auto!important;  
+}
+
+@media screen and (max-width: 456px) {
+  .list-header {
+  }
+}
+
+@media screen and (min-width: 456px) {
+  .list-header {
+    width: 400px!important;
+  }
+}
