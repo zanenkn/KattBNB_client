@@ -1,3 +1,12 @@
 /*******************************
          Site Overrides
 *******************************/
+
+
+.ui[class*="left icon"].input>input {
+  padding-left: 2rem!important;
+}
+
+.ui.icon.input>i.icon {
+  opacity: 1;
+}

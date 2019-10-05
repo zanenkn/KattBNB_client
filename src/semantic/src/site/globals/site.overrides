@@ -198,3 +198,43 @@ h4 {
   height: 258px!important;
   margin-bottom: 1rem;
 }
+
+/*******************************
+              LIST
+*******************************/
+
+.list-card {
+  background: white;
+  margin-bottom: 2rem!important;
+}
+
+@media screen and (max-width: 456px) {
+  .list-card {
+    padding: 1.5rem!important;
+  }
+}
+
+@media screen and (min-width: 456px) {
+  .list-card {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px!important;
+    padding: 2rem!important;
+  }
+}
+
+.list-header {
+    margin-left: auto!important;
+    margin-right: auto!important;  
+}
+
+@media screen and (max-width: 456px) {
+  .list-header {
+  }
+}
+
+@media screen and (min-width: 456px) {
+  .list-header {
+    width: 400px!important;
+  }
+}

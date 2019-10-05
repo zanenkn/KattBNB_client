@@ -3,6 +3,7 @@ import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu'
 import Search from './Components/Search'
+import SearchResults from './Components/SearchResults'
 import AboutUs from './Components/AboutUs'
 import Blog from './Components/Blog'
 import ContactUs from './Components/ContactUs'
@@ -48,6 +49,7 @@ class App extends Component {
             <ScrollToTop>
               <Switch>
                 <Route exact path='/' component={Search}></Route>
+                <Route exact path='/search-results' component={SearchResults}></Route>
                 <Route exact path='/about-us' component={AboutUs}></Route>
                 <Route exact path='/blog' component={Blog}></Route>
                 <Route exact path='/contact-us' component={ContactUs}></Route>

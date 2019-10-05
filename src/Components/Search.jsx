@@ -54,6 +54,31 @@ class Search extends Component {
     this.setState({ to }, this.showFromMonth)
   }
 
+  async searchAxiosCall() {
+    await axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
+      this.setState({
+        searchData: response.data,
+        loading: false,
+        errors: '',
+        errorDisplay: false
+      })
+    })
+    let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
+    let msFrom = new Date(utcFrom).getTime()
+    let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
+    let msTo = new Date(utcTo).getTime()
+    this.props.history.push({
+      pathname: '/search-results',
+      state: {
+        from: msFrom,
+        to: msTo,
+        cats: this.state.cats,
+        location: this.state.location,
+        searchData: this.state.searchData
+      }
+    })
+  }
+
   clearDates = () => {
     this.setState({
       from: undefined,
@@ -91,14 +116,7 @@ class Search extends Component {
         errors: ['You must choose both check-in and check-out dates to continue!']
       })
     } else {
-      axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
-        this.setState({
-          searchData: response.data,
-          loading: false,
-          errors: '',
-          errorDisplay: false
-        })
-      })
+      this.searchAxiosCall()
     }
   }
 
@@ -107,7 +125,6 @@ class Search extends Component {
 
     let errorDisplay
     let searchButton
-    let searchMessage
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
@@ -138,14 +155,6 @@ class Search extends Component {
       )
     }
 
-    if (this.state.searchData !== '' && this.state.searchData.length === 0) {
-      searchMessage = (
-        <Header>
-          Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.
-        </Header>
-      )
-    }
-
     return (
       <div className='content-wrapper' >
         <Header as='h2'>
@@ -165,6 +174,7 @@ class Search extends Component {
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
+                  inputProps={{ readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
                     disabledDays: { after: to, before: tomorrowDate },
@@ -185,7 +195,7 @@ class Search extends Component {
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
-                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false }}
+                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
                     disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
@@ -233,7 +243,6 @@ class Search extends Component {
             />
           </Form>
           {errorDisplay}
-          {searchMessage}
           <div className='button-wrapper'>
             <div>
               {searchButton}
