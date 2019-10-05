@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Form, Icon } from 'semantic-ui-react'
+import { Grid, Form, Icon, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import List from './List'
 import moment from 'moment'
@@ -11,7 +11,8 @@ class SearchResults extends Component {
     checkOutDate: '',
     numberOfCats: '',
     location: '',
-    searchDataLocation: ''
+    searchDataLocation: '',
+    listResults: true
   }
 
   componentDidMount() {
@@ -52,12 +53,13 @@ class SearchResults extends Component {
     return availableHosts
   }
 
-
   render() {
-    let searchMessage
     let inDate = moment(this.state.checkInDate).format('ll')
     let outDate = moment(this.state.checkOutDate).format('ll')
     let finalAvailableHosts = []
+    let listButton
+    let mapButton
+    let results
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
       let availableByDate = this.search(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
@@ -68,6 +70,32 @@ class SearchResults extends Component {
       })
     }
 
+    listButton = (
+      <Button onClick={() => {this.setState({listResults: true})}}>List</Button>
+    )
+
+    mapButton = (
+      <Button onClick={() => {this.setState({listResults: false})}}>Map</Button>
+    )
+
+    if(this.state.listResults === true) {
+      results = (
+        <List
+          finalAvailableHosts={finalAvailableHosts}
+          numberOfCats={this.state.numberOfCats}
+          checkInDate={this.state.checkInDate}
+          checkOutDate={this.state.checkOutDate}
+        />
+      )
+    } else {
+      results = (
+        <div style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem', 'marginTop': '25vh' }}>
+          <p>
+            map
+          </p>
+        </div>
+      )
+    }
 
     return (
       <>
@@ -110,15 +138,12 @@ class SearchResults extends Component {
                 />
               </Form.Group>
             </Form>
+            {listButton}
+            {mapButton}
           </Grid>
         </div>
-        {searchMessage}
-        <List
-          finalAvailableHosts={finalAvailableHosts}
-          numberOfCats={this.state.numberOfCats}
-          checkInDate={this.state.checkInDate}
-          checkOutDate={this.state.checkOutDate}
-        />
+
+        {results}
       </>
     )
   }
