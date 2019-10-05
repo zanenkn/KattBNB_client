@@ -79,7 +79,7 @@ class SearchResults extends Component {
       <Icon name='map' circular inverted style={this.state.listResults ? {'background-color': 'grey', 'cursor': 'pointer'} : {'background-color': '#c90c61', 'cursor': 'pointer'}} onClick={() => {this.setState({listResults: false})}} />
     )
 
-    if(this.state.listResults === true) {
+    if (this.state.listResults === true) {
       results = (
         <List
           finalAvailableHosts={finalAvailableHosts}
@@ -93,6 +93,7 @@ class SearchResults extends Component {
         <Map />
       )
     }
+
 
     return (
       <>
