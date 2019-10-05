@@ -1,4 +1,4 @@
-describe('Visitor can view search results as a list', () => {
+describe('User cannot see her profile', () => {
   before(function () {
     cy.server()
     cy.visit('http://localhost:3000/')
@@ -8,6 +8,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').click()
@@ -19,26 +20,8 @@ describe('Visitor can view search results as a list', () => {
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click()
   })
 
-  it('and see correct amount of results', () => {
-    cy.contains('3 result(s)')
-  })
-
-  it('and see correct prices', () => {
-    cy.get('#2').within(() => {
-      cy.contains('560 kr')
-    })
-
-    cy.get('#3').within(() => {
-      cy.contains('460 kr')
-    })
-  })
-
-  it('and not see hosts that are not available', () => {
-    cy.get('#4').should('not.exist')
-    cy.get('#5').should('not.exist')
-  })
-
-  it('and not see hosts that does not accept required amount of cats', () => {
-    cy.get('#1').should('not.exist')
+  it('in the results if logged in', () => {
+    cy.contains('2 result(s)')
+    cy.get('#6').should('not.exist')
   })
 })
