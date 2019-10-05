@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Form, Icon, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import List from './List'
+import Map from './Map'
 import moment from 'moment'
 
 class SearchResults extends Component {
@@ -89,11 +90,7 @@ class SearchResults extends Component {
       )
     } else {
       results = (
-        <div style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem', 'marginTop': '25vh' }}>
-          <p>
-            map
-          </p>
-        </div>
+        <Map />
       )
     }
 
