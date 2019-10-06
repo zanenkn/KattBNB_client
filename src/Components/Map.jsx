@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import { connect } from 'react-redux'
 
 class Map extends Component {
 
   state = {
-
+    searchData: ''
   }
 
   componentDidMount() {
-
+    axios.get('/api/v1/host_profiles').then(response => {
+      this.setState({
+        searchData: response.data
+      })
+    })
   }
 
   getBookingLength(checkIn, checkOut) {
@@ -57,4 +63,8 @@ class Map extends Component {
   }
 }
 
-export default Map
+const mapStateToProps = state => ({
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+})
+
+export default connect(mapStateToProps)(Map)

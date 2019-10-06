@@ -72,11 +72,11 @@ class SearchResults extends Component {
     }
 
     listButton = (
-      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'background-color': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true }) }} />
+      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'backgroundColor': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true }) }} />
     )
 
     mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'background-color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false }) }} />
+      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'backgroundColor': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false }) }} />
     )
 
     if (this.state.listResults === true) {
