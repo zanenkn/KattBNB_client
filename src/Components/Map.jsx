@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { getBookingLength, bookingSearch } from '../Modules/booking'
-import RetailerMap from 'react-retailer-map'
-import 'react-retailer-map/lib/styles/retailer-map.scss'
+import GoogleMapReact from 'google-map-react'
+import MapStyle from '../Modules/MapStyle'
 
 class Map extends Component {
+
+  static defaultProps = {
+    center: {
+      lat: 59.330651,
+      lng: 18.068562
+    },
+    zoom: 11
+  }
 
   state = {
     searchData: ''
@@ -22,17 +31,6 @@ class Map extends Component {
   render() {
     let finalAvailableHosts = []
     let bookingLength = parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))
-    const googleMapURL = `https://maps.googleapis.com/maps/api/js?v=3&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&language=en&region=BH&libraries=geometry,drawing,places`
-    const retailers = [
-      {
-        id: 1,
-        location: "Example 1",
-        coordinates: {
-          lat: 26.178696,
-          lng: 50.552151
-        }
-      }
-    ]
 
     if (this.state.searchData !== '' && this.state.searchData.length > 0) {
       let availableByDate = bookingSearch(this.state.searchData, this.props.checkInDate, this.props.checkOutDate)
@@ -45,9 +43,30 @@ class Map extends Component {
 
 
     return (
-      <div id='map'>
-        <RetailerMap retailers={retailers} geolocate={true} color="#f00" countryCode="BH" googleMapURL={googleMapURL} />
-      </div>
+      //<div id='map'>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          options={{ styles: MapStyle }}
+          //onClick={this.hideElements}
+        >
+
+          {finalAvailableHosts.map(host => (
+            <Icon name='arrow down'
+              size='large'
+              lat={parseFloat(host.lat)}
+              lng={parseFloat(host.long)}
+              text='yolo'
+              key={host.id}
+              id={host.user.id}
+              //onClick={this.handleDatapointClick}
+              //className={this.setDatapointColor(post)} 
+              />
+          ))}
+
+        </GoogleMapReact>
+      //</div>
     )
   }
 }
