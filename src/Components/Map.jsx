@@ -8,8 +8,6 @@ import MapStyle from '../Modules/MapStyle'
 
 class Map extends Component {
 
-  
-
   state = {
     searchData: ''
   }
@@ -24,7 +22,7 @@ class Map extends Component {
 
   render() {
     let finalAvailableHosts = []
-    let bookingLength = parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))
+    let mapCenter
 
     if (this.state.searchData !== '' && this.state.searchData.length > 0) {
       let availableByDate = bookingSearch(this.state.searchData, this.props.checkInDate, this.props.checkOutDate)
@@ -35,8 +33,6 @@ class Map extends Component {
       })
     }
 
-    let mapCenter
-
     mapCenter = {
       lat: 59.330651,
       lng: 18.068562
@@ -44,41 +40,32 @@ class Map extends Component {
 
 
     return (
-      //<div id='map'>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
-          defaultCenter={mapCenter}
-          defaultZoom={11}
-          options={{ styles: MapStyle }}
-          //onClick={this.hideElements}
-        >
-
-          {finalAvailableHosts.map(host => (
-            
-            <Label pointing='below'
-              color='teal'
-              lat={parseFloat(host.lat)}
-              lng={parseFloat(host.long)}
-              key={host.id}
-              id={host.user.id}
-              //onClick={this.handleDatapointClick}
-              //className={this.setDatapointColor(post)} 
-              >
-                
-                {parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.numberOfCats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))}&nbsp;kr
-              
-                
-              </Label>
-          ))}
-
-        </GoogleMapReact>
-
-
-
-      //</div>
+      <GoogleMapReact
+        id='map'
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
+        defaultCenter={mapCenter}
+        defaultZoom={11}
+        options={{ styles: MapStyle }}
+      //onClick={this.hideElements}
+      >
+        {finalAvailableHosts.map(host => (
+          <Label pointing='below'
+            color='teal'
+            lat={parseFloat(host.lat)}
+            lng={parseFloat(host.long)}
+            key={host.id}
+            id={host.user.id}
+          //onClick={this.handleDatapointClick}
+          //className={this.setDatapointColor(post)} 
+          >
+            {parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.numberOfCats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))}&nbsp;kr
+          </Label>
+        ))}
+      </GoogleMapReact>
     )
   }
 }
+
 
 const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id,
