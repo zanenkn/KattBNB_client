@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Icon } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { getBookingLength, bookingSearch } from '../Modules/booking'
 import GoogleMapReact from 'google-map-react'
@@ -53,19 +53,27 @@ class Map extends Component {
         >
 
           {finalAvailableHosts.map(host => (
-            <Icon name='arrow down'
-              size='large'
+            
+            <Label pointing='below'
+              color='teal'
               lat={parseFloat(host.lat)}
               lng={parseFloat(host.long)}
-              text='yolo'
               key={host.id}
               id={host.user.id}
               //onClick={this.handleDatapointClick}
               //className={this.setDatapointColor(post)} 
-              />
+              >
+                
+                {parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.numberOfCats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))}&nbsp;kr
+              
+                
+              </Label>
           ))}
 
         </GoogleMapReact>
+
+
+
       //</div>
     )
   }
