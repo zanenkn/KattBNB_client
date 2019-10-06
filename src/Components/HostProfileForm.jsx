@@ -4,6 +4,7 @@ import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../react-day-picker.css'
+import { generateRandomNumber } from '../Modules/locationRandomizer'
 
 
 class HostProfileForm extends Component {
@@ -66,20 +67,6 @@ class HostProfileForm extends Component {
     }
   }
 
-  generateRandomNumberLat = () => {
-    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
-    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
-    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
-    return parseFloat(resultNumber)
-  }
-
-  generateRandomNumberLong = () => {
-    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
-    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
-    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
-    return parseFloat(resultNumber)
-  }
-
   geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
     Geocode.fromAddress(this.state.userInputAddress).then(
@@ -88,8 +75,8 @@ class HostProfileForm extends Component {
         this.setState({
           latitude: lat,
           longitude: lng,
-          lat: lat - this.generateRandomNumberLat(),
-          long: lng + this.generateRandomNumberLong(),
+          lat: lat - generateRandomNumber(),
+          long: lng + generateRandomNumber(),
           address: response.results[0].formatted_address,
           addressSearch: false,
           addressErrorDisplay: false
