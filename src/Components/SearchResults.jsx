@@ -72,11 +72,11 @@ class SearchResults extends Component {
     }
 
     listButton = (
-      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'background-color': '#c90c61', 'cursor': 'pointer' } : { 'background-color': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true }) }} />
+      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'background-color': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true }) }} />
     )
 
     mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'background-color': 'grey', 'cursor': 'pointer' } : { 'background-color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false }) }} />
+      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'background-color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false }) }} />
     )
 
     if (this.state.listResults === true) {
@@ -90,7 +90,11 @@ class SearchResults extends Component {
       )
     } else {
       results = (
-        <Map />
+        <Map
+          numberOfCats={this.state.numberOfCats}
+          checkInDate={this.state.checkInDate}
+          checkOutDate={this.state.checkOutDate}
+        />
       )
     }
 
@@ -110,7 +114,7 @@ class SearchResults extends Component {
             </p>
 
             <Form style={{ 'padding': '0', 'width': '100%' }}>
-              <Form.Group inline unstackable style={{ 'padding': '0', 'justifyContent': 'space-between', 'margin': 'auto', 'min-width': '258px' }}>
+              <Form.Group inline unstackable style={{ 'padding': '0', 'justifyContent': 'space-between', 'margin': 'auto', 'minWidth': '258px' }}>
                 <Form.Input
                   iconPosition='left'
                   style={{ 'maxWidth': '125px', 'marginRight': '-1rem' }}
@@ -141,6 +145,7 @@ class SearchResults extends Component {
     )
   }
 }
+
 
 const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id,

@@ -3,6 +3,7 @@ import { Header, Grid, Image } from 'semantic-ui-react'
 import HostScore from './HostScore'
 
 class List extends Component {
+  
   getBookingLength(checkIn, checkOut) {
     let dateArray = []
     let startDate = checkIn
