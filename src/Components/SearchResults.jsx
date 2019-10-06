@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Icon, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { bookingSearch } from '../Modules/booking'
 import List from './List'
 import Map from './Map'
 import moment from 'moment'
@@ -30,29 +31,6 @@ class SearchResults extends Component {
     }
   }
 
-  search(hosts, checkIn, checkOut) {
-    let booking = []
-    let startDate = checkIn
-    let stopDate = checkOut
-    let currentDate = startDate
-    while (currentDate <= stopDate) {
-      booking.push(currentDate)
-      currentDate = currentDate + 86400000
-    }
-    let availableHosts = []
-    hosts.map(host => {
-      let matcher = []
-      booking.map(date => {
-        if ((host.availability).includes(date)) {
-          matcher.push(date)
-        }
-      })
-      if (JSON.stringify(matcher) === JSON.stringify(booking)) {
-        availableHosts.push(host)
-      }
-    })
-    return availableHosts
-  }
 
   render() {
     let inDate = moment(this.state.checkInDate).format('ll')
@@ -63,7 +41,7 @@ class SearchResults extends Component {
     let results
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
-      let availableByDate = this.search(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
+      let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
       availableByDate.map(host => {
         if (host.max_cats_accepted >= this.state.numberOfCats && this.props.id !== host.user.id) {
           finalAvailableHosts.push(host)

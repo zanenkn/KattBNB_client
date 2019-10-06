@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
 import { Header, Grid, Image } from 'semantic-ui-react'
 import HostScore from './HostScore'
+import { getBookingLength } from '../Modules/booking'
+
 
 class List extends Component {
-  
-  getBookingLength(checkIn, checkOut) {
-    let dateArray = []
-    let startDate = checkIn
-    let stopDate = checkOut
-    let currentDate = startDate
-    while (currentDate <= stopDate) {
-      dateArray.push(currentDate)
-      currentDate = currentDate + 86400000
-    }
-    return dateArray.length
-  }
+
 
   render() {
     let searchMessage
@@ -36,7 +27,7 @@ class List extends Component {
           )
 
           let total = (
-            parseFloat(perDay) * parseFloat(this.getBookingLength(this.props.checkInDate, this.props.checkOutDate))
+            parseFloat(perDay) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))
           )
 
           return (
