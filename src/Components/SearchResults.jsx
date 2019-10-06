@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Icon, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import Geocode from 'react-geocode'
 import { bookingSearch } from '../Modules/booking'
 import List from './List'
 import Map from './Map'
@@ -13,8 +14,29 @@ class SearchResults extends Component {
     checkOutDate: '',
     numberOfCats: '',
     location: '',
+    locationLat: '',
+    locationLong: '',
     searchDataLocation: '',
     listResults: true
+  }
+
+  geolocationDataAddress = () => {
+    Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
+    Geocode.fromAddress(this.props.history.location.state.location).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location
+        this.setState({
+          locationLat: lat,
+          locationLong: lng
+        })
+      },
+      error => {
+        this.setState({
+          locationLat: 59.330651,
+          locationLong: 18.068562
+        })
+      }
+    )
   }
 
   componentDidMount() {
@@ -28,6 +50,7 @@ class SearchResults extends Component {
         location: this.props.history.location.state.location,
         searchDataLocation: this.props.history.location.state.searchData
       })
+      this.geolocationDataAddress()
     }
   }
 
@@ -72,6 +95,8 @@ class SearchResults extends Component {
           numberOfCats={this.state.numberOfCats}
           checkInDate={this.state.checkInDate}
           checkOutDate={this.state.checkOutDate}
+          mapCenterLat={this.state.locationLat}
+          mapCenterLong={this.state.locationLong}
         />
       )
     }

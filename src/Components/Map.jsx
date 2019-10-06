@@ -34,8 +34,8 @@ class Map extends Component {
     }
 
     mapCenter = {
-      lat: 59.330651,
-      lng: 18.068562
+      lat: this.props.mapCenterLat,
+      lng: this.props.mapCenterLong
     }
 
 
