@@ -8,13 +8,7 @@ import MapStyle from '../Modules/MapStyle'
 
 class Map extends Component {
 
-  static defaultProps = {
-    center: {
-      lat: 59.330651,
-      lng: 18.068562
-    },
-    zoom: 11
-  }
+  
 
   state = {
     searchData: ''
@@ -41,13 +35,20 @@ class Map extends Component {
       })
     }
 
+    let mapCenter
+
+    mapCenter = {
+      lat: 59.330651,
+      lng: 18.068562
+    }
+
 
     return (
       //<div id='map'>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
+          defaultCenter={mapCenter}
+          defaultZoom={11}
           options={{ styles: MapStyle }}
           //onClick={this.hideElements}
         >
