@@ -134,14 +134,14 @@ class SearchResults extends Component {
                 />
               </Form.Group>
             </Form>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row' }}>
+            {listButton}
+            {mapButton}
+            </div>
           </div>
         </div>
 
-        <Container style={{ 'background': '#ECECEC', 'height': '100vh', 'padding': '2rem', 'paddingTop': '1rem', 'marginTop': '25vh' }}>
-          <div style={{ 'display': 'flex', 'flexDirection': 'row', 'paddingBottom': '1rem' }}>
-            {listButton}
-            {mapButton}
-          </div>
+        <Container style={{ 'background': '#ECECEC', 'height': '65vh', 'marginTop': '25vh' }}>
           {results}
         </Container>
       </>

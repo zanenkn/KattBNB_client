@@ -43,7 +43,7 @@ class Map extends Component {
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
         defaultCenter={mapCenter}
-        defaultZoom={11}
+        defaultZoom={12}
         options={{ styles: MapStyle }}
       //onClick={this.hideElements}
       >
