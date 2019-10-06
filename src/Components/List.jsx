@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Header, Grid, Image } from 'semantic-ui-react'
+import { Header, Grid, Image } from 'semantic-ui-react'
 import HostScore from './HostScore'
 
 class List extends Component {
