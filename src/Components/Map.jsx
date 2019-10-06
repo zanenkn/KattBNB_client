@@ -53,11 +53,23 @@ class Map extends Component {
   }
 
   render() {
+    let finalAvailableHosts = []
+    let bookingLength = parseFloat(this.getBookingLength(this.props.checkInDate, this.props.checkOutDate))
+
+    if (this.state.searchData !== '' && this.state.searchData.length > 0) {
+      let availableByDate = this.search(this.state.searchData, this.props.checkInDate, this.props.checkOutDate)
+      availableByDate.map(host => {
+        if (host.max_cats_accepted >= this.props.numberOfCats && this.props.id !== host.user.id) {
+          finalAvailableHosts.push(host)
+        }
+      })
+    }
 
 
     return (
       <p id='map'>
         map
+        {bookingLength}
       </p>
     )
   }
