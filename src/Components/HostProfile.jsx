@@ -5,6 +5,8 @@ import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../react-day-picker.css'
 import { generateRandomNumber } from '../Modules/locationRandomizer'
+import { search } from '../Modules/addressLocationMatcher'
+
 
 class HostProfile extends Component {
   constructor(props) {
@@ -599,16 +601,20 @@ class HostProfile extends Component {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
     Geocode.fromAddress(this.state.userInputAddress).then(
       response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({
-          latitude: lat,
-          longitude: lng,
-          lat: lat - generateRandomNumber(),
-          long: lng + generateRandomNumber(),
-          newAddress: response.results[0].formatted_address,
-          addressSearch: false,
-          addressErrorDisplay: false
-        })
+        const { lat, lng } = response.results[0].geometry.location
+        if (search(this.props.location, response.results[0].address_components) === undefined) {
+          if (window.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')) {
+            this.setState({
+              latitude: lat,
+              longitude: lng,
+              lat: lat - generateRandomNumber(),
+              long: lng + generateRandomNumber(),
+              newAddress: response.results[0].formatted_address,
+              addressSearch: false,
+              addressErrorDisplay: false
+            })
+          }
+        }
       },
       error => {
         this.setState({
