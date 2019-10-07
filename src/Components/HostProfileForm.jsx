@@ -85,6 +85,16 @@ class HostProfileForm extends Component {
               addressErrorDisplay: false
             })
           }
+        } else {
+          this.setState({
+            latitude: lat,
+            longitude: lng,
+            lat: lat - generateRandomNumber(),
+            long: lng + generateRandomNumber(),
+            address: response.results[0].formatted_address,
+            addressSearch: false,
+            addressErrorDisplay: false
+          })
         }
       },
       error => {
