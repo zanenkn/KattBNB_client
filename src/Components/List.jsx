@@ -63,7 +63,7 @@ class List extends Component {
 
 
     return (
-      <div style={{'padding': '2rem'}} >
+      <div style={{ 'padding': '2rem' }} >
         {searchMessage}
         {results}
       </div>

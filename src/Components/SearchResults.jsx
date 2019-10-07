@@ -135,8 +135,8 @@ class SearchResults extends Component {
               </Form.Group>
             </Form>
             <div style={{ 'display': 'flex', 'flexDirection': 'row' }}>
-            {listButton}
-            {mapButton}
+              {listButton}
+              {mapButton}
             </div>
           </div>
         </div>
