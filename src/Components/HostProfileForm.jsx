@@ -54,7 +54,10 @@ class HostProfileForm extends Component {
 
   handleDayClick(day, { selected }) {
     const { selectedDays } = this.state
-    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
+    if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
       if (selected) {
         const selectedIndex = selectedDays.findIndex(selectedDay =>
           DateUtils.isSameDay(selectedDay, day)
@@ -169,10 +172,11 @@ class HostProfileForm extends Component {
   render() {
     let addressSearch
     let addressErrorMessage
-
     let onCreateErrorMessage
-
     let createHostProfileButton
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.addressSearch === true) {
       addressSearch = (
@@ -238,8 +242,6 @@ class HostProfileForm extends Component {
         </Button>
       )
     }
-
-    const today = new Date()
 
 
     return (
@@ -313,7 +315,7 @@ class HostProfileForm extends Component {
 
             <DayPicker
               showWeekNumbers
-              disabledDays={{ before: today }}
+              disabledDays={{ before: tomorrowDate }}
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               onDayClick={this.handleDayClick}

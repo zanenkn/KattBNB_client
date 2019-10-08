@@ -539,8 +539,11 @@ class HostProfile extends Component {
   }
 
   handleDayClick(day, { selected }) {
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
     const { selectedDays } = this.state
-    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+    if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
       if (selected) {
         const selectedIndex = selectedDays.findIndex(selectedDay =>
           DateUtils.isSameDay(selectedDay, day)
@@ -651,6 +654,8 @@ class HostProfile extends Component {
     let selectedDays
     let calendar
     const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
     let addressSearch
     let errorDisplay
     let addressErrorMessage
@@ -840,7 +845,7 @@ class HostProfile extends Component {
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               fromMonth={today}
-              disabledDays={{ before: today }}
+              disabledDays={{ before: tomorrowDate }}
               onDayClick={this.handleDayClick}
             />
           </div>
