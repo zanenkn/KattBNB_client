@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { Form, Icon, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
-import { bookingSearch } from '../Modules/booking'
+import { bookingSearch, getBookingLength } from '../Modules/booking'
 import List from './List'
 import GoogleMap from './GoogleMap'
 import moment from 'moment'
+import axios from 'axios'
 
 class SearchResults extends Component {
 
@@ -43,12 +44,33 @@ class SearchResults extends Component {
     if (this.props.history.location.state === undefined) {
       this.props.history.push({ pathname: '/' })
     } else {
+      let allAvailableHosts = []
+      axios.get('/api/v1/host_profiles').then(response => {
+        if (response.data !== '' && response.data.length > 0) {
+          let availableByDate = bookingSearch(response.data, this.props.history.location.state.from, this.props.history.location.state.to)
+          availableByDate.map(host => {
+            if (host.max_cats_accepted >= this.props.history.location.state.cats && this.props.id !== host.user.id) {
+              let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.history.location.state.from, this.props.history.location.state.to))
+              allAvailableHosts.push(
+                {
+                  id: host.user.id,
+                  lat: parseFloat(host.lat),
+                  lng: parseFloat(host.long),
+                  total: total
+                }
+              )
+            }
+          })
+        }
+      })
+
       this.setState({
         checkInDate: this.props.history.location.state.from,
         checkOutDate: this.props.history.location.state.to,
         numberOfCats: this.props.history.location.state.cats,
         location: this.props.history.location.state.location,
-        searchDataLocation: this.props.history.location.state.searchData
+        searchDataLocation: this.props.history.location.state.searchData,
+        allAvailableHosts: allAvailableHosts
       })
       this.geolocationDataAddress()
     }
@@ -92,11 +114,12 @@ class SearchResults extends Component {
     } else {
       results = (
         <GoogleMap
-          // numberOfCats={this.state.numberOfCats}
-          // checkInDate={this.state.checkInDate}
-          // checkOutDate={this.state.checkOutDate}
-          // mapCenterLat={this.state.locationLat}
-          // mapCenterLong={this.state.locationLong}
+          numberOfCats={this.state.numberOfCats}
+          checkInDate={this.state.checkInDate}
+          checkOutDate={this.state.checkOutDate}
+          mapCenterLat={this.state.locationLat}
+          mapCenterLong={this.state.locationLong}
+          allAvailableHosts={this.state.allAvailableHosts}
         />
       )
     }

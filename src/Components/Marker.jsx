@@ -13,9 +13,10 @@ class Marker extends React.PureComponent {
     return (
       <Label 
       pointing='below'
-      color='teal'
+      style={{'backgroundColor': '#c90c61', 'color': '#ffffff'}}
+      id={this.props.id}
       >
-        {this.props.txt}
+        {this.props.total}&nbsp;kr
       </Label>
     );
   }
@@ -23,6 +24,6 @@ class Marker extends React.PureComponent {
 
 Marker.propTypes = {
   inGroup: PropTypes.bool,
-};
+}
 
 export default Marker
