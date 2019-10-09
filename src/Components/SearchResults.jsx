@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import { bookingSearch } from '../Modules/booking'
 import List from './List'
-import Map from './Map'
+import GoogleMap from './GoogleMap'
 import moment from 'moment'
 
 class SearchResults extends Component {
@@ -91,12 +91,12 @@ class SearchResults extends Component {
       )
     } else {
       results = (
-        <Map
-          numberOfCats={this.state.numberOfCats}
-          checkInDate={this.state.checkInDate}
-          checkOutDate={this.state.checkOutDate}
-          mapCenterLat={this.state.locationLat}
-          mapCenterLong={this.state.locationLong}
+        <GoogleMap
+          // numberOfCats={this.state.numberOfCats}
+          // checkInDate={this.state.checkInDate}
+          // checkOutDate={this.state.checkOutDate}
+          // mapCenterLat={this.state.locationLat}
+          // mapCenterLong={this.state.locationLong}
         />
       )
     }
