@@ -30,12 +30,6 @@ class SearchResults extends Component {
           locationLat: lat,
           locationLong: lng
         })
-      },
-      error => {
-        this.setState({
-          locationLat: 59.330651,
-          locationLong: 18.068562
-        })
       }
     )
   }
@@ -63,7 +57,6 @@ class SearchResults extends Component {
           })
         }
       })
-
       this.setState({
         checkInDate: this.props.history.location.state.from,
         checkOutDate: this.props.history.location.state.to,

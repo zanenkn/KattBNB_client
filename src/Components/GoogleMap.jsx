@@ -60,7 +60,8 @@ export class GoogleMap extends React.PureComponent {
     return (
       <div style={{ 'width': '100%', 'height': '100%' }}>
         <GoogleMapReact
-          defaultCenter={this.state.mapOptions.center}
+          defaultCenter={{lat: 59.330651, lng: 18.068562}}
+          center={this.state.mapOptions.center}
           defaultZoom={12}
           options={{ styles: mapStyles }}
           onChange={this.handleMapChange}
