@@ -1,5 +1,7 @@
 describe('Visitor can view search results as a list', () => {
   before(function () {
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({
@@ -8,15 +10,15 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
-    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').click()
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click()
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
   })
 
   it('and see correct amount of results', () => {
