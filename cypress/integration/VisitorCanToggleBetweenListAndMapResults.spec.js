@@ -17,8 +17,8 @@ describe('Visitor can toggle between list and map results', () => {
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click({force: true})
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({force: true})
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click({ force: true })
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
   })
 
   it('and see list as a default view', () => {

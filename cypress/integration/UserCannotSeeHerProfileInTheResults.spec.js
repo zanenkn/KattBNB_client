@@ -1,6 +1,5 @@
 describe('User cannot see her profile', () => {
   before(function () {
-    
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({

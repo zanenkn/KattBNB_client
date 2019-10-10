@@ -30,12 +30,12 @@ export class GoogleMap extends React.PureComponent {
     this.setState({
       clusters: this.state.mapOptions.bounds
         ? this.getClusters(props).map(({ wx, wy, numPoints, points }) => ({
-            lat: wy,
-            lng: wx,
-            numPoints,
-            id: `${numPoints}_${points[0].id}`,
-            points,
-          }))
+          lat: wy,
+          lng: wx,
+          numPoints,
+          id: `${numPoints}_${points[0].id}`,
+          points,
+        }))
         : [],
     })
   }
@@ -50,15 +50,15 @@ export class GoogleMap extends React.PureComponent {
         },
       },
       () => {
-        this.createClusters(this.props);
+        this.createClusters(this.props)
       }
     )
   }
 
   render() {
-    return (
 
-      <div style={{'width': '100%', 'height': '100%'}}>
+    return (
+      <div style={{ 'width': '100%', 'height': '100%' }}>
         <GoogleMapReact
           defaultCenter={this.state.mapOptions.center}
           defaultZoom={12}
@@ -91,7 +91,6 @@ export class GoogleMap extends React.PureComponent {
           })}
         </GoogleMapReact>
       </div>
-
     )
   }
 }
