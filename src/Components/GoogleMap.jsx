@@ -78,7 +78,7 @@ export class GoogleMap extends React.PureComponent {
           position="top center"
         >
           <div>
-            <HostPopup 
+            <HostPopup
               id={this.state.id}
               numberOfCats={this.props.numberOfCats}
               checkInDate={this.props.checkInDate}
@@ -88,7 +88,7 @@ export class GoogleMap extends React.PureComponent {
         </Popup>
 
         <GoogleMapReact
-          defaultCenter={{lat: 59.330651, lng: 18.068562}}
+          defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={this.state.mapOptions.center}
           defaultZoom={12}
           options={{ styles: mapStyles }}
