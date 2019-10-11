@@ -4,6 +4,7 @@ import supercluster from 'points-cluster'
 import Marker from './Marker'
 import ClusterMarker from './ClusterMarker'
 import mapStyles from '../Modules/MapStyle.js'
+import Popup from 'reactjs-popup'
 
 export class GoogleMap extends React.PureComponent {
   state = {
@@ -15,6 +16,7 @@ export class GoogleMap extends React.PureComponent {
       zoom: 12,
     },
     clusters: [],
+    openHostPopup: false
   }
 
   getClusters = () => {
@@ -55,10 +57,30 @@ export class GoogleMap extends React.PureComponent {
     )
   }
 
-  render() {
+  handleDatapointClick = (e) => {
+    const id = e.target.id
+    this.setState({ id: id, openHostPopup: true })
+  }
 
+  closeModal = () => {
+    this.setState({ openHostPopup: false })
+  }
+
+  render() {
     return (
       <div style={{ 'width': '100%', 'height': '100%' }}>
+        <Popup
+          modal
+          open={this.state.openHostPopup}
+          closeOnDocumentClick={true}
+          onClose={this.closeModal}
+          position="top center"
+        >
+          <div>
+            yay
+          </div>
+        </Popup>
+
         <GoogleMapReact
           defaultCenter={{lat: 59.330651, lng: 18.068562}}
           center={this.state.mapOptions.center}
@@ -77,10 +99,10 @@ export class GoogleMap extends React.PureComponent {
                   lat={item.points[0].lat}
                   lng={item.points[0].lng}
                   total={item.points[0].total}
+                  handleDatapointClick={this.handleDatapointClick.bind(this)}
                 />
               )
             }
-
             return (
               <ClusterMarker
                 key={item.id}
