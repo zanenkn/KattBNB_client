@@ -5,6 +5,7 @@ import Marker from './Marker'
 import ClusterMarker from './ClusterMarker'
 import mapStyles from '../Modules/MapStyle.js'
 import Popup from 'reactjs-popup'
+import HostPopup from './HostPopup'
 
 export class GoogleMap extends React.PureComponent {
   state = {
@@ -77,7 +78,9 @@ export class GoogleMap extends React.PureComponent {
           position="top center"
         >
           <div>
-            yay
+            <HostPopup 
+              id={this.state.id}
+            />
           </div>
         </Popup>
 
