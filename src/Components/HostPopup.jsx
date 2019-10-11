@@ -57,13 +57,13 @@ class HostPopup extends Component {
           <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &nbsp;{this.state.location}&ensp;
           <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
-          &nbsp;{perDay}
+          &nbsp;{perDay} kr/day
         </Header>
         <Header className='fake-link-underlined' style={{ 'marginTop': '0!important' }}>
           More
         </Header>
         <p className='small-centered-paragraph'>
-          The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {catVar}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')} - {moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
+          The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {catVar}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
         </p>
         <Header as='h3' style={{ 'marginTop': '0' }}>
           {total} kr
