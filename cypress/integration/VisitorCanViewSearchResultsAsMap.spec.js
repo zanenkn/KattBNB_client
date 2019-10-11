@@ -33,9 +33,9 @@ describe('Visitor can view search results as a map', () => {
   })
 
 
-  it('and see correct prices', () => {
+  it('and see correct datapoints', () => {
     let labels = [
-      "#2", "#5"
+      '#2', '#5'
     ]
 
     labels.forEach(label => {
@@ -50,5 +50,24 @@ describe('Visitor can view search results as a map', () => {
 
   it('and not see hosts that does not accept required amount of cats', () => {
     cy.get('#10').should('not.exist')
+  })
+
+  it('and see a popup with host information by clicking on a specific datapoint', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2',
+      status: 200,
+      response: 'fixture:host_profile_datapoint_click_map.json'
+    })
+    cy.get('#2').click()
+
+    let hostData = [
+      'carla', 'Stockholm', '140 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '560 kr'
+    ]
+
+    hostData.forEach(data => {
+      cy.contains(data)
+    })
   })
 })
