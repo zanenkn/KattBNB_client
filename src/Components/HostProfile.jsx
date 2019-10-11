@@ -4,6 +4,9 @@ import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../react-day-picker.css'
+import { generateRandomNumber } from '../Modules/locationRandomizer'
+import { search } from '../Modules/addressLocationMatcher'
+
 
 class HostProfile extends Component {
   constructor(props) {
@@ -154,6 +157,10 @@ class HostProfile extends Component {
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
+      lat: '',
+      long: '',
+      latitude: '',
+      longitude: '',
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
@@ -532,8 +539,11 @@ class HostProfile extends Component {
   }
 
   handleDayClick(day, { selected }) {
+    const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
     const { selectedDays } = this.state
-    if (day > new Date() || day.toDateString() === (new Date()).toDateString()) {
+    if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
       if (selected) {
         const selectedIndex = selectedDays.findIndex(selectedDay =>
           DateUtils.isSameDay(selectedDay, day)
@@ -590,34 +600,34 @@ class HostProfile extends Component {
     }
   }
 
-  generateRandomNumberLat = () => {
-    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
-    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
-    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
-    return parseFloat(resultNumber)
-  }
-
-  generateRandomNumberLong = () => {
-    const minValue = parseFloat(process.env.REACT_APP_COORDS_MIN)
-    const maxValue = parseFloat(process.env.REACT_APP_COORDS_MAX)
-    let resultNumber = (Math.random() * (maxValue - minValue) + minValue).toFixed(6)
-    return parseFloat(resultNumber)
-  }
-
   geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
     Geocode.fromAddress(this.state.userInputAddress).then(
       response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({
-          latitude: lat,
-          longitude: lng,
-          lat: lat - this.generateRandomNumberLat(),
-          long: lng + this.generateRandomNumberLong(),
-          newAddress: response.results[0].formatted_address,
-          addressSearch: false,
-          addressErrorDisplay: false
-        })
+        const { lat, lng } = response.results[0].geometry.location
+        if (search(this.props.location, response.results[0].address_components) === undefined) {
+          if (window.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')) {
+            this.setState({
+              latitude: lat,
+              longitude: lng,
+              lat: lat - generateRandomNumber(),
+              long: lng + generateRandomNumber(),
+              newAddress: response.results[0].formatted_address,
+              addressSearch: false,
+              addressErrorDisplay: false
+            })
+          }
+        } else {
+          this.setState({
+            latitude: lat,
+            longitude: lng,
+            lat: lat - generateRandomNumber(),
+            long: lng + generateRandomNumber(),
+            newAddress: response.results[0].formatted_address,
+            addressSearch: false,
+            addressErrorDisplay: false
+          })
+        }
       },
       error => {
         this.setState({
@@ -644,6 +654,8 @@ class HostProfile extends Component {
     let selectedDays
     let calendar
     const today = new Date()
+    const tomorrowNumber = today.getTime() + 86400000
+    const tomorrowDate = new Date(tomorrowNumber)
     let addressSearch
     let errorDisplay
     let addressErrorMessage
@@ -833,7 +845,7 @@ class HostProfile extends Component {
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               fromMonth={today}
-              disabledDays={{ before: today }}
+              disabledDays={{ before: tomorrowDate }}
               onDayClick={this.handleDayClick}
             />
           </div>

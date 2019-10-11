@@ -238,3 +238,11 @@ h4 {
     width: 400px!important;
   }
 }
+
+.popup-content {
+  border: none !important;
+  padding: 2rem!important;
+  width: 80% !important;
+  max-width: 300px;
+  max-height: 95% !important;
+}

@@ -157,7 +157,7 @@ class Search extends Component {
 
     return (
       <div className='content-wrapper' >
-        <Header as='h2'>
+        <Header as='h1'>
           Find a cat sitter!
         </Header>
         <Segment className='whitebox'>

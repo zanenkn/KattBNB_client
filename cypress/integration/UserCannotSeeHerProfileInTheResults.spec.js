@@ -9,15 +9,17 @@ describe('User cannot see her profile', () => {
       response: 'fixture:search_results_list.json'
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
-    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').click()
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click()
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
   })
 
   it('in the results if logged in', () => {
