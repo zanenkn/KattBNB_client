@@ -194,8 +194,8 @@ h4 {
 }
 
 .editor-canvas {
-  width: 258px!important;
-  height: 258px!important;
+  width: 100%!important;
+  height: 100%!important;
   margin-bottom: 1rem;
 }
 
