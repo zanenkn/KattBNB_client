@@ -70,4 +70,23 @@ describe('Visitor can view search results as a map', () => {
       cy.contains(data)
     })
   })
+
+  it('and see the full host profile after clicking "more" in host popup', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2',
+      status: 200,
+      response: 'fixture:host_profile_datapoint_click_map.json'
+    })
+    let hostData = [
+      '#nickname', '#description', '#per-day', 
+      '#total', '#total-kr', '#avatar'
+    ]
+    cy.get('#2').click()
+    cy.get('#more').click()
+    hostData.forEach(data => {
+      cy.contains(data)
+    }) 
+  })
 })

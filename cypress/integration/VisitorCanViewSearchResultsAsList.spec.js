@@ -43,4 +43,14 @@ describe('Visitor can view search results as a list', () => {
   it('and not see hosts that does not accept required amount of cats', () => {
     cy.get('#1').should('not.exist')
   })
+  it('and see the full host profile when clicking on a list card', () => {
+    let hostData = [
+      '#nickname', '#description', '#per-day', 
+      '#total', '#total-kr', '#avatar'
+    ]
+    cy.get('#2').click()
+    hostData.forEach(data => {
+      cy.contains(data)
+    }) 
+  })
 })
