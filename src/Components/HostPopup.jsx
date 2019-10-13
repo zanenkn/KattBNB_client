@@ -4,6 +4,7 @@ import HostScore from './HostScore'
 import { Image, Header, Button } from 'semantic-ui-react'
 import moment from 'moment'
 import { getBookingLength } from '../Modules/booking'
+import { Link } from 'react-router-dom'
 
 class HostPopup extends Component {
   state = {
@@ -59,9 +60,18 @@ class HostPopup extends Component {
           <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
           &nbsp;{perDay} kr/day
         </Header>
-        <Header className='fake-link-underlined' style={{ 'marginTop': '0!important' }}>
+        <Link 
+          to={{
+            pathname: '/full-host-profile',
+            state: {
+              nickname: this.state.nickname
+            }
+          }} 
+          className='fake-link-underlined' 
+          style={{ 'marginTop': '0!important' }}
+        >
           More
-        </Header>
+        </Link>
         <p className='small-centered-paragraph'>
           The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {catVar}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
         </p>
