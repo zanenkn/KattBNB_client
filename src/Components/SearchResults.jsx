@@ -12,7 +12,6 @@ import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 
 class SearchResults extends Component {
-
   state = {
     id: '',
     checkInDate: '',
@@ -95,7 +94,6 @@ class SearchResults extends Component {
     this.setState({ openHostPopup: false })
   }
 
-
   render() {
     let inDate = moment(this.state.checkInDate).format('ll')
     let outDate = moment(this.state.checkOutDate).format('ll')
@@ -116,66 +114,65 @@ class SearchResults extends Component {
       })
     }
 
-    if (this.state.results === 'list') {
-      results = (
-        <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
-          <List
-            finalAvailableHosts={finalAvailableHosts}
-            numberOfCats={this.state.numberOfCats}
-            checkInDate={this.state.checkInDate}
-            checkOutDate={this.state.checkOutDate}
-          />
-        </Container>
-      )
-      mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-      listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
-      resultCounter = (`${finalAvailableHosts.length} result(s)`)
-      
-    } else if (this.state.results === 'map' ) {
-      results = (
-        <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
-          <GoogleMap
-            numberOfCats={this.state.numberOfCats}
-            checkInDate={this.state.checkInDate}
-            checkOutDate={this.state.checkOutDate}
-            mapCenterLat={this.state.locationLat}
-            mapCenterLong={this.state.locationLong}
-            allAvailableHosts={this.state.allAvailableHosts}
-            handleDatapointClick={this.handleDatapointClick.bind(this)}
-          />
-        </Container>
-      )
-      mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
-      listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-      resultCounter = (`${finalAvailableHosts.length} result(s)`)
-
-    } else if (this.state.results === 'profile') {
-      results = (
-        <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
-          <HostProfileView
-            numberOfCats={this.state.numberOfCats}
-            checkInDate={this.state.checkInDate}
-            checkOutDate={this.state.checkOutDate}
-            id={this.state.id}
-            avatar={this.state.hostAvatar}
-            nickname={this.state.hostNickname}
-            location={this.state.hostLocation}
-            rate={this.state.hostRate}
-            supplement={this.state.hostSupplement}
-          />
-        </Container>
-      )
-      mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-      listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-      resultCounter = (
-        <Header
-          onClick={() => {this.setState({results: 'list'})} } 
-          className='fake-link-underlined'
-          style={{ 'textAlign': 'right' }}
-        >
-          Back to results
-        </Header>
-      )
+    switch (this.state.results) {
+      case 'list':
+        results = (
+          <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
+            <List
+              finalAvailableHosts={finalAvailableHosts}
+              numberOfCats={this.state.numberOfCats}
+              checkInDate={this.state.checkInDate}
+              checkOutDate={this.state.checkOutDate}
+            />
+          </Container>
+        )
+        mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+        listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
+        resultCounter = (`${finalAvailableHosts.length} result(s)`)
+      case 'map':
+        results = (
+          <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
+            <GoogleMap
+              numberOfCats={this.state.numberOfCats}
+              checkInDate={this.state.checkInDate}
+              checkOutDate={this.state.checkOutDate}
+              mapCenterLat={this.state.locationLat}
+              mapCenterLong={this.state.locationLong}
+              allAvailableHosts={this.state.allAvailableHosts}
+              handleDatapointClick={this.handleDatapointClick.bind(this)}
+            />
+          </Container>
+        )
+        mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
+        listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+        resultCounter = (`${finalAvailableHosts.length} result(s)`)
+      case 'profile':
+        results = (
+          <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
+            <HostProfileView
+              numberOfCats={this.state.numberOfCats}
+              checkInDate={this.state.checkInDate}
+              checkOutDate={this.state.checkOutDate}
+              id={this.state.id}
+              avatar={this.state.hostAvatar}
+              nickname={this.state.hostNickname}
+              location={this.state.hostLocation}
+              rate={this.state.hostRate}
+              supplement={this.state.hostSupplement}
+            />
+          </Container>
+        )
+        mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+        listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+        resultCounter = (
+          <Header
+            onClick={() => {this.setState({results: 'list'})} } 
+            className='fake-link-underlined'
+            style={{ 'textAlign': 'right' }}
+          >
+            Back to results
+          </Header>
+        )
     }
 
     listButton = (
@@ -256,7 +253,6 @@ class SearchResults extends Component {
     )
   }
 }
-
 
 const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id,
