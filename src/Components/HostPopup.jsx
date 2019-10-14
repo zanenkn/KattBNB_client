@@ -2,29 +2,13 @@ import React, { Component } from 'react'
 import HostScore from './HostScore'
 import { Image, Header, Button } from 'semantic-ui-react'
 import moment from 'moment'
-import { getBookingLength } from '../Modules/booking'
-import { Link } from 'react-router-dom'
+import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 class HostPopup extends Component {
-
   render() {
-    let catVar
-
-    if (this.props.numberOfCats > 1) {
-      catVar = 'cats'
-    } else {
-      catVar = 'cat'
-    }
-
-    let perDay = (
-      parseFloat(this.props.rate) + (parseFloat(this.props.numberOfCats) - 1) * parseFloat(this.props.supplement)
-    )
-
-    let total = (
-      parseFloat(perDay) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))
-    )
-
-
+    let perDay = pricePerDay(this.props.rate, this.props.numberOfCats, this.props.supplement)
+    let orderTotal = total(this.props.rate, this.props.numberOfCats, this.props.supplement, this.props.checkInDate, this.props.checkOutDate)
+    
     return (
       <>
         <Image src={this.props.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
@@ -48,10 +32,10 @@ class HostPopup extends Component {
           More
         </Header>
         <p className='small-centered-paragraph' style={{'marginBottom': '0.5rem'}}>
-          The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {catVar}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
+          The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {this.props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
         </p>
         <Header as='h3' style={{ 'marginTop': '0' }}>
-          {total} kr
+          {orderTotal} kr
         </Header>
         <Button style={{ 'marginTop': '0' }}>
           Request to book

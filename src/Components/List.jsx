@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { Header, Grid, Image } from 'semantic-ui-react'
 import HostScore from './HostScore'
-import { getBookingLength } from '../Modules/booking'
-
+import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 class List extends Component {
-
-
   render() {
     let searchMessage
     let results
@@ -22,13 +19,8 @@ class List extends Component {
     if (this.props.finalAvailableHosts.length > 0) {
       results = (
         this.props.finalAvailableHosts.map(host => {
-          let perDay = (
-            parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.numberOfCats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)
-          )
-
-          let total = (
-            parseFloat(perDay) * parseFloat(getBookingLength(this.props.checkInDate, this.props.checkOutDate))
-          )
+          let perDay = pricePerDay(host.rate, host.numberOfCats, host.supplement)
+          let orderTotal = total(host.rate, host.numberOfCats, host.supplement, this.props.checkInDate, this.props.checkOutDate)
 
           return (
             <div className='list-card' id={host.id} key={host.id}>
@@ -43,7 +35,7 @@ class List extends Component {
                       {perDay} kr/day
                     </Header>
                     <Header as='h5' style={{ 'textAlign': 'left', 'margin': '0' }}>
-                      {total} kr total
+                      {orderTotal} kr total
                     </Header>
                     <p style={{ 'fontSize': 'small', 'marginTop': '0.3rem' }} >
                       <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
@@ -60,7 +52,6 @@ class List extends Component {
         })
       )
     }
-
 
     return (
       <div style={{ 'padding': '2rem' }} >

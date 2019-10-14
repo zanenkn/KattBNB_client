@@ -1,16 +1,12 @@
 import React from 'react'
 import { Image, Header } from 'semantic-ui-react'
 import HostScore from './HostScore'
-import { getBookingLength } from '../Modules/booking'
+import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 const HostProfileView = (props) => {
-  let perDay = (
-    parseFloat(props.rate) + (parseFloat(props.numberOfCats) - 1) * parseFloat(props.supplement)
-  )
-
-  let total = (
-    parseFloat(perDay) * parseFloat(getBookingLength(props.checkInDate, props.checkOutDate))
-  )
+  let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
+  let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+  
   return (
     <>
       <Image src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
