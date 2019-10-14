@@ -3,7 +3,8 @@ import React from 'react'
 const HostProfileView = (props) => {
   return (
     <p>
-      {props.location.state.nickname}
+      yoyo
+      {props.id}
     </p>   
   )
 }

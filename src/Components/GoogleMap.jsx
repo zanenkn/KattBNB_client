@@ -83,6 +83,7 @@ export class GoogleMap extends React.PureComponent {
               numberOfCats={this.props.numberOfCats}
               checkInDate={this.props.checkInDate}
               checkOutDate={this.props.checkOutDate}
+              handleHostProfileClick={this.props.handleHostProfileClick}
             />
           </div>
         </Popup>

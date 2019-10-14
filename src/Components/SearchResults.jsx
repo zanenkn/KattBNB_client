@@ -5,12 +5,14 @@ import Geocode from 'react-geocode'
 import { bookingSearch, getBookingLength } from '../Modules/booking'
 import List from './List'
 import GoogleMap from './GoogleMap'
+import HostProfileView from './HostProfileView'
 import moment from 'moment'
 import axios from 'axios'
 
 class SearchResults extends Component {
 
   state = {
+    id: '',
     checkInDate: '',
     checkOutDate: '',
     numberOfCats: '',
@@ -18,7 +20,9 @@ class SearchResults extends Component {
     locationLat: '',
     locationLong: '',
     searchDataLocation: '',
-    listResults: true
+    listResults: true,
+    mapResults: false,
+    hostProfile: false
   }
 
   geolocationDataAddress = () => {
@@ -69,6 +73,11 @@ class SearchResults extends Component {
     }
   }
 
+  handleHostProfileClick = (e) => {
+    const id = e.target.id
+    this.setState({ id: id, hostProfile: true, listResults: false, mapResults: false })
+  }  
+
 
   render() {
     let inDate = moment(this.state.checkInDate).format('ll')
@@ -88,11 +97,11 @@ class SearchResults extends Component {
     }
 
     listButton = (
-      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'backgroundColor': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true }) }} />
+      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'backgroundColor': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true, mapResults: false, hostProfile: false }) }} />
     )
 
     mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'backgroundColor': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false }) }} />
+      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'backgroundColor': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false, mapResults: true, hostProfile: false }) }} />
     )
 
     if (this.state.listResults === true) {
@@ -106,7 +115,7 @@ class SearchResults extends Component {
           />
         </Container>
       )
-    } else {
+    } else if (this.state.mapResults === true) {
       results = (
         <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
           <GoogleMap
@@ -116,6 +125,18 @@ class SearchResults extends Component {
             mapCenterLat={this.state.locationLat}
             mapCenterLong={this.state.locationLong}
             allAvailableHosts={this.state.allAvailableHosts}
+            handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+          />
+        </Container>
+      )
+    } else if (this.state.hostProfile === true) {
+      results = (
+        <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
+          <HostProfileView 
+            numberOfCats={this.state.numberOfCats}
+            checkInDate={this.state.checkInDate}
+            checkOutDate={this.state.checkOutDate}
+            id={this.state.id}
           />
         </Container>
       )

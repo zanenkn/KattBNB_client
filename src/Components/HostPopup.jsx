@@ -61,14 +61,9 @@ class HostPopup extends Component {
           &nbsp;{perDay} kr/day
         </Header>
         <Header 
-          as={Link}
-          to={{
-            pathname: '/full-host-profile',
-            state: {
-              nickname: this.state.nickname
-            }
-          }} 
+          onClick={this.props.handleHostProfileClick} 
           className='fake-link-underlined' 
+          id={this.props.id}
           style={{ 'marginTop': '0.5rem', 'marginBottom': '1.5rem', 'textAlign': 'center', 'marginLeft': 'auto', 'marginRight': 'auto', 'display': 'table' }}
         >
           More
