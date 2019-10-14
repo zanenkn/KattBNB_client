@@ -50,17 +50,18 @@ class HostPopup extends Component {
       <>
         <Image src={this.state.avatar === null ? `https://ui-avatars.com/api/?name=${this.state.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.state.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
         <HostScore />
-        <Header as='h3' style={{ 'marginTop': '1rem' }}>
+        <Header as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
           <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &ensp;{this.state.nickname}
         </Header>
-        <Header as='h4' style={{ 'color': 'grey', 'marginTop': '0' }}>
+        <Header as='h4' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
           <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &nbsp;{this.state.location}&ensp;
           <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
           &nbsp;{perDay} kr/day
         </Header>
-        <Link 
+        <Header 
+          as={Link}
           to={{
             pathname: '/full-host-profile',
             state: {
@@ -68,11 +69,11 @@ class HostPopup extends Component {
             }
           }} 
           className='fake-link-underlined' 
-          style={{ 'marginTop': '0!important' }}
+          style={{ 'marginTop': '0.5rem', 'marginBottom': '1.5rem', 'textAlign': 'center', 'marginLeft': 'auto', 'marginRight': 'auto', 'display': 'table' }}
         >
           More
-        </Link>
-        <p className='small-centered-paragraph'>
+        </Header>
+        <p className='small-centered-paragraph' style={{'marginBottom': '0.5rem'}}>
           The stay for <strong style={{ 'color': '#c90c61' }}>{this.props.numberOfCats} {catVar}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(this.props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
         </p>
         <Header as='h3' style={{ 'marginTop': '0' }}>
