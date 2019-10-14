@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Icon, Container, Grid } from 'semantic-ui-react'
+import { Form, Icon, Container, Grid, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import { bookingSearch, getBookingLength } from '../Modules/booking'
@@ -22,9 +22,7 @@ class SearchResults extends Component {
     locationLat: '',
     locationLong: '',
     searchDataLocation: '',
-    listResults: true,
-    mapResults: false,
-    hostProfile: false,
+    results: 'list',
     openHostPopup: false
   }
 
@@ -77,7 +75,7 @@ class SearchResults extends Component {
   }
 
   handleHostProfileClick() {
-    this.setState({ hostProfile: true, listResults: false, mapResults: false, openHostPopup: false })
+    this.setState({ results: 'profile', openHostPopup: false })
   }
 
   async handleDatapointClick(e) {
@@ -104,6 +102,9 @@ class SearchResults extends Component {
     let finalAvailableHosts = []
     let listButton
     let mapButton
+    let mapButtonStyle
+    let listButtonStyle
+    let resultCounter
     let results
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
@@ -115,15 +116,7 @@ class SearchResults extends Component {
       })
     }
 
-    listButton = (
-      <Icon id='list-button' name='list' circular inverted style={this.state.listResults ? { 'backgroundColor': '#c90c61', 'cursor': 'pointer' } : { 'backgroundColor': 'grey', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: true, mapResults: false, hostProfile: false }) }} />
-    )
-
-    mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={this.state.listResults ? { 'backgroundColor': 'grey', 'cursor': 'pointer' } : { 'backgroundColor': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.setState({ listResults: false, mapResults: true, hostProfile: false }) }} />
-    )
-
-    if (this.state.listResults === true) {
+    if (this.state.results === 'list') {
       results = (
         <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
           <List
@@ -134,7 +127,11 @@ class SearchResults extends Component {
           />
         </Container>
       )
-    } else if (this.state.mapResults === true) {
+      mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+      listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
+      resultCounter = (`${finalAvailableHosts.length} result(s)`)
+      
+    } else if (this.state.results === 'map' ) {
       results = (
         <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
           <GoogleMap
@@ -148,7 +145,11 @@ class SearchResults extends Component {
           />
         </Container>
       )
-    } else if (this.state.hostProfile === true) {
+      mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
+      listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+      resultCounter = (`${finalAvailableHosts.length} result(s)`)
+
+    } else if (this.state.results === 'profile') {
       results = (
         <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
           <HostProfileView
@@ -164,7 +165,26 @@ class SearchResults extends Component {
           />
         </Container>
       )
+      mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+      listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
+      resultCounter = (
+        <Header
+          onClick={() => {this.setState({results: 'list'})} } 
+          className='fake-link-underlined'
+          style={{ 'textAlign': 'right' }}
+        >
+          Back to results
+        </Header>
+      )
     }
+
+    listButton = (
+      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={() => { this.setState({ results: 'list' }) }} />
+    )
+
+    mapButton = (
+      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={() => { this.setState({ results: 'map' }) }} />
+    )
 
     return (
       <>
@@ -225,7 +245,7 @@ class SearchResults extends Component {
               </Grid.Column>
               <Grid.Column width={8} style={{ 'padding': '0', 'textAlign': 'right', 'alignContent': 'center', 'display': 'grid' }}>
                 <strong style={{ 'color': 'grey', 'fontSize': 'small' }}>
-                  {finalAvailableHosts.length} result(s)
+                  {resultCounter}
                 </strong>
               </Grid.Column>
             </Grid>
