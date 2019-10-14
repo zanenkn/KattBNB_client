@@ -79,7 +79,7 @@ class SearchResults extends Component {
   handleHostProfileClick() {
     this.setState({ hostProfile: true, listResults: false, mapResults: false, openHostPopup: false })
   }
-  
+
   async handleDatapointClick(e) {
     axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
       this.setState({
@@ -88,7 +88,7 @@ class SearchResults extends Component {
         hostLocation: response.data[0].user.location,
         hostRate: response.data[0].price_per_day_1_cat,
         hostSupplement: response.data[0].supplement_price_per_cat_per_day,
-        openHostPopup: true 
+        openHostPopup: true
       })
     })
   }
@@ -151,7 +151,7 @@ class SearchResults extends Component {
     } else if (this.state.hostProfile === true) {
       results = (
         <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
-          <HostProfileView 
+          <HostProfileView
             numberOfCats={this.state.numberOfCats}
             checkInDate={this.state.checkInDate}
             checkOutDate={this.state.checkOutDate}
@@ -219,11 +219,11 @@ class SearchResults extends Component {
               </Form.Group>
             </Form>
             <Grid columns={2} style={{ 'display': 'flex', 'flexDirection': 'row', 'marginTop': '1rem', 'marginLeft': 'auto', 'marginRight': 'auto' }}>
-              <Grid.Column width={8} style={{'padding': '0'}}>
+              <Grid.Column width={8} style={{ 'padding': '0' }}>
                 {listButton}
                 {mapButton}
               </Grid.Column>
-              <Grid.Column width={8} style={{'padding': '0', 'textAlign': 'right', 'alignContent': 'center', 'display': 'grid' }}>
+              <Grid.Column width={8} style={{ 'padding': '0', 'textAlign': 'right', 'alignContent': 'center', 'display': 'grid' }}>
                 <strong style={{ 'color': 'grey', 'fontSize': 'small' }}>
                   {finalAvailableHosts.length} result(s)
                 </strong>
