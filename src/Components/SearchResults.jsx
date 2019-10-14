@@ -76,21 +76,21 @@ class SearchResults extends Component {
     }
   }
 
-  handleHostProfileClick = (e) => {
+  handleHostProfileClick() {
     this.setState({ hostProfile: true, listResults: false, mapResults: false, openHostPopup: false })
   }
   
   async handleDatapointClick(e) {
-    await axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
+    axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
       this.setState({
         hostAvatar: response.data[0].user.avatar,
         hostNickname: response.data[0].user.nickname,
         hostLocation: response.data[0].user.location,
         hostRate: response.data[0].price_per_day_1_cat,
         hostSupplement: response.data[0].supplement_price_per_cat_per_day,
+        openHostPopup: true 
       })
     })
-    this.setState({ openHostPopup: true })
   }
 
   closeModal = () => {
@@ -150,17 +150,21 @@ class SearchResults extends Component {
       )
     } else if (this.state.hostProfile === true) {
       results = (
-        <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
+        <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
           <HostProfileView 
             numberOfCats={this.state.numberOfCats}
             checkInDate={this.state.checkInDate}
             checkOutDate={this.state.checkOutDate}
             id={this.state.id}
+            avatar={this.state.hostAvatar}
+            nickname={this.state.hostNickname}
+            location={this.state.hostLocation}
+            rate={this.state.hostRate}
+            supplement={this.state.hostSupplement}
           />
         </Container>
       )
     }
-
 
     return (
       <>
@@ -177,12 +181,12 @@ class SearchResults extends Component {
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
-              handleHostProfileClick={this.props.handleHostProfileClick}
               avatar={this.state.hostAvatar}
               nickname={this.state.hostNickname}
               location={this.state.hostLocation}
               rate={this.state.hostRate}
               supplement={this.state.hostSupplement}
+              handleHostProfileClick={this.props.handleHostProfileClick}
               handleHostProfileClick={this.handleHostProfileClick.bind(this)}
             />
           </div>
