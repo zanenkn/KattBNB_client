@@ -129,6 +129,7 @@ class SearchResults extends Component {
         mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
         resultCounter = (`${finalAvailableHosts.length} result(s)`)
+        break
       case 'map':
         results = (
           <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
@@ -146,6 +147,7 @@ class SearchResults extends Component {
         mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         resultCounter = (`${finalAvailableHosts.length} result(s)`)
+        break
       case 'profile':
         results = (
           <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
@@ -173,6 +175,7 @@ class SearchResults extends Component {
             Back to results
           </Header>
         )
+        break
     }
 
     listButton = (
