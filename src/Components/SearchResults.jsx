@@ -8,6 +8,8 @@ import GoogleMap from './GoogleMap'
 import HostProfileView from './HostProfileView'
 import moment from 'moment'
 import axios from 'axios'
+import Popup from 'reactjs-popup'
+import HostPopup from './HostPopup'
 
 class SearchResults extends Component {
 
@@ -22,7 +24,8 @@ class SearchResults extends Component {
     searchDataLocation: '',
     listResults: true,
     mapResults: false,
-    hostProfile: false
+    hostProfile: false,
+    openHostPopup: false
   }
 
   geolocationDataAddress = () => {
@@ -74,9 +77,25 @@ class SearchResults extends Component {
   }
 
   handleHostProfileClick = (e) => {
-    const id = e.target.id
-    this.setState({ id: id, hostProfile: true, listResults: false, mapResults: false })
-  }  
+    this.setState({ hostProfile: true, listResults: false, mapResults: false, openHostPopup: false })
+  }
+  
+  async handleDatapointClick(e) {
+    await axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
+      this.setState({
+        hostAvatar: response.data[0].user.avatar,
+        hostNickname: response.data[0].user.nickname,
+        hostLocation: response.data[0].user.location,
+        hostRate: response.data[0].price_per_day_1_cat,
+        hostSupplement: response.data[0].supplement_price_per_cat_per_day,
+      })
+    })
+    this.setState({ openHostPopup: true })
+  }
+
+  closeModal = () => {
+    this.setState({ openHostPopup: false })
+  }
 
 
   render() {
@@ -125,7 +144,7 @@ class SearchResults extends Component {
             mapCenterLat={this.state.locationLat}
             mapCenterLong={this.state.locationLong}
             allAvailableHosts={this.state.allAvailableHosts}
-            handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+            handleDatapointClick={this.handleDatapointClick.bind(this)}
           />
         </Container>
       )
@@ -145,6 +164,29 @@ class SearchResults extends Component {
 
     return (
       <>
+        <Popup
+          modal
+          open={this.state.openHostPopup}
+          closeOnDocumentClick={true}
+          onClose={this.closeModal}
+          position="top center"
+        >
+          <div>
+            <HostPopup
+              id={this.state.id}
+              numberOfCats={this.state.numberOfCats}
+              checkInDate={this.state.checkInDate}
+              checkOutDate={this.state.checkOutDate}
+              handleHostProfileClick={this.props.handleHostProfileClick}
+              avatar={this.state.hostAvatar}
+              nickname={this.state.hostNickname}
+              location={this.state.hostLocation}
+              rate={this.state.hostRate}
+              supplement={this.state.hostSupplement}
+              handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+            />
+          </div>
+        </Popup>
         <div style={{ 'height': '26vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
           <div style={{ 'width': 'min-content', 'margin': 'auto' }}>
             <p style={{ 'color': '#c90c61', 'textAlign': 'left' }}>
