@@ -180,11 +180,20 @@ h4 {
 
 .expanding-wrapper {
   margin: auto;
+  padding-top: 2rem!important;
+  padding-bottom: 2rem!important;
+}
+
+@media screen and (max-width: 700px) {
+  .expanding-wrapper {
+    padding-left: 3rem!important;
+    padding-right: 3rem!important;
+  }
 }
 
 @media screen and (min-width: 700px) {
   .expanding-wrapper {
-    width: 500px;
+    width: 560px;
   }
 }
 
