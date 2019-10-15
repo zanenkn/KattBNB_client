@@ -86,6 +86,8 @@ class SearchResults extends Component {
         hostRate: response.data[0].price_per_day_1_cat,
         hostSupplement: response.data[0].supplement_price_per_cat_per_day,
         hostDescription: response.data[0].description,
+        hostLat: response.data[0].lat,
+        hostLong: response.data[0].long,
         openHostPopup: true
       })
     })
@@ -163,6 +165,8 @@ class SearchResults extends Component {
               rate={this.state.hostRate}
               supplement={this.state.hostSupplement}
               description={this.state.hostDescription}
+              lat={this.state.hostLat}
+              long={this.state.hostLong}
             />
           </Container>
         )

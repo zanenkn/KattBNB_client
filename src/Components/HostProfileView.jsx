@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Header, Button } from 'semantic-ui-react'
 import HostScore from './HostScore'
 import Reviews from './Reviews'
+import HostLocationMap from './HostLocationMap'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 import moment from 'moment'
 
@@ -45,8 +46,24 @@ const HostProfileView = (props) => {
       <Button style={{ 'marginTop': '0', 'marginBottom': '2rem'}}>
         Request to book
       </Button>
-
-    </div>   
+      <div>
+        <HostLocationMap 
+          lat={props.lat}
+          long={props.long}
+          nickname={props.nickname}
+        />
+      </div>
+      <Header as='h3' style={{'textAlign': 'left'}}>
+        Questions?
+      </Header>
+      <p>
+        You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
+      </p>
+      <p className='fake-link-underlined'>
+        Send now
+      </p>
+    </div>
+    
   )
 }
 

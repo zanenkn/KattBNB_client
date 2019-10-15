@@ -1,0 +1,58 @@
+import React, { Component } from 'react'
+import GoogleMapReact from 'google-map-react'
+import mapStyles from '../Modules/MapStyle.js'
+import { Icon, Header } from 'semantic-ui-react'
+
+class HostLocationMap extends Component {
+  static defaultProps = {
+    center: {
+      lat: 59.95,
+      lng: 30.33
+    },
+    zoom: 13
+  }
+
+  handleMapChange = ({ center, zoom, bounds }) => {
+    this.setState(
+      {
+        mapOptions: {
+          center,
+          zoom,
+          bounds,
+        },
+      }
+    )
+  }
+
+  render() {
+    return (
+      <>
+      <div style={{ 'width': '100%', 'height': '300px', 'overflow': 'hidden' }}>
+        <Header as='h3' style={{'textAlign': 'left'}}>
+          Location
+        </Header>
+        <GoogleMapReact
+          defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
+          center={{lat: parseFloat(this.props.lat), lng: parseFloat(this.props.long)}}
+          defaultZoom={13}
+          options={{ styles: mapStyles }}
+          onChange={this.handleMapChange}
+          yesIWantToUseGoogleMapApiInternals
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
+        >
+          <Icon
+            name='circle'
+            lat={parseFloat(this.props.lat)}
+            lng={parseFloat(this.props.long)}
+          />
+        </GoogleMapReact>
+      </div>
+      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+        This is an approximate address of <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong>. You will receive more detailed information when booking is confirmed.
+      </p>
+      </>
+    )
+  }
+}
+
+export default HostLocationMap
