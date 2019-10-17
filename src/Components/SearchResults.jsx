@@ -92,7 +92,6 @@ class SearchResults extends Component {
     })
   }
 
-
   handleDatapointClick(e) {
     this.getHostById(e)
     this.setState({
@@ -100,9 +99,10 @@ class SearchResults extends Component {
     })
   }
 
-
   closeModal = () => {
-    this.setState({ openHostPopup: false })
+    this.setState({
+      openHostPopup: false
+    })
   }
 
   render() {
@@ -208,7 +208,7 @@ class SearchResults extends Component {
           open={this.state.openHostPopup}
           closeOnDocumentClick={true}
           onClose={this.closeModal}
-          position="top center"
+          position='top center'
         >
           <div>
             <HostPopup
