@@ -77,7 +77,7 @@ class SearchResults extends Component {
     this.setState({ results: 'profile', openHostPopup: false })
   }
 
-  async handleDatapointClick(e) {
+  getHostById(e) {
     axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
       this.setState({
         hostAvatar: response.data[0].user.avatar,
@@ -88,10 +88,18 @@ class SearchResults extends Component {
         hostDescription: response.data[0].description,
         hostLat: response.data[0].lat,
         hostLong: response.data[0].long,
-        openHostPopup: true
       })
     })
   }
+
+
+  handleDatapointClick(e) {
+    this.getHostById(e)
+    this.setState({
+      openHostPopup: true
+    })
+  }
+
 
   closeModal = () => {
     this.setState({ openHostPopup: false })
