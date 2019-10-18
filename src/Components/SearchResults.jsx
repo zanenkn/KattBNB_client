@@ -103,6 +103,18 @@ class SearchResults extends Component {
     this.setState({
       openHostPopup: false
     })
+    if (this.state.results !== 'profile') {
+      this.setState({
+        hostAvatar: '',
+        hostNickname: '',
+        hostLocation: '',
+        hostRate: '',
+        hostSupplement: '',
+        hostDescription: '',
+        hostLat: '',
+        hostLong: ''
+      })
+    }
   }
 
   render() {
@@ -134,7 +146,7 @@ class SearchResults extends Component {
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
-              handleListItemClick={this.handleDatapointClick.bind(this)}              
+              handleListItemClick={this.handleDatapointClick.bind(this)}
             />
           </Container>
         )
@@ -183,7 +195,7 @@ class SearchResults extends Component {
         listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         resultCounter = (
           <Header
-            onClick={() => {this.setState({results: 'list'})} } 
+            onClick={() => { this.setState({ results: 'list', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }}
             className='fake-link-underlined'
             style={{ 'textAlign': 'right' }}
           >
@@ -194,11 +206,11 @@ class SearchResults extends Component {
     }
 
     listButton = (
-      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={() => { this.setState({ results: 'list' }) }} />
+      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={() => { this.setState({ results: 'list', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }} />
     )
 
     mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={() => { this.setState({ results: 'map' }) }} />
+      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={() => { this.setState({ results: 'map', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }} />
     )
 
     return (
@@ -221,7 +233,6 @@ class SearchResults extends Component {
               location={this.state.hostLocation}
               rate={this.state.hostRate}
               supplement={this.state.hostSupplement}
-              handleHostProfileClick={this.props.handleHostProfileClick}
               handleHostProfileClick={this.handleHostProfileClick.bind(this)}
             />
           </div>
