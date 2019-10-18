@@ -34,14 +34,14 @@ class HostLocationMap extends Component {
         <GoogleMapReact
           defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={{lat: parseFloat(this.props.lat), lng: parseFloat(this.props.long)}}
-          defaultZoom={13}
-          options={{ styles: mapStyles }}
+          defaultZoom={15}
+          options={{ scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }}
           onChange={this.handleMapChange}
           yesIWantToUseGoogleMapApiInternals
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
         >
-          <Icon
-            name='circle'
+          <div
+            style={{'width': '50px', 'height': '50px', 'backgroundColor': '#c90c61', 'borderRadius': '50%', 'opacity': '0.5'}}
             lat={parseFloat(this.props.lat)}
             lng={parseFloat(this.props.long)}
           />
