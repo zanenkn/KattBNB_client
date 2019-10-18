@@ -99,22 +99,33 @@ class SearchResults extends Component {
     })
   }
 
+  resetHost() {
+    this.setState({
+      hostAvatar: '',
+      hostNickname: '',
+      hostLocation: '',
+      hostRate: '',
+      hostSupplement: '',
+      hostDescription: '',
+      hostLat: '',
+      hostLong: ''
+    })
+  }
+
   closeModal = () => {
     this.setState({
       openHostPopup: false
     })
     if (this.state.results !== 'profile') {
-      this.setState({
-        hostAvatar: '',
-        hostNickname: '',
-        hostLocation: '',
-        hostRate: '',
-        hostSupplement: '',
-        hostDescription: '',
-        hostLat: '',
-        hostLong: ''
-      })
+      this.resetHost()
     }
+  }
+
+  switchResultView = (e) => {
+    this.setState({
+      results: (e.target.id).split('-')[0]
+    })
+    this.resetHost()
   }
 
   render() {
@@ -195,7 +206,8 @@ class SearchResults extends Component {
         listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         resultCounter = (
           <Header
-            onClick={() => { this.setState({ results: 'list', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }}
+            id='list-return'
+            onClick={this.switchResultView}
             className='fake-link-underlined'
             style={{ 'textAlign': 'right' }}
           >
@@ -206,11 +218,11 @@ class SearchResults extends Component {
     }
 
     listButton = (
-      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={() => { this.setState({ results: 'list', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }} />
+      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={this.switchResultView} />
     )
 
     mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={() => { this.setState({ results: 'map', hostAvatar: '', hostNickname: '', hostLocation: '', hostRate: '', hostSupplement: '', hostDescription: '', hostLat: '', hostLong: '' }) }} />
+      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
     )
 
     return (
