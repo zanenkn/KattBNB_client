@@ -27,29 +27,24 @@ class HostLocationMap extends Component {
   render() {
     return (
       <>
-      <div style={{ 'width': '100%', 'height': '300px', 'overflow': 'hidden' }}>
-        <Header as='h3' style={{'textAlign': 'left'}}>
-          Location
-        </Header>
-        <GoogleMapReact
-          defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
-          center={{lat: parseFloat(this.props.lat), lng: parseFloat(this.props.long)}}
-          defaultZoom={15}
-          options={{ scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }}
-          onChange={this.handleMapChange}
-          yesIWantToUseGoogleMapApiInternals
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
-        >
-          <div
-            style={{'width': '50px', 'height': '50px', 'backgroundColor': '#c90c61', 'borderRadius': '50%', 'opacity': '0.5'}}
-            lat={parseFloat(this.props.lat)}
-            lng={parseFloat(this.props.long)}
-          />
-        </GoogleMapReact>
-      </div>
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        This is an approximate address of <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong>. You will receive more detailed information when booking is confirmed.
-      </p>
+        <div style={{ 'width': '100%', 'height': '300px', 'overflow': 'hidden' }}>
+          <Header as='h3' style={{ 'textAlign': 'left' }}>
+            Location
+          </Header>
+          <GoogleMapReact
+            defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
+            center={{ lat: parseFloat(this.props.lat), lng: parseFloat(this.props.long) }}
+            defaultZoom={15}
+            options={{ scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }}
+            onChange={this.handleMapChange}
+            yesIWantToUseGoogleMapApiInternals
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
+          >
+          </GoogleMapReact>
+        </div>
+        <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+          This is the approximate area of <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong>. You will receive the exact location when booking is confirmed.
+        </p>
       </>
     )
   }
