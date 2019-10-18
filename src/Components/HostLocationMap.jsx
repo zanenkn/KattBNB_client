@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import mapStyles from '../Modules/MapStyle.js'
-import { Icon, Header } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 
 class HostLocationMap extends Component {
   static defaultProps = {

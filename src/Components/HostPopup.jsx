@@ -25,7 +25,7 @@ const HostPopup = (props) => {
       <Header
         onClick={props.handleHostProfileClick}
         className='fake-link-underlined'
-        id={props.id}
+        id='more'
         style={{ 'marginTop': '0.5rem', 'marginBottom': '1.5rem', 'textAlign': 'center', 'marginLeft': 'auto', 'marginRight': 'auto', 'display': 'table' }}
       >
         More
