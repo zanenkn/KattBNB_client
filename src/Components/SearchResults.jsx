@@ -78,6 +78,7 @@ class SearchResults extends Component {
       results: 'profile',
       openHostPopup: false
     })
+    window.scrollTo(0, 0)
   }
 
   getHostById(e) {
@@ -123,6 +124,7 @@ class SearchResults extends Component {
   switchResultView = (e) => {
     this.setState({ results: (e.target.id).split('-')[0] })
     this.resetHost()
+    window.scrollTo(0, 0)
   }
 
   render() {
@@ -222,7 +224,6 @@ class SearchResults extends Component {
       <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
     )
 
-
     return (
       <>
         <Popup
@@ -292,8 +293,6 @@ class SearchResults extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  id: state.reduxTokenAuth.currentUser.attributes.id,
-})
+const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
 export default connect(mapStateToProps)(SearchResults)
