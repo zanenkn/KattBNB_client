@@ -16,7 +16,6 @@ import PasswordReset from './Components/PasswordReset'
 import ChangePassword from './Components/ChangePassword'
 import PasswordResetSuccess from './Components/PasswordResetSuccess'
 import UserPage from './Components/UserPage'
-import HostProfileView from './Components/HostProfileView'
 import ScrollToTop from './Components/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -62,7 +61,6 @@ class App extends Component {
                 <Route exact path='/password-reset' component={PasswordReset}></Route>
                 <Route exact path='/change-password' component={ChangePassword}></Route>
                 <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
-                <Route exact path='/full-host-profile' component={HostProfileView}></Route>
                 {userPageRoute}
               </Switch>
             </ScrollToTop>
