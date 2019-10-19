@@ -13,7 +13,7 @@ class Marker extends React.PureComponent {
     return (
       <Label
         pointing='below'
-        style={{ 'backgroundColor': '#c90c61', 'color': '#ffffff' }}
+        style={{ 'backgroundColor': '#c90c61', 'color': '#ffffff', 'transform': 'translate(-50%, -50%)' }}
         id={this.props.id}
         onClick={this.props.handleDatapointClick}
       >

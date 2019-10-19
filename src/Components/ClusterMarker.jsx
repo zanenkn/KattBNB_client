@@ -12,7 +12,7 @@ class ClusterMarker extends React.PureComponent {
 
   render() {
     return (
-      <div style={{ 'display': 'flex' }} >
+      <div style={{ 'display': 'flex', 'transform': 'translate(-50%, -50%)' }} >
         {this.state.clusterFaceMarkers.map(marker =>
           <Marker
             key={marker.id}
@@ -23,7 +23,7 @@ class ClusterMarker extends React.PureComponent {
           />
         )}
         {this.props.points.length > 1 &&
-          <Label circular style={{ 'height': '2em', 'width': '2em', 'fontSize': 'x-small', 'backgroundColor': '#c90c61', 'color': '#ffffff' }}>
+          <Label circular style={{ 'height': '2em', 'width': '2em', 'fontSize': 'x-small', 'backgroundColor': '#c90c61', 'color': '#ffffff', 'transform': 'translate(-50%, -50%)' }}>
             +{this.props.points.length - 1}
           </Label>}
       </div>
