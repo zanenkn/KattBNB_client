@@ -65,7 +65,17 @@ export class GoogleMap extends React.PureComponent {
           defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={this.state.mapOptions.center}
           defaultZoom={12}
-          options={{ styles: mapStyles }}
+          options={{
+            styles: mapStyles,
+            restriction: {
+              latLngBounds: {
+                east: 31.817221,
+                north: 71.185669,
+                south: 51.080991,
+                west: 3.221893
+              }
+            }
+          }}
           onChange={this.handleMapChange}
           yesIWantToUseGoogleMapApiInternals
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
