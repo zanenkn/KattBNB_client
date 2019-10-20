@@ -3,9 +3,9 @@ import axios from 'axios'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import '../react-day-picker.css'
-import { generateRandomNumber } from '../Modules/locationRandomizer'
-import { search } from '../Modules/addressLocationMatcher'
+import '../../NpmPackageCSS/react-day-picker.css'
+import { generateRandomNumber } from '../../Modules/locationRandomizer'
+import { search } from '../../Modules/addressLocationMatcher'
 
 
 class HostProfile extends Component {

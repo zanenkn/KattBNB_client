@@ -1,9 +1,9 @@
 import React from 'react'
 import { Image, Header, Button } from 'semantic-ui-react'
-import HostScore from './HostScore'
+import HostScore from '../ReusableComponents/HostScore'
 import Reviews from './Reviews'
 import HostLocationMap from './HostLocationMap'
-import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import moment from 'moment'
 
 const HostProfileView = (props) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Header } from 'semantic-ui-react'
-import WIP from './WorkInProgress'
+import WIP from '../ReusableComponents/WorkInProgress'
 
 class Legal extends Component {
   render() {

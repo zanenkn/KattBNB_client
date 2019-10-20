@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import supercluster from 'points-cluster'
 import Marker from './Marker'
 import ClusterMarker from './ClusterMarker'
-import mapStyles from '../Modules/MapStyle.js'
+import mapStyles from '../../Modules/MapStyle.js'
 
 export class GoogleMap extends React.PureComponent {
   state = {

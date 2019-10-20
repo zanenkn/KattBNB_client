@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import HostProfileForm from './HostProfileForm'
-import HostProfile from './HostProfile'
+import HostProfileForm from './HostProfile/HostProfileForm'
+import HostProfile from './HostProfile/HostProfile'
 import { connect } from 'react-redux'
 import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../Modules/locationData'

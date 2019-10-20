@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-react'
-import { LOCATION_OPTIONS } from '../Modules/locationData'
-import { registerUser } from '../reduxTokenAuthConfig'
+import { LOCATION_OPTIONS } from '../../Modules/locationData'
+import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 
 class SignUp extends Component {

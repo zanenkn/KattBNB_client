@@ -4,7 +4,7 @@ import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import moment from 'moment'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
-import '../react-day-picker-range.css'
+import '../NpmPackageCSS/react-day-picker-range.css'
 import { formatDate, parseDate } from 'react-day-picker/moment'
 
 

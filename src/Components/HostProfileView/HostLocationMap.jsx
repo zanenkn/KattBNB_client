@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
-import mapStyles from '../Modules/MapStyle.js'
+import mapStyles from '../../Modules/MapStyle.js'
 import { Header } from 'semantic-ui-react'
 
 class HostLocationMap extends Component {

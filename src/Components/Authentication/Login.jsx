@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { signInUser } from '../reduxTokenAuthConfig'
+import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
 
 class Login extends Component {

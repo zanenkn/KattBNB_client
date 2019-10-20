@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Grid, Image } from 'semantic-ui-react'
-import HostScore from './HostScore'
+import HostScore from './ReusableComponents/HostScore'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 const List = (props) => {
