@@ -26,21 +26,46 @@ describe('Visitor can view search results as a list', () => {
   })
 
   it('and see correct prices', () => {
-    cy.get('#2').within(() => {
+    cy.get('#22').within(() => {
       cy.contains('560 kr')
     })
 
-    cy.get('#3').within(() => {
+    cy.get('#33').within(() => {
       cy.contains('460 kr')
     })
   })
 
   it('and not see hosts that are not available', () => {
-    cy.get('#4').should('not.exist')
-    cy.get('#5').should('not.exist')
+    cy.get('#44').should('not.exist')
+    cy.get('#55').should('not.exist')
   })
 
   it('and not see hosts that does not accept required amount of cats', () => {
-    cy.get('#1').should('not.exist')
+    cy.get('#11').should('not.exist')
+  })
+
+  it('and see the full host profile when clicking on a list card', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2',
+      status: 200,
+      response: 'fixture:host_profile_datapoint_click_map.json'
+    })
+    let hostData = [
+      [
+        '#nickname', '#description', '#per-day',
+        '#total'
+      ],
+      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
+    ]
+    cy.get('#2').click({ force: true })
+    cy.get('#more').click()
+
+    hostData[0].forEach(data => {
+      cy.get(data).contains(hostData[1][hostData[0].indexOf(data)])
+    })
+
+    cy.get('#avatar').should('be.visible')
   })
 })

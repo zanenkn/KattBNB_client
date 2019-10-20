@@ -4,8 +4,6 @@ import supercluster from 'points-cluster'
 import Marker from './Marker'
 import ClusterMarker from './ClusterMarker'
 import mapStyles from '../Modules/MapStyle.js'
-import Popup from 'reactjs-popup'
-import HostPopup from './HostPopup'
 
 export class GoogleMap extends React.PureComponent {
   state = {
@@ -58,40 +56,26 @@ export class GoogleMap extends React.PureComponent {
     )
   }
 
-  handleDatapointClick = (e) => {
-    const id = e.target.id
-    this.setState({ id: id, openHostPopup: true })
-  }
-
-  closeModal = () => {
-    this.setState({ openHostPopup: false })
-  }
 
   render() {
     return (
       <div style={{ 'width': '100%', 'height': '100%' }}>
-        <Popup
-          modal
-          open={this.state.openHostPopup}
-          closeOnDocumentClick={true}
-          onClose={this.closeModal}
-          position="top center"
-        >
-          <div>
-            <HostPopup
-              id={this.state.id}
-              numberOfCats={this.props.numberOfCats}
-              checkInDate={this.props.checkInDate}
-              checkOutDate={this.props.checkOutDate}
-            />
-          </div>
-        </Popup>
 
         <GoogleMapReact
           defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={this.state.mapOptions.center}
           defaultZoom={12}
-          options={{ styles: mapStyles }}
+          options={{
+            styles: mapStyles,
+            restriction: {
+              latLngBounds: {
+                east: 31.817221,
+                north: 71.185669,
+                south: 51.080991,
+                west: 3.221893
+              }
+            }
+          }}
           onChange={this.handleMapChange}
           yesIWantToUseGoogleMapApiInternals
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
@@ -105,7 +89,7 @@ export class GoogleMap extends React.PureComponent {
                   lat={item.points[0].lat}
                   lng={item.points[0].lng}
                   total={item.points[0].total}
-                  handleDatapointClick={this.handleDatapointClick.bind(this)}
+                  handleDatapointClick={this.props.handleDatapointClick}
                 />
               )
             }
