@@ -69,7 +69,6 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your maximum amount of cats accepted was succesfully updated!')
     })
-    cy.contains('Maximum cats: 5')
   })
 
   it('and change her daily rate successfully', () => {
