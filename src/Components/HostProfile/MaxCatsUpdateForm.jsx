@@ -103,15 +103,13 @@ class MaxCatsUpdateForm extends Component {
         </Form>
         {errorDisplay}
         <div className='button-wrapper'>
-          <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
+          <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
           {maxCatsFormSubmitButton}
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>
-
     )
   }
-
 }
 
 export default MaxCatsUpdateForm

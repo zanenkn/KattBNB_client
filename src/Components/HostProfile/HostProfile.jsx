@@ -82,7 +82,6 @@ class HostProfile extends Component {
       editDescriptionForm: false,
       newDescription: '',
       editMaxCatsForm: false,
-      newMaxCats: '',
       editRateForm: false,
       newRate: '',
       editSupplementForm: false,
@@ -117,7 +116,6 @@ class HostProfile extends Component {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
       newDescription: this.state.description,
-      newMaxCats: '',
       newRate: '',
       newSupplement: '',
       newAvailability: [],
@@ -151,7 +149,6 @@ class HostProfile extends Component {
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
       newDescription: '',
-      newMaxCats: '',
       newRate: '',
       newSupplement: '',
       newAvailability: [],
@@ -178,7 +175,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newMaxCats: this.state.maxCats,
       newDescription: '',
       newRate: '',
       newSupplement: '',
@@ -211,7 +207,6 @@ class HostProfile extends Component {
       editRateForm: !this.state.editRateForm,
       newRate: this.state.rate,
       newDescription: '',
-      newMaxCats: '',
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -242,7 +237,6 @@ class HostProfile extends Component {
       editSupplementForm: !this.state.editSupplementForm,
       newSupplement: this.state.supplement,
       newDescription: '',
-      newMaxCats: '',
       newRate: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -276,7 +270,6 @@ class HostProfile extends Component {
         return new Date(date)
       }),
       newDescription: '',
-      newMaxCats: '',
       newRate: '',
       newSupplement: '',
       newAddress: '',
@@ -340,7 +333,7 @@ class HostProfile extends Component {
     }
   }
 
-  
+
 
   updateRate = (e) => {
     e.preventDefault()
@@ -703,9 +696,10 @@ class HostProfile extends Component {
     if (this.state.editMaxCatsForm) {
       editMaxCatsForm = (
         <MaxCatsUpdateForm
-        maxCats={this.state.maxCats}
-        id={this.props.id}
-        />        
+          maxCats={this.state.maxCats}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
+        />
       )
     }
 
