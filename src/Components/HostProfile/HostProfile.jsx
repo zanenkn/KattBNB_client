@@ -6,6 +6,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
+import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 
 
 class HostProfile extends Component {
@@ -339,52 +340,7 @@ class HostProfile extends Component {
     }
   }
 
-  updateMaxCats = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    if (this.state.newMaxCats !== '' && this.state.newMaxCats !== this.state.maxCats && this.state.newMaxCats >= 1) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        max_cats_accepted: this.state.newMaxCats
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            maxCats: Math.floor(this.state.newMaxCats),
-            editMaxCatsForm: false
-          })
-          window.alert('Your maximum amount of cats accepted was succesfully updated!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['The field is blank, unchanged or the number is invalid!']
-      })
-    }
-  }
-
-  listenEnterMaxCatsUpdate = (event) => {
-    if (event.key === 'Enter') {
-      this.updateMaxCats(event)
-    }
-  }
+  
 
   updateRate = (e) => {
     e.preventDefault()
@@ -644,7 +600,6 @@ class HostProfile extends Component {
     let editDescriptionForm
     let descriptionFormSubmitButton
     let editMaxCatsForm
-    let maxCatsFormSubmitButton
     let editRateForm
     let rateFormSubmitButton
     let editSupplementForm
@@ -683,9 +638,6 @@ class HostProfile extends Component {
       descriptionFormSubmitButton = (
         <Button loading id='description-submit-button' className='submit-button'>Save</Button>
       )
-      maxCatsFormSubmitButton = (
-        <Button loading id='maxCats-submit-button' className='submit-button'>Save</Button>
-      )
       rateFormSubmitButton = (
         <Button loading id='rate-submit-button' className='submit-button'>Save</Button>
       )
@@ -701,9 +653,6 @@ class HostProfile extends Component {
     } else {
       descriptionFormSubmitButton = (
         <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Save</Button>
-      )
-      maxCatsFormSubmitButton = (
-        <Button id='maxCats-submit-button' className='submit-button' onClick={this.updateMaxCats}>Save</Button>
       )
       rateFormSubmitButton = (
         <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Save</Button>
@@ -753,28 +702,10 @@ class HostProfile extends Component {
 
     if (this.state.editMaxCatsForm) {
       editMaxCatsForm = (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>
-            Enter maximum number of cats from the same household you would like to host.
-          </p>
-          <Form id='update-maxCats' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
-            <Form.Input
-              required
-              type='number'
-              id='newMaxCats'
-              value={this.state.newMaxCats}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterMaxCatsUpdate}
-            />
-          </Form>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.maxCatsFormHandler}>Close</Button>
-            {maxCatsFormSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <MaxCatsUpdateForm
+        maxCats={this.state.maxCats}
+        id={this.props.id}
+        />        
       )
     }
 
