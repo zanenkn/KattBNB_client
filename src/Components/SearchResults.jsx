@@ -22,7 +22,8 @@ class SearchResults extends Component {
     locationLong: '',
     searchDataLocation: '',
     results: 'list',
-    openHostPopup: false
+    openHostPopup: false,
+    scrollOffset: 0
   }
 
   geolocationDataAddress = () => {
@@ -76,7 +77,8 @@ class SearchResults extends Component {
   handleHostProfileClick() {
     this.setState({
       results: 'profile',
-      openHostPopup: false
+      openHostPopup: false,
+      scrollOffset: window.pageYOffset
     })
     window.scrollTo(0, 0)
   }
@@ -122,9 +124,9 @@ class SearchResults extends Component {
   }
 
   switchResultView = (e) => {
+    window.scrollTo(0, this.state.scrollOffset)
     this.setState({ results: (e.target.id).split('-')[0] })
     this.resetHost()
-    window.scrollTo(0, 0)
   }
 
   render() {
@@ -201,8 +203,6 @@ class SearchResults extends Component {
             />
           </Container>
         )
-        mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-        listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         resultCounter = (
           <Header
             id='list-return'
@@ -216,13 +216,23 @@ class SearchResults extends Component {
         break
     }
 
-    listButton = (
-      <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={this.switchResultView} />
-    )
+    if (this.state.results === 'profile') {
+      listButton = (
+        <Icon id='list-button' name='list' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
+      )
 
-    mapButton = (
-      <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
-    )
+      mapButton = (
+        <Icon id='map-button' name='map' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
+      )
+    } else {
+      listButton = (
+        <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={this.switchResultView} />
+      )
+
+      mapButton = (
+        <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
+      )
+    }
 
     return (
       <>
