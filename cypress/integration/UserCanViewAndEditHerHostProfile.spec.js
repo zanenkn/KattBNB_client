@@ -57,7 +57,6 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your description was succesfully updated!')
     })
-    cy.contains('This is my new description!!!')
   })
 
   it('and change her maximum accepted cats successfully', () => {
