@@ -7,7 +7,7 @@ class MaxCatsUpdateForm extends Component {
     errorDisplay: false,
     errors: '',
     loading: false,
-    newMaxCats: ''
+    newMaxCats: this.props.maxCats
   }
 
   updateMaxCats = (e) => {
