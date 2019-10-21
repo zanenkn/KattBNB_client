@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Geocode from 'react-geocode'
-import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
-import { generateRandomNumber } from '../../Modules/locationRandomizer'
-import { search } from '../../Modules/addressLocationMatcher'
+import { Divider, Header, Message, Segment } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
 import SupplementUpdateForm from './SupplementUpdateForm'
 import AvailabilityUpdateForm from './AvailabilityUpdateForm'
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
+import AddressUpdateForm from './AddressUpdateForm'
 
 class HostProfile extends Component {
   constructor(props) {
@@ -30,16 +28,7 @@ class HostProfile extends Component {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      editAddress: false,
-      addressSearch: false,
-      addressErrorDisplay: false,
-      addressError: '',
-      newAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      userInputAddress: ''
+      editAddress: false
     }
   }
 
@@ -61,8 +50,7 @@ class HostProfile extends Component {
           availability: response.data.availability,
           selectedDays: response.data.availability.map(function (date) {
             return new Date(date)
-          }),
-          userInputAddress: response.data.full_address
+          })
         })
       })
       .catch(error => {
@@ -80,19 +68,11 @@ class HostProfile extends Component {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      addressSearch: false,
       editAddress: false,
       newAddress: '',
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressErrorDisplay: false,
-      addressError: '',
       errorDisplay: false,
       errors: ''
     })
@@ -114,18 +94,10 @@ class HostProfile extends Component {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      addressSearch: false,
       editAddress: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
-      }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressError: '',
-      addressErrorDisplay: false
+      })
     })
     this.props.closeLocPasForms()
   }
@@ -133,13 +105,6 @@ class HostProfile extends Component {
   addressFormHandler = () => {
     this.setState({
       editAddress: !this.state.editAddress,
-      addressSearch: true,
-      newAddress: this.state.fullAddress,
-      userInputAddress: this.state.fullAddress,
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
       errorDisplay: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -149,9 +114,7 @@ class HostProfile extends Component {
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      editableCalendar: false,
-      addressError: '',
-      addressErrorDisplay: false
+      editableCalendar: false
     })
     this.props.closeLocPasForms()
   }
@@ -159,25 +122,16 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newAddress: '',
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      addressSearch: false,
       editAddress: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
-      }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressError: '',
-      addressErrorDisplay: false
+      })
     })
     this.props.closeLocPasForms()
   }
@@ -185,25 +139,16 @@ class HostProfile extends Component {
   rateFormHandler = () => {
     this.setState({
       editRateForm: !this.state.editRateForm,
-      newAddress: '',
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      addressSearch: false,
       editAddress: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
-      }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressError: '',
-      addressErrorDisplay: false
+      })
     })
     this.props.closeLocPasForms()
   }
@@ -211,25 +156,16 @@ class HostProfile extends Component {
   supplementFormHandler = () => {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
-      newAddress: '',
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
       editableCalendar: false,
-      addressSearch: false,
       editAddress: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
-      }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressError: '',
-      addressErrorDisplay: false
+      })
     })
     this.props.closeLocPasForms()
   }
@@ -237,125 +173,30 @@ class HostProfile extends Component {
   availabilityFormHandler = () => {
     this.setState({
       editableCalendar: !this.state.editableCalendar,
-      newAddress: '',
       errorDisplay: false,
       errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      addressSearch: false,
       editAddress: false,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
-      }),
-      userInputAddress: '',
-      lat: '',
-      long: '',
-      latitude: '',
-      longitude: '',
-      addressError: '',
-      addressErrorDisplay: false
+      })
     })
     this.props.closeLocPasForms()
   }
 
-  updateAddress = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    const path = `/api/v1/host_profiles/${this.props.id}`
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    const payload = {
-      full_address: this.state.newAddress,
-      lat: this.state.lat,
-      long: this.state.long,
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    }
-    axios.patch(path, payload, { headers: headers })
-      .then(() => {
-        this.setState({
-          loading: false,
-          errorDisplay: false,
-          fullAddress: this.state.newAddress,
-          editAddress: false
-        })
-        window.alert('Your address was succesfully updated!')
-      })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          errorDisplay: true,
-          errors: error.response.data.errors.full_messages
-        })
-      })
-  }
-
-  listenEnterAddressSearch = (event) => {
-    if (event.key === 'Enter') {
-      this.geolocationDataAddress(event)
-    }
-  }
-
-  geolocationDataAddress = () => {
-    Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
-    Geocode.fromAddress(this.state.userInputAddress).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location
-        if (search(this.props.location, response.results[0].address_components) === undefined) {
-          if (window.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')) {
-            this.setState({
-              latitude: lat,
-              longitude: lng,
-              lat: lat - generateRandomNumber(),
-              long: lng + generateRandomNumber(),
-              newAddress: response.results[0].formatted_address,
-              addressSearch: false,
-              addressErrorDisplay: false
-            })
-          }
-        } else {
-          this.setState({
-            latitude: lat,
-            longitude: lng,
-            lat: lat - generateRandomNumber(),
-            long: lng + generateRandomNumber(),
-            newAddress: response.results[0].formatted_address,
-            addressSearch: false,
-            addressErrorDisplay: false
-          })
-        }
-      },
-      error => {
-        this.setState({
-          addressErrorDisplay: true,
-          addressError: error.message
-        })
-      }
-    )
-  }
-
   render() {
-
     let editDescriptionForm
     let editMaxCatsForm
     let editRateForm
     let editSupplementForm
-    let addressFormSubmitButton
     let calendar
     let addressSearch
     let errorDisplay
-    let addressErrorMessage
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
-
-
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -368,22 +209,6 @@ class HostProfile extends Component {
           </ul>
         </Message>
       )
-    }
-
-    if (this.state.loading) {
-      addressFormSubmitButton = (
-        <Button loading id='address-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      if (this.state.fullAddress !== this.state.newAddress && this.state.newAddress !== '') {
-        addressFormSubmitButton = (
-          <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
-        )
-      } else {
-        addressFormSubmitButton = (
-          <Button disabled id='address-submit-button' className='submit-button'>Save</Button>
-        )
-      }
     }
 
     if (this.state.editDescriptionForm) {
@@ -443,74 +268,16 @@ class HostProfile extends Component {
       )
     }
 
-
-
-    if (this.state.addressErrorDisplay) {
-      addressErrorMessage = (
-        <Message negative >
-          {this.state.addressError}
-        </Message>
+    if (this.state.editAddress) {
+      addressSearch = (
+        <AddressUpdateForm 
+          fullAddress={this.state.fullAddress}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
+          location={this.props.location}
+        />
       )
     }
-
-    if (this.state.editAddress) {
-      if (this.state.addressSearch === true) {
-        addressSearch = (
-          <>
-            <Divider />
-            <p className='small-centered-paragraph'>
-              You can update your address below by entering and searching your new address.
-            </p>
-
-            {addressErrorMessage}
-            <div style={{ 'margin': 'auto', 'display': 'table', 'width': '100%' }}>
-              <Form.Input
-                style={{ 'width': '100%' }}
-                placeholder='Search...'
-                required
-                id='userInputAddress'
-                value={this.state.userInputAddress}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterAddressSearch}
-                iconPosition='right'
-                icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress} style={{ 'color': '#c90c61' }} />}
-              />
-            </div>
-            {errorDisplay}
-            <div className='button-wrapper'>
-              <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
-              {addressFormSubmitButton}
-            </div>
-            <Divider style={{ 'marginBottom': '2rem' }} />
-          </>
-        )
-      } else {
-        addressSearch = (
-          <>
-            <Divider />
-            <p className='small-centered-paragraph'>
-              You can update your address below by entering and searching your new address.
-            </p>
-
-            <div className='required field'>
-              <p style={{ 'textAlign': 'center' }}>
-                {this.state.newAddress}&nbsp;
-                <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, newAddress: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
-                  Not right?
-                </Header>
-              </p>
-            </div>
-            {errorDisplay}
-            <div className='button-wrapper'>
-              <Button secondary id='address-close-button' className='cancel-button' onClick={this.addressFormHandler}>Close</Button>
-              {addressFormSubmitButton}
-            </div>
-            <Divider style={{ 'marginBottom': '2rem' }} />
-          </>
-        )
-      }
-    }
-
 
     return (
       <Segment className='whitebox'>
@@ -520,6 +287,7 @@ class HostProfile extends Component {
         <p style={{ 'textAlign': 'center' }}>
           This is your <strong> host </strong> profile. Here you can update all your cat hosting information.
         </p>
+        {errorDisplay}
 
         <Divider hidden />
         <p id='description'>
