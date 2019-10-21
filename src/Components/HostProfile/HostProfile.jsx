@@ -9,6 +9,7 @@ import { search } from '../../Modules/addressLocationMatcher'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
+import SupplementUpdateForm from './SupplementUpdateForm'
 
 class HostProfile extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class HostProfile extends Component {
       rate: '',
       maxCats: '',
       supplement: '',
-      newSupplement: '',
       availability: [],
       newAvailability: [],
       selectedDays: [],
@@ -81,7 +81,6 @@ class HostProfile extends Component {
       editMaxCatsForm: false,
       editRateForm: false,
       editSupplementForm: false,
-      newSupplement: '',
       editableCalendar: false,
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -111,7 +110,6 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -142,7 +140,6 @@ class HostProfile extends Component {
       addressSearch: true,
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
-      newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -167,7 +164,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -195,7 +191,6 @@ class HostProfile extends Component {
   rateFormHandler = () => {
     this.setState({
       editRateForm: !this.state.editRateForm,
-      newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -223,7 +218,6 @@ class HostProfile extends Component {
   supplementFormHandler = () => {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
-      newSupplement: this.state.supplement,
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -255,7 +249,6 @@ class HostProfile extends Component {
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
-      newSupplement: '',
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -276,52 +269,7 @@ class HostProfile extends Component {
     this.props.closeLocPasForms()
   }
 
-  updateSupplement = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    if (this.state.newSupplement !== '' && this.state.newSupplement !== this.state.supplement && this.state.newSupplement >= 0) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        supplement_price_per_cat_per_day: this.state.newSupplement
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            supplement: this.state.newSupplement,
-            editSupplementForm: false
-          })
-          window.alert('Your supplement rate for 1 cat was succesfully updated!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['The field is blank, unchanged or the number is invalid!']
-      })
-    }
-  }
 
-  listenEnterSupplementUpdate = (event) => {
-    if (event.key === 'Enter') {
-      this.updateSupplement(event)
-    }
-  }
 
   updateAvailability = (e) => {
     e.preventDefault()
@@ -487,7 +435,6 @@ class HostProfile extends Component {
     let editMaxCatsForm
     let editRateForm
     let editSupplementForm
-    let supplementFormSubmitButton
     let availabilityFormSubmitButton
     let addressFormSubmitButton
     let selectedDays
@@ -519,9 +466,6 @@ class HostProfile extends Component {
     }
 
     if (this.state.loading) {
-      supplementFormSubmitButton = (
-        <Button loading id='supplement-submit-button' className='submit-button'>Save</Button>
-      )
       availabilityFormSubmitButton = (
         <Button loading id='availability-submit-button' className='submit-button'>Save</Button>
       )
@@ -529,9 +473,6 @@ class HostProfile extends Component {
         <Button loading id='address-submit-button' className='submit-button'>Save</Button>
       )
     } else {
-      supplementFormSubmitButton = (
-        <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Save</Button>
-      )
       availabilityFormSubmitButton = (
         <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
       )
@@ -578,28 +519,11 @@ class HostProfile extends Component {
 
     if (this.state.editSupplementForm) {
       editSupplementForm = (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>
-            Enter how much you would like to get paid per an extra cat per day.
-          </p>
-          <Form id='update-supplement' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
-            <Form.Input
-              required
-              type='number'
-              id='newSupplement'
-              value={this.state.newSupplement}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterSupplementUpdate}
-            />
-          </Form>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.supplementFormHandler}>Close</Button>
-            {supplementFormSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <SupplementUpdateForm
+          supplement={this.state.supplement}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
+        />
       )
     }
 
