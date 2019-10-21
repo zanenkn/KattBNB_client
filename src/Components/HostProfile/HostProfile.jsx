@@ -188,13 +188,7 @@ class HostProfile extends Component {
   }
 
   render() {
-    let editDescriptionForm
-    let editMaxCatsForm
-    let editRateForm
-    let editSupplementForm
-    let calendar
-    let addressSearch
-    let errorDisplay
+    let editDescriptionForm, editMaxCatsForm, editRateForm, editSupplementForm, calendar, addressSearch, errorDisplay
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
 

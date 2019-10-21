@@ -10,15 +10,15 @@ class AddressUpdateForm extends Component {
     errors: '',
     errorDisplay: false,
     loading: false,
-    addressSearch: false,
+    addressSearch: true,
     addressErrorDisplay: false,
     addressError: '',
-    newAddress: this.props.fullAddress,
+    newAddress: '',
     lat: '',
     long: '',
     latitude: '',
     longitude: '',
-    userInputAddress: ''
+    userInputAddress: this.props.fullAddress
   }
 
   updateAddress = (e) => {

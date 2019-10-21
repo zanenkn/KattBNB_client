@@ -118,6 +118,5 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your address was succesfully updated!')
     })
-    cy.contains('Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden')
   })
 })
