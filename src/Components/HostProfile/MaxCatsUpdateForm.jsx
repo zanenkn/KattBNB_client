@@ -20,9 +20,7 @@ class MaxCatsUpdateForm extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = {
-        max_cats_accepted: this.state.newMaxCats
-      }
+      const payload = { max_cats_accepted: this.state.newMaxCats }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
