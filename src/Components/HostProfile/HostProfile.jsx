@@ -7,6 +7,7 @@ import '../../NpmPackageCSS/react-day-picker.css'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
+import DescriptionUpdateForm from './DescriptionUpdateForm'
 
 
 class HostProfile extends Component {
@@ -15,12 +16,10 @@ class HostProfile extends Component {
     this.handleDayClick = this.handleDayClick.bind(this)
     this.state = {
       description: '',
-      newDescription: '',
       fullAddress: '',
       rate: '',
       newRate: '',
       maxCats: '',
-      newMaxCats: '',
       supplement: '',
       newSupplement: '',
       availability: [],
@@ -80,7 +79,6 @@ class HostProfile extends Component {
   closeAllForms = () => {
     this.setState({
       editDescriptionForm: false,
-      newDescription: '',
       editMaxCatsForm: false,
       editRateForm: false,
       newRate: '',
@@ -115,7 +113,6 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      newDescription: this.state.description,
       newRate: '',
       newSupplement: '',
       newAvailability: [],
@@ -148,7 +145,6 @@ class HostProfile extends Component {
       addressSearch: true,
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
-      newDescription: '',
       newRate: '',
       newSupplement: '',
       newAvailability: [],
@@ -175,7 +171,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newDescription: '',
       newRate: '',
       newSupplement: '',
       newAvailability: [],
@@ -206,7 +201,6 @@ class HostProfile extends Component {
     this.setState({
       editRateForm: !this.state.editRateForm,
       newRate: this.state.rate,
-      newDescription: '',
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -236,7 +230,6 @@ class HostProfile extends Component {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
       newSupplement: this.state.supplement,
-      newDescription: '',
       newRate: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -269,7 +262,6 @@ class HostProfile extends Component {
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
-      newDescription: '',
       newRate: '',
       newSupplement: '',
       newAddress: '',
@@ -291,49 +283,6 @@ class HostProfile extends Component {
     })
     this.props.closeLocPasForms()
   }
-
-  updateDescription = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    if (this.state.newDescription !== '' && this.state.newDescription !== this.state.description) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        description: this.state.newDescription
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            description: this.state.newDescription,
-            editDescriptionForm: false
-          })
-          window.alert('Your description was succesfully updated!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['The field is blank or unchanged!']
-      })
-    }
-  }
-
-
 
   updateRate = (e) => {
     e.preventDefault()
@@ -591,7 +540,6 @@ class HostProfile extends Component {
   render() {
 
     let editDescriptionForm
-    let descriptionFormSubmitButton
     let editMaxCatsForm
     let editRateForm
     let rateFormSubmitButton
@@ -628,9 +576,6 @@ class HostProfile extends Component {
     }
 
     if (this.state.loading) {
-      descriptionFormSubmitButton = (
-        <Button loading id='description-submit-button' className='submit-button'>Save</Button>
-      )
       rateFormSubmitButton = (
         <Button loading id='rate-submit-button' className='submit-button'>Save</Button>
       )
@@ -644,9 +589,6 @@ class HostProfile extends Component {
         <Button loading id='address-submit-button' className='submit-button'>Save</Button>
       )
     } else {
-      descriptionFormSubmitButton = (
-        <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Save</Button>
-      )
       rateFormSubmitButton = (
         <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Save</Button>
       )
@@ -669,27 +611,11 @@ class HostProfile extends Component {
 
     if (this.state.editDescriptionForm) {
       editDescriptionForm = (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>
-            Please tell us a little about yourself and your experience with cats. This will be displayed at the search.
-          </p>
-
-          <Form id='update-description'>
-            <Form.TextArea
-              required
-              id='newDescription'
-              value={this.state.newDescription}
-              onChange={this.onChangeHandler}
-            />
-          </Form>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <Button secondary id='description-close-button' className='cancel-button' onClick={this.descriptionFormHandler}>Close</Button>
-            {descriptionFormSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <DescriptionUpdateForm
+          description={this.state.description}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
+        />
       )
     }
 
