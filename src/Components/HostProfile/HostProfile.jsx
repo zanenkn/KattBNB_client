@@ -8,7 +8,7 @@ import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
-
+import RateUpdateForm from './RateUpdateForm'
 
 class HostProfile extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class HostProfile extends Component {
       description: '',
       fullAddress: '',
       rate: '',
-      newRate: '',
       maxCats: '',
       supplement: '',
       newSupplement: '',
@@ -81,7 +80,6 @@ class HostProfile extends Component {
       editDescriptionForm: false,
       editMaxCatsForm: false,
       editRateForm: false,
-      newRate: '',
       editSupplementForm: false,
       newSupplement: '',
       editableCalendar: false,
@@ -113,7 +111,6 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      newRate: '',
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -145,7 +142,6 @@ class HostProfile extends Component {
       addressSearch: true,
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
-      newRate: '',
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -171,7 +167,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newRate: '',
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -200,7 +195,6 @@ class HostProfile extends Component {
   rateFormHandler = () => {
     this.setState({
       editRateForm: !this.state.editRateForm,
-      newRate: this.state.rate,
       newSupplement: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
@@ -230,7 +224,6 @@ class HostProfile extends Component {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
       newSupplement: this.state.supplement,
-      newRate: '',
       newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
@@ -262,7 +255,6 @@ class HostProfile extends Component {
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
-      newRate: '',
       newSupplement: '',
       newAddress: '',
       errorDisplay: false,
@@ -282,53 +274,6 @@ class HostProfile extends Component {
       addressErrorDisplay: false
     })
     this.props.closeLocPasForms()
-  }
-
-  updateRate = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    if (this.state.newRate !== '' && this.state.newRate !== this.state.rate && this.state.newRate >= 0.01) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        price_per_day_1_cat: this.state.newRate
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            rate: this.state.newRate,
-            editRateForm: false
-          })
-          window.alert('Your daily rate for 1 cat was succesfully updated!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['The field is blank, unchanged or the number is invalid!']
-      })
-    }
-  }
-
-  listenEnterRateUpdate = (event) => {
-    if (event.key === 'Enter') {
-      this.updateRate(event)
-    }
   }
 
   updateSupplement = (e) => {
@@ -536,13 +481,11 @@ class HostProfile extends Component {
     )
   }
 
-
   render() {
 
     let editDescriptionForm
     let editMaxCatsForm
     let editRateForm
-    let rateFormSubmitButton
     let editSupplementForm
     let supplementFormSubmitButton
     let availabilityFormSubmitButton
@@ -576,9 +519,6 @@ class HostProfile extends Component {
     }
 
     if (this.state.loading) {
-      rateFormSubmitButton = (
-        <Button loading id='rate-submit-button' className='submit-button'>Save</Button>
-      )
       supplementFormSubmitButton = (
         <Button loading id='supplement-submit-button' className='submit-button'>Save</Button>
       )
@@ -589,9 +529,6 @@ class HostProfile extends Component {
         <Button loading id='address-submit-button' className='submit-button'>Save</Button>
       )
     } else {
-      rateFormSubmitButton = (
-        <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Save</Button>
-      )
       supplementFormSubmitButton = (
         <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Save</Button>
       )
@@ -631,28 +568,11 @@ class HostProfile extends Component {
 
     if (this.state.editRateForm) {
       editRateForm = (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>
-            Enter how much you would like to get paid per day when hosting 1 cat.
-          </p>
-          <Form id='update-rate' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
-            <Form.Input
-              required
-              type='number'
-              id='newRate'
-              value={this.state.newRate}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterRateUpdate}
-            />
-          </Form>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <Button secondary id='rate-close-button' className='cancel-button' onClick={this.rateFormHandler}>Close</Button>
-            {rateFormSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <RateUpdateForm
+          rate={this.state.rate}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
+        />
       )
     }
 
