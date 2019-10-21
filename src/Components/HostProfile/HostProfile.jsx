@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
-import DayPicker, { DateUtils } from 'react-day-picker'
-import '../../NpmPackageCSS/react-day-picker.css'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
@@ -11,6 +9,7 @@ import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
 import SupplementUpdateForm from './SupplementUpdateForm'
 import AvailabilityUpdateForm from './AvailabilityUpdateForm'
+import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
 
 class HostProfile extends Component {
   constructor(props) {
@@ -81,12 +80,12 @@ class HostProfile extends Component {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       addressSearch: false,
       editAddress: false,
       newAddress: '',
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -108,9 +107,6 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -120,6 +116,9 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -137,14 +136,14 @@ class HostProfile extends Component {
       addressSearch: true,
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       lat: '',
       long: '',
       latitude: '',
       longitude: '',
       errorDisplay: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       errors: '',
       editDescriptionForm: false,
       editMaxCatsForm: false,
@@ -160,9 +159,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -172,6 +168,9 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -186,9 +185,6 @@ class HostProfile extends Component {
   rateFormHandler = () => {
     this.setState({
       editRateForm: !this.state.editRateForm,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -198,6 +194,9 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -212,9 +211,6 @@ class HostProfile extends Component {
   supplementFormHandler = () => {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -224,6 +220,9 @@ class HostProfile extends Component {
       editableCalendar: false,
       addressSearch: false,
       editAddress: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -238,9 +237,6 @@ class HostProfile extends Component {
   availabilityFormHandler = () => {
     this.setState({
       editableCalendar: !this.state.editableCalendar,
-      selectedDays: this.state.availability.map(function (date) {
-        return new Date(date)
-      }),
       newAddress: '',
       errorDisplay: false,
       errors: '',
@@ -250,6 +246,9 @@ class HostProfile extends Component {
       editSupplementForm: false,
       addressSearch: false,
       editAddress: false,
+      selectedDays: this.state.availability.map(function (date) {
+        return new Date(date)
+      }),
       userInputAddress: '',
       lat: '',
       long: '',
@@ -260,10 +259,6 @@ class HostProfile extends Component {
     })
     this.props.closeLocPasForms()
   }
-
-
-
-
 
   updateAddress = (e) => {
     e.preventDefault()
@@ -353,7 +348,6 @@ class HostProfile extends Component {
     let editRateForm
     let editSupplementForm
     let addressFormSubmitButton
-    let selectedDays
     let calendar
     let addressSearch
     let errorDisplay
@@ -361,9 +355,7 @@ class HostProfile extends Component {
     const rate = parseFloat(this.state.rate)
     const supplement = parseFloat(this.state.supplement)
 
-    selectedDays = this.state.availability.map(function (date) {
-      return new Date(date)
-    })
+
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -437,32 +429,21 @@ class HostProfile extends Component {
     if (this.state.editableCalendar) {
       calendar = (
         <AvailabilityUpdateForm
-        selectedDays={this.state.selectedDays}
-        availability={this.state.availability}
-        id={this.props.id}
-        closeAllForms={this.closeAllForms.bind(this)}
+          selectedDays={this.state.selectedDays}
+          availability={this.state.availability}
+          id={this.props.id}
+          closeAllForms={this.closeAllForms.bind(this)}
         />
       )
     } else {
       calendar = (
-        <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
-          <DayPicker
-            showWeekNumbers
-            firstDayOfWeek={1}
-            selectedDays={selectedDays}
-            month={selectedDays[0]}
-            fromMonth={selectedDays[0]}
-            toMonth={selectedDays[selectedDays.length - 1]}
-          />
-        </div>
+        <AvailabilityViewOnlyMode
+          selectedDays={this.state.selectedDays}
+        />
       )
     }
 
-    if (this.state.editableCalendar === false && selectedDays.length === 0) {
-      calendar = (
-        <p>You have not selected any availability dates!</p>
-      )
-    }
+
 
     if (this.state.addressErrorDisplay) {
       addressErrorMessage = (
