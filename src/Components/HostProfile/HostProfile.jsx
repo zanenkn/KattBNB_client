@@ -10,11 +10,11 @@ import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
 import SupplementUpdateForm from './SupplementUpdateForm'
+import AvailabilityUpdateForm from './AvailabilityUpdateForm'
 
 class HostProfile extends Component {
   constructor(props) {
     super(props)
-    this.handleDayClick = this.handleDayClick.bind(this)
     this.state = {
       description: '',
       fullAddress: '',
@@ -22,7 +22,6 @@ class HostProfile extends Component {
       maxCats: '',
       supplement: '',
       availability: [],
-      newAvailability: [],
       selectedDays: [],
       errors: '',
       errorDisplay: false,
@@ -82,7 +81,6 @@ class HostProfile extends Component {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -110,7 +108,6 @@ class HostProfile extends Component {
   descriptionFormHandler = () => {
     this.setState({
       editDescriptionForm: !this.state.editDescriptionForm,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -140,7 +137,6 @@ class HostProfile extends Component {
       addressSearch: true,
       newAddress: this.state.fullAddress,
       userInputAddress: this.state.fullAddress,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -164,7 +160,6 @@ class HostProfile extends Component {
   maxCatsFormHandler = () => {
     this.setState({
       editMaxCatsForm: !this.state.editMaxCatsForm,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -191,7 +186,6 @@ class HostProfile extends Component {
   rateFormHandler = () => {
     this.setState({
       editRateForm: !this.state.editRateForm,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -218,7 +212,6 @@ class HostProfile extends Component {
   supplementFormHandler = () => {
     this.setState({
       editSupplementForm: !this.state.editSupplementForm,
-      newAvailability: [],
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -245,7 +238,6 @@ class HostProfile extends Component {
   availabilityFormHandler = () => {
     this.setState({
       editableCalendar: !this.state.editableCalendar,
-      newAvailability: this.state.availability,
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
@@ -271,82 +263,7 @@ class HostProfile extends Component {
 
 
 
-  updateAvailability = (e) => {
-    e.preventDefault()
-    this.setState({
-      loading: true
-    })
-    if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.state.availability)) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const filteredAvailability = this.state.newAvailability.filter(function (value) {
-        let date = new Date()
-        let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-        return value > (new Date(utc)).getTime() - 86400000
-      })
-      const payload = {
-        availability: filteredAvailability
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            availability: filteredAvailability,
-            editableCalendar: false
-          })
-          window.alert('Your availability was succesfully updated!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['There were no changes made in your availability!']
-      })
-    }
-  }
 
-  convertAvailabilityDates() {
-    let availableDates = this.state.selectedDays.map(function (day) {
-      let date = new Date(day)
-      let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-      return new Date(utc).getTime()
-    })
-    let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
-    this.setState({
-      newAvailability: sortedAvailableDates
-    })
-  }
-
-  handleDayClick(day, { selected }) {
-    const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
-    const { selectedDays } = this.state
-    if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
-      if (selected) {
-        const selectedIndex = selectedDays.findIndex(selectedDay =>
-          DateUtils.isSameDay(selectedDay, day)
-        )
-        selectedDays.splice(selectedIndex, 1)
-      } else {
-        selectedDays.push(day)
-      }
-      this.setState({ selectedDays })
-      this.convertAvailabilityDates()
-    }
-  }
 
   updateAddress = (e) => {
     e.preventDefault()
@@ -435,13 +352,9 @@ class HostProfile extends Component {
     let editMaxCatsForm
     let editRateForm
     let editSupplementForm
-    let availabilityFormSubmitButton
     let addressFormSubmitButton
     let selectedDays
     let calendar
-    const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
     let addressSearch
     let errorDisplay
     let addressErrorMessage
@@ -466,16 +379,10 @@ class HostProfile extends Component {
     }
 
     if (this.state.loading) {
-      availabilityFormSubmitButton = (
-        <Button loading id='availability-submit-button' className='submit-button'>Save</Button>
-      )
       addressFormSubmitButton = (
         <Button loading id='address-submit-button' className='submit-button'>Save</Button>
       )
     } else {
-      availabilityFormSubmitButton = (
-        <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
-      )
       if (this.state.fullAddress !== this.state.newAddress && this.state.newAddress !== '') {
         addressFormSubmitButton = (
           <Button id='address-submit-button' className='submit-button' onClick={this.updateAddress}>Save</Button>
@@ -529,29 +436,12 @@ class HostProfile extends Component {
 
     if (this.state.editableCalendar) {
       calendar = (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>
-            You can update your availability below by marking the dates when you are willing to host.
-          </p>
-          <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
-            <DayPicker
-              showWeekNumbers
-              firstDayOfWeek={1}
-              selectedDays={this.state.selectedDays}
-              fromMonth={today}
-              disabledDays={{ before: tomorrowDate }}
-              onDayClick={this.handleDayClick}
-            />
-          </div>
-          {errorDisplay}
-
-          <div className='button-wrapper'>
-            <Button secondary id='availability-close-button' className='cancel-button' onClick={this.availabilityFormHandler}>Close</Button>
-            {availabilityFormSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <AvailabilityUpdateForm
+        selectedDays={this.state.selectedDays}
+        availability={this.state.availability}
+        id={this.props.id}
+        closeAllForms={this.closeAllForms.bind(this)}
+        />
       )
     } else {
       calendar = (
