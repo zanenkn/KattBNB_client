@@ -90,7 +90,6 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your supplement rate for 1 cat was succesfully updated!')
     })
-    cy.contains('Extra 20 kr/day per cat')
   })
 
   it('and change her availability dates successfully', () => {
