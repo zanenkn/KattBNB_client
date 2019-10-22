@@ -4,13 +4,14 @@ import { List } from 'immutable'
 import Marker from './Marker'
 import { Label } from 'semantic-ui-react'
 
-
 class ClusterMarker extends React.PureComponent {
+
   state = {
     clusterFaceMarkers: this.props.points.slice(0, 1),
   }
 
   render() {
+
     return (
       <div style={{ 'display': 'flex', 'transform': 'translate(-50%, -50%)' }} >
         {this.state.clusterFaceMarkers.map(marker =>

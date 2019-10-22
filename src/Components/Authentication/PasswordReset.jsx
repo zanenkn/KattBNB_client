@@ -4,6 +4,7 @@ import axios from 'axios'
 
 
 class PasswordReset extends Component {
+
   state = {
     email: '',
     errors: '',
@@ -72,17 +73,13 @@ class PasswordReset extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Request password reset
         </Header>
-
         <Segment className='whitebox'>
-
           <p style={{ 'textAlign': 'center' }}>
             Fill in the email you registered with.
           </p>
-
           <Form>
             <Form.Input
               required
@@ -93,15 +90,10 @@ class PasswordReset extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
-
           {errorDisplay}
-
           {submitButton}
-
         </Segment>
-
       </div>
-
     )
   }
 }

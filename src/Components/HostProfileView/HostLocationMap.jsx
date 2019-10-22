@@ -4,6 +4,7 @@ import mapStyles from '../../Modules/MapStyle.js'
 import { Header } from 'semantic-ui-react'
 
 class HostLocationMap extends Component {
+
   static defaultProps = {
     center: {
       lat: 59.95,
@@ -25,6 +26,7 @@ class HostLocationMap extends Component {
   }
 
   render() {
+
     return (
       <>
         <div style={{ 'width': '100%', 'height': '300px', 'overflow': 'hidden' }}>

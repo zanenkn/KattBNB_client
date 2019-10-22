@@ -1,6 +1,7 @@
 import React from 'react'
 
 const HostScore = () => {
+  
   return (
     <div style={{'margin': 'auto', 'display': 'table'}}>
       <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">

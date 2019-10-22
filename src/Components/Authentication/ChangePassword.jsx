@@ -3,8 +3,8 @@ import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import queryString from 'query-string'
 
-
 class ChangePassword extends Component {
+
   state = {
     errors: '',
     errorDisplay: false,
@@ -100,17 +100,13 @@ class ChangePassword extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Change password
         </Header>
-
         <Segment className='whitebox'>
-
           <p style={{ 'textAlign': 'center' }}>
             Type in your new password twice in the fields below. Minimum requirement is 6 characters.
           </p>
-
           <Form>
             <Form.Input
               required
@@ -121,7 +117,6 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
-
             <Form.Input
               required
               id='passwordConfirmation'
@@ -132,16 +127,11 @@ class ChangePassword extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
-
           {errorDisplay}
           {successDisplay}
-
           {submitButton}
-
         </Segment>
-
       </div>
-
     )
   }
 }

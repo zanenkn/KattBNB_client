@@ -21,8 +21,8 @@ import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
-
 class App extends Component {
+
   contextRef = createRef()
 
   render() {
@@ -39,7 +39,6 @@ class App extends Component {
         <Sticky context={this.contextRef}>
           <Navbar />
         </Sticky>
-
         <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
           <Sidebar.Pushable
             as={Container}
@@ -64,7 +63,6 @@ class App extends Component {
                 {userPageRoute}
               </Switch>
             </ScrollToTop>
-
             <Menu />
           </Sidebar.Pushable>
         </div>

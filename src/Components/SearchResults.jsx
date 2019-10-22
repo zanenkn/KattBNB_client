@@ -12,6 +12,7 @@ import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 
 class SearchResults extends Component {
+
   state = {
     id: '',
     checkInDate: '',
@@ -215,7 +216,6 @@ class SearchResults extends Component {
       listButton = (
         <Icon id='list-button' name='list' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
       )
-
       mapButton = (
         <Icon id='map-button' name='map' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
       )
@@ -223,7 +223,6 @@ class SearchResults extends Component {
       listButton = (
         <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={this.switchResultView} />
       )
-
       mapButton = (
         <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
       )

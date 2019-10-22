@@ -31,7 +31,7 @@ class Menu extends Component {
 
   render() {
     let userLinks
-    
+
     if (this.props.currentUserIn) {
       userLinks = (
         <Header
@@ -54,7 +54,6 @@ class Menu extends Component {
           >
             Log in
           </Header>
-
           <Header
             id='signup'
             className='menu-link'
@@ -66,6 +65,7 @@ class Menu extends Component {
         </>
       )
     }
+
     return (
       <Sidebar
         id='menu'
@@ -79,9 +79,7 @@ class Menu extends Component {
           id='menu-grid'
         >
           <Grid.Column id='menu-grid-column'>
-
             {userLinks}
-
             <Header
               id='about'
               className='menu-link'
@@ -90,7 +88,6 @@ class Menu extends Component {
             >
               About us
             </Header>
-
             <Header
               id='faq'
               className='menu-link'
@@ -99,7 +96,6 @@ class Menu extends Component {
             >
               FAQ
             </Header>
-
             <Header
               id='contact'
               className='menu-link'
@@ -108,7 +104,6 @@ class Menu extends Component {
             >
               Contact us
             </Header>
-
             <Header
               id='blog'
               className='menu-link'
@@ -117,7 +112,6 @@ class Menu extends Component {
             >
               Blog
             </Header>
-
             <Header
               id='legal'
               className='menu-link'
@@ -126,10 +120,8 @@ class Menu extends Component {
             >
               Legal
             </Header>
-
           </Grid.Column>
         </Grid>
-
       </Sidebar>
     )
   }

@@ -5,6 +5,7 @@ import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
 
 class Login extends Component {
+
   state = {
     email: '',
     password: '',
@@ -79,13 +80,10 @@ class Login extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Log in
         </Header>
-
         <Segment className='whitebox'>
-
           <Form id='login-form'>
             <Form.Input
               required
@@ -109,14 +107,10 @@ class Login extends Component {
                 Forgot your password?
               </Header>
             </div>
-
           </Form>
-
           {errorDisplay}
           {successDisplay}
-
           {submitButton}
-
           <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
             Not registered?
           <br></br>
@@ -124,9 +118,7 @@ class Login extends Component {
               Create an account!
             </Header>
           </p>
-
         </Segment>
-
       </div>
     )
   }

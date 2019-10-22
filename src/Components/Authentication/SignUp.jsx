@@ -5,6 +5,7 @@ import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 
 class SignUp extends Component {
+
   state = {
     email: '',
     password: '',
@@ -84,17 +85,13 @@ class SignUp extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Sign up
         </Header>
-
         <Segment className='whitebox'>
-
           <p style={{ 'textAlign': 'center' }}>
             Password must be at least 6 characters in length. Email and Username must be unique.
           </p>
-
           <Form id='signup-form'>
             <Form.Input
               required
@@ -142,13 +139,9 @@ class SignUp extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
-
           {errorDisplay}
-
           {submitButton}
-
         </Segment>
-
       </div>
     )
   }

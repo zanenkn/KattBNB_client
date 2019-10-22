@@ -5,6 +5,7 @@ import '../../NpmPackageCSS/react-day-picker.css'
 import { Divider, Button, Message } from 'semantic-ui-react'
 
 class AvailabilityUpdateForm extends Component {
+
   constructor(props) {
     super(props)
     this.handleDayClick = this.handleDayClick.bind(this)

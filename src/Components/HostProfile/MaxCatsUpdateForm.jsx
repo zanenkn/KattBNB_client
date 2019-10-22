@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
 class MaxCatsUpdateForm extends Component {
+
   state = {
     errorDisplay: false,
     errors: '',

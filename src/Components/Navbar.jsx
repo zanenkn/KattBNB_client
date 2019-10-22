@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 class Navbar extends Component {
 
   render() {
-
     let userIcon, hamburgerIcon, noAvatar
 
     if (this.props.currentUserIn) {

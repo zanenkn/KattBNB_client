@@ -6,6 +6,7 @@ import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
 
 class AddressUpdateForm extends Component {
+
   state = {
     errors: '',
     errorDisplay: false,
@@ -137,7 +138,6 @@ class AddressUpdateForm extends Component {
           <p className='small-centered-paragraph'>
             You can update your address below by entering and searching your new address.
           </p>
-
           {addressErrorMessage}
           <div style={{ 'margin': 'auto', 'display': 'table', 'width': '100%' }}>
             <Form.Input
@@ -167,7 +167,6 @@ class AddressUpdateForm extends Component {
           <p className='small-centered-paragraph'>
             You can update your address below by entering and searching your new address.
           </p>
-
           <div className='required field'>
             <p style={{ 'textAlign': 'center' }}>
               {this.state.newAddress}&nbsp;
@@ -186,7 +185,7 @@ class AddressUpdateForm extends Component {
       )
     }
 
-    return(
+    return (
       <>
         {addressSearch}
       </>

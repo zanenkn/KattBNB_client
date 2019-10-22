@@ -342,7 +342,6 @@ class UserPage extends Component {
     }
   }
 
-
   render() {
     let errorDisplay, locationForm, locationSubmitButton, passwordForm, passwordSubmitButton, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
 
@@ -457,7 +456,6 @@ class UserPage extends Component {
                   {avatarRotateRight}
                 </div>
               </div>
-
               {errorDisplay}
               <div className='button-wrapper'>
                 {avatarSubmitButton}
@@ -486,7 +484,6 @@ class UserPage extends Component {
             />
             {errorDisplay}
           </Form>
-
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
             {locationSubmitButton}
@@ -533,7 +530,6 @@ class UserPage extends Component {
             </p>
             {errorDisplay}
           </Form>
-
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
             {passwordSubmitButton}
@@ -573,7 +569,6 @@ class UserPage extends Component {
       )
     }
 
-
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
@@ -583,15 +578,12 @@ class UserPage extends Component {
           <p style={{ 'textAlign': 'center' }}>
             This is your <strong> basic </strong> profile. Here you can update your avatar, location, and password.
           </p>
-
           {avatar}
-
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
               &nbsp;{this.props.email}
             </p>
-
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
               &nbsp;{this.state.location}&ensp;
@@ -600,7 +592,6 @@ class UserPage extends Component {
               </Header>
             </p>
             {locationForm}
-
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               &nbsp;******&ensp;
@@ -611,15 +602,12 @@ class UserPage extends Component {
             {passwordForm}
           </div>
         </Segment>
-
         <Divider hidden />
         {hostProfile}
         <Divider hidden />
-
         <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
           Delete your account
         </Header>
-
       </div>
     )
   }

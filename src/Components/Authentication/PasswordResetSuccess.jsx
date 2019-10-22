@@ -13,11 +13,9 @@ class PasswordResetSuccess extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Successful password reset request!
         </Header>
-
         <Segment className='whitebox' textAlign='center'>
           <p>
             You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email.
@@ -27,7 +25,6 @@ class PasswordResetSuccess extends Component {
     )
   }
 }
-
 
 const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })
 

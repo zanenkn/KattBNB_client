@@ -3,7 +3,6 @@ import DayPicker from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 
 const AvailabilityViewOnlyMode = (props) => {
-
   let calendar
 
   if (props.selectedDays.length === 0) {

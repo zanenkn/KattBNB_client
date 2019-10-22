@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker'
 import { verifyCredentials } from './reduxTokenAuthConfig'
 import axios from 'axios'
 
-
 const development = 'http://localhost:3007'
 const production = process.env.REACT_APP_API_ENDPOINT
 

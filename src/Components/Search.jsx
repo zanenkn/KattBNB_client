@@ -7,8 +7,8 @@ import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { formatDate, parseDate } from 'react-day-picker/moment'
 
-
 class Search extends Component {
+
   constructor(props) {
     super(props)
     this.handleFromChange = this.handleFromChange.bind(this)
@@ -120,7 +120,6 @@ class Search extends Component {
 
 
   render() {
-
     let errorDisplay, searchButton
 
     const { from, to } = this.state
@@ -159,7 +158,6 @@ class Search extends Component {
         </Header>
         <Segment className='whitebox'>
           <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
-
             <div className='required field' style={{ 'marginBottom': '0.5em' }}>
               <label>
                 When
@@ -210,7 +208,6 @@ class Search extends Component {
             <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
               <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> Clear dates </Header>
             </div>
-
             <div className='required field' style={{ 'marginBottom': '1.5em' }}>
               <label>
                 Where
@@ -227,7 +224,6 @@ class Search extends Component {
                 onKeyPress={this.listenEnterKeySearch}
               />
             </div>
-
             <Form.Input
               label='For how many cats'
               type='number'
