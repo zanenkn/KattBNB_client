@@ -15,9 +15,7 @@ class ChangePassword extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   changePassword = (e) => {
@@ -67,9 +65,7 @@ class ChangePassword extends Component {
   }
 
   render() {
-    let errorDisplay
-    let successDisplay
-    let submitButton
+    let errorDisplay, successDisplay, submitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (

@@ -35,9 +35,7 @@ class HostProfileForm extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   convertAvailabilityDates() {
@@ -152,9 +150,7 @@ class HostProfileForm extends Component {
       }
       axios.post(path, payload, { headers: headers })
         .then(() => {
-          this.setState({
-            onCreateErrorDisplay: false
-          })
+          this.setState({ onCreateErrorDisplay: false })
           window.alert('You have successfully created your host profile!')
           setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
@@ -170,10 +166,7 @@ class HostProfileForm extends Component {
 
 
   render() {
-    let addressSearch
-    let addressErrorMessage
-    let onCreateErrorMessage
-    let createHostProfileButton
+    let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
     const today = new Date()
     const tomorrowNumber = today.getTime() + 86400000
     const tomorrowDate = new Date(tomorrowNumber)

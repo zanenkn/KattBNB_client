@@ -18,9 +18,7 @@ class SignUp extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   handleLocationChange = (e, { value }) => {
@@ -41,9 +39,7 @@ class SignUp extends Component {
     } = this.state
     registerUser({ email, password, passwordConfirmation, location, nickname, url })
       .then(() => {
-        this.setState({
-          errorDisplay: false
-        })
+        this.setState({ errorDisplay: false })
         history.push('/signup-success')
       }).catch(error => {
         this.setState({
@@ -61,8 +57,7 @@ class SignUp extends Component {
   }
 
   render() {
-    let errorDisplay
-    let submitButton
+    let errorDisplay, submitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (

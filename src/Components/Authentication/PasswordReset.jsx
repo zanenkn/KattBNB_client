@@ -13,9 +13,7 @@ class PasswordReset extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   resetPassword = (e) => {
@@ -28,9 +26,7 @@ class PasswordReset extends Component {
     }
     axios.post(path, payload)
       .then(() => {
-        this.setState({
-          errorDisplay: false
-        })
+        this.setState({ errorDisplay: false })
         window.location.replace('/password-reset-success')
       })
       .catch(error => {
@@ -49,8 +45,7 @@ class PasswordReset extends Component {
   }
 
   render() {
-    let errorDisplay
-    let submitButton
+    let errorDisplay, submitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (

@@ -57,8 +57,7 @@ class MaxCatsUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
-    let maxCatsFormSubmitButton
+    let errorDisplay, maxCatsFormSubmitButton
 
     if (this.state.loading) {
       maxCatsFormSubmitButton = (

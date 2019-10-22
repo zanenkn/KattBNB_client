@@ -57,9 +57,7 @@ class UserPage extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   handleLocationChange = (e, { value }) => {
@@ -152,21 +150,22 @@ class UserPage extends Component {
   }
 
   handleNewImage = e => {
-    this.setState({ image: e.target.files[0], position: { x: 0.5, y: 0.5 }, errorDisplay: false, errors: [] })
+    this.setState({
+      image: e.target.files[0],
+      position: { x: 0.5, y: 0.5 },
+      errorDisplay: false,
+      errors: []
+    })
   }
 
   rotateLeft = e => {
     e.preventDefault()
-    this.setState({
-      rotate: this.state.rotate - 90,
-    })
+    this.setState({ rotate: this.state.rotate - 90 })
   }
 
   rotateRight = e => {
     e.preventDefault()
-    this.setState({
-      rotate: this.state.rotate + 90,
-    })
+    this.setState({ rotate: this.state.rotate + 90 })
   }
 
   handleXPosition = e => {
@@ -345,22 +344,7 @@ class UserPage extends Component {
 
 
   render() {
-    let errorDisplay
-
-    let locationForm
-    let locationSubmitButton
-
-    let passwordForm
-    let passwordSubmitButton
-
-    let hostProfile
-    let hostProfileForm
-
-    let avatar
-    let avatarSubmitButton
-    let avatarRotateRight
-    let avatarRotateLeft
-    let noAvatar
+    let errorDisplay, locationForm, locationSubmitButton, passwordForm, passwordSubmitButton, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
 
     if (this.state.errorDisplay) {
       errorDisplay = (

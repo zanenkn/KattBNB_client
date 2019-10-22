@@ -57,8 +57,7 @@ class RateUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
-    let rateFormSubmitButton
+    let errorDisplay, rateFormSubmitButton
 
     if (this.state.loading) {
       rateFormSubmitButton = (

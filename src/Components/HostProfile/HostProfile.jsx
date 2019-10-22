@@ -87,7 +87,7 @@ class HostProfile extends Component {
   formHandler = (e) => {
     let states = ['editDescriptionForm', 'editRateForm', 'editSupplementForm', 'editMaxCatsForm', 'editableCalendar', 'editAddress']
     states.forEach(stt => {
-      (stt != e.target.id) ? this.setState({[stt]: false}) : this.setState({[stt]: !this.state.stt}) 
+      (stt !== e.target.id) ? this.setState({[stt]: false}) : this.setState({[stt]: !this.state.stt}) 
     })
     this.setState({
       errorDisplay: false,

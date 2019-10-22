@@ -88,8 +88,7 @@ class AvailabilityUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
-    let availabilityFormSubmitButton
+    let errorDisplay, availabilityFormSubmitButton
 
     const today = new Date()
     const tomorrowNumber = today.getTime() + 86400000

@@ -51,8 +51,7 @@ class DescriptionUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
-    let descriptionFormSubmitButton
+    let errorDisplay, descriptionFormSubmitButton
 
     if (this.state.loading) {
       descriptionFormSubmitButton = (

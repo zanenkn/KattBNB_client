@@ -31,6 +31,7 @@ class Menu extends Component {
 
   render() {
     let userLinks
+    
     if (this.props.currentUserIn) {
       userLinks = (
         <Header

@@ -57,8 +57,7 @@ class SupplementUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
-    let supplementFormSubmitButton
+    let errorDisplay, supplementFormSubmitButton
 
     if (this.state.loading) {
       supplementFormSubmitButton = (

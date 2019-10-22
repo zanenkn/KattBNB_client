@@ -26,9 +26,7 @@ class Search extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   handleLocationChange = (e, { value }) => {
@@ -123,8 +121,7 @@ class Search extends Component {
 
   render() {
 
-    let errorDisplay
-    let searchButton
+    let errorDisplay, searchButton
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }

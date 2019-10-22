@@ -29,8 +29,6 @@ class PasswordResetSuccess extends Component {
 }
 
 
-const mapStateToProps = state => ({
-  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
-})
+const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })
 
 export default connect(mapStateToProps)(PasswordResetSuccess)

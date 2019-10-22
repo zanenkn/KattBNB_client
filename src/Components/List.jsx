@@ -4,8 +4,8 @@ import HostScore from './ReusableComponents/HostScore'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 const List = (props) => {
-  let searchMessage
-  let results
+
+  let searchMessage, results
 
   if (props.finalAvailableHosts.length === 0) {
     searchMessage = (

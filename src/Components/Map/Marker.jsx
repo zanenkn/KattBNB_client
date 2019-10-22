@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Label } from 'semantic-ui-react'
 
-
-
 class Marker extends React.PureComponent {
   static defaultProps = {
     inGroup: false,

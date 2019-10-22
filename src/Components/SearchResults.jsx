@@ -133,12 +133,7 @@ class SearchResults extends Component {
     let inDate = moment(this.state.checkInDate).format('ll')
     let outDate = moment(this.state.checkOutDate).format('ll')
     let finalAvailableHosts = []
-    let listButton
-    let mapButton
-    let mapButtonStyle
-    let listButtonStyle
-    let resultCounter
-    let results
+    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
       let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
