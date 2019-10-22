@@ -27,37 +27,37 @@ describe('User can view her host profile', () => {
   })
 
   it('and get an error message on description update if update criteria are not met', () => {
-    cy.get('#change-description-link').click()
+    cy.get('#editDescriptionForm').click()
     cy.get('#description-submit-button').click()
     cy.contains('The field is blank or unchanged!')
   })
 
   it('and get an error message on max cats accepted update if update criteria are not met', () => {
-    cy.get('#change-maxCats-link').click()
+    cy.get('#editMaxCatsForm').click()
     cy.get('#maxCats-submit-button').click()
     cy.contains('The field is blank, unchanged or the number is invalid!')
   })
 
   it('and get an error message on daily rate update if update criteria are not met', () => {
-    cy.get('#change-rate-link').click()
+    cy.get('#editRateForm').click()
     cy.get('#rate-submit-button').click()
     cy.contains('The field is blank, unchanged or the number is invalid!')
   })
 
   it('and get an error message on supplement update if update criteria are not met', () => {
-    cy.get('#change-supplement-link').click()
+    cy.get('#editSupplementForm').click()
     cy.get('#supplement-submit-button').click()
     cy.contains('The field is blank, unchanged or the number is invalid!')
   })
 
   it('and get an error message on availability update if update criteria are not met', () => {
-    cy.get('#change-availability-link').click()
+    cy.get('#editableCalendar').click()
     cy.get('#availability-submit-button').click()
     cy.contains('There were no changes made in your availability!')
   })
 
   it('and get a disabled submit button on address update if update criteria are not met', () => {
-    cy.get('#change-address-link').click()
+    cy.get('#editAddress').click()
     cy.get('#search').click()
     cy.get('#address-submit-button').should('have.class', 'disabled')
   })

@@ -50,7 +50,7 @@ describe('User can view her host profile', () => {
 
   it('and change her description successfully', () => {
     cy.contains('This is my new description!!!').should('not.exist')
-    cy.get('#change-description-link').click()
+    cy.get('#editDescriptionForm').click()
     cy.get('#newDescription').clear()
     cy.get('#newDescription').type('This is my new description!!!')
     cy.get('#description-submit-button').click()
@@ -61,7 +61,7 @@ describe('User can view her host profile', () => {
 
   it('and change her maximum accepted cats successfully', () => {
     cy.contains('Maximum cats: 5').should('not.exist')
-    cy.get('#change-maxCats-link').click()
+    cy.get('#editMaxCatsForm').click()
     cy.get('#newMaxCats').clear()
     cy.get('#newMaxCats').type('5')
     cy.get('#maxCats-submit-button').click()
@@ -72,7 +72,7 @@ describe('User can view her host profile', () => {
 
   it('and change her daily rate successfully', () => {
     cy.contains('120 kr/day for 1 cat').should('not.exist')
-    cy.get('#change-rate-link').click()
+    cy.get('#editRateForm').click()
     cy.get('#newRate').clear()
     cy.get('#newRate').type('120')
     cy.get('#rate-submit-button').click()
@@ -83,7 +83,7 @@ describe('User can view her host profile', () => {
 
   it('and change her supplement rate successfully', () => {
     cy.contains('Extra 20 kr/day per cat').should('not.exist')
-    cy.get('#change-supplement-link').click()
+    cy.get('#editSupplementForm').click()
     cy.get('#newSupplement').clear()
     cy.get('#newSupplement').type('20')
     cy.get('#supplement-submit-button').click()
@@ -93,7 +93,7 @@ describe('User can view her host profile', () => {
   })
 
   it('and change her availability dates successfully', () => {
-    cy.get('#change-availability-link').click()
+    cy.get('#editableCalendar').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(2)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(3)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(4)').click()
@@ -109,7 +109,7 @@ describe('User can view her host profile', () => {
 
   it('and change her address successfully', () => {
     cy.contains('Stockholm Arlanda Airport (ARN), 190 45 Stockholm-Arlanda, Sweden').should('not.exist')
-    cy.get('#change-address-link').click()
+    cy.get('#editAddress').click()
     cy.get('#userInputAddress').clear()
     cy.get('#userInputAddress').type('arlanda airport')
     cy.get('#search').click()
