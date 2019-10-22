@@ -11,26 +11,22 @@ import AddressUpdateForm from './AddressUpdateForm'
 
 class HostProfile extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      description: '',
-      fullAddress: '',
-      rate: '',
-      maxCats: '',
-      supplement: '',
-      availability: [],
-      selectedDays: [],
-      errors: '',
-      errorDisplay: false,
-      loading: false,
-      editDescriptionForm: false,
-      editMaxCatsForm: false,
-      editRateForm: false,
-      editSupplementForm: false,
-      editableCalendar: false,
-      editAddress: false
-    }
+  state = {
+    description: '',
+    fullAddress: '',
+    rate: '',
+    maxCats: '',
+    supplement: '',
+    availability: [],
+    selectedDays: [],
+    errors: '',
+    errorDisplay: false,
+    editDescriptionForm: false,
+    editMaxCatsForm: false,
+    editRateForm: false,
+    editSupplementForm: false,
+    editableCalendar: false,
+    editAddress: false
   }
 
   componentDidMount() {
@@ -70,17 +66,12 @@ class HostProfile extends Component {
       editSupplementForm: false,
       editableCalendar: false,
       editAddress: false,
-      newAddress: '',
       selectedDays: this.state.availability.map(function (date) {
         return new Date(date)
       }),
       errorDisplay: false,
       errors: ''
     })
-  }
-
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
   }
 
   formHandler = (e) => {
