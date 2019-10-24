@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
+import { Header, Segment, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
 import LocationUpdateForm from './LocationUpdateForm'
+import PasswordUpdateForm from './PasswordUpdateForm'
 
 class UserPage extends Component {
 
@@ -16,9 +17,6 @@ class UserPage extends Component {
     displayLocationForm: false,
     displayPasswordForm: false,
     avatar: this.props.avatar,
-    currentPassword: '',
-    newPassword: '',
-    newPasswordConfirmation: '',
     loading: false,
     errorDisplay: false,
     errors: '',
@@ -36,16 +34,6 @@ class UserPage extends Component {
     })
   }
 
-  listenEnterKeyPassword = (event) => {
-    if (event.key === 'Enter') {
-      this.updatePassword(event)
-    }
-  }
-
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
-  }
-
   avatarFormHandler = () => {
     this.setState({
       displayLocationForm: false,
@@ -55,10 +43,7 @@ class UserPage extends Component {
       errors: '',
       image: '',
       position: { x: 0.5, y: 0.5 },
-      rotate: 0,
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      rotate: 0
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -71,10 +56,7 @@ class UserPage extends Component {
       displayPasswordForm: false,
       hostProfileForm: false,
       errorDisplay: false,
-      errors: '',
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      errors: ''
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -87,10 +69,7 @@ class UserPage extends Component {
       displayLocationForm: false,
       hostProfileForm: false,
       errorDisplay: false,
-      errors: '',
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      errors: ''
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -103,10 +82,7 @@ class UserPage extends Component {
       displayLocationForm: false,
       displayPasswordForm: false,
       errorDisplay: false,
-      errors: '',
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      errors: ''
     })
   }
 
@@ -115,10 +91,7 @@ class UserPage extends Component {
       displayLocationForm: false,
       displayPasswordForm: false,
       errorDisplay: false,
-      errors: '',
-      currentPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      errors: ''
     })
   }
 
@@ -208,46 +181,7 @@ class UserPage extends Component {
 
 
 
-  updatePassword = (e) => {
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
-      window.location.replace('/login')
-    } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
-      this.setState({ loading: true })
-      e.preventDefault()
-      const path = '/api/v1/auth/password'
-      const payload = {
-        current_password: this.state.currentPassword,
-        password: this.state.newPassword,
-        password_confirmation: this.state.newPasswordConfirmation,
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload)
-        .then(() => {
-          this.setState({
-            displayPasswordForm: false,
-            errorDisplay: false
-          })
-          window.location.replace('/login')
-          window.localStorage.clear()
-          window.alert('Your password was successfully changed!')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
-      this.setState({
-        errorDisplay: true,
-        errors: ["Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters"]
-      })
-    }
-  }
+  
 
   destroyAccount = () => {
     this.setState({
@@ -277,7 +211,7 @@ class UserPage extends Component {
   }
 
   render() {
-    let errorDisplay, locationForm, passwordForm, passwordSubmitButton, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
+    let errorDisplay, locationForm, passwordForm, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -293,9 +227,6 @@ class UserPage extends Component {
     }
 
     if (this.state.loading) {
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
-      )
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
       )
@@ -306,9 +237,6 @@ class UserPage extends Component {
         <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
     } else {
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
-      )
       avatarSubmitButton = (
         <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
       )
@@ -405,47 +333,9 @@ class UserPage extends Component {
 
     if (this.state.displayPasswordForm) {
       passwordForm = (
-        <>
-          <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
-            <Form.Input
-              required
-              id='currentPassword'
-              value={this.state.currentPassword}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder='Current password'
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <Form.Input
-              required
-              id='newPassword'
-              value={this.state.newPassword}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder='New password'
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <Form.Input
-              required
-              id='newPasswordConfirmation'
-              value={this.state.newPasswordConfirmation}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder='New password again'
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
-              Upon successful password change you will be redirected back to login.
-            </p>
-            {errorDisplay}
-          </Form>
-          <div className='button-wrapper'>
-            <Button secondary className='cancel-button' onClick={this.passwordFormHandler}>Close</Button>
-            {passwordSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <PasswordUpdateForm
+        closeLocationAndPasswordForms={this.closeLocationAndPasswordForms.bind(this)}
+        />
       )
     }
 

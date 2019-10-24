@@ -1,0 +1,139 @@
+import React, { Component } from 'react'
+import { Form, Button, Message, Divider } from 'semantic-ui-react'
+import axios from 'axios'
+
+class PasswordUpdateForm extends Component {
+
+  state = {
+    currentPassword: '',
+    newPassword: '',
+    newPasswordConfirmation: '',
+    loading: false,
+    errorDisplay: false,
+    errors: '',
+  }
+
+  listenEnterKeyPassword = (event) => {
+    if (event.key === 'Enter') {
+      this.updatePassword(event)
+    }
+  }
+
+  onChangeHandler = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
+  }
+
+  updatePassword = (e) => {
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
+      this.setState({ loading: true })
+      e.preventDefault()
+      const path = '/api/v1/auth/password'
+      const payload = {
+        current_password: this.state.currentPassword,
+        password: this.state.newPassword,
+        password_confirmation: this.state.newPasswordConfirmation,
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload)
+        .then(() => {
+          this.setState({
+            displayPasswordForm: false,
+            errorDisplay: false
+          })
+          window.location.replace('/login')
+          window.localStorage.clear()
+          window.alert('Your password was successfully changed!')
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+    } else {
+      this.setState({
+        errorDisplay: true,
+        errors: ["Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters"]
+      })
+    }
+  }
+
+  render() {
+    let errorDisplay, passwordSubmitButton
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative style={{ 'width': 'inherit' }} >
+          <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
+
+    if (this.state.loading) {
+      passwordSubmitButton = (
+        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
+      )
+    } else {
+      passwordSubmitButton = (
+        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
+      )
+    }
+
+    return (
+      <>
+        <Divider />
+        <Form style={{ 'maxWidth': '194px' }}>
+          <Form.Input
+            required
+            id='currentPassword'
+            value={this.state.currentPassword}
+            type='password'
+            onChange={this.onChangeHandler}
+            placeholder='Current password'
+            onKeyPress={this.listenEnterKeyPassword}
+          />
+          <Form.Input
+            required
+            id='newPassword'
+            value={this.state.newPassword}
+            type='password'
+            onChange={this.onChangeHandler}
+            placeholder='New password'
+            onKeyPress={this.listenEnterKeyPassword}
+          />
+          <Form.Input
+            required
+            id='newPasswordConfirmation'
+            value={this.state.newPasswordConfirmation}
+            type='password'
+            onChange={this.onChangeHandler}
+            placeholder='New password again'
+            onKeyPress={this.listenEnterKeyPassword}
+          />
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
+            Upon successful password change you will be redirected back to login.
+          </p>
+          {errorDisplay}
+        </Form>
+        <div className='button-wrapper'>
+          <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>Close</Button>
+          {passwordSubmitButton}
+        </div>
+        <Divider style={{ 'marginBottom': '2rem' }} />
+      </>
+    )
+  }
+}
+
+export default PasswordUpdateForm
