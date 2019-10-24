@@ -6,7 +6,6 @@ import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 class LocationUpdateForm extends Component {
 
   state = {
-    location: '',
     newLocation: '',
     loading: false,
     errorDisplay: false,
@@ -27,7 +26,7 @@ class LocationUpdateForm extends Component {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
-    } else if (this.state.newLocation === this.state.location || this.state.newLocation === '') {
+    } else if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
       this.setState({
         loading: false,
         errorDisplay: true,
@@ -44,19 +43,14 @@ class LocationUpdateForm extends Component {
         'access-token': window.localStorage.getItem('access-token')
       }
       axios.put(path, payload)
-        .then(response => {
+        .then(() => {
           this.setState({
-            displayLocationForm: false,
-            location: response.data.data.location,
             loading: false,
-            errorDisplay: false
+            errorDisplay: false,
+            errors: ''
           })
-          if (this.state.hostProfile.length === 1) {
-            window.alert('Location succesfully changed!')
-          } else {
-            window.alert('Location succesfully changed!')
-            window.location.reload()
-          }
+          window.alert('Location succesfully changed!')
+          window.location.reload()
         })
         .catch(error => {
           this.setState({
@@ -112,7 +106,7 @@ class LocationUpdateForm extends Component {
           {errorDisplay}
         </Form>
         <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
+          <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>Close</Button>
           {locationSubmitButton}
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
