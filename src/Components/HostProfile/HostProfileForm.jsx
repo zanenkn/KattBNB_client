@@ -3,12 +3,12 @@ import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
-import '../react-day-picker.css'
-import { generateRandomNumber } from '../Modules/locationRandomizer'
-import { search } from '../Modules/addressLocationMatcher'
-
+import '../../NpmPackageCSS/react-day-picker.css'
+import { generateRandomNumber } from '../../Modules/locationRandomizer'
+import { search } from '../../Modules/addressLocationMatcher'
 
 class HostProfileForm extends Component {
+
   constructor(props) {
     super(props)
     this.handleDayClick = this.handleDayClick.bind(this)
@@ -35,9 +35,7 @@ class HostProfileForm extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   convertAvailabilityDates() {
@@ -152,9 +150,7 @@ class HostProfileForm extends Component {
       }
       axios.post(path, payload, { headers: headers })
         .then(() => {
-          this.setState({
-            onCreateErrorDisplay: false
-          })
+          this.setState({ onCreateErrorDisplay: false })
           window.alert('You have successfully created your host profile!')
           setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
@@ -168,12 +164,8 @@ class HostProfileForm extends Component {
     }
   }
 
-
   render() {
-    let addressSearch
-    let addressErrorMessage
-    let onCreateErrorMessage
-    let createHostProfileButton
+    let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
     const today = new Date()
     const tomorrowNumber = today.getTime() + 86400000
     const tomorrowDate = new Date(tomorrowNumber)
@@ -243,7 +235,6 @@ class HostProfileForm extends Component {
       )
     }
 
-
     return (
       <div id='host-profile-form'>
         <Header as='h2'>
@@ -261,13 +252,11 @@ class HostProfileForm extends Component {
             value={this.state.description}
             onChange={this.onChangeHandler}
           />
-
           {addressErrorMessage}
           {addressSearch}
           <p className='small-left-paragraph'>
             Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
           </p>
-
           <Form.Group
             widths='equal'
           >
@@ -281,7 +270,6 @@ class HostProfileForm extends Component {
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterKey}
             />
-
             <Form.Input
               label='Max cats accepted'
               type='number'
@@ -292,7 +280,6 @@ class HostProfileForm extends Component {
               onChange={this.onChangeHandler}
               onKeyPress={this.listenEnterKey}
             />
-
             <Form.Input
               label='Supplement'
               type='number'
@@ -307,12 +294,10 @@ class HostProfileForm extends Component {
           <p className='small-left-paragraph'>
             <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
           </p>
-
           <div className='required field' >
             <label for='availability' >
               Availability
             </label>
-
             <DayPicker
               showWeekNumbers
               disabledDays={{ before: tomorrowDate }}
@@ -325,9 +310,7 @@ class HostProfileForm extends Component {
             Please mark the dates when you are available to host!
           </p>
         </Form>
-
         {onCreateErrorMessage}
-
         <div className='button-wrapper'>
           <div>
             <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
@@ -336,7 +319,6 @@ class HostProfileForm extends Component {
             {createHostProfileButton}
           </div>
         </div>
-
       </div>
     )
   }

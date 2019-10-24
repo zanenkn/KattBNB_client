@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-react'
-import { LOCATION_OPTIONS } from '../Modules/locationData'
-import { registerUser } from '../reduxTokenAuthConfig'
+import { LOCATION_OPTIONS } from '../../Modules/locationData'
+import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 
 class SignUp extends Component {
+
   state = {
     email: '',
     password: '',
@@ -18,9 +19,7 @@ class SignUp extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   handleLocationChange = (e, { value }) => {
@@ -41,9 +40,7 @@ class SignUp extends Component {
     } = this.state
     registerUser({ email, password, passwordConfirmation, location, nickname, url })
       .then(() => {
-        this.setState({
-          errorDisplay: false
-        })
+        this.setState({ errorDisplay: false })
         history.push('/signup-success')
       }).catch(error => {
         this.setState({
@@ -61,8 +58,7 @@ class SignUp extends Component {
   }
 
   render() {
-    let errorDisplay
-    let submitButton
+    let errorDisplay, submitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -89,17 +85,13 @@ class SignUp extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Sign up
         </Header>
-
         <Segment className='whitebox'>
-
           <p style={{ 'textAlign': 'center' }}>
             Password must be at least 6 characters in length. Email and Username must be unique.
           </p>
-
           <Form id='signup-form'>
             <Form.Input
               required
@@ -147,13 +139,9 @@ class SignUp extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
-
           {errorDisplay}
-
           {submitButton}
-
         </Segment>
-
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import HostScore from './HostScore'
+import HostScore from './ReusableComponents/HostScore'
 import { Image, Header, Button } from 'semantic-ui-react'
 import moment from 'moment'
 import { pricePerDay, total } from '../Modules/PriceCalculations'

@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
 
 class AboutUs extends Component {
+
   render() {
+
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
           About us
         </Header>
-
         <Header as='h2' >
           The idea of KattBNB
         </Header>
-
         <p>
           Cancelling a weekend trip because there is no one to look after your cat. Changing your plans because a friend who reluctantly agreed to pet sit bailed the last minute. Dragging your clearly disgruntled cat on a lengthy train ride because that’s the only way to visit your parents for Christmas. If you’re a cat owner, chances are that you’ve been there.
         </p>
@@ -24,11 +24,9 @@ class AboutUs extends Component {
         </p>
         <Divider hidden />
         <Divider hidden />
-
         <Header as='h2'>
           Us behind the scenes
         </Header>
-
         <div>
           <Image style={{ 'margin': 'auto' }} src='zane.png' size='small'></Image>
         </div>
@@ -43,7 +41,6 @@ class AboutUs extends Component {
         </p>
         <Divider hidden />
         <Divider hidden />
-
         <div>
           <Image style={{ 'margin': 'auto' }} src='george.png' size='small'></Image>
         </div>
@@ -58,7 +55,6 @@ class AboutUs extends Component {
         </p>
         <Divider hidden />
         <Divider hidden />
-
         <div>
           <Image style={{ 'margin': 'auto' }} src='felix.png' size='small'></Image>
         </div>
@@ -73,15 +69,12 @@ class AboutUs extends Component {
         </p>
         <Divider hidden />
         <Divider hidden />
-
         <Header as='h2'>
           Acknowledgements
         </Header>
-
         <p>
           None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
         </p>
-
       </div>
     )
   }

@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Label } from 'semantic-ui-react'
 
-
-
 class Marker extends React.PureComponent {
+
   static defaultProps = {
     inGroup: false,
   }
 
   render() {
+
     return (
       <Label
         pointing='below'
@@ -23,8 +23,6 @@ class Marker extends React.PureComponent {
   }
 }
 
-Marker.propTypes = {
-  inGroup: PropTypes.bool,
-}
+Marker.propTypes = { inGroup: PropTypes.bool }
 
 export default Marker

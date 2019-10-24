@@ -4,11 +4,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 class Navbar extends Component {
-  render() {
 
-    let userIcon
-    let hamburgerIcon
-    let noAvatar
+  render() {
+    let userIcon, hamburgerIcon, noAvatar
 
     if (this.props.currentUserIn) {
       noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`

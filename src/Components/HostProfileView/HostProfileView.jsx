@@ -1,15 +1,15 @@
 import React from 'react'
 import { Image, Header, Button } from 'semantic-ui-react'
-import HostScore from './HostScore'
+import HostScore from '../ReusableComponents/HostScore'
 import Reviews from './Reviews'
 import HostLocationMap from './HostLocationMap'
-import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import moment from 'moment'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  
+
   return (
     <div className='expanding-wrapper'>
       <Image id='avatar' src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
@@ -33,7 +33,7 @@ const HostProfileView = (props) => {
       <Header id='total' as='h3' style={{ 'marginTop': '0' }}>
         {orderTotal} kr
       </Header>
-      <Button style={{ 'marginTop': '0', 'marginBottom': '2rem'}}>
+      <Button style={{ 'marginTop': '0', 'marginBottom': '2rem' }}>
         Request to book
       </Button>
       <Reviews />
@@ -43,17 +43,17 @@ const HostProfileView = (props) => {
       <Header as='h3' style={{ 'marginTop': '0' }}>
         {orderTotal} kr
       </Header>
-      <Button style={{ 'marginTop': '0', 'marginBottom': '2rem'}}>
+      <Button style={{ 'marginTop': '0', 'marginBottom': '2rem' }}>
         Request to book
       </Button>
       <div>
-        <HostLocationMap 
+        <HostLocationMap
           lat={props.lat}
           long={props.long}
           nickname={props.nickname}
         />
       </div>
-      <Header as='h3' style={{'textAlign': 'left'}}>
+      <Header as='h3' style={{ 'textAlign': 'left' }}>
         Questions?
       </Header>
       <p>
@@ -63,7 +63,6 @@ const HostProfileView = (props) => {
         Send now
       </p>
     </div>
-    
   )
 }
 

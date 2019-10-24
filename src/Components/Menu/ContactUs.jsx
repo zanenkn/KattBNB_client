@@ -3,13 +3,14 @@ import { Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-re
 import NetlifyForm from 'react-netlify-form'
 
 class ContactUs extends Component {
+
   render() {
+
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
           Contact us
         </Header>
-
         <Segment className='whitebox'>
           <Form>
             <NetlifyForm name='contact-us'>
@@ -23,7 +24,6 @@ class ContactUs extends Component {
                   {!success &&
                     <>
                       <p style={{ 'textAlign': 'center' }}>Fill in this form to send us a message. We will get back to you as soon as we read it!</p>
-
                       <Form.Input
                         as='input'
                         type='text'
@@ -32,7 +32,6 @@ class ContactUs extends Component {
                         placeholder='Your name'
                         style={{ 'marginBottom': '1rem' }}
                       />
-
                       <Form.Input
                         as='input'
                         type='email'
@@ -47,7 +46,6 @@ class ContactUs extends Component {
                         name='message'
                         placeholder='Your message'
                       />
-
                       <Button className='submit-button'>Send</Button>
                     </>
                   }
@@ -61,7 +59,6 @@ class ContactUs extends Component {
             </NetlifyForm>
           </Form>
         </Segment>
-
       </div>
     )
   }

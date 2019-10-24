@@ -4,14 +4,15 @@ import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import { bookingSearch, getBookingLength } from '../Modules/booking'
 import List from './List'
-import GoogleMap from './GoogleMap'
-import HostProfileView from './HostProfileView'
+import GoogleMap from './Map/GoogleMap'
+import HostProfileView from './HostProfileView/HostProfileView'
 import moment from 'moment'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 
 class SearchResults extends Component {
+
   state = {
     id: '',
     checkInDate: '',
@@ -133,12 +134,7 @@ class SearchResults extends Component {
     let inDate = moment(this.state.checkInDate).format('ll')
     let outDate = moment(this.state.checkOutDate).format('ll')
     let finalAvailableHosts = []
-    let listButton
-    let mapButton
-    let mapButtonStyle
-    let listButtonStyle
-    let resultCounter
-    let results
+    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
       let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
@@ -220,7 +216,6 @@ class SearchResults extends Component {
       listButton = (
         <Icon id='list-button' name='list' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
       )
-
       mapButton = (
         <Icon id='map-button' name='map' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
       )
@@ -228,7 +223,6 @@ class SearchResults extends Component {
       listButton = (
         <Icon id='list-button' name='list' circular inverted style={listButtonStyle} onClick={this.switchResultView} />
       )
-
       mapButton = (
         <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
       )

@@ -3,9 +3,10 @@ import GoogleMapReact from 'google-map-react'
 import supercluster from 'points-cluster'
 import Marker from './Marker'
 import ClusterMarker from './ClusterMarker'
-import mapStyles from '../Modules/MapStyle.js'
+import mapStyles from '../../Modules/MapStyle.js'
 
 export class GoogleMap extends React.PureComponent {
+
   state = {
     mapOptions: {
       center: {
@@ -58,9 +59,9 @@ export class GoogleMap extends React.PureComponent {
 
 
   render() {
+
     return (
       <div style={{ 'width': '100%', 'height': '100%' }}>
-
         <GoogleMapReact
           defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={this.state.mapOptions.center}

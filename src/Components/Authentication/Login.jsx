@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { signInUser } from '../reduxTokenAuthConfig'
+import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
 
 class Login extends Component {
+
   state = {
     email: '',
     password: '',
@@ -15,9 +16,7 @@ class Login extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   logInUser = (e) => {
@@ -51,9 +50,7 @@ class Login extends Component {
   }
 
   render() {
-    let errorDisplay
-    let successDisplay
-    let submitButton
+    let errorDisplay, successDisplay, submitButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -83,13 +80,10 @@ class Login extends Component {
 
     return (
       <div className='content-wrapper' >
-
         <Header as='h1'>
           Log in
         </Header>
-
         <Segment className='whitebox'>
-
           <Form id='login-form'>
             <Form.Input
               required
@@ -113,14 +107,10 @@ class Login extends Component {
                 Forgot your password?
               </Header>
             </div>
-
           </Form>
-
           {errorDisplay}
           {successDisplay}
-
           {submitButton}
-
           <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
             Not registered?
           <br></br>
@@ -128,9 +118,7 @@ class Login extends Component {
               Create an account!
             </Header>
           </p>
-
         </Segment>
-
       </div>
     )
   }
