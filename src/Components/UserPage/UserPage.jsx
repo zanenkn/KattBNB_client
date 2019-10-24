@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
+import { Header, Segment, Button, Divider } from 'semantic-ui-react'
 import axios from 'axios'
-import ReactAvatarEditor from 'react-avatar-editor'
-import Popup from 'reactjs-popup'
 import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
+import AvatarUpdateForm from './AvatarUpdateForm'
 
 class UserPage extends Component {
 
@@ -16,16 +15,8 @@ class UserPage extends Component {
   state = {
     displayLocationForm: false,
     displayPasswordForm: false,
-    avatar: this.props.avatar,
-    loading: false,
-    errorDisplay: false,
-    errors: '',
     hostProfile: '',
-    hostProfileForm: false,
-    image: '',
-    position: { x: 0.5, y: 0.5 },
-    scale: 1,
-    rotate: 0
+    hostProfileForm: false
   }
 
   async componentDidMount() {
@@ -38,12 +29,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
-      hostProfileForm: false,
-      errorDisplay: false,
-      errors: '',
-      image: '',
-      position: { x: 0.5, y: 0.5 },
-      rotate: 0
+      hostProfileForm: false
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -54,9 +40,7 @@ class UserPage extends Component {
     this.setState({
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
-      hostProfileForm: false,
-      errorDisplay: false,
-      errors: ''
+      hostProfileForm: false
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -67,9 +51,7 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      hostProfileForm: false,
-      errorDisplay: false,
-      errors: ''
+      hostProfileForm: false
     })
     if (this.state.hostProfile.length === 1) {
       this.hostProfileElement.current.closeAllForms()
@@ -80,108 +62,16 @@ class UserPage extends Component {
     this.setState({
       hostProfileForm: !this.state.hostProfileForm,
       displayLocationForm: false,
-      displayPasswordForm: false,
-      errorDisplay: false,
-      errors: ''
+      displayPasswordForm: false
     })
   }
 
   closeLocationAndPasswordForms = () => {
     this.setState({
       displayLocationForm: false,
-      displayPasswordForm: false,
-      errorDisplay: false,
-      errors: ''
+      displayPasswordForm: false
     })
   }
-
-  setEditorRef = editor => {
-    if (editor) this.editor = editor
-  }
-
-  handleNewImage = e => {
-    this.setState({
-      image: e.target.files[0],
-      position: { x: 0.5, y: 0.5 },
-      errorDisplay: false,
-      errors: []
-    })
-  }
-
-  rotateLeft = e => {
-    e.preventDefault()
-    this.setState({ rotate: this.state.rotate - 90 })
-  }
-
-  rotateRight = e => {
-    e.preventDefault()
-    this.setState({ rotate: this.state.rotate + 90 })
-  }
-
-  handleXPosition = e => {
-    const x = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, x } })
-  }
-
-  handleYPosition = e => {
-    const y = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, y } })
-  }
-
-  handlePositionChange = position => {
-    this.setState({ position })
-  }
-
-  updateAvatar = (e) => {
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
-      window.location.replace('/login')
-    } else if (this.state.image === '') {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['You have selected no avatar!']
-      })
-    } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['Please select a JPG, JPEG, PNG or GIF image file!']
-      })
-    }
-    else {
-      e.preventDefault()
-      this.setState({ loading: true })
-      const img = this.editor.getImageScaledToCanvas().toDataURL()
-      const path = '/api/v1/auth/'
-      const payload = {
-        avatar: img,
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload)
-        .then(response => {
-          this.setState({
-            avatar: response.data.data.avatar,
-            loading: false,
-            errorDisplay: false
-          })
-          window.location.reload(true)
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    }
-  }
-
-
-
-  
 
   destroyAccount = () => {
     this.setState({
@@ -211,116 +101,7 @@ class UserPage extends Component {
   }
 
   render() {
-    let errorDisplay, locationForm, passwordForm, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
-
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative style={{ 'width': 'inherit' }} >
-          <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      avatarSubmitButton = (
-        <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
-      )
-      avatarRotateRight = (
-        <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-      )
-      avatarRotateLeft = (
-        <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-      )
-    } else {
-      avatarSubmitButton = (
-        <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
-      )
-      if (this.state.image === '') {
-        avatarRotateRight = (
-          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-        )
-        avatarRotateLeft = (
-          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-        )
-      } else {
-        avatarRotateRight = (
-          <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateRight} />
-        )
-        avatarRotateLeft = (
-          <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateLeft} />
-        )
-      }
-    }
-
-    noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-    avatar = (
-      <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
-        <Icon.Group size='big' onClick={this.avatarFormHandler}>
-          <Image src={this.state.avatar === null ? noAvatar : this.state.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
-          <Popup
-            modal
-            className='avatar-popup'
-            trigger={
-              <Icon
-                id='add-avatar'
-                corner='bottom right'
-                name='pencil alternate'
-                circular
-                style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
-              />
-            }
-            position='top center'
-            closeOnDocumentClick={true}
-          >
-            <div style={{ 'marginBottom': '1rem' }}>
-              <div>
-                <ReactAvatarEditor
-                  ref={this.setEditorRef}
-                  width={258}
-                  height={258}
-                  position={this.state.position}
-                  onPositionChange={this.handlePositionChange}
-                  rotate={parseFloat(this.state.rotate)}
-                  borderRadius={129}
-                  image={this.state.image}
-                  className='editor-canvas'
-                />
-              </div>
-              <div className='button-wrapper' style={{ 'marginBottom': '1rem' }}>
-                <div>
-                  <label for='files'>
-                    <Icon.Group>
-                      <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em' }} />
-                      <Icon
-                        corner='bottom right'
-                        name='add'
-                        style={{ 'textShadow': 'none', 'color': '#c90c61' }}
-                      />
-                    </Icon.Group>
-                  </label>
-                  <input id='files' style={{ 'display': 'none' }} onChange={this.handleNewImage} type='file' />
-                </div>
-                <div>
-                  {avatarRotateLeft}
-                </div>
-                <div>
-                  {avatarRotateRight}
-                </div>
-              </div>
-              {errorDisplay}
-              <div className='button-wrapper'>
-                {avatarSubmitButton}
-              </div>
-            </div>
-          </Popup>
-        </Icon.Group>
-      </div>
-    )
+    let locationForm, passwordForm, hostProfile, hostProfileForm
 
     if (this.state.displayLocationForm) {
       locationForm = (
@@ -334,7 +115,7 @@ class UserPage extends Component {
     if (this.state.displayPasswordForm) {
       passwordForm = (
         <PasswordUpdateForm
-        closeLocationAndPasswordForms={this.closeLocationAndPasswordForms.bind(this)}
+          closeLocationAndPasswordForms={this.closeLocationAndPasswordForms.bind(this)}
         />
       )
     }
@@ -378,7 +159,11 @@ class UserPage extends Component {
           <p style={{ 'textAlign': 'center' }}>
             This is your <strong> basic </strong> profile. Here you can update your avatar, location, and password.
           </p>
-          {avatar}
+          <AvatarUpdateForm
+            avatar={this.props.avatar}
+            username={this.props.username}
+            closeAllForms={this.avatarFormHandler.bind(this)}
+          />
           <div style={{ 'margin': 'auto', 'display': 'table' }}>
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
@@ -412,7 +197,6 @@ class UserPage extends Component {
     )
   }
 }
-
 
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
