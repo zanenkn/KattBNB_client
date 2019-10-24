@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
 import { connect } from 'react-redux'
-import { Header, Segment, Form, Dropdown, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
-import { LOCATION_OPTIONS } from '../../Modules/locationData'
+import { Header, Segment, Form, Button, Message, Divider, Image, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
+import LocationUpdateForm from './LocationUpdateForm'
 
 class UserPage extends Component {
 
@@ -16,8 +16,6 @@ class UserPage extends Component {
     displayLocationForm: false,
     displayPasswordForm: false,
     avatar: this.props.avatar,
-    location: this.props.location,
-    newLocation: this.props.location,
     currentPassword: '',
     newPassword: '',
     newPasswordConfirmation: '',
@@ -44,12 +42,6 @@ class UserPage extends Component {
     }
   }
 
-  listenEnterKeyLocation = (event) => {
-    if (event.key === 'Enter') {
-      this.updateLocation(event)
-    }
-  }
-
   listenEnterKeyPassword = (event) => {
     if (event.key === 'Enter') {
       this.updatePassword(event)
@@ -60,16 +52,11 @@ class UserPage extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  handleLocationChange = (e, { value }) => {
-    this.setState({ newLocation: value })
-  }
-
   avatarFormHandler = () => {
     this.setState({
       displayLocationForm: false,
       displayPasswordForm: false,
       hostProfileForm: false,
-      newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
       image: '',
@@ -89,7 +76,6 @@ class UserPage extends Component {
       displayLocationForm: !this.state.displayLocationForm,
       displayPasswordForm: false,
       hostProfileForm: false,
-      newLocation: this.state.location,
       errorDisplay: false,
       errors: '',
       currentPassword: '',
@@ -105,7 +91,6 @@ class UserPage extends Component {
     this.setState({
       displayPasswordForm: !this.state.displayPasswordForm,
       displayLocationForm: false,
-      newLocation: this.state.location,
       hostProfileForm: false,
       errorDisplay: false,
       errors: '',
@@ -122,7 +107,6 @@ class UserPage extends Component {
     this.setState({
       hostProfileForm: !this.state.hostProfileForm,
       displayLocationForm: false,
-      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
@@ -135,7 +119,6 @@ class UserPage extends Component {
   closeLocationAndPasswordForms = () => {
     this.setState({
       displayLocationForm: false,
-      newLocation: this.state.location,
       displayPasswordForm: false,
       errorDisplay: false,
       errors: '',
@@ -229,50 +212,7 @@ class UserPage extends Component {
     }
   }
 
-  updateLocation = (e) => {
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
-      window.location.replace('/login')
-    } else if (this.state.newLocation === this.state.location || this.state.newLocation === '') {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['No location selected or location is unchanged!']
-      })
-    } else {
-      this.setState({ loading: true })
-      e.preventDefault()
-      const path = '/api/v1/auth/'
-      const payload = {
-        location: this.state.newLocation,
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload)
-        .then(response => {
-          this.setState({
-            displayLocationForm: false,
-            location: response.data.data.location,
-            loading: false,
-            errorDisplay: false
-          })
-          if (this.state.hostProfile.length === 1) {
-            window.alert('Location succesfully changed!')
-          } else {
-            window.alert('Location succesfully changed!')
-            window.location.reload(true)
-          }
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    }
-  }
+  
 
   updatePassword = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
@@ -343,7 +283,7 @@ class UserPage extends Component {
   }
 
   render() {
-    let errorDisplay, locationForm, locationSubmitButton, passwordForm, passwordSubmitButton, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
+    let errorDisplay, locationForm, passwordForm, passwordSubmitButton, hostProfile, hostProfileForm, avatar, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -359,9 +299,6 @@ class UserPage extends Component {
     }
 
     if (this.state.loading) {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' loading>Change</Button>
-      )
       passwordSubmitButton = (
         <Button id='password-submit-button' className='submit-button' loading>Change</Button>
       )
@@ -375,9 +312,6 @@ class UserPage extends Component {
         <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
     } else {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
-      )
       passwordSubmitButton = (
         <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
       )
@@ -468,28 +402,7 @@ class UserPage extends Component {
 
     if (this.state.displayLocationForm) {
       locationForm = (
-        <>
-          <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
-            <Dropdown
-              clearable
-              search
-              selection
-              placeholder='Select new location'
-              options={LOCATION_OPTIONS}
-              id='location'
-              style={{ 'width': '100%' }}
-              onChange={this.handleLocationChange}
-              onKeyPress={this.listenEnterKeyLocation}
-            />
-            {errorDisplay}
-          </Form>
-          <div className='button-wrapper'>
-            <Button secondary className='cancel-button' onClick={this.locationFormHandler}>Close</Button>
-            {locationSubmitButton}
-          </div>
-          <Divider style={{ 'marginBottom': '2rem' }} />
-        </>
+        <LocationUpdateForm />
       )
     }
 
