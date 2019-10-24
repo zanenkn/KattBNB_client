@@ -164,7 +164,6 @@ class HostProfileForm extends Component {
     }
   }
 
-
   render() {
     let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
     const today = new Date()
