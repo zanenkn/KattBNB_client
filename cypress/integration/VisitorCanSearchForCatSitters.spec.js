@@ -31,6 +31,8 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: 'fixture:search_no_results.json'
     })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('#cats').type('1')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
@@ -38,8 +40,8 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(5) > .DayPicker-Day:nth-child(2)').click()
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').click()
-    cy.get('#search-button').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').last().click()
+    cy.get('#search-button').click({ force: true })
     cy.contains('Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.')
   })
 
@@ -55,6 +57,8 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: 'fixture:search_no_results.json'
     })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('#cats').type('15')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
@@ -62,12 +66,12 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(5) > .DayPicker-Day:nth-child(2)').click()
-    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').click()
-    cy.get('#search-button').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').last().click()
+    cy.get('#search-button').click({ force: true })
     cy.contains('Dorotea')
     cy.contains('0 result(s)')
     cy.contains('15')
-    cy.get(':nth-child(1) > .ui > input').should('have.value', 'Dec 23, 2019')
-    cy.get(':nth-child(2) > .ui > input').should('have.value', 'Dec 31, 2019')
+    cy.get(':nth-child(1) > .ui > input').should('have.value', '2019-12-23')
+    cy.get(':nth-child(2) > .ui > input').should('have.value', '2019-12-31')
   })
 })
