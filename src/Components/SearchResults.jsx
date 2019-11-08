@@ -7,6 +7,7 @@ import List from './List'
 import GoogleMap from './Map/GoogleMap'
 import HostProfileView from './HostProfileView/HostProfileView'
 import moment from 'moment'
+import 'moment/locale/sv'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
@@ -131,8 +132,8 @@ class SearchResults extends Component {
   }
 
   render() {
-    let inDate = moment(this.state.checkInDate).format('ll')
-    let outDate = moment(this.state.checkOutDate).format('ll')
+    let inDate = moment(this.state.checkInDate).format('l')
+    let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
     let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
 
