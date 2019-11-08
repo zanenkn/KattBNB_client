@@ -205,6 +205,7 @@ class SearchResults extends Component {
               description={this.state.hostDescription}
               lat={this.state.hostLat}
               long={this.state.hostLong}
+              requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
             />
           </Container>
         )
