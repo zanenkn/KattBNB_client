@@ -135,7 +135,15 @@ class SearchResults extends Component {
     if (this.props.id === undefined) {
       this.props.history.push('/login')
     } else {
-      this.props.history.push('/request-to-book')
+      this.props.history.push({
+        pathname: '/request-to-book',
+        state: { 
+          numberOfCats: this.state.numberOfCats,
+          checkInDate: this.state.checkInDate,
+          checkOutDate: this.state.checkOutDate,
+          nickname: this.state.hostNickname
+        }
+      })
     }
   }
 
