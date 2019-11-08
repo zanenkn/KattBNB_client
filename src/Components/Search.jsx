@@ -213,7 +213,7 @@ class Search extends Component {
                 Where
               </label>
               <Dropdown
-                style={{ 'minWidth': '-webkit-fill-available' }}
+                //style={{ 'minWidth': '-webkit-fill-available' }}
                 clearable
                 search
                 selection
