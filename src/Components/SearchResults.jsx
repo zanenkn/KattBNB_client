@@ -131,6 +131,14 @@ class SearchResults extends Component {
     this.resetHost()
   }
 
+  requestToBookButtonClick = () => {
+    if (this.props.id === undefined) {
+      this.props.history.push('/login')
+    } else {
+      this.props.history.push('/request-to-book')
+    }
+  }
+
   render() {
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
@@ -250,6 +258,7 @@ class SearchResults extends Component {
               rate={this.state.hostRate}
               supplement={this.state.hostSupplement}
               handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+              requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
             />
           </div>
         </Popup>
