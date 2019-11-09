@@ -21,7 +21,7 @@ class RequestToBook extends Component {
   }
 
   componentDidMount() {
-    if (this.props.history.location.state === undefined) {
+    if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/' })
     } else {
       this.setState({
