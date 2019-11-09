@@ -12,7 +12,7 @@ const SuccessfulRequest = (props) => {
       <Header as='h1'>
         Success!
       </Header>
-      <Segment className='whitebox'  style={{ 'textAlign': 'center'}}>
+      <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
         <p>
           You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{props.location.state.numberOfCats} {props.location.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.location.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{checkOut}</strong>.
         </p>
@@ -21,7 +21,7 @@ const SuccessfulRequest = (props) => {
         </p>
       </Segment>
     </div>
-  )    
+  )
 }
 
 export default SuccessfulRequest

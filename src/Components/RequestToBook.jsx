@@ -11,7 +11,28 @@ class RequestToBook extends Component {
     message: '',
     loading: false,
     errorDisplay: false,
-    errors: ''
+    errors: '',
+    checkIn: '',
+    checkOut: '',
+    perDay: '',
+    orderTotal: '',
+    numberOfCats: '',
+    nickname: ''
+  }
+
+  componentDidMount() {
+    if (this.props.history.location.state === undefined) {
+      this.props.history.push({ pathname: '/' })
+    } else {
+      this.setState({
+        checkIn: moment(this.props.location.state.checkInDate).format('l'),
+        checkOut: moment(this.props.location.state.checkOutDate).format('l'),
+        perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement),
+        orderTotal: total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
+        numberOfCats: this.props.location.state.numberOfCats,
+        nickname: this.props.location.state.nickname
+      })
+    }
   }
 
   onChangeHandler = (e) => {
@@ -72,10 +93,6 @@ class RequestToBook extends Component {
   }
 
   render() {
-    let checkIn = moment(this.props.location.state.checkInDate).format('l')
-    let checkOut = moment(this.props.location.state.checkOutDate).format('l')
-    let perDay = pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement)
-    let orderTotal = total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
     let errorDisplay, requestToBookButton
 
     if (this.state.errorDisplay) {
@@ -108,7 +125,7 @@ class RequestToBook extends Component {
         </Header>
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.numberOfCats} {this.props.location.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{checkOut}</strong>.
+            You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
           </p>
           <Form>
             <Form.TextArea
@@ -125,14 +142,14 @@ class RequestToBook extends Component {
             By requesting to book, you agree to pay the total cost for this stay:
           </p>
           <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
-            {orderTotal} kr
+            {this.state.orderTotal} kr
           </Header>
           <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
-            ({perDay} kr/day)
+            ({this.state.perDay} kr/day)
           </Header>
           {requestToBookButton}
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.nickname}</strong> will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
+            <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
           </p>
         </Segment>
       </div>

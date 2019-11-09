@@ -28,15 +28,11 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, requestToBook
+    let userPageRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
         <Route exact path='/user-page' component={UserPage}></Route>
-      )
-
-      requestToBook = (
-        <Route exact path='/request-to-book' component={RequestToBook}></Route>
       )
     }
 
@@ -66,8 +62,8 @@ class App extends Component {
                 <Route exact path='/password-reset' component={PasswordReset}></Route>
                 <Route exact path='/change-password' component={ChangePassword}></Route>
                 <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+                <Route exact path='/request-to-book' component={RequestToBook}></Route>
                 <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
-                {requestToBook}
                 {userPageRoute}
               </Switch>
             </ScrollToTop>
