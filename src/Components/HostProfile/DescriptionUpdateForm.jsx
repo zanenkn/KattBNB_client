@@ -81,7 +81,7 @@ class DescriptionUpdateForm extends Component {
       <>
         <Divider />
         <p className='small-centered-paragraph'>
-          Please tell us a little about yourself and your experience with cats. This will be displayed at the search.
+          Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search.
         </p>
         <Form id='update-description'>
           <Form.TextArea
