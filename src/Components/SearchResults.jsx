@@ -137,7 +137,7 @@ class SearchResults extends Component {
     } else {
       this.props.history.push({
         pathname: '/request-to-book',
-        state: { 
+        state: {
           numberOfCats: this.state.numberOfCats,
           checkInDate: this.state.checkInDate,
           checkOutDate: this.state.checkOutDate,

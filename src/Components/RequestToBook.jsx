@@ -5,6 +5,7 @@ import moment from 'moment'
 import axios from 'axios'
 
 class RequestToBook extends Component {
+
   state = {
     message: '',
     loading: false,
@@ -63,8 +64,8 @@ class RequestToBook extends Component {
     }
   }
 
-
   render() {
+
     let checkIn = moment(this.props.location.state.checkInDate).format('l')
     let checkOut = moment(this.props.location.state.checkOutDate).format('l')
     let errorDisplay
@@ -90,7 +91,6 @@ class RequestToBook extends Component {
         <p>
           You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} - {checkOut}.
         </p>
-
         <Form>
           <Form.TextArea
             label='Message'
