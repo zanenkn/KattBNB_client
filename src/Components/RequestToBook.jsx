@@ -54,15 +54,12 @@ class RequestToBook extends Component {
           this.props.history.push({
             pathname: '/successful-request',
             state: {
-              numberOfCats: this.props.numberOfCats,
-              checkInDate: this.props.checkInDate,
-              checkOutDate: this.props.checkOutDate,
-              nickname: this.props.hostNickname
+              numberOfCats: this.props.location.state.numberOfCats,
+              checkInDate: this.props.location.state.checkInDate,
+              checkOutDate: this.props.location.state.checkOutDate,
+              nickname: this.props.location.state.nickname
             }
           })
-          // this.setState({ errorDisplay: false })
-          // window.alert('You have successfully requested a booking!')
-          // window.location.replace('/')
         })
         .catch(error => {
           this.setState({
