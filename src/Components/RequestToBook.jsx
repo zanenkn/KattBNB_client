@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Header, Form, Button, Message } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
+import { pricePerDay, total } from '../Modules/PriceCalculations'
 
 class RequestToBook extends Component {
 
@@ -67,6 +68,8 @@ class RequestToBook extends Component {
   render() {
     let checkIn = moment(this.props.location.state.checkInDate).format('l')
     let checkOut = moment(this.props.location.state.checkOutDate).format('l')
+    let perDay = pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement)
+    let orderTotal = total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
     let errorDisplay, requestToBookButton
 
     if (this.state.errorDisplay) {
@@ -98,7 +101,7 @@ class RequestToBook extends Component {
           Request to book
         </Header>
         <p>
-          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}.
+          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}. Total cost for this stay will be {orderTotal} kr ({perDay} kr/day).
         </p>
         <Form>
           <Form.TextArea

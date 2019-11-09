@@ -141,7 +141,9 @@ class SearchResults extends Component {
           numberOfCats: this.state.numberOfCats,
           checkInDate: this.state.checkInDate,
           checkOutDate: this.state.checkOutDate,
-          nickname: this.state.hostNickname
+          nickname: this.state.hostNickname,
+          hostRate: this.state.hostRate,
+          hostSupplement: this.state.hostSupplement
         }
       })
     }
