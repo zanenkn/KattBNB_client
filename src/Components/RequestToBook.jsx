@@ -52,7 +52,7 @@ class RequestToBook extends Component {
         .then(() => {
           this.setState({ errorDisplay: false })
           window.alert('You have successfully created a booking!')
-          //     setTimeout(function () { window.location.replace('/user-page') }, 500)
+          window.location.replace('/')
         })
         .catch(error => {
           this.setState({
@@ -93,7 +93,7 @@ class RequestToBook extends Component {
         <Form>
           <Form.TextArea
             label='Message'
-            placeholder='Message'
+            placeholder='Say a few words to the host...'
             required
             id='message'
             value={this.state.message}
@@ -106,7 +106,7 @@ class RequestToBook extends Component {
           onClick={this.createBooking}
         >
           Request to book
-      </Button>
+        </Button>
       </>
     )
   }
