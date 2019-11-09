@@ -65,7 +65,6 @@ class RequestToBook extends Component {
   }
 
   render() {
-
     let checkIn = moment(this.props.location.state.checkInDate).format('l')
     let checkOut = moment(this.props.location.state.checkOutDate).format('l')
     let errorDisplay
