@@ -51,9 +51,18 @@ class RequestToBook extends Component {
       }
       axios.post(path, payload, { headers: headers })
         .then(() => {
-          this.setState({ errorDisplay: false })
-          window.alert('You have successfully requested a booking!')
-          window.location.replace('/')
+          this.props.history.push({
+            pathname: '/successful-request',
+            state: {
+              numberOfCats: this.props.numberOfCats,
+              checkInDate: this.props.checkInDate,
+              checkOutDate: this.props.checkOutDate,
+              nickname: this.props.hostNickname
+            }
+          })
+          // this.setState({ errorDisplay: false })
+          // window.alert('You have successfully requested a booking!')
+          // window.location.replace('/')
         })
         .catch(error => {
           this.setState({

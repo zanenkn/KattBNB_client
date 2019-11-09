@@ -17,6 +17,7 @@ import ChangePassword from './Components/Authentication/ChangePassword'
 import PasswordResetSuccess from './Components/Authentication/PasswordResetSuccess'
 import UserPage from './Components/UserPage/UserPage'
 import RequestToBook from './Components/RequestToBook'
+import SuccessfulRequest from './Components/SuccessfulRequest'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -65,6 +66,7 @@ class App extends Component {
                 <Route exact path='/password-reset' component={PasswordReset}></Route>
                 <Route exact path='/change-password' component={ChangePassword}></Route>
                 <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+                <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                 {requestToBook}
                 {userPageRoute}
               </Switch>
