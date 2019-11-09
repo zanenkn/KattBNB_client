@@ -67,7 +67,7 @@ class RequestToBook extends Component {
   render() {
     let checkIn = moment(this.props.location.state.checkInDate).format('l')
     let checkOut = moment(this.props.location.state.checkOutDate).format('l')
-    let errorDisplay
+    let errorDisplay, requestToBookButton
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -79,6 +79,16 @@ class RequestToBook extends Component {
             ))}
           </ul>
         </Message>
+      )
+    }
+
+    if (this.state.loading) {
+      requestToBookButton = (
+        <Button loading id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }}>Request to book</Button>
+      )
+    } else {
+      requestToBookButton = (
+        <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} onClick={this.createBooking}>Request to book</Button>
       )
     }
 
@@ -101,12 +111,7 @@ class RequestToBook extends Component {
           />
         </Form>
         {errorDisplay}
-        <Button
-          style={{ 'marginTop': '0' }}
-          onClick={this.createBooking}
-        >
-          Request to book
-        </Button>
+        {requestToBookButton}
       </>
     )
   }
