@@ -24,7 +24,7 @@ class RequestToBook extends Component {
     if (this.state.message === '') {
       this.setState({
         loading: false,
-        errors: ['Writting a message to the host is obligatory!'],
+        errors: ['Please write a message to the host!'],
         errorDisplay: true
       })
     } else {
@@ -52,7 +52,7 @@ class RequestToBook extends Component {
       axios.post(path, payload, { headers: headers })
         .then(() => {
           this.setState({ errorDisplay: false })
-          window.alert('You have successfully created a booking!')
+          window.alert('You have successfully requested a booking!')
           window.location.replace('/')
         })
         .catch(error => {
@@ -101,12 +101,12 @@ class RequestToBook extends Component {
           Request to book
         </Header>
         <p>
-          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}. Total cost for this stay will be {orderTotal} kr ({perDay} kr/day).
+          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}. {this.props.location.state.nickname} will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
         </p>
         <Form>
           <Form.TextArea
             label='Message'
-            placeholder='Say a few words to the host...'
+            placeholder='Say a few words to the host..'
             required
             id='message'
             value={this.state.message}
@@ -115,7 +115,7 @@ class RequestToBook extends Component {
         </Form>
         {errorDisplay}
         <p>
-          Upon successfully booking, the cat host will be notified with an email. The cat host has 3 days to accept or decline your request. In any case, you will be notified with an email. If the cat host accepts, you are advised to arrange an appointment and finalize the transaction between each other.
+          By requesting to book, you agree to pay the total cost for this stay: {orderTotal} kr ({perDay} kr/day). 
         </p>
         {requestToBookButton}
       </>
