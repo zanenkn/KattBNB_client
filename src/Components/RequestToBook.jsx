@@ -98,7 +98,7 @@ class RequestToBook extends Component {
           Request to book
         </Header>
         <p>
-          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} - {checkOut}.
+          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}.
         </p>
         <Form>
           <Form.TextArea
@@ -111,6 +111,9 @@ class RequestToBook extends Component {
           />
         </Form>
         {errorDisplay}
+        <p>
+          Upon successfully booking, the cat host will be notified with an email. The cat host has 3 days to accept or decline your request. In any case, you will be notified with an email. If the cat host accepts, you are advised to arrange an appointment and finalize the transaction between each other.
+        </p>
         {requestToBookButton}
       </>
     )
