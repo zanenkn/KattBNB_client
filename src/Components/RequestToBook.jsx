@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Header, Form, Button, Message } from 'semantic-ui-react'
+import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
@@ -96,29 +96,40 @@ class RequestToBook extends Component {
     }
 
     return (
-      <>
-        <Header>
+      <div className='content-wrapper' >
+        <Header as='h1'>
           Request to book
         </Header>
-        <p>
-          You are requesting a booking for {this.props.location.state.numberOfCats} cat with {this.props.location.state.nickname} during the dates of {checkIn} and {checkOut}. {this.props.location.state.nickname} will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
-        </p>
-        <Form>
-          <Form.TextArea
-            label='Message'
-            placeholder='Say a few words to the host..'
-            required
-            id='message'
-            value={this.state.message}
-            onChange={this.onChangeHandler}
-          />
-        </Form>
-        {errorDisplay}
-        <p>
-          By requesting to book, you agree to pay the total cost for this stay: {orderTotal} kr ({perDay} kr/day). 
-        </p>
-        {requestToBookButton}
-      </>
+        <Segment className='whitebox'>
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+            You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.numberOfCats} {this.props.location.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{checkOut}</strong>.
+          </p>
+          <Form>
+            <Form.TextArea
+              label='Message'
+              placeholder='Say a few words to the host..'
+              required
+              id='message'
+              value={this.state.message}
+              onChange={this.onChangeHandler}
+            />
+          </Form>
+          {errorDisplay}
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+            By requesting to book, you agree to pay the total cost for this stay:
+          </p>
+          <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
+            {orderTotal} kr
+          </Header>
+          <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
+            ({perDay} kr/day)
+          </Header>
+          {requestToBookButton}
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+            <strong style={{ 'color': '#c90c61' }}>{this.props.location.state.nickname}</strong> will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
+          </p>
+        </Segment>
+      </div>
     )
   }
 }
