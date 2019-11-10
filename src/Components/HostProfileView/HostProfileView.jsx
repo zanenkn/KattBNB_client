@@ -34,6 +34,7 @@ const HostProfileView = (props) => {
         {orderTotal} kr
       </Header>
       <Button
+        id='request-to-book'
         style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
         onClick={props.requestToBookButtonClick}>
         Request to book
@@ -46,6 +47,7 @@ const HostProfileView = (props) => {
         {orderTotal} kr
       </Header>
       <Button
+        id='request-to-book'
         style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
         onClick={props.requestToBookButtonClick}>
         Request to book
