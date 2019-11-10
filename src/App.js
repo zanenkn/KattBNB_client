@@ -19,7 +19,7 @@ import UserPage from './Components/UserPage/UserPage'
 import RequestToBook from './Components/Bookings/RequestToBook'
 import SuccessfulRequest from './Components/Bookings/SuccessfulRequest'
 import ScrollToTop from './Modules/ScrollToTop'
-import { Container, Sticky, Sidebar } from 'semantic-ui-react'
+import { Container, Sticky, Sidebar, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
@@ -33,6 +33,20 @@ class App extends Component {
     if (this.props.currentUserIn) {
       userPageRoute = (
         <Route exact path='/user-page' component={UserPage}></Route>
+      )
+    } else {
+      userPageRoute = (
+        <>
+          <Container
+            className='content-wrapper'
+            textAlign='center'>
+            <Icon
+              name='stop circle'
+              size='massive'
+              color='red' />
+            <h1> You need to be signed in to access this page! </h1>
+          </Container>
+        </>
       )
     }
 

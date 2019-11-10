@@ -19,6 +19,12 @@ describe('User can view her host profile', () => {
       status: 200,
       response: 'fixture:successful_address_search2.json'
     })
+    cy.route({
+      method: 'DELETE',
+      url: 'http://localhost:3007/api/v1/auth/sign_out',
+      status: 200,
+      response: 'fixture:successful_signout.json'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#navlinks').within(() => {
@@ -66,5 +72,13 @@ describe('User can view her host profile', () => {
     cy.get('#add-avatar').click()
     cy.get('#avatar-submit-button').click()
     cy.contains('You have selected no avatar')
+  })
+
+  it('and if she logs out and visits the user-page path manually, she gets an error message', () => {
+    cy.get('div > .ui > #navbar > #hamburger > .icon').click()
+    cy.get('#app-content > #menu > #menu-grid > #menu-grid-column > #logout').click()
+    cy.wait(2000)
+    cy.visit('http://localhost:3000/user-page')
+    cy.contains('You need to be signed in to access this page!')
   })
 })
