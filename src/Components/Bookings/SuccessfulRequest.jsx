@@ -37,7 +37,7 @@ class SuccessfulRequest extends Component {
             You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
           </p>
           <p>
-            <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link-underlined'>FAQ</Header>.
+            <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link'>FAQ</Header>.
           </p>
         </Segment>
       </div>
