@@ -33,7 +33,11 @@ class Login extends Component {
           successDisplay: true,
           errorDisplay: false
         })
-        setTimeout(function () { history.push('/') }, 1000)
+        if (window.localStorage.getItem('searchIndex') === null) {
+          setTimeout(function () { history.push('/') }, 1000)
+        } else {
+          history.go(-1)
+        }
       }).catch(error => {
         this.setState({
           errorDisplay: true,
