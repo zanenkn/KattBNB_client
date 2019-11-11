@@ -63,6 +63,8 @@ class RequestToBook extends Component {
         message: this.state.message,
         dates: booking,
         host_nickname: this.props.location.state.nickname,
+        price_per_day: this.state.perDay,
+        price_total: this.state.orderTotal,
         user_id: this.props.id
       }
       const headers = {
@@ -148,9 +150,6 @@ class RequestToBook extends Component {
             ({this.state.perDay} kr/day)
           </Header>
           {requestToBookButton}
-          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> will have 3 days to accept or decline your booking request and we will let you know by email. Read more about booking process in our FAQ.
-          </p>
         </Segment>
       </div>
     )
