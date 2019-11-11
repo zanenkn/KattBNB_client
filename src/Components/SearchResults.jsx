@@ -164,10 +164,6 @@ class SearchResults extends Component {
       })
     }
 
-    if (this.props.id === undefined) {
-      window.localStorage.setItem('searchIndex', true)
-    }
-
     switch (this.state.results) {
       case 'list':
         results = (

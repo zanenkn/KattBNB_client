@@ -33,7 +33,7 @@ class Login extends Component {
           successDisplay: true,
           errorDisplay: false
         })
-        if (window.localStorage.getItem('searchIndex') === null) {
+        if (history.length <= 2) {
           setTimeout(function () { history.push('/') }, 1000)
         } else {
           history.go(-1)
