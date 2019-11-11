@@ -56,7 +56,7 @@ class AvatarUpdateForm extends Component {
   updateAvatar = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
-      window.location.replace('/')
+      window.location.replace('/login')
     } else if (this.state.image === '') {
       this.setState({
         loading: false,

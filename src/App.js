@@ -44,7 +44,7 @@ class App extends Component {
               name='stop circle'
               size='massive'
               color='red' />
-            <h1> You need to be signed in to access this page! </h1>
+            <h1> You cannot access this page or the page does not exist! </h1>
           </Container>
         </>
       )

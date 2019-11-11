@@ -5,6 +5,7 @@ describe('User can log in', () => {
 
   it('succesfully', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.contains('Find a cat sitter!')
   })
 
   it('unsuccessfuly with invalid credentials', () => {

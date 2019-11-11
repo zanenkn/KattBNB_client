@@ -46,7 +46,7 @@ class PasswordUpdateForm extends Component {
             errorDisplay: false
           })
           window.alert('Your password was successfully changed!')
-          window.location.replace('/')
+          window.location.replace('/login')
           window.localStorage.clear()
         })
         .catch(error => {

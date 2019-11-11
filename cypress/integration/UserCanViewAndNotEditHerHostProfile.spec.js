@@ -79,6 +79,6 @@ describe('User can view her host profile', () => {
     cy.get('#app-content > #menu > #menu-grid > #menu-grid-column > #logout').click()
     cy.wait(2000)
     cy.visit('http://localhost:3000/user-page')
-    cy.contains('You need to be signed in to access this page!')
+    cy.contains('You cannot access this page or the page does not exist!')
   })
 })

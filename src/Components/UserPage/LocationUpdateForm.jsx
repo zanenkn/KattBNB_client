@@ -25,7 +25,7 @@ class LocationUpdateForm extends Component {
   updateLocation = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
-      window.location.replace('/')
+      window.location.replace('/login')
     } else if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
       this.setState({
         loading: false,
