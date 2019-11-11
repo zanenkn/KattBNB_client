@@ -36,7 +36,7 @@ class ChangePassword extends Component {
             successDisplay: true,
             errorDisplay: false
           })
-          setTimeout(function () { window.location.replace('/login') }, 2000)
+          setTimeout(function () { window.location.replace('/') }, 2000)
         })
         .catch(error => {
           this.setState({

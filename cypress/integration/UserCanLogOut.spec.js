@@ -13,13 +13,12 @@ describe('User can sign out', () => {
       response: 'fixture:successful_signout.json'
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
-    cy.contains('You have succesfully logged in! Please wait to be redirected.')
-    cy.wait(3000)
+    cy.wait(1000)
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })
     cy.get('#logout').click()
     cy.wait(1000)
-    cy.contains('Log in')
+    cy.contains('Find a cat sitter!')
   })
 })

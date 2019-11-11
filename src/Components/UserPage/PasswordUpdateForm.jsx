@@ -26,7 +26,7 @@ class PasswordUpdateForm extends Component {
   updatePassword = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
-      window.location.replace('/login')
+      window.location.replace('/')
     } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
       this.setState({ loading: true })
       e.preventDefault()
@@ -46,7 +46,7 @@ class PasswordUpdateForm extends Component {
             errorDisplay: false
           })
           window.alert('Your password was successfully changed!')
-          window.location.replace('/login')
+          window.location.replace('/')
           window.localStorage.clear()
         })
         .catch(error => {

@@ -56,6 +56,10 @@ class Login extends Component {
   render() {
     let errorDisplay, successDisplay, submitButton
 
+    if (this.props.history.action === 'POP') {
+      this.props.history.push({ pathname: '/' })
+    }
+
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative textAlign='center'>

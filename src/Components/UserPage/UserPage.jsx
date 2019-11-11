@@ -95,7 +95,7 @@ class UserPage extends Component {
         .catch(() => {
           window.alert('There was a problem deleting your account! Please login and try again.')
           window.localStorage.clear()
-          window.location.replace('/login')
+          window.location.replace('/')
         })
     }
   }
