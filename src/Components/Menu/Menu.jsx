@@ -22,7 +22,7 @@ class Menu extends Component {
     axios.delete(path, { headers: headers })
       .then(() => {
         window.localStorage.clear()
-        window.location.replace('/login')
+        window.location.replace('/')
       })
       .catch(() => {
         window.alert('There was a problem signing you out. Please try again in a minute')
