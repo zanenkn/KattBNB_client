@@ -36,7 +36,10 @@ const HostPopup = (props) => {
       <Header as='h3' style={{ 'marginTop': '0' }}>
         {orderTotal} kr
       </Header>
-      <Button style={{ 'marginTop': '0' }}>
+      <Button
+        id='request-to-book'
+        style={{ 'marginTop': '0' }}
+        onClick={props.requestToBookButtonClick}>
         Request to book
       </Button>
     </>

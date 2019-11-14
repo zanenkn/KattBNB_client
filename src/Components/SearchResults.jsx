@@ -7,6 +7,7 @@ import List from './List'
 import GoogleMap from './Map/GoogleMap'
 import HostProfileView from './HostProfileView/HostProfileView'
 import moment from 'moment'
+import 'moment/locale/sv'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
@@ -130,9 +131,27 @@ class SearchResults extends Component {
     this.resetHost()
   }
 
+  requestToBookButtonClick = () => {
+    if (this.props.id === undefined) {
+      this.props.history.push('/login')
+    } else {
+      this.props.history.push({
+        pathname: '/request-to-book',
+        state: {
+          numberOfCats: this.state.numberOfCats,
+          checkInDate: this.state.checkInDate,
+          checkOutDate: this.state.checkOutDate,
+          nickname: this.state.hostNickname,
+          hostRate: this.state.hostRate,
+          hostSupplement: this.state.hostSupplement
+        }
+      })
+    }
+  }
+
   render() {
-    let inDate = moment(this.state.checkInDate).format('ll')
-    let outDate = moment(this.state.checkOutDate).format('ll')
+    let inDate = moment(this.state.checkInDate).format('l')
+    let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
     let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
 
@@ -196,6 +215,7 @@ class SearchResults extends Component {
               description={this.state.hostDescription}
               lat={this.state.hostLat}
               long={this.state.hostLong}
+              requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
             />
           </Container>
         )
@@ -249,6 +269,7 @@ class SearchResults extends Component {
               rate={this.state.hostRate}
               supplement={this.state.hostSupplement}
               handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+              requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
             />
           </div>
         </Popup>

@@ -246,7 +246,7 @@ class HostProfileForm extends Component {
         <Form id='host-profile-form'>
           <Form.TextArea
             label='About you'
-            placeholder='Please write shortly about yourself and your experience with cats..'
+            placeholder='Please write shortly about yourself and your experience with cats, as well as any cat amenities your apartment or house offers.'
             required
             id='description'
             value={this.state.description}

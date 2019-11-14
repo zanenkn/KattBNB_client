@@ -33,7 +33,11 @@ class Login extends Component {
           successDisplay: true,
           errorDisplay: false
         })
-        setTimeout(function () { history.push('/') }, 1000)
+        if (history.length <= 2) {
+          history.push('/')
+        } else {
+          history.go(-1)
+        }
       }).catch(error => {
         this.setState({
           errorDisplay: true,
@@ -50,7 +54,7 @@ class Login extends Component {
   }
 
   render() {
-    let errorDisplay, successDisplay, submitButton
+    let errorDisplay, successDisplay, submitButton, notRegisteredLinks, forgotPassword
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -63,8 +67,34 @@ class Login extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
-          You have succesfully logged in! Please wait to be redirected.
+          You have succesfully logged in!
         </Message>
+      )
+
+      notRegisteredLinks = (
+        <p></p>
+      )
+
+      forgotPassword = (
+        <p></p>
+      )
+    } else {
+      notRegisteredLinks = (
+        <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
+          Not registered?
+          <br></br>
+          <Header as={Link} to='sign-up' className='fake-link'>
+            Create an account!
+          </Header>
+        </p>
+      )
+
+      forgotPassword = (
+        <div style={{ 'textAlign': 'right' }}>
+          <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
+            Forgot your password?
+          </Header>
+        </div>
       )
     }
 
@@ -102,29 +132,16 @@ class Login extends Component {
               placeholder='Password'
               onKeyPress={this.listenEnterKey}
             />
-            <div style={{ 'textAlign': 'right' }}>
-              <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
-                Forgot your password?
-              </Header>
-            </div>
+            {forgotPassword}
           </Form>
           {errorDisplay}
           {successDisplay}
           {submitButton}
-          <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
-            Not registered?
-          <br></br>
-            <Header as={Link} to='sign-up' className='fake-link'>
-              Create an account!
-            </Header>
-          </p>
+          {notRegisteredLinks}
         </Segment>
       </div>
     )
   }
 }
 
-export default connect(
-  null,
-  { signInUser },
-)(Login)
+export default connect(null, { signInUser })(Login)
