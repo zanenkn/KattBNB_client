@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { Header } from 'semantic-ui-react'
 
 class AllBookings extends Component {
 
@@ -21,9 +22,28 @@ class AllBookings extends Component {
   }
 
   render() {
+    let requests =[]
+
+    if (this.state.outgoingBookings.length > 0) {
+      this.state.outgoingBookings.map(booking => {
+        if (booking.status === 'pending') {
+          requests.push(booking)
+        }
+      })
+    }
+
     return (
       <>
-        {this.state.outgoingBookings.length}
+        <Header as='h1'>
+          Hi, {this.props.username}!
+        </Header>
+
+        <p>
+          Outgoing Bookings
+          Requests: {requests.length}
+          Upcoming:
+          History:
+        </p>
       </>
     )
   }
