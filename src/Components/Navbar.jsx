@@ -53,7 +53,7 @@ class Navbar extends Component {
               <Grid.Column className='navlink' width={4}>
                 <svg className='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='#FFFFFF' d='M17 11v3l-3-3H8a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-1zm-3 2v2a2 2 0 0 1-2 2H6l-3 3v-3H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h2v3a4 4 0 0 0 4 4h6z' /></svg>
               </Grid.Column>
-              <Grid.Column className='navlink' width={4}>
+              <Grid.Column className='navlink' width={4} as={Link} to='/all-bookings' onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
                 <svg className='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='#FFFFFF' d='M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z' /></svg>
               </Grid.Column>
               {userIcon}
