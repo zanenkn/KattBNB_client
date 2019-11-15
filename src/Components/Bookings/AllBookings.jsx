@@ -22,12 +22,24 @@ class AllBookings extends Component {
   }
 
   render() {
-    let requests =[]
+    let requests = []
+    let upcoming = []
+    let declined = []
+    let history = []
+    let todaysDate = new Date()
+    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+    let today =  new Date(utc).getTime()
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
         if (booking.status === 'pending') {
           requests.push(booking)
+        } else if (booking.status === 'declined') {
+          declined.push(booking)
+        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length-1] > today ) {
+          upcoming.push(booking)
+        } else {
+          history.push(booking)
         }
       })
     }
@@ -38,11 +50,14 @@ class AllBookings extends Component {
           Hi, {this.props.username}!
         </Header>
 
-        <p>
+        <Header as='h3'>
           Outgoing Bookings
-          Requests: {requests.length}
-          Upcoming:
-          History:
+        </Header>
+        <p className='small-centered-paragraph'>
+          Requests: {requests.length}&nbsp;
+          Upcoming: {upcoming.length}&nbsp;
+          Declined: {declined.length}&nbsp;
+          History: {history.length}
         </p>
       </>
     )
