@@ -25,7 +25,7 @@ class UserPage extends Component {
       this.setState({ hostProfile: response.data })
     })
     if (this.state.hostProfile.length === 1) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
+      const path = `/api/v1/host_profiles/${this.state.hostProfile[0].id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
