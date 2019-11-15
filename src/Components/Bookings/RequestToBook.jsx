@@ -95,7 +95,9 @@ class RequestToBook extends Component {
   }
 
   render() {
-    let errorDisplay, requestToBookButton
+    let errorDisplay, requestToBookButton, messageLength
+
+    messageLength = 400 - this.state.message.length
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -139,6 +141,9 @@ class RequestToBook extends Component {
               onChange={this.onChangeHandler}
             />
           </Form>
+          <p>
+            remaining characters: {messageLength}
+          </p>
           {errorDisplay}
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
             By requesting to book, you agree to pay the total cost for this stay:
