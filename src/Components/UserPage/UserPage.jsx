@@ -125,7 +125,7 @@ class UserPage extends Component {
         <HostProfileForm
           user_id={this.props.id}
           closeForm={this.hostProfileFormHandler.bind(this)}
-          location={this.state.location} />
+          location={this.props.location} />
       )
     } else {
       hostProfileForm = (
@@ -140,7 +140,7 @@ class UserPage extends Component {
       hostProfile = (
         <HostProfile
           id={this.state.hostProfile[0].id}
-          location={this.state.location}
+          location={this.props.location}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )
