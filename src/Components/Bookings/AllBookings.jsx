@@ -57,7 +57,7 @@ class AllBookings extends Component {
             requests: requests,
             upcoming: upcoming,
             declined: declined,
-            history: history 
+            history: history
           }
         }}>Outgoing Bookings</Link>
 
