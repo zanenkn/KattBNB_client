@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class AllBookings extends Component {
 
@@ -28,7 +29,7 @@ class AllBookings extends Component {
     let history = []
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-    let today =  new Date(utc).getTime()
+    let today = new Date(utc).getTime()
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -36,7 +37,7 @@ class AllBookings extends Component {
           requests.push(booking)
         } else if (booking.status === 'declined') {
           declined.push(booking)
-        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length-1] > today ) {
+        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
           upcoming.push(booking)
         } else {
           history.push(booking)
@@ -50,9 +51,16 @@ class AllBookings extends Component {
           Hi, {this.props.username}!
         </Header>
 
-        <Header as='h3'>
-          Outgoing Bookings
-        </Header>
+        <Link as='h1' to={{
+          pathname: '/outgoing-bookings',
+          state: {
+            requests: requests,
+            upcoming: upcoming,
+            declined: declined,
+            history: history 
+          }
+        }}>Outgoing Bookings</Link>
+
         <p className='small-centered-paragraph'>
           Requests: {requests.length}&nbsp;
           Upcoming: {upcoming.length}&nbsp;
