@@ -48,6 +48,12 @@ class RequestToBook extends Component {
         errors: ['Please write a message to the host!'],
         errorDisplay: true
       })
+    } else if (this.state.message.length > 400) {
+      this.setState({
+        loading: false,
+        errors: ['The message cannot exceed 400 characters!'],
+        errorDisplay: true
+      })
     } else {
       let booking = []
       let startDate = this.props.location.state.checkInDate
