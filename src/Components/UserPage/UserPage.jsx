@@ -16,13 +16,26 @@ class UserPage extends Component {
     displayLocationForm: false,
     displayPasswordForm: false,
     hostProfile: '',
-    hostProfileForm: false
+    hostProfileForm: false,
+    fullAddress: ''
   }
 
   async componentDidMount() {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ hostProfile: response.data })
     })
+    if (this.state.hostProfile.length === 1) {
+      const path = `/api/v1/host_profiles/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.get(path, { headers: headers })
+        .then(response => {
+          this.setState({ fullAddress: response.data.full_address })
+        })
+    }
   }
 
   avatarFormHandler = () => {
@@ -107,6 +120,7 @@ class UserPage extends Component {
       locationForm = (
         <LocationUpdateForm
           location={this.props.location}
+          fullAddress={this.state.fullAddress}
           closeLocationAndPasswordForms={this.closeLocationAndPasswordForms.bind(this)}
         />
       )
