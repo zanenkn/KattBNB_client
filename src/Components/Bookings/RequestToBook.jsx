@@ -147,8 +147,8 @@ class RequestToBook extends Component {
               onChange={this.onChangeHandler}
             />
           </Form>
-          <p>
-            remaining characters: {messageLength}
+          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+            Remaining characters: {messageLength}
           </p>
           {errorDisplay}
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
