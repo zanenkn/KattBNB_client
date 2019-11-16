@@ -61,21 +61,26 @@ class AllBookings extends Component {
     }
 
     return (
-      <>
+      <div className='expanding-wrapper'>
         <Header as='h1'>
           Hi, {this.props.username}!
         </Header>
-        <Button as={Link} style={{ 'background-color': '#ffffff' }} to={{
-          pathname: '/outgoing-bookings',
-          state: {
-            requests: requests,
-            upcoming: upcoming,
-            declined: declined,
-            history: history
-          }
-        }}>Outgoing Bookings</Button>
+        <p style={{'textAlign': 'center'}}>
+          Here you can manage your bookings.
+        </p>
+        <Button onClick={() => {
+          this.props.history.push({
+            pathname: '/outgoing-bookings',
+            state: {
+              requests: requests,
+              upcoming: upcoming,
+              declined: declined,
+              history: history
+            }
+          })
+        }}>View outgoing bookings</Button>
         {bookingStats}
-      </>
+      </div>
     )
   }
 }
