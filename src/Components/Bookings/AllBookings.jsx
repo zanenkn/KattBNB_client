@@ -60,14 +60,12 @@ class AllBookings extends Component {
       )
     }
 
-
     return (
       <>
         <Header as='h1'>
           Hi, {this.props.username}!
         </Header>
-
-        <Button as={Link} style={{'background-color': '#ffffff'}} to={{
+        <Button as={Link} style={{ 'background-color': '#ffffff' }} to={{
           pathname: '/outgoing-bookings',
           state: {
             requests: requests,
@@ -76,7 +74,6 @@ class AllBookings extends Component {
             history: history
           }
         }}>Outgoing Bookings</Button>
-
         {bookingStats}
       </>
     )
