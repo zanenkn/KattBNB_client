@@ -122,7 +122,10 @@ class HostProfile extends Component {
     } else {
       calendar = (
         <AvailabilityViewOnlyMode
-          selectedDays={this.props.selectedDays}
+          selectedDays={this.props.availability.map(function (date) {
+            return new Date(date)
+          })
+          }
         />
       )
     }
