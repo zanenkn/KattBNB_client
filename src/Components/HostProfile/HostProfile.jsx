@@ -29,9 +29,6 @@ class HostProfile extends Component {
       editSupplementForm: false,
       editableCalendar: false,
       editAddress: false,
-      selectedDays: this.props.availability.map(function (date) {
-        return new Date(date)
-      }),
       errorDisplay: false,
       errors: ''
     })
@@ -44,10 +41,7 @@ class HostProfile extends Component {
     })
     this.setState({
       errorDisplay: false,
-      errors: '',
-      selectedDays: this.props.availability.map(function (date) {
-        return new Date(date)
-      })
+      errors: ''
     })
     this.props.closeLocPasForms()
   }
@@ -113,7 +107,10 @@ class HostProfile extends Component {
     if (this.state.editableCalendar) {
       calendar = (
         <AvailabilityUpdateForm
-          selectedDays={this.props.selectedDays}
+          selectedDays={this.props.availability.map(function (date) {
+            return new Date(date)
+          })
+          }
           availability={this.props.availability}
           id={this.props.id}
           closeAllForms={this.closeAllForms.bind(this)}

@@ -22,8 +22,7 @@ class UserPage extends Component {
     rate: '',
     maxCats: '',
     supplement: '',
-    availability: [],
-    selectedDays: []
+    availability: []
   }
 
   async componentDidMount() {
@@ -45,10 +44,7 @@ class UserPage extends Component {
             rate: response.data.price_per_day_1_cat,
             maxCats: response.data.max_cats_accepted,
             supplement: response.data.supplement_price_per_cat_per_day,
-            availability: response.data.availability,
-            selectedDays: response.data.availability.map(function (date) {
-              return new Date(date)
-            })
+            availability: response.data.availability
           })
         })
     }
@@ -176,7 +172,6 @@ class UserPage extends Component {
           maxCats={this.state.maxCats}
           supplement={this.state.supplement}
           availability={this.state.availability}
-          selectedDays={this.state.selectedDays}
           location={this.props.location}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
