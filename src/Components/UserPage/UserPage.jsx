@@ -17,7 +17,13 @@ class UserPage extends Component {
     displayPasswordForm: false,
     hostProfile: '',
     hostProfileForm: false,
-    fullAddress: ''
+    description: '',
+    fullAddress: '',
+    rate: '',
+    maxCats: '',
+    supplement: '',
+    availability: [],
+    selectedDays: []
   }
 
   async componentDidMount() {
@@ -33,7 +39,17 @@ class UserPage extends Component {
       }
       axios.get(path, { headers: headers })
         .then(response => {
-          this.setState({ fullAddress: response.data.full_address })
+          this.setState({
+            description: response.data.description,
+            fullAddress: response.data.full_address,
+            rate: response.data.price_per_day_1_cat,
+            maxCats: response.data.max_cats_accepted,
+            supplement: response.data.supplement_price_per_cat_per_day,
+            availability: response.data.availability,
+            selectedDays: response.data.availability.map(function (date) {
+              return new Date(date)
+            })
+          })
         })
     }
   }
@@ -154,6 +170,13 @@ class UserPage extends Component {
       hostProfile = (
         <HostProfile
           id={this.state.hostProfile[0].id}
+          description={this.state.description}
+          fullAddress={this.state.fullAddress}
+          rate={this.state.rate}
+          maxCats={this.state.maxCats}
+          supplement={this.state.supplement}
+          availability={this.state.availability}
+          selectedDays={this.state.selectedDays}
           location={this.props.location}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
