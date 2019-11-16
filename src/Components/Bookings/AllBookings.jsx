@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Header } from 'semantic-ui-react'
+import { Header, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class AllBookings extends Component {
@@ -30,6 +30,7 @@ class AllBookings extends Component {
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
+    let bookingStats
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -43,7 +44,22 @@ class AllBookings extends Component {
           history.push(booking)
         }
       })
+      bookingStats = (
+        <p className='small-centered-paragraph'>
+          Requests: {requests.length}&nbsp;
+          Upcoming: {upcoming.length}&nbsp;
+          Declined: {declined.length}&nbsp;
+          History: {history.length}
+        </p>
+      )
+    } else {
+      bookingStats = (
+        <p className='small-centered-paragraph'>
+          You don't have any Outgoing Bookings yet.
+        </p>
+      )
     }
+
 
     return (
       <>
@@ -51,7 +67,7 @@ class AllBookings extends Component {
           Hi, {this.props.username}!
         </Header>
 
-        <Link as='h1' to={{
+        <Button as={Link} style={{'background-color': '#ffffff'}} to={{
           pathname: '/outgoing-bookings',
           state: {
             requests: requests,
@@ -59,14 +75,9 @@ class AllBookings extends Component {
             declined: declined,
             history: history
           }
-        }}>Outgoing Bookings</Link>
+        }}>Outgoing Bookings</Button>
 
-        <p className='small-centered-paragraph'>
-          Requests: {requests.length}&nbsp;
-          Upcoming: {upcoming.length}&nbsp;
-          Declined: {declined.length}&nbsp;
-          History: {history.length}
-        </p>
+        {bookingStats}
       </>
     )
   }
