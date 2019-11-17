@@ -22,37 +22,37 @@ class AllBookings extends Component {
   }
 
   render() {
-    let requests = []
-    let upcoming = []
-    let declined = []
-    let history = []
+    let outgoingRequests = []
+    let outgoingUpcoming = []
+    let outgoingDeclined = []
+    let outgoingHistory = []
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let bookingStats
+    let outgoingBookingStats
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
         if (booking.status === 'pending') {
-          requests.push(booking)
+          outgoingRequests.push(booking)
         } else if (booking.status === 'declined') {
-          declined.push(booking)
+          outgoingDeclined.push(booking)
         } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-          upcoming.push(booking)
+          outgoingUpcoming.push(booking)
         } else {
-          history.push(booking)
+          outgoingHistory.push(booking)
         }
       })
-      bookingStats = (
+      outgoingBookingStats = (
         <p className='small-centered-paragraph'>
-          Requests: {requests.length}&nbsp;
-          Upcoming: {upcoming.length}&nbsp;
-          Declined: {declined.length}&nbsp;
-          History: {history.length}
+          Requests: {outgoingRequests.length}&nbsp;
+          Upcoming: {outgoingUpcoming.length}&nbsp;
+          Declined: {outgoingDeclined.length}&nbsp;
+          History: {outgoingHistory.length}
         </p>
       )
     } else {
-      bookingStats = (
+      outgoingBookingStats = (
         <p className='small-centered-paragraph'>
           You don't have any Outgoing Bookings yet.
         </p>
@@ -71,14 +71,14 @@ class AllBookings extends Component {
           this.props.history.push({
             pathname: '/outgoing-bookings',
             state: {
-              requests: requests,
-              upcoming: upcoming,
-              declined: declined,
-              history: history
+              outgoingRequests: outgoingRequests,
+              outgoingUpcoming: outgoingUpcoming,
+              outgoingDeclined: outgoingDeclined,
+              outgoingHistory: outgoingHistory
             }
           })
         }}>View outgoing bookings</Button>
-        {bookingStats}
+        {outgoingBookingStats}
       </div>
     )
   }

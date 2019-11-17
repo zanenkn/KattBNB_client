@@ -2,7 +2,6 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 import OutgoingRequests from './OutgoingRequests'
 
-
 const OutgoingBookings = (props) => {
 
   return (
@@ -17,7 +16,7 @@ const OutgoingBookings = (props) => {
         Requests
       </Header>
       <OutgoingRequests 
-        requests={props.location.state.requests}
+        requests={props.location.state.outgoingRequests}
       />
     </div>
   )
