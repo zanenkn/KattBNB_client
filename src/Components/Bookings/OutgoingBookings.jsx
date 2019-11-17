@@ -2,6 +2,7 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 import OutgoingRequests from './OutgoingRequests'
 import OutgoingUpcoming from './OutgoingUpcoming'
+import OutgoingHistory from './OutgoingHistory'
 
 const OutgoingBookings = (props) => {
 
@@ -24,6 +25,13 @@ const OutgoingBookings = (props) => {
       </Header>
       <OutgoingUpcoming 
         upcoming={props.location.state.outgoingUpcoming}
+      />
+      <Header as='h2' style={{'marginBottom': '0'}}>
+        History
+      </Header>
+      <OutgoingHistory
+        declined={props.location.state.outgoingDeclined}
+        history={props.location.state.outgoingHistory}
       />
     </div>
   )
