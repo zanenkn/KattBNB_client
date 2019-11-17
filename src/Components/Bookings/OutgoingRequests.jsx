@@ -8,7 +8,7 @@ const OutgoingRequests = (props) => {
       <>
         <p className='small-centered-paragraph'>
           <strong>
-            You have {props.requests.length} {props.requests.length > 1 ? 'requests' : 'request'}.
+            You have made {props.requests.length} booking {props.requests.length > 1 ? 'requests' : 'request'}.
           </strong>
         </p>
         <p style={{'textAlign': 'center'}}>
