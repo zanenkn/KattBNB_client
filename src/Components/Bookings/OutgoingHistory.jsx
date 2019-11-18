@@ -3,7 +3,8 @@ import moment from 'moment'
 import { Container } from 'semantic-ui-react'
 
 const OutgoingHistory = (props) => {
-  props.history.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
+  let sortedHistory = props.history
+  sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
   if (props.history.length > 0) {
     return (
@@ -13,7 +14,7 @@ const OutgoingHistory = (props) => {
             You have {props.history.length} past {props.history.length > 1 ? 'bookings' : 'booking'}.
           </strong>
         </p>
-        {props.history.map(booking => {
+        {sortedHistory.map(booking => {
           if (booking.status === 'declined') {
             return (
               <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id}>

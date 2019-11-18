@@ -3,6 +3,9 @@ import moment from 'moment'
 import { Container } from 'semantic-ui-react'
 
 const OutgoingRequests = (props) => {
+  let sortedRequests = props.requests
+  sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
+
   if (props.requests.length > 0) {
     return (
       <>
@@ -14,7 +17,7 @@ const OutgoingRequests = (props) => {
         <p style={{ 'textAlign': 'center' }}>
           These are requests to book you have made awaiting confirmation from host(s).
         </p>
-        {props.requests.map(request => {
+        {sortedRequests.map(request => {
           return (
             <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={request.id}>
               <p className='small-centered-paragraph'>

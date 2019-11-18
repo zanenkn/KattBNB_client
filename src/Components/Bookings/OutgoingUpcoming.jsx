@@ -3,6 +3,9 @@ import moment from 'moment'
 import { Container } from 'semantic-ui-react'
 
 const OutgoingUpcoming = (props) => {
+  let sortedUpcoming = props.upcoming
+  sortedUpcoming.sort((a, b) => (b.dates[0] - a.dates[0]))
+
   if (props.upcoming.length > 0) {
     return (
       <>
@@ -14,7 +17,7 @@ const OutgoingUpcoming = (props) => {
         <p style={{ 'textAlign': 'center' }}>
           These are finalized bookings coming up soon. Get in touch with these hosts to organize the drop-off and pick-up.
         </p>
-        {props.upcoming.map(upcoming => {
+        {sortedUpcoming.map(upcoming => {
           return (
             <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={upcoming.id}>
               <p className='small-centered-paragraph'>
