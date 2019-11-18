@@ -24,7 +24,6 @@ class AllBookings extends Component {
   render() {
     let outgoingRequests = []
     let outgoingUpcoming = []
-    let outgoingDeclined = []
     let outgoingHistory = []
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
@@ -35,8 +34,6 @@ class AllBookings extends Component {
       this.state.outgoingBookings.map(booking => {
         if (booking.status === 'pending') {
           outgoingRequests.push(booking)
-        } else if (booking.status === 'declined') {
-          outgoingDeclined.push(booking)
         } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
           outgoingUpcoming.push(booking)
         } else {
@@ -47,7 +44,6 @@ class AllBookings extends Component {
         <p className='small-centered-paragraph'>
           Requests: {outgoingRequests.length}&nbsp;
           Upcoming: {outgoingUpcoming.length}&nbsp;
-          Declined: {outgoingDeclined.length}&nbsp;
           History: {outgoingHistory.length}
         </p>
       )
@@ -73,7 +69,6 @@ class AllBookings extends Component {
             state: {
               outgoingRequests: outgoingRequests,
               outgoingUpcoming: outgoingUpcoming,
-              outgoingDeclined: outgoingDeclined,
               outgoingHistory: outgoingHistory
             }
           })

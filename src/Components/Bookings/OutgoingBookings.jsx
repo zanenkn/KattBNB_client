@@ -30,7 +30,6 @@ const OutgoingBookings = (props) => {
         History
       </Header>
       <OutgoingHistory
-        declined={props.location.state.outgoingDeclined}
         history={props.location.state.outgoingHistory}
       />
     </div>
