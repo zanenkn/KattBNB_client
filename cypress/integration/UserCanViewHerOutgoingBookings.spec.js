@@ -12,6 +12,9 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#navlinks').within(() => {
       cy.get('#bookings-icon').click()
     })
+    cy.wait(5000)
+    cy.get('#view-outgoing-bookings').click()
+
   })
 
   it('', () => {

@@ -63,7 +63,7 @@ class AllBookings extends Component {
         <p style={{ 'textAlign': 'center' }}>
           Here you can manage your bookings.
         </p>
-        <Button onClick={() => {
+        <Button id='view-outgoing-bookings' onClick={() => {
           this.props.history.push({
             pathname: '/outgoing-bookings',
             state: {
