@@ -8,25 +8,25 @@ const OutgoingBookings = (props) => {
 
   return (
     <div className='expanding-wrapper'>
-      <Header as='h1' style={{'marginBottom': '0'}}>
+      <Header as='h1' style={{ 'marginBottom': '0' }}>
         Outgoing bookings
       </Header>
-      <p style={{'textAlign': 'center'}}>
+      <p style={{ 'textAlign': 'center' }}>
         You booking your cat(s) to stay with hosts.
       </p>
-      <Header as='h2' style={{'marginBottom': '0'}}>
+      <Header as='h2' style={{ 'marginBottom': '0' }}>
         Requests
       </Header>
-      <OutgoingRequests 
+      <OutgoingRequests
         requests={props.location.state.outgoingRequests}
       />
-      <Header as='h2' style={{'marginBottom': '0'}}>
+      <Header as='h2' style={{ 'marginBottom': '0' }}>
         Upcoming
       </Header>
-      <OutgoingUpcoming 
+      <OutgoingUpcoming
         upcoming={props.location.state.outgoingUpcoming}
       />
-      <Header as='h2' style={{'marginBottom': '0'}}>
+      <Header as='h2' style={{ 'marginBottom': '0' }}>
         History
       </Header>
       <OutgoingHistory

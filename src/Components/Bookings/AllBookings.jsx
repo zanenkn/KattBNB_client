@@ -64,7 +64,7 @@ class AllBookings extends Component {
         <Header as='h1'>
           Hi, {this.props.username}!
         </Header>
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           Here you can manage your bookings.
         </p>
         <Button onClick={() => {
