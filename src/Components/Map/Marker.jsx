@@ -9,6 +9,8 @@ class Marker extends React.PureComponent {
   }
 
   render() {
+    let total = this.props.total
+    let totalWithDecimals = +total.toFixed(2)
 
     return (
       <Label
@@ -17,7 +19,7 @@ class Marker extends React.PureComponent {
         id={this.props.id}
         onClick={this.props.handleDatapointClick}
       >
-        {this.props.total}&nbsp;kr
+        {totalWithDecimals}&nbsp;kr
       </Label>
     )
   }
