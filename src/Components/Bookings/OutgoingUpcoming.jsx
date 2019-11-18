@@ -17,18 +17,20 @@ const OutgoingUpcoming = (props) => {
         <p style={{ 'textAlign': 'center' }}>
           These are finalized bookings coming up soon. Get in touch with these hosts to organize the drop-off and pick-up.
         </p>
-        {sortedUpcoming.map(upcoming => {
-          return (
-            <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={upcoming.id}>
-              <p className='small-centered-paragraph'>
-                You have successfully booked a stay with <strong>{upcoming.host_nickname}</strong> for your <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
-              </p>
-              <p className='fake-link-underlined'>
-                View details
-              </p>
-            </Container>
-          )
-        })}
+        <div id='outgoing-upcoming'>
+          {sortedUpcoming.map(upcoming => {
+            return (
+              <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={upcoming.id}>
+                <p className='small-centered-paragraph'>
+                  You have successfully booked a stay with <strong>{upcoming.host_nickname}</strong> for your <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
+                </p>
+                <p className='fake-link-underlined'>
+                  View details
+                </p>
+              </Container>
+            )
+          })}
+        </div>
       </>
     )
   } else {
