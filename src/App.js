@@ -37,9 +37,11 @@ class App extends Component {
       userPageRoute = (
         <Route exact path='/user-page' component={UserPage}></Route>
       )
+
       allBookingsRoute = (
         <Route exact path='/all-bookings' component={AllBookings}></Route>
       )
+
       outgoingBookingsRoute = (
         <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
       )
@@ -47,9 +49,11 @@ class App extends Component {
       userPageRoute = (
         <NoAccess />
       )
+
       allBookingsRoute = (
         <NoAccess />
       )
+
       outgoingBookingsRoute = (
         <NoAccess />
       )

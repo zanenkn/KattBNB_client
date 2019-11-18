@@ -1,0 +1,96 @@
+[
+  {
+    "id": 1,
+    "number_of_cats": 1,
+    "dates": [
+      1574726400000,
+      1574812800000
+    ],
+    "status": "pending",
+    "host_nickname": "bboa",
+    "price_total": null,
+    "created_at": "2019-11-08T18:45:39.463Z",
+    "updated_at": "2019-11-08T18:45:39.463Z",
+    "user_id": 1
+  },
+  {
+    "id": 2,
+    "number_of_cats": 1,
+    "dates": [
+      1574726400000,
+      1574812800000
+    ],
+    "status": "pending",
+    "host_nickname": "bboa",
+    "price_total": null,
+    "created_at": "2019-11-08T18:54:22.358Z",
+    "updated_at": "2019-11-08T18:54:22.358Z",
+    "user_id": 1
+  },
+  {
+    "id": 3,
+    "number_of_cats": 1,
+    "dates": [
+      1574726400000,
+      1574812800000,
+      1574899200000,
+      1574985600000
+    ],
+    "status": "pending",
+    "host_nickname": "bboa",
+    "price_total": null,
+    "created_at": "2019-11-09T08:56:30.830Z",
+    "updated_at": "2019-11-09T08:56:30.830Z",
+    "user_id": 1
+  },
+  {
+    "id": 4,
+    "number_of_cats": 1,
+    "dates": [
+      1574726400000,
+      1574812800000,
+      1574899200000,
+      1574985600000
+    ],
+    "status": "pending",
+    "host_nickname": "malakies",
+    "price_total": null,
+    "created_at": "2019-11-09T08:59:07.198Z",
+    "updated_at": "2019-11-09T08:59:07.198Z",
+    "user_id": 1
+  },
+  {
+    "id": 5,
+    "number_of_cats": 1,
+    "dates": [
+      1574726400000,
+      1574812800000,
+      1574899200000,
+      1574985600000
+    ],
+    "status": "pending",
+    "host_nickname": "malakies",
+    "price_total": null,
+    "created_at": "2019-11-09T09:06:48.090Z",
+    "updated_at": "2019-11-09T09:06:48.090Z",
+    "user_id": 1
+  },
+  {
+    "id": 6,
+    "number_of_cats": 1,
+    "dates": [
+      1574640000000,
+      1574726400000,
+      1574812800000,
+      1574899200000,
+      1574985600000,
+      1575072000000
+    ],
+    "status": "pending",
+    "host_nickname": "malakies",
+    "price_total": null,
+    "created_at": "2019-11-09T18:14:16.828Z",
+    "updated_at": "2019-11-09T18:14:16.828Z",
+    "user_id": 1
+  }
+]
