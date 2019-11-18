@@ -38,13 +38,13 @@ class LocationUpdateForm extends Component {
         this.setState({ loading: true })
         e.preventDefault()
         const path = '/api/v1/auth/'
-        const payload = {
-          location: this.state.newLocation,
+        const payload = { location: this.state.newLocation }
+        const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token')
         }
-        axios.put(path, payload)
+        axios.put(path, payload, { headers: headers })
           .then(() => {
             this.setState({
               loading: false,
@@ -66,13 +66,13 @@ class LocationUpdateForm extends Component {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/'
-      const payload = {
-        location: this.state.newLocation,
+      const payload = { location: this.state.newLocation }
+      const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.put(path, payload)
+      axios.put(path, payload, { headers: headers })
         .then(() => {
           this.setState({
             loading: false,
