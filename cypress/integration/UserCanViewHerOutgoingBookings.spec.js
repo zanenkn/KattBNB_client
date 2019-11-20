@@ -18,7 +18,7 @@ describe('User can view her outgoing bookings', () => {
     cy.wait(2000)
     cy.contains('Requests: 2')
     cy.contains('Upcoming: 2')
-    cy.contains('History: 4')
+    cy.contains('History: 5')
   })
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {
@@ -37,27 +37,7 @@ describe('User can view her outgoing bookings', () => {
 
   it('and see her bookings history displayed in correct chronological order', () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.get('#outgoing-history').first().contains('Your request to book a stay with Canceled2 for your 1 cat during the dates of 2019-11-26 until 2019-11-29 got canceled.')
+    cy.get('#outgoing-history').first().contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.')
     cy.get('#outgoing-history').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2019-11-25 until 2019-11-30 got canceled.')
-  })
-
-  it('', () => {
-
-  })
-
-  it('', () => {
-
-  })
-
-  it('', () => {
-
-  })
-
-  it('', () => {
-
-  })
-
-  it('', () => {
-
   })
 })
