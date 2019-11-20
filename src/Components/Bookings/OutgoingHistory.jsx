@@ -18,7 +18,7 @@ const OutgoingHistory = (props) => {
           {sortedHistory.map(booking => {
             if (booking.status === 'declined') {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id}>
+                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id} key={booking.id}>
                   <p className='small-centered-paragraph'>
                     <strong>DECLINED REQUEST</strong>
                   </p>
