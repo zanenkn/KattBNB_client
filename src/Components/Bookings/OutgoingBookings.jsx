@@ -25,13 +25,13 @@ class OutgoingBookings extends Component {
         <p style={{ 'textAlign': 'center' }}>
           You booking your cat(s) to stay with hosts.
         </p>
-        <Button onClick={() => { this.requests.scrollIntoView({ behavior: "smooth" }) }}>
+        <Button onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
           View Requests
         </Button>
-        <Button onClick={() => { this.upcoming.scrollIntoView({ behavior: "smooth" }) }}>
+        <Button onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
           View Upcoming
         </Button>
-        <Button onClick={() => { this.history.scrollIntoView({ behavior: "smooth" }) }}>
+        <Button onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
           View History
         </Button>
         <div style={{ 'height': '8vh' }} ref={(el) => { this.requests = el }} />
