@@ -20,7 +20,7 @@ class ClusterMarker extends React.PureComponent {
             lat={marker.lat}
             lng={marker.lng}
             id={marker.id}
-            total={+marker.total.toFixed(2)}
+            total={marker.total}
           />
         )}
         {this.props.points.length > 1 &&
