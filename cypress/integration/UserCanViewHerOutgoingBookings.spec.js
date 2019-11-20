@@ -22,6 +22,8 @@ describe('User can view her outgoing bookings', () => {
   })
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {
+    const now = new Date(2019, 11, 20).getTime()
+    cy.clock(now)
     cy.get('#view-outgoing-bookings').click()
     cy.get('#outgoing-upcoming').first().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2019-11-26 until 2019-11-30.')
     cy.get('#outgoing-upcoming').last().contains('You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2019-11-25 until 2019-11-29.')
