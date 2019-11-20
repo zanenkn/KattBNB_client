@@ -48,8 +48,6 @@ class HostProfile extends Component {
 
   render() {
     let editDescriptionForm, editMaxCatsForm, editRateForm, editSupplementForm, calendar, addressSearch, errorDisplay
-    const rate = parseFloat(this.props.rate)
-    const supplement = parseFloat(this.props.supplement)
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -174,7 +172,7 @@ class HostProfile extends Component {
         {editMaxCatsForm}
         <p id='rate'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M18 6V4H2v2h16zm0 4H2v6h16v-6zM0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm4 8h4v2H4v-2z" /></svg>
-          &nbsp;{rate} kr/day for 1 cat&ensp;
+          &nbsp;{this.props.rate} kr/day for 1 cat&ensp;
           <Header as='strong' id='editRateForm' onClick={this.formHandler} className='fake-link-underlined'>
             Change
           </Header>
@@ -182,7 +180,7 @@ class HostProfile extends Component {
         {editRateForm}
         <p id='supplement'>
           <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" /></svg>
-          &nbsp;Extra {supplement} kr/day per cat&ensp;
+          &nbsp;Extra {this.props.supplement} kr/day per cat&ensp;
           <Header as='strong' id='editSupplementForm' onClick={this.formHandler} className='fake-link-underlined'>
             Change
           </Header>

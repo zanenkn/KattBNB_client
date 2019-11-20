@@ -38,12 +38,28 @@ class UserPage extends Component {
       }
       axios.get(path, { headers: headers })
         .then(response => {
+          let rateToNumber = parseFloat(response.data.price_per_day_1_cat)
+          let rateToString = rateToNumber.toFixed(2)
+          let finalRate
+          if (rateToString[rateToString.length - 1] === '0' && rateToString[rateToString.length - 2] === '0') {
+            finalRate = parseFloat(rateToString)
+          } else {
+            finalRate = rateToString
+          }
+          let supplementToNumber = parseFloat(response.data.supplement_price_per_cat_per_day)
+          let supplementToString = supplementToNumber.toFixed(2)
+          let finalSupplement
+          if (supplementToString[supplementToString.length - 1] === '0' && supplementToString[supplementToString.length - 2] === '0') {
+            finalSupplement = parseFloat(supplementToString)
+          } else {
+            finalSupplement = supplementToString
+          }
           this.setState({
             description: response.data.description,
             fullAddress: response.data.full_address,
-            rate: response.data.price_per_day_1_cat,
+            rate: finalRate,
             maxCats: response.data.max_cats_accepted,
-            supplement: response.data.supplement_price_per_cat_per_day,
+            supplement: finalSupplement,
             availability: response.data.availability
           })
         })
