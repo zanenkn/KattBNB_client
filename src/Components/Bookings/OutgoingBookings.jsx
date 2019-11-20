@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
-import { Header, Button } from 'semantic-ui-react'
+import { Header, Button, Icon } from 'semantic-ui-react'
 import OutgoingRequests from './OutgoingRequests'
 import OutgoingUpcoming from './OutgoingUpcoming'
 import OutgoingHistory from './OutgoingHistory'
 
 class OutgoingBookings extends Component {
+  scrollToTop = (e) => {
+    e.preventDefault()
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
   render() {
+    
     return (
       <div className='expanding-wrapper'>
         <Header as='h1' style={{ 'marginBottom': '0' }}>
@@ -45,6 +54,9 @@ class OutgoingBookings extends Component {
         <OutgoingHistory
           history={this.props.location.state.outgoingHistory}
         />
+        <div className='scroll-to-top '>
+          <Icon link="#" name='angle up' size='huge' color='grey' onClick={ this.scrollToTop }/>
+        </div>
       </div>
     )
   }

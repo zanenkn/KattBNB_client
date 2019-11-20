@@ -255,3 +255,11 @@ h4 {
   max-width: 300px;
   max-height: 95% !important;
 }
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 0px;
+  z-index: 300;
+  left: 50%;
+  transform: translateX(-50%);
+}
