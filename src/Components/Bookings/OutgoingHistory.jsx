@@ -32,7 +32,7 @@ const OutgoingHistory = (props) => {
               )
             } else if (booking.status === 'canceled') {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id}>
+                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id} key={booking.id}>
                   <p className='small-centered-paragraph'>
                     <strong>CANCELED REQUEST</strong>
                   </p>
@@ -46,7 +46,7 @@ const OutgoingHistory = (props) => {
               )
             } else {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id}>
+                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id} key={booking.id}>
                   <p className='small-centered-paragraph'>
                     Your cat(s) stayed with <strong>{booking.host_nickname}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
                   </p>
