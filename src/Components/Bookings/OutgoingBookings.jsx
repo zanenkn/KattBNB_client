@@ -6,6 +6,18 @@ import OutgoingHistory from './OutgoingHistory'
 
 class OutgoingBookings extends Component {
 
+  state = {
+    scrollYPosition: 0
+  }
+
+  componentDidMount() { window.addEventListener('scroll', this.handleScroll) }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
+
+  handleScroll = () => {
+    this.setState({ scrollYPosition: window.scrollY })
+  }
+
   scrollToTop = (e) => {
     e.preventDefault()
     window.scrollTo({
@@ -56,7 +68,7 @@ class OutgoingBookings extends Component {
           history={this.props.location.state.outgoingHistory}
         />
         <div className='scroll-to-top '>
-          <Icon link='#' name='angle up' size='huge' color='grey' onClick={this.scrollToTop} />
+          <Icon link='#' name='angle up' size='huge' color='grey' style={this.state.scrollYPosition < 200 ? { 'display': 'none' } : { 'display': 'block' }} onClick={this.scrollToTop} />
         </div>
       </div>
     )
