@@ -23,7 +23,7 @@ export class GoogleMap extends React.PureComponent {
     const clusters = supercluster(this.props.allAvailableHosts, {
       minZoom: 0,
       maxZoom: 16,
-      radius: 20,
+      radius: 1,
     })
     return clusters(this.state.mapOptions)
   }

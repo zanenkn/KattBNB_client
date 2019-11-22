@@ -24,7 +24,7 @@ class ClusterMarker extends React.PureComponent {
           />
         )}
         {this.props.points.length > 1 &&
-          <Label circular style={{ 'height': '2em', 'width': '2em', 'fontSize': 'x-small', 'backgroundColor': '#c90c61', 'color': '#ffffff', 'transform': 'translate(-50%, -50%)' }}>
+          <Label circular style={{ 'height': '2em', 'width': '2em', 'fontSize': 'x-small', 'backgroundColor': '#c90c61', 'color': '#ffffff', 'transform': 'translate(-350%, -200%)' }}>
             +{this.props.points.length - 1}
           </Label>}
       </div>

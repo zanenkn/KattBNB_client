@@ -48,6 +48,12 @@ class RequestToBook extends Component {
         errors: ['Please write a message to the host!'],
         errorDisplay: true
       })
+    } else if (this.state.message.length > 400) {
+      this.setState({
+        loading: false,
+        errors: ['The message cannot exceed 400 characters!'],
+        errorDisplay: true
+      })
     } else {
       let booking = []
       let startDate = this.props.location.state.checkInDate
@@ -95,7 +101,9 @@ class RequestToBook extends Component {
   }
 
   render() {
-    let errorDisplay, requestToBookButton
+    let errorDisplay, requestToBookButton, messageLength
+
+    messageLength = 400 - this.state.message.length
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -139,6 +147,9 @@ class RequestToBook extends Component {
               onChange={this.onChangeHandler}
             />
           </Form>
+          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+            Remaining characters: {messageLength}
+          </p>
           {errorDisplay}
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
             By requesting to book, you agree to pay the total cost for this stay:

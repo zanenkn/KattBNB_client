@@ -34,12 +34,14 @@ class PasswordUpdateForm extends Component {
       const payload = {
         current_password: this.state.currentPassword,
         password: this.state.newPassword,
-        password_confirmation: this.state.newPasswordConfirmation,
+        password_confirmation: this.state.newPasswordConfirmation
+      }
+      const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.put(path, payload)
+      axios.put(path, payload, { headers: headers })
         .then(() => {
           this.setState({
             displayPasswordForm: false,

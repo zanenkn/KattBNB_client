@@ -300,6 +300,7 @@ class HostProfileForm extends Component {
             </label>
             <DayPicker
               showWeekNumbers
+              fromMonth={today}
               disabledDays={{ before: tomorrowDate }}
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}

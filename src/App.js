@@ -18,8 +18,11 @@ import PasswordResetSuccess from './Components/Authentication/PasswordResetSucce
 import UserPage from './Components/UserPage/UserPage'
 import RequestToBook from './Components/Bookings/RequestToBook'
 import SuccessfulRequest from './Components/Bookings/SuccessfulRequest'
+import AllBookings from './Components/Bookings/AllBookings'
+import OutgoingBookings from './Components/Bookings/OutgoingBookings'
+import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
-import { Container, Sticky, Sidebar, Icon } from 'semantic-ui-react'
+import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
@@ -28,25 +31,31 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
         <Route exact path='/user-page' component={UserPage}></Route>
       )
+
+      allBookingsRoute = (
+        <Route exact path='/all-bookings' component={AllBookings}></Route>
+      )
+
+      outgoingBookingsRoute = (
+        <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
+      )
     } else {
       userPageRoute = (
-        <>
-          <Container
-            className='content-wrapper'
-            textAlign='center'>
-            <Icon
-              name='stop circle'
-              size='massive'
-              color='red' />
-            <h1> You cannot access this page or the page does not exist! </h1>
-          </Container>
-        </>
+        <NoAccess />
+      )
+
+      allBookingsRoute = (
+        <NoAccess />
+      )
+
+      outgoingBookingsRoute = (
+        <NoAccess />
       )
     }
 
@@ -79,6 +88,8 @@ class App extends Component {
                 <Route exact path='/request-to-book' component={RequestToBook}></Route>
                 <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                 {userPageRoute}
+                {allBookingsRoute}
+                {outgoingBookingsRoute}
               </Switch>
             </ScrollToTop>
             <Menu />

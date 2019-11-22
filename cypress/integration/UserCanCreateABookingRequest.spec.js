@@ -1,4 +1,4 @@
-describe('Visitor can create a booking request', () => {
+describe('User can create a booking request', () => {
   beforeEach(function () {
     cy.server()
     cy.route({
@@ -50,12 +50,21 @@ describe('Visitor can create a booking request', () => {
     cy.contains('You have successfully requested a booking for')
   })
 
-  it('unsuccessfully and get an error message', () => {
+  it('unsuccessfully and get an error message cause message field is empty', () => {
     cy.get('#2').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#request-to-book-button').click()
     cy.contains('Please write a message to the host!')
+  })
+
+  it('unsuccessfully and get an error message cause message field contains more than 400 characters', () => {
+    cy.get('#2').click()
+    cy.get('#more').click()
+    cy.get('#request-to-book').click()
+    cy.get('#message').type('Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!')
+    cy.get('#request-to-book-button').click()
+    cy.contains('The message cannot exceed 400 characters!')
   })
 
   it('only if she is logged in or she will be redirected to the log in page', () => {

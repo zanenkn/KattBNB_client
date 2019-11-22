@@ -16,13 +16,54 @@ class UserPage extends Component {
     displayLocationForm: false,
     displayPasswordForm: false,
     hostProfile: '',
-    hostProfileForm: false
+    hostProfileForm: false,
+    description: '',
+    fullAddress: '',
+    rate: '',
+    maxCats: '',
+    supplement: '',
+    availability: []
   }
 
   async componentDidMount() {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ hostProfile: response.data })
     })
+    if (this.state.hostProfile.length === 1) {
+      const path = `/api/v1/host_profiles/${this.state.hostProfile[0].id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.get(path, { headers: headers })
+        .then(response => {
+          let rateToNumber = parseFloat(response.data.price_per_day_1_cat)
+          let rateToString = rateToNumber.toFixed(2)
+          let finalRate
+          if (rateToString[rateToString.length - 1] === '0' && rateToString[rateToString.length - 2] === '0') {
+            finalRate = parseFloat(rateToString)
+          } else {
+            finalRate = rateToString
+          }
+          let supplementToNumber = parseFloat(response.data.supplement_price_per_cat_per_day)
+          let supplementToString = supplementToNumber.toFixed(2)
+          let finalSupplement
+          if (supplementToString[supplementToString.length - 1] === '0' && supplementToString[supplementToString.length - 2] === '0') {
+            finalSupplement = parseFloat(supplementToString)
+          } else {
+            finalSupplement = supplementToString
+          }
+          this.setState({
+            description: response.data.description,
+            fullAddress: response.data.full_address,
+            rate: finalRate,
+            maxCats: response.data.max_cats_accepted,
+            supplement: finalSupplement,
+            availability: response.data.availability
+          })
+        })
+    }
   }
 
   avatarFormHandler = () => {
@@ -107,6 +148,7 @@ class UserPage extends Component {
       locationForm = (
         <LocationUpdateForm
           location={this.props.location}
+          fullAddress={this.state.fullAddress}
           closeLocationAndPasswordForms={this.closeLocationAndPasswordForms.bind(this)}
         />
       )
@@ -125,7 +167,7 @@ class UserPage extends Component {
         <HostProfileForm
           user_id={this.props.id}
           closeForm={this.hostProfileFormHandler.bind(this)}
-          location={this.state.location} />
+          location={this.props.location} />
       )
     } else {
       hostProfileForm = (
@@ -140,7 +182,13 @@ class UserPage extends Component {
       hostProfile = (
         <HostProfile
           id={this.state.hostProfile[0].id}
-          location={this.state.location}
+          description={this.state.description}
+          fullAddress={this.state.fullAddress}
+          rate={this.state.rate}
+          maxCats={this.state.maxCats}
+          supplement={this.state.supplement}
+          availability={this.state.availability}
+          location={this.props.location}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )

@@ -75,13 +75,13 @@ class AvatarUpdateForm extends Component {
       this.setState({ loading: true })
       const img = this.editor.getImageScaledToCanvas().toDataURL()
       const path = '/api/v1/auth/'
-      const payload = {
-        avatar: img,
+      const payload = { avatar: img }
+      const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.put(path, payload)
+      axios.put(path, payload, { headers: headers })
         .then(() => {
           this.setState({
             loading: false,
