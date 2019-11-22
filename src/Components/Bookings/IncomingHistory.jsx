@@ -22,7 +22,7 @@ const IncomingHistory = (props) => {
                   <strong>DECLINED REQUEST</strong>
                 </p>
                 <p className='small-centered-paragraph'>
-                  You declined a booking request from <strong>booking.user.nickname</strong> for their <strong>{booking.number_of_cats} {booking.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
+                  You declined a booking request from <strong>{booking.user.nickname}</strong> for their <strong>{booking.number_of_cats} {booking.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
                 </p>
                 <p className='fake-link-underlined'>
                   View message
@@ -36,7 +36,7 @@ const IncomingHistory = (props) => {
                   <strong>CANCELED REQUEST</strong>
                 </p>
                 <p className='small-centered-paragraph'>
-                  A booking request from <strong>booking.user.nickname</strong> for their <strong>{booking.number_of_cats} {booking.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong> got canceled due to no answer from you within 3 days time.
+                  A booking request from <strong>{booking.user.nickname}</strong> for their <strong>{booking.number_of_cats} {booking.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong> got canceled due to no answer from you within 3 days time.
                 </p>
               </Container>
             )
@@ -44,7 +44,7 @@ const IncomingHistory = (props) => {
             return (
               <Container style={{ 'backgroundColor': '#e8e8e8', 'marginBottom': '3rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
                 <p className='small-centered-paragraph'>
-                  You hosted <strong>booking.user.nickname</strong> cat(s) during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
+                  You hosted <strong>{booking.user.nickname}'s</strong> cat(s) during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
                 </p>
                 <p className='fake-link-underlined'>
                   View review
