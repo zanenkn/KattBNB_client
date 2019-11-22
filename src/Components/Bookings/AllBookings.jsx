@@ -6,18 +6,23 @@ import { Header, Button } from 'semantic-ui-react'
 class AllBookings extends Component {
 
   state = {
-    outgoingBookings: []
+    outgoingBookings: [],
+    incomingBookings: []
   }
 
   componentDidMount() {
-    const path = `/api/v1/bookings?user_id=${this.props.id}`
+    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}`
+    const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}`
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-    axios.get(path, { headers: headers }).then(response => {
+    axios.get(pathOutgoing, { headers: headers }).then(response => {
       this.setState({ outgoingBookings: response.data })
+    })
+    axios.get(pathIncoming, { headers: headers }).then(response => {
+      this.setState({ incomingBookings: response.data })
     })
   }
 
@@ -25,10 +30,13 @@ class AllBookings extends Component {
     let outgoingRequests = []
     let outgoingUpcoming = []
     let outgoingHistory = []
+    let incomingRequests = []
+    let incomingUpcoming = []
+    let incomingHistory = []
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let outgoingBookingStats
+    let outgoingBookingStats, incomingBookingStats
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -55,6 +63,31 @@ class AllBookings extends Component {
       )
     }
 
+    if (this.state.incomingBookings.length > 0) {
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending') {
+          incomingRequests.push(booking)
+        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+          incomingUpcoming.push(booking)
+        } else {
+          incomingHistory.push(booking)
+        }
+      })
+      incomingBookingStats = (
+        <p className='small-centered-paragraph'>
+          Requests: {incomingRequests.length}&nbsp;
+          Upcoming: {incomingUpcoming.length}&nbsp;
+          History: {incomingHistory.length}
+        </p>
+      )
+    } else {
+      incomingBookingStats = (
+        <p className='small-centered-paragraph'>
+          You don't have any Incoming Bookings yet.
+        </p>
+      )
+    }
+
     return (
       <div className='expanding-wrapper'>
         <Header as='h1'>
@@ -73,7 +106,24 @@ class AllBookings extends Component {
             }
           })
         }}>View outgoing bookings</Button>
+        <p className='small-centered-paragraph'>
+          You booking your cat(s) to stay with hosts.
+        </p>
         {outgoingBookingStats}
+        <Button id='view-incoming-bookings' onClick={() => {
+          this.props.history.push({
+            pathname: '/incoming-bookings',
+            state: {
+              incomingRequests: incomingRequests,
+              incomingUpcoming: incomingUpcoming,
+              incomingHistory: incomingHistory
+            }
+          })
+        }}>View incoming bookings</Button>
+        <p className='small-centered-paragraph'>
+          You hosting other people's cats.
+        </p>
+        {incomingBookingStats}
       </div>
     )
   }
