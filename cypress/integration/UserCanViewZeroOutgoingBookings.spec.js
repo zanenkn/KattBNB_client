@@ -15,14 +15,11 @@ describe('User can view her outgoing bookings', () => {
   })
 
   it('and see relevant message if there are no bookings stored in the database', () => {
-    cy.wait(2000)
-    cy.contains("You don't have any Outgoing Bookings yet.")
+    cy.contains("Need someone to take care of your cat while you're away?")
   })
 
-  it('and see relevant messages under each category of bookings', () => {
+  it("and get redirected to the main page when clicking on 'Search and book' link", () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.contains("You don't have any upcoming bookings.")
-    cy.contains("You don't have any booking requests.")
-    cy.contains("You don't have any past bookings.")
+    cy.contains('Find a cat sitter!')
   })
 })
