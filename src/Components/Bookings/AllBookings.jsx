@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Header, Button } from 'semantic-ui-react'
+import { Header, Button, Segment } from 'semantic-ui-react'
 
 class AllBookings extends Component {
 
@@ -36,7 +36,7 @@ class AllBookings extends Component {
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let outgoingBookingStats, incomingBookingStats
+    let outgoingBookingStats, incomingBookingStats, incomingSegment, outgoingSegment
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -49,16 +49,21 @@ class AllBookings extends Component {
         }
       })
       outgoingBookingStats = (
-        <p className='small-centered-paragraph'>
-          Requests: {outgoingRequests.length}&nbsp;
-          Upcoming: {outgoingUpcoming.length}&nbsp;
-          History: {outgoingHistory.length}
-        </p>
+        <>
+          <p style={{'textAlign': 'center'}}>
+            You booking your cat(s) to stay with hosts.
+          </p>
+          <p className='small-centered-paragraph'>
+            Requests:&nbsp;{outgoingRequests.length}&thinsp;
+            Upcoming:&nbsp;{outgoingUpcoming.length}&thinsp;
+            History:&nbsp;{outgoingHistory.length}
+          </p>
+        </>
       )
     } else {
       outgoingBookingStats = (
         <p className='small-centered-paragraph'>
-          You don't have any Outgoing Bookings yet.
+          You don't have any Outgoing bookings yet.
         </p>
       )
     }
@@ -74,56 +79,74 @@ class AllBookings extends Component {
         }
       })
       incomingBookingStats = (
-        <p className='small-centered-paragraph'>
-          Requests: {incomingRequests.length}&nbsp;
-          Upcoming: {incomingUpcoming.length}&nbsp;
-          History: {incomingHistory.length}
-        </p>
+        <>
+          <p style={{ 'textAlign': 'center' }}>
+            You hosting other people's cats.
+          </p>
+          <p className='small-centered-paragraph'>
+            Requests:&nbsp;{incomingRequests.length}&thinsp;
+            Upcoming:&nbsp;{incomingUpcoming.length}&thinsp;
+            History:&nbsp;{incomingHistory.length}
+          </p>
+        </>
       )
     } else {
       incomingBookingStats = (
         <p className='small-centered-paragraph'>
-          You don't have any Incoming Bookings yet.
+          You don't have any Incoming bookings yet.
         </p>
       )
     }
 
+    incomingSegment = (
+      <Segment className='whitebox'>
+        <Header as='h3'>
+          Incoming bookings
+        </Header>
+        {incomingBookingStats}   
+        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline', 'display': `${this.state.incomingBookings.length > 0 ? 'block' : 'none'}`}} id='view-incoming-bookings' 
+          onClick={() => {
+            this.props.history.push({
+              pathname: '/incoming-bookings',
+              state: {
+                incomingRequests: incomingRequests,
+                incomingUpcoming: incomingUpcoming,
+                incomingHistory: incomingHistory
+              }
+            })
+          }}>View</Header>          
+      </Segment>
+    )
+
+    outgoingSegment = (
+      <Segment className='whitebox'>
+        <Header as='h3'>
+          Outgoing bookings
+        </Header>
+        {outgoingBookingStats}
+        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline', 'display': `${this.state.outgoingBookings.length > 0 ? 'block' : 'none'}`}} id='view-outgoing-bookings'
+          onClick={() => {
+            this.props.history.push({
+              pathname: '/outgoing-bookings',
+              state: {
+                outgoingRequests: outgoingRequests,
+                outgoingUpcoming: outgoingUpcoming,
+                outgoingHistory: outgoingHistory
+              }
+            })
+          }}>View</Header>
+      </Segment>
+    )
+
     return (
-      <div className='expanding-wrapper'>
+      <div className='content-wrapper'>
         <Header as='h1'>
           Hi, {this.props.username}!
         </Header>
         <p style={{ 'textAlign': 'center' }}>
           Here you can manage your bookings.
         </p>
-        <Button id='view-outgoing-bookings' onClick={() => {
-          this.props.history.push({
-            pathname: '/outgoing-bookings',
-            state: {
-              outgoingRequests: outgoingRequests,
-              outgoingUpcoming: outgoingUpcoming,
-              outgoingHistory: outgoingHistory
-            }
-          })
-        }}>View outgoing bookings</Button>
-        <p className='small-centered-paragraph'>
-          You booking your cat(s) to stay with hosts.
-        </p>
-        {outgoingBookingStats}
-        <Button id='view-incoming-bookings' onClick={() => {
-          this.props.history.push({
-            pathname: '/incoming-bookings',
-            state: {
-              incomingRequests: incomingRequests,
-              incomingUpcoming: incomingUpcoming,
-              incomingHistory: incomingHistory
-            }
-          })
-        }}>View incoming bookings</Button>
-        <p className='small-centered-paragraph'>
-          You hosting other people's cats.
-        </p>
-        {incomingBookingStats}
+        {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
       </div>
     )
   }
