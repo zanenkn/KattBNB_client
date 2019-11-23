@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Header, Button, Segment } from 'semantic-ui-react'
+import { Header, Segment } from 'semantic-ui-react'
 
 class AllBookings extends Component {
 
@@ -49,19 +49,19 @@ class AllBookings extends Component {
         }
       })
       outgoingBookingStats = (
-        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
           Requests:&nbsp;{outgoingRequests.length}&thinsp;
           Upcoming:&nbsp;{outgoingUpcoming.length}&thinsp;
           History:&nbsp;{outgoingHistory.length}
         </p>
       )
       outgoingText = (
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           You booking your cat(s) to stay with hosts.
         </p>
       )
       outgoingCTA = (
-        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-outgoing-bookings'
+        <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
           onClick={() => {
             this.props.history.push({
               pathname: '/outgoing-bookings',
@@ -75,20 +75,20 @@ class AllBookings extends Component {
       )
     } else {
       outgoingBookingStats = (
-        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
           None yet.
         </p>
       )
       outgoingText = (
-        <p style={{'textAlign': 'center'}}>
+        <p style={{ 'textAlign': 'center' }}>
           Need someone to take care of your cat while you're away?
         </p>
       )
       outgoingCTA = (
-        <Header 
-          className='fake-link' 
-          style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-outgoing-bookings'
-          onClick={() => {this.props.history.push('/')}}
+        <Header
+          className='fake-link'
+          style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
+          onClick={() => { this.props.history.push('/') }}
         >
           Search and book
         </Header>
@@ -106,7 +106,7 @@ class AllBookings extends Component {
         }
       })
       incomingBookingStats = (
-        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
           Requests:&nbsp;{incomingRequests.length}&thinsp;
           Upcoming:&nbsp;{incomingUpcoming.length}&thinsp;
           History:&nbsp;{incomingHistory.length}
@@ -118,7 +118,7 @@ class AllBookings extends Component {
         </p>
       )
       incomingCTA = (
-        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-incoming-bookings' 
+        <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
           onClick={() => {
             this.props.history.push({
               pathname: '/incoming-bookings',
@@ -128,11 +128,11 @@ class AllBookings extends Component {
                 incomingHistory: incomingHistory
               }
             })
-          }}>View</Header>  
+          }}>View</Header>
       )
     } else {
       incomingBookingStats = (
-        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
           None yet.
         </p>
       )
@@ -142,20 +142,20 @@ class AllBookings extends Component {
         </p>
       )
       incomingCTA = (
-        <Header 
-          className='fake-link' 
-          style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-incoming-bookings' 
-          onClick={() => {this.props.history.push('/faq')}}
+        <Header
+          className='fake-link'
+          style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
+          onClick={() => { this.props.history.push('/faq') }}
         >
           Become a cat host
-        </Header>  
+        </Header>
       )
     }
 
     outgoingSegment = (
       <Segment className='whitebox'>
         <div className='topbox'>
-          <Header as='h3' style={{'color': 'white', 'marginBottom': '0'}}>Outgoing bookings</Header>
+          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>Outgoing bookings</Header>
           {outgoingBookingStats}
         </div>
         {outgoingText}
@@ -166,11 +166,11 @@ class AllBookings extends Component {
     incomingSegment = (
       <Segment className='whitebox'>
         <div className='topbox'>
-          <Header as='h3' style={{'color': 'white', 'marginBottom': '0'}}>Incoming bookings</Header>
-          {incomingBookingStats} 
+          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>Incoming bookings</Header>
+          {incomingBookingStats}
         </div>
         {incomingText}
-        {incomingCTA}        
+        {incomingCTA}
       </Segment>
     )
 
