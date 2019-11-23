@@ -263,3 +263,27 @@ h4 {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.topbox {
+  padding: 1rem;
+  padding-top: 2rem;
+  background: #c90c61;
+}
+
+@media screen and (max-width: 700px) {
+  .topbox {
+    margin-bottom: 1rem;
+    margin-top: -2rem;
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .topbox {
+    margin-bottom: 2rem;
+    margin-top: -4rem;
+    margin-left: -4rem;
+    margin-right: -4rem;
+  }
+}

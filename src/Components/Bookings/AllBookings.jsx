@@ -36,7 +36,7 @@ class AllBookings extends Component {
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let outgoingBookingStats, incomingBookingStats, incomingSegment, outgoingSegment
+    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -49,22 +49,49 @@ class AllBookings extends Component {
         }
       })
       outgoingBookingStats = (
-        <>
-          <p style={{'textAlign': 'center'}}>
-            You booking your cat(s) to stay with hosts.
-          </p>
-          <p className='small-centered-paragraph'>
-            Requests:&nbsp;{outgoingRequests.length}&thinsp;
-            Upcoming:&nbsp;{outgoingUpcoming.length}&thinsp;
-            History:&nbsp;{outgoingHistory.length}
-          </p>
-        </>
+        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+          Requests:&nbsp;{outgoingRequests.length}&thinsp;
+          Upcoming:&nbsp;{outgoingUpcoming.length}&thinsp;
+          History:&nbsp;{outgoingHistory.length}
+        </p>
+      )
+      outgoingText = (
+        <p style={{'textAlign': 'center'}}>
+          You booking your cat(s) to stay with hosts.
+        </p>
+      )
+      outgoingCTA = (
+        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-outgoing-bookings'
+          onClick={() => {
+            this.props.history.push({
+              pathname: '/outgoing-bookings',
+              state: {
+                outgoingRequests: outgoingRequests,
+                outgoingUpcoming: outgoingUpcoming,
+                outgoingHistory: outgoingHistory
+              }
+            })
+          }}>View</Header>
       )
     } else {
       outgoingBookingStats = (
-        <p className='small-centered-paragraph'>
-          You don't have any Outgoing bookings yet.
+        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+          None yet.
         </p>
+      )
+      outgoingText = (
+        <p style={{'textAlign': 'center'}}>
+          Need someone to take care of your cat while you're away?
+        </p>
+      )
+      outgoingCTA = (
+        <Header 
+          className='fake-link' 
+          style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-outgoing-bookings'
+          onClick={() => {this.props.history.push('/')}}
+        >
+          Search and book
+        </Header>
       )
     }
 
@@ -79,32 +106,19 @@ class AllBookings extends Component {
         }
       })
       incomingBookingStats = (
-        <>
-          <p style={{ 'textAlign': 'center' }}>
-            You hosting other people's cats.
-          </p>
-          <p className='small-centered-paragraph'>
-            Requests:&nbsp;{incomingRequests.length}&thinsp;
-            Upcoming:&nbsp;{incomingUpcoming.length}&thinsp;
-            History:&nbsp;{incomingHistory.length}
-          </p>
-        </>
-      )
-    } else {
-      incomingBookingStats = (
-        <p className='small-centered-paragraph'>
-          You don't have any Incoming bookings yet.
+        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+          Requests:&nbsp;{incomingRequests.length}&thinsp;
+          Upcoming:&nbsp;{incomingUpcoming.length}&thinsp;
+          History:&nbsp;{incomingHistory.length}
         </p>
       )
-    }
-
-    incomingSegment = (
-      <Segment className='whitebox'>
-        <Header as='h3'>
-          Incoming bookings
-        </Header>
-        {incomingBookingStats}   
-        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline', 'display': `${this.state.incomingBookings.length > 0 ? 'block' : 'none'}`}} id='view-incoming-bookings' 
+      incomingText = (
+        <p style={{ 'textAlign': 'center' }}>
+          You hosting other people's cats.
+        </p>
+      )
+      incomingCTA = (
+        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-incoming-bookings' 
           onClick={() => {
             this.props.history.push({
               pathname: '/incoming-bookings',
@@ -114,27 +128,49 @@ class AllBookings extends Component {
                 incomingHistory: incomingHistory
               }
             })
-          }}>View</Header>          
-      </Segment>
-    )
+          }}>View</Header>  
+      )
+    } else {
+      incomingBookingStats = (
+        <p className='small-centered-paragraph' style={{'color': 'white'}}>
+          None yet.
+        </p>
+      )
+      incomingText = (
+        <p style={{ 'textAlign': 'center' }}>
+          Wanna take care of cats and make a bit of money?
+        </p>
+      )
+      incomingCTA = (
+        <Header 
+          className='fake-link' 
+          style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline'}} id='view-incoming-bookings' 
+          onClick={() => {this.props.history.push('/faq')}}
+        >
+          Become a cat host
+        </Header>  
+      )
+    }
 
     outgoingSegment = (
       <Segment className='whitebox'>
-        <Header as='h3'>
-          Outgoing bookings
-        </Header>
-        {outgoingBookingStats}
-        <Header className='fake-link' style={{'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline', 'display': `${this.state.outgoingBookings.length > 0 ? 'block' : 'none'}`}} id='view-outgoing-bookings'
-          onClick={() => {
-            this.props.history.push({
-              pathname: '/outgoing-bookings',
-              state: {
-                outgoingRequests: outgoingRequests,
-                outgoingUpcoming: outgoingUpcoming,
-                outgoingHistory: outgoingHistory
-              }
-            })
-          }}>View</Header>
+        <div className='topbox'>
+          <Header as='h3' style={{'color': 'white', 'marginBottom': '0'}}>Outgoing bookings</Header>
+          {outgoingBookingStats}
+        </div>
+        {outgoingText}
+        {outgoingCTA}
+      </Segment>
+    )
+
+    incomingSegment = (
+      <Segment className='whitebox'>
+        <div className='topbox'>
+          <Header as='h3' style={{'color': 'white', 'marginBottom': '0'}}>Incoming bookings</Header>
+          {incomingBookingStats} 
+        </div>
+        {incomingText}
+        {incomingCTA}        
       </Segment>
     )
 
