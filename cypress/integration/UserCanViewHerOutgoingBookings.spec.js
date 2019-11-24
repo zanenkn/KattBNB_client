@@ -15,10 +15,10 @@ describe('User can view her outgoing bookings', () => {
   })
 
   it('and see correct stats of her bookings', () => {
-    cy.wait(2000)
-    cy.contains('Requests: 2')
-    cy.contains('Upcoming: 2')
-    cy.contains('History: 5')
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-upcoming]').should('have.length', 2)
+    cy.get('[data-cy=outgoing-requests]').should('have.length', 2)
+    cy.get('[data-cy=outgoing-history]').should('have.length', 5)
   })
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {

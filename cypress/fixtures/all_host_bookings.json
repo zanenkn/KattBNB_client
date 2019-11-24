@@ -7,14 +7,14 @@
       1574812800000
     ],
     "status": "pending",
-    "host_nickname": "Pending2",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 100,
     "message": "Please keep my cats, Pending2",
     "created_at": "2019-11-08T18:54:39.463Z",
     "updated_at": "2019-11-08T18:45:39.463Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Pending2"
     }
   },
   {
@@ -25,14 +25,14 @@
       1574812800000
     ],
     "status": "pending",
-    "host_nickname": "Pending1",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 300,
     "message": "Please keep my cats, Pending1",
     "created_at": "2019-11-08T18:55:22.358Z",
     "updated_at": "2019-11-08T18:54:22.358Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Pending1"
     }
   },
   {
@@ -45,14 +45,14 @@
       1574985600000
     ],
     "status": "declined",
-    "host_nickname": "Declined2",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 400.66,
     "message": "Please keep my cats, Declined2",
     "created_at": "2019-11-09T08:56:30.830Z",
     "updated_at": "2019-11-09T08:56:30.830Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Declined2"
     }
   },
   {
@@ -65,14 +65,14 @@
       1574985600000
     ],
     "status": "declined",
-    "host_nickname": "Declined1",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 100.10,
     "message": "Please keep my cats, Declined1",
     "created_at": "2019-11-09T08:39:07.198Z",
     "updated_at": "2019-11-09T08:39:07.198Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Declined1"
     }
   },
   {
@@ -85,14 +85,14 @@
       1574985600000
     ],
     "status": "canceled",
-    "host_nickname": "Canceled2",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 100.67,
     "message": "Please keep my cats, Canceled2",
     "created_at": "2019-11-09T09:06:48.090Z",
     "updated_at": "2019-11-09T09:06:48.090Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Canceled2"
     }
   },
   {
@@ -107,14 +107,14 @@
       1575072000000
     ],
     "status": "canceled",
-    "host_nickname": "Canceled1",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 500,
     "message": "Please keep my cats, Canceled1",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-09T08:14:16.828Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Canceled1"
     }
   },
   {
@@ -127,14 +127,14 @@
       1574985600000
     ],
     "status": "accepted",
-    "host_nickname": "Accepted2",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 667,
     "message": "Please keep my cats, Accepted2",
     "created_at": "2019-11-09T09:06:48.090Z",
     "updated_at": "2019-11-09T09:06:48.090Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Accepted2"
     }
   },
   {
@@ -149,14 +149,14 @@
       1575072000000
     ],
     "status": "accepted",
-    "host_nickname": "Accepted1",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 678,
     "message": "Please keep my cats, Accepted1",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-09T08:14:16.828Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "Accepted1"
     }
   },
   {
@@ -172,14 +172,14 @@
       1574121400000
     ],
     "status": "accepted",
-    "host_nickname": "AcceptedOfThePast",
+    "host_nickname": "GeorgeTheGreek",
     "price_total": 678,
     "message": "Please keep my cats, AcceptedOfThePast",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-15T08:14:16.828Z",
     "user_id": 1,
     "user": {
-      "nickname": "GeorgeTheGreek"
+      "nickname": "AcceptedOfThePast"
     }
   }
 ]
