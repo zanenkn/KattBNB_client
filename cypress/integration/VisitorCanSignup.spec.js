@@ -1,4 +1,4 @@
-describe('User can sign up', () => {
+describe('Visitor can sign up', () => {
 
   beforeEach(function () {
     cy.server()

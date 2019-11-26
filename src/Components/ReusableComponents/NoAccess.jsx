@@ -9,7 +9,7 @@ const NoAccess = () => {
         Hello!
       </Header>
       <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
-        <p>Don't be a stranger. You need to <Header as={Link} to='login' className='fake-link' >log in</Header> to view this section or the page does not exist!</p>
+        <p>Don't be a stranger. You need to <Header as={Link} to='login' className='fake-link' >log in</Header> to view this section!</p>
       </Segment>
     </div>
   )
