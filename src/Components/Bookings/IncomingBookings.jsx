@@ -38,19 +38,19 @@ class IncomingBookings extends Component {
           <p style={{ 'textAlign': 'center' }}>
             You hosting other people's cats.
           </p>
-          <div style={{'display': 'flex'}}>
-            <Button size='mini' style={{'marginTop': '0'}} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
+          <div style={{ 'display': 'flex' }}>
+            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
               Requests
             </Button>
-            <Button size='mini' style={{'marginTop': '0'}} onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
+            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
               Upcoming
             </Button>
-            <Button size='mini' style={{'marginTop': '0'}} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
+            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
               History
             </Button>
           </div>
         </div>
-        <Container style={{'marginTop': '26vh' }}>
+        <Container style={{ 'marginTop': '26vh' }}>
           <div className='expanding-wrapper'>
             <div ref={(el) => { this.requests = el }} />
             <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>

@@ -20,22 +20,22 @@ const IncomingRequests = (props) => {
         {sortedRequests.map(request => {
           return (
             <Segment className='whitebox'>
-                <Grid className='topbox'>
-                  <Grid.Row style={{'alignItems': 'center'}} >
+              <Grid className='topbox'>
+                <Grid.Row style={{ 'alignItems': 'center' }} >
                   <Grid.Column width={8}>
-                      <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{request.price_total} kr</Header>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <Icon name='plus circle' style={{'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right'}} size='big'/>
-                      <Icon name='check circle' style={{'color': '#ffffff', 'float': 'right'}} size='big'/>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <div>
-                    <p style={{'color': '#ffffff', 'fontSize': 'small', 'marginBottom': '1rem', 'marginTop': '-0.5rem'}}>
-                      You must reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>
-                    </p>
-                  </div>
-                </Grid>
+                    <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{request.price_total} kr</Header>
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <Icon name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right' }} size='big' />
+                    <Icon name='check circle' style={{ 'color': '#ffffff', 'float': 'right' }} size='big' />
+                  </Grid.Column>
+                </Grid.Row>
+                <div>
+                  <p style={{ 'color': '#ffffff', 'fontSize': 'small', 'marginBottom': '1rem', 'marginTop': '-0.5rem' }}>
+                    You must reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>
+                  </p>
+                </div>
+              </Grid>
               <p className='small-centered-paragraph'>
                 <strong style={{ 'color': '#c90c61' }}>{request.user.nickname}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{request.number_of_cats} {request.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[0]).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
               </p>
