@@ -20,7 +20,6 @@ const IncomingRequests = (props) => {
         {sortedRequests.map(request => {
           return (
             <Segment className='whitebox'>
-            
                 <Grid className='topbox'>
                   <Grid.Row style={{'alignItems': 'center'}} >
                   <Grid.Column width={8}>
@@ -33,7 +32,7 @@ const IncomingRequests = (props) => {
                   </Grid.Row>
                   <div>
                     <p style={{'color': '#ffffff', 'fontSize': 'small', 'marginBottom': '1rem', 'marginTop': '-0.5rem'}}>
-                      You must reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>.
+                      You must reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>
                     </p>
                   </div>
                 </Grid>

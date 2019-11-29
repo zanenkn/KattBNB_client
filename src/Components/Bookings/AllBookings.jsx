@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Header, Segment } from 'semantic-ui-react'
+import { Header, Segment, Button } from 'semantic-ui-react'
 
 class AllBookings extends Component {
 
@@ -112,24 +112,46 @@ class AllBookings extends Component {
           History:&nbsp;{incomingHistory.length}
         </p>
       )
-      incomingText = (
-        <p style={{ 'textAlign': 'center' }}>
-          You hosting other people's cats.
-        </p>
-      )
-      incomingCTA = (
-        <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
-          onClick={() => {
-            this.props.history.push({
-              pathname: '/incoming-bookings',
-              state: {
-                incomingRequests: incomingRequests,
-                incomingUpcoming: incomingUpcoming,
-                incomingHistory: incomingHistory
-              }
-            })
-          }}>View</Header>
-      )
+
+      if (incomingRequests.length > 0) {
+        incomingText = (
+          <p style={{ 'textAlign': 'center' }}>
+            You have <strong style={{ 'color': '#c90c61' }}>{incomingRequests.length} incoming booking {incomingRequests.length > 1 ? 'requests' : 'request'}</strong> awaiting your decision.
+          </p>
+        )
+        incomingCTA = (
+          <Button id='view-incoming-bookings'
+            onClick={() => {
+              this.props.history.push({
+                pathname: '/incoming-bookings',
+                state: {
+                  incomingRequests: incomingRequests,
+                  incomingUpcoming: incomingUpcoming,
+                  incomingHistory: incomingHistory
+                }
+              })
+            }}>View</Button>
+        )
+      } else {
+        incomingText = (
+          <p style={{ 'textAlign': 'center' }}>
+            You hosting other people's cats.
+          </p>
+        )
+        incomingCTA = (
+          <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
+            onClick={() => {
+              this.props.history.push({
+                pathname: '/incoming-bookings',
+                state: {
+                  incomingRequests: incomingRequests,
+                  incomingUpcoming: incomingUpcoming,
+                  incomingHistory: incomingHistory
+                }
+              })
+            }}>View</Header>
+        )
+      }
     } else {
       incomingBookingStats = (
         <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
