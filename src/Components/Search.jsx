@@ -13,11 +13,11 @@ class Search extends Component {
         </Header>
         <Segment className='whitebox'>
           <p style={{'textAlign': 'center'}}>
-            Good things take time! But they are also worth the wait. We are working hard to get the best cat boarding site up and running. Stay tuned! 
+            {t('landing.paragraph')} 
           </p>
           <div style={{'textAlign': 'center'}}>
             <Header  as={Link} to='about-us' className='fake-link-underlined' >
-              Who we are
+              {t('landing.link-to-about')}
             </Header>
           </div>
 
