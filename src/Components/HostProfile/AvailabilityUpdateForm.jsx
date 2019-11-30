@@ -130,7 +130,7 @@ class AvailabilityUpdateForm extends Component {
             firstDayOfWeek={1}
             selectedDays={this.state.selectedDays}
             fromMonth={today}
-            disabledDays={{ before: tomorrowDate }}
+            disabledDays={{ before: today }}
             onDayClick={this.handleDayClick}
           />
         </div>
