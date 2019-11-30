@@ -1,0 +1,53 @@
+{
+  "landing": {
+    "title": "KattBNB is coming soon!",
+    "paragraph": "Good things take time! But they are also worth the wait. We are working hard to get the best cat boarding site up and running. Stay tuned!",
+    "link-to-about": "Who we are"
+  },
+  "menu": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "about": "About us",
+    "faq": "FAQ",
+    "contact": "Contact us",
+    "blog": "Blog",
+    "legal": "Legal"
+  },
+  "wip": {
+    "message": "This section is still a work in progress!"
+  },
+  "about": {
+    "about-title": "About us",
+    "idea-title": "The idea of KattBNB",
+    "idea-p1": "Cancelling a weekend trip because there is no one to look after your cat. Changing your plans because a friend who reluctantly agreed to pet sit bailed the last minute. Dragging your clearly disgruntled cat on a lengthy train ride because that’s the only way to visit your parents for Christmas. If you’re a cat owner, chances are that you’ve been there.",
+    "idea-p2": "But what if booking your cat with a trusty petsitter would be as easy as booking yourself in a hotel or Airbnb? What if you wouldn’t have to worry about your furry friends wellbeing while you’re away on holiday?",
+    "idea-p3": "We believe if things can be made less difficult, they should. And we believe problems are solved when people come together. That’s why we are building KattBNB - a platform where cat owners can meet cat sitters and booking a boarding for your cat is a breeze. Because hey, it should be.",
+    "behind-scenes-title": "Us behind the scenes",
+    "zane-title": "CEO and web developer",
+    "zane-txt": "Driving force behind the idea on the good days and crying force on the other ones",
+    "george-title": "CTO and web developer",
+    "george-txt": "Greek god of coding, the million dollar combo of stubbornness and patience",
+    "felix-title": "Advisor in business development",
+    "felix-txt": "Felix tells us what to do when we don’t know what to do",
+    "acknowledgements-title": "Acknowledgements",
+    "acknowledgements-txt": "None of this would be possible without Craft Academy. These people taught us to code and all things beyond that."
+  },
+  "faq": {
+    "header1": "What is KattBNB?",
+    "p1": "Our idea of KattBNB is a platform that lets cat sitters offer their services and cat owners book a sitter that is most convenient to them. Think that you could check your cat in with someone you can trust as easy you check yourself in a hotel! That’s what we are building. A full range service that allows you to not only find the right person to look after your cat but also handles the booking, payment, staying in touch and all the other stuff. So you don’t have to worry while you are away.",
+    "header2": "When is KattBNB going live?",
+    "p2": "We are planning and working hard towards a release on spring 2020.",
+    "header3": "Who we are?",
+    "p3": "We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More here.",
+    "header4": "I want to contribute!",
+    "p4-1": "Good! If you have an idea how to improve our code, you are welcome to open a pull request on GitHub.",
+    "p4-2": "For any other suggestions and feedback, please use this form to get in touch with us."
+  },
+  "contact": {
+    "contact-p": "Fill in this form to send us a message. We will get back to you as soon as we read it!",
+    "name-placeholder": "Your name",
+    "email-placeholder": "Your email address",
+    "message-placeholder": "Your message",
+    "send-btn": "Send"
+  }
+}
