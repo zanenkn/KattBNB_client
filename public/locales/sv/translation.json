@@ -44,8 +44,8 @@
     "p4-2": "För andra förslag och feedback, använd detta formulär för att komma i kontakt med oss."
   },
   "contact": {
-    "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser den!",
-    " name-placeholder": "Ditt namn",
+    "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser det!",
+    "name-placeholder": "Ditt namn",
     "email-placeholder": "Din e-postadress",
     "message-placeholder": "Ditt meddelande",
     "send-btn": "Skicka"

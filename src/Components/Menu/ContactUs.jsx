@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-react'
 import NetlifyForm from 'react-netlify-form'
+import { withTranslation } from 'react-i18next'
 
 class ContactUs extends Component {
 
   render() {
-
+    const { t } = this.props
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Contact us
+          {t('menu.contact')}
         </Header>
         <Segment className='whitebox'>
           <Form>
@@ -23,13 +24,13 @@ class ContactUs extends Component {
                   }
                   {!success &&
                     <>
-                      <p style={{ 'textAlign': 'center' }}>Fill in this form to send us a message. We will get back to you as soon as we read it!</p>
+                      <p style={{ 'textAlign': 'center' }}>{t('contact.contact-p')}</p>
                       <Form.Input
                         as='input'
                         type='text'
                         required
                         name='name'
-                        placeholder='Your name'
+                        placeholder={t('contact.name-placeholder')}
                         style={{ 'marginBottom': '1rem' }}
                       />
                       <Form.Input
@@ -37,16 +38,16 @@ class ContactUs extends Component {
                         type='email'
                         required
                         name='email'
-                        placeholder='Your email address'
+                        placeholder={t('contact.email-placeholder')}
                         style={{ 'marginBottom': '1rem' }}
                       />
                       <TextArea
                         as='textarea'
                         required
                         name='message'
-                        placeholder='Your message'
+                        placeholder={t('contact.message-placeholder')}
                       />
-                      <Button className='submit-button'>Send</Button>
+                      <Button className='submit-button'>{t('contact.send-btn')} </Button>
                     </>
                   }
                   {success &&
@@ -64,4 +65,4 @@ class ContactUs extends Component {
   }
 }
 
-export default ContactUs
+export default withTranslation()(ContactUs)
