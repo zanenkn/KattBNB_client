@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { Sidebar, Header, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { withTranslation } from 'react-i18next'
 
 class Search extends Component {
   render() {
+    const { t } = this.props
+    debugger;
+
     return (
       <Sidebar.Pushable className='content-wrapper' >
         <Header as='h1'>
-          KattBNB is coming soon!
+          {t('landing.title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{'textAlign': 'center'}}>
@@ -25,4 +29,4 @@ class Search extends Component {
   }
 }
 
-export default Search
+export default withTranslation()(Search)

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component, createRef, Suspense } from 'react'
 import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu/Menu'
@@ -21,6 +21,7 @@ class App extends Component {
 
   render() {
     return (
+      <Suspense fallback={(<div>Loading</div>)}>
       <div ref={this.contextRef}>
         <Sticky context={this.contextRef}>
           <Navbar />
@@ -47,6 +48,7 @@ class App extends Component {
           </Sidebar.Pushable>
         </div>
       </div>
+      </Suspense>
     )
   }
 }
