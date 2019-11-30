@@ -172,7 +172,7 @@ class Search extends Component {
                   inputProps={{ readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
-                    disabledDays: { after: to, before: tomorrowDate },
+                    disabledDays: { after: to, before: today },
                     toMonth: to,
                     modifiers,
                     numberOfMonths: 1,
@@ -193,7 +193,7 @@ class Search extends Component {
                   inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
-                    disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
+                    disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
                     modifiers,
                     firstDayOfWeek: 1,
                     showWeekNumbers: true,
