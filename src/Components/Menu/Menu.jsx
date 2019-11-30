@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import i18n from '../../i18n'
+import { withTranslation } from 'react-i18next'
 
 class Menu extends Component {
 
@@ -31,6 +32,7 @@ class Menu extends Component {
   }
 
   render() {
+    const { t } = this.props
     const changeLanguage = (lng) => {
       i18n.changeLanguage(lng)
     }
@@ -44,7 +46,7 @@ class Menu extends Component {
           as={Link}
           onClick={this.signOut}
         >
-          Log out
+          {t('menu.logout')}
         </Header>
       )
     } else {
@@ -56,7 +58,7 @@ class Menu extends Component {
             as={Link}
             to='/login'
           >
-            Log in
+            {t('menu.login')}
           </Header>
           <Header
             id='signup'
@@ -64,7 +66,7 @@ class Menu extends Component {
             as={Link}
             to='/sign-up'
           >
-            Sign up
+            {t('menu.signup')}
           </Header>
         </>
       )
@@ -90,7 +92,7 @@ class Menu extends Component {
               as={Link}
               to='/about-us'
             >
-              About us
+              {t('menu.about')}
             </Header>
             <Header
               id='faq'
@@ -98,7 +100,7 @@ class Menu extends Component {
               as={Link}
               to='faq'
             >
-              FAQ
+              {t('menu.faq')}
             </Header>
             <Header
               id='contact'
@@ -106,7 +108,7 @@ class Menu extends Component {
               as={Link}
               to='/contact-us'
             >
-              Contact us
+              {t('menu.contact')}
             </Header>
 
             <Header
@@ -115,7 +117,7 @@ class Menu extends Component {
               as={Link}
               to='/legal'
             >
-              Legal
+              {t('menu.legal')}
             </Header>
             <div>
               <Button size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('sv')}>Svenska</Button>
@@ -142,4 +144,4 @@ const mapDispatchToProps = {
   })
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu))
+export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu)))

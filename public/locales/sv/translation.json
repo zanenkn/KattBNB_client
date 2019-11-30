@@ -6,6 +6,7 @@
   },
   "menu": {
     "login": "Logga in",
+    "logout": "Logga ut",
     "signup": "Registrera konto",
     "about": "Om oss",
     "faq": "Frågor och svar",
@@ -27,10 +28,10 @@
     "zane-txt": "Drivande kraft bakom affärsidén på en bra dag och gråtande kraft på övriga dagar",
     "george-title": "Teknish chef och webbutvecklare",
     "george-txt": "Grekisk gud av kodning, den oslagbara kombinationen av envishet och tålamod",
-    "felix-title": "Affärsrådgivare / Rådgivare i affärsutveckling",
+    "felix-title": "Affärsrådgivare",
     "felix-txt": "Felix säger vad vi ska göra när vi inte vet vad vi ska göra",
-    "aknowledgements-title": "Erkännanden",
-    "aknowledgements-txt": "Inget av detta skulle vara möjligt utan Craft Academy. Dessa människor lärde oss att koda och allting utöver det."
+    "acknowledgements-title": "Erkännanden",
+    "acknowledgements-txt": "Inget av detta skulle vara möjligt utan Craft Academy. Dessa människor lärde oss att koda och allting utöver det."
   },
   "faq": {
     "header1": "Vad är KattBNB?",
@@ -44,10 +45,12 @@
     "p4-2": "För andra förslag och feedback, använd detta formulär för att komma i kontakt med oss."
   },
   "contact": {
-    "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser den!",
-    " name-placeholder": "Ditt namn",
+    "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser det!",
+    "name-placeholder": "Ditt namn",
     "email-placeholder": "Din e-postadress",
     "message-placeholder": "Ditt meddelande",
-    "send-btn": "Skicka"
+    "send-btn": "Skicka",
+    "thankyou-msg": "Tack för ditt meddelande!",
+    "error-msg": "Meddelandet skickades inte. Försök igen senare."
   }
 }

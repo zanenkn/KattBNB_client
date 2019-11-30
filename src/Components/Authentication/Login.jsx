@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { Header } from 'semantic-ui-react'
 import WIP from '../ReusableComponents/WorkInProgress'
+import { withTranslation } from 'react-i18next'
 
 class Login extends Component {
 
   render() {
-
+    const { t } = this.props
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Legal
+          {t('menu.login')}
         </Header>
         <WIP />
       </div>
@@ -17,4 +18,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default withTranslation()(Login)
