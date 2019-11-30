@@ -6,8 +6,6 @@ import { withTranslation } from 'react-i18next'
 class Search extends Component {
   render() {
     const { t } = this.props
-    debugger;
-
     return (
       <Sidebar.Pushable className='content-wrapper' >
         <Header as='h1'>

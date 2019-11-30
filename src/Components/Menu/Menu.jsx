@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
+import { Sidebar, Segment, Grid, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import i18n from '../../i18n'
 
 class Menu extends Component {
 
@@ -30,6 +31,9 @@ class Menu extends Component {
   }
 
   render() {
+    const changeLanguage = (lng) => {
+      i18n.changeLanguage(lng)
+    }
     let userLinks
 
     if (this.props.currentUserIn) {
@@ -104,14 +108,7 @@ class Menu extends Component {
             >
               Contact us
             </Header>
-            <Header
-              id='blog'
-              className='menu-link'
-              as={Link}
-              to='/blog'
-            >
-              Blog
-            </Header>
+
             <Header
               id='legal'
               className='menu-link'
@@ -120,6 +117,10 @@ class Menu extends Component {
             >
               Legal
             </Header>
+            <div>
+              <Button size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('sv')}>Svenska</Button>
+              <Button size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('en')}>English</Button>
+            </div>
           </Grid.Column>
         </Grid>
       </Sidebar>

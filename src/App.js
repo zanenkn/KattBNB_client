@@ -11,7 +11,7 @@ import Legal from './Components/Menu/Legal'
 import Login from './Components/Authentication/Login'
 import SignUp from './Components/Authentication/SignUp'
 import ScrollToTop from './Modules/ScrollToTop'
-import { Container, Sticky, Sidebar } from 'semantic-ui-react'
+import { Container, Sticky, Sidebar, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
@@ -20,6 +20,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
+
     return (
       <Suspense fallback={(<div>Loading</div>)}>
       <div ref={this.contextRef}>
@@ -45,9 +46,11 @@ class App extends Component {
               </Switch>
             </ScrollToTop>
             <Menu />
+
           </Sidebar.Pushable>
         </div>
       </div>
+      
       </Suspense>
     )
   }
