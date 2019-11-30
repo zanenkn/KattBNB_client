@@ -48,6 +48,8 @@
     "name-placeholder": "Your name",
     "email-placeholder": "Your email address",
     "message-placeholder": "Your message",
-    "send-btn": "Send"
+    "send-btn": "Send",
+    "thankyou-msg": "Thank you for your message!",
+    "error-msg": "Your message was not sent. Please try again later."
   }
 }

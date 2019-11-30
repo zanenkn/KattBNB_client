@@ -19,7 +19,7 @@ class ContactUs extends Component {
                 <>
                   {error &&
                     <Message negative style={{ 'textAlign': 'center' }}>
-                      Your information was not sent. Please try again later.
+                      {t('contact.error-msg')}
                     </Message>
                   }
                   {!success &&
@@ -52,7 +52,7 @@ class ContactUs extends Component {
                   }
                   {success &&
                     <p style={{ 'textAlign': 'center' }}>
-                      Thank you for your message!
+                      {t('contact.thankyou-msg')}
                     </p>
                   }
                 </>
