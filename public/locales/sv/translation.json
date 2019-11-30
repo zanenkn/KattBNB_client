@@ -27,10 +27,10 @@
     "zane-txt": "Drivande kraft bakom affärsidén på en bra dag och gråtande kraft på övriga dagar",
     "george-title": "Teknish chef och webbutvecklare",
     "george-txt": "Grekisk gud av kodning, den oslagbara kombinationen av envishet och tålamod",
-    "felix-title": "Affärsrådgivare / Rådgivare i affärsutveckling",
+    "felix-title": "Affärsrådgivare",
     "felix-txt": "Felix säger vad vi ska göra när vi inte vet vad vi ska göra",
-    "aknowledgements-title": "Erkännanden",
-    "aknowledgements-txt": "Inget av detta skulle vara möjligt utan Craft Academy. Dessa människor lärde oss att koda och allting utöver det."
+    "acknowledgements-title": "Erkännanden",
+    "acknowledgements-txt": "Inget av detta skulle vara möjligt utan Craft Academy. Dessa människor lärde oss att koda och allting utöver det."
   },
   "faq": {
     "header1": "Vad är KattBNB?",

@@ -1,29 +1,30 @@
 import React, { Component } from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 const AboutUs = () => {
-
+  const { t } = useTranslation()
   return (
     <div className='content-wrapper' >
       <Header as='h1'>
-        About us
+        {t('menu.about')}
       </Header>
       <Header as='h2' >
-        The idea of KattBNB
+        {t('about.idea-title')}
       </Header>
       <p>
-        Cancelling a weekend trip because there is no one to look after your cat. Changing your plans because a friend who reluctantly agreed to pet sit bailed the last minute. Dragging your clearly disgruntled cat on a lengthy train ride because that’s the only way to visit your parents for Christmas. If you’re a cat owner, chances are that you’ve been there.
+        {t('about.idea-p1')}
       </p>
       <p>
-        But what if booking your cat with a trusty petsitter would be as easy as booking yourself in a hotel or Airbnb? What if you wouldn’t have to worry about your furry friends wellbeing while you’re away on holiday?
+        {t('about.idea-p2')}
       </p>
       <p>
-        We believe if things can be made less difficult, they should. And we believe problems are solved when people come together. That’s why we are building KattBNB - a platform where cat owners can meet cat sitters and booking a boarding for your cat is a breeze. Because hey, it should be.
+        {t('about.idea-p3')}
       </p>
       <Divider hidden />
       <Divider hidden />
       <Header as='h2'>
-        Us behind the scenes
+        {t('about.behind-scenes-title')}
       </Header>
       <div>
         <Image style={{ 'margin': 'auto' }} src='zane.png' size='small'></Image>
@@ -32,10 +33,10 @@ const AboutUs = () => {
         <a href='https://www.linkedin.com/in/zane-neikena' target='_blank' rel='noopener noreferrer'>Zane Neikena</a>
       </Header>
       <Header as='h4' style={{ 'marginTop': 0 }}>
-        CEO and web developer
+        {t('about.zane-title')}
       </Header>
       <p style={{ 'textAlign': 'center' }}>
-        Driving force behind the idea on the good days and crying force on the other ones
+        {t('about.zane-txt')}
       </p>
       <Divider hidden />
       <Divider hidden />
@@ -46,10 +47,10 @@ const AboutUs = () => {
         <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>George Tomaras</a>
       </Header>
       <Header as='h4' style={{ 'marginTop': 0 }}>
-        CTO and web developer
+        {t('about.george-title')}
       </Header>
       <p style={{ 'textAlign': 'center' }}>
-        Greek god of coding, the million dollar combo of stubbornness and patience
+        {t('about.george-txt')}
       </p>
       <Divider hidden />
       <Divider hidden />
@@ -60,15 +61,15 @@ const AboutUs = () => {
         <a href='https://www.linkedin.com/in/felix-bonnier-90b4561/' target='_blank' rel='noopener noreferrer'>Felix Bonnier</a>
       </Header>
       <Header as='h4' style={{ 'marginTop': 0 }}>
-        Advisor in business development
+        {t('about.felix-title')}
       </Header>
       <p style={{ 'textAlign': 'center' }}>
-        Felix tells us what to do when we don’t know what to do
+        {t('about.felix-txt')}
       </p>
       <Divider hidden />
       <Divider hidden />
       <Header as='h2'>
-        Acknowledgements
+        {t('about.acknowledgements-title')}
       </Header>
       <p>
         None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
