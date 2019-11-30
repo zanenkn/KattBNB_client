@@ -167,8 +167,6 @@ class HostProfileForm extends Component {
   render() {
     let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.addressSearch === true) {
       addressSearch = (

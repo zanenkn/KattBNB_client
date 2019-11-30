@@ -92,8 +92,6 @@ class AvailabilityUpdateForm extends Component {
     let errorDisplay, availabilityFormSubmitButton
 
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.loading) {
       availabilityFormSubmitButton = (

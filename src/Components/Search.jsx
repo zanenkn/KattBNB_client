@@ -125,8 +125,6 @@ class Search extends Component {
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.errorDisplay) {
       errorDisplay = (
