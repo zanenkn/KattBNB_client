@@ -47,21 +47,21 @@ class OutgoingBookings extends Component {
           View History
         </Button>
         <div style={{ 'height': '8vh' }} ref={(el) => { this.requests = el }} />
-        <Header as='h2' style={{ 'marginBottom': '0' }}>
+        <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
           Requests
         </Header>
         <OutgoingRequests
           requests={this.props.location.state.outgoingRequests}
         />
         <div style={{ 'height': '8vh' }} ref={(el) => { this.upcoming = el }} />
-        <Header as='h2' style={{ 'marginBottom': '0' }}>
+        <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
           Upcoming
         </Header>
         <OutgoingUpcoming
           upcoming={this.props.location.state.outgoingUpcoming}
         />
         <div style={{ 'height': '8vh' }} ref={(el) => { this.history = el }} />
-        <Header as='h2' style={{ 'marginBottom': '0' }}>
+        <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
           History
         </Header>
         <OutgoingHistory

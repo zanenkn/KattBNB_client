@@ -31,29 +31,31 @@ class IncomingBookings extends Component {
 
     return (
       <>
-        <div style={{ 'height': '26vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
-          <Header as='h1' style={{ 'marginBottom': '0' }}>
+        <div style={{ 'height': '26vh', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center' }}>
+          <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'align-self': 'flex-start' }}>
             Incoming bookings
           </Header>
-          <p style={{ 'textAlign': 'center' }}>
+          <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
             You hosting other people's cats.
           </p>
-          <div style={{ 'display': 'flex' }}>
-            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
-              Requests
-            </Button>
-            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
-              Upcoming
-            </Button>
-            <Button size='mini' style={{ 'marginTop': '0' }} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
-              History
-            </Button>
+          <div style={{ 'display': 'flex', 'align-self': 'flex-end', 'margin': '0 auto' }}>
+            <Button.Group size='mini'>
+              <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
+                Requests
+              </Button>
+              <Button style={{ 'marginTop': '0' }} onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
+                Upcoming
+              </Button>
+              <Button style={{ 'marginTop': '0' }} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
+                History
+              </Button>
+            </Button.Group>
           </div>
         </div>
         <Container style={{ 'marginTop': '26vh' }}>
           <div className='expanding-wrapper'>
             <div ref={(el) => { this.requests = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
-              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
                 Requests
               </Header>
               <IncomingRequests
@@ -61,7 +63,7 @@ class IncomingBookings extends Component {
               />
             </div>
             <div ref={(el) => { this.upcoming = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
-              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                 Upcoming
               </Header>
               <IncomingUpcoming
@@ -69,7 +71,7 @@ class IncomingBookings extends Component {
               />
             </div>
             <div ref={(el) => { this.history = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
-              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                 History
               </Header>
               <IncomingHistory
