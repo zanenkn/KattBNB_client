@@ -225,6 +225,7 @@ class Search extends Component {
                 clearable
                 search
                 selection
+                value={this.state.location}
                 placeholder='Choose your location'
                 options={LOCATION_OPTIONS}
                 id='location'
