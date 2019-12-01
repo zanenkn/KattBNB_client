@@ -54,7 +54,7 @@ class OutgoingBookings extends Component {
         </div>
         <Container style={{ 'marginTop': '26vh' }}>
           <div className='expanding-wrapper'>
-            <div ref={(el) => { this.requests = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+            <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
               <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
                 Requests
               </Header>
@@ -62,7 +62,7 @@ class OutgoingBookings extends Component {
                 requests={this.props.location.state.outgoingRequests}
               />
             </div>
-            <div style={{ 'height': '8vh' }} ref={(el) => { this.upcoming = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+            <div style={{ 'height': '8vh' }} ref={(el) => { this.upcoming = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
               <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                 Upcoming
               </Header>
@@ -70,7 +70,7 @@ class OutgoingBookings extends Component {
                 upcoming={this.props.location.state.outgoingUpcoming}
               />
             </div>
-            <div style={{ 'height': '8vh' }} ref={(el) => { this.history = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+            <div style={{ 'height': '8vh' }} ref={(el) => { this.history = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
               <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                 History
               </Header>
