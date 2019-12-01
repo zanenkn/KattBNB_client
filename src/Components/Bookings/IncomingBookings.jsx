@@ -52,27 +52,30 @@ class IncomingBookings extends Component {
         </div>
         <Container style={{ 'marginTop': '26vh' }}>
           <div className='expanding-wrapper'>
-            <div ref={(el) => { this.requests = el }} />
-            <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
-              Requests
-            </Header>
-            <IncomingRequests
-              requests={this.props.location.state.incomingRequests}
-            />
-            <div ref={(el) => { this.upcoming = el }} />
-            <Header as='h2' style={{ 'marginBottom': '0' }}>
-              Upcoming
-            </Header>
-            <IncomingUpcoming
-              upcoming={this.props.location.state.incomingUpcoming}
-            />
-            <div ref={(el) => { this.history = el }} />
-            <Header as='h2' style={{ 'marginBottom': '0' }}>
-              History
-            </Header>
-            <IncomingHistory
-              history={this.props.location.state.incomingHistory}
-            />
+            <div ref={(el) => { this.requests = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+                Requests
+              </Header>
+              <IncomingRequests
+                requests={this.props.location.state.incomingRequests}
+              />
+            </div>
+            <div ref={(el) => { this.upcoming = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+                Upcoming
+              </Header>
+              <IncomingUpcoming
+                upcoming={this.props.location.state.incomingUpcoming}
+              />
+            </div>
+            <div ref={(el) => { this.history = el }} style={{'marginTop': '-36vh', 'paddingTop': '36vh'}}>
+              <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
+                History
+              </Header>
+              <IncomingHistory
+                history={this.props.location.state.incomingHistory}
+              />
+            </div>
             <div className='scroll-to-top '>
               <Icon link='#' name='angle up' size='huge' color='grey' style={this.state.scrollYPosition < 200 ? { 'display': 'none' } : { 'display': 'block' }} onClick={this.scrollToTop} />
             </div>
