@@ -120,8 +120,8 @@ class Menu extends Component {
               {t('menu.legal')}
             </Header>
             <div>
-              <Button size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('sv')}>Svenska</Button>
-              <Button size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('en')}>English</Button>
+              <Button id='se' size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('sv')}>Svenska</Button>
+              <Button id='en' size='mini' style={{'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem'}} onClick={() => changeLanguage('en')}>English</Button>
             </div>
           </Grid.Column>
         </Grid>
