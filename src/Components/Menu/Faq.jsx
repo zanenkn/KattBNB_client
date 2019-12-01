@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sidebar, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 const Faq = () =>  {
   const { t } = useTranslation()
@@ -32,7 +32,9 @@ const Faq = () =>  {
       </Header>
 
       <p>
-        We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <Header  as={Link} to='about-us' className='fake-link-underlined'>here</Header>. 
+        <Trans i18nKey='faq.p3'>
+          We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <Header as={Link} to='about-us' style={{'fontSize': 'medium'}} className='fake-link-underlined-reg'>here</Header>. 
+        </Trans>
       </p>
 
       <Header as='h3' style={{'textAlign': 'left'}} >
@@ -40,11 +42,15 @@ const Faq = () =>  {
       </Header>
 
       <p>
-        Good! If you have an idea how to improve our code, you are welcome to open a pull request <a href='https://github.com/zanenkn/KattBNB_client' target='_blank' rel='noopener noreferrer' style={{'textDecoration': 'underline'}}>on GitHub</a>. 
+        <Trans i18nKey='faq.p4-1'>
+          Good! If you have an idea how to improve our code, you are welcome to open a pull request <a href='https://github.com/zanenkn/KattBNB_client' target='_blank' rel='noopener noreferrer' style={{'textDecoration': 'underline'}}>on GitHub</a>. 
+        </Trans>
       </p>
 
       <p>
-        For any other suggestions and feedback, please use <Header  as={Link} to='contact-us' className='fake-link-underlined'>this form</Header> to get in touch with us. 
+        <Trans i18nKey='faq.p4-2'>
+          For any other suggestions and feedback, please use <Header as={Link} to='contact-us' className='fake-link-underlined-reg'>this form</Header> to get in touch with us. 
+        </Trans>
       </p>
 
     </Sidebar.Pushable>

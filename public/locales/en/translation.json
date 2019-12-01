@@ -31,7 +31,7 @@
     "felix-title": "Advisor in business development",
     "felix-txt": "Felix tells us what to do when we don’t know what to do",
     "acknowledgements-title": "Acknowledgements",
-    "acknowledgements-txt": "None of this would be possible without Craft Academy. These people taught us to code and all things beyond that."
+    "acknowledgements-txt": "None of this would be possible without <1>Craft Academy</1>. These people taught us to code and all things beyond that."
   },
   "faq": {
     "header1": "What is KattBNB?",
@@ -39,10 +39,10 @@
     "header2": "When is KattBNB going live?",
     "p2": "We are planning and working hard towards a release on spring 2020.",
     "header3": "Who we are?",
-    "p3": "We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More here.",
+    "p3": "We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <1>here</1>.",
     "header4": "I want to contribute!",
-    "p4-1": "Good! If you have an idea how to improve our code, you are welcome to open a pull request on GitHub.",
-    "p4-2": "For any other suggestions and feedback, please use this form to get in touch with us."
+    "p4-1": "Good! If you have an idea how to improve our code, you are welcome to open a pull request <1>on GitHub</1>.",
+    "p4-2": "For any other suggestions and feedback, please use <1>this form</1> to get in touch with us."
   },
   "contact": {
     "contact-p": "Fill in this form to send us a message. We will get back to you as soon as we read it!",

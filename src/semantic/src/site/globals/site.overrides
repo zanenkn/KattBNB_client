@@ -34,6 +34,18 @@
   color: #bd0a5b!important;
 }
 
+.fake-link-underlined-reg {
+  color: #c90c61;
+  cursor: pointer!important;
+  font-size: medium!important;
+  text-decoration: underline;
+  font-weight: normal!important;
+}
+
+.fake-link-underlined-reg:hover {
+  color: #bd0a5b!important;
+}
+
 /*******************************
             NAVBAR
 *******************************/

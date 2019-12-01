@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 const AboutUs = () => {
   const { t } = useTranslation()
@@ -72,7 +72,9 @@ const AboutUs = () => {
         {t('about.acknowledgements-title')}
       </Header>
       <p>
-        None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
+        <Trans i18nKey='about.acknowledgements-txt'>
+          None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
+        </Trans>
       </p>
     </div>
   )
