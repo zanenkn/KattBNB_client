@@ -10,15 +10,17 @@ const List = (props) => {
   if (props.finalAvailableHosts.length === 0) {
     searchMessage = (
       <Header>
-        Your search did not yield any results! Try <Link to={{
-          pathname: '/',
-          state: {
-            checkInDate: new Date(props.checkInDate),
-            checkOutDate: new Date(props.checkOutDate),
-            location: props.location,
-            numberOfCats: props.numberOfCats
-          }
-        }}> changing </Link> your search criteria or go to the map to find cat sitters in nearby areas.
+        Your search did not yield any results! Try <Link className='fake-link'
+          style={{ 'textDecoration': 'underline' }}
+          to={{
+            pathname: '/',
+            state: {
+              checkInDate: new Date(props.checkInDate),
+              checkOutDate: new Date(props.checkOutDate),
+              location: props.location,
+              numberOfCats: props.numberOfCats
+            }
+          }}> changing </Link> your search criteria or go to the map to find cat sitters in nearby areas.
       </Header>
     )
   }
