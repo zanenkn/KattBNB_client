@@ -25,6 +25,17 @@ class Search extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.history.location.state !== undefined) {
+      this.setState({
+        from: this.props.history.location.state.checkInDate,
+        to: this.props.history.location.state.checkOutDate,
+        location: this.props.history.location.state.location,
+        cats: this.props.history.location.state.numberOfCats
+      })
+    }
+  }
+
   onChangeHandler = (e) => {
     this.setState({ [e.target.id]: e.target.value })
   }
