@@ -130,8 +130,19 @@ class UserPage extends Component {
       displayPasswordForm: false,
       hostProfileForm: false
     })
+    let noAccountDelete = []
+    let todaysDate = new Date()
+    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+    let today = new Date(utc).getTime()
     if (this.state.incomingBookings.length > 0) {
-      window.alert('To delete your account please send us a request via the Contact Us section!')
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
+          noAccountDelete.push(booking)
+        }
+      })
+    }
+    if (noAccountDelete.length > 0) {
+      window.alert('To delete your account, please follow relevant instructions in our FAQ page!')
     } else if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
       const headers = {

@@ -19,7 +19,7 @@ const IncomingRequests = (props) => {
         </p>
         {sortedRequests.map(request => {
           return (
-            <Segment className='whitebox' data-cy='incoming-requests'>
+            <Segment className='whitebox' data-cy='incoming-requests' key={request.id}>
               <Grid className='topbox'>
                 <Grid.Row style={{ 'alignItems': 'center' }} >
                   <Grid.Column width={8}>
