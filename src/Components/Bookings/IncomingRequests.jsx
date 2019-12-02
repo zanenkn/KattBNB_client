@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Segment, Header, Grid, Icon } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
+import IncRequestPopup from './IncRequestPopup'
 
 const IncomingRequests = (props) => {
   let sortedRequests = props.requests
@@ -48,7 +49,14 @@ const IncomingRequests = (props) => {
                 position="top center"
                 closeOnDocumentClick={true}
               >
-                yay
+                <IncRequestPopup 
+                  nickname={request.user.nickname}
+                  number_of_cats={request.number_of_cats}
+                  startDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+                  endDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                  message={request.message}
+                  avatar={request.user.avatar}
+                />
               </Popup>
 
             </Segment>
