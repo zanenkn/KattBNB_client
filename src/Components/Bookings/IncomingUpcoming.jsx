@@ -24,7 +24,7 @@ const IncomingUpcoming = (props) => {
                 You have approved a stay for <strong>{upcoming.user.nickname}'s</strong> <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
               </p>
               <p className='fake-link-underlined'>
-                Message
+                Message {upcoming.user.nickname}
               </p>
             </Container>
           )

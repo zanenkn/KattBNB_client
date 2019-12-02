@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Segment, Header, Grid, Icon } from 'semantic-ui-react'
+import Popup from 'reactjs-popup'
 
 const IncomingRequests = (props) => {
   let sortedRequests = props.requests
@@ -39,9 +40,17 @@ const IncomingRequests = (props) => {
               <p className='small-centered-paragraph'>
                 <strong style={{ 'color': '#c90c61' }}>{request.user.nickname}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{request.number_of_cats} {request.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[0]).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
               </p>
-              <p className='fake-link-underlined'>
-                View message
-              </p>
+              <Popup modal trigger={
+                <p className='fake-link-underlined'>
+                  View message
+                </p>
+              }
+                position="top center"
+                closeOnDocumentClick={true}
+              >
+                yay
+              </Popup>
+
             </Segment>
           )
         })}
