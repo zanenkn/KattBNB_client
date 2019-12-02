@@ -23,7 +23,6 @@ class UserPage extends Component {
     maxCats: '',
     supplement: '',
     availability: [],
-    outgoingBookings: [],
     incomingBookings: []
   }
 
@@ -66,16 +65,12 @@ class UserPage extends Component {
           })
         })
     }
-    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}`
     const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}`
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-    axios.get(pathOutgoing, { headers: headers }).then(response => {
-      this.setState({ outgoingBookings: response.data })
-    })
     axios.get(pathIncoming, { headers: headers }).then(response => {
       this.setState({ incomingBookings: response.data })
     })
@@ -135,7 +130,7 @@ class UserPage extends Component {
       displayPasswordForm: false,
       hostProfileForm: false
     })
-    if (this.state.incomingBookings.length > 0 || this.state.outgoingBookings.length > 0) {
+    if (this.state.incomingBookings.length > 0) {
       window.alert('To delete your account please send us a request via the Contact Us section!')
     } else if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
