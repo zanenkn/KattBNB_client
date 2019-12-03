@@ -212,6 +212,7 @@ class UserPage extends Component {
           supplement={this.state.supplement}
           availability={this.state.availability}
           location={this.props.location}
+          incomingBookings={this.state.incomingBookings}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )
