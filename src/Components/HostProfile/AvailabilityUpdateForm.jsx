@@ -70,12 +70,15 @@ class AvailabilityUpdateForm extends Component {
     this.setState({ newAvailability: sortedAvailableDates })
   }
 
-  handleDayClick(day, { selected }) {
+  handleDayClick(day, { selected, disabled }) {
     const today = new Date()
     const tomorrowNumber = today.getTime() + 86400000
     const tomorrowDate = new Date(tomorrowNumber)
     const { selectedDays } = this.state
     if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
+      if (disabled) {
+        return
+      }
       if (selected) {
         const selectedIndex = selectedDays.findIndex(selectedDay =>
           DateUtils.isSameDay(selectedDay, day)
