@@ -49,16 +49,15 @@ const IncomingRequests = (props) => {
                 position="top center"
                 closeOnDocumentClick={true}
               >
-                <IncRequestPopup 
+                <IncRequestPopup
                   nickname={request.user.nickname}
                   number_of_cats={request.number_of_cats}
-                  startDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-                  endDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                  startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                  endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
                   message={request.message}
                   avatar={request.user.avatar}
                 />
               </Popup>
-
             </Segment>
           )
         })}
