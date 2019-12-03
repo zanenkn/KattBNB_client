@@ -94,6 +94,7 @@ class AvailabilityUpdateForm extends Component {
     let disabledAvailabilityBookings = []
     let disabledAvailabilityDates = []
     let disabledDaysSorted = []
+    let disabledDaysDates = []
 
     const today = new Date()
     let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
@@ -130,6 +131,9 @@ class AvailabilityUpdateForm extends Component {
         disabledAvailabilityDates = disabledAvailabilityBookings.flat()
         disabledDaysSorted = disabledAvailabilityDates.sort()
       })
+      disabledDaysSorted.map(day => {
+        disabledDaysDates.push(new Date(day))
+      })
     }
 
     return (
@@ -144,7 +148,7 @@ class AvailabilityUpdateForm extends Component {
             firstDayOfWeek={1}
             selectedDays={this.state.selectedDays}
             fromMonth={today}
-            disabledDays={{ before: today }}
+            disabledDays={disabledDaysDates}
             onDayClick={this.handleDayClick}
           />
         </div>
