@@ -14,7 +14,8 @@ class AvailabilityUpdateForm extends Component {
       errors: '',
       loading: false,
       newAvailability: this.props.availability,
-      selectedDays: this.props.selectedDays
+      selectedDays: this.props.selectedDays,
+      incomingBookings: this.props.incomingBookings
     }
   }
 
@@ -90,8 +91,13 @@ class AvailabilityUpdateForm extends Component {
 
   render() {
     let errorDisplay, availabilityFormSubmitButton
+    let disabledAvailabilityBookings = []
+    let disabledAvailabilityDates = []
+    let disabledDaysSorted = []
 
     const today = new Date()
+    let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+    let todaysDate = new Date(utc).getTime()
 
     if (this.state.loading) {
       availabilityFormSubmitButton = (
@@ -114,6 +120,16 @@ class AvailabilityUpdateForm extends Component {
           </ul>
         </Message>
       )
+    }
+
+    if (this.state.incomingBookings.length > 0) {
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > todaysDate)) {
+          disabledAvailabilityBookings.push(booking.dates)
+        }
+        disabledAvailabilityDates = disabledAvailabilityBookings.flat()
+        disabledDaysSorted = disabledAvailabilityDates.sort()
+      })
     }
 
     return (
