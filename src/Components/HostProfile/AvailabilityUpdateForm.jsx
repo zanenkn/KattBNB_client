@@ -97,11 +97,12 @@ class AvailabilityUpdateForm extends Component {
     let disabledAvailabilityBookings = []
     let disabledAvailabilityDates = []
     let disabledDaysSorted = []
-    let disabledDaysDates = []
 
     const today = new Date()
     let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
     let todaysDate = new Date(utc).getTime()
+
+    let disabledDaysDates = [{ before: today }]
 
     if (this.state.loading) {
       availabilityFormSubmitButton = (
