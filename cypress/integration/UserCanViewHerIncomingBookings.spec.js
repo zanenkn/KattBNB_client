@@ -33,6 +33,12 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-requests]').last().contains('Pending2 wants to book a stay for their 1 cat during the dates of 2051-08-04 until 2051-08-05.')
   })
 
+  it('and see the message left by the user when she clicks the relevant link of a requested booking', () => {
+    cy.get('#view-incoming-bookings').click()
+    cy.get(':nth-child(1) > :nth-child(4) > .fake-link-underlined').click()
+    cy.contains('Please keep my cats, Pending1')
+  })
+
   it('and see her bookings history displayed in correct chronological order', () => {
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains("You hosted AcceptedOfThePast's cat(s) during the dates of 2019-11-26 until 2019-11-19.")
