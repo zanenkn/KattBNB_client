@@ -9,6 +9,7 @@ const IncomingRequests = (props) => {
   sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
 
   if (props.requests.length > 0) {
+    let priceWithDecimalsString, total
     return (
       <>
         <p className='small-centered-paragraph'>
@@ -20,12 +21,18 @@ const IncomingRequests = (props) => {
           These are booking requests from cat owners awaiting your decision.
         </p>
         {sortedRequests.map(request => {
+          priceWithDecimalsString = request.price_total.toFixed(2)
+          if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+            total = parseFloat(priceWithDecimalsString)
+          } else {
+            total = priceWithDecimalsString
+          }
           return (
             <Segment className='whitebox' data-cy='incoming-requests' key={request.id}>
               <Grid className='topbox'>
                 <Grid.Row style={{ 'alignItems': 'center' }} >
                   <Grid.Column width={8}>
-                    <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{request.price_total} kr</Header>
+                    <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{total} kr</Header>
                   </Grid.Column>
                   <Grid.Column width={8}>
                     <Icon name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right' }} size='big' />
