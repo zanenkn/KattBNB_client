@@ -21,10 +21,6 @@ const IncRequestPopup = (props) => {
       <p style={{ 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem 0 0' }}>
         {props.message}
       </p>
-      <div className='button-wrapper'>
-        <Button secondary>Decline</Button>
-        <Button>Accept</Button>
-      </div>
     </>
   )
 }
