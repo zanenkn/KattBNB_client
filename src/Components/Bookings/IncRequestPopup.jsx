@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Button, Image } from 'semantic-ui-react'
+import { Header, Image } from 'semantic-ui-react'
 
 const IncRequestPopup = (props) => {
   return (

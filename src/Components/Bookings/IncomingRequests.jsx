@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Segment, Header, Grid, Icon } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
 import IncRequestPopup from './IncRequestPopup'
+import DeclineRequestPopup from './DeclineRequestPopup'
 
 class IncomingRequests extends Component {
 
@@ -37,7 +38,18 @@ class IncomingRequests extends Component {
                       <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{total} kr</Header>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Icon name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right' }} size='big' />
+                      <Popup modal trigger={
+                        <Icon name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right' }} size='big' />
+                      }
+                        position="top center"
+                        closeOnDocumentClick={true}
+                      >
+                        <DeclineRequestPopup
+                          nickname={request.user.nickname}
+                          startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                          endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+                        />
+                      </Popup>
                       <Icon name='check circle' style={{ 'color': '#ffffff', 'float': 'right' }} size='big' />
                     </Grid.Column>
                   </Grid.Row>
