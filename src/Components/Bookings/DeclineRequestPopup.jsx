@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Button } from 'semantic-ui-react'
+import { Header, Form, Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
@@ -54,6 +54,20 @@ class DeclineRequestPopup extends Component {
   }
 
   render() {
+    let errorDisplay
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <Message.Header textAlign='center'>Request could not be declined because of following error(s):</Message.Header>
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
     return (
       <>
         <Header as='h2'>
@@ -73,7 +87,8 @@ class DeclineRequestPopup extends Component {
             onChange={this.onChangeHandler}
           />
         </Form>
-        <Button onClick={this.declineBooking}>Decline</Button>
+        {errorDisplay}
+        <Button loading={this.state.loading ? true : false} onClick={this.declineBooking}>Decline</Button>
       </>
     )
   }
