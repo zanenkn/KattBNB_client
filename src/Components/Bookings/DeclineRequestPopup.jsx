@@ -15,29 +15,37 @@ class DeclineRequestPopup extends Component {
     e.preventDefault()
     this.setState({ loading: true })
     if (window.confirm('Do you really want to decline this booking request?')) {
-      const path = `/api/v1/bookings/${this.props.id}`
-      const headers = {
+      if(this.state.message !== ''){
+        const path = `/api/v1/bookings/${this.props.id}`
+        const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        host_message: this.state.message,
-        status: "declined"
-      }
-      const { history } = this.props
-      axios.patch(path, payload, { headers: headers })
-      .then(() => {
-        history.push('/all-bookings')
-      })
-      .catch(error => {
-        debugger
+        }
+        const payload = {
+          host_message: this.state.message,
+          status: "declined"
+        }
+        const { history } = this.props
+        axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          history.push('/all-bookings')
+        })
+        .catch(error => {
+          debugger
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.errors.full_messages
+          })
+        })
+      } else {
         this.setState({
           loading: false,
           errorDisplay: true,
-          errors: error.response.data.errors.full_messages
+          errors: ["Message can't be blank!"]
         })
-      })
+      }
     }
   }
 
