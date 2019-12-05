@@ -45,6 +45,7 @@ class IncomingRequests extends Component {
                         closeOnDocumentClick={true}
                       >
                         <DeclineRequestPopup
+                          id={request.id}
                           nickname={request.user.nickname}
                           startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
                           endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}

@@ -1,9 +1,44 @@
 import React, { Component } from 'react'
 import { Header, Form, Button } from 'semantic-ui-react'
+import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 class DeclineRequestPopup extends Component {
   state = {
-    message: ''
+    message: '',
+    loading: false,
+    errorDisplay: false,
+    errors: ''
+  }
+
+  declineBooking = (e) => {
+    e.preventDefault()
+    this.setState({ loading: true })
+    if (window.confirm('Do you really want to decline this booking request?')) {
+      const path = `/api/v1/bookings/${this.props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        host_message: this.state.message,
+        status: "declined"
+      }
+      const { history } = this.props
+      axios.patch(path, payload, { headers: headers })
+      .then(() => {
+        history.push('/all-bookings')
+      })
+      .catch(error => {
+        debugger
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: error.response.data.errors.full_messages
+        })
+      })
+    }
   }
 
   onChangeHandler = (e) => {
@@ -30,13 +65,10 @@ class DeclineRequestPopup extends Component {
             onChange={this.onChangeHandler}
           />
         </Form>
-        <div className='button-wrapper'>
-          <Button secondary>Back</Button>
-          <Button>Decline</Button>
-        </div>
+        <Button onClick={this.declineBooking}>Decline</Button>
       </>
     )
   }
 }
 
-export default DeclineRequestPopup
+export default withRouter(DeclineRequestPopup)
