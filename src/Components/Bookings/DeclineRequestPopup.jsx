@@ -32,11 +32,10 @@ class DeclineRequestPopup extends Component {
           history.push('/all-bookings')
         })
         .catch(error => {
-          debugger
           this.setState({
             loading: false,
             errorDisplay: true,
-            errors: error.response.data.errors.full_messages
+            errors: error.response.data.error
           })
         })
       } else {
@@ -78,7 +77,7 @@ class DeclineRequestPopup extends Component {
         </p>
         <Form>
           <Form.TextArea
-            style={{ 'minHeight': '150px' }}
+            style={{ 'minHeight': '120px' }}
             label='Message'
             placeholder='Let them know why..'
             required
@@ -87,6 +86,9 @@ class DeclineRequestPopup extends Component {
             onChange={this.onChangeHandler}
           />
         </Form>
+        <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+          Remaining characters: {200 - this.state.message.length}
+        </p>
         {errorDisplay}
         <Button loading={this.state.loading ? true : false} onClick={this.declineBooking}>Decline</Button>
       </>
