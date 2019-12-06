@@ -22,7 +22,8 @@ class UserPage extends Component {
     rate: '',
     maxCats: '',
     supplement: '',
-    availability: []
+    availability: [],
+    incomingBookings: []
   }
 
   async componentDidMount() {
@@ -64,6 +65,15 @@ class UserPage extends Component {
           })
         })
     }
+    const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}`
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token')
+    }
+    axios.get(pathIncoming, { headers: headers }).then(response => {
+      this.setState({ incomingBookings: response.data })
+    })
   }
 
   avatarFormHandler = () => {
@@ -120,7 +130,20 @@ class UserPage extends Component {
       displayPasswordForm: false,
       hostProfileForm: false
     })
-    if (window.confirm('Do you really want to delete your account?')) {
+    let noAccountDelete = []
+    let todaysDate = new Date()
+    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+    let today = new Date(utc).getTime()
+    if (this.state.incomingBookings.length > 0) {
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
+          noAccountDelete.push(booking)
+        }
+      })
+    }
+    if (noAccountDelete.length > 0) {
+      window.alert('To delete your account, please follow relevant instructions in our FAQ page!')
+    } else if (window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -189,6 +212,7 @@ class UserPage extends Component {
           supplement={this.state.supplement}
           availability={this.state.availability}
           location={this.props.location}
+          incomingBookings={this.state.incomingBookings}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
           ref={this.hostProfileElement} />
       )

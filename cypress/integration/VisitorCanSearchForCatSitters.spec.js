@@ -42,7 +42,32 @@ describe('Visitor can search for cat sitters on landing page', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(5) > .DayPicker-Day:nth-child(2)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').last().click()
     cy.get('#search-button').click({ force: true })
-    cy.contains('Your search did not yield any results! Try changing your search criteria or go to the map to find cat sitters in nearby areas.')
+    cy.contains('Your search did not yield any results!')
+  })
+
+  it('successfully and can click on no matching results relevant message, get redirected and have the search criteria prefilled', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea',
+      status: 200,
+      response: 'fixture:search_no_results.json'
+    })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
+    cy.get('#cats').type('1')
+    cy.get('.ui > #search-form > .required > #location > .default').click()
+    cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
+    cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPickerInput-Overlay > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(5) > .DayPicker-Day:nth-child(2)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(6) > .DayPicker-Day:nth-child(3)').last().click()
+    cy.get('#search-button').click({ force: true })
+    cy.get('.fake-link').click()
+    cy.get(':nth-child(2) > .DayPickerInput > input').should('have.value', 'December 23, 2019')
+    cy.get('[style="margin-top: 0.5em;"] > .DayPickerInput > input').should('have.value', 'December 31, 2019')
+    cy.contains('Dorotea')
+    cy.get('#cats').should('have.value', '1')
   })
 
   it('but cannot navigate manually to the search results path, without first filling the search form', () => {

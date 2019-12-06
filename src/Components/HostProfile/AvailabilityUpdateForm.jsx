@@ -14,7 +14,8 @@ class AvailabilityUpdateForm extends Component {
       errors: '',
       loading: false,
       newAvailability: this.props.availability,
-      selectedDays: this.props.selectedDays
+      selectedDays: this.props.selectedDays,
+      incomingBookings: this.props.incomingBookings
     }
   }
 
@@ -69,12 +70,15 @@ class AvailabilityUpdateForm extends Component {
     this.setState({ newAvailability: sortedAvailableDates })
   }
 
-  handleDayClick(day, { selected }) {
+  handleDayClick(day, { selected, disabled }) {
     const today = new Date()
     const tomorrowNumber = today.getTime() + 86400000
     const tomorrowDate = new Date(tomorrowNumber)
     const { selectedDays } = this.state
     if (day > tomorrowDate || day.toDateString() === tomorrowDate.toDateString()) {
+      if (disabled) {
+        return
+      }
       if (selected) {
         const selectedIndex = selectedDays.findIndex(selectedDay =>
           DateUtils.isSameDay(selectedDay, day)
@@ -90,10 +94,15 @@ class AvailabilityUpdateForm extends Component {
 
   render() {
     let errorDisplay, availabilityFormSubmitButton
+    let disabledAvailabilityBookings = []
+    let disabledAvailabilityDates = []
+    let disabledDaysSorted = []
 
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
+    let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+    let todaysDate = new Date(utc).getTime()
+
+    let disabledDaysDates = [{ before: today }]
 
     if (this.state.loading) {
       availabilityFormSubmitButton = (
@@ -118,6 +127,19 @@ class AvailabilityUpdateForm extends Component {
       )
     }
 
+    if (this.state.incomingBookings.length > 0) {
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > todaysDate)) {
+          disabledAvailabilityBookings.push(booking.dates)
+        }
+        disabledAvailabilityDates = disabledAvailabilityBookings.flat()
+        disabledDaysSorted = disabledAvailabilityDates.sort()
+      })
+      disabledDaysSorted.map(day => {
+        disabledDaysDates.push(new Date(day))
+      })
+    }
+
     return (
       <>
         <Divider />
@@ -130,7 +152,7 @@ class AvailabilityUpdateForm extends Component {
             firstDayOfWeek={1}
             selectedDays={this.state.selectedDays}
             fromMonth={today}
-            disabledDays={{ before: tomorrowDate }}
+            disabledDays={disabledDaysDates}
             onDayClick={this.handleDayClick}
           />
         </div>

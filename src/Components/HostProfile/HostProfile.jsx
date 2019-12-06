@@ -111,6 +111,7 @@ class HostProfile extends Component {
           }
           availability={this.props.availability}
           id={this.props.id}
+          incomingBookings={this.props.incomingBookings}
           closeAllForms={this.closeAllForms.bind(this)}
         />
       )

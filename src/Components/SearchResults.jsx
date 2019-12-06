@@ -173,6 +173,7 @@ class SearchResults extends Component {
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
+              location={this.state.location}
               handleListItemClick={this.handleDatapointClick.bind(this)}
             />
           </Container>

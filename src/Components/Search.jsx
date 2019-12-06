@@ -25,6 +25,17 @@ class Search extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.history.location.state !== undefined) {
+      this.setState({
+        from: this.props.history.location.state.checkInDate,
+        to: this.props.history.location.state.checkOutDate,
+        location: this.props.history.location.state.location,
+        cats: this.props.history.location.state.numberOfCats
+      })
+    }
+  }
+
   onChangeHandler = (e) => {
     this.setState({ [e.target.id]: e.target.value })
   }
@@ -125,8 +136,6 @@ class Search extends Component {
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -172,7 +181,7 @@ class Search extends Component {
                   inputProps={{ readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
-                    disabledDays: { after: to, before: tomorrowDate },
+                    disabledDays: { after: to, before: today },
                     toMonth: to,
                     modifiers,
                     numberOfMonths: 1,
@@ -193,7 +202,7 @@ class Search extends Component {
                   inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
                   dayPickerProps={{
                     selectedDays: [from, { from, to }],
-                    disabledDays: this.state.from !== undefined ? { before: from } : { before: tomorrowDate },
+                    disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
                     modifiers,
                     firstDayOfWeek: 1,
                     showWeekNumbers: true,
@@ -216,6 +225,7 @@ class Search extends Component {
                 clearable
                 search
                 selection
+                value={this.state.location}
                 placeholder='Choose your location'
                 options={LOCATION_OPTIONS}
                 id='location'

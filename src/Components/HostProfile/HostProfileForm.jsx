@@ -167,8 +167,6 @@ class HostProfileForm extends Component {
   render() {
     let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
     const today = new Date()
-    const tomorrowNumber = today.getTime() + 86400000
-    const tomorrowDate = new Date(tomorrowNumber)
 
     if (this.state.addressSearch === true) {
       addressSearch = (
@@ -301,7 +299,7 @@ class HostProfileForm extends Component {
             <DayPicker
               showWeekNumbers
               fromMonth={today}
-              disabledDays={{ before: tomorrowDate }}
+              disabledDays={{ before: today }}
               firstDayOfWeek={1}
               selectedDays={this.state.selectedDays}
               onDayClick={this.handleDayClick}
