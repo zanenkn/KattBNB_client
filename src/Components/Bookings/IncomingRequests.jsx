@@ -5,11 +5,19 @@ import Popup from 'reactjs-popup'
 import IncRequestPopup from './IncRequestPopup'
 import DeclineRequestPopup from './DeclineRequestPopup'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
+
 
 class IncomingRequests extends Component {
   state = {
     errorDisplay: false,
     errors: ''
+  }
+
+  componentDidMount() {
+    if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
+      this.props.history.push({ pathname: '/' })
+    }
   }
 
   acceptRequest = (e) => {
@@ -26,12 +34,19 @@ class IncomingRequests extends Component {
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          window.location.replace('/all-bookings')
+          const {history} = this.props
+          history.push({
+            pathname: '/request-accepted-success',
+            state: {
+              checkInDate: 23,
+              checkOutDate: 22
+            }
+          })
         })
         .catch(error => {
           this.setState({
             errorDisplay: true,
-            errors: error.response.data.errors
+            errors: error.response.data.error
           })
         })
     }
@@ -149,4 +164,4 @@ class IncomingRequests extends Component {
   }
 }
 
-export default IncomingRequests
+export default withRouter(IncomingRequests)
