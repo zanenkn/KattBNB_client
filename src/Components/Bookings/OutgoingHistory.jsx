@@ -36,7 +36,9 @@ const OutgoingHistory = (props) => {
                 >
                   <OutRequestDeclinedPopup
                     id={booking.id}
-                    host={booking.host_nickname}
+                    nickname={booking.host_nickname}
+                    message={booking.host_message}
+                    avatar={booking.host_avatar}
                     startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
                     endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
                   />
