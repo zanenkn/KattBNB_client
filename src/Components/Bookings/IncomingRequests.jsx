@@ -35,8 +35,8 @@ class IncomingRequests extends Component {
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          const {history} = this.props
-          history.push({pathname: '/request-accepted-success'})
+          const { history } = this.props
+          history.push({ pathname: '/request-accepted-success' })
         })
         .catch(error => {
           this.setState({
