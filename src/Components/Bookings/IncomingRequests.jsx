@@ -30,18 +30,13 @@ class IncomingRequests extends Component {
         'access-token': window.localStorage.getItem('access-token')
       }
       const payload = {
-        status: 'accepted'
+        status: 'accepted',
+        host_message: 'accepted by host'
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           const {history} = this.props
-          history.push({
-            pathname: '/request-accepted-success',
-            state: {
-              checkInDate: 23,
-              checkOutDate: 22
-            }
-          })
+          history.push({pathname: '/request-accepted-success'})
         })
         .catch(error => {
           this.setState({
