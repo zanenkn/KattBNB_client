@@ -1,16 +1,59 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import { Segment, Header, Grid, Icon } from 'semantic-ui-react'
+import { Segment, Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
 import IncRequestPopup from './IncRequestPopup'
 import DeclineRequestPopup from './DeclineRequestPopup'
+import axios from 'axios'
 
 class IncomingRequests extends Component {
+  state = {
+    errorDisplay: false,
+    errors: ''
+  }
+
+  acceptRequest = (e) => {
+    e.preventDefault()
+    if (window.confirm('You are about to accept this booking request. Continue?')) {
+      const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        status: 'accepted'
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          window.location.replace('/all-bookings')
+        })
+        .catch(error => {
+          this.setState({
+            errorDisplay: true,
+            errors: error.response.data.errors
+          })
+        })
+    }
+  }
 
   render() {
     let sortedRequests = this.props.requests
     sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
-    let priceWithDecimalsString, total, requestsToDisplay
+    let priceWithDecimalsString, total, requestsToDisplay, errorDisplay
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <Message.Header textAlign='center'>Request could not be accepted because of following error(s):</Message.Header>
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
 
     if (this.props.requests.length > 0) {
       requestsToDisplay = (
@@ -39,7 +82,7 @@ class IncomingRequests extends Component {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Popup modal trigger={
-                        <Icon id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right' }} size='big' />
+                        <Icon id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                       }
                         position="top center"
                         closeOnDocumentClick={true}
@@ -51,7 +94,7 @@ class IncomingRequests extends Component {
                           endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
                         />
                       </Popup>
-                      <Icon id='accept' name='check circle' style={{ 'color': '#ffffff', 'float': 'right' }} size='big' />
+                      <Icon id={`accept-${request.id}`} onClick={this.acceptRequest} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                     </Grid.Column>
                   </Grid.Row>
                   <div>
@@ -99,6 +142,7 @@ class IncomingRequests extends Component {
 
     return (
       <>
+        {errorDisplay}
         {requestsToDisplay}
       </>
     )
