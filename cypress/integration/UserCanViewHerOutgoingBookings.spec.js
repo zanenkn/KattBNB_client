@@ -38,4 +38,12 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').first().contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.')
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
   })
+
+  it('and see relevant host message in declined history bookings', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#3').within(() => {
+      cy.get('.fake-link-underlined').click()
+    })
+    cy.contains('Sorry, dude! I decline!')
+  })
 })

@@ -46,6 +46,7 @@
     ],
     "status": "declined",
     "host_nickname": "Declined2",
+    "host_message": "Sorry, dude! I decline!",
     "price_total": 400.66,
     "message": "Please keep my cats, Declined2",
     "created_at": "2019-11-09T08:56:30.830Z",

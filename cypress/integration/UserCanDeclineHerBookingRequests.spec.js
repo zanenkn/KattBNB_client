@@ -41,7 +41,7 @@ describe('User can decline her booking request', () => {
     cy.contains("Message can't be blank or more than 200 characters!")
   })
 
-  it('successfully cause the message is more than 200 characters', () => {
+  it('unsuccessfully cause the message is more than 200 characters', () => {
     cy.get('#decline').click()
     cy.get('#message').type('I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!!')
     cy.get('#decline-button').click()
