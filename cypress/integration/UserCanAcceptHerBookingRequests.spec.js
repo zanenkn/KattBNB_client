@@ -26,8 +26,9 @@ describe('User can accept her booking request', () => {
     })
     cy.get('#view-incoming-bookings').click()
   })
+  
   it('successfully', () => {
     cy.get('#accept-2').click()
-    cy.contains('yay')
+    cy.contains('You have successfully accepted a booking request.')
   })
 })
