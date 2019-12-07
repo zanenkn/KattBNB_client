@@ -16,7 +16,7 @@ describe('Visitor can view menu', () => {
   })
 
   it('and can see links to different homepage sections', () => {
-    let links = ['Log in', 'Sign up', 'About us', 'Legal', 'FAQ', 'Contact us', 'Blog']
+    let links = ['Log in', 'Sign up', 'About us', 'Legal', 'FAQ', 'Contact us']
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })

@@ -1,7 +1,5 @@
 describe('Visitor can toggle between list and map results', () => {
   before(function () {
-    const now = new Date(2019, 9, 1).getTime()
-    cy.clock(now)
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({
@@ -10,6 +8,8 @@ describe('Visitor can toggle between list and map results', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()

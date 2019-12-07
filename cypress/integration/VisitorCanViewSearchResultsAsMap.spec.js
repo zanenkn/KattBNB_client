@@ -1,7 +1,5 @@
 describe('Visitor can view search results as a map', () => {
   before(function () {
-    const now = new Date(2019, 9, 1).getTime()
-    cy.clock(now)
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({
@@ -16,6 +14,8 @@ describe('Visitor can view search results as a map', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()
@@ -31,7 +31,6 @@ describe('Visitor can view search results as a map', () => {
     })
     cy.get('#map-button').click()
   })
-
 
   it('and see correct datapoints', () => {
     let labels = [
@@ -52,7 +51,7 @@ describe('Visitor can view search results as a map', () => {
     cy.get('#10').should('not.exist')
   })
 
-  it('and see a popup with host information by clicking on a specific datapoint', () => {
+  it.only('and see a popup with host information by clicking on a specific datapoint', () => {
     cy.server()
     cy.route({
       method: 'GET',
@@ -60,8 +59,9 @@ describe('Visitor can view search results as a map', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
-    cy.get('#2').click()
 
+    cy.get('#2').click({ force: true })
+    
     let hostData = [
       'carla', 'Stockholm', '140 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '560 kr'
     ]
