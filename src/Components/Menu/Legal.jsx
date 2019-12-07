@@ -1,20 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Header } from 'semantic-ui-react'
 import WIP from '../ReusableComponents/WorkInProgress'
+import { useTranslation } from 'react-i18next'
 
-class Legal extends Component {
-
-  render() {
-
-    return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          Legal
-        </Header>
-        <WIP />
-      </div>
-    )
-  }
+const Legal = () => {
+  const { t } = useTranslation()
+  return (
+    <div className='content-wrapper' >
+      <Header as='h1'>
+        {t('menu.legal')}
+      </Header>
+      <WIP />
+    </div>
+  )
 }
 
 export default Legal
