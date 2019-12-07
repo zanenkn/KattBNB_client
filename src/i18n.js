@@ -12,7 +12,7 @@ i18n
 
   .init({
     fallbackLng,
-    lng: 'sv', 
+    lng: 'en', 
     debug: true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
