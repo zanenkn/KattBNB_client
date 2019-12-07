@@ -46,4 +46,11 @@ describe('User can view her outgoing bookings', () => {
     })
     cy.contains('Sorry, dude! I decline!')
   })
+
+  it('and see upcoming booking details', () => {
+    cy.get('#8').within(() => {
+      cy.get('.fake-link-underlined').click()
+    })
+    cy.should('contain', 'Your cat is going on an adventure with')
+  })
 })
