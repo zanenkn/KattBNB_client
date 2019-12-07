@@ -7,11 +7,12 @@ import configureStore from './state/store/configureStore'
 import * as serviceWorker from './serviceWorker'
 import { verifyCredentials } from './reduxTokenAuthConfig'
 import axios from 'axios'
+import './i18n'
 
 const development = 'http://localhost:3007'
 const production = process.env.REACT_APP_API_ENDPOINT
 
-axios.defaults.baseURL = production
+axios.defaults.baseURL = development
 
 const store = configureStore()
 verifyCredentials(store)
