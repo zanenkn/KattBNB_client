@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Header, Button } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from './Reviews'
-import HostLocationMap from './HostLocationMap'
+import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import moment from 'moment'
 
