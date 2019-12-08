@@ -37,7 +37,8 @@ const OutgoingUpcoming = (props) => {
                       priceTotal: upcoming.price_total,
                       address: upcoming.host_full_address,
                       lat: upcoming.host_real_lat,
-                      long: upcoming.host_real_long
+                      long: upcoming.host_real_long,
+                      numberOfCats: upcoming.number_of_cats
                     }
                   })
                 }}
