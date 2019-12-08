@@ -1,6 +1,7 @@
 import React from 'react'
 
-const BookingDetails = () => {
+const BookingDetails = (props) => {
+  
   return (
     <div>
       
