@@ -63,6 +63,6 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#6').within(() => {
       cy.get('.fake-link-underlined').click()
     })
-    cy.should('contain', 'Your booking got automatically cancelled due to Canceled1 not responding for 3 days. Try to search again, we hope you find a perfect host soon!')
+    cy.contains('Your booking got automatically cancelled due to Canceled1 not responding for 3 days.')
   })
 })
