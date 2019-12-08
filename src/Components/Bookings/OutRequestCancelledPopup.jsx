@@ -13,11 +13,11 @@ const OutRequestCancelledPopup = (props) => {
           Your booking request for the dates of <strong>{props.startDate}</strong> until <strong>{props.endDate}</strong> got cancelled.
         </p>
       </div>
-      <p style={{ 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem 0 0' }}>
+      <p style={{ 'margin': '1rem 0 0' }}>
         Your booking got automatically cancelled due to <strong style={{'fontStyle': 'normal', 'color': '#c90c61'}}>{props.nickname}</strong> not responding for 3 days.
       </p>
-      <p style={{ 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem 0 0' }}>
-        Try to <Header as={Link} to='/' className='fake-link-underlined' style={{'fontStyle': 'normal'}}>search again</Header>, we hope you find a perfect host soon!
+      <p style={{ 'margin': '1rem 0 0' }}>
+        Try to <Header as={Link} to='/' className='fake-link-underlined-reg' style={{'fontStyle': 'normal'}}>search again</Header>, we hope you find a perfect host soon!
       </p>
     </>
   )
