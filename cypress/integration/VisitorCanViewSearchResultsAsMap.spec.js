@@ -51,7 +51,7 @@ describe('Visitor can view search results as a map', () => {
     cy.get('#10').should('not.exist')
   })
 
-  it.only('and see a popup with host information by clicking on a specific datapoint', () => {
+  it('and see a popup with host information by clicking on a specific datapoint', () => {
     cy.server()
     cy.route({
       method: 'GET',
