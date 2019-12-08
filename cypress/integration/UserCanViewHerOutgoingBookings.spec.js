@@ -56,7 +56,7 @@ describe('User can view her outgoing bookings', () => {
     cy.should('contain', 'The total cost of this stay is 678 kr')
     cy.should('contain', 'Some address in Sthlm')
   })
-
+  
   it('and see information about cancelled booking', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#6').within(() => {
