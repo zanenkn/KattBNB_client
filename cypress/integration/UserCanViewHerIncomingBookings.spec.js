@@ -51,6 +51,6 @@ describe('User can view her incoming bookings', () => {
     cy.get('#3').within(() => {
       cy.get('.fake-link-underlined').click()
     })
-    cy.should('contain', 'Sorry, dude! I decline!')
+    cy.contains('Sorry, dude! I decline!')
   })
 })
