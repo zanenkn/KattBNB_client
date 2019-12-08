@@ -31,7 +31,9 @@ const OutgoingUpcoming = (props) => {
                   history.push({
                     pathname: '/booking-details',
                     state: {
-                      host: upcoming.host_nickname,
+                      avatar: upcoming.host_avatar,
+                      description: upcoming.host_description,
+                      nickname: upcoming.host_nickname,
                       startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
                       endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
                       priceTotal: upcoming.price_total,

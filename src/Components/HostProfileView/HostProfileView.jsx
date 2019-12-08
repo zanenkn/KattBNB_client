@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Header, Button } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
-import Reviews from './Reviews'
+import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import moment from 'moment'
@@ -65,7 +65,7 @@ const HostProfileView = (props) => {
       <p>
         You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
       </p>
-      <p className='fake-link-underlined'>
+      <p className='fake-link-underlined-reg'>
         Send now
       </p>
     </div>
