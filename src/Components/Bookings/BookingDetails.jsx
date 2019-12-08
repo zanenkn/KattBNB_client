@@ -3,9 +3,9 @@ import React from 'react'
 const BookingDetails = (props) => {
   
   return (
-    <div>
-      
-    </div>
+    <p>
+      {props.location.state.host}
+    </p>
   )
 }
 
