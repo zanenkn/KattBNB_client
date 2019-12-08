@@ -7,7 +7,7 @@ const OutRequestCancelledPopup = (props) => {
     <>
       <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
         <Header as='h2' style={{ 'color': '#ffffff', 'textAlign': 'left' }}>
-          DECLINED
+          CANCELLED
         </Header>
         <p style={{ 'color': '#ffffff', 'fontSize': 'small' }}>
           Your booking request for the dates of <strong>{props.startDate}</strong> until <strong>{props.endDate}</strong> got cancelled.
