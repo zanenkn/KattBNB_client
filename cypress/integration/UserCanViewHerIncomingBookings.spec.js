@@ -45,4 +45,12 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-history]').first().contains("You hosted AcceptedOfThePast's cat(s) during the dates of 2019-11-26 until 2019-11-19.")
     cy.get('[data-cy=incoming-history]').last().contains('A booking request from Canceled1 for their 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled due to no answer from you within 3 days time.')
   })
+
+  it('and see a message she wrote when she declined a booking', () => {
+    cy.get('#view-incoming-bookings').click()
+    cy.get('#3').within(() => {
+      cy.get('.fake-link-underlined').click()
+    })
+    cy.should('contain', 'Sorry, dude! I decline!')
+  })
 })
