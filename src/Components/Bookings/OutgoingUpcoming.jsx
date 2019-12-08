@@ -35,7 +35,9 @@ const OutgoingUpcoming = (props) => {
                       startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
                       endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
                       priceTotal: upcoming.price_total,
-                      address: upcoming.host_full_address
+                      address: upcoming.host_full_address,
+                      lat: upcoming.host_real_lat,
+                      long: upcoming.host_real_long
                     }
                   })
                 }}
