@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import { Container } from 'semantic-ui-react'
+import Popup from 'reactjs-popup'
+import IncRequestDeclinedPopup from './IncRequestDeclinedPopup'
 
 const IncomingHistory = (props) => {
   let sortedHistory = props.history
@@ -24,9 +26,22 @@ const IncomingHistory = (props) => {
                 <p className='small-centered-paragraph'>
                   You declined a booking request from <strong>{booking.user.nickname}</strong> for their <strong>{booking.number_of_cats} {booking.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong>{moment(booking.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
                 </p>
-                <p className='fake-link-underlined'>
-                  View message
-                </p>
+                <Popup modal trigger={
+                  <p className='fake-link-underlined'>
+                    View message
+                  </p>
+                }
+                  position="top center"
+                  closeOnDocumentClick={true}
+                >
+                  <IncRequestDeclinedPopup
+                    id={booking.id}
+                    nickname={booking.user.nickname}
+                    message={booking.host_message}
+                    startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                    endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+                  />
+                </Popup>
               </Container>
             )
           } else if (booking.status === 'canceled') {

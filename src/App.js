@@ -5,7 +5,6 @@ import Menu from './Components/Menu/Menu'
 import Search from './Components/Search'
 import SearchResults from './Components/SearchResults'
 import AboutUs from './Components/Menu/AboutUs'
-import Blog from './Components/Menu/Blog'
 import ContactUs from './Components/Menu/ContactUs'
 import Faq from './Components/Menu/Faq'
 import Legal from './Components/Menu/Legal'
@@ -22,6 +21,7 @@ import AllBookings from './Components/Bookings/AllBookings'
 import OutgoingBookings from './Components/Bookings/OutgoingBookings'
 import IncomingBookings from './Components/Bookings/IncomingBookings'
 import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully'
+import BookingDetails from './Components/Bookings/BookingDetails'
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -86,7 +86,6 @@ class App extends Component {
                   <Route exact path='/' component={Search}></Route>
                   <Route exact path='/search-results' component={SearchResults}></Route>
                   <Route exact path='/about-us' component={AboutUs}></Route>
-                  <Route exact path='/blog' component={Blog}></Route>
                   <Route exact path='/contact-us' component={ContactUs}></Route>
                   <Route exact path='/faq' component={Faq}></Route>
                   <Route exact path='/legal' component={Legal}></Route>
@@ -99,6 +98,7 @@ class App extends Component {
                   <Route exact path='/request-to-book' component={RequestToBook}></Route>
                   <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                   <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
+                  <Route exact path='/booking-details' component={BookingDetails}></Route>
                   {userPageRoute}
                   {allBookingsRoute}
                   {outgoingBookingsRoute}

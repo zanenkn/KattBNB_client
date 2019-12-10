@@ -46,4 +46,23 @@ describe('User can view her outgoing bookings', () => {
     })
     cy.contains('Sorry, dude! I decline!')
   })
+
+  it('and see upcoming booking details', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#8').within(() => {
+      cy.get('.fake-link-underlined').click({ force: true })
+    })
+    cy.get('p')
+    cy.should('contain', '2051-08-04 - 2051-08-08')
+    cy.should('contain', '678 kr')
+    cy.should('contain', 'Some address in Sthlm')
+  })
+
+  it('and see information about cancelled booking', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#6').within(() => {
+      cy.get('.fake-link-underlined').click()
+    })
+    cy.contains('Your booking got automatically cancelled due to Canceled1 not responding for 3 days.')
+  })
 })
