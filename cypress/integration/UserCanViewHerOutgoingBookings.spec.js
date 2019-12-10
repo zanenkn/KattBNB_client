@@ -47,10 +47,10 @@ describe('User can view her outgoing bookings', () => {
     cy.contains('Sorry, dude! I decline!')
   })
 
-  it.only('and see upcoming booking details', () => {
+  it('and see upcoming booking details', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#8').within(() => {
-      cy.get('.fake-link-underlined').click({force: true})
+      cy.get('.fake-link-underlined').click({ force: true })
     })
     cy.get('p')
     cy.should('contain', '2051-08-04 - 2051-08-08')

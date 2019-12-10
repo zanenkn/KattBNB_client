@@ -5,7 +5,6 @@ import Menu from './Components/Menu/Menu'
 import Search from './Components/Search'
 import SearchResults from './Components/SearchResults'
 import AboutUs from './Components/Menu/AboutUs'
-import Blog from './Components/Menu/Blog'
 import ContactUs from './Components/Menu/ContactUs'
 import Faq from './Components/Menu/Faq'
 import Legal from './Components/Menu/Legal'
@@ -87,7 +86,6 @@ class App extends Component {
                   <Route exact path='/' component={Search}></Route>
                   <Route exact path='/search-results' component={SearchResults}></Route>
                   <Route exact path='/about-us' component={AboutUs}></Route>
-                  <Route exact path='/blog' component={Blog}></Route>
                   <Route exact path='/contact-us' component={ContactUs}></Route>
                   <Route exact path='/faq' component={Faq}></Route>
                   <Route exact path='/legal' component={Legal}></Route>
