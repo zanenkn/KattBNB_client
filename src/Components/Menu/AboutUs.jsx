@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 

@@ -61,7 +61,7 @@ describe('Visitor can view search results as a map', () => {
     })
 
     cy.get('#2').click({ force: true })
-    
+
     let hostData = [
       'carla', 'Stockholm', '140 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '560 kr'
     ]

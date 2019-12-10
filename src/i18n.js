@@ -6,13 +6,13 @@ const fallbackLng = ['en']
 const availableLanguages = ['en', 'sv']
 
 i18n
-  .use(Backend) 
+  .use(Backend)
 
-  .use(initReactI18next) 
+  .use(initReactI18next)
 
   .init({
     fallbackLng,
-    lng: 'en', 
+    lng: 'en',
     debug: true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],

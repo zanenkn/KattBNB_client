@@ -36,5 +36,4 @@ describe('Visitor can click on sidebar links and be redirected', () => {
     cy.get('#contact').click()
     cy.contains('Contact us')
   })
-
 })
