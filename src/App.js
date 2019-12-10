@@ -22,6 +22,7 @@ import AllBookings from './Components/Bookings/AllBookings'
 import OutgoingBookings from './Components/Bookings/OutgoingBookings'
 import IncomingBookings from './Components/Bookings/IncomingBookings'
 import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully'
+import BookingDetails from './Components/Bookings/BookingDetails'
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -99,6 +100,7 @@ class App extends Component {
                   <Route exact path='/request-to-book' component={RequestToBook}></Route>
                   <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                   <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
+                  <Route exact path='/booking-details' component={BookingDetails}></Route>
                   {userPageRoute}
                   {allBookingsRoute}
                   {outgoingBookingsRoute}

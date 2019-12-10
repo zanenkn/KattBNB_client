@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Container } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 const OutgoingUpcoming = (props) => {
   let sortedUpcoming = props.upcoming
@@ -23,7 +24,27 @@ const OutgoingUpcoming = (props) => {
               <p className='small-centered-paragraph'>
                 You have successfully booked a stay with <strong>{upcoming.host_nickname}</strong> for your <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
               </p>
-              <p className='fake-link-underlined'>
+              <p 
+                className='fake-link-underlined' 
+                onClick={() => { 
+                  const { history } = props
+                  history.push({
+                    pathname: '/booking-details',
+                    state: {
+                      avatar: upcoming.host_avatar,
+                      description: upcoming.host_description,
+                      nickname: upcoming.host_nickname,
+                      startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
+                      endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
+                      priceTotal: upcoming.price_total,
+                      address: upcoming.host_full_address,
+                      lat: upcoming.host_real_lat,
+                      long: upcoming.host_real_long,
+                      numberOfCats: upcoming.number_of_cats
+                    }
+                  })
+                }}
+              >
                 View details
               </p>
             </Container>
@@ -44,4 +65,4 @@ const OutgoingUpcoming = (props) => {
   }
 }
 
-export default OutgoingUpcoming
+export default withRouter(OutgoingUpcoming)
