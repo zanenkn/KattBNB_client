@@ -1,7 +1,5 @@
 describe('Visitor can toggle between list and map results', () => {
   before(function () {
-    const now = new Date(2019, 9, 1).getTime()
-    cy.clock(now)
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({
@@ -10,6 +8,8 @@ describe('Visitor can toggle between list and map results', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()
@@ -28,6 +28,7 @@ describe('Visitor can toggle between list and map results', () => {
 
   it('and see map view when she hits the relevant button', () => {
     cy.get('#map-button').click()
+    cy.wait(2000)
     cy.get('.list-card').should('not.exist')
     cy.get('[style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"]').should('be.visible')
   })

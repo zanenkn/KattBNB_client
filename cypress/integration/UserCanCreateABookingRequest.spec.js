@@ -37,6 +37,9 @@ describe('User can create a booking request', () => {
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
+    cy.clock().then((clock) => {
+      clock.restore()
+    })
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
   })
 
@@ -72,7 +75,7 @@ describe('User can create a booking request', () => {
       cy.get('.icon').click()
     })
     cy.get('#logout').click()
-    cy.wait(1000)
+
     cy.visit('http://localhost:3000')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)

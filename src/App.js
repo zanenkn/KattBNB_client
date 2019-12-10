@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component, createRef, Suspense } from 'react'
 import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu/Menu'
@@ -70,44 +70,46 @@ class App extends Component {
     }
 
     return (
-      <div ref={this.contextRef}>
-        <Sticky context={this.contextRef}>
-          <Navbar />
-        </Sticky>
-        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
-          <Sidebar.Pushable
-            as={Container}
-            id='app-content'
-            className='disable-scrollbars'
-          >
-            <ScrollToTop>
-              <Switch>
-                <Route exact path='/' component={Search}></Route>
-                <Route exact path='/search-results' component={SearchResults}></Route>
-                <Route exact path='/about-us' component={AboutUs}></Route>
-                <Route exact path='/blog' component={Blog}></Route>
-                <Route exact path='/contact-us' component={ContactUs}></Route>
-                <Route exact path='/faq' component={Faq}></Route>
-                <Route exact path='/legal' component={Legal}></Route>
-                <Route exact path='/login' component={Login}></Route>
-                <Route exact path='/sign-up' component={SignUp}></Route>
-                <Route exact path='/signup-success' component={SignupSuccess}></Route>
-                <Route exact path='/password-reset' component={PasswordReset}></Route>
-                <Route exact path='/change-password' component={ChangePassword}></Route>
-                <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
-                <Route exact path='/request-to-book' component={RequestToBook}></Route>
-                <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
-                <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
-                {userPageRoute}
-                {allBookingsRoute}
-                {outgoingBookingsRoute}
-                {incomingBookingsRoute}
-              </Switch>
-            </ScrollToTop>
-            <Menu />
-          </Sidebar.Pushable>
+      <Suspense fallback={(<div>Loading</div>)}>
+        <div ref={this.contextRef}>
+          <Sticky context={this.contextRef}>
+            <Navbar />
+          </Sticky>
+          <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
+            <Sidebar.Pushable
+              as={Container}
+              id='app-content'
+              className='disable-scrollbars'
+            >
+              <ScrollToTop>
+                <Switch>
+                  <Route exact path='/' component={Search}></Route>
+                  <Route exact path='/search-results' component={SearchResults}></Route>
+                  <Route exact path='/about-us' component={AboutUs}></Route>
+                  <Route exact path='/blog' component={Blog}></Route>
+                  <Route exact path='/contact-us' component={ContactUs}></Route>
+                  <Route exact path='/faq' component={Faq}></Route>
+                  <Route exact path='/legal' component={Legal}></Route>
+                  <Route exact path='/login' component={Login}></Route>
+                  <Route exact path='/sign-up' component={SignUp}></Route>
+                  <Route exact path='/signup-success' component={SignupSuccess}></Route>
+                  <Route exact path='/password-reset' component={PasswordReset}></Route>
+                  <Route exact path='/change-password' component={ChangePassword}></Route>
+                  <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+                  <Route exact path='/request-to-book' component={RequestToBook}></Route>
+                  <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
+                  <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
+                  {userPageRoute}
+                  {allBookingsRoute}
+                  {outgoingBookingsRoute}
+                  {incomingBookingsRoute}
+                </Switch>
+              </ScrollToTop>
+              <Menu />
+            </Sidebar.Pushable>
+          </div>
         </div>
-      </div>
+      </Suspense>
     )
   }
 }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Sidebar, Segment, Grid, Header } from 'semantic-ui-react'
+import { Sidebar, Segment, Grid, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import i18n from '../../i18n'
+import { withTranslation } from 'react-i18next'
 
 class Menu extends Component {
 
@@ -30,6 +32,10 @@ class Menu extends Component {
   }
 
   render() {
+    const { t } = this.props
+    const changeLanguage = (lng) => {
+      i18n.changeLanguage(lng)
+    }
     let userLinks
 
     if (this.props.currentUserIn) {
@@ -40,7 +46,7 @@ class Menu extends Component {
           as={Link}
           onClick={this.signOut}
         >
-          Log out
+          {t('menu.logout')}
         </Header>
       )
     } else {
@@ -52,7 +58,7 @@ class Menu extends Component {
             as={Link}
             to='/login'
           >
-            Log in
+            {t('menu.login')}
           </Header>
           <Header
             id='signup'
@@ -60,12 +66,11 @@ class Menu extends Component {
             as={Link}
             to='/sign-up'
           >
-            Sign up
+            {t('menu.signup')}
           </Header>
         </>
       )
     }
-
     return (
       <Sidebar
         id='menu'
@@ -86,7 +91,7 @@ class Menu extends Component {
               as={Link}
               to='/about-us'
             >
-              About us
+              {t('menu.about')}
             </Header>
             <Header
               id='faq'
@@ -94,7 +99,7 @@ class Menu extends Component {
               as={Link}
               to='faq'
             >
-              FAQ
+              {t('menu.faq')}
             </Header>
             <Header
               id='contact'
@@ -102,15 +107,7 @@ class Menu extends Component {
               as={Link}
               to='/contact-us'
             >
-              Contact us
-            </Header>
-            <Header
-              id='blog'
-              className='menu-link'
-              as={Link}
-              to='/blog'
-            >
-              Blog
+              {t('menu.contact')}
             </Header>
             <Header
               id='legal'
@@ -118,27 +115,28 @@ class Menu extends Component {
               as={Link}
               to='/legal'
             >
-              Legal
+              {t('menu.legal')}
             </Header>
+            <div>
+              <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => changeLanguage('sv')}>Svenska</Button>
+              <Button id='en' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => changeLanguage('en')}>English</Button>
+            </div>
           </Grid.Column>
         </Grid>
       </Sidebar>
     )
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     menuVisible: state.animation.menuVisible,
     currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
   }
 }
-
 const mapDispatchToProps = {
   menuVisbilityHandler: menuVisible => ({
     type: 'CHANGE_VISIBILITY',
     menuVisbible: menuVisible
   })
 }
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu))
+export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu)))
