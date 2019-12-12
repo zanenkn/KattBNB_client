@@ -78,5 +78,16 @@
     "title": "Request password reset",
     "instructions": "Fill in the email you registered with.",
     "btn": "Reset"
+  },
+  "PasswordResetSuccess": {
+    "title": "Successful password reset request!",
+    "p": "You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email."
+  },
+  "Signup": {
+
+  },
+  "SignupSuccess": {
+    "title": "Successful signup!",
+    "p": "Welcome, you have successfully signed up for KattBNB! You will need to confirm your email address in order to log in and start using our services. To continue, please follow the instructions we have sent to your email."
   }
 }
