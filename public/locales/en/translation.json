@@ -53,9 +53,6 @@
     "thankyou-msg": "Thank you for your message!",
     "error-msg": "Your message was not sent. Please try again later."
   },
- 
-//AUTH
-
   "ChangePassword": {
     "error-1": "You should first visit the login page and click on the 'Forgot your password?' link",
     "error-2": "Check that both fields are an exact match with each other and that they consist of at least 6 characters",
@@ -65,5 +62,14 @@
     "p-instructions": "Type in your new password twice in the fields below. Minimum requirement is 6 characters.",
     "password-placeholder": "Password",
     "passwordConfirmation-placeholder": "Repeat password"
+  },
+  "Login": {
+    "success-msg": "You have succesfully logged in!",
+    "no-acc": "Not registered?",
+    "signin-link": "Create an account!",
+    "forgot-link": "Forgot your password?",
+    "email-plch": "Email",
+    "password-plch": "Password",
+    "title": "Log in"
   }
 }
