@@ -46,7 +46,7 @@ class PasswordReset extends Component {
   }
 
   render() {
-    let errorDisplay, submitButton
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -58,16 +58,6 @@ class PasswordReset extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      submitButton = (
-        <Button className='submit-button' id='reset-pass-button' loading>Reset</Button>
-      )
-    } else {
-      submitButton = (
-        <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword}>Reset</Button>
       )
     }
 
@@ -91,7 +81,9 @@ class PasswordReset extends Component {
             />
           </Form>
           {errorDisplay}
-          {submitButton}
+          <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
+            Reset
+          </Button>
         </Segment>
       </div>
     )
