@@ -70,7 +70,7 @@ class ChangePassword extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>Password change could not be completed because of following error(s):</Message.Header>
+          <Message.Header textAlign='center'>Password could not be changed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
@@ -85,16 +85,6 @@ class ChangePassword extends Component {
         <Message success textAlign='center'>
           You have succesfully changed your password! Please wait to be redirected.
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      submitButton = (
-        <Button className='submit-button' id='change-pass-button' loading>Change Password</Button>
-      )
-    } else {
-      submitButton = (
-        <Button className='submit-button' id='change-pass-button' onClick={this.changePassword}>Change Password</Button>
       )
     }
 
@@ -129,7 +119,7 @@ class ChangePassword extends Component {
           </Form>
           {errorDisplay}
           {successDisplay}
-          {submitButton}
+          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>Change password</Button>
         </Segment>
       </div>
     )
