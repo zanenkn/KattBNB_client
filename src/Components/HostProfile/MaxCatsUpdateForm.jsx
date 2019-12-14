@@ -58,17 +58,7 @@ class MaxCatsUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, maxCatsFormSubmitButton
-
-    if (this.state.loading) {
-      maxCatsFormSubmitButton = (
-        <Button loading id='maxCats-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      maxCatsFormSubmitButton = (
-        <Button id='maxCats-submit-button' className='submit-button' onClick={this.updateMaxCats}>Save</Button>
-      )
-    }
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -102,7 +92,7 @@ class MaxCatsUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='maxCats-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          {maxCatsFormSubmitButton}
+          <Button id='maxCats-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateMaxCats}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

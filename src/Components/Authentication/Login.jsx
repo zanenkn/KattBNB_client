@@ -54,7 +54,7 @@ class Login extends Component {
   }
 
   render() {
-    let errorDisplay, successDisplay, submitButton, notRegisteredLinks, forgotPassword
+    let errorDisplay, successDisplay, notRegisteredLinks, forgotPassword
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -98,16 +98,6 @@ class Login extends Component {
       )
     }
 
-    if (this.state.loading) {
-      submitButton = (
-        <Button className='submit-button' id='log-in-button' loading>Log in</Button>
-      )
-    } else {
-      submitButton = (
-        <Button className='submit-button' id='log-in-button' onClick={this.logInUser}>Log in</Button>
-      )
-    }
-
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
@@ -136,7 +126,7 @@ class Login extends Component {
           </Form>
           {errorDisplay}
           {successDisplay}
-          {submitButton}
+          <Button className='submit-button' id='log-in-button' loading={this.state.loading ? true : false} onClick={this.logInUser}>Log in</Button>
           {notRegisteredLinks}
         </Segment>
       </div>

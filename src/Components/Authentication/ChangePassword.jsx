@@ -65,7 +65,7 @@ class ChangePassword extends Component {
   }
 
   render() {
-    let errorDisplay, successDisplay, submitButton
+    let errorDisplay, successDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -85,16 +85,6 @@ class ChangePassword extends Component {
         <Message success textAlign='center'>
           You have succesfully changed your password! Please wait to be redirected.
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      submitButton = (
-        <Button className='submit-button' id='change-pass-button' loading>Change Password</Button>
-      )
-    } else {
-      submitButton = (
-        <Button className='submit-button' id='change-pass-button' onClick={this.changePassword}>Change Password</Button>
       )
     }
 
@@ -129,7 +119,7 @@ class ChangePassword extends Component {
           </Form>
           {errorDisplay}
           {successDisplay}
-          {submitButton}
+          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>Change Password</Button>
         </Segment>
       </div>
     )

@@ -58,17 +58,7 @@ class SupplementUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, supplementFormSubmitButton
-
-    if (this.state.loading) {
-      supplementFormSubmitButton = (
-        <Button loading id='supplement-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      supplementFormSubmitButton = (
-        <Button id='supplement-submit-button' className='submit-button' onClick={this.updateSupplement}>Save</Button>
-      )
-    }
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -102,7 +92,7 @@ class SupplementUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='supplement-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          {supplementFormSubmitButton}
+          <Button id='supplement-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateSupplement}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

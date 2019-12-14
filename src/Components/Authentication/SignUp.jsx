@@ -58,7 +58,7 @@ class SignUp extends Component {
   }
 
   render() {
-    let errorDisplay, submitButton
+    let errorDisplay
 
     if (this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/' })
@@ -74,16 +74,6 @@ class SignUp extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      submitButton = (
-        <Button id='sign-up-button' loading>Loading</Button>
-      )
-    } else {
-      submitButton = (
-        <Button id='sign-up-button' onClick={this.createUser}>Sign up</Button>
       )
     }
 
@@ -144,7 +134,7 @@ class SignUp extends Component {
             />
           </Form>
           {errorDisplay}
-          {submitButton}
+          <Button id='sign-up-button' loading={this.state.loading ? true : false} onClick={this.createUser}>Sign up</Button>
         </Segment>
       </div>
     )

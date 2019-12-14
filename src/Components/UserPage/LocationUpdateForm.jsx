@@ -93,7 +93,7 @@ class LocationUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, locationSubmitButton
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -105,16 +105,6 @@ class LocationUpdateForm extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' loading>Change</Button>
-      )
-    } else {
-      locationSubmitButton = (
-        <Button id='location-submit-button' className='submit-button' onClick={this.updateLocation}>Change</Button>
       )
     }
 
@@ -137,7 +127,7 @@ class LocationUpdateForm extends Component {
         </Form>
         <div className='button-wrapper'>
           <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>Close</Button>
-          {locationSubmitButton}
+          <Button id='location-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateLocation}>Change</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>
