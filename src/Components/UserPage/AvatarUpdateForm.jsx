@@ -109,7 +109,7 @@ class AvatarUpdateForm extends Component {
 
 
   render() {
-    let errorDisplay, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
+    let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
 
