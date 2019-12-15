@@ -48,12 +48,12 @@ class ChangePassword extends Component {
         })
     } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
       this.setState({
-        errors: ["You should first visit the login page and click on the 'Forgot your password?' link"],
+        errors: ['ChangePassword.error-1'],
         errorDisplay: true
       })
     } else {
       this.setState({
-        errors: ['Check that both fields are an exact match with each other and that they consist of at least 6 characters'],
+        errors: ['ChangePassword.error-2'],
         errorDisplay: true
       })
     }
@@ -67,7 +67,7 @@ class ChangePassword extends Component {
 
   render() {
     const { t } = this.props
-    let errorDisplay, successDisplay, submitButton
+    let errorDisplay, successDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -75,7 +75,7 @@ class ChangePassword extends Component {
           <Message.Header textAlign='center'>{t('ChangePassword.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
