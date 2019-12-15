@@ -3,6 +3,7 @@ import { Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-re
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
+import { withTranslation } from 'react-i18next'
 
 class SignUp extends Component {
 
@@ -58,6 +59,7 @@ class SignUp extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay
 
     if (this.props.history.action === 'POP') {
@@ -67,7 +69,7 @@ class SignUp extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>User could not be registered because of following error(s):</Message.Header>
+          <Message.Header textAlign='center'>{t('Signup.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
@@ -80,11 +82,11 @@ class SignUp extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Sign up
+          {t('Signup.title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            Password must be at least 6 characters in length. Email and Username must be unique.
+            {t('Signup.instructions')}
           </p>
           <Form id='signup-form'>
             <Form.Input
@@ -92,7 +94,7 @@ class SignUp extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder='Email'
+              placeholder={t('reusable-placeholders.email')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -101,7 +103,7 @@ class SignUp extends Component {
               type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder='Password'
+              placeholder={t('reusable-placeholders.password')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -110,7 +112,7 @@ class SignUp extends Component {
               type='password'
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder='Repeat password'
+              placeholder={t('reusable-placeholders.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -118,7 +120,7 @@ class SignUp extends Component {
               id='nickname'
               value={this.state.username}
               onChange={this.onChangeHandler}
-              placeholder='Username / Nickname'
+              placeholder={t('Signup.nickname-plch')}
               onKeyPress={this.listenEnterKey}
             />
             <Dropdown
@@ -126,7 +128,7 @@ class SignUp extends Component {
               search
               selection
               style={{ 'width': '100%' }}
-              placeholder='Select location'
+              placeholder={t('Signup.location-plch')}
               options={LOCATION_OPTIONS}
               id='location'
               onChange={this.handleLocationChange}
@@ -135,7 +137,7 @@ class SignUp extends Component {
           </Form>
           {errorDisplay}
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
-            Sign up
+            {t('Signup.title')}
           </Button>
         </Segment>
       </div>
@@ -143,7 +145,4 @@ class SignUp extends Component {
   }
 }
 
-export default connect(
-  null,
-  { registerUser },
-)(SignUp)
+export default withTranslation()(connect(null, { registerUser },)(SignUp))
