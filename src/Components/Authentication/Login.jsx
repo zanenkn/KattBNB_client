@@ -3,6 +3,7 @@ import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
+import { withTranslation } from 'react-i18next'
 
 class Login extends Component {
 
@@ -54,6 +55,7 @@ class Login extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay, successDisplay, notRegisteredLinks, forgotPassword
 
     if (this.state.errorDisplay) {
@@ -67,17 +69,17 @@ class Login extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
-          You have succesfully logged in!
+          {t('Login.success-msg')}
         </Message>
       )
 
     } else {
       notRegisteredLinks = (
         <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
-          Not registered?
+          {t('Login.no-acc')}
           <br></br>
           <Header as={Link} to='sign-up' className='fake-link'>
-            Create an account!
+          {t('Login.signin-link')}
           </Header>
         </p>
       )
@@ -85,7 +87,7 @@ class Login extends Component {
       forgotPassword = (
         <div style={{ 'textAlign': 'right' }}>
           <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
-            Forgot your password?
+          {t('Login.forgot-link')}
           </Header>
         </div>
       )
@@ -94,7 +96,7 @@ class Login extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Log in
+        {t('Login.title')}
         </Header>
         <Segment className='whitebox'>
           <Form id='login-form'>
@@ -103,7 +105,7 @@ class Login extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder='Email'
+              placeholder={t('reusable-placeholders.email')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -112,7 +114,7 @@ class Login extends Component {
               type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder='Password'
+              placeholder={t('reusable-placeholders.password')}
               onKeyPress={this.listenEnterKey}
             />
             {forgotPassword}
@@ -120,7 +122,7 @@ class Login extends Component {
           {errorDisplay}
           {successDisplay}
           <Button className='submit-button' id='log-in-button' loading={this.state.loading ? true : false} onClick={this.logInUser}>
-            Log in
+          {t('Login.title')}
           </Button>
           {notRegisteredLinks}
         </Segment>
@@ -129,4 +131,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { signInUser })(Login)
+export default withTranslation()(connect(null, { signInUser })(Login))
