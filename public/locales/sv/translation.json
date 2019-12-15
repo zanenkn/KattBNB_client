@@ -69,7 +69,7 @@
   "Login": {
     "success-msg": "Du har loggat in!",
     "no-acc": "Inte registrerad?",
-    "signin-link": "Skapa ett konto!",
+    "signup-link": "Skapa ett konto!",
     "forgot-link": "Glömt ditt lösenord?",
     "title": "Logga in"
   },

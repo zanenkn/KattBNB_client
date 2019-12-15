@@ -8,7 +8,7 @@ class PasswordResetSuccess extends Component {
 
   render() {
     const { t } = this.props
-    
+
     if (this.props.currentUserIn) {
       window.localStorage.clear()
       setTimeout(function () { window.location.reload(true) }, 500)

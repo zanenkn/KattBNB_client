@@ -15,7 +15,7 @@ class SignupSuccess extends Component {
     }
 
     return (
-      <div className='content-wrapper' >
+      <div className='content-wrapper'>
         <Header as='h1'>
           {t('SignupSuccess.title')}
         </Header>

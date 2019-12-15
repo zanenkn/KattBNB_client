@@ -69,7 +69,7 @@
   "Login": {
     "success-msg": "You have succesfully logged in!",
     "no-acc": "Not registered?",
-    "signin-link": "Create an account!",
+    "signup-link": "Create an account!",
     "forgot-link": "Forgot your password?",
     "title": "Log in"
   },

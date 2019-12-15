@@ -145,4 +145,4 @@ class SignUp extends Component {
   }
 }
 
-export default withTranslation()(connect(null, { registerUser },)(SignUp))
+export default withTranslation()(connect(null, { registerUser })(SignUp))
