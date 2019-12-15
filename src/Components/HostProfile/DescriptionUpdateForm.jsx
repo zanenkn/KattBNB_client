@@ -52,17 +52,7 @@ class DescriptionUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, descriptionFormSubmitButton
-
-    if (this.state.loading) {
-      descriptionFormSubmitButton = (
-        <Button loading id='description-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      descriptionFormSubmitButton = (
-        <Button id='description-submit-button' className='submit-button' onClick={this.updateDescription}>Save</Button>
-      )
-    }
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -94,7 +84,7 @@ class DescriptionUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='description-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          {descriptionFormSubmitButton}
+          <Button id='description-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateDescription}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

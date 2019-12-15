@@ -165,7 +165,7 @@ class HostProfileForm extends Component {
   }
 
   render() {
-    let addressSearch, addressErrorMessage, onCreateErrorMessage, createHostProfileButton
+    let addressSearch, addressErrorMessage, onCreateErrorMessage
     const today = new Date()
 
     if (this.state.addressSearch === true) {
@@ -216,20 +216,6 @@ class HostProfileForm extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      createHostProfileButton = (
-        <Button id='save-host-profile-button' className='submit-button' loading>
-          Save
-        </Button>
-      )
-    } else {
-      createHostProfileButton = (
-        <Button id='save-host-profile-button' className='submit-button' onClick={this.createHostProfile}>
-          Save
-        </Button>
       )
     }
 
@@ -315,7 +301,7 @@ class HostProfileForm extends Component {
             <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
           </div>
           <div>
-            {createHostProfileButton}
+            <Button id='save-host-profile-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.createHostProfile}>Save</Button>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-describe('Visitor can click on sidebar links and be redirected', () => {
+describe('Visitor can click on sidebar links and be redirected depending on chosen language', () => {
   beforeEach(function () {
     cy.server()
     cy.visit('http://localhost:3000/')
@@ -7,33 +7,87 @@ describe('Visitor can click on sidebar links and be redirected', () => {
     })
   })
 
-  it('to Login page', () => {
+  it('to ENG Login page', () => {
     cy.get('#login').click()
     cy.contains('Log in')
   })
 
-  it('to Sign Up page', () => {
+  it('to ENG Sign Up page', () => {
     cy.get('#signup').click()
     cy.contains('Sign up')
   })
 
-  it('to About Us page', () => {
+  it('to ENG About Us page', () => {
     cy.get('#about').click()
     cy.contains('About us')
   })
 
-  it('to Legal page', () => {
+  it('to ENG Legal page', () => {
     cy.get('#legal').click()
     cy.contains('Legal')
   })
 
-  it('to FAQ page', () => {
+  it('to ENG FAQ page', () => {
     cy.get('#faq').click()
     cy.contains('FAQ')
   })
 
-  it('to Contact Us page', () => {
+  it('to ENG Contact Us page', () => {
     cy.get('#contact').click()
     cy.contains('Contact us')
+  })
+
+  it('to SE Login page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#login').click()
+    cy.contains('Log in')
+  })
+
+  it('to SE Sign Up page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#signup').click()
+    cy.contains('Sign up')
+  })
+
+  it('to SE About Us page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#about').click()
+    cy.contains('Om oss')
+  })
+
+  it('to SE Legal page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#legal').click()
+    cy.contains('Policy')
+  })
+
+  it('to SE FAQ page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#faq').click()
+    cy.contains('Frågor och svar')
+  })
+
+  it('to SE Contact Us page', () => {
+    cy.get('#se').click()
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#contact').click()
+    cy.contains('Kontakta oss')
   })
 })

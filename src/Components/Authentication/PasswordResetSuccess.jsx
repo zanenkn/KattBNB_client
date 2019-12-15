@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class PasswordResetSuccess extends Component {
 
@@ -18,7 +19,7 @@ class PasswordResetSuccess extends Component {
         </Header>
         <Segment className='whitebox' textAlign='center'>
           <p>
-            You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email.
+            You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <Header as={Link} to='faq' className='fake-link'>FAQ</Header> section.
           </p>
         </Segment>
       </div>

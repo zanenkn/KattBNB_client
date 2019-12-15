@@ -101,7 +101,7 @@ class RequestToBook extends Component {
   }
 
   render() {
-    let errorDisplay, requestToBookButton, messageLength
+    let errorDisplay, messageLength
 
     messageLength = 400 - this.state.message.length
 
@@ -115,16 +115,6 @@ class RequestToBook extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      requestToBookButton = (
-        <Button loading id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }}>Request to book</Button>
-      )
-    } else {
-      requestToBookButton = (
-        <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} onClick={this.createBooking}>Request to book</Button>
       )
     }
 
@@ -160,7 +150,7 @@ class RequestToBook extends Component {
           <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
             ({this.state.perDay} kr/day)
           </Header>
-          {requestToBookButton}
+          <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} loading={this.state.loading ? true : false} onClick={this.createBooking}>Request to book</Button>
         </Segment>
       </div>
     )

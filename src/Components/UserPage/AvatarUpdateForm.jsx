@@ -109,7 +109,7 @@ class AvatarUpdateForm extends Component {
 
 
   render() {
-    let errorDisplay, avatarSubmitButton, avatarRotateRight, avatarRotateLeft, noAvatar
+    let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar
 
     noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
 
@@ -127,9 +127,6 @@ class AvatarUpdateForm extends Component {
     }
 
     if (this.state.loading) {
-      avatarSubmitButton = (
-        <Button id='avatar-submit-button' className='submit-button' loading>Save</Button>
-      )
       avatarRotateRight = (
         <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
@@ -137,9 +134,6 @@ class AvatarUpdateForm extends Component {
         <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
       )
     } else {
-      avatarSubmitButton = (
-        <Button id='avatar-submit-button' className='submit-button' onClick={this.updateAvatar}>Save</Button>
-      )
       if (this.state.image === '') {
         avatarRotateRight = (
           <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
@@ -214,7 +208,7 @@ class AvatarUpdateForm extends Component {
               </div>
               {errorDisplay}
               <div className='button-wrapper'>
-                {avatarSubmitButton}
+                <Button id='avatar-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateAvatar}>Save</Button>
               </div>
             </div>
           </Popup>

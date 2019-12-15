@@ -15,8 +15,22 @@ describe('Visitor can view menu', () => {
     cy.get('#menu').should('not.be.visible')
   })
 
-  it('and can see links to different homepage sections', () => {
+  it('and can see links to different homepage sections in ENG', () => {
     let links = ['Log in', 'Sign up', 'About us', 'Legal', 'FAQ', 'Contact us']
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    links.forEach(link => {
+      cy.contains(link)
+    })
+  })
+
+  it('and can see links to different homepage sections in SE', () => {
+    let links = ['Logga in', 'Registrera konto', 'Om oss', 'Frågor och svar', 'Kontakta oss', 'Policy']
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#se').click()
     cy.get('#hamburger').within(() => {
       cy.get('.icon').click()
     })
