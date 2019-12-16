@@ -141,7 +141,13 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
-          <ClientCaptcha captchaCode={code => this.setState({captcha: code})} />
+          <ClientCaptcha captchaCode={code => this.setState({captcha: code})}
+          fontFamily='Bodoni' 
+          fontColor='#c90c61'
+          charsCount='6'
+          backgroundColor='#566573'
+          width='130'
+          />
         </Segment>
       </div>
     )
