@@ -18,7 +18,8 @@ class SignUp extends Component {
     url: 'https://kattbnb.netlify.com/login',
     errorDisplay: false,
     loading: false,
-    captcha: '' 
+    captcha: '' ,
+    userCaptcha: ''
   }
 
   onChangeHandler = (e) => {
@@ -134,6 +135,14 @@ class SignUp extends Component {
               options={LOCATION_OPTIONS}
               id='location'
               onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKey}
+            />
+            <Form.Input
+              required
+              id='userCaptcha'
+              value={this.state.userCaptcha}
+              onChange={this.onChangeHandler}
+              placeholder="I'm not a robot"
               onKeyPress={this.listenEnterKey}
             />
           </Form>
