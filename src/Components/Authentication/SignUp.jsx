@@ -4,6 +4,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
+import ClientCaptcha from 'react-client-captcha'
 
 class SignUp extends Component {
 
@@ -139,6 +140,7 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
+          <ClientCaptcha captchaCode={code => console.log(code)} />
         </Segment>
       </div>
     )
