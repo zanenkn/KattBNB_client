@@ -55,6 +55,7 @@ class Login extends Component {
   }
 
   render() {
+
     const { t } = this.props
     let errorDisplay, successDisplay, notRegisteredLinks, forgotPassword
 

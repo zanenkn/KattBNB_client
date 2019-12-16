@@ -131,7 +131,7 @@ class Search extends Component {
 
 
   render() {
-    let errorDisplay, searchButton
+    let errorDisplay
 
     const { from, to } = this.state
     const modifiers = { start: from, end: to }
@@ -147,16 +147,6 @@ class Search extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      searchButton = (
-        <Button className='submit-button' loading>Search</Button>
-      )
-    } else {
-      searchButton = (
-        <Button id='search-button' className='submit-button' onClick={this.search}>Search</Button>
       )
     }
 
@@ -247,7 +237,7 @@ class Search extends Component {
           {errorDisplay}
           <div className='button-wrapper'>
             <div>
-              {searchButton}
+              <Button id='search-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.search}>Search</Button>
             </div>
           </div>
         </Segment>

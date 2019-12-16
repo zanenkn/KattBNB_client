@@ -93,7 +93,7 @@ class AvailabilityUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, availabilityFormSubmitButton
+    let errorDisplay
     let disabledAvailabilityBookings = []
     let disabledAvailabilityDates = []
     let disabledDaysSorted = []
@@ -103,16 +103,6 @@ class AvailabilityUpdateForm extends Component {
     let todaysDate = new Date(utc).getTime()
 
     let disabledDaysDates = [{ before: today }]
-
-    if (this.state.loading) {
-      availabilityFormSubmitButton = (
-        <Button loading id='availability-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      availabilityFormSubmitButton = (
-        <Button id='availability-submit-button' className='submit-button' onClick={this.updateAvailability}>Save</Button>
-      )
-    }
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -159,7 +149,7 @@ class AvailabilityUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          {availabilityFormSubmitButton}
+          <Button id='availability-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateAvailability}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

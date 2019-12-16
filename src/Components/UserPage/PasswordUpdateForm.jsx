@@ -67,7 +67,7 @@ class PasswordUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, passwordSubmitButton
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -79,16 +79,6 @@ class PasswordUpdateForm extends Component {
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    if (this.state.loading) {
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' loading>Change</Button>
-      )
-    } else {
-      passwordSubmitButton = (
-        <Button id='password-submit-button' className='submit-button' onClick={this.updatePassword}>Change</Button>
       )
     }
 
@@ -130,7 +120,7 @@ class PasswordUpdateForm extends Component {
         </Form>
         <div className='button-wrapper'>
           <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>Close</Button>
-          {passwordSubmitButton}
+          <Button id='password-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updatePassword}>Change</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

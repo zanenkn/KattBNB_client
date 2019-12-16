@@ -58,17 +58,7 @@ class RateUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay, rateFormSubmitButton
-
-    if (this.state.loading) {
-      rateFormSubmitButton = (
-        <Button loading id='rate-submit-button' className='submit-button'>Save</Button>
-      )
-    } else {
-      rateFormSubmitButton = (
-        <Button id='rate-submit-button' className='submit-button' onClick={this.updateRate}>Save</Button>
-      )
-    }
+    let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -102,7 +92,7 @@ class RateUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='rate-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          {rateFormSubmitButton}
+          <Button id='rate-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateRate}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>

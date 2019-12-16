@@ -4,6 +4,7 @@ import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withTranslation, Trans } from 'react-i18next'
 
+
 class SignupSuccess extends Component {
 
   render() {

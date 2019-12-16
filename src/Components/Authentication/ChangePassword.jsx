@@ -66,6 +66,7 @@ class ChangePassword extends Component {
   }
 
   render() {
+
     const { t } = this.props
     let errorDisplay, successDisplay
 
@@ -121,6 +122,7 @@ class ChangePassword extends Component {
           </Form>
           {errorDisplay}
           {successDisplay}
+
           <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword.title')}</Button>
         </Segment>
       </div>
