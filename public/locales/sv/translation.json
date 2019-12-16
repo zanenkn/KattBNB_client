@@ -52,5 +52,46 @@
     "send-btn": "Skicka",
     "thankyou-msg": "Tack för ditt meddelande!",
     "error-msg": "Meddelandet skickades inte. Försök igen senare."
+  },
+  "reusable-placeholders": {
+    "email": "E-post",
+    "password": "Lösenord",
+    "password-confirmation": "Upprepa lösenord"
+  },
+  "ChangePassword": {
+    "error-1": "Du bör först besöka inloggningssidan och klicka på länken 'Glömt ditt lösenord?'",
+    "error-2": "Kontrollera att lösenordsfälten är en exakt matchning, och att dom innehåller minst 6 tecken",
+    "error-header": "Lösenordet kunde inte ändras på grund av följande fel:",
+    "success-msg": "Ditt lösenord är ändrat! Vänligen vänta på omdirigering",
+    "title": "Byt lösenord",
+    "instructions": "Skriv in ditt nya lösenord i båda fälten nedan. Lösenordet måste vara minst 6 tecken."
+  },
+  "Login": {
+    "success-msg": "Du har loggat in!",
+    "no-acc": "Inte registrerad?",
+    "signup-link": "Skapa ett konto!",
+    "forgot-link": "Glömt ditt lösenord?",
+    "title": "Logga in"
+  },
+  "PasswordReset": {
+    "error-header": "Återställning av lösenord kunde inte genomföras på grund av följande fel:",
+    "title": "Begär återställning av lösenord",
+    "instructions": "Fyll i e-postadressen som du registrerade dig med.",
+    "btn": "Återställ"
+  },
+  "PasswordResetSuccess": {
+    "title": "Begäran om lösenordsåterställning lyckades!",
+    "p": "Din begäran om återställning av lösenord lyckades! Följ instruktionerna som vi har skickat till din e-post för att fortsätta. Om du inte hittar vårt meddelande i din inkorg, vänligen se avsnittet <1>Frågor och svar</1>."
+  },
+  "Signup": {
+    "error-header": "Användare kunde inte registreras på grund av följande fel:",
+    "title": "Registrera dig",
+    "instructions": "Lösenordet måste ha minst 6 tecken. E-post och användarnamn måste vara unika.",
+    "nickname-plch": "Användarnamn / Smeknamn",
+    "location-plch": "Välj plats"
+  },
+  "SignupSuccess": {
+    "title": "Lyckad registrering!",
+    "p": "Välkommen, du har registrerat dig hos KattBNB! Du behöver bekräfta din e-postadress inom 24 timmar för att kunna logga in och börja använda våra tjänster. Följ instruktionerna som vi har skickat till din e-post för att fortsätta. Om du inte hittar vårt meddelande i din inkorg, vänligen se avsnittet <1>Frågor och svar</1>."
   }
 }

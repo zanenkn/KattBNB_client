@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import queryString from 'query-string'
+import { withTranslation } from 'react-i18next'
 
 class ChangePassword extends Component {
 
@@ -47,12 +48,12 @@ class ChangePassword extends Component {
         })
     } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
       this.setState({
-        errors: ["You should first visit the login page and click on the 'Forgot your password?' link"],
+        errors: ['ChangePassword.error-1'],
         errorDisplay: true
       })
     } else {
       this.setState({
-        errors: ['Check that both fields are an exact match with each other and that they consist of at least 6 characters'],
+        errors: ['ChangePassword.error-2'],
         errorDisplay: true
       })
     }
@@ -65,15 +66,17 @@ class ChangePassword extends Component {
   }
 
   render() {
+
+    const { t } = this.props
     let errorDisplay, successDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>Password change could not be completed because of following error(s):</Message.Header>
+          <Message.Header textAlign='center'>{t('ChangePassword.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -83,7 +86,7 @@ class ChangePassword extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success textAlign='center'>
-          You have succesfully changed your password! Please wait to be redirected.
+          {t('ChangePassword.success-msg')}
         </Message>
       )
     }
@@ -91,11 +94,11 @@ class ChangePassword extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Change password
+          {t('ChangePassword.title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            Type in your new password twice in the fields below. Minimum requirement is 6 characters.
+            {t('ChangePassword.instructions')}
           </p>
           <Form>
             <Form.Input
@@ -103,7 +106,7 @@ class ChangePassword extends Component {
               id='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder='Password'
+              placeholder={t('reusable-placeholders.password')}
               type='password'
               onKeyPress={this.listenEnterKey}
             />
@@ -112,18 +115,19 @@ class ChangePassword extends Component {
               id='passwordConfirmation'
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder='Repeat password'
+              placeholder={t('reusable-placeholders.password-confirmation')}
               type='password'
               onKeyPress={this.listenEnterKey}
             />
           </Form>
           {errorDisplay}
           {successDisplay}
-          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>Change Password</Button>
+
+          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword.title')}</Button>
         </Segment>
       </div>
     )
   }
 }
 
-export default ChangePassword
+export default withTranslation()(ChangePassword)

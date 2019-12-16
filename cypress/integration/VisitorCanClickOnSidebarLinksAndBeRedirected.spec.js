@@ -43,7 +43,7 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
       cy.get('.icon').click()
     })
     cy.get('#login').click()
-    cy.contains('Log in')
+    cy.contains('Logga in')
   })
 
   it('to SE Sign Up page', () => {
@@ -52,7 +52,7 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
       cy.get('.icon').click()
     })
     cy.get('#signup').click()
-    cy.contains('Sign up')
+    cy.contains('Registrera dig')
   })
 
   it('to SE About Us page', () => {

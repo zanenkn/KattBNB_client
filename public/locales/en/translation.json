@@ -52,5 +52,46 @@
     "send-btn": "Send",
     "thankyou-msg": "Thank you for your message!",
     "error-msg": "Your message was not sent. Please try again later."
+  },
+  "reusable-placeholders": {
+    "email": "Email",
+    "password": "Password",
+    "password-confirmation": "Repeat password"
+  },
+  "ChangePassword": {
+    "error-1": "You should first visit the login page and click on the 'Forgot your password?' link",
+    "error-2": "Check that both fields are an exact match with each other and that they consist of at least 6 characters",
+    "error-header": "Password could not be changed because of following error(s):",
+    "success-msg": "You have succesfully changed your password! Please wait to be redirected.",
+    "title": "Change password",
+    "instructions": "Type in your new password twice in the fields below. Minimum requirement is 6 characters."
+  },
+  "Login": {
+    "success-msg": "You have succesfully logged in!",
+    "no-acc": "Not registered?",
+    "signup-link": "Create an account!",
+    "forgot-link": "Forgot your password?",
+    "title": "Log in"
+  },
+  "PasswordReset": {
+    "error-header": "Password reset could not be completed because of following error(s):",
+    "title": "Request password reset",
+    "instructions": "Fill in the email you registered with.",
+    "btn": "Reset"
+  },
+  "PasswordResetSuccess": {
+    "title": "Successful password reset request!",
+    "p": "You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <1>FAQ</1> section."
+  },
+  "Signup": {
+    "error-header": "User could not be registered because of following error(s):",
+    "title": "Sign up",
+    "instructions": "Password must be at least 6 characters in length. Email and Username must be unique.",
+    "nickname-plch": "Username / Nickname",
+    "location-plch": "Select location"
+  },
+  "SignupSuccess": {
+    "title": "Successful signup!",
+    "p": "Welcome, you have successfully signed up for KattBNB! You will need to confirm your email address in the next 24 hours in order to log in and start using our services. To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <1>FAQ</1> section."
   }
 }

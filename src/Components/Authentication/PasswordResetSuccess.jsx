@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { withTranslation, Trans } from 'react-i18next'
 
 class PasswordResetSuccess extends Component {
 
   render() {
+    const { t } = this.props
 
     if (this.props.currentUserIn) {
       window.localStorage.clear()
@@ -15,11 +17,13 @@ class PasswordResetSuccess extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Successful password reset request!
+          {t('PasswordResetSuccess.title')}
         </Header>
         <Segment className='whitebox' textAlign='center'>
           <p>
-            You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <Header as={Link} to='faq' className='fake-link'>FAQ</Header> section.
+            <Trans i18nKey='PasswordResetSuccess.p'>
+              You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <Header as={Link} to='faq' className='fake-link'>FAQ</Header> section.
+            </Trans>
           </p>
         </Segment>
       </div>
@@ -29,4 +33,4 @@ class PasswordResetSuccess extends Component {
 
 const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })
 
-export default connect(mapStateToProps)(PasswordResetSuccess)
+export default withTranslation()(connect(mapStateToProps)(PasswordResetSuccess))

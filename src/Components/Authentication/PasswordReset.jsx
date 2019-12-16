@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
-
+import { withTranslation } from 'react-i18next'
 
 class PasswordReset extends Component {
 
@@ -46,12 +46,13 @@ class PasswordReset extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay
 
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>Password reset could not be completed because of following error(s):</Message.Header>
+          <Message.Header textAlign='center'>{t('PasswordReset.error-header')}:</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
@@ -64,11 +65,11 @@ class PasswordReset extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Request password reset
+          {t('PasswordReset.title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            Fill in the email you registered with.
+            {t('PasswordReset.instructions')}
           </p>
           <Form>
             <Form.Input
@@ -76,16 +77,18 @@ class PasswordReset extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder='Email'
+              placeholder={t('reusable-placeholders.email')}
               onKeyPress={this.listenEnterKey}
             />
           </Form>
           {errorDisplay}
-          <Button className='submit-button' id='reset-pass-button' loading={this.state.loading ? true : false} onClick={this.resetPassword}>Reset</Button>
+          <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
+            {t('PasswordReset.btn')}
+          </Button>
         </Segment>
       </div>
     )
   }
 }
 
-export default PasswordReset
+export default withTranslation()(PasswordReset)
