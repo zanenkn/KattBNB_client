@@ -17,7 +17,8 @@ class SignUp extends Component {
     errors: '',
     url: 'https://kattbnb.netlify.com/login',
     errorDisplay: false,
-    loading: false
+    loading: false,
+    captcha: '' 
   }
 
   onChangeHandler = (e) => {
@@ -140,7 +141,7 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
-          <ClientCaptcha captchaCode={code => console.log(code)} />
+          <ClientCaptcha captchaCode={code => this.setState({captcha: code})} />
         </Segment>
       </div>
     )
