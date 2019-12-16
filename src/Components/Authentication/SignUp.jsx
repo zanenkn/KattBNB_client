@@ -18,7 +18,7 @@ class SignUp extends Component {
     url: 'https://kattbnb.netlify.com/login',
     errorDisplay: false,
     loading: false,
-    captcha: '' ,
+    captcha: '',
     userCaptcha: ''
   }
 
@@ -33,26 +33,34 @@ class SignUp extends Component {
   createUser = (e) => {
     this.setState({ loading: true })
     e.preventDefault()
-    const { history, registerUser } = this.props
-    const {
-      email,
-      password,
-      passwordConfirmation,
-      location,
-      nickname,
-      url
-    } = this.state
-    registerUser({ email, password, passwordConfirmation, location, nickname, url })
-      .then(() => {
-        this.setState({ errorDisplay: false })
-        history.push('/signup-success')
-      }).catch(error => {
-        this.setState({
-          errors: error.response.data.errors.full_messages,
-          errorDisplay: true,
-          loading: false
-        })
+    if (this.state.userCaptcha !== this.state.captcha) {
+      this.setState({
+        errors: ['You did not input the captcha phrase correctly, please try again!'],
+        errorDisplay: true,
+        loading: false
       })
+    } else {
+      const { history, registerUser } = this.props
+      const {
+        email,
+        password,
+        passwordConfirmation,
+        location,
+        nickname,
+        url
+      } = this.state
+      registerUser({ email, password, passwordConfirmation, location, nickname, url })
+        .then(() => {
+          this.setState({ errorDisplay: false })
+          history.push('/signup-success')
+        }).catch(error => {
+          this.setState({
+            errors: error.response.data.errors.full_messages,
+            errorDisplay: true,
+            loading: false
+          })
+        })
+    }
   }
 
   listenEnterKey = (event) => {
@@ -150,12 +158,12 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
-          <ClientCaptcha captchaCode={code => this.setState({captcha: code})}
-          fontFamily='Bodoni' 
-          fontColor='#c90c61'
-          charsCount='6'
-          backgroundColor='#566573'
-          width='130'
+          <ClientCaptcha captchaCode={code => this.setState({ captcha: code })}
+            fontFamily='Bodoni'
+            fontColor='#c90c61'
+            charsCount='6'
+            backgroundColor='#566573'
+            width='130'
           />
         </Segment>
       </div>
