@@ -70,7 +70,7 @@ class SignUp extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>{t('Signup.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }}>{t('Signup.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
