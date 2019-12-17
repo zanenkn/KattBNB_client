@@ -72,7 +72,7 @@ class PasswordUpdateForm extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative style={{ 'width': 'inherit' }} >
-          <Message.Header textAlign='center'>Update action could not be completed because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>

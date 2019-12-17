@@ -56,7 +56,7 @@ class DeclineRequestPopup extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>Request could not be declined because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >Request could not be declined because of following error(s):</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>

@@ -73,7 +73,7 @@ class ChangePassword extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>{t('ChangePassword.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('ChangePassword.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{t(error)}</li>
@@ -85,7 +85,7 @@ class ChangePassword extends Component {
 
     if (this.state.successDisplay) {
       successDisplay = (
-        <Message success textAlign='center'>
+        <Message success style={{ 'textAlign': 'center' }} >
           {t('ChangePassword.success-msg')}
         </Message>
       )
