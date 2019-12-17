@@ -35,7 +35,7 @@ class SignUp extends Component {
     e.preventDefault()
     if (this.state.userCaptcha !== this.state.captcha) {
       this.setState({
-        errors: ['You did not input the captcha phrase correctly, please try again!'],
+        errors: ["You didn't input the captcha phrase correctly, please try again!"],
         errorDisplay: true,
         loading: false
       })

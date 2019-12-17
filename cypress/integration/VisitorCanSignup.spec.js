@@ -35,7 +35,32 @@ describe('Visitor can sign up', () => {
     cy.get('.visible > .selected > .text').click()
 
     cy.get('#sign-up-button').click()
+    cy.visit('http://localhost:3000/signup-success')
     cy.contains('Successful signup!')
+  })
+
+  it('and gets error message if captcha is invalid', () => {
+    cy.get('#hamburger').within(() => {
+      cy.get('.icon').click()
+    })
+    cy.get('#signup').click()
+    cy.get('#signup-form').within(() => {
+
+      let text = [
+        ['#email', 'zane@mail'],
+        ['#password', 'pass'],
+        ['#passwordConfirmation', 'pass'],
+        ['#nickname', 'KittenPrincess']
+      ]
+
+      text.forEach(element => {
+        cy.get(element[0]).type(element[1])
+      })
+    })
+
+    cy.get('#sign-up-button').click()
+
+    cy.contains("You didn't input the captcha phrase correctly, please try again!")
   })
 
   it('and gets error message if email is not valid and/or passwords do not match', () => {
