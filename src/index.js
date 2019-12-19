@@ -9,10 +9,7 @@ import { verifyCredentials } from './reduxTokenAuthConfig'
 import axios from 'axios'
 import './i18n'
 
-const development = 'http://localhost:3007'
-const production = process.env.REACT_APP_API_ENDPOINT
-
-axios.defaults.baseURL = development
+axios.defaults.baseURL = (process.env.NODE_ENV === 'development' ? 'http://localhost:3007' : process.env.REACT_APP_API_ENDPOINT)
 
 const store = configureStore()
 verifyCredentials(store)

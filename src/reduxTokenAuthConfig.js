@@ -1,10 +1,7 @@
 import { generateAuthActions } from 'redux-token-auth'
 
-const production = `${process.env.REACT_APP_API_ENDPOINT}/api/v1/auth`
-const development = 'http://localhost:3007/api/v1/auth'
-
 const config = {
-  authUrl: development,
+  authUrl: (process.env.NODE_ENV === 'development' ? 'http://localhost:3007/api/v1/auth' : `${process.env.REACT_APP_API_ENDPOINT}/api/v1/auth`),
   userAttributes: {
     id: 'id',
     uid: 'uid',
@@ -30,4 +27,4 @@ export {
   registerUser,
   signInUser,
   verifyCredentials,
-} 
+}
