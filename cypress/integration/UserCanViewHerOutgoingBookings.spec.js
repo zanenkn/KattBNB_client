@@ -53,7 +53,7 @@ describe('User can view her outgoing bookings', () => {
       cy.get('.fake-link-underlined').click({ force: true })
     })
     cy.get('p')
-    cy.should('contain', '2051-08-04 - 2051-08-08')
+    cy.should('contain', '2051-08-04 until 2051-08-08')
     cy.should('contain', '678 kr')
     cy.should('contain', 'Some address in Sthlm')
   })
