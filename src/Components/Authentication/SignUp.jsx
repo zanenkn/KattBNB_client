@@ -83,7 +83,7 @@ class SignUp extends Component {
           <Message.Header style={{ 'textAlign': 'center' }}>{t('Signup.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -156,12 +156,12 @@ class SignUp extends Component {
               />
             </div>
             <Form.Input
-              label='Type the code you see above'
+              label={t('Signup.captcha-label')}
               required
               id='userCaptcha'
               value={this.state.userCaptcha}
               onChange={this.onChangeHandler}
-              placeholder="I'm not a robot"
+              placeholder={t('Signup.captcha-plch')}
               onKeyPress={this.listenEnterKey}
             />
           </Form>
