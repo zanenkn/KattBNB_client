@@ -145,7 +145,18 @@ class SignUp extends Component {
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKey}
             />
+            <div style={{ 'margin': '1em 0'}}>
+              <ClientCaptcha
+                captchaCode={code => this.setState({ captcha: code })}
+                fontFamily='bodoni'
+                fontColor='#c90c61'
+                charsCount={6}
+                backgroundColor='#e8e8e8'
+                width={130}
+              />
+            </div>
             <Form.Input
+              label='Type the code you see above'
               required
               id='userCaptcha'
               value={this.state.userCaptcha}
@@ -158,14 +169,7 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
-          <ClientCaptcha
-            captchaCode={code => this.setState({ captcha: code })}
-            fontFamily='bodoni'
-            fontColor='#c90c61'
-            charsCount={6}
-            backgroundColor='#d35400'
-            width={130}
-          />
+          
         </Segment>
       </div>
     )
