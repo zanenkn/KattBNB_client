@@ -19,6 +19,6 @@ describe('User can sign out', () => {
     })
     cy.get('#logout').click()
     cy.wait(1000)
-    cy.contains('Log in')
+    cy.contains('Find a cat sitter!')
   })
 })
