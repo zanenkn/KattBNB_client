@@ -145,7 +145,7 @@ class SignUp extends Component {
               onChange={this.handleLocationChange}
               onKeyPress={this.listenEnterKey}
             />
-            <div style={{ 'margin': '1em 0'}}>
+            <div style={{ 'margin': '1em 0' }}>
               <ClientCaptcha
                 captchaCode={code => this.setState({ captcha: code })}
                 fontFamily='bodoni'
@@ -169,7 +169,6 @@ class SignUp extends Component {
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('Signup.title')}
           </Button>
-          
         </Segment>
       </div>
     )
