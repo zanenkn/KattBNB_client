@@ -14,14 +14,12 @@ const BookingDetails = (props) => {
         <div style={{ 'margin': 'auto', 'display': 'table' }}>
           <p>
             <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z" /></svg>
-            &nbsp;{props.location.state.startDate} - {props.location.state.endDate}
+            &nbsp;{props.location.state.startDate} until {props.location.state.endDate}
           </p>
-
           <p>
             <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z" /></svg>
             &nbsp;{props.location.state.address}
           </p>
-          
           <p>
             <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
             &nbsp;{props.location.state.priceTotal} kr in total&ensp;
@@ -30,7 +28,7 @@ const BookingDetails = (props) => {
           </p>
         </div>
       </Segment>
-      <Header as='h2' style={{'marginBottom': '2rem'}}>
+      <Header as='h2' style={{ 'marginBottom': '2rem' }}>
         About your host
       </Header>
       <Image id='avatar' src={props.location.state.avatar === null ? `https://ui-avatars.com/api/?name=${props.location.state.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.location.state.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
@@ -41,10 +39,8 @@ const BookingDetails = (props) => {
       <p id='description'>
         {props.location.state.description}
       </p>
-      
       <Reviews />
-
-      <div style={{'marginTop': '2rem'}}>
+      <div style={{ 'marginTop': '2rem' }}>
         <HostLocationMap
           lat={props.location.state.lat}
           long={props.location.state.long}

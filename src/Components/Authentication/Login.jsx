@@ -61,7 +61,7 @@ class Login extends Component {
 
     if (this.state.errorDisplay) {
       errorDisplay = (
-        <Message negative textAlign='center'>
+        <Message negative style={{ 'textAlign': 'center' }} >
           {this.state.errors}
         </Message>
       )
@@ -69,7 +69,7 @@ class Login extends Component {
 
     if (this.state.successDisplay) {
       successDisplay = (
-        <Message success textAlign='center'>
+        <Message success style={{ 'textAlign': 'center' }} >
           {t('Login.success-msg')}
         </Message>
       )

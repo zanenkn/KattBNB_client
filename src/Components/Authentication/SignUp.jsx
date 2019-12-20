@@ -4,6 +4,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
+import ClientCaptcha from 'react-client-captcha'
 
 class SignUp extends Component {
 
@@ -16,7 +17,9 @@ class SignUp extends Component {
     errors: '',
     url: 'https://kattbnb.netlify.com/login',
     errorDisplay: false,
-    loading: false
+    loading: false,
+    captcha: '',
+    userCaptcha: ''
   }
 
   onChangeHandler = (e) => {
@@ -30,26 +33,34 @@ class SignUp extends Component {
   createUser = (e) => {
     this.setState({ loading: true })
     e.preventDefault()
-    const { history, registerUser } = this.props
-    const {
-      email,
-      password,
-      passwordConfirmation,
-      location,
-      nickname,
-      url
-    } = this.state
-    registerUser({ email, password, passwordConfirmation, location, nickname, url })
-      .then(() => {
-        this.setState({ errorDisplay: false })
-        history.push('/signup-success')
-      }).catch(error => {
-        this.setState({
-          errors: error.response.data.errors.full_messages,
-          errorDisplay: true,
-          loading: false
-        })
+    if (this.state.userCaptcha !== this.state.captcha) {
+      this.setState({
+        errors: ["You didn't input the captcha phrase correctly, please try again!"],
+        errorDisplay: true,
+        loading: false
       })
+    } else {
+      const { history, registerUser } = this.props
+      const {
+        email,
+        password,
+        passwordConfirmation,
+        location,
+        nickname,
+        url
+      } = this.state
+      registerUser({ email, password, passwordConfirmation, location, nickname, url })
+        .then(() => {
+          this.setState({ errorDisplay: false })
+          history.push('/signup-success')
+        }).catch(error => {
+          this.setState({
+            errors: error.response.data.errors.full_messages,
+            errorDisplay: true,
+            loading: false
+          })
+        })
+    }
   }
 
   listenEnterKey = (event) => {
@@ -69,10 +80,10 @@ class SignUp extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header textAlign='center'>{t('Signup.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }}>{t('Signup.error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -132,6 +143,25 @@ class SignUp extends Component {
               options={LOCATION_OPTIONS}
               id='location'
               onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKey}
+            />
+            <div style={{ 'margin': '1em 0' }}>
+              <ClientCaptcha
+                captchaCode={code => this.setState({ captcha: code })}
+                fontFamily='bodoni'
+                fontColor='#c90c61'
+                charsCount={6}
+                backgroundColor='#e8e8e8'
+                width={130}
+              />
+            </div>
+            <Form.Input
+              label={t('Signup.captcha-label')}
+              required
+              id='userCaptcha'
+              value={this.state.userCaptcha}
+              onChange={this.onChangeHandler}
+              placeholder={t('Signup.captcha-plch')}
               onKeyPress={this.listenEnterKey}
             />
           </Form>

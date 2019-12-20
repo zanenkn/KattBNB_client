@@ -46,6 +46,11 @@
   color: #bd0a5b!important;
 }
 
+#retryButton {
+  opacity: 0.2;
+  cursor: pointer;
+}
+
 /*******************************
             NAVBAR
 *******************************/
