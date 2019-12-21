@@ -23,6 +23,7 @@ class UserPage extends Component {
     maxCats: '',
     supplement: '',
     availability: [],
+    forbiddenDates: [],
     incomingBookings: []
   }
 
@@ -61,7 +62,8 @@ class UserPage extends Component {
             rate: finalRate,
             maxCats: response.data.max_cats_accepted,
             supplement: finalSupplement,
-            availability: response.data.availability
+            availability: response.data.availability,
+            forbiddenDates: response.data.forbidden_dates
           })
         })
     }
@@ -211,6 +213,7 @@ class UserPage extends Component {
           maxCats={this.state.maxCats}
           supplement={this.state.supplement}
           availability={this.state.availability}
+          forbiddenDates={this.state.forbiddenDates}
           location={this.props.location}
           incomingBookings={this.state.incomingBookings}
           closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
