@@ -1,9 +1,73 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Image, Header, Grid } from 'semantic-ui-react'
+import axios from 'axios'
 
-const AllConversations = () => {
-  return (
-    'yay'
-  )
+class AllConversations extends Component {
+  state = {
+    conversations: ''
+  }
+
+  componentDidMount() {
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token')
+    }
+    const path= `/api/v1/conversations?user_id=${this.props.id}`
+
+    axios.get(path, { headers: headers })
+      .then(response => {
+        this.setState({ 
+          conversations: response.data 
+        })
+    })
+  }
+
+  render() {
+    let messages
+    if (this.state.conversations.length < 1) {
+      messages = (
+        'no messages'
+      )
+    } else {
+      messages = (
+      this.state.conversations.map(conversation => {
+        let other_user
+        conversation.user1.id === this.props.id ? other_user=conversation.user2 : other_user=conversation.user1
+
+        return (
+          <div key={conversation.id}>
+            <Grid columns='equal'>
+              <Grid.Column>
+                <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
+              </Grid.Column>
+              <Grid.Column>
+                <p>{other_user.nickname}</p>
+                <p>{conversation.last_msg.body}</p>
+              </Grid.Column>
+              <Grid.Column>
+                <p>{conversation.last_msg.created_at}</p>
+              </Grid.Column>
+            </Grid>
+          </div> 
+        )
+      })
+      )
+    }
+    return (
+      <div className='content-wrapper' >
+        <Header as='h1'>
+          Messages
+        </Header>
+        {messages}
+      </div>
+    )
+  }
 }
 
-export default AllConversations
+const mapStateToProps = state => ({
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+})
+
+export default connect(mapStateToProps)(AllConversations)
