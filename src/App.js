@@ -22,6 +22,7 @@ import OutgoingBookings from './Components/Bookings/OutgoingBookings'
 import IncomingBookings from './Components/Bookings/IncomingBookings'
 import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully'
 import BookingDetails from './Components/Bookings/BookingDetails'
+import AllConversations from './Components/Messenger/AllConversations'
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -33,7 +34,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -51,6 +52,9 @@ class App extends Component {
       incomingBookingsRoute = (
         <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
       )
+      messengerRoute = (
+        <Route exact path='/messenger' component={AllConversations}></Route>
+      )
     } else {
       userPageRoute = (
         <NoAccess />
@@ -65,6 +69,10 @@ class App extends Component {
       )
 
       incomingBookingsRoute = (
+        <NoAccess />
+      )
+
+      messengerRoute = (
         <NoAccess />
       )
     }
@@ -103,6 +111,7 @@ class App extends Component {
                   {allBookingsRoute}
                   {outgoingBookingsRoute}
                   {incomingBookingsRoute}
+                  {messengerRoute}
                 </Switch>
               </ScrollToTop>
               <Menu />
