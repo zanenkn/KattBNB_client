@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Image, Header, Grid } from 'semantic-ui-react'
+import { Image, Header, Grid, Divider } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
 
@@ -39,21 +39,24 @@ class AllConversations extends Component {
     } else {
       messages = (
       this.state.conversations.map(conversation => {
-        let other_user
+        let other_user, time_format, today, conversation_date
+        today = new Date (Date.now())
+        conversation_date =  new Date (conversation.last_msg.created_at)
         conversation.user1.id === this.props.id ? other_user=conversation.user2 : other_user=conversation.user1
-
+        conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear() ? time_format = 'k:mm' : time_format = 'D MMM k:mm'
         return (
           <div key={conversation.id}>
+            <Divider />
             <Grid columns='equal'>
-              <Grid.Column>
+              <Grid.Column width={4}>
                 <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={8}>
                 <p>{other_user.nickname}</p>
                 <p>{conversation.last_msg.body}</p>
               </Grid.Column>
-              <Grid.Column>
-                <p>{moment(conversation.last_msg.created_at).format('lll')}</p>
+              <Grid.Column width={4}>
+                <p>{moment(conversation.last_msg.created_at).format(time_format)}</p>
               </Grid.Column>
             </Grid>
           </div> 
@@ -62,7 +65,7 @@ class AllConversations extends Component {
       )
     }
     return (
-      <div className='content-wrapper' >
+      <div>
         <Header as='h1'>
           Messages
         </Header>
