@@ -20,7 +20,7 @@ class AllConversations extends Component {
     axios.get(path, { headers: headers })
       .then(response => {
         const sortedResponse = response.data.sort(function (a, b) {
-          let dateA = new Date(a.last_msg.created_at), dateB = new Date(b.last_msg.created_at);
+          let dateA = new Date(a.msg_created), dateB = new Date(b.msg_created)
           return dateB - dateA
         })
         this.setState({ conversations: sortedResponse })
@@ -32,14 +32,16 @@ class AllConversations extends Component {
 
     if (this.state.conversations.length < 1) {
       messages = (
-        'no messages'
+        <p>
+          You don't have any messages (yet).
+        </p>
       )
     } else {
       messages = (
         this.state.conversations.map(conversation => {
           let other_user, time_format, today, conversation_date
           today = new Date(Date.now())
-          conversation_date = new Date(conversation.last_msg.created_at)
+          conversation_date = new Date(conversation.msg_created)
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
           conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear() ? time_format = 'k:mm' : time_format = 'D MMM k:mm'
           return (
@@ -51,10 +53,10 @@ class AllConversations extends Component {
                 </Grid.Column>
                 <Grid.Column width={8}>
                   <p>{other_user.nickname}</p>
-                  <p>{conversation.last_msg.body}</p>
+                  <p>{conversation.msg_body}</p>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <p>{moment(conversation.last_msg.created_at).format(time_format)}</p>
+                  <p>{moment(conversation.msg_created).format(time_format)}</p>
                 </Grid.Column>
               </Grid>
             </div>
