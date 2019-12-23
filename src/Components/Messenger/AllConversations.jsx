@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Image, Header, Grid } from 'semantic-ui-react'
+import moment from 'moment'
 import axios from 'axios'
 
 class AllConversations extends Component {
@@ -18,8 +19,13 @@ class AllConversations extends Component {
 
     axios.get(path, { headers: headers })
       .then(response => {
+        const sortedResponse = response.data.sort(function (a, b) {
+          let dateA = new Date(a.last_msg.created_at), dateB = new Date(b.last_msg.created_at);
+          return dateB - dateA
+        })
+
         this.setState({ 
-          conversations: response.data 
+          conversations: sortedResponse 
         })
     })
   }
@@ -47,7 +53,7 @@ class AllConversations extends Component {
                 <p>{conversation.last_msg.body}</p>
               </Grid.Column>
               <Grid.Column>
-                <p>{conversation.last_msg.created_at}</p>
+                <p>{moment(conversation.last_msg.created_at).format('lll')}</p>
               </Grid.Column>
             </Grid>
           </div> 
