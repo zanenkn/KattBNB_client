@@ -5,6 +5,7 @@ import moment from 'moment'
 import axios from 'axios'
 
 class AllConversations extends Component {
+
   state = {
     conversations: ''
   }
@@ -15,53 +16,50 @@ class AllConversations extends Component {
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-    const path= `/api/v1/conversations?user_id=${this.props.id}`
-
+    const path = `/api/v1/conversations?user_id=${this.props.id}`
     axios.get(path, { headers: headers })
       .then(response => {
         const sortedResponse = response.data.sort(function (a, b) {
           let dateA = new Date(a.last_msg.created_at), dateB = new Date(b.last_msg.created_at);
           return dateB - dateA
         })
-
-        this.setState({ 
-          conversations: sortedResponse 
-        })
-    })
+        this.setState({ conversations: sortedResponse })
+      })
   }
 
   render() {
     let messages
+
     if (this.state.conversations.length < 1) {
       messages = (
         'no messages'
       )
     } else {
       messages = (
-      this.state.conversations.map(conversation => {
-        let other_user, time_format, today, conversation_date
-        today = new Date (Date.now())
-        conversation_date =  new Date (conversation.last_msg.created_at)
-        conversation.user1.id === this.props.id ? other_user=conversation.user2 : other_user=conversation.user1
-        conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear() ? time_format = 'k:mm' : time_format = 'D MMM k:mm'
-        return (
-          <div key={conversation.id}>
-            <Divider />
-            <Grid columns='equal'>
-              <Grid.Column width={4}>
-                <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <p>{other_user.nickname}</p>
-                <p>{conversation.last_msg.body}</p>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <p>{moment(conversation.last_msg.created_at).format(time_format)}</p>
-              </Grid.Column>
-            </Grid>
-          </div> 
-        )
-      })
+        this.state.conversations.map(conversation => {
+          let other_user, time_format, today, conversation_date
+          today = new Date(Date.now())
+          conversation_date = new Date(conversation.last_msg.created_at)
+          conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
+          conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear() ? time_format = 'k:mm' : time_format = 'D MMM k:mm'
+          return (
+            <div key={conversation.id}>
+              <Divider />
+              <Grid columns='equal'>
+                <Grid.Column width={4}>
+                  <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <p>{other_user.nickname}</p>
+                  <p>{conversation.last_msg.body}</p>
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <p>{moment(conversation.last_msg.created_at).format(time_format)}</p>
+                </Grid.Column>
+              </Grid>
+            </div>
+          )
+        })
       )
     }
     return (
@@ -75,8 +73,6 @@ class AllConversations extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  id: state.reduxTokenAuth.currentUser.attributes.id,
-})
+const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
 export default connect(mapStateToProps)(AllConversations)

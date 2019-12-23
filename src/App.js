@@ -52,6 +52,7 @@ class App extends Component {
       incomingBookingsRoute = (
         <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
       )
+      
       messengerRoute = (
         <Route exact path='/messenger' component={AllConversations}></Route>
       )
