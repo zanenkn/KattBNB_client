@@ -41,7 +41,7 @@ class AllConversations extends Component {
         this.state.conversations.map(conversation => {
           let other_user, time_format, today, conversation_date
 
-          today = new Date
+          today = new Date()
           conversation_date = new Date(conversation.msg_created)
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
 
