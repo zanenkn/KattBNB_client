@@ -25,10 +25,16 @@ describe('User can see a list of all her conversations', () => {
     cy.get('#3').within(() => {
       cy.contains('steffe')
     })
+    cy.get('#4').within(() => {
+      cy.contains('Christmas')
+    })
   })
 
-  it('displayed in correct chronological order', () => {
+  it('displayed in correct chronological order (empty conversations are displayed last with relevant message)', () => {
     cy.get('[data-cy=all-messages]').first().contains('elGreco')
-    cy.get('[data-cy=all-messages]').last().contains('steffe')
+    cy.get('[data-cy=all-messages]').last().contains('Christmas')
+    cy.get('#4').within(() => {
+      cy.contains('No messages')
+    })
   })
 })

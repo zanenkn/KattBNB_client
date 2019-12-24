@@ -45,7 +45,7 @@ class AllConversations extends Component {
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
           conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear() ? time_format = 'k:mm' : time_format = 'D MMM k:mm'
           return (
-            <div key={conversation.id} id={conversation.id}>
+            <div key={conversation.id} id={conversation.id} data-cy='all-messages'>
               <Divider />
               <Grid columns='equal'>
                 <Grid.Column width={4}>
@@ -54,12 +54,12 @@ class AllConversations extends Component {
                 <Grid.Column width={8}>
                   <p>{other_user.nickname}</p>
                   <p style={{ 'whiteSpace': 'nowrap', 'height': '2rem', 'overflow': 'hidden', 'textOverflow': 'ellipsis' }}>
-                    {conversation.msg_body}
+                    {conversation.msg_body === null ? '' : conversation.msg_body}
                   </p>
 
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <p>{moment(conversation.msg_created).format(time_format)}</p>
+                  <p>{conversation.msg_created === null ? 'No messages' : moment(conversation.msg_created).format(time_format)}</p>
                 </Grid.Column>
               </Grid>
             </div>
@@ -68,12 +68,12 @@ class AllConversations extends Component {
       )
     }
     return (
-      <div data-cy='all-messages'>
+      <>
         <Header as='h1'>
           Messages
         </Header>
         {messages}
-      </div>
+      </>
     )
   }
 }
