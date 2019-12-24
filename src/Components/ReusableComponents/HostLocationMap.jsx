@@ -29,12 +29,12 @@ class HostLocationMap extends Component {
     let underMapText, options, marker
 
     if (this.props.address === undefined) {
-      underMapText=(
+      underMapText = (
         <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
           This is the approximate area of <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong>. You will receive the exact location when booking is confirmed.
         </p>
       )
-      options={ scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }
+      options = { scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }
     } else {
       underMapText = (
         <p style={{ 'margin': '1rem', 'textAlign': 'center' }}>
@@ -42,10 +42,10 @@ class HostLocationMap extends Component {
           &nbsp;{this.props.address}
         </p>
       )
-      options = { styles: mapStyles }
+      options = { scrollwheel: false, zoomControl: false, styles: mapStyles }
 
       marker = (
-        <Icon 
+        <Icon
           name='map marker alternate'
           size='huge'
           style={{ 'color': '#c90c61' }}
