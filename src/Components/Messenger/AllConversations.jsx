@@ -53,10 +53,10 @@ class AllConversations extends Component {
                 </Grid.Column>
                 <Grid.Column width={8}>
                   <p>{other_user.nickname}</p>
-                  <p style={{'whiteSpace': 'nowrap', 'height': '2rem', 'overflow': 'hidden', 'textOverflow': 'ellipsis'}}>
+                  <p style={{ 'whiteSpace': 'nowrap', 'height': '2rem', 'overflow': 'hidden', 'textOverflow': 'ellipsis' }}>
                     {conversation.msg_body}
                   </p>
-                 
+
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <p>{moment(conversation.msg_created).format(time_format)}</p>
