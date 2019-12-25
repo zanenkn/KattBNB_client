@@ -57,7 +57,7 @@ class AllConversations extends Component {
             >
               <Divider />
               <Grid className='conversation-index-wrapper'>
-                <Grid.Column width={4} style={{'display': 'grid', 'alignContent': 'center', 'paddingLeft': '1.5rem'}}>
+                <Grid.Column width={4} style={{ 'display': 'grid', 'alignContent': 'center', 'paddingLeft': '1.5rem' }}>
                   <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
                 </Grid.Column>
                 <Grid.Column width={8}>

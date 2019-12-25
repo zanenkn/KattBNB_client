@@ -35,17 +35,17 @@ class Conversation extends Component {
     } else {
       messages = (
         this.state.messages.map(message => {
-          return(
+          return (
             <>
-            {message.user.nickname}
-            {message.body}
-            {message.created_at}
+              {message.user.nickname}
+              {message.body}
+              {message.created_at}
             </>
           )
         })
       )
     }
-    return(
+    return (
       <>
         {messages}
       </>
