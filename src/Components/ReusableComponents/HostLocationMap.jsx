@@ -26,7 +26,7 @@ class HostLocationMap extends Component {
   }
 
   render() {
-    let underMapText, options, marker, googleMapsLink
+    let underMapText, marker, googleMapsLink
 
     googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${parseFloat(this.props.lat)},${parseFloat(this.props.long)}`
 
@@ -36,7 +36,6 @@ class HostLocationMap extends Component {
           This is the approximate area of <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong>. You will receive the exact location when booking is confirmed.
         </p>
       )
-      options = { scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }
     } else {
       underMapText = (
         <p style={{ 'margin': '1rem', 'textAlign': 'center' }}>
@@ -44,7 +43,6 @@ class HostLocationMap extends Component {
           &nbsp; <a href={googleMapsLink} target='_blank' rel='noopener noreferrer'>{this.props.address}</a>
         </p>
       )
-      options = { scrollwheel: false, zoomControl: false, styles: mapStyles }
 
       marker = (
         <Icon
@@ -67,7 +65,7 @@ class HostLocationMap extends Component {
             defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
             center={{ lat: parseFloat(this.props.lat), lng: parseFloat(this.props.long) }}
             defaultZoom={15}
-            options={options}
+            options={{ scrollwheel: false, zoomControl: false, gestureHandling: 'none', styles: mapStyles }}
             onChange={this.handleMapChange}
             yesIWantToUseGoogleMapApiInternals
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
