@@ -3,7 +3,9 @@ import React, { Component } from 'react'
 class Conversation extends Component {
   render() {
     return(
-      'yay'
+      <>
+      {this.props.location.state.id}
+      </>
     )
   }
 }
