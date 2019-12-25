@@ -3,11 +3,12 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import timeFormat from '../../Modules/dateFormatting'
-import { Image } from 'semantic-ui-react'
+import { Image, Form, Button } from 'semantic-ui-react'
 
 class Conversation extends Component {
   state = {
-    messages: ''
+    messages: '',
+    newMessage: ''
   }
 
   componentDidMount() {
@@ -25,6 +26,16 @@ class Conversation extends Component {
         })
         this.setState({ messages: sortedResponse })
       })
+  }
+
+  listenEnterKeyMessage = (event) => {
+    if (event.key === 'Enter') {
+      this.updatePassword(event)
+    }
+  }
+
+  onChangeHandler = (e) => {
+    this.setState({ [e.target.id]: e.target.value })
   }
 
   render() {
@@ -53,6 +64,17 @@ class Conversation extends Component {
     return (
       <>
         {messages}
+        <Form style={{ 'maxWidth': '194px' }}>
+          <Form.Input
+            required
+            id='newMessage'
+            value={this.state.newMessage}
+            onChange={this.onChangeHandler}
+            placeholder='Say something..'
+            onKeyPress={this.listenEnterKeyMessage}
+          />
+        </Form>
+        <Button />
       </>
     )
   }
