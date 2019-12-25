@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import timeFormat from '../../Modules/dateFormatting'
+import { Image } from 'semantic-ui-react'
 
 class Conversation extends Component {
   state = {
@@ -38,9 +41,10 @@ class Conversation extends Component {
         this.state.messages.map(message => {
           return (
             <div style={{ 'textAlign': (this.props.username === message.user.nickname ? 'right' : 'left') }}>
+              <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
               {message.user.nickname}
               {message.body}
-              {message.created_at}
+              {moment(message.created_at).format(timeFormat(message.created_at))}
             </div>
           )
         })
