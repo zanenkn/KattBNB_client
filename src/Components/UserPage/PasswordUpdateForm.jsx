@@ -108,6 +108,7 @@ class PasswordUpdateForm extends Component {
           <PasswordStrengthBar
             password={this.state.newPassword}
             minLength={6}
+            scoreWords={(navigator.language.includes('en') === true ? ['weak', 'weak', 'okay', 'good', 'strong'] : ['svagt', 'svagt', 'okay', 'bra', 'starkt'])}
           />
           <Form.Input
             required
@@ -121,6 +122,7 @@ class PasswordUpdateForm extends Component {
           <PasswordStrengthBar
             password={this.state.newPasswordConfirmation}
             minLength={6}
+            scoreWords={(navigator.language.includes('en') === true ? ['weak', 'weak', 'okay', 'good', 'strong'] : ['svagt', 'svagt', 'okay', 'bra', 'starkt'])}
           />
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
             Upon successful password change you will be redirected back to login.
