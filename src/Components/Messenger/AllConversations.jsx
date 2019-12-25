@@ -32,7 +32,7 @@ class AllConversations extends Component {
 
     if (this.state.conversations.length < 1) {
       messages = (
-        <p>
+        <p style={{'textAlign': 'center', 'fontStyle': 'italic'}}>
           You don't have any messages (yet).
         </p>
       )
@@ -56,19 +56,21 @@ class AllConversations extends Component {
           return (
             <div key={conversation.id} id={conversation.id} data-cy='all-messages'>
               <Divider />
-              <Grid columns='equal'>
-                <Grid.Column width={4}>
-                  <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
+              <Grid columns='equal' className='conversation-index-wrapper'>
+                <Grid.Column width={4} style={{'display': 'grid', 'alignContent': 'center'}}>
+                  <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
                 </Grid.Column>
-                <Grid.Column width={8}>
-                  <p>{other_user.nickname}</p>
+                <Grid.Column width={8} style={{'padding': '1rem 0'}}>
+                  <p style={{'marginBottom': '0', 'color': '#c90c61'}}>
+                    <strong>{other_user.nickname}</strong>
+                  </p>
                   <p style={{ 'whiteSpace': 'nowrap', 'height': '2rem', 'overflow': 'hidden', 'textOverflow': 'ellipsis' }}>
                     {conversation.msg_body === null ? '' : conversation.msg_body}
                   </p>
 
                 </Grid.Column>
-                <Grid.Column width={4}>
-                  <p>{conversation.msg_created === null ? 'No messages' : moment(conversation.msg_created).format(time_format)}</p>
+                <Grid.Column width={4} style={{'textAlign': 'right'}}>
+                  <p style={{'fontSize': 'small'}}>{conversation.msg_created === null ? 'No messages' : moment(conversation.msg_created).format(time_format)}</p>
                 </Grid.Column>
               </Grid>
             </div>
@@ -77,12 +79,13 @@ class AllConversations extends Component {
       )
     }
     return (
-      <>
+      <div className='messenger-wrapper'>
         <Header as='h1'>
           Messages
         </Header>
         {messages}
-      </>
+        <Divider/>
+      </div>
     )
   }
 }
