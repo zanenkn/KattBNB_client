@@ -5,6 +5,7 @@ import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class SignUp extends Component {
 
@@ -117,6 +118,7 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password')}
               onKeyPress={this.listenEnterKey}
             />
+            <PasswordStrengthBar password={this.state.password} />
             <Form.Input
               required
               id='passwordConfirmation'
@@ -126,6 +128,7 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
+            <PasswordStrengthBar password={this.state.passwordConfirmation} />
             <Form.Input
               required
               id='nickname'

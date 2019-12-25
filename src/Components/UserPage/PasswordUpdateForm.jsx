@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Message, Divider } from 'semantic-ui-react'
 import axios from 'axios'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class PasswordUpdateForm extends Component {
 
@@ -104,6 +105,7 @@ class PasswordUpdateForm extends Component {
             placeholder='New password'
             onKeyPress={this.listenEnterKeyPassword}
           />
+          <PasswordStrengthBar password={this.state.newPassword} />
           <Form.Input
             required
             id='newPasswordConfirmation'
@@ -113,6 +115,7 @@ class PasswordUpdateForm extends Component {
             placeholder='New password again'
             onKeyPress={this.listenEnterKeyPassword}
           />
+          <PasswordStrengthBar password={this.state.newPasswordConfirmation} />
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
             Upon successful password change you will be redirected back to login.
           </p>

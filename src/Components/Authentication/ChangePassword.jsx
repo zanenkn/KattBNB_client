@@ -3,6 +3,7 @@ import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class ChangePassword extends Component {
 
@@ -110,6 +111,7 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
+            <PasswordStrengthBar password={this.state.password} />
             <Form.Input
               required
               id='passwordConfirmation'
@@ -119,6 +121,7 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
+            <PasswordStrengthBar password={this.state.passwordConfirmation} />
           </Form>
           {errorDisplay}
           {successDisplay}
