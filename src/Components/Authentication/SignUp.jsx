@@ -122,6 +122,7 @@ class SignUp extends Component {
               password={this.state.password}
               minLength={6}
               scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
             />
             <Form.Input
               required
@@ -136,6 +137,7 @@ class SignUp extends Component {
               password={this.state.passwordConfirmation}
               minLength={6}
               scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
             />
             <Form.Input
               required

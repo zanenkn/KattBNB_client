@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Message, Divider } from 'semantic-ui-react'
 import axios from 'axios'
+import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
 
 class PasswordUpdateForm extends Component {
@@ -68,6 +69,7 @@ class PasswordUpdateForm extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay
 
     if (this.state.errorDisplay) {
@@ -109,6 +111,7 @@ class PasswordUpdateForm extends Component {
             password={this.state.newPassword}
             minLength={6}
             scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+            shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
           />
           <Form.Input
             required
@@ -123,6 +126,7 @@ class PasswordUpdateForm extends Component {
             password={this.state.newPasswordConfirmation}
             minLength={6}
             scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+            shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
           />
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
             Upon successful password change you will be redirected back to login.
@@ -139,4 +143,4 @@ class PasswordUpdateForm extends Component {
   }
 }
 
-export default PasswordUpdateForm
+export default withTranslation()(PasswordUpdateForm)

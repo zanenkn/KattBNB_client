@@ -56,7 +56,8 @@
   "reusable-placeholders": {
     "email": "E-post",
     "password": "Lösenord",
-    "password-confirmation": "Upprepa lösenord"
+    "password-confirmation": "Upprepa lösenord",
+    "pass-strength-bar": "för kort"
   },
   "ChangePassword": {
     "error-1": "Du bör först besöka inloggningssidan och klicka på länken 'Glömt ditt lösenord?'",
