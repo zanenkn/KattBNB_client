@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 class Conversation extends Component {
   state = {
@@ -36,11 +37,11 @@ class Conversation extends Component {
       messages = (
         this.state.messages.map(message => {
           return (
-            <>
+            <div style={{ 'textAlign': (this.props.username === message.user.nickname ? 'right' : 'left') }}>
               {message.user.nickname}
               {message.body}
               {message.created_at}
-            </>
+            </div>
           )
         })
       )
@@ -53,4 +54,6 @@ class Conversation extends Component {
   }
 }
 
-export default Conversation
+const mapStateToProps = state => ({ username: state.reduxTokenAuth.currentUser.attributes.username })
+
+export default connect(mapStateToProps)(Conversation)

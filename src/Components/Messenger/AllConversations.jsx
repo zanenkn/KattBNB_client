@@ -40,7 +40,8 @@ class AllConversations extends Component {
     } else {
       messages = (
         this.state.conversations.map(conversation => {
-          let other_user, time_format, today, conversation_date
+          let other_user, time_format
+          
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
           time_format = timeFormat(conversation.msg_created)
 
