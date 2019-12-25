@@ -111,7 +111,10 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar password={this.state.password} />
+            <PasswordStrengthBar
+              password={this.state.password}
+              minLength={6}
+            />
             <Form.Input
               required
               id='passwordConfirmation'
@@ -121,7 +124,10 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar password={this.state.passwordConfirmation} />
+            <PasswordStrengthBar
+              password={this.state.passwordConfirmation}
+              minLength={6}
+            />
           </Form>
           {errorDisplay}
           {successDisplay}

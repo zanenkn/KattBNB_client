@@ -105,7 +105,10 @@ class PasswordUpdateForm extends Component {
             placeholder='New password'
             onKeyPress={this.listenEnterKeyPassword}
           />
-          <PasswordStrengthBar password={this.state.newPassword} />
+          <PasswordStrengthBar
+            password={this.state.newPassword}
+            minLength={6}
+          />
           <Form.Input
             required
             id='newPasswordConfirmation'
@@ -115,7 +118,10 @@ class PasswordUpdateForm extends Component {
             placeholder='New password again'
             onKeyPress={this.listenEnterKeyPassword}
           />
-          <PasswordStrengthBar password={this.state.newPasswordConfirmation} />
+          <PasswordStrengthBar
+            password={this.state.newPasswordConfirmation}
+            minLength={6}
+          />
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0' }}>
             Upon successful password change you will be redirected back to login.
           </p>

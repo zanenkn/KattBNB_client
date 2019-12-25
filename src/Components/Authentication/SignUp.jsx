@@ -118,7 +118,10 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password')}
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar password={this.state.password} />
+            <PasswordStrengthBar
+              password={this.state.password}
+              minLength={6}
+            />
             <Form.Input
               required
               id='passwordConfirmation'
@@ -128,7 +131,10 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar password={this.state.passwordConfirmation} />
+            <PasswordStrengthBar
+              password={this.state.passwordConfirmation}
+              minLength={6}
+            />
             <Form.Input
               required
               id='nickname'
