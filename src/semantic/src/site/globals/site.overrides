@@ -130,6 +130,41 @@ h4 {
   }
 }
 
+.expanding-wrapper {
+  margin: auto;
+  padding-top: 2rem!important;
+  padding-bottom: 2rem!important;
+}
+
+@media screen and (max-width: 700px) {
+  .expanding-wrapper {
+    padding-left: 3rem!important;
+    padding-right: 3rem!important;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .expanding-wrapper {
+    width: 560px;
+  }
+}
+
+.messenger-wrapper {
+  padding-top: 5vw!important;
+  margin: 0 auto
+}
+
+@media screen and (max-width: 700px) {
+  .messenger-wrapper {
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .messenger-wrapper {
+    width: 560px;
+  }
+}
+
 /*******************************
               MENU
 *******************************/
@@ -193,25 +228,6 @@ h4 {
 .top-bottom-margin-auto {
   margin-top: auto!important;
   margin-bottom: auto!important;
-}
-
-.expanding-wrapper {
-  margin: auto;
-  padding-top: 2rem!important;
-  padding-bottom: 2rem!important;
-}
-
-@media screen and (max-width: 700px) {
-  .expanding-wrapper {
-    padding-left: 3rem!important;
-    padding-right: 3rem!important;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .expanding-wrapper {
-    width: 560px;
-  }
 }
 
 .avatar-popup-content {
@@ -303,4 +319,17 @@ h4 {
     margin-left: -4rem!important;
     margin-right: -4rem!important;
   }
+}
+
+/*******************************
+          MESSENGER
+*******************************/
+
+.conversation-index-wrapper {
+ padding: 0 5vw !important;
+ cursor: pointer
+}
+
+.conversation-index-wrapper:hover {
+ background-color: #eeeeee;
 }
