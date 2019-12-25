@@ -121,7 +121,7 @@ class SignUp extends Component {
             <PasswordStrengthBar
               password={this.state.password}
               minLength={6}
-              scoreWords={(navigator.language.includes('en') === true ? ['weak', 'weak', 'okay', 'good', 'strong'] : ['svagt', 'svagt', 'okay', 'bra', 'starkt'])}
+              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
             />
             <Form.Input
               required
@@ -135,7 +135,7 @@ class SignUp extends Component {
             <PasswordStrengthBar
               password={this.state.passwordConfirmation}
               minLength={6}
-              scoreWords={(navigator.language.includes('en') === true ? ['weak', 'weak', 'okay', 'good', 'strong'] : ['svagt', 'svagt', 'okay', 'bra', 'starkt'])}
+              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
             />
             <Form.Input
               required
