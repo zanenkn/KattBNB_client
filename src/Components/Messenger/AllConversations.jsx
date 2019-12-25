@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Image, Header, Grid, Divider } from 'semantic-ui-react'
+import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
 
@@ -40,18 +41,8 @@ class AllConversations extends Component {
       messages = (
         this.state.conversations.map(conversation => {
           let other_user, time_format, today, conversation_date
-
-          today = new Date()
-          conversation_date = new Date(conversation.msg_created)
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
-
-          if (conversation_date.getDate() === today.getDate() && conversation_date.getMonth() === today.getMonth() && conversation_date.getYear() === today.getYear()) {
-            time_format = 'k:mm'
-          } else if (conversation_date.getYear() !== today.getYear()) {
-            time_format = 'll'
-          } else {
-            time_format = 'D MMM k:mm'
-          }
+          time_format = timeFormat(conversation.msg_created)
 
           return (
             <div key={conversation.id} id={conversation.id} data-cy='all-messages'
