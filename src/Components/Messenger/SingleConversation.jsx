@@ -24,9 +24,30 @@ class Conversation extends Component {
   }
 
   render() {
+    let messages
+
+    if (this.state.messages.length < 1) {
+      messages = (
+        <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+          You don't have any messages in this conversation (yet).
+        </p>
+      )
+    } else {
+      messages = (
+        this.state.messages.map(message => {
+          return(
+            <>
+            {message.user.nickname}
+            {message.body}
+            {message.created_at}
+            </>
+          )
+        })
+      )
+    }
     return(
       <>
-        hej
+        {messages}
       </>
     )
   }
