@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
+import { Header, Segment, Form, Message, Button, Popup } from 'semantic-ui-react'
 import axios from 'axios'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
@@ -102,20 +102,28 @@ class ChangePassword extends Component {
             {t('ChangePassword.instructions')}
           </p>
           <Form>
-            <Form.Input
-              required
-              id='password'
-              value={this.state.password}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password')}
-              type='password'
-              onKeyPress={this.listenEnterKey}
-            />
-            <PasswordStrengthBar
-              password={this.state.password}
-              minLength={6}
-              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
-              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+            <Popup
+              trigger={
+                <Form.Input
+                  required
+                  id='password'
+                  value={this.state.password}
+                  onChange={this.onChangeHandler}
+                  placeholder={t('reusable-placeholders.password')}
+                  type='password'
+                  onKeyPress={this.listenEnterKey}
+                />
+              }
+              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              content={
+                <PasswordStrengthBar
+                  password={this.state.password}
+                  minLength={6}
+                  scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                />
+              }
+              on='focus'
             />
             <Form.Input
               required
@@ -126,16 +134,9 @@ class ChangePassword extends Component {
               type='password'
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar
-              password={this.state.passwordConfirmation}
-              minLength={6}
-              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
-              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
-            />
           </Form>
           {errorDisplay}
           {successDisplay}
-
           <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword.title')}</Button>
         </Segment>
       </div>
