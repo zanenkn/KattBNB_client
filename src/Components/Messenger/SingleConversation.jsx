@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import timeFormat from '../../Modules/dateFormatting'
-import { Image, Form, Button, Message } from 'semantic-ui-react'
+import { Image, Form, Button, Message, Header, Container } from 'semantic-ui-react'
 
 class Conversation extends Component {
   state = {
@@ -107,12 +107,38 @@ class Conversation extends Component {
     } else {
       messages = (
         this.state.messages.map(message => {
+          let textAlign, flexDirection, margin, border
+
+          if (this.props.username === message.user.nickname) {
+            textAlign = 'right'
+            flexDirection = 'row-reverse'
+            margin = 'auto 0 auto auto'
+            border ='1rem 1rem 0 1rem'
+          } else {
+            textAlign = 'left'
+            flexDirection = 'row'
+            margin = '0'
+            border = '1rem 1rem 1rem 0'
+          }
           return (
-            <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': (this.props.username === message.user.nickname ? 'right' : 'left') }}>
-              <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
-              {message.user.nickname}
-              {message.body}
-              {moment(message.created_at).format(timeFormat(message.created_at))}
+            <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': textAlign }}>
+              <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center'}}>
+                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '5vh', 'width': '5vh' }}></Image>
+                <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
+                  <strong>
+                    {message.user.nickname}
+                  </strong>
+                </p>
+              </div>
+              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'width': 'fit-content', 'maxWidth': '70%'}}>
+                <p>
+                  {message.body}  
+                </p>
+              </div>
+              <p style={{'fontSize': 'small', 'marginBottom': '1rem'}}>
+                {moment(message.created_at).format(timeFormat(message.created_at))}
+              </p>
+              
             </div>
           )
         })
@@ -121,22 +147,31 @@ class Conversation extends Component {
 
     return (
       <>
-        {messages}
-        {errorDisplay}
-        <Form style={{ 'maxWidth': '194px' }}>
-          <Form.Input
-            required
-            id='newMessage'
-            value={this.state.newMessage}
-            onChange={this.onChangeHandler}
-            placeholder='Say something..'
-            onKeyPress={this.listenEnterKeyMessage}
-          />
-          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-            Remaining characters: {messageLength}
-          </p>
-          <Button id='message-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.createMessage}>Change</Button>
-        </Form>
+        <div style={{ 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center' }}>
+          <Header as='h1'>
+            Messages
+          </Header>
+        </div>
+        <Container style={{ 'marginTop': '60px' }}>
+          <div className='single-conversation-wrapper'>
+            {messages}
+            {errorDisplay}
+            <Form style={{ 'maxWidth': '194px' }}>
+              <Form.Input
+                required
+                id='newMessage'
+                value={this.state.newMessage}
+                onChange={this.onChangeHandler}
+                placeholder='Say something..'
+                onKeyPress={this.listenEnterKeyMessage}
+              />
+              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+                Remaining characters: {messageLength}
+              </p>
+              <Button id='message-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.createMessage}>Change</Button>
+            </Form>
+          </div>
+        </Container>
       </>
     )
   }
