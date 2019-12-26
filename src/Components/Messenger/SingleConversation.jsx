@@ -38,16 +38,19 @@ class Conversation extends Component {
   }
 
   onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
+    this.setState({
+      [e.target.id]: e.target.value,
+      errorDisplay: false
+    })
   }
 
   createMessage = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    if (this.state.newMessage.length > 1000) {
+    if (this.state.newMessage.length === 0 || this.state.newMessage.length > 1000) {
       this.setState({
         loading: false,
-        errors: ['The message cannot exceed 1000 characters!'],
+        errors: ['The message cannot be empty or exceed 1000 characters!'],
         errorDisplay: true
       })
     } else {
@@ -78,7 +81,9 @@ class Conversation extends Component {
   }
 
   render() {
-    let messages, errorDisplay
+    let messages, errorDisplay, messageLength
+
+    messageLength = 1000 - this.state.newMessage.length
 
     if (this.state.errorDisplay) {
       errorDisplay = (
@@ -127,7 +132,10 @@ class Conversation extends Component {
             placeholder='Say something..'
             onKeyPress={this.listenEnterKeyMessage}
           />
-          <Button id='message-submit-button' className='submit-button' loading={this.state.loading ? true : false} onSubmit={this.createMessage}>Change</Button>
+          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+            Remaining characters: {messageLength}
+          </p>
+          <Button id='message-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.createMessage}>Change</Button>
         </Form>
       </>
     )
