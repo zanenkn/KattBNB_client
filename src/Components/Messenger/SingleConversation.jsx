@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import timeFormat from '../../Modules/dateFormatting'
-import { Image, Form, Button, Message, Header, Container } from 'semantic-ui-react'
+import { Image, Input, Icon, Message, Header, Container } from 'semantic-ui-react'
 
 class Conversation extends Component {
   state = {
@@ -28,6 +28,7 @@ class Conversation extends Component {
           return dateA - dateB
         })
         this.setState({ messages: sortedResponse })
+        this.bottom.scrollIntoView({ behavior: 'smooth' })
       })
   }
 
@@ -44,15 +45,20 @@ class Conversation extends Component {
     })
   }
 
+  async handleError(errors) {
+    await this.setState({
+      loading: false,
+      errors: errors,
+      errorDisplay: true
+    })
+    this.bottom.scrollIntoView({ behavior: 'smooth' })
+  }
+
   createMessage = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
     if (this.state.newMessage.length === 0 || this.state.newMessage.length > 1000) {
-      this.setState({
-        loading: false,
-        errors: ['The message cannot be empty or exceed 1000 characters!'],
-        errorDisplay: true
-      })
+      this.handleError(['The message cannot be empty or exceed 1000 characters!'])     
     } else {
       const path = `/api/v1/conversations/${this.props.location.state.id}/messages`
       const payload = {
@@ -71,14 +77,12 @@ class Conversation extends Component {
           window.location.reload()
         })
         .catch(error => {
-          this.setState({
-            loading: false,
-            errors: error.response.data.error,
-            errorDisplay: true
-          })
+          this.handleError(error.response.data.error)
         })
     }
   }
+
+
 
   render() {
     let messages, errorDisplay, messageLength
@@ -88,7 +92,9 @@ class Conversation extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative style={{ 'width': 'inherit' }} >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >
+            Could not send the message because of following error(s):
+          </Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
@@ -123,14 +129,14 @@ class Conversation extends Component {
           return (
             <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': textAlign }}>
               <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center'}}>
-                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '5vh', 'width': '5vh' }}></Image>
+                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
                 <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
                   <strong>
                     {message.user.nickname}
                   </strong>
                 </p>
               </div>
-              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'width': 'fit-content', 'maxWidth': '70%'}}>
+              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%'}}>
                 <p>
                   {message.body}  
                 </p>
@@ -138,7 +144,6 @@ class Conversation extends Component {
               <p style={{'fontSize': 'small', 'marginBottom': '1rem'}}>
                 {moment(message.created_at).format(timeFormat(message.created_at))}
               </p>
-              
             </div>
           )
         })
@@ -152,26 +157,47 @@ class Conversation extends Component {
             Messages
           </Header>
         </div>
-        <Container style={{ 'marginTop': '60px' }}>
+        <Container style={{ 'marginTop': '60px', 'marginBottom': '100px' }}>
           <div className='single-conversation-wrapper'>
             {messages}
             {errorDisplay}
-            <Form style={{ 'maxWidth': '194px' }}>
-              <Form.Input
-                required
+            <div ref={(el) => { this.bottom = el }}></div>
+          </div>
+        </Container>
+        
+        <div style={{'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+          <div className='single-conversation-wrapper' >
+            <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
+              <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem' }} />
+              <Input
+                fluid
+                style={{'marginBottom': '0', 'width': '100%' }}
                 id='newMessage'
                 value={this.state.newMessage}
                 onChange={this.onChangeHandler}
                 placeholder='Say something..'
                 onKeyPress={this.listenEnterKeyMessage}
+                icon={
+                  <Icon 
+                    id='send' 
+                    name='arrow alternate circle up' 
+                    link 
+                    size='large' 
+                    onClick={this.createMessage} 
+                    style={{ 
+                      'color': '#c90c61',
+                      'marginRight': '-0.5rem',
+                      'display': this.state.newMessage === '' ? 'none' : 'block'
+                    }} 
+                  />
+                }
               />
-              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-                Remaining characters: {messageLength}
-              </p>
-              <Button id='message-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.createMessage}>Change</Button>
-            </Form>
+            </div>
+            <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
+              Remaining characters: {messageLength}
+            </p>
           </div>
-        </Container>
+        </div>
       </>
     )
   }
