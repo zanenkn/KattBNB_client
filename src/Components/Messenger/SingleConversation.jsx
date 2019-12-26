@@ -44,29 +44,37 @@ class Conversation extends Component {
   createMessage = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
-    const path = `/api/v1/conversations/${this.props.location.state.id}/messages`
-    const payload = {
-      body: this.state.newMessage,
-      conversation_id: this.props.location.state.id,
-      user_id: this.props.id
-    }
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    axios.post(path, payload, { headers: headers })
-      .then(() => {
-        this.setState({ errorDisplay: false })
-        window.location.reload()
+    if (this.state.newMessage.length > 1000) {
+      this.setState({
+        loading: false,
+        errors: ['The message cannot exceed 1000 characters!'],
+        errorDisplay: true
       })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          errors: error.response.data.error,
-          errorDisplay: true
+    } else {
+      const path = `/api/v1/conversations/${this.props.location.state.id}/messages`
+      const payload = {
+        body: this.state.newMessage,
+        conversation_id: this.props.location.state.id,
+        user_id: this.props.id
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(() => {
+          this.setState({ errorDisplay: false })
+          window.location.reload()
         })
-      })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errors: error.response.data.error,
+            errorDisplay: true
+          })
+        })
+    }
   }
 
   render() {
