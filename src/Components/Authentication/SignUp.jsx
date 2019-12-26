@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-react'
+import { Header, Segment, Form, Button, Dropdown, Message, Popup } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
@@ -109,21 +109,32 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.email')}
               onKeyPress={this.listenEnterKey}
             />
-            <Form.Input
-              required
-              id='password'
-              type='password'
-              value={this.state.password}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password')}
-              onKeyPress={this.listenEnterKey}
+            <Popup
+              trigger={
+                <Form.Input
+                  required
+                  id='password'
+                  type='password'
+                  value={this.state.password}
+                  onChange={this.onChangeHandler}
+                  placeholder={t('reusable-placeholders.password')}
+                  onKeyPress={this.listenEnterKey}
+                />
+              }
+              header='Password strength'
+              content={
+                <PasswordStrengthBar
+                  style={{ 'marginBottom': '0.5rem' }}
+                  password={this.state.password}
+                  minLength={6}
+                  scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                />
+              }
+              on='focus'
             />
-            <PasswordStrengthBar
-              password={this.state.password}
-              minLength={6}
-              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
-              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
-            />
+
+            
             <Form.Input
               required
               id='passwordConfirmation'
@@ -133,12 +144,7 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
-            <PasswordStrengthBar
-              password={this.state.passwordConfirmation}
-              minLength={6}
-              scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
-              shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
-            />
+            
             <Form.Input
               required
               id='nickname'
