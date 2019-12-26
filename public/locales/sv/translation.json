@@ -57,7 +57,8 @@
     "email": "E-post",
     "password": "Lösenord",
     "password-confirmation": "Upprepa lösenord",
-    "pass-strength-bar": "för kort"
+    "pass-strength-bar": "för kort",
+    "pass-strength-bar-popup-header": "Lösenordsstyrka"
   },
   "ChangePassword": {
     "error-1": "Du bör först besöka inloggningssidan och klicka på länken 'Glömt ditt lösenord?'",

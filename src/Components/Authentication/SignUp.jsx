@@ -121,7 +121,7 @@ class SignUp extends Component {
                   onKeyPress={this.listenEnterKey}
                 />
               }
-              header='Password strength'
+              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
               content={
                 <PasswordStrengthBar
                   style={{ 'marginBottom': '0.5rem' }}
@@ -133,8 +133,6 @@ class SignUp extends Component {
               }
               on='focus'
             />
-
-            
             <Form.Input
               required
               id='passwordConfirmation'
@@ -144,7 +142,6 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
-            
             <Form.Input
               required
               id='nickname'

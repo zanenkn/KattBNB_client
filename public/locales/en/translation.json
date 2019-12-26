@@ -57,7 +57,8 @@
     "email": "Email",
     "password": "Password",
     "password-confirmation": "Repeat password",
-    "pass-strength-bar": "too short"
+    "pass-strength-bar": "too short",
+    "pass-strength-bar-popup-header": "Password strength"
   },
   "ChangePassword": {
     "error-1": "You should first visit the login page and click on the 'Forgot your password?' link",
