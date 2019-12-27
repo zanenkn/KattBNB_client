@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Image, Header, Grid, Divider } from 'semantic-ui-react'
+import { Image, Header, Grid, Divider, Container } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
@@ -56,7 +56,7 @@ class AllConversations extends Component {
                 })
               }}
             >
-              <Divider />
+              
               <Grid className='conversation-index-wrapper'>
                 <Grid.Column width={4} style={{ 'display': 'grid', 'alignContent': 'center', 'paddingLeft': '1.5rem' }}>
                   <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
@@ -73,19 +73,25 @@ class AllConversations extends Component {
                   <p style={{ 'fontSize': 'small' }}>{conversation.msg_created === null ? 'No messages' : moment(conversation.msg_created).format(time_format)}</p>
                 </Grid.Column>
               </Grid>
+              <Divider />
+              
             </div>
           )
         })
       )
     }
     return (
-      <div className='messenger-wrapper'>
-        <Header as='h1'>
-          Messages
-        </Header>
-        {messages}
-        <Divider />
-      </div>
+      <>
+        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem' }}>
+          <Header as='h1'>
+            Messages
+          </Header>
+        </div>
+        <div className='messenger-wrapper'>
+          <Divider />
+          {messages}
+        </div>
+      </>
     )
   }
 }
