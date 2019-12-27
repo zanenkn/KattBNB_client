@@ -24,6 +24,29 @@ describe('User can see messages of individual conversation', () => {
     cy.get('[data-cy=all-messages-individual-conversation]').last().contains('test')
   })
 
+  it('if messages exist, otherwise see a relevant message', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      status: 200,
+      response: 'fixture:all_user_conversations.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/conversations/1',
+      status: 200,
+      response: 'fixture:no_user_messages.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#navlinks').within(() => {
+      cy.get('#messenger-icon').click()
+    })
+    cy.get('#1').click()
+    cy.contains("You don't have any messages in this conversation (yet).")
+  })
+
   it('and create a new message which is displayed after page reload', () => {
     cy.server()
     cy.route({
