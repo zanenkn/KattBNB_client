@@ -125,7 +125,7 @@ class Conversation extends Component {
             border = '1rem 1rem 1rem 0'
           }
           return (
-            <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': textAlign }}>
+            <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
               <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
                 <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
                 <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
