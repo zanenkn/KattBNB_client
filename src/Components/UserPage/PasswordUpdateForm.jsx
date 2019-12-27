@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Button, Message, Divider } from 'semantic-ui-react'
+import { Form, Button, Message, Divider, Popup } from 'semantic-ui-react'
 import axios from 'axios'
+import { withTranslation } from 'react-i18next'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class PasswordUpdateForm extends Component {
 
@@ -67,6 +69,7 @@ class PasswordUpdateForm extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay
 
     if (this.state.errorDisplay) {
@@ -95,14 +98,28 @@ class PasswordUpdateForm extends Component {
             placeholder='Current password'
             onKeyPress={this.listenEnterKeyPassword}
           />
-          <Form.Input
-            required
-            id='newPassword'
-            value={this.state.newPassword}
-            type='password'
-            onChange={this.onChangeHandler}
-            placeholder='New password'
-            onKeyPress={this.listenEnterKeyPassword}
+          <Popup
+            trigger={
+              <Form.Input
+                required
+                id='newPassword'
+                value={this.state.newPassword}
+                type='password'
+                onChange={this.onChangeHandler}
+                placeholder='New password'
+                onKeyPress={this.listenEnterKeyPassword}
+              />
+            }
+            header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+            content={
+              <PasswordStrengthBar
+                password={this.state.newPassword}
+                minLength={6}
+                scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
+                shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+              />
+            }
+            on='focus'
           />
           <Form.Input
             required
@@ -128,4 +145,4 @@ class PasswordUpdateForm extends Component {
   }
 }
 
-export default PasswordUpdateForm
+export default withTranslation()(PasswordUpdateForm)
