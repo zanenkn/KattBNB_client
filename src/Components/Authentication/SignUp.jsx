@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Header, Segment, Form, Button, Dropdown, Message } from 'semantic-ui-react'
+import { Header, Segment, Form, Button, Dropdown, Message, Popup } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 class SignUp extends Component {
 
@@ -108,14 +109,29 @@ class SignUp extends Component {
               placeholder={t('reusable-placeholders.email')}
               onKeyPress={this.listenEnterKey}
             />
-            <Form.Input
-              required
-              id='password'
-              type='password'
-              value={this.state.password}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password')}
-              onKeyPress={this.listenEnterKey}
+            <Popup
+              trigger={
+                <Form.Input
+                  required
+                  id='password'
+                  type='password'
+                  value={this.state.password}
+                  onChange={this.onChangeHandler}
+                  placeholder={t('reusable-placeholders.password')}
+                  onKeyPress={this.listenEnterKey}
+                />
+              }
+              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              content={
+                <PasswordStrengthBar
+                  style={{ 'marginBottom': '0.5rem' }}
+                  password={this.state.password}
+                  minLength={6}
+                  scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
+                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                />
+              }
+              on='focus'
             />
             <Form.Input
               required
