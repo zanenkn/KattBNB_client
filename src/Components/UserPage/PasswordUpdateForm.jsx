@@ -115,7 +115,7 @@ class PasswordUpdateForm extends Component {
               <PasswordStrengthBar
                 password={this.state.newPassword}
                 minLength={6}
-                scoreWords={(navigator.language.includes('sv') === true || navigator.language.includes('SV') === true ? ['svagt', 'svagt', 'okay', 'bra', 'starkt'] : ['weak', 'weak', 'okay', 'good', 'strong'])}
+                scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
                 shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
               />
             }

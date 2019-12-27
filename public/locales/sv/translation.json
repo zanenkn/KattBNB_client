@@ -58,7 +58,11 @@
     "password": "Lösenord",
     "password-confirmation": "Upprepa lösenord",
     "pass-strength-bar": "för kort",
-    "pass-strength-bar-popup-header": "Lösenordsstyrka"
+    "pass-strength-bar-popup-header": "Lösenordsstyrka",
+    "weak": "svag",
+    "okay": "medium",
+    "good": "bra", 
+    "strong": "stark"
   },
   "ChangePassword": {
     "error-1": "Du bör först besöka inloggningssidan och klicka på länken 'Glömt ditt lösenord?'",
