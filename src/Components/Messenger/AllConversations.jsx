@@ -8,10 +8,12 @@ import axios from 'axios'
 class AllConversations extends Component {
 
   state = {
-    conversations: ''
+    conversations: '',
+    scrollYPosition: 0
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
@@ -28,8 +30,16 @@ class AllConversations extends Component {
       })
   }
 
+  componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
+
+  handleScroll = () => {
+    this.setState({ scrollYPosition: window.scrollY })
+  }
+
   render() {
-    let messages
+    let messages, boxShadow
+
+    boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
     if (this.state.conversations.length < 1) {
       messages = (
@@ -82,7 +92,7 @@ class AllConversations extends Component {
     }
     return (
       <>
-        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem' }}>
+        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
           <Header as='h1'>
             Messages
           </Header>
