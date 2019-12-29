@@ -160,10 +160,17 @@ class Conversation extends Component {
 
     return (
       <>
-        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
-          <Header as='h1'>
-            Messages
-          </Header>
+        <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
+          <div className='max-width-wrapper' style={{'display': 'flex', 'alignItems': 'center'}}>
+            <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => {this.props.history.push('/messenger')}} />
+            <div style={{'display': 'inline', 'margin': 'auto'}}>
+              <Header as='h2'>
+                <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }}/>
+                {this.props.location.state.user.nickname}
+              </Header>
+            </div>
+            <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} />
+          </div>
         </div>
         <Container className='messenger-wrapper' style={{ 'marginBottom': '100px' }}>
           <Divider />

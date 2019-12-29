@@ -198,6 +198,17 @@ h4 {
   }
 }
 
+.max-width-wrapper {
+  margin: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .max-width-wrapper {
+    width: 560px;
+  }
+}
+
 /*******************************
               MENU
 *******************************/

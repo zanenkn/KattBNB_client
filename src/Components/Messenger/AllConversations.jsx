@@ -61,7 +61,8 @@ class AllConversations extends Component {
                 this.props.history.push({
                   pathname: '/conversation',
                   state: {
-                    id: conversation.id
+                    id: conversation.id,
+                    user: other_user
                   }
                 })
               }}
