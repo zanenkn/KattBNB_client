@@ -7,20 +7,70 @@ import { Image, Input, Icon, Message, Header, Container, Divider } from 'semanti
 import Cable from 'actioncable'
 
 class Conversation extends Component {
-  // state = {
-  //   messages: '',
-  //   newMessage: '',
-  //   loading: false,
-  //   errorDisplay: false,
-  //   errors: '',
-  //   scrollYPosition: 0
-  // }
+  state = {
+    newMessage: '',
+    chatLogs: [],
+    messagesHistory: [],
+    loading: false,
+    errorDisplay: false,
+    errors: '',
+    scrollYPosition: 0
+  }
+  
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token')
+    }
+    const path = `/api/v1/conversations/${this.props.location.state.id}`
+    axios.get(path, { headers: headers })
+      .then(response => {
+        const sortedResponse = response.data.message.sort(function (a, b) {
+          let dateA = new Date(a.created_at), dateB = new Date(b.created_at)
+          return dateA - dateB
+        })
+        this.setState({ messagesHistory: sortedResponse })
+        this.bottom.scrollIntoView({ behavior: 'smooth' })
+      })
+  }
+  
+  componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
+  
+  handleScroll = () => {
+    this.setState({ scrollYPosition: window.scrollY })
+  }
 
-    state = {
-      currentChatMessage: '',
-      chatLogs: [],
-      current_user: this.props.id
-    };
+  listenEnterKeyMessage = (event) => {
+    if (event.key === 'Enter') {
+      this.handleSendEvent(event)
+    }
+  }
+
+  onChangeHandler = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+      errorDisplay: false
+    })
+  }
+
+  handleSendEvent(event) {
+    event.preventDefault()
+    this.chats.create(this.state.newMessage, this.props.location.state.id, this.props.id)
+    this.setState({
+      newMessage: ''
+    })
+  }
+
+  async handleError(errors) {
+    await this.setState({
+      loading: false,
+      errors: errors,
+      errorDisplay: true
+    })
+    this.bottom.scrollIntoView({ behavior: 'smooth' })
+  }
 
   createSocket() {
     let cable = Cable.createConsumer(`http://localhost:3007/cable/conversations/${this.props.location.state.id}`);
@@ -30,135 +80,195 @@ class Conversation extends Component {
     }, {
       connected: () => {},
       received: (data) => {
-        let chatLogs = this.state.chatLogs;
-        chatLogs.push(data);
-        this.setState({ chatLogs: chatLogs });
+        let chatLogs = this.state.chatLogs
+        chatLogs.push(data.message);
+        this.setState({ chatLogs: chatLogs })
+        this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
       create: function(msg, conv_id, user_id) {
         this.perform('send_message', {
           body: msg,
           user_id: user_id,
           conversation_id: conv_id
-        });
+        })
       }
-    });
-  }
-
-  destroySocket() {
-    
+    })
   }
 
   componentWillMount() {
-    this.createSocket();
-  }
-
-  componentWillUnmount() {
-    this.destroySocket()
-  }
-
-  renderChatLog() {
-    return this.state.chatLogs.map((el) => {
-      return (
-        <li key={`chat_${el.id}`}>
-          <span className='chat-message'>{ el.content }</span>
-          <span className='chat-created-at'>{ el.created_at }</span>
-        </li>
-      );
-    });
+    this.createSocket()
   }
 
   render() {
-    return (
-      <div className='App'>
-        <div className='stage'>
-          <h1>Chat</h1>
-          <ul className='chat-logs'>
-            { this.renderChatLog() }
+    let messagesHistory, errorDisplay, messageLength, boxShadow, currentLogs
+
+    boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
+
+    messageLength = 1000 - this.state.newMessage.length
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative style={{ 'width': 'inherit' }} >
+          <Message.Header style={{ 'textAlign': 'center' }} >
+            Could not send the message because of following error(s):
+          </Message.Header>
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
           </ul>
-          <input
-            onKeyPress={ (e) => this.handleChatInputKeyPress(e) }
-            value={ this.state.currentChatMessage }
-            onChange={ (e) => this.updateCurrentChatMessage(e) }
-            type='text'
-            placeholder='Enter your message...'
-            className='chat-input' />
-          <button
-            onClick={ (e) => this.handleSendEvent(e) }
-            className='send'>
-            Send
-          </button>
+        </Message>
+      )
+    }
+
+    if (this.state.messagesHistory.length < 1) {
+      messagesHistory = (
+        <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+          You don't have any messages in this conversation (yet).
+        </p>
+      )
+    } else {
+      messagesHistory = (
+        this.state.messagesHistory.map(message => {
+          let textAlign, flexDirection, margin, border
+
+          if (this.props.username === message.user.nickname) {
+            textAlign = 'right'
+            flexDirection = 'row-reverse'
+            margin = 'auto 0 auto auto'
+            border = '1rem 1rem 0 1rem'
+          } else {
+            textAlign = 'left'
+            flexDirection = 'row'
+            margin = '0'
+            border = '1rem 1rem 1rem 0'
+          }
+          return (
+            <div key={this.state.messagesHistory.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
+              <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
+                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
+                <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
+                  <strong>
+                    {message.user.nickname}
+                  </strong>
+                </p>
+              </div>
+              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
+                <p>
+                  {message.body}
+                </p>
+              </div>
+              <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
+                {moment(message.created_at).format(timeFormat(message.created_at))}
+              </p>
+            </div>
+          )
+        })
+      )
+    }
+
+    if (this.state.chatLogs.length > 0) {
+      currentLogs = (
+        this.state.chatLogs.map(message => {
+          let textAlign, flexDirection, margin, border
+
+          if (this.props.username === message.user.nickname) {
+            textAlign = 'right'
+            flexDirection = 'row-reverse'
+            margin = 'auto 0 auto auto'
+            border = '1rem 1rem 0 1rem'
+          } else {
+            textAlign = 'left'
+            flexDirection = 'row'
+            margin = '0'
+            border = '1rem 1rem 1rem 0'
+          }
+          return (
+            <div key={this.state.messagesHistory.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
+              <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
+                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
+                <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
+                  <strong>
+                    {message.user.nickname}
+                  </strong>
+                </p>
+              </div>
+              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
+                <p>
+                  {message.body}
+                </p>
+              </div>
+              <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
+                {moment(message.created_at).format(timeFormat(message.created_at))}
+              </p>
+            </div>
+          )
+        })
+      )
+    }
+    return (
+      <>
+        <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
+          <div className='max-width-wrapper' style={{'display': 'flex', 'alignItems': 'center'}}>
+            <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => {this.props.history.push('/messenger')}} />
+            <div style={{'display': 'inline', 'margin': 'auto'}}>
+              <Header as='h2'>
+                <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }}/>
+                {this.props.location.state.user.nickname}
+              </Header>
+            </div>
+            <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} />
+          </div>
         </div>
-      </div>
-    );
-  }
+        <Container className='messenger-wrapper' style={{ 'marginBottom': '100px' }}>
+          <Divider />
+          <div className='single-conversation-wrapper'>
+            {messagesHistory}
+            {currentLogs}
+            {errorDisplay}
+            <div ref={(el) => { this.bottom = el }}></div>
+          </div>
+        </Container>
 
-  updateCurrentChatMessage(event) {
-    this.setState({
-      currentChatMessage: event.target.value
-    });
-  }
-
-  handleChatInputKeyPress(event) {
-    if(event.key === 'Enter') {
-      this.handleSendEvent(event);
-    }//end if
-  }
-
-  handleSendEvent(event) {
-    event.preventDefault();
-    this.chats.create(this.state.currentChatMessage, this.props.location.state.id, this.props.id);
-    this.setState({
-      currentChatMessage: ''
-    });
+        <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+          <div className='single-conversation-wrapper' >
+            <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
+              <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem' }} />
+              <Input
+                fluid
+                style={{ 'marginBottom': '0', 'width': '100%' }}
+                id='newMessage'
+                value={this.state.newMessage}
+                onChange={this.onChangeHandler}
+                placeholder='Say something..'
+                onKeyPress={this.listenEnterKeyMessage}
+                icon={
+                  <Icon
+                    id='send'
+                    name='arrow alternate circle up'
+                    link
+                    size='large'
+                    onClick={ (e) => this.handleSendEvent(e) }
+                    style={{
+                      'color': '#c90c61',
+                      'marginRight': '-0.5rem',
+                      'display': this.state.newMessage === '' ? 'none' : 'block'
+                    }}
+                  />
+                }
+              />
+            </div>
+            <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
+              Remaining characters: {messageLength}
+            </p>
+          </div>
+        </div>
+      </>
+    )
   }
 }
 
-  // componentDidMount() {
-  //   window.addEventListener('scroll', this.handleScroll)
-  //   const headers = {
-  //     uid: window.localStorage.getItem('uid'),
-  //     client: window.localStorage.getItem('client'),
-  //     'access-token': window.localStorage.getItem('access-token')
-  //   }
-  //   const path = `/api/v1/conversations/${this.props.location.state.id}`
-  //   axios.get(path, { headers: headers })
-  //     .then(response => {
-  //       const sortedResponse = response.data.message.sort(function (a, b) {
-  //         let dateA = new Date(a.created_at), dateB = new Date(b.created_at)
-  //         return dateA - dateB
-  //       })
-  //       this.setState({ messages: sortedResponse })
-  //       this.bottom.scrollIntoView({ behavior: 'smooth' })
-  //     })
-  // }
-
-  // componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
-
-  // handleScroll = () => {
-  //   this.setState({ scrollYPosition: window.scrollY })
-  // }
-
-  // listenEnterKeyMessage = (event) => {
-  //   if (event.key === 'Enter') {
-  //     this.createMessage(event)
-  //   }
-  // }
-
-  // onChangeHandler = (e) => {
-  //   this.setState({
-  //     [e.target.id]: e.target.value,
-  //     errorDisplay: false
-  //   })
-  // }
-
-  // async handleError(errors) {
-  //   await this.setState({
-  //     loading: false,
-  //     errors: errors,
-  //     errorDisplay: true
-  //   })
-  //   this.bottom.scrollIntoView({ behavior: 'smooth' })
-  // }
+  
 
   // createMessage = (e) => {
   //   e.preventDefault()
@@ -188,133 +298,9 @@ class Conversation extends Component {
   //   }
   // }
 
-  // render() {
-  //   let messages, errorDisplay, messageLength, boxShadow
 
-  //   boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
-  //   messageLength = 1000 - this.state.newMessage.length
 
-  //   if (this.state.errorDisplay) {
-  //     errorDisplay = (
-  //       <Message negative style={{ 'width': 'inherit' }} >
-  //         <Message.Header style={{ 'textAlign': 'center' }} >
-  //           Could not send the message because of following error(s):
-  //         </Message.Header>
-  //         <ul id='message-error-list'>
-  //           {this.state.errors.map(error => (
-  //             <li key={error}>{error}</li>
-  //           ))}
-  //         </ul>
-  //       </Message>
-  //     )
-  //   }
-
-  //   if (this.state.messages.length < 1) {
-  //     messages = (
-  //       <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-  //         You don't have any messages in this conversation (yet).
-  //       </p>
-  //     )
-  //   } else {
-  //     messages = (
-  //       this.state.messages.map(message => {
-  //         let textAlign, flexDirection, margin, border
-
-  //         if (this.props.username === message.user.nickname) {
-  //           textAlign = 'right'
-  //           flexDirection = 'row-reverse'
-  //           margin = 'auto 0 auto auto'
-  //           border = '1rem 1rem 0 1rem'
-  //         } else {
-  //           textAlign = 'left'
-  //           flexDirection = 'row'
-  //           margin = '0'
-  //           border = '1rem 1rem 1rem 0'
-  //         }
-  //         return (
-  //           <div key={this.state.messages.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
-  //             <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
-  //               <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
-  //               <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
-  //                 <strong>
-  //                   {message.user.nickname}
-  //                 </strong>
-  //               </p>
-  //             </div>
-  //             <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
-  //               <p>
-  //                 {message.body}
-  //               </p>
-  //             </div>
-  //             <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
-  //               {moment(message.created_at).format(timeFormat(message.created_at))}
-  //             </p>
-  //           </div>
-  //         )
-  //       })
-  //     )
-  //   }
-
-  //   return (
-  //     <>
-  //       <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
-  //         <div className='max-width-wrapper' style={{'display': 'flex', 'alignItems': 'center'}}>
-  //           <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => {this.props.history.push('/messenger')}} />
-  //           <div style={{'display': 'inline', 'margin': 'auto'}}>
-  //             <Header as='h2'>
-  //               <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }}/>
-  //               {this.props.location.state.user.nickname}
-  //             </Header>
-  //           </div>
-  //           <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} />
-  //         </div>
-  //       </div>
-  //       <Container className='messenger-wrapper' style={{ 'marginBottom': '100px' }}>
-  //         <Divider />
-  //         <div className='single-conversation-wrapper'>
-  //           {messages}
-  //           {errorDisplay}
-  //           <div ref={(el) => { this.bottom = el }}></div>
-  //         </div>
-  //       </Container>
-  //       <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
-  //         <div className='single-conversation-wrapper' >
-  //           <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
-  //             <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem' }} />
-  //             <Input
-  //               fluid
-  //               style={{ 'marginBottom': '0', 'width': '100%' }}
-  //               id='newMessage'
-  //               value={this.state.newMessage}
-  //               onChange={this.onChangeHandler}
-  //               placeholder='Say something..'
-  //               onKeyPress={this.listenEnterKeyMessage}
-  //               icon={
-  //                 <Icon
-  //                   id='send'
-  //                   name='arrow alternate circle up'
-  //                   link
-  //                   size='large'
-  //                   onClick={this.createMessage}
-  //                   style={{
-  //                     'color': '#c90c61',
-  //                     'marginRight': '-0.5rem',
-  //                     'display': this.state.newMessage === '' ? 'none' : 'block'
-  //                   }}
-  //                 />
-  //               }
-  //             />
-  //           </div>
-  //           <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
-  //             Remaining characters: {messageLength}
-  //           </p>
-  //         </div>
-  //       </div>
-  //     </>
-  //   )
-  // }
-// }
 
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
