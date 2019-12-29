@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import timeFormat from '../../Modules/dateFormatting'
-import { Image, Input, Icon, Message, Header, Container } from 'semantic-ui-react'
+import { Image, Input, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 
 class Conversation extends Component {
   state = {
@@ -11,10 +11,12 @@ class Conversation extends Component {
     newMessage: '',
     loading: false,
     errorDisplay: false,
-    errors: ''
+    errors: '',
+    scrollYPosition: 0
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
@@ -30,6 +32,12 @@ class Conversation extends Component {
         this.setState({ messages: sortedResponse })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       })
+  }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
+
+  handleScroll = () => {
+    this.setState({ scrollYPosition: window.scrollY })
   }
 
   listenEnterKeyMessage = (event) => {
@@ -83,7 +91,9 @@ class Conversation extends Component {
   }
 
   render() {
-    let messages, errorDisplay, messageLength
+    let messages, errorDisplay, messageLength, boxShadow
+
+    boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
     messageLength = 1000 - this.state.newMessage.length
 
@@ -150,12 +160,13 @@ class Conversation extends Component {
 
     return (
       <>
-        <div style={{ 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center' }}>
+        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
           <Header as='h1'>
             Messages
           </Header>
         </div>
-        <Container style={{ 'marginTop': '60px', 'marginBottom': '100px' }}>
+        <Container className='messenger-wrapper' style={{ 'marginBottom': '100px' }}>
+          <Divider />
           <div className='single-conversation-wrapper'>
             {messages}
             {errorDisplay}
