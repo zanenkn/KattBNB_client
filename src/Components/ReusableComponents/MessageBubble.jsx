@@ -3,27 +3,31 @@ import { Image } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 
-const MessageBubble = (currentUsername, message ) => {
-  let textAlign, flexDirection, margin, border
+const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message ) => {
+  let textAlign, flexDirection, margin, border, avatar, nickname
 
   if (currentUsername === message.user.nickname) {
     textAlign = 'right'
     flexDirection = 'row-reverse'
     margin = 'auto 0 auto auto'
     border = '1rem 1rem 0 1rem'
+    avatar = currentAvatar
+    nickname = currentUsername
   } else {
     textAlign = 'left'
     flexDirection = 'row'
     margin = '0'
     border = '1rem 1rem 1rem 0'
+    avatar = otherAvatar
+    nickname = message.user.nickname
   }
   return (
     <div key={message.id} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
       <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
-        <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
+        <Image src={avatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
         <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
           <strong>
-            {message.user.nickname}
+            {nickname}
           </strong>
         </p>
       </div>

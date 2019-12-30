@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import moment from 'moment'
-import timeFormat from '../../Modules/dateFormatting'
 import MessageBubble from '../ReusableComponents/MessageBubble'
 import { Image, Input, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
@@ -131,7 +129,7 @@ class Conversation extends Component {
     } else {
       messagesHistory = (
         this.state.messagesHistory.map(message => {
-          return MessageBubble(this.props.username, message)
+          return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
         })
       )
     }
@@ -139,7 +137,7 @@ class Conversation extends Component {
     if (this.state.chatLogs.length > 0) {
       currentLogs = (
         this.state.chatLogs.map(message => {
-          return MessageBubble(this.props.username, message)
+          return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
         })
       )
     }
@@ -207,7 +205,8 @@ class Conversation extends Component {
 
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
-  id: state.reduxTokenAuth.currentUser.attributes.id
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+  avatar: state.reduxTokenAuth.currentUser.attributes.avatar
 })
 
 export default connect(mapStateToProps)(Conversation)
