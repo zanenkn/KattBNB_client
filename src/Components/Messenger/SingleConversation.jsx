@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import timeFormat from '../../Modules/dateFormatting'
+import MessageBubble from '../ReusableComponents/MessageBubble'
 import { Image, Input, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
 
@@ -130,39 +131,7 @@ class Conversation extends Component {
     } else {
       messagesHistory = (
         this.state.messagesHistory.map(message => {
-          let textAlign, flexDirection, margin, border
-
-          if (this.props.username === message.user.nickname) {
-            textAlign = 'right'
-            flexDirection = 'row-reverse'
-            margin = 'auto 0 auto auto'
-            border = '1rem 1rem 0 1rem'
-          } else {
-            textAlign = 'left'
-            flexDirection = 'row'
-            margin = '0'
-            border = '1rem 1rem 1rem 0'
-          }
-          return (
-            <div key={this.state.messagesHistory.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
-              <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
-                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
-                <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
-                  <strong>
-                    {message.user.nickname}
-                  </strong>
-                </p>
-              </div>
-              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
-                <p>
-                  {message.body}
-                </p>
-              </div>
-              <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
-                {moment(message.created_at).format(timeFormat(message.created_at))}
-              </p>
-            </div>
-          )
+          return MessageBubble(this.props.username, message)
         })
       )
     }
@@ -170,39 +139,7 @@ class Conversation extends Component {
     if (this.state.chatLogs.length > 0) {
       currentLogs = (
         this.state.chatLogs.map(message => {
-          let textAlign, flexDirection, margin, border
-
-          if (this.props.username === message.user.nickname) {
-            textAlign = 'right'
-            flexDirection = 'row-reverse'
-            margin = 'auto 0 auto auto'
-            border = '1rem 1rem 0 1rem'
-          } else {
-            textAlign = 'left'
-            flexDirection = 'row'
-            margin = '0'
-            border = '1rem 1rem 1rem 0'
-          }
-          return (
-            <div key={this.state.messagesHistory.indexOf(message)} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
-              <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
-                <Image src={message.user.avatar === null ? `https://ui-avatars.com/api/?name=${message.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : message.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
-                <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>
-                  <strong>
-                    {message.user.nickname}
-                  </strong>
-                </p>
-              </div>
-              <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
-                <p>
-                  {message.body}
-                </p>
-              </div>
-              <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
-                {moment(message.created_at).format(timeFormat(message.created_at))}
-              </p>
-            </div>
-          )
+          return MessageBubble(this.props.username, message)
         })
       )
     }
@@ -267,40 +204,6 @@ class Conversation extends Component {
     )
   }
 }
-
-  
-
-  // createMessage = (e) => {
-  //   e.preventDefault()
-  //   this.setState({ loading: true })
-  //   if (this.state.newMessage.length === 0 || this.state.newMessage.length > 1000) {
-  //     this.handleError(['The message cannot be empty or exceed 1000 characters!'])
-  //   } else {
-  //     const path = `/api/v1/conversations/${this.props.location.state.id}/messages`
-  //     const payload = {
-  //       body: this.state.newMessage,
-  //       conversation_id: this.props.location.state.id,
-  //       user_id: this.props.id
-  //     }
-  //     const headers = {
-  //       uid: window.localStorage.getItem('uid'),
-  //       client: window.localStorage.getItem('client'),
-  //       'access-token': window.localStorage.getItem('access-token')
-  //     }
-  //     axios.post(path, payload, { headers: headers })
-  //       .then(() => {
-  //         this.setState({ errorDisplay: false })
-  //         window.location.reload()
-  //       })
-  //       .catch(error => {
-  //         this.handleError(error.response.data.error)
-  //       })
-  //   }
-  // }
-
-
-
-
 
 const mapStateToProps = state => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
