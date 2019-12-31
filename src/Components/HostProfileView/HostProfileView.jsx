@@ -1,10 +1,10 @@
 import React from 'react'
-import { Image, Header, Button } from 'semantic-ui-react'
+import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
+import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
-import moment from 'moment'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
@@ -27,31 +27,13 @@ const HostProfileView = (props) => {
       <p id='description'>
         {props.description}
       </p>
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
-      </p>
-      <Header id='total' as='h3' style={{ 'marginTop': '0' }}>
-        {orderTotal} kr
-      </Header>
-      <Button
-        id='request-to-book'
-        style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
-        onClick={props.requestToBookButtonClick}>
-        Request to book
-      </Button>
+
+      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => {}}
+      
       <Reviews />
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
-      </p>
-      <Header as='h3' style={{ 'marginTop': '0' }}>
-        {orderTotal} kr
-      </Header>
-      <Button
-        id='request-to-book'
-        style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
-        onClick={props.requestToBookButtonClick}>
-        Request to book
-      </Button>
+
+      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => {}}
+
       <div>
         <HostLocationMap
           lat={props.lat}
