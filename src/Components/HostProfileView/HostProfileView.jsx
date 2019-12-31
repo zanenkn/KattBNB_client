@@ -35,11 +35,11 @@ const HostProfileView = (props) => {
       {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => {}}
 
       <div>
-        <HostLocationMap
+        {/* <HostLocationMap
           lat={props.lat}
           long={props.long}
           nickname={props.nickname}
-        />
+        /> */}
       </div>
       <Header as='h3' style={{ 'textAlign': 'left' }}>
         Questions?
