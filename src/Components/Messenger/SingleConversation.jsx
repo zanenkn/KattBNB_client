@@ -147,7 +147,17 @@ class Conversation extends Component {
           <div className='max-width-wrapper' style={{'display': 'flex', 'alignItems': 'center'}}>
             <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => {this.props.history.push('/messenger')}} />
             <div style={{'display': 'inline', 'margin': 'auto'}}>
-              <Header as='h2'>
+              <Header as='h2' onClick={() => {
+                this.props.history.push({ 
+                  pathname: '/host-profile', 
+                  state: {
+                    user_id: this.props.location.state.user.id,
+                    avatar: this.props.location.state.user.avatar,
+                    nickname: this.props.location.state.user.nickname,
+                    location: this.props.location.state.user.location
+                  } 
+                })}
+              }>
                 <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }}/>
                 {this.props.location.state.user.nickname}
               </Header>

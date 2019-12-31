@@ -24,6 +24,7 @@ import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSu
 import BookingDetails from './Components/Bookings/BookingDetails'
 import AllConversations from './Components/Messenger/AllConversations'
 import Conversation from './Components/Messenger/SingleConversation'
+import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -117,6 +118,7 @@ class App extends Component {
                   <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                   <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
                   <Route exact path='/booking-details' component={BookingDetails}></Route>
+                  <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
                   {userPageRoute}
                   {allBookingsRoute}
                   {outgoingBookingsRoute}
