@@ -1,7 +1,6 @@
 import React from 'react'
-import HostLocationMap from '../ReusableComponents/HostLocationMap'
-import Reviews from '../ReusableComponents/Reviews'
-import { Header, Segment, Image } from 'semantic-ui-react'
+import HostProfileView from '../HostProfileView/HostProfileView'
+import { Header, Segment } from 'semantic-ui-react'
 
 const BookingDetails = (props) => {
 
@@ -40,32 +39,17 @@ const BookingDetails = (props) => {
       <Header as='h2' style={{ 'marginBottom': '2rem' }}>
         About your host
       </Header>
-      <Image id='avatar' src={props.location.state.avatar === null ? `https://ui-avatars.com/api/?name=${props.location.state.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.location.state.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
-      <Header id='nickname' as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '1rem' }}>
-        <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
-        &ensp;{props.location.state.nickname}
-      </Header>
-      <p id='description'>
-        {props.location.state.description}
-      </p>
-      <Reviews />
-      <div style={{ 'marginTop': '2rem' }}>
-        <HostLocationMap
-          lat={props.location.state.lat}
-          long={props.location.state.long}
-          nickname={props.location.state.nickname}
-          address={props.location.state.address}
-        />
-      </div>
-      <Header as='h3' style={{ 'textAlign': 'left' }}>
-        Questions?
-      </Header>
-      <p>
-        You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.location.state.nickname}</strong> and find out.
-      </p>
-      <p className='fake-link-underlined'>
-        Send now
-      </p>
+      <HostProfileView
+        numberOfCats={props.location.state.numberOfCats}
+        id={props.location.state.id}
+        avatar={props.location.state.avatar}
+        nickname={props.location.state.nickname}
+        location={props.location.state.location}
+        description={props.location.state.description}
+        lat={props.location.state.lat}
+        long={props.location.state.long}
+        address={props.location.state.address}
+      />
     </div>
   )
 }
