@@ -14,6 +14,7 @@ const BookingDetails = (props) => {
   }
 
   return (
+    <>
     <div className='expanding-wrapper'>
       <Header as='h1'>
         Booking details
@@ -36,7 +37,9 @@ const BookingDetails = (props) => {
           </p>
         </div>
       </Segment>
-      <Header as='h2' style={{ 'marginBottom': '2rem' }}>
+    </div>
+    <>
+      <Header as='h2' style={{ 'margin': '1rem 0 0' }}>
         About your host
       </Header>
       <HostProfileView
@@ -50,7 +53,8 @@ const BookingDetails = (props) => {
         long={props.location.state.long}
         address={props.location.state.address}
       />
-    </div>
+    </>
+    </>
   )
 }
 
