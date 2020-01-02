@@ -17,22 +17,6 @@
   "wip": {
     "message": "Denna sida är fortfarande under utveckling!"
   },
-  "about": {
-    "about-title": "Om oss",
-    "idea-title": "Idén bakom KattBNB",
-    "idea-p1": "Ställa in en weekend resa för att ingen kan ta hand om din katt. Ändra dina semesterplaner för att en vän som motvilligt gick med på att vara kattvakt ångrar sig i sista stund. Släpa med din uppenbart missnöjda katt på en lång tågresa för det var enda sättet att besöka släkten till jul. Om du är kattägare så är det stor chans att du känner igen dig.",
-    "idea-p2": "Men tänk om det var lika lätt att hitta en pålitlig kattvakt som att boka in sig på ett hotell eller Airbnb? Ifall du inte behövde oroa dig för dina pälsklingars välmående medan du njuter av din semester?",
-    "idea-p3": "Vi tror på att saker som kan förenklas, borde förenklas, och  att problem löses när människor kommer samman. Det är därför som vi bygger KattBNB - en plattform där kattägare möter kattvakter, och där bokning av kattpassning är lätt som en plätt. För du, det borde det vara.",
-    "behind-scenes-title": "Teamet bakom KattBNB",
-    "zane-title": "VD och webbutvecklare ",
-    "zane-txt": "Drivande kraft bakom affärsidén på en bra dag och gråtande kraft på övriga dagar",
-    "george-title": "Teknisk chef och webbutvecklare",
-    "george-txt": "Grekisk gud av kodning, den oslagbara kombinationen av envishet och tålamod",
-    "felix-title": "Affärsrådgivare",
-    "felix-txt": "Felix säger vad vi ska göra när vi inte vet vad vi ska göra",
-    "acknowledgements-title": "Erkännanden",
-    "acknowledgements-txt": "Inget av detta skulle vara möjligt utan <1>Craft Academy</1>. Dessa människor lärde oss att koda och allting utöver det."
-  },
   "faq": {
     "header1": "Vad är KattBNB?",
     "p1": "Vår idé med KattBNB är en plattform där kattvakter kan erbjuda sina tjänster och kattägare kan boka den bekvämaste kattvakten för dom. Föreställ dig att du kan checka-in din katt hos en pålitlig kattvakt, lika enkelt som att checka-in dig själv på ett hotell! Det är vad vi bygger. En fullservicetjänst som gör att du inte bara kan hitta rätt person att ta hand om din katt utan som också hanterar bokningen, betalningen, att hålla kontakten och alla andra saker. Så slipper du oroa dig medan du är bortrest.",
