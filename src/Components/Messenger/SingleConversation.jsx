@@ -72,7 +72,10 @@ class Conversation extends Component {
   }
 
   createSocket() {
-    let cable = Cable.createConsumer(`http://localhost:3007/cable/conversations/${this.props.location.state.id}`);
+    let uid = window.localStorage.getItem('uid')
+    let client = window.localStorage.getItem('client')
+    let token = window.localStorage.getItem('access-token')
+    let cable = Cable.createConsumer(`ws://localhost:3007/api/v1/cable/conversation/${this.props.location.state.id}?token=${token}&uid=${uid}&client=${client}`)
     this.chats = cable.subscriptions.create({
       channel: 'ConversationsChannel',
       conversations_id: this.props.location.state.id
@@ -80,7 +83,7 @@ class Conversation extends Component {
       connected: () => {},
       received: (data) => {
         let chatLogs = this.state.chatLogs
-        chatLogs.push(data.message);
+        chatLogs.push(data.message)
         this.setState({ chatLogs: chatLogs })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
