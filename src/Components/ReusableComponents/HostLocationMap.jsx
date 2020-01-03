@@ -58,7 +58,7 @@ class HostLocationMap extends Component {
     return (
       <>
         <div style={{ 'width': '100%', 'height': '300px', 'overflow': 'hidden' }}>
-          <Header as='h3' style={{ 'textAlign': 'left' }}>
+          <Header as='h3' style={{ 'textAlign': 'left', 'margin': '2rem 0 1rem' }}>
             Location
           </Header>
           <GoogleMapReact

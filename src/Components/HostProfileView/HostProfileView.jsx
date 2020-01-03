@@ -1,14 +1,26 @@
 import React from 'react'
-import { Image, Header, Button } from 'semantic-ui-react'
+import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
+import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
-import moment from 'moment'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+  let locationAndPrice
+
+  if (props.location) {
+    locationAndPrice = (
+      <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
+        &nbsp;{props.location}&ensp;
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
+        &nbsp;{perDay} kr/day
+      </Header>
+    )
+  }
 
   return (
     <div className='expanding-wrapper'>
@@ -18,45 +30,19 @@ const HostProfileView = (props) => {
         <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
         &ensp;{props.nickname}
       </Header>
-      <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
-        <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
-        &nbsp;{props.location}&ensp;
-        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
-        &nbsp;{perDay} kr/day
-      </Header>
+      {locationAndPrice}
       <p id='description'>
         {props.description}
       </p>
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
-      </p>
-      <Header id='total' as='h3' style={{ 'marginTop': '0' }}>
-        {orderTotal} kr
-      </Header>
-      <Button
-        id='request-to-book'
-        style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
-        onClick={props.requestToBookButtonClick}>
-        Request to book
-      </Button>
+      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => { }}
       <Reviews />
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
-      </p>
-      <Header as='h3' style={{ 'marginTop': '0' }}>
-        {orderTotal} kr
-      </Header>
-      <Button
-        id='request-to-book'
-        style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
-        onClick={props.requestToBookButtonClick}>
-        Request to book
-      </Button>
+      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => { }}
       <div>
         <HostLocationMap
           lat={props.lat}
           long={props.long}
           nickname={props.nickname}
+          address={props.address}
         />
       </div>
       <Header as='h3' style={{ 'textAlign': 'left' }}>
