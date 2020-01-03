@@ -79,7 +79,8 @@ class Conversation extends Component {
     let uid = window.localStorage.getItem('uid')
     let client = window.localStorage.getItem('client')
     let token = window.localStorage.getItem('access-token')
-    let cable = Cable.createConsumer(`ws://localhost:3007/api/v1/cable/conversation/${this.props.location.state.id}?token=${token}&uid=${uid}&client=${client}`)
+    let path = (process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT)
+    let cable = Cable.createConsumer(`${path}/api/v1/cable/conversation/${this.props.location.state.id}?token=${token}&uid=${uid}&client=${client}`)
     this.chats = cable.subscriptions.create({
       channel: 'ConversationsChannel',
       conversations_id: this.props.location.state.id
