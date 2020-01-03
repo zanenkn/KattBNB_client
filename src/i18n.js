@@ -12,6 +12,7 @@ i18n
 
   .init({
     fallbackLng,
+    ns: ['translation', 'AboutUs', 'SearchResults'],
     lng: 'en',
     debug: true,
     whitelist: availableLanguages,
