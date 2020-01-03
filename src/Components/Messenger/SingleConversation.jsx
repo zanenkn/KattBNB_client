@@ -51,15 +51,8 @@ class Conversation extends Component {
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
-      errorDisplay: false
-    })
-  }
-
-  handleSendEvent(event) {
-    event.preventDefault()
-    this.chats.create(this.state.newMessage, this.props.location.state.id, this.props.id)
-    this.setState({
-      newMessage: ''
+      errorDisplay: false,
+      errors: ''
     })
   }
 
@@ -70,6 +63,16 @@ class Conversation extends Component {
       errorDisplay: true
     })
     this.bottom.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  handleSendEvent(event) {
+    event.preventDefault()
+    if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
+      this.handleError(['The message cannot be empty or exceed 1000 characters!'])
+    } else {
+      this.chats.create(this.state.newMessage, this.props.location.state.id, this.props.id)
+      this.setState({ newMessage: '' })
+    }
   }
 
   createSocket() {
