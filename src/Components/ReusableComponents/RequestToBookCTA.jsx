@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Header } from 'semantic-ui-react'
 import moment from 'moment'
 
-const RequestToBookCTA = (numberOfCats, nickname, checkInDate, checkOutDate, orderTotal, requestToBookButtonClick ) => {
+const RequestToBookCTA = (numberOfCats, nickname, checkInDate, checkOutDate, orderTotal, requestToBookButtonClick) => {
 
   return (
     <>

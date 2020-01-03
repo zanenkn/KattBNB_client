@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Image, Header, Grid, Divider, Container } from 'semantic-ui-react'
+import { Image, Header, Grid, Divider } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
@@ -39,7 +39,7 @@ class AllConversations extends Component {
   render() {
     let messages, boxShadow
 
-    boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
+    boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
     if (this.state.conversations.length < 1) {
       messages = (
@@ -51,7 +51,7 @@ class AllConversations extends Component {
       messages = (
         this.state.conversations.map(conversation => {
           let other_user, time_format
-          
+
           conversation.user1.id === this.props.id ? other_user = conversation.user2 : other_user = conversation.user1
           time_format = timeFormat(conversation.msg_created)
 
@@ -67,7 +67,6 @@ class AllConversations extends Component {
                 })
               }}
             >
-              
               <Grid className='conversation-index-wrapper'>
                 <Grid.Column width={4} style={{ 'display': 'grid', 'alignContent': 'center', 'paddingLeft': '1.5rem' }}>
                   <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
@@ -85,15 +84,15 @@ class AllConversations extends Component {
                 </Grid.Column>
               </Grid>
               <Divider />
-              
             </div>
           )
         })
       )
     }
+
     return (
       <>
-        <div style={{'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
+        <div style={{ 'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
           <Header as='h1'>
             Messages
           </Header>

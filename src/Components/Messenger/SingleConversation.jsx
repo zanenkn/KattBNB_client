@@ -6,6 +6,7 @@ import { Image, Input, Icon, Message, Header, Container, Divider } from 'semanti
 import Cable from 'actioncable'
 
 class Conversation extends Component {
+
   state = {
     newMessage: '',
     chatLogs: [],
@@ -15,7 +16,7 @@ class Conversation extends Component {
     errors: '',
     scrollYPosition: 0
   }
-  
+
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
     const headers = {
@@ -34,9 +35,9 @@ class Conversation extends Component {
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       })
   }
-  
+
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
-  
+
   handleScroll = () => {
     this.setState({ scrollYPosition: window.scrollY })
   }
@@ -80,14 +81,14 @@ class Conversation extends Component {
       channel: 'ConversationsChannel',
       conversations_id: this.props.location.state.id
     }, {
-      connected: () => {},
+      connected: () => { },
       received: (data) => {
         let chatLogs = this.state.chatLogs
         chatLogs.push(data.message)
         this.setState({ chatLogs: chatLogs })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
-      create: function(msg, conv_id, user_id) {
+      create: function (msg, conv_id, user_id) {
         this.perform('send_message', {
           body: msg,
           user_id: user_id,
@@ -97,14 +98,12 @@ class Conversation extends Component {
     })
   }
 
-  componentWillMount() {
-    this.createSocket()
-  }
+  componentWillMount() { this.createSocket() }
 
   render() {
     let messagesHistory, errorDisplay, messageLength, boxShadow, currentLogs
 
-    boxShadow = this.state.scrollYPosition > 0 ?  '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
+    boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
     messageLength = 1000 - this.state.newMessage.length
 
@@ -144,24 +143,26 @@ class Conversation extends Component {
         })
       )
     }
+
     return (
       <>
         <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
-          <div className='max-width-wrapper' style={{'display': 'flex', 'alignItems': 'center'}}>
-            <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => {this.props.history.push('/messenger')}} />
-            <div style={{'display': 'inline', 'margin': 'auto', 'cursor': 'pointer'}}>
+          <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
+            <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
+            <div style={{ 'display': 'inline', 'margin': 'auto', 'cursor': 'pointer' }}>
               <Header as='h2' onClick={() => {
-                this.props.history.push({ 
-                  pathname: '/host-profile', 
+                this.props.history.push({
+                  pathname: '/host-profile',
                   state: {
                     user_id: this.props.location.state.user.id,
                     avatar: this.props.location.state.user.avatar,
                     nickname: this.props.location.state.user.nickname,
                     location: this.props.location.state.user.location
-                  } 
-                })}
+                  }
+                })
+              }
               }>
-                <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }}/>
+                <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }} />
                 {this.props.location.state.user.nickname}
               </Header>
             </div>
@@ -177,7 +178,6 @@ class Conversation extends Component {
             <div ref={(el) => { this.bottom = el }}></div>
           </div>
         </Container>
-
         <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
           <div className='single-conversation-wrapper' >
             <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
@@ -196,7 +196,7 @@ class Conversation extends Component {
                     name='arrow alternate circle up'
                     link
                     size='large'
-                    onClick={ (e) => this.handleSendEvent(e) }
+                    onClick={(e) => this.handleSendEvent(e)}
                     style={{
                       'color': '#c90c61',
                       'marginRight': '-0.5rem',

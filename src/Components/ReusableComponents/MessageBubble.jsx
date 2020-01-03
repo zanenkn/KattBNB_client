@@ -3,7 +3,7 @@ import { Image } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 
-const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message ) => {
+const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => {
   let textAlign, flexDirection, margin, border, avatar, nickname
 
   if (currentUsername === message.user.nickname) {
@@ -21,6 +21,7 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message ) =>
     avatar = otherAvatar
     nickname = message.user.nickname
   }
+  
   return (
     <div key={message.id} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
       <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
