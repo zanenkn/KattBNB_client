@@ -11,6 +11,7 @@ import 'moment/locale/sv'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
+import { withTranslation, Trans } from 'react-i18next'
 
 class SearchResults extends Component {
 
@@ -150,6 +151,7 @@ class SearchResults extends Component {
   }
 
   render() {
+    const { t } = this.props
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
@@ -180,7 +182,12 @@ class SearchResults extends Component {
         )
         mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
-        resultCounter = (`${finalAvailableHosts.length} result(s)`)
+        resultCounter = (
+          <Trans 
+            values={{ count: finalAvailableHosts.length }}
+            i18nKey='SearchResults:counter'
+          />
+        )
         break
       case 'map':
         results = (
@@ -198,7 +205,12 @@ class SearchResults extends Component {
         )
         mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
-        resultCounter = (`${finalAvailableHosts.length} result(s)`)
+        resultCounter = (
+          <Trans 
+          values={{ count: finalAvailableHosts.length }}
+          i18nKey='SearchResults:counter'
+        />
+        )
         break
       case 'profile':
         results = (
@@ -227,7 +239,7 @@ class SearchResults extends Component {
             className='fake-link-underlined'
             style={{ 'textAlign': 'right' }}
           >
-            Back to results
+            {t('SearchResults:back')}
           </Header>
         )
         break
@@ -321,4 +333,4 @@ class SearchResults extends Component {
 
 const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
-export default connect(mapStateToProps)(SearchResults)
+export default withTranslation()(connect(mapStateToProps)(SearchResults))
