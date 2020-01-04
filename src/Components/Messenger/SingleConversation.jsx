@@ -124,13 +124,13 @@ class Conversation extends Component {
       )
     }
 
-    if (this.state.messagesHistory.length < 1) {
+    if (this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1) {
       messagesHistory = (
         <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
           You don't have any messages in this conversation (yet).
         </p>
       )
-    } else {
+    } else if (this.state.messagesHistory.length > 0) {
       messagesHistory = (
         this.state.messagesHistory.map(message => {
           return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
