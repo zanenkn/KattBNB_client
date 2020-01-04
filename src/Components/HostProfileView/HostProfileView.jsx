@@ -50,7 +50,6 @@ const HostProfileView = (props) => {
   //     })
   // }
 
-  
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
