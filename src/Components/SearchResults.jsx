@@ -15,7 +15,6 @@ import HostPopup from './HostPopup'
 class SearchResults extends Component {
 
   state = {
-    id: '',
     checkInDate: '',
     checkOutDate: '',
     numberOfCats: '',
@@ -88,6 +87,7 @@ class SearchResults extends Component {
   getHostById(e) {
     axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
       this.setState({
+        hostId: response.data[0].user.id,
         hostAvatar: response.data[0].user.avatar,
         hostNickname: response.data[0].user.nickname,
         hostLocation: response.data[0].user.location,
@@ -207,7 +207,7 @@ class SearchResults extends Component {
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
-              id={this.state.id}
+              hostId={this.state.hostId}
               avatar={this.state.hostAvatar}
               nickname={this.state.hostNickname}
               location={this.state.hostLocation}
@@ -260,7 +260,6 @@ class SearchResults extends Component {
         >
           <div>
             <HostPopup
-              id={this.state.id}
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}

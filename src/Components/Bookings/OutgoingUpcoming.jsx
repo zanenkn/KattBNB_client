@@ -31,6 +31,7 @@ const OutgoingUpcoming = (props) => {
                   history.push({
                     pathname: '/booking-details',
                     state: {
+                      hostId: upcoming.host_id,
                       avatar: upcoming.host_avatar,
                       description: upcoming.host_description,
                       nickname: upcoming.host_nickname,

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
@@ -10,6 +11,46 @@ const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice
+
+  // messageHost = (e) => {
+  //   e.preventDefault()
+  //   const path = '/api/v1/bookings'
+  //   const payload = {
+  //     number_of_cats: this.props.location.state.numberOfCats,
+  //     message: this.state.message,
+  //     dates: booking,
+  //     host_nickname: this.props.location.state.nickname,
+  //     price_per_day: this.state.perDay,
+  //     price_total: this.state.orderTotal,
+  //     user_id: this.props.id
+  //   }
+  //   const headers = {
+  //     uid: window.localStorage.getItem('uid'),
+  //     client: window.localStorage.getItem('client'),
+  //     'access-token': window.localStorage.getItem('access-token')
+  //   }
+  //   axios.post(path, payload, { headers: headers })
+  //     .then(() => {
+  //       this.props.history.push({
+  //         pathname: '/successful-request',
+  //         state: {
+  //           numberOfCats: this.props.location.state.numberOfCats,
+  //           checkInDate: this.props.location.state.checkInDate,
+  //           checkOutDate: this.props.location.state.checkOutDate,
+  //           nickname: this.props.location.state.nickname
+  //         }
+  //       })
+  //     })
+  //     .catch(error => {
+  //       this.setState({
+  //         loading: false,
+  //         errors: error.response.data.error,
+  //         errorDisplay: true
+  //       })
+  //     })
+  // }
+
+  
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
@@ -74,4 +115,6 @@ const HostProfileView = (props) => {
   )
 }
 
-export default HostProfileView
+const mapStateToProps = state => ({ userId: state.reduxTokenAuth.currentUser.attributes.id })
+
+export default connect(mapStateToProps)(HostProfileView)

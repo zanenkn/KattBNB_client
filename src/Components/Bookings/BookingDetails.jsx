@@ -44,7 +44,7 @@ const BookingDetails = (props) => {
         </Header>
         <HostProfileView
           numberOfCats={props.location.state.numberOfCats}
-          id={props.location.state.id}
+          hostId={props.location.state.hostId}
           avatar={props.location.state.avatar}
           nickname={props.location.state.nickname}
           location={props.location.state.location}

@@ -11,7 +11,7 @@ class HostProfileViewWrapper extends Component {
   }
 
   async componentDidMount() {
-    let response = await axios.get(`/api/v1/host_profiles?user_id=${this.props.location.state.user_id}`)
+    let response = await axios.get(`/api/v1/host_profiles?user_id=${this.props.location.state.userId}`)
     this.setState({
       hostProfile: response.data[0],
       lat: response.data[0].lat,
@@ -27,7 +27,7 @@ class HostProfileViewWrapper extends Component {
         <div style={{ 'height': '100%' }}>
           <HostProfileView
             numberOfCats={0}
-            id={this.props.location.state.user_id}
+            hostId={this.props.location.state.userId}
             avatar={this.props.location.state.avatar}
             nickname={this.props.location.state.nickname}
             location={this.props.location.state.location}

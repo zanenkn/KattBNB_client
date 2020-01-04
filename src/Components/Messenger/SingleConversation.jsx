@@ -156,7 +156,7 @@ class Conversation extends Component {
                 this.props.history.push({
                   pathname: '/host-profile',
                   state: {
-                    user_id: this.props.location.state.user.id,
+                    userId: this.props.location.state.user.id,
                     avatar: this.props.location.state.user.avatar,
                     nickname: this.props.location.state.user.nickname,
                     location: this.props.location.state.user.location
