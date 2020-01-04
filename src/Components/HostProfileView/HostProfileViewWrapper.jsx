@@ -25,7 +25,7 @@ class HostProfileViewWrapper extends Component {
     return (
       <div style={{ 'height': '100%' }}>
         <HostProfileView
-          numberOfCats={1}
+          numberOfCats={0}
           id={this.props.location.state.user_id}
           avatar={this.props.location.state.avatar}
           nickname={this.props.location.state.nickname}

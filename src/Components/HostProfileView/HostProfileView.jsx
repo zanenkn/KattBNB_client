@@ -11,7 +11,23 @@ const HostProfileView = (props) => {
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice
 
-  if (props.location) {
+  if (props.location && props.numberOfCats === 0) {
+    let priceWithDecimalsString, totalRate
+    priceWithDecimalsString = props.rate.toFixed(2)
+    if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+      totalRate = parseFloat(priceWithDecimalsString)
+    } else {
+      totalRate = priceWithDecimalsString
+    }
+    locationAndPrice = (
+      <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
+        &nbsp;{props.location}&ensp;
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
+        &nbsp;{totalRate} kr/day for 1 cat
+      </Header>
+    )
+  } else if (props.location) {
     locationAndPrice = (
       <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
