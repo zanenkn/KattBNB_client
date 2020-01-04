@@ -6,50 +6,49 @@ import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import axios from 'axios'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice
 
-  // messageHost = (e) => {
+  // const messageHost = (e) => {
   //   e.preventDefault()
-  //   const path = '/api/v1/bookings'
-  //   const payload = {
-  //     number_of_cats: this.props.location.state.numberOfCats,
-  //     message: this.state.message,
-  //     dates: booking,
-  //     host_nickname: this.props.location.state.nickname,
-  //     price_per_day: this.state.perDay,
-  //     price_total: this.state.orderTotal,
-  //     user_id: this.props.id
-  //   }
-  //   const headers = {
-  //     uid: window.localStorage.getItem('uid'),
-  //     client: window.localStorage.getItem('client'),
-  //     'access-token': window.localStorage.getItem('access-token')
-  //   }
-  //   axios.post(path, payload, { headers: headers })
-  //     .then(() => {
-  //       this.props.history.push({
-  //         pathname: '/successful-request',
-  //         state: {
-  //           numberOfCats: this.props.location.state.numberOfCats,
-  //           checkInDate: this.props.location.state.checkInDate,
-  //           checkOutDate: this.props.location.state.checkOutDate,
-  //           nickname: this.props.location.state.nickname
+  //   if (props.userId === undefined) {
+  //     this.props.history.push('/login')
+  //   } else {
+  //     const path = '/api/v1/conversations'
+  //     const payload = {
+  //       user1_id: props.hostId,
+  //       user2_id: props.userId
+  //     }
+  //     const headers = {
+  //       uid: window.localStorage.getItem('uid'),
+  //       client: window.localStorage.getItem('client'),
+  //       'access-token': window.localStorage.getItem('access-token')
+  //     }
+  //     axios.post(path, payload, { headers: headers })
+  //       .then((response) => {
+  //         if (response.data.message === 'Conversation already exists') {
+  //           this.props.history.push({
+  //             pathname: '/conversation',
+  //             state: { id: response.data.id }
+  //           })
+  //         }
+  //         else if (response.data.message === 'Successfully created') {
+  //           this.props.history.push('/messenger')
   //         }
   //       })
-  //     })
-  //     .catch(error => {
-  //       this.setState({
-  //         loading: false,
-  //         errors: error.response.data.error,
-  //         errorDisplay: true
+  //       .catch(error => {
+  //         this.setState({
+  //           loading: false,
+  //           errors: error.response.data.error,
+  //           errorDisplay: true
+  //         })
   //       })
-  //     })
+  //   }
   // }
-
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
