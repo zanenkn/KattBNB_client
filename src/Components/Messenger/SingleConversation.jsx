@@ -11,7 +11,6 @@ class Conversation extends Component {
     newMessage: '',
     chatLogs: [],
     messagesHistory: [],
-    loading: false,
     errorDisplay: false,
     errors: '',
     scrollYPosition: 0
@@ -58,7 +57,6 @@ class Conversation extends Component {
 
   async handleError(errors) {
     await this.setState({
-      loading: false,
       errors: errors,
       errorDisplay: true
     })
