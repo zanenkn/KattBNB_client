@@ -25,13 +25,6 @@
     "good": "bra", 
     "strong": "stark"
   },
-  "Login": {
-    "success-msg": "Du har loggat in!",
-    "no-acc": "Inte registrerad?",
-    "signup-link": "Skapa ett konto!",
-    "forgot-link": "Glömt ditt lösenord?",
-    "title": "Logga in"
-  },
   "PasswordReset": {
     "error-header": "Återställning av lösenord kunde inte genomföras på grund av följande fel:",
     "title": "Begär återställning av lösenord",
