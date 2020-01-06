@@ -70,17 +70,17 @@ class Login extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success style={{ 'textAlign': 'center' }} >
-          {t('Login.success-msg')}
+          {t('Login:success-msg')}
         </Message>
       )
 
     } else {
       notRegisteredLinks = (
         <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
-          {t('Login.no-acc')}
+          {t('Login:no-acc')}
           <br></br>
           <Header as={Link} to='sign-up' className='fake-link'>
-            {t('Login.signup-link')}
+            {t('Login:signup-link')}
           </Header>
         </p>
       )
@@ -88,7 +88,7 @@ class Login extends Component {
       forgotPassword = (
         <div style={{ 'textAlign': 'right' }}>
           <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
-            {t('Login.forgot-link')}
+            {t('Login:forgot-link')}
           </Header>
         </div>
       )
@@ -97,7 +97,7 @@ class Login extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('Login.title')}
+          {t('Login:title')}
         </Header>
         <Segment className='whitebox'>
           <Form id='login-form'>
@@ -123,7 +123,7 @@ class Login extends Component {
           {errorDisplay}
           {successDisplay}
           <Button className='submit-button' id='log-in-button' loading={this.state.loading ? true : false} onClick={this.logInUser}>
-            {t('Login.title')}
+            {t('Login:title')}
           </Button>
           {notRegisteredLinks}
         </Segment>
