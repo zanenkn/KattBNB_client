@@ -25,10 +25,6 @@
     "good": "bra", 
     "strong": "stark"
   },
-  "PasswordResetSuccess": {
-    "title": "Begäran om lösenordsåterställning lyckades!",
-    "p": "Din begäran om återställning av lösenord lyckades! Följ instruktionerna som vi har skickat till din e-post för att fortsätta. Om du inte hittar vårt meddelande i din inkorg, vänligen se avsnittet <1>Frågor och svar</1>."
-  },
   "Signup": {
     "error-header": "Användare kunde inte registreras på grund av följande fel:",
     "title": "Registrera dig",
