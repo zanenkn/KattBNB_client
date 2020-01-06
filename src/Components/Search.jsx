@@ -3,6 +3,7 @@ import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-re
 import { LOCATION_OPTIONS } from '../Modules/locationData'
 import axios from 'axios'
 import moment from 'moment'
+import { connect } from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { formatDate, parseDate } from 'react-day-picker/moment'
@@ -18,7 +19,7 @@ class Search extends Component {
       errors: '',
       searchData: '',
       loading: false,
-      location: '',
+      location: this.props.location,
       cats: '',
       from: undefined,
       to: undefined
@@ -246,4 +247,6 @@ class Search extends Component {
   }
 }
 
-export default Search
+const mapStateToProps = state => ({ location: state.reduxTokenAuth.currentUser.attributes.location })
+
+export default connect(mapStateToProps)(Search)
