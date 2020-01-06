@@ -14,9 +14,6 @@
     "blog": "Blogg",
     "legal": "Policy"
   },
-  "wip": {
-    "message": "Denna sida är fortfarande under utveckling!"
-  },
   "contact": {
     "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser det!",
     "name-placeholder": "Ditt namn",

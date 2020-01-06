@@ -14,9 +14,6 @@
     "blog": "Blog",
     "legal": "Legal"
   },
-  "wip": {
-    "message": "This section is still a work in progress!"
-  },
   "contact": {
     "contact-p": "Fill in this form to send us a message. We will get back to you as soon as we read it!",
     "name-placeholder": "Your name",
