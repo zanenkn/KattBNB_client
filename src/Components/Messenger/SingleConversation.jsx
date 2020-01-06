@@ -11,7 +11,6 @@ class Conversation extends Component {
     newMessage: '',
     chatLogs: [],
     messagesHistory: [],
-    loading: false,
     errorDisplay: false,
     errors: '',
     scrollYPosition: 0
@@ -58,7 +57,6 @@ class Conversation extends Component {
 
   async handleError(errors) {
     await this.setState({
-      loading: false,
       errors: errors,
       errorDisplay: true
     })
@@ -126,13 +124,13 @@ class Conversation extends Component {
       )
     }
 
-    if (this.state.messagesHistory.length < 1) {
+    if (this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1) {
       messagesHistory = (
         <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
           You don't have any messages in this conversation (yet).
         </p>
       )
-    } else {
+    } else if (this.state.messagesHistory.length > 0) {
       messagesHistory = (
         this.state.messagesHistory.map(message => {
           return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
@@ -158,10 +156,12 @@ class Conversation extends Component {
                 this.props.history.push({
                   pathname: '/host-profile',
                   state: {
-                    user_id: this.props.location.state.user.id,
+                    userId: this.props.location.state.user.id,
                     avatar: this.props.location.state.user.avatar,
                     nickname: this.props.location.state.user.nickname,
-                    location: this.props.location.state.user.location
+                    location: this.props.location.state.user.location,
+                    errors: '',
+                    noMessage: true
                   }
                 })
               }

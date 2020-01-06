@@ -46,10 +46,10 @@ const List = (props) => {
               </Grid.Column>
               <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
                 <div>
-                  <Header as='h3' style={{ 'textAlign': 'left', 'marginBottom': '0' }}>
+                  <Header as='h3' style={{ 'textAlign': 'left', 'marginBottom': '0' }} id={host.user.id} onClick={props.handleListItemClick}>
                     {perDay} kr/day
                   </Header>
-                  <Header as='h5' style={{ 'textAlign': 'left', 'margin': '0' }}>
+                  <Header as='h5' style={{ 'textAlign': 'left', 'margin': '0' }} id={host.user.id} onClick={props.handleListItemClick}>
                     {orderTotal} kr total
                   </Header>
                   <p style={{ 'fontSize': 'small', 'marginTop': '0.3rem' }} >

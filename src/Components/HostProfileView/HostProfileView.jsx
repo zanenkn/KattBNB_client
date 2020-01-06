@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header } from 'semantic-ui-react'
+import { Image, Header, Message } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
@@ -9,9 +9,25 @@ import { pricePerDay, total } from '../../Modules/PriceCalculations'
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  let locationAndPrice
+  let locationAndPrice, errorDisplay, sendMessage
 
-  if (props.location) {
+  if (props.location && props.numberOfCats === 0) {
+    let priceWithDecimalsString, totalRate
+    priceWithDecimalsString = props.rate.toFixed(2)
+    if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+      totalRate = parseFloat(priceWithDecimalsString)
+    } else {
+      totalRate = priceWithDecimalsString
+    }
+    locationAndPrice = (
+      <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
+        &nbsp;{props.location}&ensp;
+        <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
+        &nbsp;{totalRate} kr/day for 1 cat
+      </Header>
+    )
+  } else if (props.location) {
     locationAndPrice = (
       <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
@@ -19,6 +35,36 @@ const HostProfileView = (props) => {
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
         &nbsp;{perDay} kr/day
       </Header>
+    )
+  }
+
+  if (props.errors.length > 0) {
+    errorDisplay = (
+      <Message negative style={{ 'width': 'inherit' }} >
+        <Message.Header style={{ 'textAlign': 'center' }} >Action could not be completed because of following error(s):</Message.Header>
+        <ul id='message-error-list'>
+          {props.errors.map(error => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      </Message>
+    )
+  }
+
+  if (props.noMessage !== true) {
+    sendMessage = (
+      <>
+        <Header as='h3' style={{ 'textAlign': 'left' }}>
+          Questions?
+        </Header>
+        <p>
+          You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
+        </p>
+        {errorDisplay}
+        <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
+          Send now
+        </p>
+      </>
     )
   }
 
@@ -45,15 +91,7 @@ const HostProfileView = (props) => {
           address={props.address}
         />
       </div>
-      <Header as='h3' style={{ 'textAlign': 'left' }}>
-        Questions?
-      </Header>
-      <p>
-        You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
-      </p>
-      <p className='fake-link-underlined-reg'>
-        Send now
-      </p>
+      {sendMessage}
     </div>
   )
 }
