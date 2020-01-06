@@ -71,6 +71,24 @@ describe('Visitor can view search results as a list', () => {
 
   it('and send a message to the host only if she is logged in', () => {
     cy.server()
+    cy.visit('http://localhost:3000/')
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm',
+      status: 200,
+      response: 'fixture:search_results_list.json'
+    })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
+    cy.get('.ui > #search-form > .required > #location > .default').click()
+    cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
+    cy.get('#search-form > .required > #location > .visible > .selected').click()
+    cy.get('.ui > #search-form > .required > .ui > #cats').click()
+    cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?user_id=2',
@@ -83,7 +101,26 @@ describe('Visitor can view search results as a list', () => {
     cy.contains('Log in')
   })
 
-  it.only('and gets redirected to relevant route to send a message if she is logged in', () => {
+  it('and gets redirected to relevant route to send a message if she is logged in', () => {
+    cy.server()
+    cy.visit('http://localhost:3000/')
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm',
+      status: 200,
+      response: 'fixture:search_results_list.json'
+    })
+    const now = new Date(2019, 9, 1).getTime()
+    cy.clock(now)
+    cy.get('.ui > #search-form > .required > #location > .default').click()
+    cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
+    cy.get('#search-form > .required > #location > .visible > .selected').click()
+    cy.get('.ui > #search-form > .required > .ui > #cats').click()
+    cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
+    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
+    cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
     cy.server()
     cy.route({
       method: 'GET',
