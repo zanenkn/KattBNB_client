@@ -67,7 +67,7 @@ const HostProfileView = (props) => {
       <p>
         You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
       </p>
-      <p className='fake-link-underlined-reg' onClick={props.messageHost}>
+      <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
         Send now
       </p>
     </div>
