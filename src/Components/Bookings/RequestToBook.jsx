@@ -4,6 +4,7 @@ import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import { Trans } from 'react-i18next'
 
 class RequestToBook extends Component {
 
@@ -125,7 +126,9 @@ class RequestToBook extends Component {
         </Header>
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
+            <Trans i18nKey='RequestToBook:request-info' count={this.state.numberOfCats}> 
+              You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cats</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
+            </Trans>
           </p>
           <Form>
             <Form.TextArea

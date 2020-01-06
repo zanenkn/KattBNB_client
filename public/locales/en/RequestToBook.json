@@ -3,7 +3,7 @@
   "error-2": "The message cannot exceed 400 characters!",
   "error-header": "Booking could not be requested because of following error(s):",
   "title": "Request to book",
-  "request-info": "You are requesting a booking for <1>{{number}} {'cats' : 'cat'}</1> with <2>{{host}}</2> during the dates of <3>{{checkin}}</3> until <4>{{checkout}}</4>.",
+  "request-info": "You are requesting a booking for <1>{{count}} cat</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7>.",
   "message-plch": "Say a few words to the host..",
   "remaining-chars": "Remaining characters: {{count}}",
   "agree-to-pay": "By requesting to book, you agree to pay the total cost for this stay:"
