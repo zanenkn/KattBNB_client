@@ -17,11 +17,11 @@ class PasswordResetSuccess extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('PasswordResetSuccess.title')}
+          {t('PasswordResetSuccess:title')}
         </Header>
         <Segment className='whitebox' textAlign='center'>
           <p>
-            <Trans i18nKey='PasswordResetSuccess.p'>
+            <Trans i18nKey='PasswordResetSuccess:p'>
               You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <Header as={Link} to='faq' className='fake-link'>FAQ</Header> section.
             </Trans>
           </p>
