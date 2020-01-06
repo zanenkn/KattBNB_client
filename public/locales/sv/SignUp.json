@@ -1,0 +1,9 @@
+{
+    "error-header": "Användare kunde inte registreras på grund av följande fel:",
+    "title": "Registrera dig",
+    "instructions": "Lösenordet måste ha minst 6 tecken. E-post och användarnamn måste vara unika.",
+    "nickname-plch": "Användarnamn",
+    "location-plch": "Välj kommun",
+    "captcha-label": "Ange kontrollkoden ovan",
+    "captcha-plch": "Jag är inte en robot"
+}
