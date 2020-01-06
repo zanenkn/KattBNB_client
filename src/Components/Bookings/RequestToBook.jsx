@@ -150,7 +150,9 @@ class RequestToBook extends Component {
           <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
             ({this.state.perDay} kr/day)
           </Header>
-          <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} loading={this.state.loading ? true : false} onClick={this.createBooking}>Request to book</Button>
+          <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} loading={this.state.loading ? true : false} onClick={this.createBooking}>
+            Request to book
+          </Button>
         </Segment>
       </div>
     )

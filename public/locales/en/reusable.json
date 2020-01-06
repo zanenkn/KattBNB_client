@@ -1,0 +1,6 @@
+{
+  "price": {
+    "per-day": "{{price}} kr/day",
+    "total": "{{price}} kr total"
+  }
+}
