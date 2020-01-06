@@ -49,12 +49,12 @@ class ChangePassword extends Component {
         })
     } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
       this.setState({
-        errors: ['ChangePassword.error-1'],
+        errors: ['ChangePassword:error-1'],
         errorDisplay: true
       })
     } else {
       this.setState({
-        errors: ['ChangePassword.error-2'],
+        errors: ['ChangePassword:error-2'],
         errorDisplay: true
       })
     }
@@ -74,7 +74,7 @@ class ChangePassword extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('ChangePassword.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('ChangePassword:error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{t(error)}</li>
@@ -87,7 +87,7 @@ class ChangePassword extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success style={{ 'textAlign': 'center' }} >
-          {t('ChangePassword.success-msg')}
+          {t('ChangePassword:success-msg')}
         </Message>
       )
     }
@@ -95,11 +95,11 @@ class ChangePassword extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('ChangePassword.title')}
+          {t('ChangePassword:title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            {t('ChangePassword.instructions')}
+            {t('ChangePassword:instructions')}
           </p>
           <Form>
             <Popup
@@ -137,7 +137,7 @@ class ChangePassword extends Component {
           </Form>
           {errorDisplay}
           {successDisplay}
-          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword.title')}</Button>
+          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword:title')}</Button>
         </Segment>
       </div>
     )
