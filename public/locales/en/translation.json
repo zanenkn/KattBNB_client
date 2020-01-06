@@ -25,12 +25,6 @@
     "good": "good", 
     "strong": "strong"
   },
-  "PasswordReset": {
-    "error-header": "Password reset could not be completed because of following error(s):",
-    "title": "Request password reset",
-    "instructions": "Fill in the email you registered with.",
-    "btn": "Reset"
-  },
   "PasswordResetSuccess": {
     "title": "Successful password reset request!",
     "p": "You have successfully requested a password reset! To continue, please follow the instructions we have sent to your email. If you didn't receive our message in your inbox, please refer to our <1>FAQ</1> section."

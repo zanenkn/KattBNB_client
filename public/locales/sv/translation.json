@@ -25,12 +25,6 @@
     "good": "bra", 
     "strong": "stark"
   },
-  "PasswordReset": {
-    "error-header": "Återställning av lösenord kunde inte genomföras på grund av följande fel:",
-    "title": "Begär återställning av lösenord",
-    "instructions": "Fyll i e-postadressen som du registrerade dig med.",
-    "btn": "Återställ"
-  },
   "PasswordResetSuccess": {
     "title": "Begäran om lösenordsåterställning lyckades!",
     "p": "Din begäran om återställning av lösenord lyckades! Följ instruktionerna som vi har skickat till din e-post för att fortsätta. Om du inte hittar vårt meddelande i din inkorg, vänligen se avsnittet <1>Frågor och svar</1>."
