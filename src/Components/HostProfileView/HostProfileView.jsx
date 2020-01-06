@@ -1,54 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
-import axios from 'axios'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice
-
-  // const messageHost = (e) => {
-  //   e.preventDefault()
-  //   if (props.userId === undefined) {
-  //     this.props.history.push('/login')
-  //   } else {
-  //     const path = '/api/v1/conversations'
-  //     const payload = {
-  //       user1_id: props.hostId,
-  //       user2_id: props.userId
-  //     }
-  //     const headers = {
-  //       uid: window.localStorage.getItem('uid'),
-  //       client: window.localStorage.getItem('client'),
-  //       'access-token': window.localStorage.getItem('access-token')
-  //     }
-  //     axios.post(path, payload, { headers: headers })
-  //       .then((response) => {
-  //         if (response.data.message === 'Conversation already exists') {
-  //           this.props.history.push({
-  //             pathname: '/conversation',
-  //             state: { id: response.data.id }
-  //           })
-  //         }
-  //         else if (response.data.message === 'Successfully created') {
-  //           this.props.history.push('/messenger')
-  //         }
-  //       })
-  //       .catch(error => {
-  //         this.setState({
-  //           loading: false,
-  //           errors: error.response.data.error,
-  //           errorDisplay: true
-  //         })
-  //       })
-  //   }
-  // }
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
@@ -106,13 +67,11 @@ const HostProfileView = (props) => {
       <p>
         You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
       </p>
-      <p className='fake-link-underlined-reg'>
+      <p className='fake-link-underlined-reg' onClick={props.messageHost}>
         Send now
       </p>
     </div>
   )
 }
 
-const mapStateToProps = state => ({ userId: state.reduxTokenAuth.currentUser.attributes.id })
-
-export default connect(mapStateToProps)(HostProfileView)
+export default HostProfileView

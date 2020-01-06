@@ -149,6 +149,46 @@ class SearchResults extends Component {
     }
   }
 
+  messageHost = (e) => {
+    e.preventDefault()
+    if (this.props.id === undefined) {
+      this.props.history.push('/login')
+    } else {
+      const path = '/api/v1/conversations'
+      const payload = {
+        user1_id: this.props.id,
+        user2_id: this.state.hostId
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(response => {
+          this.props.history.push({
+            pathname: '/conversation',
+            state: {
+              id: response.data.id,
+              user: {
+                avatar: this.state.hostAvatar,
+                id: this.state.hostId,
+                location: this.state.hostLocation,
+                nickname: this.state.hostNickname
+              }
+            }
+          })
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errors: error.response.data.error,
+            errorDisplay: true
+          })
+        })
+    }
+  }
+
   render() {
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
@@ -208,6 +248,7 @@ class SearchResults extends Component {
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
               hostId={this.state.hostId}
+              currentUserId={this.props.id}
               avatar={this.state.hostAvatar}
               nickname={this.state.hostNickname}
               location={this.state.hostLocation}
@@ -217,6 +258,7 @@ class SearchResults extends Component {
               lat={this.state.hostLat}
               long={this.state.hostLong}
               requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+              messageHost={this.messageHost.bind(this)}
             />
           </Container>
         )
