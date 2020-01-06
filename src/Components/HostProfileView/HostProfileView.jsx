@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header } from 'semantic-ui-react'
+import { Image, Header, Message } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
@@ -9,7 +9,7 @@ import { pricePerDay, total } from '../../Modules/PriceCalculations'
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  let locationAndPrice
+  let locationAndPrice, errorDisplay
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
@@ -35,6 +35,19 @@ const HostProfileView = (props) => {
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
         &nbsp;{perDay} kr/day
       </Header>
+    )
+  }
+
+  if (props.errors.length > 0) {
+    errorDisplay = (
+      <Message negative style={{ 'width': 'inherit' }} >
+        <Message.Header style={{ 'textAlign': 'center' }} >Action could not be completed because of following error(s):</Message.Header>
+        <ul id='message-error-list'>
+          {props.errors.map(error => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      </Message>
     )
   }
 
@@ -67,6 +80,7 @@ const HostProfileView = (props) => {
       <p>
         You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
       </p>
+      {errorDisplay}
       <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
         Send now
       </p>
