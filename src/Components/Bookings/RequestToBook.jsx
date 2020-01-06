@@ -126,8 +126,8 @@ class RequestToBook extends Component {
         </Header>
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            <Trans i18nKey='RequestToBook:request-info' count={this.state.numberOfCats}> 
-              You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cats</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
+            <Trans i18nKey='RequestToBook:request-info' count={parseInt(this.state.numberOfCats)}> 
+              You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
             </Trans>
           </p>
           <Form>
