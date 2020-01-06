@@ -9,7 +9,7 @@ import { pricePerDay, total } from '../../Modules/PriceCalculations'
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  let locationAndPrice, errorDisplay
+  let locationAndPrice, errorDisplay, sendMessage
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
@@ -51,6 +51,23 @@ const HostProfileView = (props) => {
     )
   }
 
+  if (props.noMessage !== true) {
+    sendMessage = (
+      <>
+        <Header as='h3' style={{ 'textAlign': 'left' }}>
+          Questions?
+        </Header>
+        <p>
+          You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
+        </p>
+        {errorDisplay}
+        <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
+          Send now
+        </p>
+      </>
+    )
+  }
+
   return (
     <div className='expanding-wrapper'>
       <Image id='avatar' src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
@@ -74,16 +91,7 @@ const HostProfileView = (props) => {
           address={props.address}
         />
       </div>
-      <Header as='h3' style={{ 'textAlign': 'left' }}>
-        Questions?
-      </Header>
-      <p>
-        You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
-      </p>
-      {errorDisplay}
-      <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
-        Send now
-      </p>
+      {sendMessage}
     </div>
   )
 }

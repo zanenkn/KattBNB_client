@@ -36,6 +36,8 @@ class HostProfileViewWrapper extends Component {
             description={this.state.hostProfile.description}
             lat={this.state.lat}
             long={this.state.long}
+            errors={this.props.location.state.errors}
+            noMessage={this.props.location.state.noMessage}
           />
         </div>
       )

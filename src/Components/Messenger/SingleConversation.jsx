@@ -159,7 +159,9 @@ class Conversation extends Component {
                     userId: this.props.location.state.user.id,
                     avatar: this.props.location.state.user.avatar,
                     nickname: this.props.location.state.user.nickname,
-                    location: this.props.location.state.user.location
+                    location: this.props.location.state.user.location,
+                    errors: '',
+                    noMessage: true
                   }
                 })
               }
