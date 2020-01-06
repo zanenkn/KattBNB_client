@@ -52,7 +52,7 @@ class PasswordReset extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('PasswordReset.error-header')}:</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('PasswordReset:error-header')}:</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{error}</li>
@@ -65,11 +65,11 @@ class PasswordReset extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('PasswordReset.title')}
+          {t('PasswordReset:title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            {t('PasswordReset.instructions')}
+            {t('PasswordReset:instructions')}
           </p>
           <Form>
             <Form.Input
@@ -83,7 +83,7 @@ class PasswordReset extends Component {
           </Form>
           {errorDisplay}
           <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
-            {t('PasswordReset.btn')}
+            {t('PasswordReset:btn')}
           </Button>
         </Segment>
       </div>
