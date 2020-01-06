@@ -113,7 +113,7 @@ class Search extends Component {
         errorDisplay: true,
         errors: ['Number of cats must be a whole positive number!']
       })
-    } else if (this.state.location === '') {
+    } else if (this.state.location === '' || this.state.location === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
