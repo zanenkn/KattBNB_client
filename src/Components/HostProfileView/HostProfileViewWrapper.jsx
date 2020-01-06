@@ -12,11 +12,13 @@ class HostProfileViewWrapper extends Component {
 
   async componentDidMount() {
     let response = await axios.get(`/api/v1/host_profiles?user_id=${this.props.location.state.userId}`)
-    this.setState({
-      hostProfile: response.data[0],
-      lat: response.data[0].lat,
-      long: response.data[0].long
-    })
+    if (response.data.length > 0) {
+      this.setState({
+        hostProfile: response.data[0],
+        lat: response.data[0].lat,
+        long: response.data[0].long
+      })
+    }
   }
 
   render() {
@@ -39,6 +41,14 @@ class HostProfileViewWrapper extends Component {
             errors={this.props.location.state.errors}
             noMessage={this.props.location.state.noMessage}
           />
+        </div>
+      )
+    } else {
+      hostProfileView = (
+        <div className='content-wrapper' >
+          <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+            This user has no host profile.
+          </p>
         </div>
       )
     }
