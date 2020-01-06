@@ -41,6 +41,7 @@ const OutgoingUpcoming = (props) => {
                       address: upcoming.host_full_address,
                       lat: upcoming.host_real_lat,
                       long: upcoming.host_real_long,
+                      location: upcoming.host_location,
                       numberOfCats: upcoming.number_of_cats
                     }
                   })

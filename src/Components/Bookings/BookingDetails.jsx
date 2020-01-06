@@ -32,7 +32,7 @@ class BookingDetails extends Component {
               user: {
                 avatar: this.props.location.state.avatar,
                 id: this.props.location.state.hostId,
-                location: '',
+                location: this.props.location.state.location,
                 nickname: this.props.location.state.nickname
               }
             }
