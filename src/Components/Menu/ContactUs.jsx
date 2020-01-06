@@ -19,18 +19,18 @@ class ContactUs extends Component {
                 <>
                   {error &&
                     <Message negative style={{ 'textAlign': 'center' }}>
-                      {t('contact.error-msg')}
+                      {t('ContactUs:error-msg')}
                     </Message>
                   }
                   {!success &&
                     <>
-                      <p style={{ 'textAlign': 'center' }}>{t('contact.contact-p')}</p>
+                      <p style={{ 'textAlign': 'center' }}>{t('ContactUs:contact-p')}</p>
                       <Form.Input
                         as='input'
                         type='text'
                         required
                         name='name'
-                        placeholder={t('contact.name-placeholder')}
+                        placeholder={t('ContactUs:name-placeholder')}
                         style={{ 'marginBottom': '1rem' }}
                       />
                       <Form.Input
@@ -38,21 +38,21 @@ class ContactUs extends Component {
                         type='email'
                         required
                         name='email'
-                        placeholder={t('contact.email-placeholder')}
+                        placeholder={t('ContactUs:email-placeholder')}
                         style={{ 'marginBottom': '1rem' }}
                       />
                       <TextArea
                         as='textarea'
                         required
                         name='message'
-                        placeholder={t('contact.message-placeholder')}
+                        placeholder={t('ContactUs:message-placeholder')}
                       />
-                      <Button className='submit-button'>{t('contact.send-btn')} </Button>
+                      <Button className='submit-button'>{t('ContactUs:send-btn')} </Button>
                     </>
                   }
                   {success &&
                     <p style={{ 'textAlign': 'center' }}>
-                      {t('contact.thankyou-msg')}
+                      {t('ContactUs:thankyou-msg')}
                     </p>
                   }
                 </>
