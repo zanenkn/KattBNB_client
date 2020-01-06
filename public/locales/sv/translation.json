@@ -25,14 +25,6 @@
     "good": "bra", 
     "strong": "stark"
   },
-  "ChangePassword": {
-    "error-1": "Du bör först besöka inloggningssidan och klicka på länken 'Glömt ditt lösenord?'",
-    "error-2": "Kontrollera att lösenordsfälten är en exakt matchning, och att dom innehåller minst 6 tecken",
-    "error-header": "Lösenordet kunde inte ändras på grund av följande fel:",
-    "success-msg": "Ditt lösenord är ändrat! Vänligen vänta på omdirigering",
-    "title": "Byt lösenord",
-    "instructions": "Skriv in ditt nya lösenord i båda fälten nedan. Lösenordet måste vara minst 6 tecken."
-  },
   "Login": {
     "success-msg": "Du har loggat in!",
     "no-acc": "Inte registrerad?",
