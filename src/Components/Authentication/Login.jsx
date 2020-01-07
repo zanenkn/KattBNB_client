@@ -106,7 +106,7 @@ class Login extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.email')}
+              placeholder={t('reusable:plch.email')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -115,7 +115,7 @@ class Login extends Component {
               type='password'
               value={this.state.password}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password')}
+              placeholder={t('reusable:plch.password')}
               onKeyPress={this.listenEnterKey}
             />
             {forgotPassword}

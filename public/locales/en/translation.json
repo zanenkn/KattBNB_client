@@ -1,9 +1,4 @@
 {
-  "landing": {
-    "title": "KattBNB is coming soon!",
-    "paragraph": "Good things take time! But they are also worth the wait. We are working hard to get the best cat boarding site up and running. Stay tuned!",
-    "link-to-about": "Who we are"
-  },
   "menu": {
     "login": "Log in",
     "logout": "Log out",
@@ -13,17 +8,6 @@
     "contact": "Contact us",
     "blog": "Blog",
     "legal": "Legal"
-  },
-  "reusable-placeholders": {
-    "email": "Email",
-    "password": "Password",
-    "password-confirmation": "Repeat password",
-    "pass-strength-bar": "too short",
-    "pass-strength-bar-popup-header": "Password strength",
-    "weak": "weak",
-    "okay": "okay",
-    "good": "good", 
-    "strong": "strong"
   },
   "You didn't input the captcha phrase correctly, please try again!": "You didn't input the captcha phrase correctly, please try again!"
 }

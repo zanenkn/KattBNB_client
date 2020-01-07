@@ -109,18 +109,18 @@ class ChangePassword extends Component {
                   id='password'
                   value={this.state.password}
                   onChange={this.onChangeHandler}
-                  placeholder={t('reusable-placeholders.password')}
+                  placeholder={t('reusable:plch.password')}
                   type='password'
                   onKeyPress={this.listenEnterKey}
                 />
               }
-              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              header={t('reusable:plch.pass-strength-bar-popup-header')}
               content={
                 <PasswordStrengthBar
                   password={this.state.password}
                   minLength={6}
-                  scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
-                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                  scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
                 />
               }
               on='focus'
@@ -130,7 +130,7 @@ class ChangePassword extends Component {
               id='passwordConfirmation'
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password-confirmation')}
+              placeholder={t('reusable:plch.password-confirmation')}
               type='password'
               onKeyPress={this.listenEnterKey}
             />

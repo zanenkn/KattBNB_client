@@ -14,16 +14,5 @@
     "blog": "Blogg",
     "legal": "Policy"
   },
-  "reusable-placeholders": {
-    "email": "E-post",
-    "password": "Lösenord",
-    "password-confirmation": "Upprepa lösenord",
-    "pass-strength-bar": "för kort",
-    "pass-strength-bar-popup-header": "Lösenordsstyrka",
-    "weak": "svag",
-    "okay": "medium",
-    "good": "bra", 
-    "strong": "stark"
-  },
   "You didn't input the captcha phrase correctly, please try again!": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
 }

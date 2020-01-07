@@ -77,7 +77,7 @@ class PasswordReset extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.email')}
+              placeholder={t('reusable:plch.email')}
               onKeyPress={this.listenEnterKey}
             />
           </Form>

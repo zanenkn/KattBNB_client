@@ -251,4 +251,4 @@ class Search extends Component {
 
 const mapStateToProps = state => ({ location: state.reduxTokenAuth.currentUser.attributes.location })
 
-export default withTranslation(connect(mapStateToProps)(Search))
+export default withTranslation()(connect(mapStateToProps)(Search))

@@ -1,0 +1,17 @@
+{
+  "price": {
+  },
+  "request-cta": {
+  },
+  "plch": {
+    "email": "E-post",
+    "password": "Lösenord",
+    "password-confirmation": "Upprepa lösenord",
+    "pass-strength-bar": "för kort",
+    "pass-strength-bar-popup-header": "Lösenordsstyrka",
+    "weak": "svag",
+    "okay": "medium",
+    "good": "bra", 
+    "strong": "stark"
+  }
+}

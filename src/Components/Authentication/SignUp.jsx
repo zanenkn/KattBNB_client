@@ -106,7 +106,7 @@ class SignUp extends Component {
               id='email'
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.email')}
+              placeholder={t('reusable:plch.email')}
               onKeyPress={this.listenEnterKey}
             />
             <Popup
@@ -117,18 +117,18 @@ class SignUp extends Component {
                   type='password'
                   value={this.state.password}
                   onChange={this.onChangeHandler}
-                  placeholder={t('reusable-placeholders.password')}
+                  placeholder={t('reusable:plch.password')}
                   onKeyPress={this.listenEnterKey}
                 />
               }
-              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              header={t('reusable:plch.pass-strength-bar-popup-header')}
               content={
                 <PasswordStrengthBar
                   style={{ 'marginBottom': '0.5rem' }}
                   password={this.state.password}
                   minLength={6}
-                  scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
-                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                  scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
                 />
               }
               on='focus'
@@ -139,7 +139,7 @@ class SignUp extends Component {
               type='password'
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password-confirmation')}
+              placeholder={t('reusable:plch.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
