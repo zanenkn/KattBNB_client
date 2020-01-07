@@ -5,5 +5,6 @@
     "nickname-plch": "Användarnamn",
     "location-plch": "Välj kommun",
     "captcha-label": "Ange kontrollkoden ovan",
-    "captcha-plch": "Jag är inte en robot"
+    "captcha-plch": "Jag är inte en robot",
+    "You didn't input the captcha phrase correctly, please try again!": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
 }
