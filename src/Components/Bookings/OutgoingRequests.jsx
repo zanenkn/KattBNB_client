@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import { Container } from 'semantic-ui-react'
+import Popup from 'reactjs-popup'
+import OutRequestUserMessagePopup from './OutRequestUserMessagePopup'
 
 const OutgoingRequests = (props) => {
   let sortedRequests = props.requests
@@ -26,6 +28,23 @@ const OutgoingRequests = (props) => {
               <p className='small-centered-paragraph'>
                 You will receive a reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>.
               </p>
+              <Popup modal trigger={
+                <p className='fake-link-underlined'>
+                  View your message
+                </p>
+              }
+                position='top center'
+                closeOnDocumentClick={true}
+              >
+                <OutRequestUserMessagePopup
+                  id={request.id}
+                  nickname={request.user.nickname}
+                  message={request.message}
+                  avatar={request.user.avatar}
+                  startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                  endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+                />
+              </Popup>
             </Container>
           )
         })}

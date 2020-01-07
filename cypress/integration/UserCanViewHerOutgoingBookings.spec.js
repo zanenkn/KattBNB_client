@@ -39,6 +39,14 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
   })
 
+  it('and see her own message in request bookings', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#2').within(() => {
+      cy.get('.fake-link-underlined').click({ force: true })
+    })
+    cy.contains('Please keep my cats, Pending1')
+  })
+
   it('and see relevant host message in declined history bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#3').within(() => {
