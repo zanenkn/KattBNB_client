@@ -150,17 +150,61 @@ h4 {
 }
 
 .messenger-wrapper {
-  padding-top: 5vw!important;
-  margin: 0 auto
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (min-width: 10px) {
   .messenger-wrapper {
+    margin-top: 5rem;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .messenger-wrapper {
+    margin-top: 6rem;
   }
 }
 
 @media screen and (min-width: 700px) {
   .messenger-wrapper {
+    margin-top: 7rem;
+    width: 560px
+  }
+}
+
+@media screen and (min-width: 870px) {
+  .messenger-wrapper {
+    margin-top: 8rem;
+    width: 560px
+  }
+}
+
+.single-conversation-wrapper {
+  padding-top: 1rem!important;
+  margin: 0 auto
+}
+
+@media screen and (max-width: 700px) {
+  .single-conversation-wrapper {
+    padding-left: 1.5rem!important;
+    padding-right: 1.5rem!important;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .single-conversation-wrapper {
+    width: 560px;
+  }
+}
+
+.max-width-wrapper {
+  margin: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .max-width-wrapper {
     width: 560px;
   }
 }

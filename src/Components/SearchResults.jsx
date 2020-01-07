@@ -16,7 +16,6 @@ import { withTranslation, Trans } from 'react-i18next'
 class SearchResults extends Component {
 
   state = {
-    id: '',
     checkInDate: '',
     checkOutDate: '',
     numberOfCats: '',
@@ -26,7 +25,8 @@ class SearchResults extends Component {
     searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
-    scrollOffset: 0
+    scrollOffset: 0,
+    errors: ''
   }
 
   geolocationDataAddress = () => {
@@ -89,6 +89,7 @@ class SearchResults extends Component {
   getHostById(e) {
     axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
       this.setState({
+        hostId: response.data[0].user.id,
         hostAvatar: response.data[0].user.avatar,
         hostNickname: response.data[0].user.nickname,
         hostLocation: response.data[0].user.location,
@@ -147,6 +148,42 @@ class SearchResults extends Component {
           hostSupplement: this.state.hostSupplement
         }
       })
+    }
+  }
+
+  messageHost = (e) => {
+    e.preventDefault()
+    if (this.props.id === undefined) {
+      this.props.history.push('/login')
+    } else {
+      const path = '/api/v1/conversations'
+      const payload = {
+        user1_id: this.props.id,
+        user2_id: this.state.hostId
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(response => {
+          this.props.history.push({
+            pathname: '/conversation',
+            state: {
+              id: response.data.id,
+              user: {
+                avatar: this.state.hostAvatar,
+                id: this.state.hostId,
+                location: this.state.hostLocation,
+                nickname: this.state.hostNickname
+              }
+            }
+          })
+        })
+        .catch(error => {
+          this.setState({ errors: error.response.data.errors.full_messages })
+        })
     }
   }
 
@@ -219,7 +256,8 @@ class SearchResults extends Component {
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}
-              id={this.state.id}
+              hostId={this.state.hostId}
+              currentUserId={this.props.id}
               avatar={this.state.hostAvatar}
               nickname={this.state.hostNickname}
               location={this.state.hostLocation}
@@ -229,6 +267,8 @@ class SearchResults extends Component {
               lat={this.state.hostLat}
               long={this.state.hostLong}
               requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+              messageHost={this.messageHost.bind(this)}
+              errors={this.state.errors}
             />
           </Container>
         )
@@ -272,7 +312,6 @@ class SearchResults extends Component {
         >
           <div>
             <HostPopup
-              id={this.state.id}
               numberOfCats={this.state.numberOfCats}
               checkInDate={this.state.checkInDate}
               checkOutDate={this.state.checkOutDate}

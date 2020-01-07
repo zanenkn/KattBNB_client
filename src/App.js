@@ -23,6 +23,8 @@ import IncomingBookings from './Components/Bookings/IncomingBookings'
 import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully'
 import BookingDetails from './Components/Bookings/BookingDetails'
 import AllConversations from './Components/Messenger/AllConversations'
+import Conversation from './Components/Messenger/SingleConversation'
+import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -34,7 +36,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -52,9 +54,13 @@ class App extends Component {
       incomingBookingsRoute = (
         <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
       )
-      
+
       messengerRoute = (
         <Route exact path='/messenger' component={AllConversations}></Route>
+      )
+
+      conversationRoute = (
+        <Route exact path='/conversation' component={Conversation}></Route>
       )
     } else {
       userPageRoute = (
@@ -74,6 +80,10 @@ class App extends Component {
       )
 
       messengerRoute = (
+        <NoAccess />
+      )
+
+      conversationRoute = (
         <NoAccess />
       )
     }
@@ -108,11 +118,13 @@ class App extends Component {
                   <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
                   <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
                   <Route exact path='/booking-details' component={BookingDetails}></Route>
+                  <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
                   {userPageRoute}
                   {allBookingsRoute}
                   {outgoingBookingsRoute}
                   {incomingBookingsRoute}
                   {messengerRoute}
+                  {conversationRoute}
                 </Switch>
               </ScrollToTop>
               <Menu />

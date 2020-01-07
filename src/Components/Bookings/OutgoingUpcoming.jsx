@@ -24,13 +24,14 @@ const OutgoingUpcoming = (props) => {
               <p className='small-centered-paragraph'>
                 You have successfully booked a stay with <strong>{upcoming.host_nickname}</strong> for your <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
               </p>
-              <p 
-                className='fake-link-underlined' 
-                onClick={() => { 
+              <p
+                className='fake-link-underlined'
+                onClick={() => {
                   const { history } = props
                   history.push({
                     pathname: '/booking-details',
                     state: {
+                      hostId: upcoming.host_id,
                       avatar: upcoming.host_avatar,
                       description: upcoming.host_description,
                       nickname: upcoming.host_nickname,
@@ -40,6 +41,7 @@ const OutgoingUpcoming = (props) => {
                       address: upcoming.host_full_address,
                       lat: upcoming.host_real_lat,
                       long: upcoming.host_real_long,
+                      location: upcoming.host_location,
                       numberOfCats: upcoming.number_of_cats
                     }
                   })
