@@ -46,7 +46,7 @@ class Menu extends Component {
           as={Link}
           onClick={this.signOut}
         >
-          {t('menu.logout')}
+          {t('reusable:title.logout')}
         </Header>
       )
     } else {
@@ -58,7 +58,7 @@ class Menu extends Component {
             as={Link}
             to='/login'
           >
-            {t('menu.login')}
+            {t('reusable:title.login')}
           </Header>
           <Header
             id='signup'
@@ -66,7 +66,7 @@ class Menu extends Component {
             as={Link}
             to='/sign-up'
           >
-            {t('menu.signup')}
+            {t('reusable:title.signup')}
           </Header>
         </>
       )
@@ -91,7 +91,7 @@ class Menu extends Component {
               as={Link}
               to='/about-us'
             >
-              {t('menu.about')}
+              {t('reusable:title.about')}
             </Header>
             <Header
               id='faq'
@@ -99,7 +99,7 @@ class Menu extends Component {
               as={Link}
               to='faq'
             >
-              {t('menu.faq')}
+              {t('reusable:title.faq')}
             </Header>
             <Header
               id='contact'
@@ -107,7 +107,7 @@ class Menu extends Component {
               as={Link}
               to='/contact-us'
             >
-              {t('menu.contact')}
+              {t('reusable:title.contact')}
             </Header>
             <Header
               id='legal'
@@ -115,7 +115,7 @@ class Menu extends Component {
               as={Link}
               to='/legal'
             >
-              {t('menu.legal')}
+              {t('reusable:title.legal')}
             </Header>
             <div>
               <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => changeLanguage('sv')}>Svenska</Button>

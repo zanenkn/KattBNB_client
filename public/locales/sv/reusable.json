@@ -13,5 +13,15 @@
     "okay": "medium",
     "good": "bra", 
     "strong": "stark"
+  },
+  "title": {
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "signup": "Registrera konto",
+    "about": "Om oss",
+    "faq": "Frågor och svar",
+    "contact": "Kontakta oss",
+    "blog": "Blogg",
+    "legal": "Policy"
   }
 }

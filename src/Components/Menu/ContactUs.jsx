@@ -10,7 +10,7 @@ class ContactUs extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('menu.contact')}
+          {t('reusable:title.contact')}
         </Header>
         <Segment className='whitebox'>
           <Form>

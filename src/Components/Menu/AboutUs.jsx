@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <div className='content-wrapper' >
       <Header as='h1'>
-        {t('menu.about')}
+        {t('reusable:title.about')}
       </Header>
       <Header as='h2' >
         {t('AboutUs:idea-title')}

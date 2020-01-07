@@ -8,7 +8,7 @@ const Faq = () => {
   return (
     <Sidebar.Pushable className='content-wrapper' >
       <Header as='h1'>
-        {t('menu.faq')}
+        {t('reusable:title.faq')}
       </Header>
 
       <Header as='h3' style={{ 'textAlign': 'left' }} >
