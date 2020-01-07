@@ -104,6 +104,7 @@ class SignUp extends Component {
             <Form.Input
               required
               id='email'
+              label={t('reusable-placeholders.email')}
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder={t('reusable-placeholders.email')}
@@ -115,6 +116,7 @@ class SignUp extends Component {
                   required
                   id='password'
                   type='password'
+                  label={t('reusable-placeholders.password')}
                   value={this.state.password}
                   onChange={this.onChangeHandler}
                   placeholder={t('reusable-placeholders.password')}
@@ -137,6 +139,7 @@ class SignUp extends Component {
               required
               id='passwordConfirmation'
               type='password'
+              label={t('reusable-placeholders.password-confirmation')}
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
               placeholder={t('reusable-placeholders.password-confirmation')}
@@ -145,22 +148,28 @@ class SignUp extends Component {
             <Form.Input
               required
               id='nickname'
+              label={t('Signup.nickname-plch')}
               value={this.state.username}
               onChange={this.onChangeHandler}
               placeholder={t('Signup.nickname-plch')}
               onKeyPress={this.listenEnterKey}
             />
-            <Dropdown
-              clearable
-              search
-              selection
-              style={{ 'width': '100%' }}
-              placeholder={t('Signup.location-plch')}
-              options={LOCATION_OPTIONS}
-              id='location'
-              onChange={this.handleLocationChange}
-              onKeyPress={this.listenEnterKey}
-            />
+            <div className='required field' style={{ 'marginBottom': '1.5em' }}>
+              <label>
+                {t('Signup.location-plch')}
+              </label>
+              <Dropdown
+                clearable
+                search
+                selection
+                style={{ 'width': '100%' }}
+                placeholder={t('Signup.location-plch')}
+                options={LOCATION_OPTIONS}
+                id='location'
+                onChange={this.handleLocationChange}
+                onKeyPress={this.listenEnterKey}
+              />
+            </div>
             <div style={{ 'margin': '1em 0' }}>
               <ClientCaptcha
                 captchaCode={code => this.setState({ captcha: code })}
