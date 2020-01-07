@@ -3,6 +3,7 @@ import HostScore from './ReusableComponents/HostScore'
 import { Image, Header, Button } from 'semantic-ui-react'
 import moment from 'moment'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { Trans } from 'react-i18next'
 
 const HostPopup = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
@@ -31,7 +32,9 @@ const HostPopup = (props) => {
         More
       </Header>
       <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-        The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
+        <Trans>
+          The stay for <strong style={{ 'color': '#c90c61' }}>{props.numberOfCats} {props.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(props.checkInDate).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(props.checkOutDate).format('YYYY-MM-DD')}</strong> would in total cost
+        </Trans>
       </p>
       <Header as='h3' style={{ 'marginTop': '0' }}>
         {orderTotal} kr

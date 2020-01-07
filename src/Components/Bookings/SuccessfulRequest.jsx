@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
 import moment from 'moment'
+import { Trans } from 'react-i18next'
 
 class SuccessfulRequest extends Component {
 
@@ -34,10 +35,14 @@ class SuccessfulRequest extends Component {
         </Header>
         <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
           <p>
-            You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
+            <Trans>
+              You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
+            </Trans>
           </p>
           <p>
-            <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link'>FAQ</Header>.
+            <Trans>
+              <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link'>FAQ</Header>.
+            </Trans>
           </p>
         </Segment>
       </div>
