@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
 import { Image, Header, Grid, Divider } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
@@ -9,7 +10,8 @@ class AllConversations extends Component {
 
   state = {
     conversations: '',
-    scrollYPosition: 0
+    scrollYPosition: 0,
+    loading: true
   }
 
   componentDidMount() {
@@ -26,7 +28,10 @@ class AllConversations extends Component {
           let dateA = new Date(a.msg_created), dateB = new Date(b.msg_created)
           return dateB - dateA
         })
-        this.setState({ conversations: sortedResponse })
+        this.setState({
+          conversations: sortedResponse,
+          loading: false
+        })
       })
   }
 
@@ -37,7 +42,7 @@ class AllConversations extends Component {
   }
 
   render() {
-    let messages, boxShadow
+    let messages, boxShadow, page
 
     boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
 
@@ -90,17 +95,29 @@ class AllConversations extends Component {
       )
     }
 
+    if (this.state.loading) {
+      page = (
+        <Spinner />
+      )
+    } else {
+      page = (
+        <>
+          <div style={{ 'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
+            <Header as='h1'>
+              Messages
+            </Header>
+          </div>
+          <div className='messenger-wrapper'>
+            <Divider />
+            {messages}
+          </div>
+        </>
+      )
+    }
+
     return (
       <>
-        <div style={{ 'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
-          <Header as='h1'>
-            Messages
-          </Header>
-        </div>
-        <div className='messenger-wrapper'>
-          <Divider />
-          {messages}
-        </div>
+        {page}
       </>
     )
   }
