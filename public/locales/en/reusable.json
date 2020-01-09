@@ -13,6 +13,7 @@
     "email": "Email",
     "password": "Password",
     "password-confirmation": "Repeat password",
+    "message": "Message",
     "pass-strength-bar": "too short",
     "pass-strength-bar-popup-header": "Password strength",
     "weak": "weak",
@@ -29,5 +30,9 @@
     "contact": "Contact us",
     "blog": "Blog",
     "legal": "Legal"
-  }
+  },
+  "errors": {
+    "action-error-header": "Action could not be completed because of following error(s):"
+  },
+  "remaining-chars": "Remaining characters:"
 }

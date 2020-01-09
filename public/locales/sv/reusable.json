@@ -13,6 +13,7 @@
     "email": "E-post",
     "password": "Lösenord",
     "password-confirmation": "Upprepa lösenord",
+    "message": "Meddelande",
     "pass-strength-bar": "för kort",
     "pass-strength-bar-popup-header": "Lösenordsstyrka",
     "weak": "svag",
@@ -29,5 +30,9 @@
     "contact": "Kontakta oss",
     "blog": "Blogg",
     "legal": "Policy"
-  }
+  },
+  "errors": {
+    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:"
+  },
+  "remaining-chars": "Återstående tecken:"
 }

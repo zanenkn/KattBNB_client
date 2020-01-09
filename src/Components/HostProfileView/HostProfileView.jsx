@@ -5,11 +5,13 @@ import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import { useTranslation, Trans } from 'react-i18next'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice, errorDisplay, sendMessage
+  const { t } = useTranslation()
 
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
@@ -24,7 +26,7 @@ const HostProfileView = (props) => {
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
         &nbsp;{props.location}&ensp;
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
-        &nbsp;{totalRate} kr/day for 1 cat
+        &nbsp;{totalRate} {t('reusable:price.total-for-1')}
       </Header>
     )
   } else if (props.location) {
@@ -33,7 +35,7 @@ const HostProfileView = (props) => {
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
         &nbsp;{props.location}&ensp;
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
-        &nbsp;{perDay} kr/day
+        &nbsp;{perDay} {t('reusable:price.per-day')}
       </Header>
     )
   }
@@ -41,7 +43,7 @@ const HostProfileView = (props) => {
   if (props.errors.length > 0) {
     errorDisplay = (
       <Message negative style={{ 'width': 'inherit' }} >
-        <Message.Header style={{ 'textAlign': 'center' }} >Action could not be completed because of following error(s):</Message.Header>
+        <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
         <ul id='message-error-list'>
           {props.errors.map(error => (
             <li key={error}>{error}</li>
@@ -55,14 +57,16 @@ const HostProfileView = (props) => {
     sendMessage = (
       <>
         <Header as='h3' style={{ 'textAlign': 'left' }}>
-          Questions?
+          {t('HostProfileView:questions')}
         </Header>
         <p>
-          You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
+          <Trans i18nKey='HostProfileView:send-msg' values={{ host: props.nickname }} >
+            You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
+          </Trans>
         </p>
         {errorDisplay}
         <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
-          Send now
+          {t('HostProfileView:send-cta')}
         </p>
       </>
     )
