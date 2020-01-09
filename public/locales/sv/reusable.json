@@ -1,7 +1,13 @@
 {
   "price": {
+    "per-day": "{{price}} kr/dag",
+    "total": "{{price}} kr totalt",
+    "total-for-1": "{{price}} kr/dag för 1 katt"
   },
   "request-cta": {
+    "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
+    "txt_plural": "Vistelsen för <1>{{count}} katter</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
+    "btn": "Bokningsförfrågan"
   },
   "plch": {
     "email": "E-post",
