@@ -7,6 +7,12 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1',
+      status: 200,
+      response: 'fixture:all_user_bookings.json'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#navlinks').within(() => {
