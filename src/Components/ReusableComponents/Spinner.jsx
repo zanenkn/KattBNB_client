@@ -4,19 +4,21 @@ const Spinner = () => {
 
   return (
     <div className='content-wrapper' >
-      <div class='lds-spinner'>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div style={{'margin': 'auto', 'display': 'table'}}>
+        <div class='lds-spinner'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
   )
