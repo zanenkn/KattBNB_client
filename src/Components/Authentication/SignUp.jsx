@@ -104,7 +104,7 @@ class SignUp extends Component {
             <Form.Input
               required
               id='email'
-              label={t('reusable-placeholders.email')}
+              label={t('reusable:plch.email')}
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.email')}
@@ -116,7 +116,7 @@ class SignUp extends Component {
                   required
                   id='password'
                   type='password'
-                  label={t('reusable-placeholders.password')}
+                  label={t('reusable:plch.password')}
                   value={this.state.password}
                   onChange={this.onChangeHandler}
                   placeholder={t('reusable:plch.password')}
@@ -139,7 +139,7 @@ class SignUp extends Component {
               required
               id='passwordConfirmation'
               type='password'
-              label={t('reusable-placeholders.password-confirmation')}
+              label={t('reusable:plch.password-confirmation')}
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.password-confirmation')}
@@ -148,7 +148,7 @@ class SignUp extends Component {
             <Form.Input
               required
               id='nickname'
-              label={t('Signup.nickname-plch')}
+              label={t('SignUp:nickname-plch')}
               value={this.state.username}
               onChange={this.onChangeHandler}
               placeholder={t('SignUp:nickname-plch')}
@@ -156,7 +156,7 @@ class SignUp extends Component {
             />
             <div className='required field' style={{ 'marginBottom': '1.5em' }}>
               <label>
-                {t('Signup.location-plch')}
+                {t('SignUp:location-plch')}
               </label>
               <Dropdown
                 clearable

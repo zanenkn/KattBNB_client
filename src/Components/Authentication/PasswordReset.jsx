@@ -75,7 +75,7 @@ class PasswordReset extends Component {
             <Form.Input
               required
               id='email'
-              label={t('reusable-placeholders.email')}
+              label={t('reusable:plch.email')}
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.email')}
