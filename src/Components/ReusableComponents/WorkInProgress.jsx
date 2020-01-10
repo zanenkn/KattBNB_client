@@ -11,7 +11,7 @@ const WIP = () => {
           <Icon loading name='cog' style={{ 'color': '#80808069', 'fontSize': '3rem', 'marginBottom': '1rem' }} />
         </Container>
         <Container text padded>
-          {t('wip.message')}
+          {t('WorkInProgress:message')}
         </Container>
       </Header>
     </Segment>

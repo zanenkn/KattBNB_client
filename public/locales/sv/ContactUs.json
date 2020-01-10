@@ -1,0 +1,9 @@
+{
+    "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser det!",
+    "name-placeholder": "Ditt namn",
+    "email-placeholder": "Din e-postadress",
+    "message-placeholder": "Ditt meddelande",
+    "send-btn": "Skicka",
+    "thankyou-msg": "Tack för ditt meddelande!",
+    "error-msg": "Meddelandet skickades inte. Försök igen senare."
+}

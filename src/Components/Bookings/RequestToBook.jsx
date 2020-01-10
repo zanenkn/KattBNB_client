@@ -4,6 +4,7 @@ import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import { Trans, withTranslation } from 'react-i18next'
 
 class RequestToBook extends Component {
 
@@ -45,13 +46,13 @@ class RequestToBook extends Component {
     if (this.state.message === '') {
       this.setState({
         loading: false,
-        errors: ['Please write a message to the host!'],
+        errors: ['RequestToBook:error-1'],
         errorDisplay: true
       })
     } else if (this.state.message.length > 400) {
       this.setState({
         loading: false,
-        errors: ['The message cannot exceed 400 characters!'],
+        errors: ['RequestToBook:error-2'],
         errorDisplay: true
       })
     } else {
@@ -101,6 +102,7 @@ class RequestToBook extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay, messageLength
 
     messageLength = 400 - this.state.message.length
@@ -108,10 +110,10 @@ class RequestToBook extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header>Booking could not be requested because of following error(s):</Message.Header>
+          <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
           <ul>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -121,16 +123,18 @@ class RequestToBook extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Request to book
+          {t('RequestToBook:title')}
         </Header>
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{this.state.numberOfCats} {this.state.numberOfCats > 1 ? 'cats' : 'cat'}</strong> with <strong style={{ 'color': '#c90c61' }}>{this.state.nickname}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{this.state.checkIn}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.state.checkOut}</strong>.
+            <Trans i18nKey='RequestToBook:request-info' count={parseInt(this.state.numberOfCats)}> 
+              You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
+            </Trans>
           </p>
           <Form>
             <Form.TextArea
-              label='Message'
-              placeholder='Say a few words to the host..'
+              label={t('reusable:plch.message')}
+              placeholder={t('RequestToBook:message-plch')}
               required
               id='message'
               value={this.state.message}
@@ -138,19 +142,21 @@ class RequestToBook extends Component {
             />
           </Form>
           <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-            Remaining characters: {messageLength}
+            {t('reusable:remaining-chars')} {messageLength}
           </p>
           {errorDisplay}
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            By requesting to book, you agree to pay the total cost for this stay:
+            {t('RequestToBook:agree-to-pay')}
           </p>
           <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
             {this.state.orderTotal} kr
           </Header>
           <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
-            ({this.state.perDay} kr/day)
+            ({this.state.perDay} {t('reusable:price.per-day')})
           </Header>
-          <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} loading={this.state.loading ? true : false} onClick={this.createBooking}>Request to book</Button>
+          <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} loading={this.state.loading ? true : false} onClick={this.createBooking}>
+            {t('reusable:request-cta.btn')}
+          </Button>
         </Segment>
       </div>
     )
@@ -159,4 +165,4 @@ class RequestToBook extends Component {
 
 const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
-export default connect(mapStateToProps)(RequestToBook)
+export default withTranslation()(connect(mapStateToProps)(RequestToBook))

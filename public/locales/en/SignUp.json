@@ -1,0 +1,10 @@
+{
+    "error-header": "User could not be registered because of following error(s):",
+    "title": "Sign up",
+    "instructions": "Password must be at least 6 characters in length. Email and Username must be unique.",
+    "nickname-plch": "Username / Nickname",
+    "location-plch": "Select location",
+    "captcha-label": "Type the code you see above",
+    "captcha-plch": "I am not a robot",
+    "You didn't input the captcha phrase correctly, please try again!": "You didn't input the captcha phrase correctly, please try again!"
+}

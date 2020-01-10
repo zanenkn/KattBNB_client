@@ -8,7 +8,7 @@ const Legal = () => {
   return (
     <div className='content-wrapper' >
       <Header as='h1'>
-        {t('menu.legal')}
+        {t('reusable:title.legal')}
       </Header>
       <WIP />
     </div>

@@ -49,12 +49,12 @@ class ChangePassword extends Component {
         })
     } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
       this.setState({
-        errors: ['ChangePassword.error-1'],
+        errors: ['ChangePassword:error-1'],
         errorDisplay: true
       })
     } else {
       this.setState({
-        errors: ['ChangePassword.error-2'],
+        errors: ['ChangePassword:error-2'],
         errorDisplay: true
       })
     }
@@ -74,7 +74,7 @@ class ChangePassword extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('ChangePassword.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('ChangePassword:error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{t(error)}</li>
@@ -87,7 +87,7 @@ class ChangePassword extends Component {
     if (this.state.successDisplay) {
       successDisplay = (
         <Message success style={{ 'textAlign': 'center' }} >
-          {t('ChangePassword.success-msg')}
+          {t('ChangePassword:success-msg')}
         </Message>
       )
     }
@@ -95,11 +95,11 @@ class ChangePassword extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('ChangePassword.title')}
+          {t('ChangePassword:title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            {t('ChangePassword.instructions')}
+            {t('ChangePassword:instructions')}
           </p>
           <Form>
             <Popup
@@ -109,18 +109,18 @@ class ChangePassword extends Component {
                   id='password'
                   value={this.state.password}
                   onChange={this.onChangeHandler}
-                  placeholder={t('reusable-placeholders.password')}
+                  placeholder={t('reusable:plch.password')}
                   type='password'
                   onKeyPress={this.listenEnterKey}
                 />
               }
-              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              header={t('reusable:plch.pass-strength-bar-popup-header')}
               content={
                 <PasswordStrengthBar
                   password={this.state.password}
                   minLength={6}
-                  scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
-                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                  scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
                 />
               }
               on='focus'
@@ -130,14 +130,14 @@ class ChangePassword extends Component {
               id='passwordConfirmation'
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password-confirmation')}
+              placeholder={t('reusable:plch.password-confirmation')}
               type='password'
               onKeyPress={this.listenEnterKey}
             />
           </Form>
           {errorDisplay}
           {successDisplay}
-          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword.title')}</Button>
+          <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword:title')}</Button>
         </Segment>
       </div>
     )

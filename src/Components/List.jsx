@@ -20,7 +20,7 @@ const List = (props) => {
               location: props.location,
               numberOfCats: props.numberOfCats
             }
-          }}> changing </Link> your search criteria or go to the map to find cat sitters in nearby areas.
+          }}> changing your search criteria</Link> or go to the map view to find cat sitters in nearby areas.
       </Header>
     )
   }

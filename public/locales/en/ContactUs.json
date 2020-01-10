@@ -1,0 +1,9 @@
+{
+    "contact-p": "Fill in this form to send us a message. We will get back to you as soon as we read it!",
+    "name-placeholder": "Your name",
+    "email-placeholder": "Your email address",
+    "message-placeholder": "Your message",
+    "send-btn": "Send",
+    "thankyou-msg": "Thank you for your message!",
+    "error-msg": "Your message was not sent. Please try again later."
+}

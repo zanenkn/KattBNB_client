@@ -1,0 +1,38 @@
+{
+  "price": {
+    "per-day": "kr/day",
+    "total": "kr total",
+    "total-for-1": "kr/day for 1 cat"
+  },
+  "request-cta": {
+    "txt": "The stay for <1>{{count}} cat</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7> would in total cost",
+    "txt_plural": "The stay for <1>{{count}} cats</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7> would in total cost",
+    "btn": "Request to book"
+  },
+  "plch": {
+    "email": "Email",
+    "password": "Password",
+    "password-confirmation": "Repeat password",
+    "message": "Message",
+    "pass-strength-bar": "too short",
+    "pass-strength-bar-popup-header": "Password strength",
+    "weak": "weak",
+    "okay": "okay",
+    "good": "good", 
+    "strong": "strong"
+  },
+  "title": {
+    "login": "Log in",
+    "logout": "Log out",
+    "signup": "Sign up",
+    "about": "About us",
+    "faq": "FAQ",
+    "contact": "Contact us",
+    "blog": "Blog",
+    "legal": "Legal"
+  },
+  "errors": {
+    "action-error-header": "Action could not be completed because of following error(s):"
+  },
+  "remaining-chars": "Remaining characters:"
+}
