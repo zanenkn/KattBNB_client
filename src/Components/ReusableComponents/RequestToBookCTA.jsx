@@ -7,7 +7,8 @@ const RequestToBookCTA = (numberOfCats, nickname, checkInDate, checkOutDate, ord
   const { t } = useTranslation()
   return (
     <>
-      <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+      <p className='small-centered-paragrap  const { t } = useTranslation()
+h' style={{ 'marginBottom': '0.5rem' }}>
         <Trans i18nKey='reusable:request-cta.txt' count={parseInt(numberOfCats)}>
           The stay for <strong style={{ 'color': '#c90c61' }}>{{count: numberOfCats}} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: moment(checkInDate).format('YYYY-MM-DD')}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: moment(checkOutDate).format('YYYY-MM-DD')}}</strong> would in total cost
         </Trans>
