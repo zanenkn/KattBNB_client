@@ -110,13 +110,13 @@ class PasswordUpdateForm extends Component {
                 onKeyPress={this.listenEnterKeyPassword}
               />
             }
-            header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+            header={t('reusable:plch.pass-strength-bar-popup-header')}
             content={
               <PasswordStrengthBar
                 password={this.state.newPassword}
                 minLength={6}
-                scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
-                shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                shortScoreWord={t('reusable:plch.pass-strength-bar')}
               />
             }
             on='focus'

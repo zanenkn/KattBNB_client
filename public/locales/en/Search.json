@@ -1,0 +1,15 @@
+{
+  "error-1": "Number of cats must be a whole positive number!",
+  "error-2": "You must choose a location to continue!",
+  "error-3": "You must choose both check-in and check-out dates to continue!",
+  "error-header": "Search could not be performed because of following error(s):",
+  "title": "Find a cat sitter!",
+  "when": "When",
+  "checkin": "Check-in",
+  "checkout": "Check-out",
+  "reset": "Clear dates",
+  "where": "Where",
+  "where-plch": "Choose your location",
+  "how-many": "For how many cats",
+  "cta": "Search"
+}

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { formatDate, parseDate } from 'react-day-picker/moment'
+import { withTranslation } from 'react-i18next'
 
 class Search extends Component {
 
@@ -111,19 +112,19 @@ class Search extends Component {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['Number of cats must be a whole positive number!']
+        errors: ['Search:error-1']
       })
     } else if (this.state.location === '' || this.state.location === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['You must choose a location to continue!']
+        errors: ['Search:error-2']
       })
     } else if (this.state.to === undefined || this.state.from === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['You must choose both check-in and check-out dates to continue!']
+        errors: ['Search:error-3']
       })
     } else {
       this.searchAxiosCall()
@@ -132,6 +133,7 @@ class Search extends Component {
 
 
   render() {
+    const { t } = this.props
     let errorDisplay
 
     const { from, to } = this.state
@@ -141,10 +143,10 @@ class Search extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header>Search could not be performed because of following error(s):</Message.Header>
+          <Message.Header>{t('Search:error-header')}</Message.Header>
           <ul>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -154,18 +156,18 @@ class Search extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Find a cat sitter!
+          {t('Search:title')}
         </Header>
         <Segment className='whitebox'>
           <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
             <div className='required field' style={{ 'marginBottom': '0.5em' }}>
               <label>
-                When
+                {t('Search:when')}
                 </label>
               <div className='InputFromTo'>
                 <DayPickerInput
                   value={from}
-                  placeholder='Check-in'
+                  placeholder={t('Search:checkin')}
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
@@ -186,7 +188,7 @@ class Search extends Component {
                 <DayPickerInput
                   ref={el => (this.to = el)}
                   value={to}
-                  placeholder='Check-out'
+                  placeholder={t('Search:checkout')}
                   format='LL'
                   formatDate={formatDate}
                   parseDate={parseDate}
@@ -206,18 +208,18 @@ class Search extends Component {
               </div>
             </div>
             <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
-              <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> Clear dates </Header>
+              <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> {t('Search:reset')} </Header>
             </div>
             <div className='required field' style={{ 'marginBottom': '1.5em' }}>
               <label>
-                Where
+                {t('Search:where')}
               </label>
               <Dropdown
                 clearable
                 search
                 selection
                 value={this.state.location}
-                placeholder='Choose your location'
+                placeholder={t('Search:where-plch')}
                 options={LOCATION_OPTIONS}
                 id='location'
                 onChange={this.handleLocationChange}
@@ -225,7 +227,7 @@ class Search extends Component {
               />
             </div>
             <Form.Input
-              label='For how many cats'
+              label={t('Search:how-many')}
               type='number'
               required
               id='cats'
@@ -238,7 +240,7 @@ class Search extends Component {
           {errorDisplay}
           <div className='button-wrapper'>
             <div>
-              <Button id='search-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.search}>Search</Button>
+              <Button id='search-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.search}>{t('Search:cta')}</Button>
             </div>
           </div>
         </Segment>
@@ -249,4 +251,4 @@ class Search extends Component {
 
 const mapStateToProps = state => ({ location: state.reduxTokenAuth.currentUser.attributes.location })
 
-export default connect(mapStateToProps)(Search)
+export default withTranslation()(connect(mapStateToProps)(Search))

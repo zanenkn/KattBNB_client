@@ -1,0 +1,11 @@
+{
+  "header1": "Vad är KattBNB?",
+  "p1": "Vår idé med KattBNB är en plattform där kattvakter kan erbjuda sina tjänster och kattägare kan boka den bekvämaste kattvakten för dom. Föreställ dig att du kan checka-in din katt hos en pålitlig kattvakt, lika enkelt som att checka-in dig själv på ett hotell! Det är vad vi bygger. En fullservicetjänst som gör att du inte bara kan hitta rätt person att ta hand om din katt utan som också hanterar bokningen, betalningen, att hålla kontakten och alla andra saker. Så slipper du oroa dig medan du är bortrest.",
+  "header2": "När lanseras KattBNB?",
+  "p2": "Vi planerar och arbetar hårt för att lansera våren 2020.",
+  "header3": "Vilka är vi?",
+  "p3": "Vi är ett par vänner som brinner för katter och kodning. Vi tror på att lösa problem som är viktiga och samtidigt ha roligt på vägen. Mer <1>här</1>.",
+  "header4": "Jag vill hjälpa till!",
+  "p4-1": "Härligt! Om du har en idé om hur du kan förbättra vår kod är du välkommen att öppna en pull request <1>på GitHub</1>.",
+  "p4-2": "För andra förslag och feedback, använd <1>detta formulär</1> för att komma i kontakt med oss."
+}

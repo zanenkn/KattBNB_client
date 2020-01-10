@@ -36,7 +36,7 @@ class SignUp extends Component {
     e.preventDefault()
     if (this.state.userCaptcha !== this.state.captcha) {
       this.setState({
-        errors: ["You didn't input the captcha phrase correctly, please try again!"],
+        errors: ["SignUp:You didn't input the captcha phrase correctly, please try again!"],
         errorDisplay: true,
         loading: false
       })
@@ -81,7 +81,7 @@ class SignUp extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }}>{t('Signup.error-header')}</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }}>{t('SignUp:error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
               <li key={error}>{t(error)}</li>
@@ -94,11 +94,11 @@ class SignUp extends Component {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          {t('Signup.title')}
+          {t('SignUp:title')}
         </Header>
         <Segment className='whitebox'>
           <p style={{ 'textAlign': 'center' }}>
-            {t('Signup.instructions')}
+            {t('SignUp:instructions')}
           </p>
           <Form id='signup-form'>
             <Form.Input
@@ -107,7 +107,7 @@ class SignUp extends Component {
               label={t('reusable-placeholders.email')}
               value={this.state.email}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.email')}
+              placeholder={t('reusable:plch.email')}
               onKeyPress={this.listenEnterKey}
             />
             <Popup
@@ -119,18 +119,18 @@ class SignUp extends Component {
                   label={t('reusable-placeholders.password')}
                   value={this.state.password}
                   onChange={this.onChangeHandler}
-                  placeholder={t('reusable-placeholders.password')}
+                  placeholder={t('reusable:plch.password')}
                   onKeyPress={this.listenEnterKey}
                 />
               }
-              header={t('reusable-placeholders.pass-strength-bar-popup-header')}
+              header={t('reusable:plch.pass-strength-bar-popup-header')}
               content={
                 <PasswordStrengthBar
                   style={{ 'marginBottom': '0.5rem' }}
                   password={this.state.password}
                   minLength={6}
-                  scoreWords={[t('reusable-placeholders.weak'), t('reusable-placeholders.weak'), t('reusable-placeholders.okay'), t('reusable-placeholders.good'), t('reusable-placeholders.strong')]}
-                  shortScoreWord={t('reusable-placeholders.pass-strength-bar')}
+                  scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
                 />
               }
               on='focus'
@@ -142,7 +142,7 @@ class SignUp extends Component {
               label={t('reusable-placeholders.password-confirmation')}
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
-              placeholder={t('reusable-placeholders.password-confirmation')}
+              placeholder={t('reusable:plch.password-confirmation')}
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
@@ -151,7 +151,7 @@ class SignUp extends Component {
               label={t('Signup.nickname-plch')}
               value={this.state.username}
               onChange={this.onChangeHandler}
-              placeholder={t('Signup.nickname-plch')}
+              placeholder={t('SignUp:nickname-plch')}
               onKeyPress={this.listenEnterKey}
             />
             <div className='required field' style={{ 'marginBottom': '1.5em' }}>
@@ -163,7 +163,7 @@ class SignUp extends Component {
                 search
                 selection
                 style={{ 'width': '100%' }}
-                placeholder={t('Signup.location-plch')}
+                placeholder={t('SignUp:location-plch')}
                 options={LOCATION_OPTIONS}
                 id='location'
                 onChange={this.handleLocationChange}
@@ -181,18 +181,18 @@ class SignUp extends Component {
               />
             </div>
             <Form.Input
-              label={t('Signup.captcha-label')}
+              label={t('SignUp:captcha-label')}
               required
               id='userCaptcha'
               value={this.state.userCaptcha}
               onChange={this.onChangeHandler}
-              placeholder={t('Signup.captcha-plch')}
+              placeholder={t('SignUp:captcha-plch')}
               onKeyPress={this.listenEnterKey}
             />
           </Form>
           {errorDisplay}
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
-            {t('Signup.title')}
+            {t('SignUp:title')}
           </Button>
         </Segment>
       </div>

@@ -1,0 +1,11 @@
+{
+    "header1": "What is KattBNB?",
+    "p1": "Our idea of KattBNB is a platform that lets cat sitters offer their services and cat owners book a sitter that is most convenient to them. Think that you could check your cat in with someone you can trust as easy you check yourself in a hotel! That’s what we are building. A full range service that allows you to not only find the right person to look after your cat but also handles the booking, payment, staying in touch and all the other stuff. So you don’t have to worry while you are away.",
+    "header2": "When is KattBNB going live?",
+    "p2": "We are planning and working hard towards a release on spring 2020.",
+    "header3": "Who we are?",
+    "p3": "We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <1>here</1>.",
+    "header4": "I want to contribute!",
+    "p4-1": "Good! If you have an idea how to improve our code, you are welcome to open a pull request <1>on GitHub</1>.",
+    "p4-2": "For any other suggestions and feedback, please use <1>this form</1> to get in touch with us."
+}

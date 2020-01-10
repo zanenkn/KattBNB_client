@@ -1,0 +1,15 @@
+{
+  "error-1": "Antalet katter måste vara ett helt och positivt tal!",
+  "error-2": "Du måste välja en kommun för att fortsätta!",
+  "error-3": "Du måste välja både incheckningsdatum och utcheckningsdatum för att fortsätta!",
+  "error-header": "Sökning kunde inte utföras på grund av följande fel:",
+  "title": "Hitta en kattvakt!",
+  "when": "När",
+  "checkin": "Incheckning",
+  "checkout": "Utcheckning",
+  "reset": "Rensa datum",
+  "where": "Var",
+  "where-plch": "Välj din kommun",
+  "how-many": "För hur många katter",
+  "cta": "Sök"
+}
