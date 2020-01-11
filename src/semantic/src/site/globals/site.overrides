@@ -378,6 +378,31 @@ h4 {
  background-color: #eeeeee;
 }
 
+.expanding-textarea {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  min-height: 2.3em !important;
+  resize: none;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin: 0px;
+  outline: 0px;
+  -webkit-appearance: none;
+  line-height: 1.21429em;
+  padding: 0.678571em 1em;
+  font-size: 1em;
+  background: rgb(255, 255, 255);
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 0.285714rem;
+  box-shadow: transparent 0px 0px 0px 0px inset;
+  transition: color 0.1s ease 0s, border-color 0.1s ease 0s;
+}
+
+.expanding-textarea::placeholder {
+  font-style: italic;
+}
+
 /*******************************
           SPINNER
 *******************************/

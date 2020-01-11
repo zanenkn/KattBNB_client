@@ -195,40 +195,36 @@ class Conversation extends Component {
           </Container>
           <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
             <div className='single-conversation-wrapper' >
-              <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
-                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem' }} />
-                <div style={{'width': '100%', 'alignSelf': 'center', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px'}}>
-                <TextareaAutosize
-                  minRows={1}
-                  maxRows={6}
-                  style={{'width': '100%', 'position': 'relative', 'bottom': '0px'}}
-                  defaultValue="Say something.."
-                />
+              <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
+                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'center' }} />
+                <div style={{'width': '100%', 'alignSelf': 'center', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse'}}>
+                  <TextareaAutosize
+                    minRows={1}
+                    maxRows={6}
+                    className='expanding-textarea disable-scrollbars'
+                    placeholder='Say something..'
+                    id='newMessage'
+                    value={this.state.newMessage}
+                    onChange={this.onChangeHandler}
+                    onKeyPress={this.listenEnterKeyMessage}
+                  />
+                  <Icon
+                    id='send'
+                    name='arrow alternate circle up'
+                    link
+                    size='large'
+                    onClick={(e) => this.handleSendEvent(e)}
+                    style={{
+                      'color': '#c90c61',
+                      'marginRight': '-0.5rem',
+                      'display': this.state.newMessage === '' ? 'none' : 'block',
+                      'zIndex': '4000',
+                      'alignSelf': 'flex-end',
+                      'marginBottom': '0.6rem',
+                      'marginRight': '0.5rem'
+                    }}
+                  />
                 </div>
-                
-                {/* <Input
-                  fluid
-                  style={{ 'marginBottom': '0', 'width': '100%' }}
-                  id='newMessage'
-                  value={this.state.newMessage}
-                  onChange={this.onChangeHandler}
-                  placeholder='Say something..'
-                  onKeyPress={this.listenEnterKeyMessage}
-                  icon={
-                    <Icon
-                      id='send'
-                      name='arrow alternate circle up'
-                      link
-                      size='large'
-                      onClick={(e) => this.handleSendEvent(e)}
-                      style={{
-                        'color': '#c90c61',
-                        'marginRight': '-0.5rem',
-                        'display': this.state.newMessage === '' ? 'none' : 'block'
-                      }}
-                    />
-                  }
-                /> */}
               </div>
               <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
                 Remaining characters: {messageLength}
