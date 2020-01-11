@@ -5,6 +5,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
 import { Image, Input, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
+import TextareaAutosize from 'react-textarea-autosize'
 
 class Conversation extends Component {
 
@@ -196,7 +197,16 @@ class Conversation extends Component {
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
                 <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem' }} />
-                <Input
+                <div style={{'width': '100%', 'alignSelf': 'center', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px'}}>
+                <TextareaAutosize
+                  minRows={1}
+                  maxRows={6}
+                  style={{'width': '100%', 'position': 'relative', 'bottom': '0px'}}
+                  defaultValue="Say something.."
+                />
+                </div>
+                
+                {/* <Input
                   fluid
                   style={{ 'marginBottom': '0', 'width': '100%' }}
                   id='newMessage'
@@ -218,7 +228,7 @@ class Conversation extends Component {
                       }}
                     />
                   }
-                />
+                /> */}
               </div>
               <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
                 Remaining characters: {messageLength}
