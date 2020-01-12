@@ -16,7 +16,8 @@ class Conversation extends Component {
     errorDisplay: false,
     errors: '',
     scrollYPosition: 0,
-    loading: true
+    loading: true,
+    footerHeight: '32px'
   }
 
   componentDidMount() {
@@ -184,7 +185,7 @@ class Conversation extends Component {
               <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} />
             </div>
           </div>
-          <Container className='messenger-wrapper' style={{ 'marginBottom': '100px' }}>
+          <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
             <Divider />
             <div className='single-conversation-wrapper'>
               {messagesHistory}
@@ -193,11 +194,11 @@ class Conversation extends Component {
               <div ref={(el) => { this.bottom = el }}></div>
             </div>
           </Container>
-          <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'overflow': 'hidden', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+          <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
-                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'center' }} />
-                <div style={{'width': '100%', 'alignSelf': 'center', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse'}}>
+                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} />
+                <div style={{'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight}}>
                   <TextareaAutosize
                     minRows={1}
                     maxRows={6}
@@ -207,26 +208,33 @@ class Conversation extends Component {
                     value={this.state.newMessage}
                     onChange={this.onChangeHandler}
                     onKeyPress={this.listenEnterKeyMessage}
+                    onHeightChange={(height) => this.setState({footerHeight: `${height}px`})}
                   />
-                  <Icon
-                    id='send'
-                    name='arrow alternate circle up'
-                    link
-                    size='large'
-                    onClick={(e) => this.handleSendEvent(e)}
-                    style={{
-                      'color': '#c90c61',
-                      'marginRight': '-0.5rem',
-                      'display': this.state.newMessage === '' ? 'none' : 'block',
-                      'zIndex': '4000',
-                      'alignSelf': 'flex-end',
-                      'marginBottom': '0.6rem',
-                      'marginRight': '0.5rem'
-                    }}
-                  />
+                  <div style={{
+                    'marginRight': '-0.5rem',
+                    'display': this.state.newMessage === '' ? 'none' : 'block',
+                    'zIndex': '4000',
+                    'alignSelf': 'flex-end',
+                    'marginBottom': '0.6rem',
+                    'marginRight': '0.5rem',
+                    'background': 'white',
+                    'paddingLeft': '0.5rem',
+                    'paddingTop': '0.5rem'
+                  }}>
+                    <Icon
+                      id='send'
+                      name='arrow alternate circle up'
+                      link
+                      size='large'
+                      onClick={(e) => this.handleSendEvent(e)}
+                      style={{
+                        'color': '#c90c61'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'display': messageLength < 100 ? 'block' : 'none' }}>
+              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'visibility': messageLength < 100 ? 'visible' : 'hidden', 'marginBottom': '0.5rem' }}>
                 Remaining characters: {messageLength}
               </p>
             </div>
