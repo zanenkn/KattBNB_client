@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 const OutgoingUpcoming = (props) => {
   let sortedUpcoming = props.upcoming
-  sortedUpcoming.sort((a, b) => (b.dates[0] - a.dates[0]))
+  sortedUpcoming.sort((a, b) => (a.dates[0] - b.dates[0]))
 
   if (props.upcoming.length > 0) {
     return (
