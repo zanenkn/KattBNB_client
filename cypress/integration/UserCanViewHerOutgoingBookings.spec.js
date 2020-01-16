@@ -29,8 +29,8 @@ describe('User can view her outgoing bookings', () => {
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-upcoming]').first().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
-    cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.')
+    cy.get('[data-cy=outgoing-upcoming]').first().contains('You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.')
+    cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
   })
 
   it('and see her requested bookings displayed in correct chronological order', () => {

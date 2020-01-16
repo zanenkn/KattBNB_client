@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
-import { Image, Input, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
+import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -211,7 +211,6 @@ class Conversation extends Component {
                     onHeightChange={(height) => this.setState({footerHeight: `${height}px`})}
                   />
                   <div style={{
-                    'marginRight': '-0.5rem',
                     'display': this.state.newMessage === '' ? 'none' : 'block',
                     'zIndex': '4000',
                     'alignSelf': 'flex-end',
@@ -219,7 +218,7 @@ class Conversation extends Component {
                     'marginRight': '0.5rem',
                     'background': 'white',
                     'paddingLeft': '0.5rem',
-                    'paddingTop': '0.5rem'
+                    'paddingTop': '0.4rem'
                   }}>
                     <Icon
                       id='send'

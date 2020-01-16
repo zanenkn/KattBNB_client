@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Header, Message } from 'semantic-ui-react'
+import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
