@@ -55,7 +55,7 @@ describe('Visitor can view search results as a list', () => {
     let hostData = [
       [
         '#nickname', '#description', '#per-day',
-        '#total'
+        '#per-day'
       ],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
     ]

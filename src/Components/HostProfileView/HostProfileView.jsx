@@ -1,16 +1,17 @@
 import React from 'react'
-import { Image, Header, Message } from 'semantic-ui-react'
+import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
 import Reviews from '../ReusableComponents/Reviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
+import MessageHostCTA from '../ReusableComponents/MessageHostCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  let locationAndPrice, errorDisplay, sendMessage
+  let locationAndPrice, sendMessage, requestToBook
   const { t } = useTranslation()
 
   if (props.location && props.numberOfCats === 0) {
@@ -40,35 +41,17 @@ const HostProfileView = (props) => {
     )
   }
 
-  if (props.errors.length > 0) {
-    errorDisplay = (
-      <Message negative style={{ 'width': 'inherit' }} >
-        <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
-        <ul id='message-error-list'>
-          {props.errors.map(error => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      </Message>
+  if (props.noMessage !== true) {
+    sendMessage = (
+      MessageHostCTA(props.nickname, props.messageHost)
     )
   }
 
-  if (props.noMessage !== true) {
-    sendMessage = (
-      <>
-        <Header as='h3' style={{ 'textAlign': 'left' }}>
-          {t('HostProfileView:questions')}
-        </Header>
-        <p>
-          <Trans i18nKey='HostProfileView:send-msg' values={{ host: props.nickname }} >
-            You can send a message to <strong style={{ 'color': '#c90c61' }}>{props.nickname}</strong> and find out.
-          </Trans>
-        </p>
-        {errorDisplay}
-        <p id='send-message' className='fake-link-underlined-reg' onClick={props.messageHost}>
-          {t('HostProfileView:send-cta')}
-        </p>
-      </>
+  if (props.requestToBookButtonClick) {
+    requestToBook = (
+      <div style={{'marginTop': '3rem'}}>
+        {(RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick))}
+      </div>
     )
   }
 
@@ -84,18 +67,16 @@ const HostProfileView = (props) => {
       <p id='description'>
         {props.description}
       </p>
-      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => { }}
-      <Reviews />
-      {props.requestToBookButtonClick ? (RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)) : () => { }}
-      <div>
-        <HostLocationMap
-          lat={props.lat}
-          long={props.long}
-          nickname={props.nickname}
-          address={props.address}
-        />
-      </div>
       {sendMessage}
+      <Reviews />
+      {requestToBook}
+      <HostLocationMap
+        lat={props.lat}
+        long={props.long}
+        nickname={props.nickname}
+        address={props.address}
+      />
+      {requestToBook}
     </div>
   )
 }

@@ -104,6 +104,7 @@ class Login extends Component {
             <Form.Input
               required
               id='email'
+              label={t('reusable:plch.email')}
               value={this.state.email}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.email')}
@@ -113,6 +114,7 @@ class Login extends Component {
               required
               id='password'
               type='password'
+              label={t('reusable:plch.password')}
               value={this.state.password}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.password')}

@@ -34,15 +34,12 @@ class IncomingUpcoming extends Component {
           }
         })
       })
-      .catch(error => {
-        this.setState({ errors: error.response.data.errors.full_messages })
-      })
   }
 
   render() {
 
     let sortedUpcoming = this.props.upcoming
-    sortedUpcoming.sort((a, b) => (b.dates[0] - a.dates[0]))
+    sortedUpcoming.sort((a, b) => (a.dates[0] - b.dates[0]))
     let page
 
     if (this.props.upcoming.length > 0) {

@@ -7,6 +7,12 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1',
+      status: 200,
+      response: 'fixture:all_user_bookings.json'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#navlinks').within(() => {
@@ -24,8 +30,8 @@ describe('User can view her incoming bookings', () => {
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {
     cy.get('#view-incoming-bookings').click()
-    cy.get('[data-cy=incoming-upcoming]').first().contains("You have approved a stay for Accepted1's 1 cat for the dates of 2051-08-04 until 2051-08-08.")
-    cy.get('[data-cy=incoming-upcoming]').last().contains("You have approved a stay for Accepted2's 1 cat for the dates of 2051-08-03 until 2051-08-07.")
+    cy.get('[data-cy=incoming-upcoming]').first().contains("You have approved a stay for Accepted2's 1 cat for the dates of 2051-08-03 until 2051-08-07.")
+    cy.get('[data-cy=incoming-upcoming]').last().contains("You have approved a stay for Accepted1's 1 cat for the dates of 2051-08-04 until 2051-08-08.")
   })
 
   it('and see her requested bookings displayed in correct chronological order', () => {

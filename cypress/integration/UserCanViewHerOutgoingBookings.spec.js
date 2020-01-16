@@ -7,6 +7,12 @@ describe('User can view her outgoing bookings', () => {
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#navlinks').within(() => {
@@ -23,8 +29,8 @@ describe('User can view her outgoing bookings', () => {
 
   it('and see her upcoming bookings displayed in correct chronological order', () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-upcoming]').first().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
-    cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.')
+    cy.get('[data-cy=outgoing-upcoming]').first().contains('You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.')
+    cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
   })
 
   it('and see her requested bookings displayed in correct chronological order', () => {
@@ -37,6 +43,14 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.')
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
+  })
+
+  it('and see her own message in request bookings', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#2').within(() => {
+      cy.get('.fake-link-underlined').click({ force: true })
+    })
+    cy.contains('Please keep my cats, Pending1')
   })
 
   it('and see relevant host message in declined history bookings', () => {

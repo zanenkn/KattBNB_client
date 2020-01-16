@@ -32,7 +32,7 @@ const OutgoingHistory = (props) => {
                     View message
                   </p>
                 }
-                  position="top center"
+                  position='top center'
                   closeOnDocumentClick={true}
                 >
                   <OutRequestDeclinedPopup

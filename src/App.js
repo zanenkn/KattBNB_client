@@ -26,6 +26,7 @@ import AllConversations from './Components/Messenger/AllConversations'
 import Conversation from './Components/Messenger/SingleConversation'
 import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
 import NoAccess from './Components/ReusableComponents/NoAccess'
+import Spinner from './Components/ReusableComponents/Spinner'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -89,7 +90,7 @@ class App extends Component {
     }
 
     return (
-      <Suspense fallback={(<div>Loading</div>)}>
+      <Suspense fallback={(<Spinner />)}>
         <div ref={this.contextRef}>
           <Sticky context={this.contextRef}>
             <Navbar />

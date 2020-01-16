@@ -25,8 +25,7 @@ class SearchResults extends Component {
     searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
-    scrollOffset: 0,
-    errors: ''
+    scrollOffset: 0
   }
 
   geolocationDataAddress = () => {
@@ -181,9 +180,6 @@ class SearchResults extends Component {
             }
           })
         })
-        .catch(error => {
-          this.setState({ errors: error.response.data.errors.full_messages })
-        })
     }
   }
 
@@ -268,7 +264,6 @@ class SearchResults extends Component {
               long={this.state.hostLong}
               requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
               messageHost={this.messageHost.bind(this)}
-              errors={this.state.errors}
             />
           </Container>
         )

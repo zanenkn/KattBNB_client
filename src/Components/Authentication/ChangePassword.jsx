@@ -107,6 +107,7 @@ class ChangePassword extends Component {
                 <Form.Input
                   required
                   id='password'
+                  label={t('reusable:plch.password')}
                   value={this.state.password}
                   onChange={this.onChangeHandler}
                   placeholder={t('reusable:plch.password')}
@@ -128,6 +129,7 @@ class ChangePassword extends Component {
             <Form.Input
               required
               id='passwordConfirmation'
+              label={t('reusable:plch.password-confirmation')}
               value={this.state.passwordConfirmation}
               onChange={this.onChangeHandler}
               placeholder={t('reusable:plch.password-confirmation')}

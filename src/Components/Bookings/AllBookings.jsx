@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { Header, Segment, Button } from 'semantic-ui-react'
@@ -7,7 +8,9 @@ class AllBookings extends Component {
 
   state = {
     outgoingBookings: [],
-    incomingBookings: []
+    incomingBookings: [],
+    loadingOutgoing: true,
+    loadingIncoming: true
   }
 
   componentDidMount() {
@@ -19,10 +22,16 @@ class AllBookings extends Component {
       'access-token': window.localStorage.getItem('access-token')
     }
     axios.get(pathOutgoing, { headers: headers }).then(response => {
-      this.setState({ outgoingBookings: response.data })
+      this.setState({
+        outgoingBookings: response.data,
+        loadingOutgoing: false
+      })
     })
     axios.get(pathIncoming, { headers: headers }).then(response => {
-      this.setState({ incomingBookings: response.data })
+      this.setState({
+        incomingBookings: response.data,
+        loadingIncoming: false
+      })
     })
   }
 
@@ -36,7 +45,7 @@ class AllBookings extends Component {
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA
+    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, page
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -196,16 +205,28 @@ class AllBookings extends Component {
       </Segment>
     )
 
+    if (this.state.loadingIncoming && this.state.loadingOutgoing) {
+      page = (
+        <Spinner />
+      )
+    } else if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false) {
+      page = (
+        <div className='content-wrapper'>
+          <Header as='h1'>
+            Hi, {this.props.username}!
+          </Header>
+          <p style={{ 'textAlign': 'center' }}>
+            Here you can manage your bookings.
+          </p>
+          {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
+        </div>
+      )
+    }
+
     return (
-      <div className='content-wrapper'>
-        <Header as='h1'>
-          Hi, {this.props.username}!
-        </Header>
-        <p style={{ 'textAlign': 'center' }}>
-          Here you can manage your bookings.
-        </p>
-        {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
-      </div>
+      <>
+        {page}
+      </>
     )
   }
 }

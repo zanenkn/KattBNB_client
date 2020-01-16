@@ -6,8 +6,6 @@ import axios from 'axios'
 
 class BookingDetails extends Component {
 
-  state = { errors: '' }
-
   messageHost = (e) => {
     e.preventDefault()
     if (this.props.id === undefined) {
@@ -37,9 +35,6 @@ class BookingDetails extends Component {
               }
             }
           })
-        })
-        .catch(error => {
-          this.setState({ errors: error.response.data.errors.full_messages })
         })
     }
   }
@@ -98,7 +93,6 @@ class BookingDetails extends Component {
             long={this.props.location.state.long}
             address={this.props.location.state.address}
             messageHost={this.messageHost.bind(this)}
-            errors={this.state.errors}
           />
         </>
       </>
