@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  let locationAndPrice, errorDisplay, sendMessage, requestToBook
+  let locationAndPrice, sendMessage, requestToBook
   const { t } = useTranslation()
 
   if (props.location && props.numberOfCats === 0) {
@@ -38,19 +38,6 @@ const HostProfileView = (props) => {
         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d="M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" /></svg>
         &nbsp;{perDay} {t('reusable:price.per-day')}
       </Header>
-    )
-  }
-
-  if (props.errors.length > 0) {
-    errorDisplay = (
-      <Message negative style={{ 'width': 'inherit' }} >
-        <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
-        <ul id='message-error-list'>
-          {props.errors.map(error => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      </Message>
     )
   }
 

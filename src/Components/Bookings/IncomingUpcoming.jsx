@@ -34,9 +34,6 @@ class IncomingUpcoming extends Component {
           }
         })
       })
-      .catch(error => {
-        this.setState({ errors: error.response.data.errors.full_messages })
-      })
   }
 
   render() {

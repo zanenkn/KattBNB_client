@@ -14,7 +14,6 @@ const MessageHostCTA = (nickname, messageHost) => {
           You can send a message to <strong style={{ 'color': '#c90c61' }}>{nickname}</strong> and find out.
         </Trans>
       </p>
-      {/* {errorDisplay} */}
       <Button
         id='send-message'
         style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
