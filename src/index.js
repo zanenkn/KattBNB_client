@@ -8,11 +8,14 @@ import * as serviceWorker from './serviceWorker'
 import { verifyCredentials } from './reduxTokenAuthConfig'
 import axios from 'axios'
 import './i18n'
+import smoothscroll from 'smoothscroll-polyfill';
+
 
 axios.defaults.baseURL = (process.env.NODE_ENV === 'development' ? 'http://localhost:3007' : process.env.REACT_APP_API_ENDPOINT)
 
 const store = configureStore()
 verifyCredentials(store)
+smoothscroll.polyfill()
 
 ReactDOM.render(
   <Provider store={store}>
