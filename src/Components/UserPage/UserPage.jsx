@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
+import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
 import { Header, Segment, Button, Divider } from 'semantic-ui-react'
 import axios from 'axios'
@@ -24,12 +25,16 @@ class UserPage extends Component {
     supplement: '',
     availability: [],
     forbiddenDates: [],
-    incomingBookings: []
+    incomingBookings: [],
+    loading: true
   }
 
   async componentDidMount() {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ hostProfile: response.data })
+      this.setState({
+        hostProfile: response.data,
+        loading: false
+      })
     })
     if (this.state.hostProfile.length === 1) {
       const path = `/api/v1/host_profiles/${this.state.hostProfile[0].id}`
@@ -203,26 +208,32 @@ class UserPage extends Component {
       )
     }
 
-    if (this.state.hostProfile.length === 1) {
+    if (this.state.loading) {
       hostProfile = (
-        <HostProfile
-          id={this.state.hostProfile[0].id}
-          description={this.state.description}
-          fullAddress={this.state.fullAddress}
-          rate={this.state.rate}
-          maxCats={this.state.maxCats}
-          supplement={this.state.supplement}
-          availability={this.state.availability}
-          forbiddenDates={this.state.forbiddenDates}
-          location={this.props.location}
-          incomingBookings={this.state.incomingBookings}
-          closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
-          ref={this.hostProfileElement} />
+        <Spinner />
       )
     } else {
-      hostProfile = (
-        hostProfileForm
-      )
+      if (this.state.hostProfile.length === 1) {
+        hostProfile = (
+          <HostProfile
+            id={this.state.hostProfile[0].id}
+            description={this.state.description}
+            fullAddress={this.state.fullAddress}
+            rate={this.state.rate}
+            maxCats={this.state.maxCats}
+            supplement={this.state.supplement}
+            availability={this.state.availability}
+            forbiddenDates={this.state.forbiddenDates}
+            location={this.props.location}
+            incomingBookings={this.state.incomingBookings}
+            closeLocPasForms={this.closeLocationAndPasswordForms.bind(this)}
+            ref={this.hostProfileElement} />
+        )
+      } else {
+        hostProfile = (
+          hostProfileForm
+        )
+      }
     }
 
     return (
