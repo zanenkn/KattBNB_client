@@ -232,7 +232,7 @@ class UserPage extends Component {
             Hi, {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
-            This is your <strong> basic </strong> profile. Here you can update your avatar, location, and password.
+            This is your <strong> user </strong> profile. Here you can update your avatar, location, and password.
           </p>
           <AvatarUpdateForm
             avatar={this.props.avatar}
