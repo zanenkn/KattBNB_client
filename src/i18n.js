@@ -12,7 +12,7 @@ i18n
 
   .init({
     fallbackLng,
-    ns: ['translation', 'AboutUs', 'SearchResults', 'Search', 'Faq', 'WorkInProgress', 'ContactUs', 'ChangePassword', 'Login', 'PasswordReset', 'PasswordResetSuccess', 'SignUp', 'SignupSuccess', 'RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'reusable'],
+    ns: ['translation', 'AboutUs', 'SearchResults', 'Search', 'Faq', 'WorkInProgress', 'ContactUs', 'ChangePassword', 'Login', 'PasswordReset', 'PasswordResetSuccess', 'SignUp', 'SignupSuccess', 'RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'reusable', 'UserPage'],
     lng: 'en',
     debug: true,
     whitelist: availableLanguages,
