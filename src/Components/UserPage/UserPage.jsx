@@ -8,6 +8,7 @@ import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import { withTranslation, Trans } from 'react-i18next'
+import i18n from '../../i18n'
 
 class UserPage extends Component {
 
@@ -32,6 +33,7 @@ class UserPage extends Component {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
       this.setState({ hostProfile: response.data })
     })
+    i18n.loadNamespaces(['UserPage'])
     if (this.state.hostProfile.length === 1) {
       const path = `/api/v1/host_profiles/${this.state.hostProfile[0].id}`
       const headers = {
