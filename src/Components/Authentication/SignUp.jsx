@@ -197,7 +197,7 @@ class SignUp extends Component {
             <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
           </div>
           {errorDisplay}
-          <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
+          <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false} disabled={this.state.termsAccepted ? false : true}>
             {t('SignUp:title')}
           </Button>
         </Segment>
