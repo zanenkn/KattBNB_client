@@ -21,7 +21,8 @@ class SignUp extends Component {
     errorDisplay: false,
     loading: false,
     captcha: '',
-    userCaptcha: ''
+    userCaptcha: '',
+    termsAccepted: false
   }
 
   onChangeHandler = (e) => {
@@ -192,7 +193,7 @@ class SignUp extends Component {
             />
           </Form>
           <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
-            <Checkbox toggle />
+            <Checkbox toggle onClick={() => this.setState({ termsAccepted: !this.state.termsAccepted })} />
             <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
           </div>
           {errorDisplay}
