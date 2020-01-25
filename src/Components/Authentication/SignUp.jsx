@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Header, Segment, Form, Button, Dropdown, Message, Popup } from 'semantic-ui-react'
+import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -190,6 +191,10 @@ class SignUp extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
+          <div>
+            <Checkbox toggle />
+            <label style={{ 'paddingLeft': '0.5em' }}>I accept the <Header as={Link} to='/legal' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+          </div>
           {errorDisplay}
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
             {t('SignUp:title')}
