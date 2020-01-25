@@ -67,7 +67,7 @@ class SignUp extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.state.termsAccepted) {
       this.createUser(event)
     }
   }
