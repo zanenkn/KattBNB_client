@@ -191,9 +191,9 @@ class SignUp extends Component {
               onKeyPress={this.listenEnterKey}
             />
           </Form>
-          <div>
+          <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
             <Checkbox toggle />
-            <label style={{ 'paddingLeft': '0.5em' }}>I accept the <Header as={Link} to='/legal' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+            <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
           </div>
           {errorDisplay}
           <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
