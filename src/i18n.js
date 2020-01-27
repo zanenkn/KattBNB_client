@@ -12,7 +12,7 @@ i18n
 
   .init({
     fallbackLng,
-    ns: ['translation', 'AboutUs', 'SearchResults', 'Search', 'Faq', 'ContactUs', 'ChangePassword', 'Login', 'PasswordReset', 'PasswordResetSuccess', 'SignUp', 'SignupSuccess', 'RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'reusable'],
+    ns: ['PasswordReset', 'PasswordResetSuccess', 'SignUp', 'SignupSuccess', 'RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'Search', 'reusable'],
     lng: 'en',
     debug: true,
     whitelist: availableLanguages,
@@ -20,6 +20,10 @@ i18n
 
     interpolation: {
       escapeValue: false
+    },
+    react: {
+      wait: true,
+      useSuspense: false
     }
   })
 

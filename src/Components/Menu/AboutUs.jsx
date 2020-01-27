@@ -3,7 +3,7 @@ import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 
 function AboutUs() {
-  const { t, ready } = useTranslation('AboutUs', { useSuspense: false })
+  const { t, ready } = useTranslation('AboutUs')
   if(ready){
     return(
       <div className='content-wrapper' >
