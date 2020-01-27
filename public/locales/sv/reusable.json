@@ -34,5 +34,8 @@
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:"
   },
-  "remaining-chars": "Återstående tecken:"
+  "remaining-chars": "Återstående tecken:",
+  "cta": {
+    "change": "Ändra"
+  }
 }
