@@ -2,18 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { withTranslation, Trans } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
-class PasswordResetSuccess extends Component {
+const PasswordResetSuccess = (props) => {
+  const { t, ready } = useTranslation('PasswordResetSuccess')
+  if (props.currentUserIn) {
+    window.localStorage.clear()
+    setTimeout(function () { window.location.reload(true) }, 500)
+  }
 
-  render() {
-    const { t } = this.props
-
-    if (this.props.currentUserIn) {
-      window.localStorage.clear()
-      setTimeout(function () { window.location.reload(true) }, 500)
-    }
-
+  if(ready) {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
@@ -28,9 +26,9 @@ class PasswordResetSuccess extends Component {
         </Segment>
       </div>
     )
-  }
+  } else {return null}
 }
 
 const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })
 
-export default withTranslation()(connect(mapStateToProps)(PasswordResetSuccess))
+export default connect(mapStateToProps)(PasswordResetSuccess)

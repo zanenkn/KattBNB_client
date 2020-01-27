@@ -25,10 +25,11 @@ class PasswordReset extends Component {
       redirect_url: this.state.url,
       email: this.state.email
     }
+
     axios.post(path, payload)
       .then(() => {
         this.setState({ errorDisplay: false })
-        window.location.replace('/password-reset-success')
+        this.props.history.push('/password-reset-success')
       })
       .catch(error => {
         this.setState({
@@ -47,49 +48,51 @@ class PasswordReset extends Component {
 
   render() {
     const { t } = this.props
-    let errorDisplay
-
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('PasswordReset:error-header')}:</Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
+    
+    if(this.props.tReady) {
+      let errorDisplay
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('PasswordReset:error-header')}:</Message.Header>
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+  
+      return (
+        <div className='content-wrapper' >
+          <Header as='h1'>
+            {t('PasswordReset:title')}
+          </Header>
+          <Segment className='whitebox'>
+            <p style={{ 'textAlign': 'center' }}>
+              {t('PasswordReset:instructions')}
+            </p>
+            <Form>
+              <Form.Input
+                required
+                id='email'
+                label={t('reusable:plch.email')}
+                value={this.state.email}
+                onChange={this.onChangeHandler}
+                placeholder={t('reusable:plch.email')}
+                onKeyPress={this.listenEnterKey}
+              />
+            </Form>
+            {errorDisplay}
+            <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
+              {t('PasswordReset:btn')}
+            </Button>
+          </Segment>
+        </div>
       )
-    }
-
-    return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          {t('PasswordReset:title')}
-        </Header>
-        <Segment className='whitebox'>
-          <p style={{ 'textAlign': 'center' }}>
-            {t('PasswordReset:instructions')}
-          </p>
-          <Form>
-            <Form.Input
-              required
-              id='email'
-              label={t('reusable:plch.email')}
-              value={this.state.email}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable:plch.email')}
-              onKeyPress={this.listenEnterKey}
-            />
-          </Form>
-          {errorDisplay}
-          <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
-            {t('PasswordReset:btn')}
-          </Button>
-        </Segment>
-      </div>
-    )
+    } else {return null}
   }
 }
 
-export default withTranslation()(PasswordReset)
+export default withTranslation('PasswordReset')(PasswordReset)
