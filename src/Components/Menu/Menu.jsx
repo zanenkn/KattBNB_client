@@ -31,11 +31,14 @@ class Menu extends Component {
       })
   }
 
+  changeLng(lng) {
+    i18n.changeLanguage(lng)
+    window.localStorage.setItem('I18N_LANGUAGE', lng)
+  }
+
   render() {
     const { t } = this.props
-    const changeLanguage = (lng) => {
-      i18n.changeLanguage(lng)
-    }
+    
     let userLinks
 
     if (this.props.currentUserIn) {
@@ -118,8 +121,8 @@ class Menu extends Component {
               {t('reusable:title.legal')}
             </Header>
             <div>
-              <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => changeLanguage('sv')}>Svenska</Button>
-              <Button id='en' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => changeLanguage('en')}>English</Button>
+              <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('sv')}>Svenska</Button>
+              <Button id='en' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('en')}>English</Button>
             </div>
           </Grid.Column>
         </Grid>

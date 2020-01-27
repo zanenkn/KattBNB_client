@@ -13,7 +13,7 @@ i18n
   .init({
     fallbackLng,
     ns: ['RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'Search', 'reusable'],
-    lng: 'en',
+    lng: window.localStorage.getItem('I18N_LANGUAGE') || 'en',
     debug: true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
