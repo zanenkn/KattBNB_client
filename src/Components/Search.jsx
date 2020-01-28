@@ -8,6 +8,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
+import Spinner from './ReusableComponents/Spinner'
 
 class Search extends Component {
 
@@ -134,121 +135,123 @@ class Search extends Component {
 
   render() {
     const { t } = this.props
-    let errorDisplay
 
-    const { from, to } = this.state
-    const modifiers = { start: from, end: to }
-    const today = new Date()
+    if(this.props.tReady){
+      let errorDisplay
+      const { from, to } = this.state
+      const modifiers = { start: from, end: to }
+      const today = new Date()
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative >
-          <Message.Header>{t('Search:error-header')}</Message.Header>
-          <ul>
-            {this.state.errors.map(error => (
-              <li key={error}>{t(error)}</li>
-            ))}
-          </ul>
-        </Message>
-      )
-    }
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <Message.Header>{t('Search:error-header')}</Message.Header>
+            <ul>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
 
-    return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          {t('Search:title')}
-        </Header>
-        <Segment className='whitebox'>
-          <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
-            <div className='required field' style={{ 'marginBottom': '0.5em' }}>
-              <label>
-                {t('Search:when')}
+      return (
+        <div className='content-wrapper' >
+          <Header as='h1'>
+            {t('Search:title')}
+          </Header>
+          <Segment className='whitebox'>
+            <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
+              <div className='required field' style={{ 'marginBottom': '0.5em' }}>
+                <label>
+                  {t('Search:when')}
+                  </label>
+                <div className='InputFromTo'>
+                  <DayPickerInput
+                    value={from}
+                    placeholder={t('Search:checkin')}
+                    format='LL'
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    inputProps={{ readOnly: true }}
+                    dayPickerProps={{
+                      selectedDays: [from, { from, to }],
+                      disabledDays: { after: to, before: today },
+                      toMonth: to,
+                      modifiers,
+                      numberOfMonths: 1,
+                      firstDayOfWeek: 1,
+                      showWeekNumbers: true
+                    }}
+                    onDayChange={this.handleFromChange}
+                  />
+                </div>
+                <div className='InputFromTo' style={{ 'marginTop': '0.5em' }}>
+                  <DayPickerInput
+                    ref={el => (this.to = el)}
+                    value={to}
+                    placeholder={t('Search:checkout')}
+                    format='LL'
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
+                    dayPickerProps={{
+                      selectedDays: [from, { from, to }],
+                      disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
+                      modifiers,
+                      firstDayOfWeek: 1,
+                      showWeekNumbers: true,
+                      month: from,
+                      fromMonth: from,
+                      numberOfMonths: 1
+                    }}
+                    onDayChange={this.handleToChange}
+                  />
+                </div>
+              </div>
+              <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
+                <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> {t('Search:reset')} </Header>
+              </div>
+              <div className='required field' style={{ 'marginBottom': '1.5em' }}>
+                <label>
+                  {t('Search:where')}
                 </label>
-              <div className='InputFromTo'>
-                <DayPickerInput
-                  value={from}
-                  placeholder={t('Search:checkin')}
-                  format='LL'
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  inputProps={{ readOnly: true }}
-                  dayPickerProps={{
-                    selectedDays: [from, { from, to }],
-                    disabledDays: { after: to, before: today },
-                    toMonth: to,
-                    modifiers,
-                    numberOfMonths: 1,
-                    firstDayOfWeek: 1,
-                    showWeekNumbers: true
-                  }}
-                  onDayChange={this.handleFromChange}
+                <Dropdown
+                  clearable
+                  search
+                  selection
+                  value={this.state.location}
+                  placeholder={t('Search:where-plch')}
+                  options={LOCATION_OPTIONS}
+                  id='location'
+                  onChange={this.handleLocationChange}
+                  onKeyPress={this.listenEnterKeySearch}
                 />
               </div>
-              <div className='InputFromTo' style={{ 'marginTop': '0.5em' }}>
-                <DayPickerInput
-                  ref={el => (this.to = el)}
-                  value={to}
-                  placeholder={t('Search:checkout')}
-                  format='LL'
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
-                  dayPickerProps={{
-                    selectedDays: [from, { from, to }],
-                    disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
-                    modifiers,
-                    firstDayOfWeek: 1,
-                    showWeekNumbers: true,
-                    month: from,
-                    fromMonth: from,
-                    numberOfMonths: 1
-                  }}
-                  onDayChange={this.handleToChange}
-                />
-              </div>
-            </div>
-            <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
-              <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> {t('Search:reset')} </Header>
-            </div>
-            <div className='required field' style={{ 'marginBottom': '1.5em' }}>
-              <label>
-                {t('Search:where')}
-              </label>
-              <Dropdown
-                clearable
-                search
-                selection
-                value={this.state.location}
-                placeholder={t('Search:where-plch')}
-                options={LOCATION_OPTIONS}
-                id='location'
-                onChange={this.handleLocationChange}
+              <Form.Input
+                label={t('Search:how-many')}
+                type='number'
+                required
+                id='cats'
+                value={this.state.cats}
+                onChange={this.onChangeHandler}
                 onKeyPress={this.listenEnterKeySearch}
+                style={{ 'maxWidth': '180px', 'height': '38px' }}
               />
+            </Form>
+            {errorDisplay}
+            <div className='button-wrapper'>
+              <div>
+                <Button id='search-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.search}>{t('Search:cta')}</Button>
+              </div>
             </div>
-            <Form.Input
-              label={t('Search:how-many')}
-              type='number'
-              required
-              id='cats'
-              value={this.state.cats}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKeySearch}
-              style={{ 'maxWidth': '180px', 'height': '38px' }}
-            />
-          </Form>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <div>
-              <Button id='search-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.search}>{t('Search:cta')}</Button>
-            </div>
-          </div>
-        </Segment>
-      </div>
-    )
+          </Segment>
+        </div>
+      )
+    } else {return <Spinner/>}
   }
 }
 
 const mapStateToProps = state => ({ location: state.reduxTokenAuth.currentUser.attributes.location })
 
-export default withTranslation()(connect(mapStateToProps)(Search))
+export default withTranslation('Search')(connect(mapStateToProps)(Search))

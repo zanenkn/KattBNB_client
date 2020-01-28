@@ -6,9 +6,9 @@ import RequestToBookCTA from './ReusableComponents/RequestToBookCTA'
 import { useTranslation } from 'react-i18next'
 
 const HostPopup = (props) => {
+  const { t } = useTranslation('HostPopup')
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
-  const { t } = useTranslation()
 
   return (
     <>

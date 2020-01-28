@@ -12,8 +12,10 @@ const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice, sendMessage, requestToBook
-  const { t } = useTranslation()
+  const { t, ready } = useTranslation('HostProfileView')
 
+
+  //if(ready) {
   if (props.location && props.numberOfCats === 0) {
     let priceWithDecimalsString, totalRate
     priceWithDecimalsString = props.rate.toFixed(2)
@@ -79,6 +81,7 @@ const HostProfileView = (props) => {
       {requestToBook}
     </div>
   )
+  //} else {return null}
 }
 
 export default HostProfileView

@@ -12,7 +12,7 @@ i18n
 
   .init({
     fallbackLng,
-    ns: ['RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'Search', 'reusable'],
+    ns: ['reusable'],
     lng: window.localStorage.getItem('I18N_LANGUAGE') || 'en',
     debug: true,
     whitelist: availableLanguages,
@@ -21,6 +21,7 @@ i18n
     interpolation: {
       escapeValue: false
     },
+
     react: {
       wait: true,
       useSuspense: false
