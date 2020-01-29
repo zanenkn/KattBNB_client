@@ -37,6 +37,7 @@
   "remaining-chars": "Remaining characters:",
   "cta": {
     "change": "Change",
-    "save": "Save"
+    "save": "Save",
+    "close": "Close"
   }
 }
