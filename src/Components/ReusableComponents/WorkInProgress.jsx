@@ -2,8 +2,9 @@ import React from 'react'
 import { Header, Segment, Icon, Container } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 
+
 const WIP = () => {
-  const { t, ready } = useTranslation('Faq', { useSuspense: false })
+  const { t, ready } = useTranslation('Faq')
   if(ready) {
     return (
       <Segment className='whitebox' >

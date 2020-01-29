@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 class PasswordReset extends Component {
 
@@ -91,7 +92,7 @@ class PasswordReset extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else {return <Spinner/>}
   }
 }
 

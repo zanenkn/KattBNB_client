@@ -2,6 +2,7 @@ import React from 'react'
 import { Sidebar, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 const Faq = () => {
   const { t, ready } = useTranslation('Faq')
@@ -56,7 +57,7 @@ const Faq = () => {
 
       </Sidebar.Pushable>
     )
-  } else {return null}
+  } else {return <Spinner/>}
 }
 
 export default Faq

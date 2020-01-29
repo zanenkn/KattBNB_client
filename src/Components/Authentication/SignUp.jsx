@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import Spinner from '../ReusableComponents/Spinner'
 
 class SignUp extends Component {
 
@@ -198,7 +199,7 @@ class SignUp extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else {return <Spinner/>}
   }
 }
 

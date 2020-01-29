@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 const SignupSuccess = (props) => {
   const { t, ready } = useTranslation('SignupSuccess')
@@ -27,7 +28,7 @@ const SignupSuccess = (props) => {
         </Segment>
       </div>
     )
-  } else { return null }
+  } else { return <Spinner/> }
 }
 
 const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })

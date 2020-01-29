@@ -7,6 +7,7 @@ import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import MessageHostCTA from '../ReusableComponents/MessageHostCTA'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import { useTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
@@ -91,7 +92,7 @@ const HostProfileView = (props) => {
         {requestToBook}
       </div>
     )
-  } else {return null}
+  } else {return <Spinner/>}
 }
 
 export default HostProfileView

@@ -4,6 +4,7 @@ import axios from 'axios'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import Spinner from '../ReusableComponents/Spinner'
 
 class ChangePassword extends Component {
 
@@ -143,7 +144,7 @@ class ChangePassword extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else {return <Spinner/>}
   }
 }
 

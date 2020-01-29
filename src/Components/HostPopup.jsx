@@ -4,6 +4,7 @@ import { Image, Header } from 'semantic-ui-react'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 import RequestToBookCTA from './ReusableComponents/RequestToBookCTA'
 import { useTranslation } from 'react-i18next'
+import Spinner from './ReusableComponents/Spinner'
 
 const HostPopup = (props) => {
   const { t, ready } = useTranslation('HostPopup')
@@ -44,7 +45,7 @@ const HostPopup = (props) => {
         />
       </>
     )
-  } else {return null}
+  } else {return <Spinner/>}
 }
 
 export default HostPopup

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-react'
 import NetlifyForm from 'react-netlify-form'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 class ContactUs extends Component {
 
@@ -63,7 +64,7 @@ class ContactUs extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else {return <Spinner/>}
   }
 }
 export default withTranslation('ContactUs')(ContactUs)

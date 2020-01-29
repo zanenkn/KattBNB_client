@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 export class Login extends Component {
 
@@ -130,7 +131,7 @@ export class Login extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else {return <Spinner/>}
     
   }
 }

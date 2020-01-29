@@ -1,6 +1,7 @@
 import React from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 function AboutUs() {
   const { t, ready } = useTranslation('AboutUs')
@@ -79,7 +80,7 @@ function AboutUs() {
         </p>
       </div>
     )
-  } else {return null}
+  } else {return <Spinner/>}
 }
 
 export default AboutUs
