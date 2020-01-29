@@ -6,7 +6,9 @@ import RequestToBookCTA from './ReusableComponents/RequestToBookCTA'
 import { useTranslation } from 'react-i18next'
 
 const HostPopup = (props) => {
-  const { t } = useTranslation('HostPopup')
+  const { t, ready } = useTranslation('HostPopup')
+  
+  if(ready) {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
 
@@ -32,9 +34,17 @@ const HostPopup = (props) => {
       >
         {t('HostPopup:more')}
       </Header>
-      {RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick)}
+      <RequestToBookCTA 
+        numberOfCats={props.numberOfCats}
+        nickname={props.nickname}
+        checkInDate={props.checkInDate}
+        checkOutDate={props.checkOutDate}
+        orderTotal={orderTotal}
+        requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
+      />
     </>
   )
+  } else {return null}
 }
 
 export default HostPopup

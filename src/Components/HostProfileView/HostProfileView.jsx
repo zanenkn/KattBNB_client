@@ -52,7 +52,14 @@ const HostProfileView = (props) => {
   if (props.requestToBookButtonClick) {
     requestToBook = (
       <div style={{'marginTop': '3rem'}}>
-        {(RequestToBookCTA(props.numberOfCats, props.nickname, props.checkInDate, props.checkOutDate, orderTotal, props.requestToBookButtonClick))}
+        <RequestToBookCTA 
+          numberOfCats={props.numberOfCats}
+          nickname={props.nickname}
+          checkInDate={props.checkInDate}
+          checkOutDate={props.checkOutDate}
+          orderTotal={orderTotal}
+          requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
+        />
       </div>
     )
   }
