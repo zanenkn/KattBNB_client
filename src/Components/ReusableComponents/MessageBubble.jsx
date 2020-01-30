@@ -4,7 +4,9 @@ import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 
 const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => {
-  let textAlign, flexDirection, margin, border, avatar, nickname
+  let textAlign, flexDirection, margin, border, avatar, nickname, content
+
+  content = (window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content')
 
   if (currentUsername === message.user.nickname) {
     textAlign = 'right'
@@ -21,7 +23,7 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => 
     avatar = otherAvatar
     nickname = message.user.nickname
   }
-  
+
   return (
     <div key={message.id} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
       <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
@@ -32,7 +34,7 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => 
           </strong>
         </p>
       </div>
-      <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': 'fit-content', 'maxWidth': '70%' }}>
+      <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': content, 'maxWidth': '70%' }}>
         <p>
           {message.body}
         </p>
