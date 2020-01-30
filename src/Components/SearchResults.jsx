@@ -11,6 +11,7 @@ import 'moment/locale/sv'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
+import Spinner from './ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'
 
 class SearchResults extends Component {
@@ -25,7 +26,8 @@ class SearchResults extends Component {
     searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
-    scrollOffset: 0
+    scrollOffset: 0,
+    loading: true
   }
 
   geolocationDataAddress = () => {
@@ -97,6 +99,7 @@ class SearchResults extends Component {
         hostDescription: response.data[0].description,
         hostLat: response.data[0].lat,
         hostLong: response.data[0].long,
+        loading: false
       })
     })
   }
@@ -120,7 +123,10 @@ class SearchResults extends Component {
   }
 
   closeModal = () => {
-    this.setState({ openHostPopup: false })
+    this.setState({
+      openHostPopup: false,
+      loading: true
+    })
     if (this.state.results !== 'profile') {
       this.resetHost()
     }
@@ -188,7 +194,7 @@ class SearchResults extends Component {
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
-    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
+    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results, popupContent
 
     if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
       let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
@@ -216,7 +222,7 @@ class SearchResults extends Component {
         mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
         resultCounter = (
-          <Trans 
+          <Trans
             values={{ count: finalAvailableHosts.length }}
             i18nKey='SearchResults:counter'
           />
@@ -239,10 +245,10 @@ class SearchResults extends Component {
         mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
         listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
         resultCounter = (
-          <Trans 
-          values={{ count: finalAvailableHosts.length }}
-          i18nKey='SearchResults:counter'
-        />
+          <Trans
+            values={{ count: finalAvailableHosts.length }}
+            i18nKey='SearchResults:counter'
+          />
         )
         break
       case 'profile':
@@ -296,6 +302,31 @@ class SearchResults extends Component {
       )
     }
 
+    if (this.state.loading) {
+      popupContent = (
+        <div>
+          <Spinner />
+        </div>
+      )
+    } else {
+      popupContent = (
+        <div>
+          <HostPopup
+            numberOfCats={this.state.numberOfCats}
+            checkInDate={this.state.checkInDate}
+            checkOutDate={this.state.checkOutDate}
+            avatar={this.state.hostAvatar}
+            nickname={this.state.hostNickname}
+            location={this.state.hostLocation}
+            rate={this.state.hostRate}
+            supplement={this.state.hostSupplement}
+            handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+            requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+          />
+        </div>
+      )
+    }
+
     return (
       <>
         <Popup
@@ -305,20 +336,7 @@ class SearchResults extends Component {
           onClose={this.closeModal}
           position='top center'
         >
-          <div>
-            <HostPopup
-              numberOfCats={this.state.numberOfCats}
-              checkInDate={this.state.checkInDate}
-              checkOutDate={this.state.checkOutDate}
-              avatar={this.state.hostAvatar}
-              nickname={this.state.hostNickname}
-              location={this.state.hostLocation}
-              rate={this.state.hostRate}
-              supplement={this.state.hostSupplement}
-              handleHostProfileClick={this.handleHostProfileClick.bind(this)}
-              requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
-            />
-          </div>
+          {popupContent}
         </Popup>
         <div style={{ 'height': '26vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
           <div style={{ 'width': 'min-content', 'margin': 'auto' }}>
