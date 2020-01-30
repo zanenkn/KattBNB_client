@@ -1,5 +1,6 @@
 {
   "delete-alert": "To delete your account, please follow relevant instructions in our FAQ page!",
+  "delete-consent": "You still have upcoming outgoing booking(s). By deleting your account, you consent to sending your email to the host(s). If you don't want to disclose your email, wait for the booking(s) to be resolved and try deleting your account again.",
   "delete-confirm": "Do you really want to delete your account?",
   "deletion-alert": "Your account was succesfully deleted!",
   "deletion-error": "There was a problem deleting your account! Please login and try again.",

@@ -164,9 +164,9 @@ class UserPage extends Component {
       })
     }
     if (noAccountDeleteIncoming.length > 0) {
-      window.alert('To delete your account, please follow relevant instructions in our FAQ page!')
+      window.alert(t('UserPage:delete-alert'))
     }
-    else if (sendEmailToHostOutgoing.length > 0 && window.confirm("You still have upcoming outgoing booking(s). By deleting your account, you consent to sending your email to the host(s). If you don't want to disclose your email, wait for the booking(s) to be resolved and try deleting your account again.")) {
+    else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
       const path = '/api/v1/auth'
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -176,16 +176,16 @@ class UserPage extends Component {
       axios.delete(path, { headers: headers })
         .then(() => {
           window.localStorage.clear()
-          window.alert('Your account was succesfully deleted!')
+          window.alert(t('UserPage:deletion-alert'))
           window.location.replace('/')
         })
         .catch(() => {
-          window.alert('There was a problem deleting your account! Please login and try again.')
+          window.alert(t('UserPage:deletion-alert'))
           window.localStorage.clear()
           window.location.replace('/login')
         })
     }
-    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm('Do you really want to delete your account?')) {
+    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(('User-Page:delete-confirm'))) {
       const path = '/api/v1/auth'
       const headers = {
         uid: window.localStorage.getItem('uid'),
