@@ -1,5 +1,4 @@
 {
   "no-avatar-error": "You have selected no avatar!",
-  "file-type-error": "Please select a JPG, JPEG, PNG or GIF image file!",
-  "error-header": "Update action could not be completed because of following error(s):"
+  "file-type-error": "Please select a JPG, JPEG, PNG or GIF image file!"
 }

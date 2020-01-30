@@ -195,11 +195,11 @@ class UserPage extends Component {
       axios.delete(path, { headers: headers })
         .then(() => {
           window.localStorage.clear()
-          window.alert(t('deletion-alert'))
+          window.alert(t('UserPage:deletion-alert'))
           window.location.replace('/')
         })
         .catch(() => {
-          window.alert(t('deletion-error'))
+          window.alert(t('UserPage:deletion-error'))
           window.localStorage.clear()
           window.location.replace('/login')
         })
@@ -240,9 +240,9 @@ class UserPage extends Component {
       } else {
         hostProfileForm = (
           <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
-            <p className='small-centered-paragraph'>{t('no-host-profile')}</p>
+            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
             <Button id='create-host-profile-button' onClick={this.hostProfileFormHandler.bind(this)}>
-              {t('host-profile-cta')}
+              {t('UserPage:host-profile-cta')}
             </Button>
           </div>
         )
@@ -313,7 +313,7 @@ class UserPage extends Component {
           {hostProfile}
           <Divider hidden />
           <Header id='delete-account-link' onClick={this.destroyAccount} className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
-            {t('delete-cta')}
+            {t('UserPage:delete-cta')}
           </Header>
         </div>
       )

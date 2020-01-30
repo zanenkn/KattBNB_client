@@ -120,7 +120,7 @@ class AvatarUpdateForm extends Component {
       if (this.state.errorDisplay) {
         errorDisplay = (
           <Message negative style={{ 'width': 'inherit' }} >
-            <Message.Header style={{ 'textAlign': 'center' }}>{t('error-header')}</Message.Header>
+            <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
             <ul id='message-error-list'>
               {this.state.errors.map(error => (
                 <li key={error}>{t(error)}</li>
