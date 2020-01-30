@@ -27,47 +27,35 @@ class HostProfileViewWrapper extends Component {
   }
 
   render() {
-    let hostProfileView
-
     if (this.state.loading) {
-      hostProfileView = (
-        <Spinner />
+      return <Spinner />
+    } else if (this.state.lat !== null && this.state.long !== null) {
+      return (
+        <div style={{ 'height': '100%' }}>
+          <HostProfileView
+            numberOfCats={0}
+            hostId={this.props.location.state.userId}
+            avatar={this.props.location.state.avatar}
+            nickname={this.props.location.state.nickname}
+            location={this.props.location.state.location}
+            rate={parseFloat(this.state.hostProfile.price_per_day_1_cat)}
+            supplement={parseFloat(this.state.hostProfile.supplement_price_per_cat_per_day)}
+            description={this.state.hostProfile.description}
+            lat={this.state.lat}
+            long={this.state.long}
+            noMessage={this.props.location.state.noMessage}
+          />
+        </div>
       )
     } else {
-      if (this.state.lat !== null && this.state.long !== null) {
-        hostProfileView = (
-          <div style={{ 'height': '100%' }}>
-            <HostProfileView
-              numberOfCats={0}
-              hostId={this.props.location.state.userId}
-              avatar={this.props.location.state.avatar}
-              nickname={this.props.location.state.nickname}
-              location={this.props.location.state.location}
-              rate={parseFloat(this.state.hostProfile.price_per_day_1_cat)}
-              supplement={parseFloat(this.state.hostProfile.supplement_price_per_cat_per_day)}
-              description={this.state.hostProfile.description}
-              lat={this.state.lat}
-              long={this.state.long}
-              noMessage={this.props.location.state.noMessage}
-            />
-          </div>
-        )
-      } else {
-        hostProfileView = (
-          <div className='content-wrapper' >
-            <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-              This user has no host profile.
-            </p>
-          </div>
-        )
-      }
+      return (
+        <div className='content-wrapper' >
+          <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+            This user has no host profile.
+          </p>
+        </div>
+      )
     }
-
-    return (
-      <>
-        {hostProfileView}
-      </>
-    )
   }
 }
 
