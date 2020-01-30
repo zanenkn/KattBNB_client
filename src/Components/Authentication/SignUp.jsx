@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Header, Segment, Form, Button, Dropdown, Message, Popup } from 'semantic-ui-react'
+import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -21,7 +22,8 @@ class SignUp extends Component {
     errorDisplay: false,
     loading: false,
     captcha: '',
-    userCaptcha: ''
+    userCaptcha: '',
+    termsAccepted: false
   }
 
   onChangeHandler = (e) => {
@@ -66,7 +68,7 @@ class SignUp extends Component {
   }
 
   listenEnterKey = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.state.termsAccepted) {
       this.createUser(event)
     }
   }
@@ -171,7 +173,7 @@ class SignUp extends Component {
                   onChange={this.handleLocationChange}
                   onKeyPress={this.listenEnterKey}
                 />
-              </div>
+              </div>   
               <div style={{ 'margin': '1em 0' }}>
                 <ClientCaptcha
                   captchaCode={code => this.setState({ captcha: code })}
@@ -192,8 +194,12 @@ class SignUp extends Component {
                 onKeyPress={this.listenEnterKey}
               />
             </Form>
+            <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
+              <Checkbox toggle onClick={() => this.setState({ termsAccepted: !this.state.termsAccepted })} />
+              <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+            </div>
             {errorDisplay}
-            <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false}>
+            <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false} disabled={this.state.termsAccepted ? false : true}>
               {t('SignUp:title')}
             </Button>
           </Segment>

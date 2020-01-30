@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
+import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
 import { Header, Segment, Button, Divider } from 'semantic-ui-react'
 import axios from 'axios'
@@ -8,7 +9,6 @@ import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import { withTranslation, Trans } from 'react-i18next'
-import Spinner from '../ReusableComponents/Spinner'
 
 class UserPage extends Component {
 
@@ -26,12 +26,17 @@ class UserPage extends Component {
     supplement: '',
     availability: [],
     forbiddenDates: [],
-    incomingBookings: []
+    incomingBookings: [],
+    outgoingBookings: [],
+    loading: true
   }
 
   async componentDidMount() {
     await axios.get(`/api/v1/host_profiles?user_id=${this.props.id}`).then(response => {
-      this.setState({ hostProfile: response.data })
+      this.setState({
+        hostProfile: response.data,
+        loading: false
+      })
     })
     if (this.state.hostProfile.length === 1) {
       const path = `/api/v1/host_profiles/${this.state.hostProfile[0].id}`
@@ -70,6 +75,7 @@ class UserPage extends Component {
         })
     }
     const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}`
+    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}`
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
@@ -77,6 +83,9 @@ class UserPage extends Component {
     }
     axios.get(pathIncoming, { headers: headers }).then(response => {
       this.setState({ incomingBookings: response.data })
+    })
+    axios.get(pathOutgoing, { headers: headers }).then(response => {
+      this.setState({ outgoingBookings: response.data })
     })
   }
 
@@ -134,21 +143,49 @@ class UserPage extends Component {
       displayPasswordForm: false,
       hostProfileForm: false
     })
-    let noAccountDelete = []
+    const { t } = this.props
+    let noAccountDeleteIncoming = []
+    let sendEmailToHostOutgoing = []
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
     if (this.state.incomingBookings.length > 0) {
       this.state.incomingBookings.map(booking => {
         if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
-          noAccountDelete.push(booking)
+          noAccountDeleteIncoming.push(booking)
         }
       })
     }
-    const { t } = this.props
-    if (noAccountDelete.length > 0) {
-      window.alert(t('delete-alert'))
-    } else if (window.confirm(t('delete-confirm'))) {
+    if (this.state.outgoingBookings.length > 0) {
+      this.state.outgoingBookings.map(booking => {
+        if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+          sendEmailToHostOutgoing.push(booking)
+        }
+      })
+    }
+    if (noAccountDeleteIncoming.length > 0) {
+      window.alert('To delete your account, please follow relevant instructions in our FAQ page!')
+    }
+    else if (sendEmailToHostOutgoing.length > 0 && window.confirm("You still have upcoming outgoing booking(s). By deleting your account, you consent to sending your email to the host(s). If you don't want to disclose your email, wait for the booking(s) to be resolved and try deleting your account again.")) {
+      const path = '/api/v1/auth'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.delete(path, { headers: headers })
+        .then(() => {
+          window.localStorage.clear()
+          window.alert('Your account was succesfully deleted!')
+          window.location.replace('/')
+        })
+        .catch(() => {
+          window.alert('There was a problem deleting your account! Please login and try again.')
+          window.localStorage.clear()
+          window.location.replace('/login')
+        })
+    }
+    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm('Do you really want to delete your account?')) {
       const path = '/api/v1/auth'
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -172,7 +209,7 @@ class UserPage extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady) {
+    if(this.props.tReady ===true && this.state.loading === false) {
       let locationForm, passwordForm, hostProfile, hostProfileForm
 
       if (this.state.displayLocationForm) {
