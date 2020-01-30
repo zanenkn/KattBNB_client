@@ -180,6 +180,13 @@ h4 {
   }
 }
 
+@media screen and (min-width: 1300px) {
+  .messenger-wrapper {
+    margin-top: 11rem;
+    width: 560px
+  }
+}
+
 .single-conversation-wrapper {
   padding-top: 1rem!important;
   margin: 0 auto
