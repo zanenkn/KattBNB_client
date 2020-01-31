@@ -180,10 +180,17 @@ h4 {
   }
 }
 
-@media screen and (min-width: 1300px) {
+@media screen and (min-width: 992px) {
   .messenger-wrapper {
-    margin-top: 11rem;
-    width: 560px
+    margin-top: 9rem;
+    width: 600px
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .messenger-wrapper {
+    margin-top: 10.5rem;
+    width: 660px
   }
 }
 
