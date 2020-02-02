@@ -1,5 +1,6 @@
 {
     "delete-alert": "För att radera ditt konto, vänligen följ relevanta instruktioner på vår Frågor och svar-sida!",
+    "delete-consent": "Du har fortfarande kommande utgående bokningar. Genom att ta bort ditt konto samtycker du till att skicka din e-postadress till kattvakten / kattvakterna. Om du inte vill avslöja din e-postadress så väntar du tills bokningen / bokningarna är slutförda och försöker sedan ta bort ditt konto igen.",
     "delete-confirm": "Är du säker på att du vill radera ditt konto?",
     "deletion-alert": "Ditt konto är nu raderat!",
     "deletion-error": "Ett fel uppstod när ditt konto skulle raderas! Vänligen logga in och försök igen.",
