@@ -36,6 +36,8 @@
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {
-    "change": "Ändra"
+    "change": "Ändra",
+    "save": "Spara",
+    "close": "Stäng"
   }
 }
