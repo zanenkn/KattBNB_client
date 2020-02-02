@@ -209,7 +209,7 @@ class UserPage extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady ===true && this.state.loading === false) {
+    if(this.props.tReady === true && this.state.loading === false) {
       let locationForm, passwordForm, hostProfile, hostProfileForm
 
       if (this.state.displayLocationForm) {
