@@ -73,8 +73,12 @@ const AboutUs = () => {
       </Header>
       <p>
         <Trans i18nKey='AboutUs:acknowledgements-txt'>
-          None of this would be possible without <a href='https://craftacademy.se/english/' target="_blank" rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
+          None of this would be possible without <a href='https://craftacademy.se' target='_blank' rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
         </Trans>
+      </p>
+      <Divider hidden />
+      <p>
+        Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa</a> for your precious help with implementing the translation package. We wish you all the best in your career as a Junior Web Developer.
       </p>
     </div>
   )
