@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { signInUser } from '../../reduxTokenAuthConfig'
 import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 class Login extends Component {
 
@@ -55,83 +56,84 @@ class Login extends Component {
   }
 
   render() {
-
     const { t } = this.props
     let errorDisplay, successDisplay, notRegisteredLinks, forgotPassword
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative style={{ 'textAlign': 'center' }} >
-          {this.state.errors}
-        </Message>
-      )
-    }
+    if (this.props.tReady) {
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative style={{ 'textAlign': 'center' }} >
+            {this.state.errors}
+          </Message>
+        )
+      }
 
-    if (this.state.successDisplay) {
-      successDisplay = (
-        <Message success style={{ 'textAlign': 'center' }} >
-          {t('Login:success-msg')}
-        </Message>
-      )
+      if (this.state.successDisplay) {
+        successDisplay = (
+          <Message success style={{ 'textAlign': 'center' }} >
+            {t('Login:success-msg')}
+          </Message>
+        )
 
-    } else {
-      notRegisteredLinks = (
-        <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
-          {t('Login:no-acc')}
-          <br></br>
-          <Header as={Link} to='sign-up' className='fake-link'>
-            {t('Login:signup-link')}
+      } else {
+        notRegisteredLinks = (
+          <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
+            {t('Login:no-acc')}
+            <br></br>
+            <Header as={Link} to='sign-up' className='fake-link'>
+              {t('Login:signup-link')}
+            </Header>
+          </p>
+        )
+
+        forgotPassword = (
+          <div style={{ 'textAlign': 'right' }}>
+            <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
+              {t('Login:forgot-link')}
+            </Header>
+          </div>
+        )
+      }
+      return (
+        <div className='content-wrapper' >
+          <Header as='h1'>
+            {t('Login:title')}
           </Header>
-        </p>
-      )
-
-      forgotPassword = (
-        <div style={{ 'textAlign': 'right' }}>
-          <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
-            {t('Login:forgot-link')}
-          </Header>
+          <Segment className='whitebox'>
+            <Form id='login-form'>
+              <Form.Input
+                required
+                id='email'
+                label={t('reusable:plch.email')}
+                value={this.state.email}
+                onChange={this.onChangeHandler}
+                placeholder={t('reusable:plch.email')}
+                onKeyPress={this.listenEnterKey}
+              />
+              <Form.Input
+                required
+                id='password'
+                type='password'
+                label={t('reusable:plch.password')}
+                value={this.state.password}
+                onChange={this.onChangeHandler}
+                placeholder={t('reusable:plch.password')}
+                onKeyPress={this.listenEnterKey}
+              />
+              {forgotPassword}
+            </Form>
+            {errorDisplay}
+            {successDisplay}
+            <Button className='submit-button' id='log-in-button' loading={this.state.loading ? true : false} onClick={this.logInUser}>
+              {t('Login:title')}
+            </Button>
+            {notRegisteredLinks}
+          </Segment>
         </div>
       )
-    }
+    } else { return <Spinner /> }
 
-    return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          {t('Login:title')}
-        </Header>
-        <Segment className='whitebox'>
-          <Form id='login-form'>
-            <Form.Input
-              required
-              id='email'
-              label={t('reusable:plch.email')}
-              value={this.state.email}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable:plch.email')}
-              onKeyPress={this.listenEnterKey}
-            />
-            <Form.Input
-              required
-              id='password'
-              type='password'
-              label={t('reusable:plch.password')}
-              value={this.state.password}
-              onChange={this.onChangeHandler}
-              placeholder={t('reusable:plch.password')}
-              onKeyPress={this.listenEnterKey}
-            />
-            {forgotPassword}
-          </Form>
-          {errorDisplay}
-          {successDisplay}
-          <Button className='submit-button' id='log-in-button' loading={this.state.loading ? true : false} onClick={this.logInUser}>
-            {t('Login:title')}
-          </Button>
-          {notRegisteredLinks}
-        </Segment>
-      </div>
-    )
   }
 }
 
-export default withTranslation()(connect(null, { signInUser })(Login))
+export default withTranslation('Login')(connect(null, { signInUser })(Login))

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
+import Spinner from '../ReusableComponents/Spinner'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
+import { withTranslation } from 'react-i18next'
 
 class LocationUpdateForm extends Component {
 
@@ -23,6 +25,7 @@ class LocationUpdateForm extends Component {
   }
 
   updateLocation = (e) => {
+    const { t } = this.props
     let address = this.props.fullAddress
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
@@ -31,10 +34,10 @@ class LocationUpdateForm extends Component {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['No location selected or location is unchanged!']
+        errors: ['no-location-error']
       })
     } else if (address !== '' && address.includes(this.state.newLocation) === false) {
-      if (window.confirm('It seems that the location you selected does not match your host profile address. Are you sure you want to continue?')) {
+      if (window.confirm(t('LocationUpdateForm:no-match-alert'))) {
         this.setState({ loading: true })
         e.preventDefault()
         const path = '/api/v1/auth/'
@@ -51,7 +54,7 @@ class LocationUpdateForm extends Component {
               errorDisplay: false,
               errors: ''
             })
-            window.alert('Location succesfully changed!')
+            window.alert(t('success-alert'))
             window.location.reload()
           })
           .catch(error => {
@@ -79,7 +82,7 @@ class LocationUpdateForm extends Component {
             errorDisplay: false,
             errors: ''
           })
-          window.alert('Location succesfully changed!')
+          window.alert(t('LocationUpdateForm:success-alert'))
           window.location.reload()
         })
         .catch(error => {
@@ -93,46 +96,50 @@ class LocationUpdateForm extends Component {
   }
 
   render() {
-    let errorDisplay
+    const { t } = this.props
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative style={{ 'width': 'inherit' }} >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
+    if (this.props.tReady) {
+      let errorDisplay
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative style={{ 'width': 'inherit' }} >
+            <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
+      return (
+        <>
+          <Divider />
+          <Form style={{ 'maxWidth': '194px' }}>
+            <Dropdown
+              clearable
+              search
+              selection
+              placeholder={t('LocationUpdateForm:new-location-plch')}
+              options={LOCATION_OPTIONS}
+              id='location'
+              style={{ 'width': '100%' }}
+              onChange={this.handleLocationChange}
+              onKeyPress={this.listenEnterKeyLocation}
+            />
+            {errorDisplay}
+          </Form>
+          <div className='button-wrapper'>
+            <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>{t('reusable:cta.close')}</Button>
+            <Button id='location-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateLocation}>{t('reusable:cta.change')}</Button>
+          </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
+        </>
       )
-    }
-
-    return (
-      <>
-        <Divider />
-        <Form style={{ 'maxWidth': '194px' }}>
-          <Dropdown
-            clearable
-            search
-            selection
-            placeholder='Select new location'
-            options={LOCATION_OPTIONS}
-            id='location'
-            style={{ 'width': '100%' }}
-            onChange={this.handleLocationChange}
-            onKeyPress={this.listenEnterKeyLocation}
-          />
-          {errorDisplay}
-        </Form>
-        <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>Close</Button>
-          <Button id='location-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateLocation}>Change</Button>
-        </div>
-        <Divider style={{ 'marginBottom': '2rem' }} />
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
-export default LocationUpdateForm
+export default withTranslation('LocationUpdateForm')(LocationUpdateForm)

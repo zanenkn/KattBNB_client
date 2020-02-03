@@ -18,7 +18,7 @@
     "pass-strength-bar-popup-header": "Password strength",
     "weak": "weak",
     "okay": "okay",
-    "good": "good", 
+    "good": "good",
     "strong": "strong"
   },
   "title": {
@@ -34,5 +34,10 @@
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):"
   },
-  "remaining-chars": "Remaining characters:"
+  "remaining-chars": "Remaining characters:",
+  "cta": {
+    "change": "Change",
+    "save": "Save",
+    "close": "Close"
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "delete-alert": "To delete your account, please follow relevant instructions in our FAQ page!",
+  "delete-consent": "You still have upcoming outgoing booking(s). By deleting your account, you consent to sending your email to the host(s). If you don't want to disclose your email, wait for the booking(s) to be resolved and try deleting your account again.",
+  "delete-confirm": "Do you really want to delete your account?",
+  "deletion-alert": "Your account was succesfully deleted!",
+  "deletion-error": "There was a problem deleting your account! Please login and try again.",
+  "no-host-profile": "You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.",
+  "host-profile-cta": "Create host profile",
+  "greeting": "Hi, {{username}}!",
+  "user-profile-p": "This is your <1>user</1> profile. Here you can update your avatar, location, and password.",
+  "delete-cta": "Delete your account"
+}
