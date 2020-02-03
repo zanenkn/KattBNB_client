@@ -8,8 +8,8 @@ import Spinner from './ReusableComponents/Spinner'
 
 const HostPopup = (props) => {
   const { t, ready } = useTranslation('HostPopup')
-  
-  if(ready) {
+
+  if (ready) {
     let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
     let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
 
@@ -35,7 +35,7 @@ const HostPopup = (props) => {
         >
           {t('HostPopup:more')}
         </Header>
-        <RequestToBookCTA 
+        <RequestToBookCTA
           numberOfCats={props.numberOfCats}
           nickname={props.nickname}
           checkInDate={props.checkInDate}
@@ -45,7 +45,7 @@ const HostPopup = (props) => {
         />
       </>
     )
-  } else {return <Spinner/>}
+  } else { return <Spinner /> }
 }
 
 export default HostPopup

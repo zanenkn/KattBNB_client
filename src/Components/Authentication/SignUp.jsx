@@ -80,7 +80,7 @@ class SignUp extends Component {
       this.props.history.push({ pathname: '/' })
     }
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       let errorDisplay
       if (this.state.errorDisplay) {
         errorDisplay = (
@@ -173,7 +173,7 @@ class SignUp extends Component {
                   onChange={this.handleLocationChange}
                   onKeyPress={this.listenEnterKey}
                 />
-              </div>   
+              </div>
               <div style={{ 'margin': '1em 0' }}>
                 <ClientCaptcha
                   captchaCode={code => this.setState({ captcha: code })}
@@ -205,7 +205,7 @@ class SignUp extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 

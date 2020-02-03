@@ -8,7 +8,7 @@ class ContactUs extends Component {
 
   render() {
     const { t } = this.props
-    if(this.props.tReady){
+    if (this.props.tReady) {
       return (
         <div className='content-wrapper' >
           <Header as='h1'>
@@ -64,7 +64,7 @@ class ContactUs extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 export default withTranslation('ContactUs')(ContactUs)

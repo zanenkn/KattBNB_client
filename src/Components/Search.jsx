@@ -136,7 +136,7 @@ class Search extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady){
+    if (this.props.tReady) {
       let errorDisplay
       const { from, to } = this.state
       const modifiers = { start: from, end: to }
@@ -165,7 +165,7 @@ class Search extends Component {
               <div className='required field' style={{ 'marginBottom': '0.5em' }}>
                 <label>
                   {t('Search:when')}
-                  </label>
+                </label>
                 <div className='InputFromTo'>
                   <DayPickerInput
                     value={from}
@@ -248,7 +248,7 @@ class Search extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 

@@ -104,7 +104,7 @@ class RequestToBook extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       let errorDisplay, messageLength
 
       messageLength = 400 - this.state.message.length
@@ -129,8 +129,8 @@ class RequestToBook extends Component {
           </Header>
           <Segment className='whitebox'>
             <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              <Trans i18nKey='RequestToBook:request-info' count={parseInt(this.state.numberOfCats)}> 
-                You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
+              <Trans i18nKey='RequestToBook:request-info' count={parseInt(this.state.numberOfCats)}>
+                You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{ count: this.state.numberOfCats }} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ checkin: this.state.checkIn }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ checkout: this.state.checkOut }}</strong>.
               </Trans>
             </p>
             <Form>
@@ -162,7 +162,7 @@ class RequestToBook extends Component {
           </Segment>
         </div>
       )
-    } else {return null}
+    } else { return null }
   }
 }
 

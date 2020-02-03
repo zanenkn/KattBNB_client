@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 const WIP = () => {
   const { t, ready } = useTranslation('Faq')
-  if(ready) {
+  if (ready) {
     return (
       <Segment className='whitebox' >
         <Header as='h4'>
@@ -18,7 +18,7 @@ const WIP = () => {
         </Header>
       </Segment>
     )
-  } else {return null}
+  } else { return null }
 }
 
 export default WIP

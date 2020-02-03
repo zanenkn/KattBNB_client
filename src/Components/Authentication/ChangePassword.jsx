@@ -71,7 +71,7 @@ class ChangePassword extends Component {
     const { t } = this.props
     let errorDisplay, successDisplay
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       if (this.state.errorDisplay) {
         errorDisplay = (
           <Message negative >
@@ -84,7 +84,7 @@ class ChangePassword extends Component {
           </Message>
         )
       }
-  
+
       if (this.state.successDisplay) {
         successDisplay = (
           <Message success style={{ 'textAlign': 'center' }} >
@@ -92,7 +92,7 @@ class ChangePassword extends Component {
           </Message>
         )
       }
-  
+
       return (
         <div className='content-wrapper' >
           <Header as='h1'>
@@ -144,7 +144,7 @@ class ChangePassword extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 

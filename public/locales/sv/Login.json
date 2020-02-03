@@ -1,7 +1,7 @@
 {
-    "success-msg": "Din inloggning lyckades!",
-    "no-acc": "Inte registrerad?",
-    "signup-link": "Skapa ett konto!",
-    "forgot-link": "Glömt ditt lösenord?",
-    "title": "Logga in"
+  "success-msg": "Din inloggning lyckades!",
+  "no-acc": "Inte registrerad?",
+  "signup-link": "Skapa ett konto!",
+  "forgot-link": "Glömt ditt lösenord?",
+  "title": "Logga in"
 }

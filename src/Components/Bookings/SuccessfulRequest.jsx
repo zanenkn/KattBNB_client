@@ -28,7 +28,7 @@ class SuccessfulRequest extends Component {
 
   render() {
     const { t } = this.props
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       return (
         <div className='content-wrapper' >
           <Header as='h1'>
@@ -37,18 +37,18 @@ class SuccessfulRequest extends Component {
           <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
             <p>
               <Trans i18nKey='SuccessfulRequest:p1' count={parseInt(this.state.numberOfCats)}>
-                You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{{count: this.state.numberOfCats}} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{checkin: this.state.checkIn}}</strong> until <strong style={{ 'color': '#c90c61' }}>{{checkout: this.state.checkOut}}</strong>.
+                You have successfully requested a booking for <strong style={{ 'color': '#c90c61' }}>{{ count: this.state.numberOfCats }} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ checkin: this.state.checkIn }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ checkout: this.state.checkOut }}</strong>.
               </Trans>
             </p>
             <p>
               <Trans i18nKey='SuccessfulRequest:p2'>
-                <strong style={{ 'color': '#c90c61' }}>{{host: this.state.nickname}}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link'>FAQ</Header>.
+                <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <Header as={Link} to='faq' className='fake-link'>FAQ</Header>.
               </Trans>
             </p>
           </Segment>
         </div>
       )
-    } else {return null}
+    } else { return null }
   }
 }
 

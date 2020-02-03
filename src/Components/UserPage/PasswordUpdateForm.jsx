@@ -72,7 +72,7 @@ class PasswordUpdateForm extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       let errorDisplay
       if (this.state.errorDisplay) {
         errorDisplay = (
@@ -144,7 +144,7 @@ class PasswordUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else {return null} 
+    } else { return null }
   }
 }
 

@@ -49,8 +49,8 @@ class PasswordReset extends Component {
 
   render() {
     const { t } = this.props
-    
-    if(this.props.tReady) {
+
+    if (this.props.tReady) {
       let errorDisplay
       if (this.state.errorDisplay) {
         errorDisplay = (
@@ -64,7 +64,7 @@ class PasswordReset extends Component {
           </Message>
         )
       }
-  
+
       return (
         <div className='content-wrapper' >
           <Header as='h1'>
@@ -92,7 +92,7 @@ class PasswordReset extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 

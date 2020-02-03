@@ -12,7 +12,7 @@ const PasswordResetSuccess = (props) => {
     setTimeout(function () { window.location.reload(true) }, 500)
   }
 
-  if(ready) {
+  if (ready) {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
@@ -27,7 +27,7 @@ const PasswordResetSuccess = (props) => {
         </Segment>
       </div>
     )
-  } else {return <Spinner/>}
+  } else { return <Spinner /> }
 }
 
 const mapStateToProps = state => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn })

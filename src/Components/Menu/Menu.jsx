@@ -39,7 +39,7 @@ class Menu extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       let userLinks
 
       if (this.props.currentUserIn) {

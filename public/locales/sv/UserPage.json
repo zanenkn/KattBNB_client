@@ -1,12 +1,12 @@
 {
-    "delete-alert": "För att radera ditt konto, vänligen följ relevanta instruktioner på vår Frågor och svar-sida!",
-    "delete-consent": "Du har fortfarande kommande utgående bokningar. Genom att ta bort ditt konto samtycker du till att skicka din e-postadress till kattvakten / kattvakterna. Om du inte vill avslöja din e-postadress så väntar du tills bokningen / bokningarna är slutförda och försöker sedan ta bort ditt konto igen.",
-    "delete-confirm": "Är du säker på att du vill radera ditt konto?",
-    "deletion-alert": "Ditt konto är nu raderat!",
-    "deletion-error": "Ett fel uppstod när ditt konto skulle raderas! Vänligen logga in och försök igen.",
-    "no-host-profile": "Du är inte registrerad som kattvakt och visas inte i sökningen. Om du vill vara kattvakt, vänligen skapa en kattvaktsprofil",
-    "host-profile-cta": "Skapa kattvaktsprofil",
-    "greeting": "Hej, {{username}}!",
-    "user-profile-p": "Det här är din <1>användareprofil</1>. Här kan du uppdatera din avatar, plats och lösenord.",
-    "delete-cta": "Radera ditt konto"
+  "delete-alert": "För att radera ditt konto, vänligen följ relevanta instruktioner på vår Frågor och svar-sida!",
+  "delete-consent": "Du har fortfarande kommande utgående bokningar. Genom att ta bort ditt konto samtycker du till att skicka din e-postadress till kattvakten / kattvakterna. Om du inte vill avslöja din e-postadress så väntar du tills bokningen / bokningarna är slutförda och försöker sedan ta bort ditt konto igen.",
+  "delete-confirm": "Är du säker på att du vill radera ditt konto?",
+  "deletion-alert": "Ditt konto är nu raderat!",
+  "deletion-error": "Ett fel uppstod när ditt konto skulle raderas! Vänligen logga in och försök igen.",
+  "no-host-profile": "Du är inte registrerad som kattvakt och visas inte i sökningen. Om du vill vara kattvakt, vänligen skapa en kattvaktsprofil",
+  "host-profile-cta": "Skapa kattvaktsprofil",
+  "greeting": "Hej, {{username}}!",
+  "user-profile-p": "Det här är din <1>användareprofil</1>. Här kan du uppdatera din avatar, plats och lösenord.",
+  "delete-cta": "Radera ditt konto"
 }

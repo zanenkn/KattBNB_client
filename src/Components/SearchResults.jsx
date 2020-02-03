@@ -193,9 +193,9 @@ class SearchResults extends Component {
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
-    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results, popupContent
+    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
         let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
         availableByDate.map(host => {
@@ -204,7 +204,7 @@ class SearchResults extends Component {
           }
         })
       }
-  
+
       switch (this.state.results) {
         case 'list':
           results = (
@@ -222,7 +222,7 @@ class SearchResults extends Component {
           mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
           listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
           resultCounter = (
-            <Trans 
+            <Trans
               values={{ count: finalAvailableHosts.length }}
               i18nKey='SearchResults:counter'
             />
@@ -245,10 +245,10 @@ class SearchResults extends Component {
           mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
           listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
           resultCounter = (
-            <Trans 
-            values={{ count: finalAvailableHosts.length }}
-            i18nKey='SearchResults:counter'
-          />
+            <Trans
+              values={{ count: finalAvailableHosts.length }}
+              i18nKey='SearchResults:counter'
+            />
           )
           break
         case 'profile':
@@ -285,7 +285,7 @@ class SearchResults extends Component {
           )
           break
       }
-  
+
       if (this.state.results === 'profile') {
         listButton = (
           <Icon id='list-button' name='list' disabled circular inverted style={{ 'backgroundColor': 'grey' }} />
@@ -301,7 +301,7 @@ class SearchResults extends Component {
           <Icon id='map-button' name='map' circular inverted style={mapButtonStyle} onClick={this.switchResultView} />
         )
       }
-  
+
       return (
         <>
           <Popup
@@ -312,19 +312,19 @@ class SearchResults extends Component {
             position='top center'
           >
             <div>
-              {this.state.loading ? <Spinner/> :
-              <HostPopup
-                numberOfCats={this.state.numberOfCats}
-                checkInDate={this.state.checkInDate}
-                checkOutDate={this.state.checkOutDate}
-                avatar={this.state.hostAvatar}
-                nickname={this.state.hostNickname}
-                location={this.state.hostLocation}
-                rate={this.state.hostRate}
-                supplement={this.state.hostSupplement}
-                handleHostProfileClick={this.handleHostProfileClick.bind(this)}
-                requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
-              />
+              {this.state.loading ? <Spinner /> :
+                <HostPopup
+                  numberOfCats={this.state.numberOfCats}
+                  checkInDate={this.state.checkInDate}
+                  checkOutDate={this.state.checkOutDate}
+                  avatar={this.state.hostAvatar}
+                  nickname={this.state.hostNickname}
+                  location={this.state.hostLocation}
+                  rate={this.state.hostRate}
+                  supplement={this.state.hostSupplement}
+                  handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+                  requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+                />
               }
             </div>
           </Popup>
@@ -370,7 +370,7 @@ class SearchResults extends Component {
           {results}
         </>
       )
-    } else {return <Spinner/>}
+    } else { return <Spinner /> }
   }
 }
 

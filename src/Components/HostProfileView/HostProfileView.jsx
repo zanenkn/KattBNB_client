@@ -15,7 +15,7 @@ const HostProfileView = (props) => {
   let locationAndPrice, sendMessage, requestToBook
   const { t, ready } = useTranslation('HostProfileView')
 
-  if(ready) {
+  if (ready) {
     if (props.location && props.numberOfCats === 0) {
       let priceWithDecimalsString, totalRate
       priceWithDecimalsString = props.rate.toFixed(2)
@@ -45,7 +45,7 @@ const HostProfileView = (props) => {
 
     if (props.noMessage !== true) {
       sendMessage = (
-        <MessageHostCTA 
+        <MessageHostCTA
           nickname={props.nickname}
           messageHost={props.messageHost.bind(this)}
         />
@@ -55,8 +55,8 @@ const HostProfileView = (props) => {
 
     if (props.requestToBookButtonClick) {
       requestToBook = (
-        <div style={{'marginTop': '3rem'}}>
-          <RequestToBookCTA 
+        <div style={{ 'marginTop': '3rem' }}>
+          <RequestToBookCTA
             numberOfCats={props.numberOfCats}
             nickname={props.nickname}
             checkInDate={props.checkInDate}
@@ -92,7 +92,7 @@ const HostProfileView = (props) => {
         {requestToBook}
       </div>
     )
-  } else {return <Spinner/>}
+  } else { return <Spinner /> }
 }
 
 export default HostProfileView

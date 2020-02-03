@@ -112,7 +112,7 @@ class AvatarUpdateForm extends Component {
   render() {
     const { t } = this.props
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar
 
       noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
@@ -219,7 +219,7 @@ class AvatarUpdateForm extends Component {
           </Icon.Group>
         </div>
       )
-    } else {return null}
+    } else { return null }
   }
 }
 

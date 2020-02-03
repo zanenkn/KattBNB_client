@@ -6,7 +6,7 @@ import Spinner from '../ReusableComponents/Spinner'
 
 const Faq = () => {
   const { t, ready } = useTranslation('Faq')
-  if(ready) {
+  if (ready) {
     return (
       <Sidebar.Pushable className='content-wrapper' >
         <Header as='h1'>
@@ -57,7 +57,7 @@ const Faq = () => {
 
       </Sidebar.Pushable>
     )
-  } else {return <Spinner/>}
+  } else { return <Spinner /> }
 }
 
 export default Faq

@@ -59,7 +59,7 @@ export class Login extends Component {
     const { t } = this.props
     let errorDisplay, successDisplay, notRegisteredLinks, forgotPassword
 
-    if(this.props.tReady) {
+    if (this.props.tReady) {
       if (this.state.errorDisplay) {
         errorDisplay = (
           <Message negative style={{ 'textAlign': 'center' }} >
@@ -67,14 +67,14 @@ export class Login extends Component {
           </Message>
         )
       }
-  
+
       if (this.state.successDisplay) {
         successDisplay = (
           <Message success style={{ 'textAlign': 'center' }} >
             {t('Login:success-msg')}
           </Message>
         )
-  
+
       } else {
         notRegisteredLinks = (
           <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
@@ -85,7 +85,7 @@ export class Login extends Component {
             </Header>
           </p>
         )
-  
+
         forgotPassword = (
           <div style={{ 'textAlign': 'right' }}>
             <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
@@ -131,8 +131,8 @@ export class Login extends Component {
           </Segment>
         </div>
       )
-    } else {return <Spinner/>}
-    
+    } else { return <Spinner /> }
+
   }
 }
 
