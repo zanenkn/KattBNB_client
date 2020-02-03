@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Header } from 'semantic-ui-react'
+import Spinner from './Spinner'
 import moment from 'moment'
 import { Trans, useTranslation } from 'react-i18next'
 
@@ -24,6 +25,6 @@ const RequestToBookCTA = (props) => {
         </Button>
       </>
     )
-  } else { return null }
+  } else { return <Spinner /> }
 }
 export default RequestToBookCTA

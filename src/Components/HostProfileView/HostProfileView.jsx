@@ -49,7 +49,6 @@ const HostProfileView = (props) => {
           nickname={props.nickname}
           messageHost={props.messageHost.bind(this)}
         />
-        //MessageHostCTA(props.nickname, props.messageHost)
       )
     }
 

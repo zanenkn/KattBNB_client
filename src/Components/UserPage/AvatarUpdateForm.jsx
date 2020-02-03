@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
+import Spinner from '../ReusableComponents/Spinner'
 import { Button, Message, Image, Icon } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 
@@ -219,7 +220,7 @@ class AvatarUpdateForm extends Component {
           </Icon.Group>
         </div>
       )
-    } else { return null }
+    } else { return <Spinner /> }
   }
 }
 

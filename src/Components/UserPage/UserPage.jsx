@@ -180,7 +180,7 @@ class UserPage extends Component {
           window.location.replace('/')
         })
         .catch(() => {
-          window.alert(t('UserPage:deletion-alert'))
+          window.alert(t('UserPage:deletion-error'))
           window.localStorage.clear()
           window.location.replace('/login')
         })

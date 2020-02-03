@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Segment, Icon, Container } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
-
+import Spinner from '../ReusableComponents/Spinner'
 
 const WIP = () => {
   const { t, ready } = useTranslation('Faq')
@@ -18,7 +18,7 @@ const WIP = () => {
         </Header>
       </Segment>
     )
-  } else { return null }
+  } else { return <Spinner /> }
 }
 
 export default WIP

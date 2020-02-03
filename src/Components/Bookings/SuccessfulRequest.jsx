@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
+import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import { Trans, withTranslation } from 'react-i18next'
 
@@ -48,7 +49,7 @@ class SuccessfulRequest extends Component {
           </Segment>
         </div>
       )
-    } else { return null }
+    } else { return <Spinner /> }
   }
 }
 

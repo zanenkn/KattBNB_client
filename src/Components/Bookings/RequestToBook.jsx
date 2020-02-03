@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
+import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
@@ -162,7 +163,7 @@ class RequestToBook extends Component {
           </Segment>
         </div>
       )
-    } else { return null }
+    } else { return <Spinner /> }
   }
 }
 

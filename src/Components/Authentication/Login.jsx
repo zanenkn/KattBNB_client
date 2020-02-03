@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
-export class Login extends Component {
+class Login extends Component {
 
   state = {
     email: '',
