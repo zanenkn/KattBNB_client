@@ -12,14 +12,19 @@ i18n
 
   .init({
     fallbackLng,
-    ns: ['translation', 'AboutUs', 'SearchResults', 'Search', 'Faq', 'WorkInProgress', 'ContactUs', 'ChangePassword', 'Login', 'PasswordReset', 'PasswordResetSuccess', 'SignUp', 'SignupSuccess', 'RequestToBook', 'SuccessfulRequest', 'HostPopup', 'HostProfileView', 'reusable'],
-    lng: 'en',
+    ns: ['reusable'],
+    lng: window.localStorage.getItem('I18N_LANGUAGE') || 'en',
     debug: true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
 
     interpolation: {
       escapeValue: false
+    },
+
+    react: {
+      wait: true,
+      useSuspense: false
     }
   })
 

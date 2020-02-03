@@ -1,0 +1,6 @@
+{
+    "no-location-error": "Ingen kommun vald eller kommun oförändrad!",
+    "no-match-alert": "Det verkar som att den kommun du valt inte stämmer med adressen i din kattvaktsprofil. Är du säker på att du vill fortsätta?",
+    "success-alert": "Kommun har ändrats!",
+    "new-location-plch": "Välj ny kommun"
+}

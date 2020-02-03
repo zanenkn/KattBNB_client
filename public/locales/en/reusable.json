@@ -34,5 +34,10 @@
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):"
   },
-  "remaining-chars": "Remaining characters:"
+  "remaining-chars": "Remaining characters:",
+  "cta": {
+    "change": "Change",
+    "save": "Save",
+    "close": "Close"
+  }
 }
