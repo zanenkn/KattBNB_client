@@ -53,7 +53,7 @@ const SupplementUpdateForm = (props) => {
           onKeyPress={e => { e.key === 'Enter' && updateSupplement() }}
         />
       </Form>
-      {errorDisplay ?
+      {errorDisplay &&
         <Message negative >
           <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
@@ -62,7 +62,6 @@ const SupplementUpdateForm = (props) => {
             ))}
           </ul>
         </Message>
-        : () => { }
       }
       <div className='button-wrapper'>
         <Button secondary id='supplement-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>

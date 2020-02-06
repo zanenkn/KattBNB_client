@@ -53,7 +53,7 @@ const DescriptionUpdateForm = (props) => {
           onChange={e => setNewDescription(e.target.value)}
         />
       </Form>
-      {errorDisplay ?
+      {errorDisplay &&
         <Message negative >
           <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
@@ -62,7 +62,7 @@ const DescriptionUpdateForm = (props) => {
             ))}
           </ul>
         </Message>
-      : () => { }}
+      }
       <div className='button-wrapper'>
         <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
         <Button id='description-submit-button' className='submit-button' loading={loading} onClick={() => updateDescription()}>Save</Button>

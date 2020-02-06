@@ -38,12 +38,6 @@ const RateUpdateForm = (props) => {
     }
   }
 
-  const listenEnterRateUpdate = (event) => {
-    if (event.key === 'Enter') {
-      updateRate()
-    }
-  }
-
   return (
     <>
       <Divider />
@@ -57,10 +51,10 @@ const RateUpdateForm = (props) => {
           id='newRate'
           value={newRate}
           onChange={e => setNewRate(e.target.value)}
-          onKeyPress={e => listenEnterRateUpdate(e)}
+          onKeyPress={e => { e.key === 'Enter' && updateRate() }}
         />
       </Form>
-      {errorDisplay ?
+      {errorDisplay &&
         <Message negative >
           <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
@@ -69,7 +63,7 @@ const RateUpdateForm = (props) => {
             ))}
           </ul>
         </Message>
-        : () => { }}
+      }
       <div className='button-wrapper'>
         <Button secondary id='rate-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
         <Button id='rate-submit-button' className='submit-button' loading={loading} onClick={() => updateRate()}>Save</Button>

@@ -45,12 +45,6 @@ const SignUp = (props) => {
     }
   }
 
-  const listenEnterKey = (event) => {
-    if (event.key === 'Enter' && termsAccepted) {
-      createUser()
-    }
-  }
-
   if (props.history.action === 'POP') {
     props.history.push({ pathname: '/' })
   }
@@ -73,8 +67,8 @@ const SignUp = (props) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t('reusable:plch.email')}
-              onKeyPress={e => listenEnterKey(e)}
-            />
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
+              />
             <Popup
               trigger={
                 <Form.Input
@@ -85,7 +79,8 @@ const SignUp = (props) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={t('reusable:plch.password')}
-                  onKeyPress={e => listenEnterKey(e)} />
+                  onKeyPress={e => { e.key === 'Enter' && createUser() }}
+                />
               }
               header={t('reusable:plch.pass-strength-bar-popup-header')}
               content={
@@ -107,7 +102,7 @@ const SignUp = (props) => {
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               placeholder={t('reusable:plch.password-confirmation')}
-              onKeyPress={e => listenEnterKey(e)}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
             />
             <Form.Input
               required
@@ -116,7 +111,7 @@ const SignUp = (props) => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               placeholder={t('SignUp:nickname-plch')}
-              onKeyPress={e => listenEnterKey(e)}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
             />
             <div className='required field' style={{ 'marginBottom': '1.5em' }}>
               <label>
@@ -131,7 +126,7 @@ const SignUp = (props) => {
                 options={LOCATION_OPTIONS}
                 id='location'
                 onChange={(e, { value }) => setLocation(value)}
-                onKeyPress={e => listenEnterKey(e)}
+                onKeyPress={e => { e.key === 'Enter' && createUser() }}
               />
             </div>
             <div style={{ 'margin': '1em 0' }}>
@@ -151,7 +146,7 @@ const SignUp = (props) => {
               value={userCaptcha}
               onChange={(e) => setUserCaptcha(e.target.value)}
               placeholder={t('SignUp:captcha-plch')}
-              onKeyPress={e => listenEnterKey(e)}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
             />
           </Form>
           <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
@@ -159,7 +154,7 @@ const SignUp = (props) => {
             <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
           </div>
 
-          {errorDisplay ?
+          {errorDisplay &&
             <Message negative >
               <Message.Header style={{ 'textAlign': 'center' }}>{t('SignUp:error-header')}</Message.Header>
               <ul id='message-error-list'>
@@ -168,7 +163,6 @@ const SignUp = (props) => {
                 ))}
               </ul>
             </Message>
-            : () => { }
           }
           <Button id='sign-up-button' onClick={() => createUser()} loading={loading} disabled={!termsAccepted}>
             {t('SignUp:title')}

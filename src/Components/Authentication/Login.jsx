@@ -34,12 +34,6 @@ const Login = (props) => {
       })
   }
 
-  const listenEnterKey = (event) => {
-    if (event.key === 'Enter') {
-      logInUser()
-    }
-  }
-
   if (ready) {
     return (
       <div className='content-wrapper' >
@@ -55,7 +49,7 @@ const Login = (props) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t('reusable:plch.email')}
-              onKeyPress={e => listenEnterKey(e)}
+              onKeyPress={e => { e.key === 'Enter' && logInUser() }}
             />
             <Form.Input
               required
@@ -65,30 +59,30 @@ const Login = (props) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={t('reusable:plch.password')}
-              onKeyPress={e => listenEnterKey(e)}
+              onKeyPress={e => { e.key === 'Enter' && logInUser() }}
             />
-            {successDisplay === false ?
+            {successDisplay === false &&
               <div style={{ 'textAlign': 'right' }}>
                 <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined' >
                   {t('Login:forgot-link')}
                 </Header>
               </div>
-              : () => { }}
+            }
           </Form>
-          {errorDisplay ?
+          {errorDisplay &&
             <Message negative style={{ 'textAlign': 'center' }} >
               {errors}
             </Message>
-            : () => { }}
-          {successDisplay ?
+          }
+          {successDisplay &&
             <Message success style={{ 'textAlign': 'center' }} >
               {t('Login:success-msg')}
             </Message>
-            : () => { }}
+          }
           <Button className='submit-button' id='log-in-button' loading={loading} onClick={() => logInUser()}>
             {t('Login:title')}
           </Button>
-          {successDisplay === false ?
+          {successDisplay === false &&
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
               {t('Login:no-acc')}
               <br></br>
@@ -96,7 +90,7 @@ const Login = (props) => {
                 {t('Login:signup-link')}
               </Header>
             </p>
-            : () => { }}
+          }
         </Segment>
       </div>
     )
