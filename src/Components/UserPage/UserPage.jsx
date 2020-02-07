@@ -128,6 +128,74 @@ const UserPage = (props) => {
     setDisplayPasswordForm(false)
   }
 
+  const destroyAccount = () => {
+    setDisplayLocationForm(false)
+    setDisplayPasswordForm(false)
+    setHostProfileForm(false)
+
+    let noAccountDeleteIncoming = []
+    let sendEmailToHostOutgoing = []
+    let todaysDate = new Date()
+    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+    let today = new Date(utc).getTime()
+
+    if (incomingBookings.length > 0) {
+      incomingBookings.map(booking => {
+        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
+          noAccountDeleteIncoming.push(booking)
+        }
+      })
+    }
+    if (outgoingBookings.length > 0) {
+      outgoingBookings.map(booking => {
+        if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+          sendEmailToHostOutgoing.push(booking)
+        }
+      })
+    }
+    if (noAccountDeleteIncoming.length > 0) {
+      window.alert(t('UserPage:delete-alert'))
+    }
+    else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
+      const path = '/api/v1/auth'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.delete(path, { headers: headers })
+        .then(() => {
+          window.localStorage.clear()
+          window.alert(t('UserPage:deletion-alert'))
+          window.location.replace('/')
+        })
+        .catch(() => {
+          window.alert(t('UserPage:deletion-error'))
+          window.localStorage.clear()
+          window.location.replace('/login')
+        })
+    }
+    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(('User-Page:delete-confirm'))) {
+      const path = '/api/v1/auth'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.delete(path, { headers: headers })
+        .then(() => {
+          window.localStorage.clear()
+          window.alert(t('UserPage:deletion-alert'))
+          window.location.replace('/')
+        })
+        .catch(() => {
+          window.alert(t('UserPage:deletion-error'))
+          window.localStorage.clear()
+          window.location.replace('/login')
+        })
+    }
+  } 
+
   // destroyAccount = () => {
   //   this.setState({
   //     displayLocationForm: false,
@@ -291,8 +359,7 @@ const UserPage = (props) => {
             </div>
         }
         <Divider hidden />
-        <Header id='delete-account-link'
-          //onClick={this.destroyAccount} 
+        <Header id='delete-account-link' onClick={() => destroyAccount()} 
           className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
           {t('UserPage:delete-cta')}
         </Header>
