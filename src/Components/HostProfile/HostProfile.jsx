@@ -85,6 +85,7 @@ const HostProfile = forwardRef((props, ref) => {
           description={props.description}
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
         />
       }
       <p id='address'>

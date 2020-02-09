@@ -22,15 +22,13 @@ const DescriptionUpdateForm = (props) => {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert('Your description was succesfully updated!')
-          window.location.reload()
-          setLoading(false)
-          errorDisplay(false)
-
+          props.setElement('description', newDescription)
+          props.closeAllForms()
         })
         .catch(error => {
           setLoading(false)
           setErrorDisplay(true)
-          setErrors(error.response.data.errors.full_messages)
+          setErrors([error.response.data.errors.full_messages])
         })
     } else {
       setLoading(false)

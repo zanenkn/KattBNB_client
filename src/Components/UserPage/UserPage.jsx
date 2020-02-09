@@ -19,6 +19,16 @@ const UserPage = (props) => {
     createHostProfileForm: false
   })
   const [hostProfile, setHostProfile] = useState([])
+  
+  const [element, setElement] = useState({
+    description: '',
+    fullAddress: '',
+    rate: '',
+    maxCats: '',
+    supplement: '',
+    availability: []  
+  })
+  
   const [description, setDescription] = useState('')
   const [fullAddress, setFullAddress] = useState('')
   const [rate, setRate] = useState('')
@@ -56,6 +66,14 @@ const UserPage = (props) => {
           } else {
             finalSupplement = supplementToString
           }
+          setElement({
+            description: resp.data.description,
+            fullAddress: resp.data.full_address,
+            rate: finalRate,
+            maxCats: resp.data.max_cats_accepted,
+            supplement: finalSupplement,
+            availability: resp.data.availability
+          })
           setDescription(resp.data.description)
           setFullAddress(resp.data.full_address)
           setRate(finalRate)
@@ -107,6 +125,15 @@ const UserPage = (props) => {
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
     }
+  }
+
+  const elementUpdateHandler = (elementName, newState) => {
+    let elements = Object.keys(element)
+    elements.forEach(element => {
+      if (element === elementName) {
+        setElement(old => ({ ...old, [elementName]: newState }))
+      }
+    })
   }
 
   const closeLocationAndPasswordForms = () => {
@@ -235,17 +262,18 @@ const UserPage = (props) => {
           ?
           <HostProfile
             id={hostProfile[0].id}
-            description={description}
-            fullAddress={fullAddress}
-            rate={rate}
-            maxCats={maxCats}
-            supplement={supplement}
-            availability={availability}
+            description={element.description}
+            fullAddress={element.fullAddress}
+            rate={element.rate}
+            maxCats={element.maxCats}
+            supplement={element.supplement}
+            availability={element.availability}
             forbiddenDates={forbiddenDates}
             location={props.location}
             incomingBookings={incomingBookings}
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
             ref={hostProfileElement}
+            setElement={elementUpdateHandler.bind(this)}
           />
           :
           form.createHostProfileForm
