@@ -21,14 +21,13 @@ const SupplementUpdateForm = (props) => {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert('Your supplement rate for 1 cat was succesfully updated!')
-          window.location.reload()
-          setLoading(false)
-          setErrorDisplay(false)
+          props.setElement('supplement', newSupplement)
+          props.closeAllForms()
         })
         .catch(error => {
           setLoading(false)
           setErrorDisplay(false)
-          setErrors(error.response.data.errors.full_messages)
+          setErrors([error.response.data.errors.full_messages])
         })
     } else {
       setLoading(false)
