@@ -11,14 +11,14 @@ import AvatarUpdateForm from './AvatarUpdateForm'
 import { useTranslation, Trans } from 'react-i18next'
 
 const UserPage = (props) => {
-
   const hostProfileElement = useRef()
   const { t, ready } = useTranslation('UserPage')
-
-  const [displayLocationForm, setDisplayLocationForm] = useState(false)
-  const [displayPasswordForm, setDisplayPasswordForm] = useState(false)
+  const [form, setForm] = useState({
+    editLocationForm: false,
+    editPasswordForm: false,
+    createHostProfileForm: false
+  })
   const [hostProfile, setHostProfile] = useState([])
-  const [hostProfileForm, setHostProfileForm] = useState(false)
   const [description, setDescription] = useState('')
   const [fullAddress, setFullAddress] = useState('')
   const [rate, setRate] = useState('')
@@ -91,47 +91,31 @@ const UserPage = (props) => {
   }, [])
 
   const avatarFormHandler = () => {
-    setDisplayLocationForm(false)
-    setDisplayPasswordForm(false)
-    setHostProfileForm(false)
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
     }
   }
 
-  const locationFormHandler = () => {
-    setDisplayLocationForm(!displayLocationForm)
-    setDisplayPasswordForm(false)
-    setHostProfileForm(false)
+  const formHandler = (e) => {
+    let states = ['editLocationForm', 'editPasswordForm', 'createHostProfileForm']
+    states.forEach(stt => {
+      if (stt === e.target.id) {
+        setForm(old => ({ ...old, [stt]: !form[stt] }))
+      } else setForm(old => ({ ...old, [stt]: false }))
+    })
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
     }
-  }
-
-  const passwordFormHandler = () => {
-    setDisplayLocationForm(false)
-    setDisplayPasswordForm(!displayPasswordForm)
-    setHostProfileForm(false)
-    if (hostProfile.length === 1) {
-      hostProfileElement.current.closeAllForms()
-    }
-  }
-
-  const hostProfileFormHandler = () => {
-    setDisplayLocationForm(false)
-    setDisplayPasswordForm(false)
-    setHostProfileForm(!hostProfileForm)
   }
 
   const closeLocationAndPasswordForms = () => {
-    setDisplayLocationForm(false)
-    setDisplayPasswordForm(false)
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false }))
+
   }
 
   const destroyAccount = () => {
-    setDisplayLocationForm(false)
-    setDisplayPasswordForm(false)
-    setHostProfileForm(false)
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))
 
     let noAccountDeleteIncoming = []
     let sendEmailToHostOutgoing = []
@@ -175,7 +159,7 @@ const UserPage = (props) => {
           window.location.replace('/login')
         })
     }
-    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(('User-Page:delete-confirm'))) {
+    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
       const path = '/api/v1/auth'
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -196,97 +180,7 @@ const UserPage = (props) => {
     }
   } 
 
-  // destroyAccount = () => {
-  //   this.setState({
-  //     displayLocationForm: false,
-  //     displayPasswordForm: false,
-  //     hostProfileForm: false
-  //   })
-  //   const { t } = this.props
-  //   let noAccountDeleteIncoming = []
-  //   let sendEmailToHostOutgoing = []
-  //   let todaysDate = new Date()
-  //   let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-  //   let today = new Date(utc).getTime()
-  //   if (this.state.incomingBookings.length > 0) {
-  //     this.state.incomingBookings.map(booking => {
-  //       if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
-  //         noAccountDeleteIncoming.push(booking)
-  //       }
-  //     })
-  //   }
-  //   if (this.state.outgoingBookings.length > 0) {
-  //     this.state.outgoingBookings.map(booking => {
-  //       if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-  //         sendEmailToHostOutgoing.push(booking)
-  //       }
-  //     })
-  //   }
-  //   if (noAccountDeleteIncoming.length > 0) {
-  //     window.alert(t('UserPage:delete-alert'))
-  //   }
-  //   else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
-  //     const path = '/api/v1/auth'
-  //     const headers = {
-  //       uid: window.localStorage.getItem('uid'),
-  //       client: window.localStorage.getItem('client'),
-  //       'access-token': window.localStorage.getItem('access-token')
-  //     }
-  //     axios.delete(path, { headers: headers })
-  //       .then(() => {
-  //         window.localStorage.clear()
-  //         window.alert(t('UserPage:deletion-alert'))
-  //         window.location.replace('/')
-  //       })
-  //       .catch(() => {
-  //         window.alert(t('UserPage:deletion-error'))
-  //         window.localStorage.clear()
-  //         window.location.replace('/login')
-  //       })
-  //   }
-  //   else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(('User-Page:delete-confirm'))) {
-  //     const path = '/api/v1/auth'
-  //     const headers = {
-  //       uid: window.localStorage.getItem('uid'),
-  //       client: window.localStorage.getItem('client'),
-  //       'access-token': window.localStorage.getItem('access-token')
-  //     }
-  //     axios.delete(path, { headers: headers })
-  //       .then(() => {
-  //         window.localStorage.clear()
-  //         window.alert(t('UserPage:deletion-alert'))
-  //         window.location.replace('/')
-  //       })
-  //       .catch(() => {
-  //         window.alert(t('UserPage:deletion-error'))
-  //         window.localStorage.clear()
-  //         window.location.replace('/login')
-  //       })
-  //   }
-  // }
-
-
   if (ready === true && loading === false) {
-    let locationForm, passwordForm
-
-    if (displayLocationForm) {
-      locationForm = (
-        <LocationUpdateForm
-          location={props.location}
-          fullAddress={fullAddress}
-          closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-        />
-      )
-    }
-
-    if (displayPasswordForm) {
-      passwordForm = (
-        <PasswordUpdateForm
-          closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-        />
-      )
-    }
-
     return (
       <div className='content-wrapper'>
         <Segment className='whitebox'>
@@ -311,19 +205,29 @@ const UserPage = (props) => {
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
               &nbsp;{props.location}&ensp;
-                <Header as='strong' id='change-location-link' onClick={() => locationFormHandler()} className='fake-link-underlined'>
+                <Header as='strong' id='editLocationForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            {locationForm}
+            {form.editLocationForm &&
+                <LocationUpdateForm
+                location={props.location}
+                fullAddress={fullAddress}
+                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+              />
+            }
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               &nbsp;******&ensp;
-                <Header as='strong' id='change-password-link' onClick={() => passwordFormHandler()} className='fake-link-underlined'>
+                <Header as='strong' id='editPasswordForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            {passwordForm}
+            {form.editPasswordForm &&
+              <PasswordUpdateForm
+              closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+            />
+            }
           </div>
         </Segment>
         <Divider hidden />
@@ -344,16 +248,16 @@ const UserPage = (props) => {
             ref={hostProfileElement}
           />
           :
-          hostProfileForm
+          form.createHostProfileForm
             ?
             <HostProfileForm
               user_id={props.id}
-              closeForm={hostProfileFormHandler.bind(this)}
+              closeForm={formHandler.bind(this)}
               location={props.location} />
             :
             <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
               <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
-              <Button id='create-host-profile-button' onClick={hostProfileFormHandler.bind(this)}>
+              <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
                 {t('UserPage:host-profile-cta')}
               </Button>
             </div>

@@ -21,24 +21,6 @@ const HostProfile = forwardRef((props, ref) => {
     editAddress: false
   })
 
-  useImperativeHandle(ref, () => ({
-
-    closeAllForms() {
-      setForm(old => ({
-        ...old,
-        editDescriptionForm: false,
-        editMaxCatsForm: false,
-        editRateForm: false,
-        editSupplementForm: false,
-        editableCalendar: false,
-        editAddress: false
-      }))
-      setErrorDisplay(false)
-      setErrors([])
-    }
-
-  }))
-
   const closeAllForms = () => {
     setForm(old => ({
       ...old,
@@ -52,8 +34,13 @@ const HostProfile = forwardRef((props, ref) => {
     setErrorDisplay(false)
     setErrors([])
   }
-  
 
+  useImperativeHandle(ref, () => ({
+    closeAllForms() {
+      closeAllForms()
+    }
+  }))
+  
   const formHandler = e => {
     closeAllForms()
     let states = Object.keys(form)
