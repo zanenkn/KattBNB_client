@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
 const RateUpdateForm = (props) => {
-
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(false)
@@ -22,14 +21,13 @@ const RateUpdateForm = (props) => {
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert('Your daily rate for 1 cat was succesfully updated!')
-          window.location.reload()
-          setLoading(false)
-          setErrorDisplay(false)
+          props.setElement('rate', newRate)
+          props.closeAllForms()
         })
         .catch(error => {
           setLoading(false)
           setErrorDisplay(true)
-          setErrors(error.response.data.errors.full_messages)
+          setErrors([error.response.data.errors.full_messages])
         })
     } else {
       setLoading(false)
