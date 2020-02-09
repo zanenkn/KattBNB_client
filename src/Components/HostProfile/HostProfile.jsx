@@ -115,6 +115,7 @@ const HostProfile = forwardRef((props, ref) => {
           maxCats={props.maxCats}
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
         />
       }
       <p id='rate'>
@@ -129,6 +130,7 @@ const HostProfile = forwardRef((props, ref) => {
           rate={props.rate}
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
         />
       }
       <p id='supplement'>
@@ -143,6 +145,7 @@ const HostProfile = forwardRef((props, ref) => {
           supplement={props.supplement}
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
         />
       }
       <p id='availability' style={{ 'marginBottom': '0' }}>

@@ -29,12 +29,6 @@ const UserPage = (props) => {
     availability: []  
   })
   
-  const [description, setDescription] = useState('')
-  const [fullAddress, setFullAddress] = useState('')
-  const [rate, setRate] = useState('')
-  const [maxCats, setMaxCats] = useState('')
-  const [supplement, setSupplement] = useState('')
-  const [availability, setAvailability] = useState([])
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
   const [outgoingBookings, setOutgoingBookings] = useState([])
@@ -74,12 +68,6 @@ const UserPage = (props) => {
             supplement: finalSupplement,
             availability: resp.data.availability
           })
-          setDescription(resp.data.description)
-          setFullAddress(resp.data.full_address)
-          setRate(finalRate)
-          setMaxCats(resp.data.max_cats_accepted)
-          setSupplement(finalSupplement)
-          setAvailability(resp.data.availability)
           setForbiddenDates(resp.data.forbidden_dates)
         })
     }
@@ -239,7 +227,7 @@ const UserPage = (props) => {
             {form.editLocationForm &&
                 <LocationUpdateForm
                 location={props.location}
-                fullAddress={fullAddress}
+                fullAddress={element.fullAddress}
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
               />
             }
