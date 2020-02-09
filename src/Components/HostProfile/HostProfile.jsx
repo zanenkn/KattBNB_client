@@ -29,7 +29,7 @@ const HostProfile = forwardRef((props, ref) => {
       editRateForm: false,
       editSupplementForm: false,
       editableCalendar: false,
-      editAddress: false
+      editAddress: false  
     }))
     setErrorDisplay(false)
     setErrors([])
@@ -101,6 +101,7 @@ const HostProfile = forwardRef((props, ref) => {
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
           location={props.location}
+          setElement={props.setElement}
         />
       }
       <p id='maxCats'>
