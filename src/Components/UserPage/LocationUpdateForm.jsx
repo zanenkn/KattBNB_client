@@ -117,7 +117,7 @@ class LocationUpdateForm extends Component {
       return (
         <>
           <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
+          <Form style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
             <Dropdown
               clearable
               search

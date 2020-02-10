@@ -91,7 +91,7 @@ class PasswordUpdateForm extends Component {
       return (
         <>
           <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
+          <Form style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
             <Form.Input
               required
               id='currentPassword'
