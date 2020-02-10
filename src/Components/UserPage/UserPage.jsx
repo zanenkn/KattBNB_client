@@ -255,6 +255,7 @@ const UserPage = (props) => {
             {form.editNotificationsForm &&
               <NotificationsUpdateForm 
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                messageNotifications={props.messageNotifications}
               />
             }
           </div>
@@ -308,7 +309,8 @@ const mapStateToProps = state => ({
   location: state.reduxTokenAuth.currentUser.attributes.location,
   email: state.reduxTokenAuth.currentUser.attributes.uid,
   id: state.reduxTokenAuth.currentUser.attributes.id,
-  avatar: state.reduxTokenAuth.currentUser.attributes.avatar
+  avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
+  messageNotifications: state.reduxTokenAuth.currentUser.attributes.messageNotifications
 })
 
 export default connect(mapStateToProps)(UserPage)

@@ -6,6 +6,7 @@ const NotificationsUpdateForm = (props) => {
 
   const { t, ready } = useTranslation()
   const [loading, setLoading] = useState(false)
+  const [messageNotifications, setMessageNotifications] = useState(props.messageNotifications)
 
   const updateMessageNotification = () => {
 
@@ -14,7 +15,7 @@ const NotificationsUpdateForm = (props) => {
   return (
     <>
       <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
-        <Checkbox toggle />
+        <Checkbox toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)}/>
         <label style={{ 'paddingLeft': '1.3em' }}>Receive notifications for every message</label>
       </div>
       <div className='button-wrapper'>
