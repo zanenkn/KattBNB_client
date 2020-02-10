@@ -1,212 +1,176 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { withTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import Spinner from '../ReusableComponents/Spinner'
 
-class SignUp extends Component {
+const SignUp = (props) => {
 
-  state = {
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-    nickname: '',
-    location: '',
-    errors: '',
-    url: 'https://kattbnb.netlify.com/login',
-    errorDisplay: false,
-    loading: false,
-    captcha: '',
-    userCaptcha: '',
-    termsAccepted: false
-  }
+  const { t, ready } = useTranslation('SignUp')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [nickname, setNickname] = useState('')
+  const [location, setLocation] = useState('')
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [captcha, setCaptcha] = useState('')
+  const [userCaptcha, setUserCaptcha] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
 
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
-  }
-
-  handleLocationChange = (e, { value }) => {
-    this.setState({ location: value })
-  }
-
-  createUser = (e) => {
-    this.setState({ loading: true })
-    e.preventDefault()
-    if (this.state.userCaptcha !== this.state.captcha) {
-      this.setState({
-        errors: ["SignUp:You didn't input the captcha phrase correctly, please try again!"],
-        errorDisplay: true,
-        loading: false
-      })
+  const createUser = (e) => {
+    setLoading(true)
+    if (userCaptcha !== captcha) {
+      setErrors(["SignUp:You didn't input the captcha phrase correctly, please try again!"])
+      setErrorDisplay(true)
+      setLoading(false)
     } else {
-      const { history, registerUser } = this.props
-      const {
-        email,
-        password,
-        passwordConfirmation,
-        location,
-        nickname,
-        url
-      } = this.state
+      const { history, registerUser } = props
+      const url = 'https://kattbnb.netlify.com/login'
       registerUser({ email, password, passwordConfirmation, location, nickname, url })
         .then(() => {
-          this.setState({ errorDisplay: false })
+          setErrorDisplay(false)
           history.push('/signup-success')
         }).catch(error => {
-          this.setState({
-            errors: error.response.data.errors.full_messages,
-            errorDisplay: true,
-            loading: false
-          })
+          setErrors(error.response.data.errors.full_messages)
+          setErrorDisplay(true)
+          setLoading(false)
         })
     }
   }
 
-  listenEnterKey = (event) => {
-    if (event.key === 'Enter' && this.state.termsAccepted) {
-      this.createUser(event)
-    }
+  if (props.history.action === 'POP') {
+    props.history.push({ pathname: '/' })
   }
 
-  render() {
-    const { t } = this.props
-
-    if (this.props.history.action === 'POP') {
-      this.props.history.push({ pathname: '/' })
-    }
-
-    if (this.props.tReady) {
-      let errorDisplay
-      if (this.state.errorDisplay) {
-        errorDisplay = (
-          <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }}>{t('SignUp:error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {this.state.errors.map(error => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        )
-      }
-
-      return (
-        <div className='content-wrapper' >
-          <Header as='h1'>
-            {t('SignUp:title')}
-          </Header>
-          <Segment className='whitebox'>
-            <p style={{ 'textAlign': 'center' }}>
-              {t('SignUp:instructions')}
-            </p>
-            <Form id='signup-form'>
-              <Form.Input
-                required
-                id='email'
-                label={t('reusable:plch.email')}
-                value={this.state.email}
-                onChange={this.onChangeHandler}
-                placeholder={t('reusable:plch.email')}
-                onKeyPress={this.listenEnterKey}
+  if (ready) {
+    return (
+      <div className='content-wrapper' >
+        <Header as='h1'>
+          {t('SignUp:title')}
+        </Header>
+        <Segment className='whitebox'>
+          <p style={{ 'textAlign': 'center' }}>
+            {t('SignUp:instructions')}
+          </p>
+          <Form id='signup-form'>
+            <Form.Input
+              required
+              id='email'
+              label={t('reusable:plch.email')}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t('reusable:plch.email')}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
               />
-              <Popup
-                trigger={
-                  <Form.Input
-                    required
-                    id='password'
-                    type='password'
-                    label={t('reusable:plch.password')}
-                    value={this.state.password}
-                    onChange={this.onChangeHandler}
-                    placeholder={t('reusable:plch.password')}
-                    onKeyPress={this.listenEnterKey}
-                  />
-                }
-                header={t('reusable:plch.pass-strength-bar-popup-header')}
-                content={
-                  <PasswordStrengthBar
-                    style={{ 'marginBottom': '0.5rem' }}
-                    password={this.state.password}
-                    minLength={6}
-                    scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
-                    shortScoreWord={t('reusable:plch.pass-strength-bar')}
-                  />
-                }
-                on='focus'
-              />
-              <Form.Input
-                required
-                id='passwordConfirmation'
-                type='password'
-                label={t('reusable:plch.password-confirmation')}
-                value={this.state.passwordConfirmation}
-                onChange={this.onChangeHandler}
-                placeholder={t('reusable:plch.password-confirmation')}
-                onKeyPress={this.listenEnterKey}
-              />
-              <Form.Input
-                required
-                id='nickname'
-                label={t('SignUp:nickname-plch')}
-                value={this.state.username}
-                onChange={this.onChangeHandler}
-                placeholder={t('SignUp:nickname-plch')}
-                onKeyPress={this.listenEnterKey}
-              />
-              <div className='required field' style={{ 'marginBottom': '1.5em' }}>
-                <label>
-                  {t('SignUp:location-plch')}
-                </label>
-                <Dropdown
-                  clearable
-                  search
-                  selection
-                  style={{ 'width': '100%' }}
-                  placeholder={t('SignUp:location-plch')}
-                  options={LOCATION_OPTIONS}
-                  id='location'
-                  onChange={this.handleLocationChange}
-                  onKeyPress={this.listenEnterKey}
+            <Popup
+              trigger={
+                <Form.Input
+                  required
+                  id='password'
+                  type='password'
+                  label={t('reusable:plch.password')}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t('reusable:plch.password')}
+                  onKeyPress={e => { e.key === 'Enter' && createUser() }}
                 />
-              </div>
-              <div style={{ 'margin': '1em 0' }}>
-                <ClientCaptcha
-                  captchaCode={code => this.setState({ captcha: code })}
-                  fontFamily='bodoni'
-                  fontColor='#c90c61'
-                  charsCount={6}
-                  backgroundColor='#e8e8e8'
-                  width={130}
+              }
+              header={t('reusable:plch.pass-strength-bar-popup-header')}
+              content={
+                <PasswordStrengthBar
+                  style={{ 'marginBottom': '0.5rem' }}
+                  password={password}
+                  minLength={6}
+                  scoreWords={[t('reusable:plch.weak'), t('reusable:plch.weak'), t('reusable:plch.okay'), t('reusable:plch.good'), t('reusable:plch.strong')]}
+                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
                 />
-              </div>
-              <Form.Input
-                label={t('SignUp:captcha-label')}
-                required
-                id='userCaptcha'
-                value={this.state.userCaptcha}
-                onChange={this.onChangeHandler}
-                placeholder={t('SignUp:captcha-plch')}
-                onKeyPress={this.listenEnterKey}
+              }
+              on='focus'
+            />
+            <Form.Input
+              required
+              id='passwordConfirmation'
+              type='password'
+              label={t('reusable:plch.password-confirmation')}
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              placeholder={t('reusable:plch.password-confirmation')}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
+            />
+            <Form.Input
+              required
+              id='nickname'
+              label={t('SignUp:nickname-plch')}
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder={t('SignUp:nickname-plch')}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
+            />
+            <div className='required field' style={{ 'marginBottom': '1.5em' }}>
+              <label>
+                {t('SignUp:location-plch')}
+              </label>
+              <Dropdown
+                clearable
+                search
+                selection
+                style={{ 'width': '100%' }}
+                placeholder={t('SignUp:location-plch')}
+                options={LOCATION_OPTIONS}
+                id='location'
+                onChange={(e, { value }) => setLocation(value)}
+                onKeyPress={e => { e.key === 'Enter' && createUser() }}
               />
-            </Form>
-            <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
-              <Checkbox toggle onClick={() => this.setState({ termsAccepted: !this.state.termsAccepted })} />
-              <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
             </div>
-            {errorDisplay}
-            <Button id='sign-up-button' onClick={this.createUser} loading={this.state.loading ? true : false} disabled={this.state.termsAccepted ? false : true}>
-              {t('SignUp:title')}
-            </Button>
-          </Segment>
-        </div>
-      )
-    } else { return <Spinner /> }
-  }
+            <div style={{ 'margin': '1em 0' }}>
+              <ClientCaptcha
+                captchaCode={code => setCaptcha(code)}
+                fontFamily='bodoni'
+                fontColor='#c90c61'
+                charsCount={6}
+                backgroundColor='#e8e8e8'
+                width={130}
+              />
+            </div>
+            <Form.Input
+              label={t('SignUp:captcha-label')}
+              required
+              id='userCaptcha'
+              value={userCaptcha}
+              onChange={(e) => setUserCaptcha(e.target.value)}
+              placeholder={t('SignUp:captcha-plch')}
+              onKeyPress={e => { e.key === 'Enter' && createUser() }}
+            />
+          </Form>
+          <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
+            <Checkbox toggle onClick={() => setTermsAccepted(!termsAccepted)} />
+            <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+          </div>
+
+          {errorDisplay &&
+            <Message negative >
+              <Message.Header style={{ 'textAlign': 'center' }}>{t('SignUp:error-header')}</Message.Header>
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          }
+          <Button id='sign-up-button' onClick={() => createUser()} loading={loading} disabled={!termsAccepted}>
+            {t('SignUp:title')}
+          </Button>
+        </Segment>
+      </div>
+    )
+  } else { return <Spinner /> }
 }
 
-export default withTranslation('SignUp')(connect(null, { registerUser })(SignUp))
+export default connect(null, { registerUser })(SignUp)

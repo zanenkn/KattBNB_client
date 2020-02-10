@@ -1,95 +1,73 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
-class DescriptionUpdateForm extends Component {
+const DescriptionUpdateForm = (props) => {
 
-  state = {
-    errorDisplay: false,
-    errors: '',
-    loading: false,
-    newDescription: this.props.description
-  }
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [newDescription, setNewDescription] = useState(props.description)
 
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
-  }
-
-  updateDescription = (e) => {
-    e.preventDefault()
-    this.setState({ loading: true })
-    if (this.state.newDescription !== '' && this.state.newDescription !== this.props.description) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
+  const updateDescription = () => {
+    setLoading(true)
+    if (newDescription !== '' && newDescription !== props.description) {
+      const path = `/api/v1/host_profiles/${props.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = { description: this.state.newDescription }
+      const payload = { description: newDescription }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false
-          })
           window.alert('Your description was succesfully updated!')
-          window.location.reload()
+          props.setElement('description', newDescription)
+          props.closeAllForms()
         })
         .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.errors.full_messages])
         })
     } else {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['The field is blank or unchanged!']
-      })
+      setLoading(false)
+      setErrorDisplay(true)
+      setErrors(['The field is blank or unchanged!'])
     }
   }
 
-  render() {
-    let errorDisplay
-
-    if (this.state.errorDisplay) {
-      errorDisplay = (
+  return (
+    <>
+      <Divider />
+      <p className='small-centered-paragraph'>
+        Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search.
+        </p>
+      <Form id='update-description'>
+        <Form.TextArea
+          required
+          id='newDescription'
+          value={newDescription}
+          onChange={e => setNewDescription(e.target.value)}
+        />
+      </Form>
+      {errorDisplay &&
         <Message negative >
           <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
           <ul id='message-error-list'>
-            {this.state.errors.map(error => (
+            {errors.map(error => (
               <li key={error}>{error}</li>
             ))}
           </ul>
         </Message>
-      )
-    }
-
-    return (
-      <>
-        <Divider />
-        <p className='small-centered-paragraph'>
-          Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search.
-        </p>
-        <Form id='update-description'>
-          <Form.TextArea
-            required
-            id='newDescription'
-            value={this.state.newDescription}
-            onChange={this.onChangeHandler}
-          />
-        </Form>
-        {errorDisplay}
-        <div className='button-wrapper'>
-          <Button secondary id='description-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          <Button id='description-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateDescription}>Save</Button>
-        </div>
-        <Divider style={{ 'marginBottom': '2rem' }} />
-      </>
-    )
-  }
+      }
+      <div className='button-wrapper'>
+        <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
+        <Button id='description-submit-button' className='submit-button' loading={loading} onClick={() => updateDescription()}>Save</Button>
+      </div>
+      <Divider style={{ 'marginBottom': '2rem' }} />
+    </>
+  )
 }
 
 export default DescriptionUpdateForm

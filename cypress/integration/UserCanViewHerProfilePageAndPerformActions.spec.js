@@ -25,7 +25,7 @@ describe('User can view her profile page', () => {
       status: 200,
       response: 'fixture:successful_location_change.json',
     })
-    cy.get('#change-location-link').click()
+    cy.get('#editLocationForm').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
     cy.get('#location-submit-button').click()
@@ -41,7 +41,7 @@ describe('User can view her profile page', () => {
       status: 422,
       response: 'fixture:unsuccessful_location_change_user_page.json',
     })
-    cy.get('#change-location-link').click()
+    cy.get('#editLocationForm').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
     cy.get('.ui > div > .ui > #location > .dropdown').click()
@@ -56,7 +56,7 @@ describe('User can view her profile page', () => {
       status: 200,
       response: 'fixture:successful_password_change_user_page.json',
     })
-    cy.get('#change-password-link').click()
+    cy.get('#editPasswordForm').click()
     cy.get('#currentPassword').type('password')
     cy.get('#newPassword').type('SeCuReP@SsWoRd')
     cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true })
@@ -71,7 +71,7 @@ describe('User can view her profile page', () => {
       status: 422,
       response: 'fixture:unsuccessful_password_change_user_page.json',
     })
-    cy.get('#change-password-link').click()
+    cy.get('#editPasswordForm').click()
     cy.get('#currentPassword').type('passwordD')
     cy.get('#newPassword').type('SeCuReP@SsWoR')
     cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true })
