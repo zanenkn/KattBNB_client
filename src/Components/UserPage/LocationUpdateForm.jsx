@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
-import Spinner from '../ReusableComponents/Spinner'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 
