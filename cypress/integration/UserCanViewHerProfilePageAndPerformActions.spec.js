@@ -79,6 +79,21 @@ describe('User can view her profile page', () => {
     cy.contains("Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters")
   })
 
+  it('and change her notification settings successfully', () => {
+    cy.route({
+      method: 'PUT',
+      url: 'http://localhost:3007/api/v1/auth',
+      status: 200,
+      response: 'fixture:successful_location_change.json',
+    })
+    cy.get('#editNotificationsForm').click()
+    cy.get('.fitted > label').click()
+    cy.get('#notifications-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Message notification settings updated!')
+    })
+  })
+
   it('and successfully deletes her account', () => {
     cy.route({
       method: 'DELETE',

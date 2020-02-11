@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
-import Spinner from '../ReusableComponents/Spinner'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 
@@ -117,7 +116,7 @@ class LocationUpdateForm extends Component {
       return (
         <>
           <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
+          <Form style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
             <Dropdown
               clearable
               search
@@ -138,7 +137,7 @@ class LocationUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else { return <Spinner /> }
+    } else { return null }
   }
 }
 

@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Header } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
 
 const MessageHostCTA = (props) => {
   const { t } = useTranslation()
+  const [loading, setLoading] = useState(false)
+
+  const handleOnClick = (e) => {
+    setLoading(true)
+    e.preventDefault()
+    props.messageHost(e)
+  }
+
   return (
     <>
       <Header id='total' as='h3' style={{ 'marginBottom': '0' }}>
@@ -17,7 +25,8 @@ const MessageHostCTA = (props) => {
       <Button
         id='send-message'
         style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
-        onClick={props.messageHost}>
+        loading={loading}
+        onClick={(e) => handleOnClick(e)}>
         {t('HostProfileView:send-cta')}
       </Button>
     </>
