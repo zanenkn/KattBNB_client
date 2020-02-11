@@ -43,7 +43,7 @@ const NotificationsUpdateForm = (props) => {
         </div>
         <div className='button-wrapper'>
           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-          <Button id='location-submit-button' className='submit-button' loading={loading} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
+          <Button id='location-submit-button' className='submit-button' loading={loading} disabled={messageNotifications === props.messageNotifications ? true : false} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>
