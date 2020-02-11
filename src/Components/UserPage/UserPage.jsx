@@ -21,16 +21,16 @@ const UserPage = (props) => {
     editNotificationsForm: false
   })
   const [hostProfile, setHostProfile] = useState([])
-  
+
   const [element, setElement] = useState({
     description: '',
     fullAddress: '',
     rate: '',
     maxCats: '',
     supplement: '',
-    availability: []  
+    availability: []
   })
-  
+
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
   const [outgoingBookings, setOutgoingBookings] = useState([])
@@ -105,12 +105,16 @@ const UserPage = (props) => {
     }
   }
 
+  const closeLocationAndPasswordForms = () => {
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false }))
+  }
+
   const formHandler = (e) => {
     let states = ['editLocationForm', 'editPasswordForm', 'createHostProfileForm', 'editNotificationsForm']
     states.forEach(stt => {
       if (stt === e.target.id) {
-        setForm(old => ({ ...old, [stt]: !form[stt] }))
-      } else setForm(old => ({ ...old, [stt]: false }))
+        setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, [stt]: !form[stt] }))
+      } 
     })
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
@@ -124,11 +128,6 @@ const UserPage = (props) => {
         setElement(old => ({ ...old, [elementName]: newState }))
       }
     })
-  }
-
-  const closeLocationAndPasswordForms = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false }))
-
   }
 
   const destroyAccount = () => {
@@ -195,7 +194,7 @@ const UserPage = (props) => {
           window.location.replace('/login')
         })
     }
-  } 
+  }
 
   if (ready === true && loading === false) {
     return (
@@ -226,42 +225,43 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            {form.editLocationForm &&
+            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
                 <LocationUpdateForm
-                location={props.location}
-                fullAddress={element.fullAddress}
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-              />
-            }
+                  location={props.location}
+                  fullAddress={element.fullAddress}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                />
+              
+            </div>
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               &nbsp;******&ensp;
                 <Header as='strong' id='editPasswordForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
-                  {t('reusable:cta.change')}
-                </Header>
+                {t('reusable:cta.change')}
+              </Header>
             </p>
-            {form.editPasswordForm &&
-              <PasswordUpdateForm
-              closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-            />
-            }
+            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+                <PasswordUpdateForm
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                />
+            </div>
             <p>
-              <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z"/></svg>
+              <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
               &nbsp;Notification settings&ensp;
                 <Header as='strong' id='editNotificationsForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
-                  {t('reusable:cta.change')}
-                </Header>  
+                {t('reusable:cta.change')}
+              </Header>
             </p>
-            {form.editNotificationsForm &&
-              <NotificationsUpdateForm 
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                messageNotifications={props.messageNotifications}
-              />
-            }
+            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+                <NotificationsUpdateForm
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  messageNotifications={props.messageNotifications}
+                />
+            </div>
           </div>
         </Segment>
         <Divider hidden />
-        {hostProfile.length === 1 
+        {hostProfile.length === 1
           ?
           <HostProfile
             id={hostProfile[0].id}
@@ -294,7 +294,7 @@ const UserPage = (props) => {
             </div>
         }
         <Divider hidden />
-        <Header id='delete-account-link' onClick={() => destroyAccount()} 
+        <Header id='delete-account-link' onClick={() => destroyAccount()}
           className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
           {t('UserPage:delete-cta')}
         </Header>

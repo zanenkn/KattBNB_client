@@ -145,7 +145,7 @@ class PasswordUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else { return <Spinner /> }
+    } else { return null }
   }
 }
 

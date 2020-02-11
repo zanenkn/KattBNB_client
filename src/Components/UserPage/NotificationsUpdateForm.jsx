@@ -27,7 +27,7 @@ const NotificationsUpdateForm = (props) => {
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>
     )
-  } else { return <Spinner /> }
+  } else { return null }
 }
 
 export default NotificationsUpdateForm
