@@ -96,7 +96,7 @@ const UserPage = (props) => {
       })
     }
     asyncDidMount()
-  }, [])
+  }, [props.id, props.username])
 
   const avatarFormHandler = () => {
     setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))

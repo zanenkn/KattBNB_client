@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Checkbox, Divider, Button } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
-import Spinner from '../ReusableComponents/Spinner'
 
 const NotificationsUpdateForm = (props) => {
 

@@ -22,7 +22,7 @@ const HostProfileViewWrapper = (props) => {
           setLoading(false)
         }
       })
-  }, [])
+  }, [props.location.state.userId])
 
   if (loading) {
     return <Spinner />
