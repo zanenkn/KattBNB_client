@@ -8,7 +8,7 @@ const HostProfileViewWrapper = (props) => {
   const [hostProfile, setHostProfile] = useState([])
   const [lat, setLat] = useState(null)
   const [long, setLong] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios.get(`/api/v1/host_profiles?user_id=${props.location.state.userId}`)
