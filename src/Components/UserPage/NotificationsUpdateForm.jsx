@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Checkbox, Divider, Button } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
+import axios from 'axios'
 
 const NotificationsUpdateForm = (props) => {
 
@@ -9,8 +10,29 @@ const NotificationsUpdateForm = (props) => {
   const [messageNotifications, setMessageNotifications] = useState(props.messageNotifications)
 
   const updateMessageNotification = () => {
-
+    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
+      window.localStorage.clear()
+      window.location.replace('/login')
+    } else {
+      setLoading(true)
+      const path = '/api/v1/auth/'
+      const payload = { message_notification: messageNotifications }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.put(path, payload, { headers: headers })
+        .then(() => {
+          window.alert('Message notification settings updated')
+          window.location.reload()
+        })
+        .catch(() => {
+          setLoading(false)
+        })
+    }
   }
+
   if (ready) {
     return (
       <div style={{ 'maxWidth': '213px' }}>
