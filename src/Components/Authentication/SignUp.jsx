@@ -68,7 +68,7 @@ const SignUp = (props) => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t('reusable:plch.email')}
               onKeyPress={e => { e.key === 'Enter' && createUser() }}
-              />
+            />
             <Popup
               trigger={
                 <Form.Input
@@ -151,7 +151,7 @@ const SignUp = (props) => {
           </Form>
           <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
             <Checkbox toggle onClick={() => setTermsAccepted(!termsAccepted)} />
-            <label style={{ 'paddingLeft': '1.3em' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+            <label style={{ 'paddingLeft': '1.3em', 'color': termsAccepted ? 'grey' : 'silver' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
           </div>
 
           {errorDisplay &&
