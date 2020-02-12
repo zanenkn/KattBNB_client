@@ -35,6 +35,7 @@ const UserPage = (props) => {
   const [incomingBookings, setIncomingBookings] = useState([])
   const [outgoingBookings, setOutgoingBookings] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingHostProfile, setLoadingHostProfile] = useState(true)
 
   useEffect(() => {
     if (hostProfile.length === 1) {
@@ -71,6 +72,7 @@ const UserPage = (props) => {
             availability: resp.data.availability
           })
           setForbiddenDates(resp.data.forbidden_dates)
+          setLoadingHostProfile(false)
         })
     }
   }, [hostProfile])
@@ -99,22 +101,22 @@ const UserPage = (props) => {
   }, [props.id, props.username])
 
   const avatarFormHandler = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
     }
   }
 
   const closeLocationAndPasswordForms = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false }))
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
   }
 
   const formHandler = (e) => {
     let states = ['editLocationForm', 'editPasswordForm', 'createHostProfileForm', 'editNotificationsForm']
     states.forEach(stt => {
       if (stt === e.target.id) {
-        setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, [stt]: !form[stt] }))
-      } 
+        setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false, [stt]: !form[stt] }))
+      }
     })
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
@@ -206,7 +208,7 @@ const UserPage = (props) => {
           <p style={{ 'textAlign': 'center' }}>
             <Trans i18nKey='UserPage:user-profile-p'>
               This is your <strong>user</strong> profile. Here you can update your avatar, location, and password.
-              </Trans>
+            </Trans>
           </p>
           <AvatarUpdateForm
             avatar={props.avatar}
@@ -225,13 +227,12 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
-                <LocationUpdateForm
-                  location={props.location}
-                  fullAddress={element.fullAddress}
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                />
-              
+            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+              <LocationUpdateForm
+                location={props.location}
+                fullAddress={element.fullAddress}
+                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+              />
             </div>
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
@@ -240,10 +241,10 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
-                <PasswordUpdateForm
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                />
+            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+              <PasswordUpdateForm
+                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+              />
             </div>
             <p>
               <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
@@ -252,17 +253,16 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
-                <NotificationsUpdateForm
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                  messageNotifications={props.messageNotifications}
-                />
+            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+              <NotificationsUpdateForm
+                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                messageNotifications={props.messageNotifications}
+              />
             </div>
           </div>
         </Segment>
         <Divider hidden />
-        {hostProfile.length === 1
-          ?
+        {hostProfile.length === 1 && loadingHostProfile === false &&
           <HostProfile
             id={hostProfile[0].id}
             description={element.description}
@@ -277,21 +277,23 @@ const UserPage = (props) => {
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
             ref={hostProfileElement}
             setElement={elementUpdateHandler.bind(this)}
-          />
-          :
-          form.createHostProfileForm
-            ?
-            <HostProfileForm
-              user_id={props.id}
-              closeForm={formHandler.bind(this)}
-              location={props.location} />
-            :
-            <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
-              <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
-              <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
-                {t('UserPage:host-profile-cta')}
-              </Button>
-            </div>
+          />}
+        {hostProfile.length === 1 && loadingHostProfile === true &&
+          <Spinner />
+        }
+        {form.createHostProfileForm && hostProfile.length === 0 &&
+          <HostProfileForm
+            user_id={props.id}
+            closeForm={formHandler.bind(this)}
+            location={props.location} />
+        }
+        {form.createHostProfileForm === false && hostProfile.length === 0 &&
+          <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
+            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
+            <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
+              {t('UserPage:host-profile-cta')}
+            </Button>
+          </div>
         }
         <Divider hidden />
         <Header id='delete-account-link' onClick={() => destroyAccount()}
