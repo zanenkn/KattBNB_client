@@ -284,7 +284,7 @@ const UserPage = (props) => {
         {form.createHostProfileForm && hostProfile.length === 0 &&
           <HostProfileForm
             user_id={props.id}
-            closeForm={formHandler.bind(this)}
+            closeForm={closeLocationAndPasswordForms.bind(this)}
             location={props.location} />
         }
         {form.createHostProfileForm === false && hostProfile.length === 0 &&
