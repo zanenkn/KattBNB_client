@@ -44,7 +44,7 @@ describe('User can view her profile page', () => {
     cy.get('#editLocationForm').click()
     cy.get('#location').click()
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click()
-    cy.get('.ui > div > .ui > #location > .dropdown').click()
+    cy.get('#location > .dropdown').click()
     cy.get('#location-submit-button').click()
     cy.contains('No location selected or location is unchanged!')
   })
