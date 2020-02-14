@@ -228,11 +228,13 @@ const UserPage = (props) => {
               </Header>
             </p>
             <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
-              <LocationUpdateForm
+              {form.editLocationForm &&
+                <LocationUpdateForm
                 location={props.location}
                 fullAddress={element.fullAddress}
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-              />
+                />
+              }
             </div>
             <p>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
@@ -242,9 +244,11 @@ const UserPage = (props) => {
               </Header>
             </p>
             <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
-              <PasswordUpdateForm
+              {form.editPasswordForm &&
+                <PasswordUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-              />
+                />
+              }
             </div>
             <p>
               <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
@@ -254,10 +258,12 @@ const UserPage = (props) => {
               </Header>
             </p>
             <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
-              <NotificationsUpdateForm
+              {form.editNotificationsForm &&
+                <NotificationsUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 messageNotifications={props.messageNotifications}
-              />
+                />
+              }
             </div>
           </div>
         </Segment>
