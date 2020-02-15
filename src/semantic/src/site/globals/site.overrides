@@ -64,10 +64,9 @@
 }
 
 .navlink {
-  display: flex!important;
-  justify-content: flex-end!important;
   padding: 0!important;
-  float: left;
+  width: unset!important;
+  float: right;
   margin: auto;
 }
 
