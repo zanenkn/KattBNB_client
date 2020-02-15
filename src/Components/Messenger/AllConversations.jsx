@@ -23,8 +23,17 @@ class AllConversations extends Component {
     }
     const path = `/api/v1/conversations?user_id=${this.props.id}`
     axios.get(path, { headers: headers })
-      .then(response => {
-        const sortedResponse = response.data.sort(function (a, b) {
+      .then(response => {   
+        
+        const shownConversations = []
+
+        response.data.map(conversation => {
+          if (conversation.hidden !== this.props.id) {
+            shownConversations.push(conversation)
+          }
+        })
+
+        const sortedResponse = shownConversations.sort(function (a, b) {
           let dateA = new Date(a.msg_created), dateB = new Date(b.msg_created)
           return dateB - dateA
         })

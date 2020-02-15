@@ -107,6 +107,32 @@ class Conversation extends Component {
     })
   }
 
+  deleteConversation() {
+    this.setState({ loading: true })
+    if (window.confirm('Do you really want to delete this conversation?')) {
+      const path = `/api/v1/conversations/${this.props.location.state.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        hidden: this.props.id
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          window.location.replace('/messenger')
+        })
+        .catch(error => {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.error
+          })
+        })
+    }
+  }
+
   componentWillMount() { this.createSocket() }
 
   render() {
@@ -182,7 +208,7 @@ class Conversation extends Component {
                   {this.props.location.state.user.nickname}
                 </Header>
               </div>
-              <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} />
+              <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} onClick={() => this.deleteConversation()} />
             </div>
           </div>
           <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
@@ -198,7 +224,7 @@ class Conversation extends Component {
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
                 <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} />
-                <div style={{'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight}}>
+                <div style={{ 'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight }}>
                   <TextareaAutosize
                     minRows={1}
                     maxRows={6}
@@ -208,7 +234,7 @@ class Conversation extends Component {
                     value={this.state.newMessage}
                     onChange={this.onChangeHandler}
                     onKeyPress={this.listenEnterKeyMessage}
-                    onHeightChange={(height) => this.setState({footerHeight: `${height}px`})}
+                    onHeightChange={(height) => this.setState({ footerHeight: `${height}px` })}
                   />
                   <div style={{
                     'display': this.state.newMessage === '' ? 'none' : 'block',
