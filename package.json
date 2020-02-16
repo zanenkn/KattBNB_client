@@ -14,7 +14,6 @@
     "points-cluster": "^0.1.4",
     "query-string": "^6.8.2",
     "react": "^16.8.6",
-    "react-animated-burgers": "^1.2.7",
     "react-avatar-editor": "^11.0.7",
     "react-client-captcha": "^1.0.3",
     "react-day-picker": "^7.3.2",
@@ -34,8 +33,7 @@
     "redux-token-auth": "^0.19.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
-    "smoothscroll-polyfill": "^0.4.4",
-    "styled-components": "^5.0.1"
+    "smoothscroll-polyfill": "^0.4.4"
   },
   "scripts": {
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
