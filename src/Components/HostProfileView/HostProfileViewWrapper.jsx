@@ -1,61 +1,57 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import HostProfileView from './HostProfileView'
 import Spinner from '../ReusableComponents/Spinner'
 
-class HostProfileViewWrapper extends Component {
+const HostProfileViewWrapper = (props) => {
 
-  state = {
-    hostProfile: [],
-    lat: null,
-    long: null,
-    loading: true
-  }
+  const [hostProfile, setHostProfile] = useState([])
+  const [lat, setLat] = useState(null)
+  const [long, setLong] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  async componentDidMount() {
-    let response = await axios.get(`/api/v1/host_profiles?user_id=${this.props.location.state.userId}`)
-    if (response.data.length > 0) {
-      this.setState({
-        hostProfile: response.data[0],
-        lat: response.data[0].lat,
-        long: response.data[0].long,
-        loading: false
+  useEffect(() => {
+    axios.get(`/api/v1/host_profiles?user_id=${props.location.state.userId}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+          setHostProfile(response.data[0])
+          setLat(response.data[0].lat)
+          setLong(response.data[0].long)
+          setLoading(false)
+        } else {
+          setLoading(false)
+        }
       })
-    } else {
-      this.setState({ loading: false })
-    }
-  }
+  }, [props.location.state.userId])
 
-  render() {
-    if (this.state.loading) {
-      return <Spinner />
-    } else if (this.state.lat !== null && this.state.long !== null) {
-      return (
-        <div style={{ 'height': '100%' }}>
-          <HostProfileView
-            numberOfCats={0}
-            hostId={this.props.location.state.userId}
-            avatar={this.props.location.state.avatar}
-            nickname={this.props.location.state.nickname}
-            location={this.props.location.state.location}
-            rate={parseFloat(this.state.hostProfile.price_per_day_1_cat)}
-            supplement={parseFloat(this.state.hostProfile.supplement_price_per_cat_per_day)}
-            description={this.state.hostProfile.description}
-            lat={this.state.lat}
-            long={this.state.long}
-            noMessage={this.props.location.state.noMessage}
-          />
-        </div>
-      )
-    } else {
-      return (
-        <div className='content-wrapper' >
-          <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-            This user has no host profile.
+  if (loading) {
+    return <Spinner />
+  } else if (lat !== null && long !== null) {
+    return (
+      <div style={{ 'height': '100%' }}>
+        <HostProfileView
+          numberOfCats={0}
+          hostId={props.location.state.userId}
+          avatar={props.location.state.avatar}
+          nickname={props.location.state.nickname}
+          location={props.location.state.location}
+          rate={parseFloat(hostProfile.price_per_day_1_cat)}
+          supplement={parseFloat(hostProfile.supplement_price_per_cat_per_day)}
+          description={hostProfile.description}
+          lat={lat}
+          long={long}
+          noMessage={props.location.state.noMessage}
+        />
+      </div>
+    )
+  } else {
+    return (
+      <div className='content-wrapper' >
+        <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+          This user has no host profile.
           </p>
-        </div>
-      )
-    }
+      </div>
+    )
   }
 }
 

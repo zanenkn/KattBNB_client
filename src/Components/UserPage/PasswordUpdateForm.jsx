@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Form, Button, Message, Divider, Popup } from 'semantic-ui-react'
-import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -91,7 +90,7 @@ class PasswordUpdateForm extends Component {
       return (
         <>
           <Divider />
-          <Form style={{ 'maxWidth': '194px' }}>
+          <Form style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
             <Form.Input
               required
               id='currentPassword'
@@ -145,7 +144,7 @@ class PasswordUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else { return <Spinner /> }
+    } else { return null }
   }
 }
 

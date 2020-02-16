@@ -7,7 +7,8 @@ const config = {
     uid: 'uid',
     location: 'location',
     username: 'nickname',
-    avatar: 'avatar'
+    avatar: 'avatar',
+    messageNotifications: 'message_notification'
   },
   userRegistrationAttributes: {
     passwordConfirmation: 'password_confirmation',

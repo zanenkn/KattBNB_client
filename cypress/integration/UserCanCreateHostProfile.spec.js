@@ -21,7 +21,7 @@ describe('User can create a host profile', () => {
       response: 'fixture:successful_host_profile_creation.json'
     })
     cy.contains('You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.')
-    cy.get('#create-host-profile-button').click()
+    cy.get('#createHostProfileForm').click()
     cy.get('#host-profile-form').within(() => {
 
       let text = [
@@ -60,7 +60,7 @@ describe('User can create a host profile', () => {
       response: 'fixture:unsuccessful_host_profile_creation.json'
     })
     cy.contains('You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.')
-    cy.get('#create-host-profile-button').click()
+    cy.get('#createHostProfileForm').click()
     cy.get('#host-profile-form').within(() => {
 
       let text = [
