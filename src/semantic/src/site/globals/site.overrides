@@ -12,6 +12,10 @@
  -ms-overflow-style: none;  /* IE 10+ */
 }
 
+button:focus {
+    outline: none;
+}
+
 .fake-link {
   color: #c90c61;
   cursor: pointer!important;
