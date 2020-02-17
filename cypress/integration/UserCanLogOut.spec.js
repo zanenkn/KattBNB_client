@@ -14,9 +14,7 @@ describe('User can sign out', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(1000)
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#logout').click()
     cy.wait(1000)
     cy.contains('Find a cat sitter!')
