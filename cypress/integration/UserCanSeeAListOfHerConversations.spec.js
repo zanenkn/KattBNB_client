@@ -9,9 +9,7 @@ describe('User can see a list of all her conversations', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#messenger-icon').click()
-    })
+    cy.get('#messenger-icon').click({force: true})
   })
 
   it('succesfully', () => {

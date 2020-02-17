@@ -27,9 +27,7 @@ describe('User can view her host profile', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#user-icon').click()
-    })
+    cy.get('#user-icon').click({force:true})
   })
 
   it('and get an error message on description update if update criteria are not met', () => {
@@ -75,7 +73,7 @@ describe('User can view her host profile', () => {
   })
 
   it('and if she logs out and visits the user-page path manually, she gets an error message', () => {
-    cy.get('div > .ui > #navbar > #hamburger > .icon').click()
+    cy.get('.hamburger-box').click()
     cy.get('#app-content > #menu > #menu-grid > #menu-grid-column > #logout').click()
     cy.wait(2000)
     cy.visit('http://localhost:3000/user-page')

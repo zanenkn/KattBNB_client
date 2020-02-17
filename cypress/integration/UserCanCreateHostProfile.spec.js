@@ -9,9 +9,7 @@ describe('User can create a host profile', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#user-icon').click()
-    })
+    cy.get('#user-icon').click({force:true})
   })
   it('successfully', () => {
     cy.route({

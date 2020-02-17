@@ -68,9 +68,7 @@ describe('User can create a booking request', () => {
   })
 
   it('only if she is logged in or she will be redirected to the log in page', () => {
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#logout').click()
 
     cy.visit('http://localhost:3000')
