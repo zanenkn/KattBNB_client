@@ -13,9 +13,7 @@ describe('Visitor can sign up', () => {
       response: 'fixture:successful_signup.json'
     })
 
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
 
@@ -41,9 +39,7 @@ describe('Visitor can sign up', () => {
   })
 
   it('and gets error message if captcha is invalid', () => {
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
 
@@ -66,9 +62,7 @@ describe('Visitor can sign up', () => {
   })
 
   it('and gets a disabled sign up button if she does not accept Terms & Conditions', () => {
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
 

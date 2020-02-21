@@ -15,9 +15,7 @@ describe('User can view her outgoing bookings', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#bookings-icon').click()
-    })
+    cy.get('#bookings-icon').click({force: true})
   })
 
   it('and see correct stats of her bookings', () => {

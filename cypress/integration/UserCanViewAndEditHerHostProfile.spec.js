@@ -27,9 +27,7 @@ describe('User can view her host profile', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#user-icon').click()
-    })
+    cy.get('#user-icon').click({force:true})
   })
 
   it('and see the saved information', () => {

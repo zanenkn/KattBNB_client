@@ -5,10 +5,10 @@ describe('Visitor can view navbar', () => {
   })
 
   it('and see hamburger menu', () => {
-    cy.get('#hamburger').should('be.visible')
+    cy.get('.hamburger-box').should('be.visible')
   })
 
   it('and see 4 navigational icons', () => {
-    cy.get('#navlinks').children().should('have.length', 4)
+    cy.get('.twelve').children().should('have.length', 4)
   })
 })

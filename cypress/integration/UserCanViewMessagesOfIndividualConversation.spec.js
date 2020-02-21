@@ -16,9 +16,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#messenger-icon').click()
-    })
+    cy.get('#messenger-icon').click({force: true})
     cy.get('#1').click()
     cy.get('[data-cy=all-messages-individual-conversation]').first().contains('Hello world!!!')
     cy.get('[data-cy=all-messages-individual-conversation]').last().contains('test')
@@ -40,9 +38,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#messenger-icon').click()
-    })
+    cy.get('#messenger-icon').click({force: true})
     cy.get('#1').click()
     cy.contains("You don't have any messages in this conversation (yet).")
   })
@@ -63,9 +59,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#messenger-icon').click()
-    })
+    cy.get('#messenger-icon').click({force: true})
     cy.get('#1').click()
     cy.get('#newMessage').type('another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!anothe')
     cy.contains('Remaining characters:')
@@ -89,9 +83,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#navlinks').within(() => {
-      cy.get('#messenger-icon').click()
-    })
+    cy.get('#messenger-icon').click({force: true})
     cy.get('#1').click()
     cy.get('#send').should('not.be.visible')
     cy.get('#newMessage').type('{enter}')

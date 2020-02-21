@@ -2,9 +2,7 @@ describe('User can reset password', () => {
   beforeEach(function () {
     cy.server()
     cy.visit('http://localhost:3000')
-    cy.get('#hamburger').within(() => {
-      cy.get('.icon').click()
-    })
+    cy.get('.hamburger-box').click()
     cy.get('#login').click()
     cy.get('#login-form').within(() => {
       cy.get('#password-reset-link').click()
