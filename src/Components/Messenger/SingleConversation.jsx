@@ -107,7 +107,7 @@ class Conversation extends Component {
     })
   }
 
-  deleteConversation() {
+  deleteConversation = () => {
     this.setState({ loading: true })
     if (window.confirm('Do you really want to delete this conversation?')) {
       const path = `/api/v1/conversations/${this.props.location.state.id}`
@@ -130,6 +130,8 @@ class Conversation extends Component {
             errors: error.response.data.error
           })
         })
+    } else {
+      this.setState({ loading: false })
     }
   }
 
@@ -208,7 +210,7 @@ class Conversation extends Component {
                   {this.props.location.state.user.nickname}
                 </Header>
               </div>
-              <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61' }} onClick={() => this.deleteConversation()} />
+              <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={this.deleteConversation} />
             </div>
           </div>
           <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
