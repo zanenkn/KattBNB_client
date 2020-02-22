@@ -138,61 +138,20 @@ class Conversation extends Component {
   componentWillMount() { this.createSocket() }
 
   render() {
-    let messagesHistory, errorDisplay, messageLength, boxShadow, currentLogs, page
-
-    boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
-
-    messageLength = 1000 - this.state.newMessage.length
-
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative style={{ 'width': 'inherit' }} >
-          <Message.Header style={{ 'textAlign': 'center' }} >
-            Could not send the message because of following error(s):
-          </Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
-      )
-    }
-
-    if (this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1) {
-      messagesHistory = (
-        <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-          You don't have any messages in this conversation (yet).
-        </p>
-      )
-    } else if (this.state.messagesHistory.length > 0) {
-      messagesHistory = (
-        this.state.messagesHistory.map(message => {
-          return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
-        })
-      )
-    }
-
-    if (this.state.chatLogs.length > 0) {
-      currentLogs = (
-        this.state.chatLogs.map(message => {
-          return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
-        })
-      )
-    }
+    let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
+    let messageLength = 1000 - this.state.newMessage.lengt
 
     if (this.state.loading) {
-      page = (
-        <Spinner />
-      )
+      return <Spinner />
     } else {
-      page = (
+      return (
         <>
           <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
             <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
-              <div style={{ 'display': 'inline', 'margin': 'auto', 'cursor': 'pointer' }}>
-                <Header as='h2' onClick={() => {
+              <div
+                style={{ 'display': 'flex', 'margin': 'auto', 'cursor': 'pointer' }}
+                onClick={() => {
                   this.props.history.push({
                     pathname: '/host-profile',
                     state: {
@@ -204,9 +163,16 @@ class Conversation extends Component {
                       noMessage: true
                     }
                   })
-                }
-                }>
-                  <Image src={this.props.location.state.user.avatar === null ? `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : this.props.location.state.user.avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0' }} />
+                }}
+              >
+                <Image
+                  src={this.props.location.state.user.avatar === null ?
+                    `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname === 'Deleted user' ? '[x]' : this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+                    : this.props.location.state.user.avatar}
+
+                  size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0', 'marginRight': '1rem' }} />
+
+                <Header as='h2' style={{ 'marginTop': '0' }}>
                   {this.props.location.state.user.nickname}
                 </Header>
               </div>
@@ -216,9 +182,33 @@ class Conversation extends Component {
           <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
             <Divider />
             <div className='single-conversation-wrapper'>
-              {messagesHistory}
-              {currentLogs}
-              {errorDisplay}
+              {this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1 &&
+                <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
+                  You don't have any messages in this conversation (yet).
+                </p>
+              }
+              {this.state.messagesHistory.length > 0 &&
+                this.state.messagesHistory.map(message => {
+                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                })
+              }
+              {this.state.chatLogs.length > 0 &&
+                this.state.chatLogs.map(message => {
+                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                })
+              }
+              {this.state.errorDisplay &&
+                <Message negative style={{ 'width': 'inherit' }} >
+                  <Message.Header style={{ 'textAlign': 'center' }} >
+                    Could not send the message because of following error(s):
+                  </Message.Header>
+                  <ul id='message-error-list'>
+                    {this.state.errors.map(error => (
+                      <li key={error}>{error}</li>
+                    ))}
+                  </ul>
+                </Message>
+              }
               <div ref={(el) => { this.bottom = el }}></div>
             </div>
           </Container>
@@ -237,6 +227,7 @@ class Conversation extends Component {
                     onChange={this.onChangeHandler}
                     onKeyPress={this.listenEnterKeyMessage}
                     onHeightChange={(height) => this.setState({ footerHeight: `${height}px` })}
+                    disabled={this.props.location.state.user.id === null && true}
                   />
                   <div style={{
                     'display': this.state.newMessage === '' ? 'none' : 'block',
@@ -269,12 +260,6 @@ class Conversation extends Component {
         </>
       )
     }
-
-    return (
-      <>
-        {page}
-      </>
-    )
   }
 }
 

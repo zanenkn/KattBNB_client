@@ -8,7 +8,14 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => 
 
   content = (window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content')
 
-  if (currentUsername === message.user.nickname) {
+  if (message.user === null) {
+    textAlign = 'left'
+    flexDirection = 'row'
+    margin = '0'
+    border = '1rem 1rem 1rem 0'
+    avatar = 'https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false'
+    nickname = 'Deleted user'
+  } else if (currentUsername === message.user.nickname) {
     textAlign = 'right'
     flexDirection = 'row-reverse'
     margin = 'auto 0 auto auto'
