@@ -139,7 +139,7 @@ class Conversation extends Component {
 
   render() {
     let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
-    let messageLength = 1000 - this.state.newMessage.lengt
+    let messageLength = 1000 - this.state.newMessage.length
 
     if (this.state.loading) {
       return <Spinner />
@@ -176,7 +176,7 @@ class Conversation extends Component {
                   {this.props.location.state.user.nickname}
                 </Header>
               </div>
-              <Icon name='trash alternate outline' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={this.deleteConversation} />
+              <Icon id='delete-conversation' name='trash alternate outline' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={this.deleteConversation} />
             </div>
           </div>
           <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
