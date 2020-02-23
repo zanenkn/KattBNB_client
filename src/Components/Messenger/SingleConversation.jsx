@@ -151,7 +151,7 @@ class Conversation extends Component {
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
               <div
                 style={{ 'display': 'flex', 'margin': 'auto', 'cursor': 'pointer' }}
-                onClick={() => {
+                onClick={() => {this.props.location.state.user.id !== null &&
                   this.props.history.push({
                     pathname: '/host-profile',
                     state: {
