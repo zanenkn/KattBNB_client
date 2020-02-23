@@ -3,6 +3,7 @@
     "id": 1,
     "msg_body": "I wanted to write a longass sentence just to test the frontend, so here it is.",
     "msg_created": "2019-12-23T10:51:39.042Z",
+    "hidden": 1,
     "user1": {
       "id": 1,
       "location": "Stockholm",
