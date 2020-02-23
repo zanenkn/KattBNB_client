@@ -38,4 +38,10 @@ describe('User can see a list of all her conversations', () => {
       cy.contains('No messages')
     })
   })
+
+  it.only('and see relevant nickname when a user is deleted from the database', () => {
+    cy.get('#6').within(() => {
+      cy.contains('Deleted user')
+    })
+  })
 })
