@@ -227,7 +227,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
               {form.editLocationForm &&
                 <LocationUpdateForm
                 location={props.location}
@@ -243,7 +243,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
@@ -257,7 +257,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
