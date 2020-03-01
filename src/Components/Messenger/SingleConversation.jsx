@@ -20,7 +20,9 @@ class Conversation extends Component {
     scrollYPosition: 0,
     loading: true,
     footerHeight: '32px',
-    imageUploadPopupOpen: false
+    imageUploadPopupOpen: false,
+    imageUploadButton: true,
+    uploadedImage: ''
   }
 
   componentDidMount() {
@@ -138,6 +140,20 @@ class Conversation extends Component {
     }
   }
 
+  onImageDropHandler = (pictureFiles, pictureDataURLs) => {
+    if (pictureFiles.length > 0) {
+      this.setState({
+        imageUploadButton: false,
+        uploadedImage: pictureFiles[0]
+      })
+    } else {
+      this.setState({
+        imageUploadButton: true,
+        uploadedImage: ''
+      })
+    }
+  }
+
   componentWillMount() { this.createSocket() }
 
   render() {
@@ -153,11 +169,14 @@ class Conversation extends Component {
             modal
             open={this.state.imageUploadPopupOpen}
             closeOnDocumentClick={true}
-            onClose={() => { this.setState({ imageUploadPopupOpen: false }) }}
+            onClose={() => { this.setState({ imageUploadPopupOpen: false, uploadedImage: '', imageUploadButton: true }) }}
             position='top center'
           >
             <div>
-              <ImageUploadPopup />
+              <ImageUploadPopup
+                onImageDropHandler={this.onImageDropHandler.bind(this)}
+                imageUploadButton={this.state.imageUploadButton}
+              />
             </div>
           </Popup>
           <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
