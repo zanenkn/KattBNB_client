@@ -6,6 +6,7 @@ import MessageBubble from '../ReusableComponents/MessageBubble'
 import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
+import Popup from 'reactjs-popup'
 
 class Conversation extends Component {
 
@@ -17,7 +18,8 @@ class Conversation extends Component {
     errors: '',
     scrollYPosition: 0,
     loading: true,
-    footerHeight: '32px'
+    footerHeight: '32px',
+    imageUploadPopupOpen: false
   }
 
   componentDidMount() {
@@ -146,23 +148,35 @@ class Conversation extends Component {
     } else {
       return (
         <>
+          <Popup
+            modal
+            open={this.state.imageUploadPopupOpen}
+            closeOnDocumentClick={true}
+            //onClose={this.closeModal}
+            position='top center'
+          >
+            <div>
+              'yay'
+            </div>
+          </Popup>
           <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
             <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
               <div
                 style={{ 'display': 'flex', 'margin': 'auto', 'cursor': this.props.location.state.user.id !== null && 'pointer' }}
-                onClick={() => {this.props.location.state.user.id !== null &&
-                  this.props.history.push({
-                    pathname: '/host-profile',
-                    state: {
-                      userId: this.props.location.state.user.id,
-                      avatar: this.props.location.state.user.avatar,
-                      nickname: this.props.location.state.user.nickname,
-                      location: this.props.location.state.user.location,
-                      errors: '',
-                      noMessage: true
-                    }
-                  })
+                onClick={() => {
+                  this.props.location.state.user.id !== null &&
+                    this.props.history.push({
+                      pathname: '/host-profile',
+                      state: {
+                        userId: this.props.location.state.user.id,
+                        avatar: this.props.location.state.user.avatar,
+                        nickname: this.props.location.state.user.nickname,
+                        location: this.props.location.state.user.location,
+                        errors: '',
+                        noMessage: true
+                      }
+                    })
                 }}
               >
                 <Image
@@ -215,7 +229,7 @@ class Conversation extends Component {
           <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
-                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} />
+                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} onClick={() => { this.setState({ imageUploadPopupOpen: true }) }} />
                 <div style={{ 'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight }}>
                   <TextareaAutosize
                     minRows={1}
