@@ -7,6 +7,7 @@ import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-re
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
+import ImageUploadPopup from './ImageUploadPopup'
 
 class Conversation extends Component {
 
@@ -152,11 +153,11 @@ class Conversation extends Component {
             modal
             open={this.state.imageUploadPopupOpen}
             closeOnDocumentClick={true}
-            //onClose={this.closeModal}
+            onClose={() => { this.setState({ imageUploadPopupOpen: false }) }}
             position='top center'
           >
             <div>
-              'yay'
+              <ImageUploadPopup />
             </div>
           </Popup>
           <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
