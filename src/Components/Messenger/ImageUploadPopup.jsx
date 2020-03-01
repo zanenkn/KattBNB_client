@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 import ImageUploader from 'react-images-upload'
 import { Icon } from 'semantic-ui-react'
 
-const ImageUploadPopup = (props) => {
+class ImageUploadPopup extends Component {
 
-  const [button, setButton] = useState(true)
-  const [image, setImage] = useState('')
-
-  const onImageDropHandler = (picture) => {
-    if (picture) {
-      setButton(false)
-      setImage(picture)
-    } else {
-      
-      setButton(true)
-    }
-    debugger
+  state = {
+    button: true,
+    image: ''
   }
 
-  return (
-    <ImageUploader
-      buttonText={
-        <div>
-          <p id="add-photo-headline">1. Add a photo!</p>
-          <Icon id="add-photo-icon" name="image outline" size="huge"></Icon>
-          <p id="add-photo-label">Maximum image file size: 5 MB</p>
-        </div>
-      }
-      //buttonClassName={this.state.button}
-      buttonStyles={button ? { 'display': 'block' } : { 'display': 'none' }}
-      withLabel={false}
-      withIcon={false}
-      withPreview={true}
-      singleImage={true}
-      onChange={() => onImageDropHandler()}
-      imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
-      maxFileSize={5242880}
-    //errorClass={(this.state.image.length > 0) ? 'image-upload-error-hidden' : 'image-upload-error-visible'}
-    />
-  )
+  onImageDropHandler = (pictureFiles, pictureDataURLs) => {
+    if (pictureFiles.length > 0) {
+      this.setState({
+        button: false,
+        image: pictureFiles[0]
+      })
+    } else {
+      this.setState({
+        button: true,
+        image: ''
+      })
+    }
+  }
+
+  render() {
+    return (
+      <ImageUploader
+        buttonText={
+          <div>
+            <p id="add-photo-headline">1. Add a photo!</p>
+            <Icon id="add-photo-icon" name="image outline" size="huge"></Icon>
+            <p id="add-photo-label">Maximum image file size: 5 MB</p>
+          </div>
+        }
+        buttonStyles={this.state.button ? { 'display': 'block' } : { 'display': 'none' }}
+        withLabel={false}
+        withIcon={false}
+        withPreview={true}
+        singleImage={true}
+        onChange={this.onImageDropHandler}
+        imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
+        maxFileSize={5242880}
+      />
+    )
+  }
 }
 
 export default ImageUploadPopup
