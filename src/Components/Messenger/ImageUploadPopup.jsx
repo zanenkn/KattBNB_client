@@ -8,13 +8,18 @@ const ImageUploadPopup = (props) => {
     <>
       <ImageUploader
         buttonText={
-          <div>
-            <p id="add-photo-headline">1. Add a photo!</p>
-            <Icon id="add-photo-icon" name="image outline" size="huge"></Icon>
-            <p id="add-photo-label">Maximum image file size: 5 MB</p>
-          </div>
+          <Icon.Group size='huge' color='white'>
+            <Icon name='photo' />
+            <Icon
+              corner='bottom right'
+              name='add'
+              style={{ 'textShadow': 'none', 'color': '#c90c61' }}
+            />
+          </Icon.Group>
+
         }
-        buttonStyles={props.imageUploadButton ? { 'display': 'block' } : { 'display': 'none' }}
+        fileContainerStyle={{ 'boxShadow': 'none', 'padding': '0', 'margin': '0' }}
+        buttonStyles={{ 'margin': '0', 'width': '100%', 'height': '8rem', 'background': '#eeeeee', 'borderRadius': '0', 'display': props.imageUploadButton ? 'block' : 'none' }}
         withLabel={false}
         withIcon={false}
         withPreview={true}
@@ -23,7 +28,14 @@ const ImageUploadPopup = (props) => {
         imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
         maxFileSize={5242880}
       />
-      <Button onClick={props.handleSendEvent} >Upload</Button>
+      <div>
+        <p className='small-centered-paragraph' style={{ 'marginTop': '1rem' }}>
+          Maximum file size: 5 MB
+          <br />
+          Supported file formats: jpg, png, gif
+        </p>
+      </div>
+      <Button onClick={props.handleSendEvent}>Send</Button>
     </>
   )
 }
