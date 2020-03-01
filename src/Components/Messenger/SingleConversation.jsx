@@ -77,10 +77,17 @@ class Conversation extends Component {
 
   handleSendEvent(event) {
     event.preventDefault()
-    if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
+    if (this.state.uploadedImage !== '') {
+      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
+      this.setState({
+        newMessage: '',
+        imageUploadPopupOpen: false
+      })
+    }
+    else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
       this.handleError(['The message cannot be empty or exceed 1000 characters!'])
     } else {
-      this.chats.create(this.state.newMessage, this.props.location.state.id, this.props.id)
+      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
       this.setState({ newMessage: '' })
     }
   }
@@ -102,9 +109,10 @@ class Conversation extends Component {
         this.setState({ chatLogs: chatLogs })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
-      create: function (msg, conv_id, user_id) {
+      create: function (msg, img, conv_id, user_id) {
         this.perform('send_message', {
           body: msg,
+          image: img,
           user_id: user_id,
           conversation_id: conv_id
         })
@@ -144,7 +152,7 @@ class Conversation extends Component {
     if (pictureFiles.length > 0) {
       this.setState({
         imageUploadButton: false,
-        uploadedImage: pictureFiles[0]
+        uploadedImage: pictureDataURLs
       })
     } else {
       this.setState({
@@ -176,6 +184,7 @@ class Conversation extends Component {
               <ImageUploadPopup
                 onImageDropHandler={this.onImageDropHandler.bind(this)}
                 imageUploadButton={this.state.imageUploadButton}
+                handleSendEvent={this.handleSendEvent.bind(this)}
               />
             </div>
           </Popup>
@@ -249,7 +258,7 @@ class Conversation extends Component {
           <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
-                <Icon name='photo' size='big' style={{ 'display': this.props.location.state.user.id === null && 'none', 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} onClick={() => { this.setState({ imageUploadPopupOpen: true }) }} />
+                <Icon name='photo' size='big' style={{ 'display': (this.props.location.state.user.id === null || this.state.newMessage.length > 0) && 'none', 'cursor': 'pointer', 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} onClick={() => { this.setState({ imageUploadPopupOpen: true }) }} />
                 <div style={{ 'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight }}>
                   <TextareaAutosize
                     minRows={1}
