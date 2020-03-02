@@ -42,9 +42,10 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => 
         </p>
       </div>
       <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': content, 'maxWidth': '70%' }}>
-        <p>
-          {message.body}
-        </p>
+        {message.body === '' ?
+          <img src={message.image} />
+          : <p>{message.body} </p>
+        }
       </div>
       <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
         {moment(message.created_at).format(timeFormat(message.created_at))}
