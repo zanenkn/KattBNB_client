@@ -618,4 +618,13 @@ h4 {
   }
 }
 
+/*******************************
+    IMAGE UPLOADER OVERRIDES
+*******************************/
 
+.fileContainer .uploadPictureContainer {
+  margin: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  width: 100% !important;
+}
