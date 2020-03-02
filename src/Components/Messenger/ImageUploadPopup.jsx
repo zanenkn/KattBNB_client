@@ -35,7 +35,12 @@ const ImageUploadPopup = (props) => {
           Supported file formats: jpg, png, gif
         </p>
       </div>
-      <Button onClick={props.handleSendEvent}>Send</Button>
+      <Button
+        onClick={props.handleSendEvent}
+        disabled={props.uploadedImage === '' && true}
+      >
+        Send
+        </Button>
     </>
   )
 }

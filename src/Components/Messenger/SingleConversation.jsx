@@ -185,6 +185,7 @@ class Conversation extends Component {
                 onImageDropHandler={this.onImageDropHandler.bind(this)}
                 imageUploadButton={this.state.imageUploadButton}
                 handleSendEvent={this.handleSendEvent.bind(this)}
+                uploadedImage={this.state.uploadedImage}
               />
             </div>
           </Popup>
