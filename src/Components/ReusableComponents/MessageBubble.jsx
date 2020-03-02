@@ -43,7 +43,7 @@ const MessageBubble = (currentUsername, currentAvatar, otherAvatar, message) => 
       </div>
       <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': content, 'maxWidth': '70%' }}>
         {message.body === '' ?
-          <img src={message.image} />
+          <a href={message.image} target='_blank' rel='noopener noreferrer'><img alt='uploaded file' src={message.image}></img></a>
           : <p>{message.body} </p>
         }
       </div>
