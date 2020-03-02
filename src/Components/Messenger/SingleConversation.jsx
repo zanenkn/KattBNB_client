@@ -47,6 +47,8 @@ class Conversation extends Component {
       })
   }
 
+  scrollDown = () => { this.bottom.scrollIntoView({ behavior: 'smooth' }) }
+
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
 
   handleScroll = () => {
@@ -233,12 +235,28 @@ class Conversation extends Component {
               }
               {this.state.messagesHistory.length > 0 &&
                 this.state.messagesHistory.map(message => {
-                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                  return (
+                    <MessageBubble
+                      currentUsername={this.props.username}
+                      currentAvatar={this.props.avatar}
+                      otherAvatar={this.props.location.state.user.avatar}
+                      message={message}
+                      scrollDown={this.scrollDown.bind(this)}
+                    />
+                  )
                 })
               }
               {this.state.chatLogs.length > 0 &&
                 this.state.chatLogs.map(message => {
-                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                  return (
+                    <MessageBubble
+                      currentUsername={this.props.username}
+                      currentAvatar={this.props.avatar}
+                      otherAvatar={this.props.location.state.user.avatar}
+                      message={message}
+                      scrollDown={this.scrollDown.bind(this)}
+                    />
+                  )
                 })
               }
               {this.state.errorDisplay &&
