@@ -80,11 +80,17 @@ class Conversation extends Component {
   handleSendEvent(event) {
     event.preventDefault()
     if (this.state.uploadedImage !== '') {
+      let scrollPosition = window.scrollY
       this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
-      this.setState({
-        newMessage: '',
-        imageUploadPopupOpen: false
-      })
+      this.setState({ newMessage: '' })
+      const closePopup = () => {
+        if (window.scrollY - scrollPosition > 120) {
+          this.setState({ imageUploadPopupOpen: false })
+        } else {
+          setTimeout(function () { closePopup() }, 100)
+        }
+      }
+      closePopup()
     }
     else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
       this.handleError(['The message cannot be empty or exceed 1000 characters!'])
