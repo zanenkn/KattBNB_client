@@ -22,7 +22,8 @@ class Conversation extends Component {
     footerHeight: '32px',
     imageUploadPopupOpen: false,
     imageUploadButton: true,
-    uploadedImage: ''
+    uploadedImage: '',
+    loadingUploadButton: false
   }
 
   componentDidMount() {
@@ -82,10 +83,16 @@ class Conversation extends Component {
     if (this.state.uploadedImage !== '') {
       let scrollPosition = window.scrollY
       this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
-      this.setState({ newMessage: '' })
+      this.setState({
+        newMessage: '',
+        loadingUploadButton: true
+      })
       const closePopup = () => {
         if (window.scrollY - scrollPosition > 120) {
-          this.setState({ imageUploadPopupOpen: false })
+          this.setState({
+            imageUploadPopupOpen: false,
+            loadingUploadButton: false
+          })
         } else {
           setTimeout(function () { closePopup() }, 100)
         }
@@ -184,7 +191,7 @@ class Conversation extends Component {
           <Popup
             modal
             open={this.state.imageUploadPopupOpen}
-            closeOnDocumentClick={true}
+            closeOnDocumentClick={!this.state.loadingUploadButton}
             onClose={() => { this.setState({ imageUploadPopupOpen: false, uploadedImage: '', imageUploadButton: true }) }}
             position='top center'
           >
@@ -194,6 +201,7 @@ class Conversation extends Component {
                 imageUploadButton={this.state.imageUploadButton}
                 handleSendEvent={this.handleSendEvent.bind(this)}
                 uploadedImage={this.state.uploadedImage}
+                loadingUploadButton={this.state.loadingUploadButton}
               />
             </div>
           </Popup>

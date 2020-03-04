@@ -628,3 +628,7 @@ h4 {
   border: none !important;
   width: 100% !important;
 }
+
+.deleteImage {
+  display: none
+}
