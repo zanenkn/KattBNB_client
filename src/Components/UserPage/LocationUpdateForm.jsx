@@ -54,7 +54,8 @@ class LocationUpdateForm extends Component {
               errors: ''
             })
             window.alert(t('success-alert'))
-            window.location.reload()
+            this.props.setElement('location', this.state.newLocation)
+            this.props.closeLocationAndPasswordForms()
           })
           .catch(error => {
             this.setState({
@@ -82,7 +83,8 @@ class LocationUpdateForm extends Component {
             errors: ''
           })
           window.alert(t('LocationUpdateForm:success-alert'))
-          window.location.reload()
+          this.props.setElement('location', this.state.newLocation)
+          this.props.closeLocationAndPasswordForms()
         })
         .catch(error => {
           this.setState({
