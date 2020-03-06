@@ -9,7 +9,7 @@ describe('User can see a list of all her conversations', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
   })
 
   it('succesfully', () => {
@@ -39,9 +39,15 @@ describe('User can see a list of all her conversations', () => {
     })
   })
 
-  it.only('and see relevant nickname when a user is deleted from the database', () => {
+  it('and see relevant nickname when a user is deleted from the database', () => {
     cy.get('#6').within(() => {
       cy.contains('Deleted user')
+    })
+  })
+
+  it('and see relevant message if last message was an image attachment', () => {
+    cy.get('#7').within(() => {
+      cy.contains('Image attachment')
     })
   })
 })
