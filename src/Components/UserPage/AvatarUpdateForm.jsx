@@ -85,10 +85,7 @@ class AvatarUpdateForm extends Component {
       }
       axios.put(path, payload, { headers: headers })
         .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false
-          })
+          this.setState({ errorDisplay: false })
           window.location.reload()
         })
         .catch(error => {
