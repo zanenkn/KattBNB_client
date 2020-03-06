@@ -28,7 +28,8 @@ const UserPage = (props) => {
     rate: '',
     maxCats: '',
     supplement: '',
-    availability: []
+    availability: [],
+    messageNotifications: props.messageNotifications
   })
 
   const [forbiddenDates, setForbiddenDates] = useState([])
@@ -69,13 +70,14 @@ const UserPage = (props) => {
             rate: finalRate,
             maxCats: resp.data.max_cats_accepted,
             supplement: finalSupplement,
-            availability: resp.data.availability
+            availability: resp.data.availability,
+            messageNotifications: props.messageNotifications
           })
           setForbiddenDates(resp.data.forbidden_dates)
           setLoadingHostProfile(false)
         })
     }
-  }, [hostProfile])
+  }, [hostProfile, props.messageNotifications])
 
   useEffect(() => {
     async function asyncDidMount() {
@@ -227,12 +229,12 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
+            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLocationForm &&
                 <LocationUpdateForm
-                location={props.location}
-                fullAddress={element.fullAddress}
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  location={props.location}
+                  fullAddress={element.fullAddress}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 />
               }
             </div>
@@ -243,10 +245,10 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
+            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 />
               }
             </div>
@@ -257,11 +259,12 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.7s ease-in-out' }}>
+            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                messageNotifications={props.messageNotifications}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  messageNotifications={element.messageNotifications}
+                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>

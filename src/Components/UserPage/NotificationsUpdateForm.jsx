@@ -25,7 +25,8 @@ const NotificationsUpdateForm = (props) => {
       axios.put(path, payload, { headers: headers })
         .then(() => {
           window.alert('Message notification settings updated!')
-          window.location.reload()
+          props.setElement('messageNotifications', messageNotifications)
+          props.closeLocationAndPasswordForms()
         })
         .catch(() => {
           setLoading(false)
