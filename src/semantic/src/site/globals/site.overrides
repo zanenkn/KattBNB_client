@@ -55,6 +55,19 @@ button:focus {
   cursor: pointer;
 }
 
+.toggle {
+  height: fit-content;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle:after {
+  content:'';
+  position:absolute;
+  top:-1rem; bottom:-1rem; 
+  left:-1rem; right:-1rem; 
+}
+
 /*******************************
             NAVBAR
 *******************************/
