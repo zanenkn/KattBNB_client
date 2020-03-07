@@ -5,8 +5,12 @@ import moment from 'moment'
 
 const MessageBubble = (props) => {
   let textAlign, flexDirection, margin, border, avatar, nickname, content
-
   content = (window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content')
+
+  const onImageLoad = (e) => {
+    props.scrollDown()
+    e.target.naturalHeight > e.target.naturalWidth ? e.target.classList.add('portrait-img') : e.target.classList.add('landscape-img')
+  }
 
   if (props.message.user === null) {
     textAlign = 'left'
@@ -41,9 +45,28 @@ const MessageBubble = (props) => {
           </strong>
         </p>
       </div>
-      <div style={{ 'backgroundColor': '#eeeeee', 'margin': margin, 'borderRadius': border, 'padding': '1rem', 'height': 'min-content', 'width': content, 'maxWidth': '70%' }}>
+      <div style={{
+        'backgroundColor': '#eeeeee',
+        'margin': margin,
+        'borderRadius': border,
+        'display': props.message.body === '' && 'flex',
+        'justifyContent': props.message.body === '' && 'center',
+        'alignItems': props.message.body === '' && 'center',
+        'overflow': props.message.body === '' && 'hidden',
+        'padding': props.message.body === '' ? 'none' : '1rem',
+        'height': 'min-content',
+        'width': content,
+        'maxWidth': '70%'
+      }}>
         {props.message.body === '' ?
-          <a href={props.message.image} target='_blank' rel='noopener noreferrer'><img onLoad={props.scrollDown} alt='uploaded file' style={{ 'maxWidth': '100px' }} src={props.message.image}></img></a>
+          <a href={props.message.image} target='_blank' rel='noopener noreferrer' style={{'lineHeight': '0'}}>
+            <img 
+              onLoad={(e) => onImageLoad(e)} 
+              alt='uploaded file'
+              style={{ 'flexShrink': '0', 'minWidth': '100%', 'minHeight': '100%' }}
+              src={props.message.image}>
+            </img>
+          </a>
           : <p>{props.message.body} </p>
         }
       </div>

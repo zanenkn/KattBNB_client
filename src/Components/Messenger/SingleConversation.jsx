@@ -48,7 +48,9 @@ class Conversation extends Component {
       })
   }
 
-  scrollDown = () => { this.bottom.scrollIntoView({ behavior: 'smooth' }) }
+  scrollDown = () => { 
+    this.bottom.scrollIntoView({ behavior: 'smooth' })
+  }
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
 
@@ -135,6 +137,13 @@ class Conversation extends Component {
     })
   }
 
+  clearImage = () => {
+    this.setState({
+      imageUploadButton: true,
+      uploadedImage: ''
+    })
+  }
+
   deleteConversation = () => {
     this.setState({ loading: true })
     if (window.confirm('Do you really want to delete this conversation?')) {
@@ -170,10 +179,7 @@ class Conversation extends Component {
         uploadedImage: pictureDataURLs
       })
     } else {
-      this.setState({
-        imageUploadButton: true,
-        uploadedImage: ''
-      })
+      this.clearImage()
     }
   }
 
@@ -202,6 +208,7 @@ class Conversation extends Component {
                 handleSendEvent={this.handleSendEvent.bind(this)}
                 uploadedImage={this.state.uploadedImage}
                 loadingUploadButton={this.state.loadingUploadButton}
+                clearImage={this.clearImage}
               />
             </div>
           </Popup>

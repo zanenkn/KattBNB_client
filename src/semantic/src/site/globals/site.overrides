@@ -627,8 +627,17 @@ h4 {
   box-shadow: none !important;
   border: none !important;
   width: 100% !important;
+  padding: 0 !important;
 }
 
 .deleteImage {
   display: none
+}
+
+.portrait-img {
+  max-height: 50vh
+}
+
+.landscape-img {
+  max-height: 30vh
 }
