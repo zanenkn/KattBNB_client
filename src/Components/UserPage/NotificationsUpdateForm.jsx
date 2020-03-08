@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Checkbox, Divider, Button } from 'semantic-ui-react'
+import { Checkbox, Divider, Button, Message } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 
@@ -7,12 +7,18 @@ const NotificationsUpdateForm = (props) => {
 
   const { t, ready } = useTranslation()
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [errorDisplay, setErrorDisplay] = useState(false)
   const [messageNotifications, setMessageNotifications] = useState(props.messageNotifications)
 
   const updateMessageNotification = () => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.clear()
       window.location.replace('/login')
+    }
+    else if (messageNotifications === props.messageNotifications) {
+      setErrorDisplay(true)
+      setErrors(['No changes made to your settings!'])
     } else {
       setLoading(true)
       const path = '/api/v1/auth/'
@@ -44,9 +50,19 @@ const NotificationsUpdateForm = (props) => {
           </div>
           <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>Receive notifications for every message</label>
         </div>
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </Message>
+        }
         <div className='button-wrapper'>
           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-          <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={messageNotifications === props.messageNotifications ? true : false} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
+          <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>

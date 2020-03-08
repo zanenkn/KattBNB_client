@@ -139,7 +139,7 @@ class PasswordUpdateForm extends Component {
           </Form>
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>{t('reusable:cta.close')}</Button>
-            <Button id='password-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updatePassword}>{t('reusable:cta.change')}</Button>
+            <Button id='password-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.updatePassword}>{t('reusable:cta.change')}</Button>
           </div>
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
