@@ -48,7 +48,7 @@ class Conversation extends Component {
       })
   }
 
-  scrollDown = () => { 
+  scrollDown = () => {
     this.bottom.scrollIntoView({ behavior: 'smooth' })
   }
 

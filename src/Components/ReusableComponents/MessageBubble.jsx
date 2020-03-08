@@ -59,9 +59,9 @@ const MessageBubble = (props) => {
         'maxWidth': '70%'
       }}>
         {props.message.body === '' ?
-          <a href={props.message.image} target='_blank' rel='noopener noreferrer' style={{'lineHeight': '0'}}>
-            <img 
-              onLoad={(e) => onImageLoad(e)} 
+          <a href={props.message.image} target='_blank' rel='noopener noreferrer' style={{ 'lineHeight': '0' }}>
+            <img
+              onLoad={(e) => onImageLoad(e)}
               alt='uploaded file'
               style={{ 'flexShrink': '0', 'minWidth': '100%', 'minHeight': '100%' }}
               src={props.message.image}>
