@@ -26,6 +26,7 @@ const MessageHostCTA = (props) => {
         id='send-message'
         style={{ 'marginTop': '0', 'marginBottom': '2rem' }}
         loading={loading}
+        disabled={loading}
         onClick={(e) => handleOnClick(e)}>
         {t('HostProfileView:send-cta')}
       </Button>
