@@ -6,6 +6,8 @@ import MessageBubble from '../ReusableComponents/MessageBubble'
 import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
+import Popup from 'reactjs-popup'
+import ImageUploadPopup from './ImageUploadPopup'
 
 class Conversation extends Component {
 
@@ -17,7 +19,11 @@ class Conversation extends Component {
     errors: '',
     scrollYPosition: 0,
     loading: true,
-    footerHeight: '32px'
+    footerHeight: '32px',
+    imageUploadPopupOpen: false,
+    imageUploadButton: true,
+    uploadedImage: '',
+    loadingUploadButton: false
   }
 
   componentDidMount() {
@@ -40,6 +46,14 @@ class Conversation extends Component {
         })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       })
+  }
+
+  scrollDown = () => {
+    this.bottom.scrollIntoView({ behavior: 'smooth' })
+    this.setState({
+      imageUploadPopupOpen: false,
+      loadingUploadButton: false
+    })
   }
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
@@ -72,10 +86,17 @@ class Conversation extends Component {
 
   handleSendEvent(event) {
     event.preventDefault()
-    if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
+    if (this.state.uploadedImage !== '') {
+      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
+      this.setState({
+        newMessage: '',
+        loadingUploadButton: true
+      })
+    }
+    else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
       this.handleError(['The message cannot be empty or exceed 1000 characters!'])
     } else {
-      this.chats.create(this.state.newMessage, this.props.location.state.id, this.props.id)
+      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
       this.setState({ newMessage: '' })
     }
   }
@@ -97,13 +118,21 @@ class Conversation extends Component {
         this.setState({ chatLogs: chatLogs })
         this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
-      create: function (msg, conv_id, user_id) {
+      create: function (msg, img, conv_id, user_id) {
         this.perform('send_message', {
           body: msg,
+          image: img,
           user_id: user_id,
           conversation_id: conv_id
         })
       }
+    })
+  }
+
+  clearImage = () => {
+    this.setState({
+      imageUploadButton: true,
+      uploadedImage: ''
     })
   }
 
@@ -135,6 +164,17 @@ class Conversation extends Component {
     }
   }
 
+  onImageDropHandler = (pictureFiles, pictureDataURLs) => {
+    if (pictureFiles.length > 0) {
+      this.setState({
+        imageUploadButton: false,
+        uploadedImage: pictureDataURLs
+      })
+    } else {
+      this.clearImage()
+    }
+  }
+
   componentWillMount() { this.createSocket() }
 
   render() {
@@ -146,23 +186,42 @@ class Conversation extends Component {
     } else {
       return (
         <>
+          <Popup
+            modal
+            open={this.state.imageUploadPopupOpen}
+            closeOnDocumentClick={!this.state.loadingUploadButton}
+            onClose={() => { this.setState({ imageUploadPopupOpen: false, uploadedImage: '', imageUploadButton: true }) }}
+            position='top center'
+          >
+            <div>
+              <ImageUploadPopup
+                onImageDropHandler={this.onImageDropHandler.bind(this)}
+                imageUploadButton={this.state.imageUploadButton}
+                handleSendEvent={this.handleSendEvent.bind(this)}
+                uploadedImage={this.state.uploadedImage}
+                loadingUploadButton={this.state.loadingUploadButton}
+                clearImage={this.clearImage}
+              />
+            </div>
+          </Popup>
           <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
             <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
               <div
                 style={{ 'display': 'flex', 'margin': 'auto', 'cursor': this.props.location.state.user.id !== null && 'pointer' }}
-                onClick={() => {this.props.location.state.user.id !== null &&
-                  this.props.history.push({
-                    pathname: '/host-profile',
-                    state: {
-                      userId: this.props.location.state.user.id,
-                      avatar: this.props.location.state.user.avatar,
-                      nickname: this.props.location.state.user.nickname,
-                      location: this.props.location.state.user.location,
-                      errors: '',
-                      noMessage: true
-                    }
-                  })
+                onClick={() => {
+                  this.props.location.state.user.id !== null &&
+                    this.props.history.push({
+                      pathname: '/host-profile',
+                      state: {
+                        userId: this.props.location.state.user.id,
+                        avatar: this.props.location.state.user.avatar,
+                        nickname: this.props.location.state.user.nickname,
+                        location: this.props.location.state.user.location,
+                        errors: '',
+                        noMessage: true
+                      }
+                    })
                 }}
               >
                 <Image
@@ -189,12 +248,32 @@ class Conversation extends Component {
               }
               {this.state.messagesHistory.length > 0 &&
                 this.state.messagesHistory.map(message => {
-                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                  return (
+                    <div key={message.id} >
+                      <MessageBubble
+                        currentUsername={this.props.username}
+                        currentAvatar={this.props.avatar}
+                        otherAvatar={this.props.location.state.user.avatar}
+                        message={message}
+                        scrollDown={this.scrollDown.bind(this)}
+                      />
+                    </div>
+                  )
                 })
               }
               {this.state.chatLogs.length > 0 &&
                 this.state.chatLogs.map(message => {
-                  return MessageBubble(this.props.username, this.props.avatar, this.props.location.state.user.avatar, message)
+                  return (
+                    <div key={message.id} >
+                      <MessageBubble
+                        currentUsername={this.props.username}
+                        currentAvatar={this.props.avatar}
+                        otherAvatar={this.props.location.state.user.avatar}
+                        message={message}
+                        scrollDown={this.scrollDown.bind(this)}
+                      />
+                    </div>
+                  )
                 })
               }
               {this.state.errorDisplay &&
@@ -215,7 +294,7 @@ class Conversation extends Component {
           <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
             <div className='single-conversation-wrapper' >
               <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
-                <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} />
+                <Icon id='upload-image' name='photo' size='big' style={{ 'display': (this.props.location.state.user.id === null || this.state.newMessage.length > 0) && 'none', 'cursor': 'pointer', 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} onClick={() => { this.setState({ imageUploadPopupOpen: true }) }} />
                 <div style={{ 'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight }}>
                   <TextareaAutosize
                     minRows={1}

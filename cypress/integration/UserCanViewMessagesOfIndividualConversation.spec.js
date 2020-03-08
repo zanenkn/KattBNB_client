@@ -16,7 +16,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
     cy.get('[data-cy=all-messages-individual-conversation]').first().contains('Hello world!!!')
     cy.get('[data-cy=all-messages-individual-conversation]').last().contains('test')
@@ -38,7 +38,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
     cy.contains("You don't have any messages in this conversation (yet).")
   })
@@ -59,7 +59,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
     cy.get('#newMessage').type('another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!anothe')
     cy.contains('Remaining characters:')
@@ -83,7 +83,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
     cy.get('#send').should('not.be.visible')
     cy.get('#newMessage').type('{enter}')
@@ -118,7 +118,7 @@ describe('User can see messages of individual conversation', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#messenger-icon').click({force: true})
+    cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
     cy.route({
       method: 'GET',
@@ -129,5 +129,30 @@ describe('User can see messages of individual conversation', () => {
     cy.get('#delete-conversation').click()
     cy.wait(1000)
     cy.get('#1').should('not.exist')
+  })
+
+  it('and can only send a written message or an image, not both at the same time', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      status: 200,
+      response: 'fixture:all_user_conversations.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/conversations/1',
+      status: 200,
+      response: 'fixture:user_messages.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#messenger-icon').click({ force: true })
+    cy.get('#1').click()
+    cy.get('#send').should('not.be.visible')
+    cy.get('#upload-image').should('be.visible')
+    cy.get('#newMessage').type('Hi!')
+    cy.get('#send').should('be.visible')
+    cy.get('#upload-image').should('not.be.visible')
   })
 })

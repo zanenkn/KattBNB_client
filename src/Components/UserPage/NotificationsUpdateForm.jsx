@@ -25,7 +25,8 @@ const NotificationsUpdateForm = (props) => {
       axios.put(path, payload, { headers: headers })
         .then(() => {
           window.alert('Message notification settings updated!')
-          window.location.reload()
+          props.setElement('messageNotifications', messageNotifications)
+          props.closeLocationAndPasswordForms()
         })
         .catch(() => {
           setLoading(false)
@@ -38,7 +39,9 @@ const NotificationsUpdateForm = (props) => {
       <div style={{ 'maxWidth': '213px' }}>
         <Divider />
         <div style={{ 'display': 'inline-flex' }}>
-          <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} />
+          <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
+            <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />
+          </div>
           <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>Receive notifications for every message</label>
         </div>
         <div className='button-wrapper'>

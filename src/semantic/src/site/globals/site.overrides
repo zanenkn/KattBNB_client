@@ -55,6 +55,19 @@ button:focus {
   cursor: pointer;
 }
 
+.toggle {
+  height: fit-content;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle:after {
+  content:'';
+  position:absolute;
+  top:-1rem; bottom:-1rem; 
+  left:-1rem; right:-1rem; 
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -618,4 +631,26 @@ h4 {
   }
 }
 
+/*******************************
+    IMAGE UPLOADER OVERRIDES
+*******************************/
 
+.fileContainer .uploadPictureContainer {
+  margin: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.deleteImage {
+  display: none
+}
+
+.portrait-img {
+  max-height: 50vh
+}
+
+.landscape-img {
+  max-height: 30vh
+}

@@ -168,8 +168,7 @@ class Search extends Component {
                 </label>
                 <div className='InputFromTo'>
                   <DayPickerInput
-                    value={from}
-                    placeholder={t('Search:checkin')}
+                    value={from || t('Search:checkin')}
                     format='LL'
                     formatDate={formatDate}
                     parseDate={parseDate}
@@ -189,8 +188,7 @@ class Search extends Component {
                 <div className='InputFromTo' style={{ 'marginTop': '0.5em' }}>
                   <DayPickerInput
                     ref={el => (this.to = el)}
-                    value={to}
-                    placeholder={t('Search:checkout')}
+                    value={to || t('Search:checkout')}
                     format='LL'
                     formatDate={formatDate}
                     parseDate={parseDate}

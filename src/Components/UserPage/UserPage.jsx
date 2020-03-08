@@ -28,7 +28,9 @@ const UserPage = (props) => {
     rate: '',
     maxCats: '',
     supplement: '',
-    availability: []
+    availability: [],
+    location: props.location,
+    messageNotifications: props.messageNotifications
   })
 
   const [forbiddenDates, setForbiddenDates] = useState([])
@@ -69,13 +71,15 @@ const UserPage = (props) => {
             rate: finalRate,
             maxCats: resp.data.max_cats_accepted,
             supplement: finalSupplement,
-            availability: resp.data.availability
+            availability: resp.data.availability,
+            location: props.location,
+            messageNotifications: props.messageNotifications
           })
           setForbiddenDates(resp.data.forbidden_dates)
           setLoadingHostProfile(false)
         })
     }
-  }, [hostProfile])
+  }, [hostProfile, props.messageNotifications, props.location])
 
   useEffect(() => {
     async function asyncDidMount() {
@@ -222,17 +226,18 @@ const UserPage = (props) => {
             </p>
             <p id='user-location'>
               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
-              &nbsp;{props.location}&ensp;
+              &nbsp;{element.location}&ensp;
                 <Header as='strong' id='editLocationForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLocationForm &&
                 <LocationUpdateForm
-                location={props.location}
-                fullAddress={element.fullAddress}
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  location={element.location}
+                  fullAddress={element.fullAddress}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>
@@ -243,10 +248,10 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 />
               }
             </div>
@@ -257,11 +262,12 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </p>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 0.2s ease-in-out' }}>
+            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                messageNotifications={props.messageNotifications}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  messageNotifications={element.messageNotifications}
+                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>

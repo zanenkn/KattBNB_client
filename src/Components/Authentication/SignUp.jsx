@@ -150,8 +150,10 @@ const SignUp = (props) => {
             />
           </Form>
           <div style={{ 'display': 'inline-flex', 'paddingTop': '1em' }}>
-            <Checkbox toggle onClick={() => setTermsAccepted(!termsAccepted)} />
-            <label style={{ 'paddingLeft': '1.3em', 'color': termsAccepted ? 'grey' : 'silver' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined-reg'>Terms & Conditions</Header></label>
+            <div className='toggle' onClick={() => setTermsAccepted(!termsAccepted)} >
+              <Checkbox toggle checked={termsAccepted} />
+            </div>
+            <label style={{ 'paddingLeft': '1.3em', 'color': termsAccepted ? 'grey' : 'silver' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined'>Terms & Conditions</Header></label>
           </div>
 
           {errorDisplay &&
