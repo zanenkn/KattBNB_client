@@ -301,7 +301,7 @@ class HostProfileForm extends Component {
             <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
           </div>
           <div>
-            <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.createHostProfile}>Save</Button>
+            <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.createHostProfile}>Save</Button>
           </div>
         </div>
       </div>

@@ -157,7 +157,7 @@ class RequestToBook extends Component {
             <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
               ({this.state.perDay} {t('reusable:price.per-day')})
             </Header>
-            <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.createBooking}>
+            <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading} onClick={this.createBooking}>
               {t('reusable:request-cta.btn')}
             </Button>
           </Segment>

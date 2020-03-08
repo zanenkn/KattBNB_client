@@ -88,7 +88,7 @@ class DeclineRequestPopup extends Component {
           Remaining characters: {200 - this.state.message.length}
         </p>
         {errorDisplay}
-        <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.declineBooking}>Decline</Button>
+        <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineBooking}>Decline</Button>
       </>
     )
   }

@@ -210,7 +210,7 @@ class AvatarUpdateForm extends Component {
                 </div>
                 {errorDisplay}
                 <div className='button-wrapper'>
-                  <Button id='avatar-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.updateAvatar}>{t('reusable:cta:save')}</Button>
+                  <Button id='avatar-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvatar}>{t('reusable:cta:save')}</Button>
                 </div>
               </div>
             </Popup>

@@ -240,7 +240,7 @@ class Search extends Component {
             {errorDisplay}
             <div className='button-wrapper'>
               <div>
-                <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.search}>{t('Search:cta')}</Button>
+                <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
               </div>
             </div>
           </Segment>
