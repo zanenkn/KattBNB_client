@@ -36,7 +36,7 @@ const MessageBubble = (props) => {
   }
 
   return (
-    <div key={props.message.id} style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
+    <div style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
       <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>
         <Image src={avatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : avatar} size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem' }}></Image>
         <p style={{ 'color': '#c90c61', 'margin': '0 0.5rem' }}>

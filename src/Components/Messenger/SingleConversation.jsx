@@ -50,6 +50,10 @@ class Conversation extends Component {
 
   scrollDown = () => {
     this.bottom.scrollIntoView({ behavior: 'smooth' })
+    this.setState({
+      imageUploadPopupOpen: false,
+      loadingUploadButton: false
+    })
   }
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
@@ -83,23 +87,11 @@ class Conversation extends Component {
   handleSendEvent(event) {
     event.preventDefault()
     if (this.state.uploadedImage !== '') {
-      let scrollPosition = window.scrollY
       this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
       this.setState({
         newMessage: '',
         loadingUploadButton: true
       })
-      const closePopup = () => {
-        if (window.scrollY - scrollPosition > 120) {
-          this.setState({
-            imageUploadPopupOpen: false,
-            loadingUploadButton: false
-          })
-        } else {
-          setTimeout(function () { closePopup() }, 100)
-        }
-      }
-      closePopup()
     }
     else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
       this.handleError(['The message cannot be empty or exceed 1000 characters!'])
@@ -257,26 +249,30 @@ class Conversation extends Component {
               {this.state.messagesHistory.length > 0 &&
                 this.state.messagesHistory.map(message => {
                   return (
-                    <MessageBubble
-                      currentUsername={this.props.username}
-                      currentAvatar={this.props.avatar}
-                      otherAvatar={this.props.location.state.user.avatar}
-                      message={message}
-                      scrollDown={this.scrollDown.bind(this)}
-                    />
+                    <div key={message.id} >
+                      <MessageBubble
+                        currentUsername={this.props.username}
+                        currentAvatar={this.props.avatar}
+                        otherAvatar={this.props.location.state.user.avatar}
+                        message={message}
+                        scrollDown={this.scrollDown.bind(this)}
+                      />
+                    </div>
                   )
                 })
               }
               {this.state.chatLogs.length > 0 &&
                 this.state.chatLogs.map(message => {
                   return (
-                    <MessageBubble
-                      currentUsername={this.props.username}
-                      currentAvatar={this.props.avatar}
-                      otherAvatar={this.props.location.state.user.avatar}
-                      message={message}
-                      scrollDown={this.scrollDown.bind(this)}
-                    />
+                    <div key={message.id} >
+                      <MessageBubble
+                        currentUsername={this.props.username}
+                        currentAvatar={this.props.avatar}
+                        otherAvatar={this.props.location.state.user.avatar}
+                        message={message}
+                        scrollDown={this.scrollDown.bind(this)}
+                      />
+                    </div>
                   )
                 })
               }

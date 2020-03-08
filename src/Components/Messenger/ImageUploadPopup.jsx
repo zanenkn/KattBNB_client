@@ -45,7 +45,7 @@ const ImageUploadPopup = (props) => {
       </div>
       <Button
         onClick={props.handleSendEvent}
-        disabled={props.uploadedImage === '' && true}
+        disabled={(props.uploadedImage === '' || props.loadingUploadButton) && true}
         loading={props.loadingUploadButton}
       >
         Send
