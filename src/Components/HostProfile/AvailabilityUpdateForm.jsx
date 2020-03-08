@@ -156,7 +156,7 @@ class AvailabilityUpdateForm extends Component {
         {errorDisplay}
         <div className='button-wrapper'>
           <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          <Button id='availability-submit-button' className='submit-button' loading={this.state.loading ? true : false} onClick={this.updateAvailability}>Save</Button>
+          <Button id='availability-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading ? true : false} onClick={this.updateAvailability}>Save</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>
