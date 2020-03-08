@@ -3,6 +3,7 @@ import { Header, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class RequestAcceptedSuccessfully extends Component {
+
   componentDidMount() {
     if (this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/all-bookings' })
