@@ -86,7 +86,7 @@ class PasswordReset extends Component {
               />
             </Form>
             {errorDisplay}
-            <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} loading={this.state.loading ? true : false}>
+            <Button className='submit-button' id='reset-pass-button' onClick={this.resetPassword} disabled={this.state.loading} loading={this.state.loading ? true : false}>
               {t('PasswordReset:btn')}
             </Button>
           </Segment>
