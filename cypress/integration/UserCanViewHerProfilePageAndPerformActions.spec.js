@@ -9,7 +9,7 @@ describe('User can view her profile page', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#user-icon').click({force:true})
+    cy.get('#user-icon').click({ force: true })
   })
 
   it('successfully', () => {
@@ -90,6 +90,12 @@ describe('User can view her profile page', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Message notification settings updated!')
     })
+  })
+
+  it('and unsuccessfully tries to change her notification settings', () => {
+    cy.get('#editNotificationsForm').click()
+    cy.get('#notifications-submit-button').click()
+    cy.contains('No changes made to your settings!')
   })
 
   it('and successfully deletes her account', () => {
