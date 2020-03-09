@@ -19,10 +19,26 @@ describe('User cannot create a booking request', () => {
       status: 422,
       response: 'fixture:unsuccessful_booking_creation.json'
     })
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
-    cy.wait(2000)
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/auth/sign_in',
+      status: 200,
+      response: 'fixture:successful_login.json',
+      headers: {
+        'uid': 'george@mail.com',
+      }
+    })
+    cy.visit('http://localhost:3000')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.hamburger-box').click()
+    cy.get('#login').click()
+    cy.get('#login-form').within(() => {
+      cy.get('#email').type('george@mail.com')
+      cy.get('#password').type('password')
+    })
+    cy.get('.submit-button').click()
+    cy.wait(2000)
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })
