@@ -79,7 +79,7 @@ const Login = (props) => {
               {t('Login:success-msg')}
             </Message>
           }
-          <Button className='submit-button' id='log-in-button' loading={loading} onClick={() => logInUser()}>
+          <Button className='submit-button' id='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()}>
             {t('Login:title')}
           </Button>
           {successDisplay === false &&

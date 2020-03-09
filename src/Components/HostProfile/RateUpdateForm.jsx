@@ -64,7 +64,7 @@ const RateUpdateForm = (props) => {
       }
       <div className='button-wrapper'>
         <Button secondary id='rate-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
-        <Button id='rate-submit-button' className='submit-button' loading={loading} onClick={() => updateRate()}>Save</Button>
+        <Button id='rate-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateRate()}>Save</Button>
       </div>
       <Divider style={{ 'marginBottom': '2rem' }} />
     </>

@@ -12,11 +12,11 @@ const Navbar = (props) => {
         <Grid.Column style={{ 'padding': '0' }} id='hamburger' width={4}>
           <button
             className={props.menuVisible ? 'hamburger hamburger--squeeze is-active' : 'hamburger hamburger--squeeze'}
-            style={{ 'padding': '0' }} type="button"
+            style={{ 'padding': '0' }} type='button'
             onClick={() => props.dispatch({ type: 'CHANGE_VISIBILITY' })}
           >
-            <span className="hamburger-box">
-              <span className="hamburger-inner"></span>
+            <span className='hamburger-box'>
+              <span className='hamburger-inner'></span>
             </span>
           </button>
         </Grid.Column>
@@ -30,7 +30,7 @@ const Navbar = (props) => {
           </Container>
 
           <Container
-            className='navlink' style={{'marginTop': '0.3rem'}}
+            className='navlink' style={{ 'marginTop': '0.3rem' }}
             as={Link} to={props.currentUserIn ? '/messenger' : '/login'}
             onClick={props.menuVisible ? () => { props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
             <svg id='messenger-icon' className='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='#FFFFFF' d='M17 11v3l-3-3H8a2 2 0 0 1-2-2V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-1zm-3 2v2a2 2 0 0 1-2 2H6l-3 3v-3H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h2v3a4 4 0 0 0 4 4h6z' /></svg>

@@ -21,30 +21,37 @@ const AddressUpdateForm = (props) => {
 
   const updateAddress = () => {
     setLoading(true)
-    const path = `/api/v1/host_profiles/${props.id}`
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
+    if (props.fullAddress === newAddress || newAddress === '') {
+      setLoading(false)
+      setErrorDisplay(true)
+      setErrors(['You have typed the same address or the field is empty!'])
+    } else {
+      const path = `/api/v1/host_profiles/${props.id}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const payload = {
+        full_address: newAddress,
+        lat: lat,
+        long: long,
+        latitude: latitude,
+        longitude: longitude
+      }
+      axios.patch(path, payload, { headers: headers })
+        .then(() => {
+          window.alert('Your address was succesfully updated!')
+          props.setElement('fullAddress', newAddress)
+          props.closeAllForms()
+        })
+        .catch(error => {
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.errors.full_messages])
+        })
     }
-    const payload = {
-      full_address: newAddress,
-      lat: lat,
-      long: long,
-      latitude: latitude,
-      longitude: longitude
-    }
-    axios.patch(path, payload, { headers: headers })
-      .then(() => {
-        window.alert('Your address was succesfully updated!')
-        props.setElement('fullAddress', newAddress)
-        props.closeAllForms()
-      })
-      .catch(error => {
-        setLoading(false)
-        setErrorDisplay(true)
-        setErrors([error.response.data.errors.full_messages])
-      })
+
   }
 
   const geolocationDataAddress = () => {
@@ -61,6 +68,8 @@ const AddressUpdateForm = (props) => {
             setNewAddress(response.results[0].formatted_address)
             setAddressSearch(false)
             setAddressErrorDisplay(false)
+            setErrorDisplay(false)
+            setErrors([])
           }
         } else {
           setLatitude(lat)
@@ -70,6 +79,8 @@ const AddressUpdateForm = (props) => {
           setNewAddress(response.results[0].formatted_address)
           setAddressSearch(false)
           setAddressErrorDisplay(false)
+          setErrorDisplay(false)
+          setErrors([])
         }
       },
       error => {
@@ -108,7 +119,7 @@ const AddressUpdateForm = (props) => {
             id='userInputAddress'
             value={userInputAddress}
             onChange={e => setUserInputAddress(e.target.value)}
-            onKeyPress={e => { e.key === 'Enter' && updateAddress() }}
+            onKeyPress={e => { e.key === 'Enter' && geolocationDataAddress() }}
             iconPosition='right'
             icon={<Icon id='search' name='search' link onClick={() => geolocationDataAddress()} style={{ 'color': '#c90c61' }} />}
           />
@@ -135,7 +146,7 @@ const AddressUpdateForm = (props) => {
       }
       <div className='button-wrapper'>
         <Button secondary id='address-close-button' className='cancel-button' onClick={() => props.closeAllForms()}>Close</Button>
-        <Button loading={loading} disabled={props.fullAddress !== newAddress && newAddress !== '' ? false : true} id='address-submit-button' className='submit-button' onClick={() => updateAddress()}>Save</Button>
+        <Button loading={loading} disabled={loading} id='address-submit-button' className='submit-button' onClick={() => updateAddress()}>Save</Button>
       </div>
       <Divider style={{ 'marginBottom': '2rem' }} />
     </>

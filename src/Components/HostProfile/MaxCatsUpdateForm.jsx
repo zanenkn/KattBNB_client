@@ -64,7 +64,7 @@ const MaxCatsUpdateForm = (props) => {
       }
       <div className='button-wrapper'>
         <Button secondary id='maxCats-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
-        <Button id='maxCats-submit-button' className='submit-button' loading={loading} onClick={() => updateMaxCats()}>Save</Button>
+        <Button id='maxCats-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateMaxCats()}>Save</Button>
       </div>
       <Divider style={{ 'marginBottom': '2rem' }} />
     </>

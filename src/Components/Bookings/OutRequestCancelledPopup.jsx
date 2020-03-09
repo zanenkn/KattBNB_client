@@ -3,6 +3,7 @@ import { Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const OutRequestCancelledPopup = (props) => {
+
   return (
     <>
       <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
@@ -14,10 +15,10 @@ const OutRequestCancelledPopup = (props) => {
         </p>
       </div>
       <p style={{ 'margin': '1rem 0 0' }}>
-        Your booking got automatically cancelled due to <strong style={{'fontStyle': 'normal', 'color': '#c90c61'}}>{props.nickname}</strong> not responding for 3 days.
+        Your booking got automatically cancelled due to <strong style={{ 'fontStyle': 'normal', 'color': '#c90c61' }}>{props.nickname}</strong> not responding for 3 days.
       </p>
       <p style={{ 'margin': '1rem 0 0' }}>
-        Try to <Header as={Link} to='/' className='fake-link-underlined-reg' style={{'fontStyle': 'normal'}}>search again</Header>, we hope you find a perfect host soon!
+        Try to <Header as={Link} to='/' className='fake-link-underlined-reg' style={{ 'fontStyle': 'normal' }}>search again</Header>, we hope you find a perfect host soon!
       </p>
     </>
   )

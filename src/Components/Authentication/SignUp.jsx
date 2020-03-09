@@ -26,7 +26,12 @@ const SignUp = (props) => {
 
   const createUser = (e) => {
     setLoading(true)
-    if (userCaptcha !== captcha) {
+    if (termsAccepted === false) {
+      setErrors(['You must accept the Terms and Conditions to continue!'])
+      setErrorDisplay(true)
+      setLoading(false)
+    }
+    else if (userCaptcha !== captcha) {
       setErrors(["SignUp:You didn't input the captcha phrase correctly, please try again!"])
       setErrorDisplay(true)
       setLoading(false)
@@ -166,7 +171,7 @@ const SignUp = (props) => {
               </ul>
             </Message>
           }
-          <Button id='sign-up-button' onClick={() => createUser()} loading={loading} disabled={!termsAccepted}>
+          <Button id='sign-up-button' onClick={() => createUser()} loading={loading} disabled={loading}>
             {t('SignUp:title')}
           </Button>
         </Segment>

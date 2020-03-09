@@ -140,7 +140,7 @@ class ChangePassword extends Component {
             </Form>
             {errorDisplay}
             {successDisplay}
-            <Button className='submit-button' id='change-pass-button' loading={this.state.loading ? true : false} onClick={this.changePassword}>{t('ChangePassword:title')}</Button>
+            <Button className='submit-button' id='change-pass-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.changePassword}>{t('ChangePassword:title')}</Button>
           </Segment>
         </div>
       )

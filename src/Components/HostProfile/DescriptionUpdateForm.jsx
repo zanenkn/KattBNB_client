@@ -63,7 +63,7 @@ const DescriptionUpdateForm = (props) => {
       }
       <div className='button-wrapper'>
         <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
-        <Button id='description-submit-button' className='submit-button' loading={loading} onClick={() => updateDescription()}>Save</Button>
+        <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateDescription()}>Save</Button>
       </div>
       <Divider style={{ 'marginBottom': '2rem' }} />
     </>

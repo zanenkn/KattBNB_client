@@ -2,6 +2,7 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 
 const IncRequestDeclinedPopup = (props) => {
+
   return (
     <>
       <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
@@ -12,9 +13,9 @@ const IncRequestDeclinedPopup = (props) => {
           You declined a booking request from <strong>{props.nickname}</strong> for the dates of <strong>{props.startDate}</strong> until <strong>{props.endDate}</strong>.
         </p>
       </div>
-        <p style={{ 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem 0 0' }}>
-          {props.message}
-        </p>
+      <p style={{ 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem 0 0' }}>
+        {props.message}
+      </p>
     </>
   )
 }

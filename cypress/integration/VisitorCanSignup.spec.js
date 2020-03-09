@@ -61,7 +61,7 @@ describe('Visitor can sign up', () => {
     cy.contains("You didn't input the captcha phrase correctly, please try again!")
   })
 
-  it('and gets a disabled sign up button if she does not accept Terms & Conditions', () => {
+  it('and gets an error message if she does not accept Terms & Conditions', () => {
     cy.get('.hamburger-box').click()
     cy.get('#signup').click()
     cy.get('#signup-form').within(() => {
@@ -78,6 +78,7 @@ describe('Visitor can sign up', () => {
       })
     })
 
-    cy.get('#sign-up-button').should('have.class', 'disabled')
+    cy.get('#sign-up-button').click()
+    cy.contains('You must accept the Terms and Conditions to continue!')
   })
 })

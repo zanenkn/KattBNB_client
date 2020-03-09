@@ -2,6 +2,7 @@ import React from 'react'
 import { Header, Image } from 'semantic-ui-react'
 
 const IncRequestPopup = (props) => {
+
   return (
     <>
       <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
