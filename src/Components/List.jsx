@@ -2,25 +2,30 @@ import React from 'react'
 import { Header, Grid, Image } from 'semantic-ui-react'
 import HostScore from './ReusableComponents/HostScore'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { useTranslation, Trans } from 'react-i18next'
+import Spinner from './ReusableComponents/Spinner'
 import { Link } from 'react-router-dom'
 
 const List = (props) => {
-  let searchMessage, results
+  const { t, ready } = useTranslation('List')
+  let searchMessage, results, page
 
   if (props.finalAvailableHosts.length === 0) {
     searchMessage = (
       <Header>
-        Your search did not yield any results! Try <Link className='fake-link'
-          style={{ 'textDecoration': 'underline' }}
-          to={{
-            pathname: '/',
-            state: {
-              checkInDate: new Date(props.checkInDate),
-              checkOutDate: new Date(props.checkOutDate),
-              location: props.location,
-              numberOfCats: props.numberOfCats
-            }
-          }}> changing your search criteria</Link> or go to the map view to find cat sitters in nearby areas.
+        <Trans i18nKey='List:no-results'>
+          Your search did not yield any results! Try <Link className='fake-link'
+            style={{ 'textDecoration': 'underline' }}
+            to={{
+              pathname: '/',
+              state: {
+                checkInDate: new Date(props.checkInDate),
+                checkOutDate: new Date(props.checkOutDate),
+                location: props.location,
+                numberOfCats: props.numberOfCats
+              }
+            }}> changing your search criteria</Link> or go to the map view to find cat sitters in nearby areas.
+          </Trans>
       </Header>
     )
   }
@@ -47,10 +52,10 @@ const List = (props) => {
               <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
                 <div>
                   <Header as='h3' style={{ 'textAlign': 'left', 'marginBottom': '0' }} id={host.user.id} onClick={props.handleListItemClick}>
-                    {perDay} kr/day
+                    {perDay} {t('reusable:price.per-day')}
                   </Header>
                   <Header as='h5' style={{ 'textAlign': 'left', 'margin': '0' }} id={host.user.id} onClick={props.handleListItemClick}>
-                    {orderTotal} kr total
+                    {orderTotal} {t('reusable:price.total')}
                   </Header>
                   <p style={{ 'fontSize': 'small', 'marginTop': '0.3rem' }} >
                     <svg fill='grey' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
@@ -68,11 +73,21 @@ const List = (props) => {
     )
   }
 
+  if (ready) {
+    page = (
+      <div style={{ 'padding': '2rem' }} >
+        {searchMessage}
+        {results}
+      </div>
+    )
+  } else {
+    page = (<Spinner />)
+  }
+
   return (
-    <div style={{ 'padding': '2rem' }} >
-      {searchMessage}
-      {results}
-    </div>
+    <>
+      {page}
+    </>
   )
 }
 
