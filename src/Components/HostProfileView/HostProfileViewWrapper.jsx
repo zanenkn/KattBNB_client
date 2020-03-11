@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import HostProfileView from './HostProfileView'
 import Spinner from '../ReusableComponents/Spinner'
 
 const HostProfileViewWrapper = (props) => {
 
+  const { t } = useTranslation('HostProfileViewWrapper')
   const [hostProfile, setHostProfile] = useState([])
   const [lat, setLat] = useState(null)
   const [long, setLong] = useState(null)
@@ -48,8 +50,8 @@ const HostProfileViewWrapper = (props) => {
     return (
       <div className='content-wrapper' >
         <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-          This user has no host profile.
-          </p>
+          {t('HostProfileViewWrapper:no-profile')}
+        </p>
       </div>
     )
   }
