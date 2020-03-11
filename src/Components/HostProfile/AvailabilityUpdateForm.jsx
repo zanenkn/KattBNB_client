@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { withTranslation } from 'react-i18next'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 import { Divider, Button, Message } from 'semantic-ui-react'
@@ -22,6 +23,7 @@ class AvailabilityUpdateForm extends Component {
 
   updateAvailability = (e) => {
     e.preventDefault()
+    const { t } = this.props
     this.setState({ loading: true })
     if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.props.availability)) {
       const path = `/api/v1/host_profiles/${this.props.id}`
@@ -42,7 +44,7 @@ class AvailabilityUpdateForm extends Component {
             loading: false,
             errorDisplay: false
           })
-          window.alert('Your availability was succesfully updated!')
+          window.alert(t('AvailabilityUpdateForm:success-update'))
           window.location.reload()
         })
         .catch(error => {
@@ -56,7 +58,7 @@ class AvailabilityUpdateForm extends Component {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['There were no changes made in your availability!']
+        errors: ['AvailabilityUpdateForm:update-error']
       })
     }
   }
@@ -94,6 +96,7 @@ class AvailabilityUpdateForm extends Component {
   }
 
   render() {
+    const { t } = this.props
     let errorDisplay
     let disabledAvailabilityBookings = []
     let disabledAvailabilityDates = []
@@ -108,10 +111,10 @@ class AvailabilityUpdateForm extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -141,7 +144,7 @@ class AvailabilityUpdateForm extends Component {
       <>
         <Divider />
         <p className='small-centered-paragraph'>
-          You can update your availability below by marking the dates when you are willing to host.
+          {t('AvailabilityUpdateForm:main-title')}
         </p>
         <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
           <DayPicker
@@ -155,8 +158,8 @@ class AvailabilityUpdateForm extends Component {
         </div>
         {errorDisplay}
         <div className='button-wrapper'>
-          <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>Close</Button>
-          <Button id='availability-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvailability}>Save</Button>
+          <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>{t('reusable:cta:close')}</Button>
+          <Button id='availability-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvailability}>{t('reusable:cta:save')}</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </>
@@ -164,4 +167,4 @@ class AvailabilityUpdateForm extends Component {
   }
 }
 
-export default AvailabilityUpdateForm
+export default withTranslation('AvailabilityUpdateForm')(AvailabilityUpdateForm)
