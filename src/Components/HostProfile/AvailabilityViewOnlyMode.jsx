@@ -1,13 +1,16 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import DayPicker from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 
 const AvailabilityViewOnlyMode = (props) => {
 
+  const { t } = useTranslation('AvailabilityViewOnlyMode')
+
   return (
     <>
       {props.selectedDays.length === 0 ?
-        <p>You have not selected any availability dates!</p> :
+        <p>{t('AvailabilityViewOnlyMode:no-dates-selected')}</p> :
         <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
           <DayPicker
             showWeekNumbers
