@@ -1,0 +1,8 @@
+{
+  "update-error": "You have typed the same address or the field is empty!",
+  "update-success": "Your address was succesfully updated!",
+  "address-select-notification": "It seems that the address you selected does not match your profile location. Are you sure you want to continue?",
+  "main-title": "You can update your address below by entering and searching your new address.",
+  "address-search-plch": "Search...",
+  "not-right": "Not right?"
+}

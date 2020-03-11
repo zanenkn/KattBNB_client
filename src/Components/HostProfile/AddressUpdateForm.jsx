@@ -51,7 +51,6 @@ const AddressUpdateForm = (props) => {
           setErrors([error.response.data.errors.full_messages])
         })
     }
-
   }
 
   const geolocationDataAddress = () => {
@@ -129,7 +128,7 @@ const AddressUpdateForm = (props) => {
           <p style={{ 'textAlign': 'center' }}>
             {newAddress}&nbsp;
               <Header as='strong' id='change-address-link' onClick={() => backToSearch()} className='fake-link-underlined'>
-              Not right?
+                Not right?
               </Header>
           </p>
         </div>
