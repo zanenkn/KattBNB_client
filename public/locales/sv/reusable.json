@@ -25,10 +25,12 @@
     "login": "Logga in",
     "logout": "Logga ut",
     "signup": "Registrera konto",
+    "login-signup": "Logga in / Registrera",
     "about": "Om oss",
     "faq": "Frågor och svar",
     "contact": "Kontakta oss",
     "blog": "Blogg",
+    "partners": "Partners",
     "legal": "Policy"
   },
   "errors": {

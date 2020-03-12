@@ -246,6 +246,14 @@ h4 {
   }
 }
 
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: auto;
+  max-width: 194px;
+}
+
 .expanding-wrapper {
   margin: auto;
   padding-top: 2rem!important;
@@ -263,6 +271,47 @@ h4 {
   .expanding-wrapper {
     width: 560px;
   }
+}
+
+.submit-button, 
+.cancel-button {
+  margin-top: 1rem!important;
+}
+
+.small-centered-paragraph {
+  text-align: center;
+  font-size: small;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.small-left-paragraph {
+  text-align: left;
+  font-size: small;
+  margin-top: -0.5rem!important;
+  margin-bottom: 2rem!important;
+}
+
+.flexbox-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+}
+
+.top-bottom-margin-auto {
+  margin-top: auto!important;
+  margin-bottom: auto!important;
+}
+
+.avatar-popup-content {
+  width: 270px!important;
+  font-size: initial;
+}
+
+.editor-canvas {
+  width: 100%!important;
+  height: 100%!important;
+  margin-bottom: 1rem;
 }
 
 .messenger-wrapper {
@@ -345,74 +394,42 @@ h4 {
 
 #menu {
   margin-top: 10vh!important;
-}
-
-#menu-grid {
   text-align: center;
-  height: 100%;
+  height: 100% !important;
   background: #ECECEC;
-}
-
-#menu-grid-column {
   display: flex;
-  justify-content: space-evenly;
-  height: 100%;
-  padding-bottom: 7vh;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90vh!important;
+  padding: 3.5rem 1rem 3.5rem;
 }
 
 .menu-link {
   color: #c90c61!important;
   font-size: 1.5rem!important;
   cursor: pointer;
+  margin: 0 !important;
+  position: relative;
 }
 
-.button-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: auto;
-  max-width: 194px;
+.menu-link:after {
+  content:'';
+  position:absolute;
+  top:-1rem; bottom:-1rem; 
+  left:-1rem; right:-1rem; 
 }
 
-.submit-button, 
-.cancel-button {
-  margin-top: 1rem!important;
+.lng-button {
+  position: relative;
+  display: inline !important;
+  margin: 0 1rem 0 !important;
 }
 
-.small-centered-paragraph {
-  text-align: center;
-  font-size: small;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.small-left-paragraph {
-  text-align: left;
-  font-size: small;
-  margin-top: -0.5rem!important;
-  margin-bottom: 2rem!important;
-}
-
-.flexbox-row {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 1em;
-}
-
-.top-bottom-margin-auto {
-  margin-top: auto!important;
-  margin-bottom: auto!important;
-}
-
-.avatar-popup-content {
-  width: 270px!important;
-  font-size: initial;
-}
-
-.editor-canvas {
-  width: 100%!important;
-  height: 100%!important;
-  margin-bottom: 1rem;
+.lng-button:after {
+  content:'';
+  position:absolute;
+  top:-1rem; bottom:-1rem; 
+  left:-1rem; right:-1rem; 
 }
 
 /*******************************

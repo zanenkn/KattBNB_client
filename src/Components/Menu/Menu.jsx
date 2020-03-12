@@ -40,10 +40,10 @@ class Menu extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let userLinks
+      let userLink
 
       if (this.props.currentUserIn) {
-        userLinks = (
+        userLink = (
           <Header
             id='logout'
             className='menu-link'
@@ -54,7 +54,7 @@ class Menu extends Component {
           </Header>
         )
       } else {
-        userLinks = (
+        userLink = (
           <>
             <Header
               id='login'
@@ -62,15 +62,7 @@ class Menu extends Component {
               as={Link}
               to='/login'
             >
-              {t('reusable:title.login')}
-            </Header>
-            <Header
-              id='signup'
-              className='menu-link'
-              as={Link}
-              to='/sign-up'
-            >
-              {t('reusable:title.signup')}
+              {t('reusable:title.login-signup')}
             </Header>
           </>
         )
@@ -83,12 +75,7 @@ class Menu extends Component {
           direction='left'
           visible={this.props.menuVisible}
         >
-          <Grid
-            verticalAlign='middle'
-            id='menu-grid'
-          >
-            <Grid.Column id='menu-grid-column'>
-              {userLinks}
+              {userLink}
               <Header
                 id='about'
                 className='menu-link'
@@ -114,6 +101,14 @@ class Menu extends Component {
                 {t('reusable:title.contact')}
               </Header>
               <Header
+                id='partners'
+                className='menu-link'
+                as={Link}
+                to='/partners'
+              >
+                {t('reusable:title.partners')}
+              </Header>
+              <Header
                 id='legal'
                 className='menu-link'
                 as={Link}
@@ -121,12 +116,11 @@ class Menu extends Component {
               >
                 {t('reusable:title.legal')}
               </Header>
-              <div>
-                <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('sv')}>Svenska</Button>
-                <Button id='en' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('en')}>English</Button>
+              <div style={{'display': 'flex', 'alignSelf': 'center'}}>
+                <Button id='se' className='lng-button' size='mini' onClick={() => this.changeLng('sv')}>Svenska</Button>
+                <Button id='en' className='lng-button' size='mini' onClick={() => this.changeLng('en')}>English</Button>
               </div>
-            </Grid.Column>
-          </Grid>
+ 
         </Sidebar>
       )
     } else { return null }
