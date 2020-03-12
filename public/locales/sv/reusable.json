@@ -2,7 +2,8 @@
   "price": {
     "per-day": "kr/dag",
     "total": "kr totalt",
-    "total-for-1": "kr/dag för 1 katt"
+    "total-for-1": "kr/dag för 1 katt",
+    "total-day": ""
   },
   "request-cta": {
     "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
