@@ -36,7 +36,7 @@ const SupplementUpdateForm = (props) => {
     } else {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['SupplementUpdateForm:update-error'])
+      setErrors(['reusable:errors:update-number-fields'])
     }
   }
 

@@ -1,5 +1,4 @@
 {
   "update-success": "Your daily rate for 1 cat was succesfully updated!",
-  "update-error": "The field is blank, unchanged or the number is invalid!",
   "main-title": "Enter how much you would like to get paid per day when hosting 1 cat."
 }

@@ -32,7 +32,8 @@
     "legal": "Legal"
   },
   "errors": {
-    "action-error-header": "Action could not be completed because of following error(s):"
+    "action-error-header": "Action could not be completed because of following error(s):",
+    "update-number-fields": "The field is blank, unchanged or the number is invalid!"
   },
   "remaining-chars": "Remaining characters:",
   "cta": {

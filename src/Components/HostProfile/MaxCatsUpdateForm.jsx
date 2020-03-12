@@ -36,7 +36,7 @@ const MaxCatsUpdateForm = (props) => {
     } else {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['MaxCatsUpdateForm:update-error'])
+      setErrors(['reusable:errors:update-number-fields'])
     }
   }
 

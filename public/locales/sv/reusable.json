@@ -32,7 +32,8 @@
     "legal": "Policy"
   },
   "errors": {
-    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:"
+    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
+    "update-number-fields": ""
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {

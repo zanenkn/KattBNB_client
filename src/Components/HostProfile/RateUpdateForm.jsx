@@ -36,7 +36,7 @@ const RateUpdateForm = (props) => {
     } else {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['RateUpdateForm:update-error'])
+      setErrors(['reusable:errors:update-number-fields'])
     }
   }
 
