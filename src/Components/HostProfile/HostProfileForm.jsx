@@ -5,6 +5,7 @@ import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
+import Spinner from '../ReusableComponents/Spinner'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
 
@@ -166,9 +167,103 @@ class HostProfileForm extends Component {
   }
 
   render() {
-    let addressSearch, addressErrorMessage, onCreateErrorMessage
-    const today = new Date()
     const { t } = this.props
+    let addressSearch, addressErrorMessage, onCreateErrorMessage, page
+    const today = new Date()
+
+    if (this.props.tReady === false) {
+      page = (
+        <Spinner />
+      )
+    } else {
+      page = (
+        <div id='host-profile-form'>
+          <Header as='h2'>
+            {t('HostProfileForm:create-profile')}
+          </Header>
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
+            {t('HostProfileForm:create-profile-main-title')}
+          </p>
+          <Form id='host-profile-form'>
+            <Form.TextArea
+              label={t('HostProfileForm:about-you-label')}
+              placeholder={t('HostProfileForm:about-you-plch')}
+              required
+              id='description'
+              value={this.state.description}
+              onChange={this.onChangeHandler}
+            />
+            {addressErrorMessage}
+            {addressSearch}
+            <p className='small-left-paragraph'>
+              {t('HostProfileForm:address-message')}
+            </p>
+            <Form.Group
+              widths='equal'
+            >
+              <Form.Input
+                label={t('HostProfileForm:rate-label')}
+                type='number'
+                placeholder={t('HostProfileForm:rate-plch')}
+                required
+                id='rate'
+                value={this.state.rate}
+                onChange={this.onChangeHandler}
+                onKeyPress={this.listenEnterKey}
+              />
+              <Form.Input
+                label={t('HostProfileForm:max-cats-label')}
+                type='number'
+                placeholder={t('HostProfileForm:max-cats-plch')}
+                required
+                id='maxCats'
+                value={this.state.maxCats}
+                onChange={this.onChangeHandler}
+                onKeyPress={this.listenEnterKey}
+              />
+              <Form.Input
+                label={t('HostProfileForm:supplement-label')}
+                type='number'
+                placeholder={t('HostProfileForm:supplement-plch')}
+                required
+                id='supplement'
+                value={this.state.supplement}
+                onChange={this.onChangeHandler}
+                onKeyPress={this.listenEnterKey}
+              />
+            </Form.Group>
+            <p className='small-left-paragraph'>
+              <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('HostProfileForm:explain-supplement-2')}
+            </p>
+            <div className='required field' >
+              <label for='availability' >
+                {t('HostProfileForm:availability-title')}
+              </label>
+              <DayPicker
+                showWeekNumbers
+                fromMonth={today}
+                disabledDays={{ before: today }}
+                firstDayOfWeek={1}
+                selectedDays={this.state.selectedDays}
+                onDayClick={this.handleDayClick}
+              />
+            </div>
+            <p className='small-centered-paragraph'>
+              {t('HostProfileForm:availability-details')}
+            </p>
+          </Form>
+          {onCreateErrorMessage}
+          <div className='button-wrapper'>
+            <div>
+              <Button secondary className='cancel-button' onClick={this.props.closeForm}>{t('reusable:cta:close')}</Button>
+            </div>
+            <div>
+              <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.createHostProfile}>{t('reusable:cta:save')}</Button>
+            </div>
+          </div>
+        </div>
+      )
+    }
 
     if (this.state.addressSearch === true) {
       addressSearch = (
@@ -222,91 +317,9 @@ class HostProfileForm extends Component {
     }
 
     return (
-      <div id='host-profile-form'>
-        <Header as='h2'>
-          {t('HostProfileForm:create-profile')}
-        </Header>
-        <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-          {t('HostProfileForm:create-profile-main-title')}
-        </p>
-        <Form id='host-profile-form'>
-          <Form.TextArea
-            label={t('HostProfileForm:about-you-label')}
-            placeholder={t('HostProfileForm:about-you-plch')}
-            required
-            id='description'
-            value={this.state.description}
-            onChange={this.onChangeHandler}
-          />
-          {addressErrorMessage}
-          {addressSearch}
-          <p className='small-left-paragraph'>
-            {t('HostProfileForm:address-message')}
-          </p>
-          <Form.Group
-            widths='equal'
-          >
-            <Form.Input
-              label={t('HostProfileForm:rate-label')}
-              type='number'
-              placeholder={t('HostProfileForm:rate-plch')}
-              required
-              id='rate'
-              value={this.state.rate}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKey}
-            />
-            <Form.Input
-              label={t('HostProfileForm:max-cats-label')}
-              type='number'
-              placeholder={t('HostProfileForm:max-cats-plch')}
-              required
-              id='maxCats'
-              value={this.state.maxCats}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKey}
-            />
-            <Form.Input
-              label={t('HostProfileForm:supplement-label')}
-              type='number'
-              placeholder={t('HostProfileForm:supplement-plch')}
-              required
-              id='supplement'
-              value={this.state.supplement}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKey}
-            />
-          </Form.Group>
-          <p className='small-left-paragraph'>
-            <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('HostProfileForm:explain-supplement-2')}
-          </p>
-          <div className='required field' >
-            <label for='availability' >
-              {t('HostProfileForm:availability-title')}
-            </label>
-            <DayPicker
-              showWeekNumbers
-              fromMonth={today}
-              disabledDays={{ before: today }}
-              firstDayOfWeek={1}
-              selectedDays={this.state.selectedDays}
-              onDayClick={this.handleDayClick}
-            />
-          </div>
-          <p className='small-centered-paragraph'>
-            {t('HostProfileForm:availability-details')}
-          </p>
-        </Form>
-        {onCreateErrorMessage}
-        <div className='button-wrapper'>
-          <div>
-            <Button secondary className='cancel-button' onClick={this.props.closeForm}>{t('reusable:cta:close')}</Button>
-          </div>
-          <div>
-            <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.createHostProfile}>{t('reusable:cta:save')}</Button>
-          </div>
-        </div>
-      </div>
+      <>
+        {page}
+      </>
     )
   }
 }
