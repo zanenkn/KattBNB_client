@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
+import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -68,12 +69,13 @@ class HostProfileForm extends Component {
   }
 
   geolocationDataAddress = () => {
+    const { t } = this.props
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
     Geocode.fromAddress(this.state.userInputAddress).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location
         if (search(this.props.location, response.results[0].address_components) === undefined) {
-          if (window.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')) {
+          if (window.confirm(t('HostProfileForm:address-select-notification'))) {
             this.setState({
               latitude: lat,
               longitude: lng,
@@ -118,12 +120,13 @@ class HostProfileForm extends Component {
   }
 
   createHostProfile = (e) => {
+    const { t } = this.props
     e.preventDefault()
     this.setState({ loading: true })
     if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
       this.setState({
         loading: false,
-        errors: ['Please check that all numeric fields are positive!'],
+        errors: ['HostProfileForm:create-error-1'],
         onCreateErrorDisplay: true
       })
     } else {
@@ -149,7 +152,7 @@ class HostProfileForm extends Component {
       axios.post(path, payload, { headers: headers })
         .then(() => {
           this.setState({ onCreateErrorDisplay: false })
-          window.alert('You have successfully created your host profile!')
+          window.alert(t('HostProfileForm:create-success'))
           setTimeout(function () { window.location.replace('/user-page') }, 500)
         })
         .catch(error => {
@@ -165,12 +168,13 @@ class HostProfileForm extends Component {
   render() {
     let addressSearch, addressErrorMessage, onCreateErrorMessage
     const today = new Date()
+    const { t } = this.props
 
     if (this.state.addressSearch === true) {
       addressSearch = (
         <Form.Input
-          label='Your full address'
-          placeholder='Search..'
+          label={t('HostProfileForm:address-label')}
+          placeholder={t('HostProfileForm:address-search-plch')}
           required
           id='userInputAddress'
           value={this.state.userInputAddress}
@@ -184,12 +188,12 @@ class HostProfileForm extends Component {
       addressSearch = (
         <div className='required field'>
           <label for='userInputAddress'>
-            Your full address
+            {t('HostProfileForm:address-label')}
           </label>
           <p>
             {this.state.address}&nbsp;
             <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
-              Not right?
+              {t('HostProfileForm:not-right')}
             </Header>
           </p>
         </div>
@@ -207,10 +211,10 @@ class HostProfileForm extends Component {
     if (this.state.onCreateErrorDisplay) {
       onCreateErrorMessage = (
         <Message negative >
-          <Message.Header>Host profile could not be saved because of following error(s):</Message.Header>
+          <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
           <ul>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -220,15 +224,15 @@ class HostProfileForm extends Component {
     return (
       <div id='host-profile-form'>
         <Header as='h2'>
-          Create host profile
+          {t('HostProfileForm:create-profile')}
         </Header>
         <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
-          Fill in this information about yourself and start hosting cats today!
+          {t('HostProfileForm:create-profile-main-title')}
         </p>
         <Form id='host-profile-form'>
           <Form.TextArea
-            label='About you'
-            placeholder='Please write shortly about yourself and your experience with cats, as well as any cat amenities your apartment or house offers.'
+            label={t('HostProfileForm:about-you-label')}
+            placeholder={t('HostProfileForm:about-you-plch')}
             required
             id='description'
             value={this.state.description}
@@ -237,15 +241,15 @@ class HostProfileForm extends Component {
           {addressErrorMessage}
           {addressSearch}
           <p className='small-left-paragraph'>
-            Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!
+            {t('HostProfileForm:address-message')}
           </p>
           <Form.Group
             widths='equal'
           >
             <Form.Input
-              label='Your rate'
+              label={t('HostProfileForm:rate-label')}
               type='number'
-              placeholder='Your daily rate in kr/day'
+              placeholder={t('HostProfileForm:rate-plch')}
               required
               id='rate'
               value={this.state.rate}
@@ -253,9 +257,9 @@ class HostProfileForm extends Component {
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
-              label='Max cats accepted'
+              label={t('HostProfileForm:max-cats-label')}
               type='number'
-              placeholder='Max amount'
+              placeholder={t('HostProfileForm:max-cats-plch')}
               required
               id='maxCats'
               value={this.state.maxCats}
@@ -263,9 +267,9 @@ class HostProfileForm extends Component {
               onKeyPress={this.listenEnterKey}
             />
             <Form.Input
-              label='Supplement'
+              label={t('HostProfileForm:supplement-label')}
               type='number'
-              placeholder='+35kr/cat/day'
+              placeholder={t('HostProfileForm:supplement-plch')}
               required
               id='supplement'
               value={this.state.supplement}
@@ -274,11 +278,11 @@ class HostProfileForm extends Component {
             />
           </Form.Group>
           <p className='small-left-paragraph'>
-            <strong>What does this mean?</strong> Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr
+            <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('HostProfileForm:explain-supplement-2')}
           </p>
           <div className='required field' >
             <label for='availability' >
-              Availability
+              {t('HostProfileForm:availability-title')}
             </label>
             <DayPicker
               showWeekNumbers
@@ -290,16 +294,16 @@ class HostProfileForm extends Component {
             />
           </div>
           <p className='small-centered-paragraph'>
-            Please mark the dates when you are available to host!
+            {t('HostProfileForm:availability-details')}
           </p>
         </Form>
         {onCreateErrorMessage}
         <div className='button-wrapper'>
           <div>
-            <Button secondary className='cancel-button' onClick={this.props.closeForm}>Close</Button>
+            <Button secondary className='cancel-button' onClick={this.props.closeForm}>{t('reusable:cta:close')}</Button>
           </div>
           <div>
-            <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.createHostProfile}>Save</Button>
+            <Button id='save-host-profile-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.createHostProfile}>{t('reusable:cta:save')}</Button>
           </div>
         </div>
       </div>
@@ -307,4 +311,4 @@ class HostProfileForm extends Component {
   }
 }
 
-export default HostProfileForm
+export default withTranslation('HostProfileForm')(HostProfileForm)
