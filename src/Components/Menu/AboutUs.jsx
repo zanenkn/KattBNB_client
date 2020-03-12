@@ -29,7 +29,7 @@ const AboutUs = () => {
           {t('AboutUs:behind-scenes-title')}
         </Header>
         <div>
-          <Image style={{ 'margin': 'auto' }} src='zane.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='zane2.png' size='small'></Image>
         </div>
         <Header style={{ 'marginBottom': 0 }}>
           <a href='https://www.linkedin.com/in/zane-neikena' target='_blank' rel='noopener noreferrer'>Zane Neikena</a>
@@ -43,7 +43,7 @@ const AboutUs = () => {
         <Divider hidden />
         <Divider hidden />
         <div>
-          <Image style={{ 'margin': 'auto' }} src='george.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='george2.png' size='small'></Image>
         </div>
         <Header style={{ 'marginBottom': 0 }}>
           <a href='https://www.linkedin.com/in/george-tomaras-05833730/' target='_blank' rel='noopener noreferrer'>George Tomaras</a>
@@ -57,16 +57,16 @@ const AboutUs = () => {
         <Divider hidden />
         <Divider hidden />
         <div>
-          <Image style={{ 'margin': 'auto' }} src='felix.png' size='small'></Image>
+          <Image style={{ 'margin': 'auto' }} src='joel.png' size='small'></Image>
         </div>
         <Header style={{ 'marginBottom': 0 }}>
-          <a href='https://www.linkedin.com/in/felix-bonnier-90b4561/' target='_blank' rel='noopener noreferrer'>Felix Bonnier</a>
+          <a href='https://www.linkedin.com/in/joel-%C3%B6hman-b09307159/' target='_blank' rel='noopener noreferrer'>Joel Öhman</a>
         </Header>
         <Header as='h4' style={{ 'marginTop': 0 }}>
-          {t('AboutUs:felix-title')}
+          {t('AboutUs:joel-title')}
         </Header>
         <p style={{ 'textAlign': 'center' }}>
-          {t('AboutUs:felix-txt')}
+          {t('AboutUs:joel-txt')}
         </p>
         <Divider hidden />
         <Divider hidden />
@@ -74,13 +74,15 @@ const AboutUs = () => {
           {t('AboutUs:acknowledgements-title')}
         </Header>
         <p>
-          <Trans i18nKey='AboutUs:acknowledgements-txt'>
-            None of this would be possible without <a href='https://craftacademy.se/' target='_blank' rel='noopener noreferrer'>Craft Academy</a>. These people taught us to code and all things beyond that.
+          <Trans i18nKey='AboutUs:acknowledgements-felix'>
+            Thank you <a href='https://www.linkedin.com/in/felix-bonnier-90b4561/' target='_blank' rel='noopener noreferrer'>Felix Bonnier</a> for all the encouragement, advice in business development and the invaluable help with our very first pitch deck.
           </Trans>
         </p>
         <Divider hidden />
         <p>
-          Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa</a> for your precious help with implementing the translation package. We wish you all the best in your career as a Junior Web Developer.
+          <Trans i18nKey='AboutUs:acknowledgements-clarissa'>
+            Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a web developer!
+          </Trans>
         </p>
       </div>
     )
