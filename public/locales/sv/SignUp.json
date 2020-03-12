@@ -7,6 +7,6 @@
   "captcha-label": "Ange kontrollkoden ovan",
   "captcha-plch": "Jag är inte en robot",
   "You didn't input the captcha phrase correctly, please try again!": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
-  "terms-error": "",
-  "terms-label": ""
+  "terms-error": "Du måste godkänna användarvillkoren för att fortsätta!",
+  "terms-label": "Jag godkänner <1>användarvillkoren</1>"
 }
