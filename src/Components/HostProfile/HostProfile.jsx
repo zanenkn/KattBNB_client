@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import { Divider, Header, Message, Segment } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
@@ -63,7 +63,9 @@ const HostProfile = forwardRef((props, ref) => {
         {t('HostProfile:main-header')}
       </Header>
       <p style={{ 'textAlign': 'center' }}>
-        {t('HostProfile:main-title-1')} <strong> {t('HostProfile:main-title-strong')} </strong> {t('HostProfile:main-title-3')}
+        <Trans i18nKey='HostProfile:main-title'>
+          This is your <strong>host profile.</strong> Here you can update all your cat hosting information.
+        </Trans>
       </p>
       {errorDisplay &&
         <Message negative >
