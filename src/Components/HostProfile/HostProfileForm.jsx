@@ -168,15 +168,63 @@ class HostProfileForm extends Component {
 
   render() {
     const { t } = this.props
-    let addressSearch, addressErrorMessage, onCreateErrorMessage, page
-    const today = new Date()
 
-    if (this.props.tReady === false) {
-      page = (
-        <Spinner />
-      )
-    } else {
-      page = (
+    if (this.props.tReady) {
+      let addressSearch, addressErrorMessage, onCreateErrorMessage
+      const today = new Date()
+
+      if (this.state.addressSearch === true) {
+        addressSearch = (
+          <Form.Input
+            label={t('HostProfileForm:address-label')}
+            placeholder={t('HostProfileForm:address-search-plch')}
+            required
+            id='userInputAddress'
+            value={this.state.userInputAddress}
+            onChange={this.onChangeHandler}
+            onKeyPress={this.listenEnterKeyAddress}
+            iconPosition='right'
+            icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} style={{ 'color': '#c90c61' }} />}
+          />
+        )
+      } else {
+        addressSearch = (
+          <div className='required field'>
+            <label for='userInputAddress'>
+              {t('HostProfileForm:address-label')}
+            </label>
+            <p>
+              {this.state.address}&nbsp;
+              <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
+                {t('HostProfileForm:not-right')}
+              </Header>
+            </p>
+          </div>
+        )
+      }
+
+      if (this.state.addressErrorDisplay) {
+        addressErrorMessage = (
+          <Message negative >
+            {this.state.addressError}
+          </Message>
+        )
+      }
+
+      if (this.state.onCreateErrorDisplay) {
+        onCreateErrorMessage = (
+          <Message negative >
+            <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
+            <ul>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
+      return (
         <div id='host-profile-form'>
           <Header as='h2'>
             {t('HostProfileForm:create-profile')}
@@ -263,64 +311,7 @@ class HostProfileForm extends Component {
           </div>
         </div>
       )
-    }
-
-    if (this.state.addressSearch === true) {
-      addressSearch = (
-        <Form.Input
-          label={t('HostProfileForm:address-label')}
-          placeholder={t('HostProfileForm:address-search-plch')}
-          required
-          id='userInputAddress'
-          value={this.state.userInputAddress}
-          onChange={this.onChangeHandler}
-          onKeyPress={this.listenEnterKeyAddress}
-          iconPosition='right'
-          icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} style={{ 'color': '#c90c61' }} />}
-        />
-      )
-    } else {
-      addressSearch = (
-        <div className='required field'>
-          <label for='userInputAddress'>
-            {t('HostProfileForm:address-label')}
-          </label>
-          <p>
-            {this.state.address}&nbsp;
-            <Header as='strong' id='change-address-link' onClick={() => { this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' }) }} className='fake-link-underlined'>
-              {t('HostProfileForm:not-right')}
-            </Header>
-          </p>
-        </div>
-      )
-    }
-
-    if (this.state.addressErrorDisplay) {
-      addressErrorMessage = (
-        <Message negative >
-          {this.state.addressError}
-        </Message>
-      )
-    }
-
-    if (this.state.onCreateErrorDisplay) {
-      onCreateErrorMessage = (
-        <Message negative >
-          <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
-          <ul>
-            {this.state.errors.map(error => (
-              <li key={error}>{t(error)}</li>
-            ))}
-          </ul>
-        </Message>
-      )
-    }
-
-    return (
-      <>
-        {page}
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
