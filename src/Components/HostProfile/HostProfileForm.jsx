@@ -45,9 +45,7 @@ class HostProfileForm extends Component {
       return new Date(utc).getTime()
     })
     let sortedAvailableDates = availableDates.sort(function (a, b) { return a - b })
-    this.setState({
-      availability: sortedAvailableDates
-    })
+    this.setState({ availability: sortedAvailableDates })
   }
 
   handleDayClick(day, { selected }) {
