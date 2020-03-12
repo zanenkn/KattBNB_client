@@ -1,61 +1,103 @@
-import React from 'react'
-import { Sidebar, Header } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Header, Accordion, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const Faq = () => {
+  const [activeIndex, setActiveIndex] = useState()
+
+  const handleClick = (e, titleProps) => {
+    const { index } = titleProps
+    const newIndex = activeIndex === index ? -1 : index
+    setActiveIndex(newIndex)
+  }
+
   const { t, ready } = useTranslation('Faq')
   if (ready) {
     return (
-      <Sidebar.Pushable className='content-wrapper' >
+      <div className='content-wrapper' >
         <Header as='h1'>
           {t('reusable:title.faq')}
         </Header>
 
         <Header as='h3' style={{ 'textAlign': 'left' }} >
-          {t('Faq:header1')}
+          {t('Faq:general.top-header')}
         </Header>
-
-        <p>
-          {t('Faq:p1')}
-        </p>
+        <Accordion>
+          <Accordion.Title
+            active={activeIndex === 101}
+            index={101}
+            onClick={handleClick}
+            style={{'color': 'grey', 'fontWeight': '600'}}
+          >
+            <Icon name='dropdown' style={{'color': '#c90c61'}} />
+            {t('Faq:general.sub-header1')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 101}>
+            <p>
+              {t('Faq:general.p1-1')}
+            </p>
+            <p>
+              {t('Faq:general.p1-2')}
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 102}
+            index={102}
+            onClick={handleClick}
+            style={{'color': 'grey', 'fontWeight': '600'}}
+          >
+            <Icon name='dropdown' style={{'color': '#c90c61'}} />
+            {t('Faq:general.sub-header2')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 102}>
+            <p>
+              {t('Faq:general.p2-1')}
+            </p>
+          </Accordion.Content>
+        </Accordion>
 
         <Header as='h3' style={{ 'textAlign': 'left' }} >
-          {t('Faq:header2')}
+          {t('Faq:host.top-header')}
         </Header>
+        <Accordion>
+          <Accordion.Title
+            active={activeIndex === 201}
+            index={201}
+            onClick={handleClick}
+            style={{'color': 'grey', 'fontWeight': '600'}}
+          >
+            <Icon name='dropdown' style={{'color': '#c90c61'}} />
+            {t('Faq:general.sub-header1')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 201}>
+            <p>
+              {t('Faq:general.p1-1')}
+            </p>
+            <p>
+              {t('Faq:general.p1-2')}
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 202}
+            index={202}
+            onClick={handleClick}
+            style={{'color': 'grey', 'fontWeight': '600'}}
+          >
+            <Icon name='dropdown' style={{'color': '#c90c61'}} />
+            {t('Faq:general.sub-header2')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 202}>
+            <p>
+              {t('Faq:general.p2-1')}
+            </p>
+          </Accordion.Content>
+        </Accordion>
 
-        <p>
-          {t('Faq:p2')}
-        </p>
 
-        <Header as='h3' style={{ 'textAlign': 'left' }} >
-          {t('Faq:header3')}
-        </Header>
 
-        <p>
-          <Trans i18nKey='Faq:p3'>
-            We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <Header as={Link} to='about-us' style={{ 'fontSize': 'medium' }} className='fake-link-underlined-reg'>here</Header>.
-          </Trans>
-        </p>
-
-        <Header as='h3' style={{ 'textAlign': 'left' }} >
-          {t('Faq:header4')}
-        </Header>
-
-        <p>
-          <Trans i18nKey='Faq:p4-1'>
-            Good! If you have an idea how to improve our code, you are welcome to open a pull request <a href='https://github.com/zanenkn/KattBNB_client' target='_blank' rel='noopener noreferrer' style={{ 'textDecoration': 'underline' }}>on GitHub</a>.
-          </Trans>
-        </p>
-
-        <p>
-          <Trans i18nKey='Faq:p4-2'>
-            For any other suggestions and feedback, please use <Header as={Link} to='contact-us' className='fake-link-underlined-reg'>this form</Header> to get in touch with us.
-          </Trans>
-        </p>
-
-      </Sidebar.Pushable>
+      </div>
     )
   } else { return <Spinner /> }
 }

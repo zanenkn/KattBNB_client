@@ -1,11 +1,47 @@
 {
-    "header1": "What is KattBNB?",
-    "p1": "Our idea of KattBNB is a platform that lets cat sitters offer their services and cat owners book a sitter that is most convenient to them. Think that you could check your cat in with someone you can trust as easy you check yourself in a hotel! That’s what we are building. A full range service that allows you to not only find the right person to look after your cat but also handles the booking, payment, staying in touch and all the other stuff. So you don’t have to worry while you are away.",
-    "header2": "When is KattBNB going live?",
-    "p2": "We are planning and working hard towards a release on spring 2020.",
-    "header3": "Who we are?",
-    "p3": "We are couple of friends passionate about cats and coding. We believe in solving problems that matter and having fun while at it. More <1>here</1>.",
-    "header4": "I want to contribute!",
-    "p4-1": "Good! If you have an idea how to improve our code, you are welcome to open a pull request <1>on GitHub</1>.",
-    "p4-2": "For any other suggestions and feedback, please use <1>this form</1> to get in touch with us."
+    "general": {
+        "top-header": "General",
+        "sub-header1": "I have signed up / reset my password successfully but I didn’t receive anything in my inbox. Why?",
+        "p1-1": "Make sure you check your spam folder, sometimes the confirmation email can end up there. If that is the case, please whitelist our address (meow-reply@kattbnb.com) via your email client settings. That way, you will receive every notification directly in your inbox.",
+        "p1-2": "Also, keep in mind that in some cases, the email message can take up to 30 minutes to be delivered.",
+        "sub-header2": "What’s the difference between incoming and outgoing bookings?",
+        "p2-1": "There are 6 types of bookings and you can see them by clicking the bookings icon in the navbar:",
+        "list-title2-1": "Incoming bookings are the bookings other cat owners requested, so that you can host their cats. There are 3 categories:",
+        "list-item2-1-1": "Requests (the bookings you still have to accept or decline)",
+        "list-item2-1-2": "Upcoming (the accepted bookings / cats that will be coming to your house)",
+        "list-item2-1-3": "History (bookings you declined or got canceled by the system or you accepted them and you already hosted the cats in a past date)",
+        "list-title2-2": "Outgoing bookings are the bookings you request, so that someone else can host your cats while you’re away. Similar to the incoming, there are also 3 categories:",
+        "list-item2-2-1": "Requests (when you ask another person to host your cats and you wait for them to accept or decline)",
+        "list-item2-2-2": "Upcoming (bookings you requested and someone else already accepted and you’ll have to drop off your cats to their house)",
+        "list-item2-2-3": "History (bookings you requested and got declined or canceled by the system or accepted and you already dropped off and picked up your cats)",
+        "sub-header-3": "Why do I have to wait for my account to be deleted?",
+        "p3-1": "When you request to delete your account, our system checks all your incoming and outgoing bookings and deletes all of your history, requests as well as your host profile, if you have any, and your main account.",
+        "p3-2": "For every outgoing upcoming booking you have at the time, your email address will be conveyed to the host if you opt to do so. If however you opt to not reveal your email address, then you will have to wait for all your outgoing upcoming bookings to resolve and then proceed to deleting your account.",
+        "p3-3": "If you have any incoming bookings at the time of the request for an account deletion, then you must first take the following steps before your account can be deleted:",
+        "list-item3-1": "Go to your profile page by clicking your avatar icon on the top right corner of the navbar.",
+        "list-item3-2": "Edit your availability and deselect all dates. That way you won’t appear in the search and nobody will be able to request a booking with you.",
+        "list-item3-3": "Go to your incoming bookings. Check your requests. Accept or decline every request.",
+        "list-item3-4": "Once you have 0 upcoming bookings, you can delete your account successfully.",
+        "p3-4": "Conversations between two users (exchanged text messages and images) will be deleted from our database by an algorithm, if both users have successfully requested an account deletion or if one user has successfully requested an account deletion and the remaining active user deletes the conversation. Or will be deleted directly by the users, if both of them request to delete a specific conversation between them.",
+        "p3-5": "Reviews written by users will be deleted from our database by an algorithm, only if associated host successfully requests an account deletion."
+
+    },
+    "host": {
+        "top-header": "Host",
+        "sub-header1": "How do I become a cat host?",
+        "p1-1": "To start hosting cats you should sign up and verify your email address via confirmation email we send you.",
+        "p1-2": "After that, you should make a host profile. You can do that from your User page.",
+        "p1-3": "Once you have the host profile set up, you will appear in the search results for users searching for cat sitters in your area."
+    },
+    "owner": {
+        "top-header": "Cat owner",
+        "sub-header1": "How do I book a cat host?",
+        "p1-1": "You can enter the requirements for your booking and see available cat hosts near you. In order to book someone you should sign up.",
+        "p1-2": "Once registered and logged in, you can send a booking request to a cat host. They will then have 3 days to accept or decline your booking request. We will notify you by email about any changes in booking request status.",
+        "p1-3": "By requesting a booking you agree and are obliged to pay the amount shown in booking details in return for cat sitter's services.",
+        "sub-header2": "Can you guarantee that the cat hosts offering their services on your website are reliable and will not harm my cat(s)?",
+        "p2-2": "We offer a platform for cat owners and cat lovers to meet, communicate and arrange cat sitting services. We strive to eliminate fraud and misuse of our App, although it is not possible for us to review and contol all the information that is uploaded by our users. We recommend that you meet with the host beforehand and make sure that they are the best match for your cat.",
+        "list-item2-1": "reviews for cat hosts that will help you decide what is best for you and your cat",
+        "list-item2-2": "BankID login for that extra piece of mind"
+    }
 }

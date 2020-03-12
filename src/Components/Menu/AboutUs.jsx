@@ -81,7 +81,7 @@ const AboutUs = () => {
         <Divider hidden />
         <p>
           <Trans i18nKey='AboutUs:acknowledgements-clarissa'>
-            Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a web developer!
+            Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a developer!
           </Trans>
         </p>
       </div>
