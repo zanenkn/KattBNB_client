@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
 const DescriptionUpdateForm = (props) => {
+
+  const { t } = useTranslation('DescriptionUpdateForm')
 
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
@@ -21,7 +24,7 @@ const DescriptionUpdateForm = (props) => {
       const payload = { description: newDescription }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          window.alert('Your description was succesfully updated!')
+          window.alert(t('DescriptionUpdateForm:update-success'))
           props.setElement('description', newDescription)
           props.closeAllForms()
         })
@@ -33,7 +36,7 @@ const DescriptionUpdateForm = (props) => {
     } else {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['The field is blank or unchanged!'])
+      setErrors(['DescriptionUpdateForm:update-error'])
     }
   }
 
@@ -41,8 +44,8 @@ const DescriptionUpdateForm = (props) => {
     <>
       <Divider />
       <p className='small-centered-paragraph'>
-        Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search.
-        </p>
+        {t('DescriptionUpdateForm:main-title')}
+      </p>
       <Form id='update-description'>
         <Form.TextArea
           required
@@ -53,17 +56,17 @@ const DescriptionUpdateForm = (props) => {
       </Form>
       {errorDisplay &&
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
           <ul id='message-error-list'>
             {errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
       }
       <div className='button-wrapper'>
-        <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
-        <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateDescription()}>Save</Button>
+        <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>{t('reusable:cta:close')}</Button>
+        <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateDescription()}>{t('reusable:cta:save')}</Button>
       </div>
       <Divider style={{ 'marginBottom': '2rem' }} />
     </>
