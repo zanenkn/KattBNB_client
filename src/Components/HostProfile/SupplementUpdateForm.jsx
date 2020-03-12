@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
 const SupplementUpdateForm = (props) => {
 
-  const { t } = useTranslation('SupplementUpdateForm')
+  const { t, ready } = useTranslation('SupplementUpdateForm')
 
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
@@ -40,40 +41,41 @@ const SupplementUpdateForm = (props) => {
     }
   }
 
-  return (
-    <>
-      <Divider />
-      <p className='small-centered-paragraph'>
-        {t('SupplementUpdateForm:main-title')}
-      </p>
-      <Form id='update-supplement' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
-        <Form.Input
-          required
-          type='number'
-          id='newSupplement'
-          value={newSupplement}
-          onChange={e => setNewSupplement(e.target.value)}
-          onKeyPress={e => { e.key === 'Enter' && updateSupplement() }}
-        />
-      </Form>
-      {errorDisplay &&
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-          <ul id='message-error-list'>
-            {errors.map(error => (
-              <li key={error}>{t(error)}</li>
-            ))}
-          </ul>
-        </Message>
-      }
-      <div className='button-wrapper'>
-        <Button secondary id='supplement-close-button' className='cancel-button' onClick={props.closeAllForms}>{t('reusable:cta:close')}</Button>
-        <Button id='supplement-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateSupplement()}>{t('reusable:cta:save')}</Button>
-      </div>
-      <Divider style={{ 'marginBottom': '2rem' }} />
-    </>
-  )
-
+  if (ready) {
+    return (
+      <>
+        <Divider />
+        <p className='small-centered-paragraph'>
+          {t('SupplementUpdateForm:main-title')}
+        </p>
+        <Form id='update-supplement' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
+          <Form.Input
+            required
+            type='number'
+            id='newSupplement'
+            value={newSupplement}
+            onChange={e => setNewSupplement(e.target.value)}
+            onKeyPress={e => { e.key === 'Enter' && updateSupplement() }}
+          />
+        </Form>
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        }
+        <div className='button-wrapper'>
+          <Button secondary id='supplement-close-button' className='cancel-button' onClick={props.closeAllForms}>{t('reusable:cta:close')}</Button>
+          <Button id='supplement-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateSupplement()}>{t('reusable:cta:save')}</Button>
+        </div>
+        <Divider style={{ 'marginBottom': '2rem' }} />
+      </>
+    )
+  } else { return <Spinner /> }
 }
 
 export default SupplementUpdateForm

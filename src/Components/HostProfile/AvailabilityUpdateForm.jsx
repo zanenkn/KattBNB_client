@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 import { Divider, Button, Message } from 'semantic-ui-react'
@@ -97,73 +98,76 @@ class AvailabilityUpdateForm extends Component {
 
   render() {
     const { t } = this.props
-    let errorDisplay
-    let disabledAvailabilityBookings = []
-    let disabledAvailabilityDates = []
-    let disabledDaysSorted = []
 
-    const today = new Date()
-    let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
-    let todaysDate = new Date(utc).getTime()
+    if (this.props.tReady) {
+      let errorDisplay
+      let disabledAvailabilityBookings = []
+      let disabledAvailabilityDates = []
+      let disabledDaysSorted = []
 
-    let disabledDaysDates = [{ before: today }]
+      const today = new Date()
+      let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+      let todaysDate = new Date(utc).getTime()
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{t(error)}</li>
-            ))}
-          </ul>
-        </Message>
+      let disabledDaysDates = [{ before: today }]
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
+      if (this.state.incomingBookings.length > 0) {
+        this.state.incomingBookings.map(booking => {
+          if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > todaysDate)) {
+            disabledAvailabilityBookings.push(booking.dates)
+          }
+          disabledAvailabilityDates = disabledAvailabilityBookings.flat()
+          disabledDaysSorted = disabledAvailabilityDates.sort()
+        })
+        disabledDaysSorted.map(day => {
+          disabledDaysDates.push(new Date(day))
+        })
+      }
+
+      if (this.state.forbiddenDates.length > 0) {
+        this.state.forbiddenDates.map(date => {
+          disabledDaysDates.push(new Date(date))
+        })
+      }
+
+      return (
+        <>
+          <Divider />
+          <p className='small-centered-paragraph'>
+            {t('AvailabilityUpdateForm:main-title')}
+          </p>
+          <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
+            <DayPicker
+              showWeekNumbers
+              firstDayOfWeek={1}
+              selectedDays={this.state.selectedDays}
+              fromMonth={today}
+              disabledDays={disabledDaysDates}
+              onDayClick={this.handleDayClick}
+            />
+          </div>
+          {errorDisplay}
+          <div className='button-wrapper'>
+            <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>{t('reusable:cta:close')}</Button>
+            <Button id='availability-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvailability}>{t('reusable:cta:save')}</Button>
+          </div>
+          <Divider style={{ 'marginBottom': '2rem' }} />
+        </>
       )
-    }
-
-    if (this.state.incomingBookings.length > 0) {
-      this.state.incomingBookings.map(booking => {
-        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > todaysDate)) {
-          disabledAvailabilityBookings.push(booking.dates)
-        }
-        disabledAvailabilityDates = disabledAvailabilityBookings.flat()
-        disabledDaysSorted = disabledAvailabilityDates.sort()
-      })
-      disabledDaysSorted.map(day => {
-        disabledDaysDates.push(new Date(day))
-      })
-    }
-
-    if (this.state.forbiddenDates.length > 0) {
-      this.state.forbiddenDates.map(date => {
-        disabledDaysDates.push(new Date(date))
-      })
-    }
-
-    return (
-      <>
-        <Divider />
-        <p className='small-centered-paragraph'>
-          {t('AvailabilityUpdateForm:main-title')}
-        </p>
-        <div style={{ 'marginRight': '-2rem', 'marginLeft': '-2rem', 'marginBottom': '-1rem' }}>
-          <DayPicker
-            showWeekNumbers
-            firstDayOfWeek={1}
-            selectedDays={this.state.selectedDays}
-            fromMonth={today}
-            disabledDays={disabledDaysDates}
-            onDayClick={this.handleDayClick}
-          />
-        </div>
-        {errorDisplay}
-        <div className='button-wrapper'>
-          <Button secondary id='availability-close-button' className='cancel-button' onClick={this.props.closeAllForms}>{t('reusable:cta:close')}</Button>
-          <Button id='availability-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvailability}>{t('reusable:cta:save')}</Button>
-        </div>
-        <Divider style={{ 'marginBottom': '2rem' }} />
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
