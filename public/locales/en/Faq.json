@@ -31,7 +31,17 @@
         "sub-header1": "How do I become a cat host?",
         "p1-1": "To start hosting cats you should sign up and verify your email address via confirmation email we send you.",
         "p1-2": "After that, you should make a host profile. You can do that from your User page.",
-        "p1-3": "Once you have the host profile set up, you will appear in the search results for users searching for cat sitters in your area."
+        "p1-3": "Once you have the host profile set up, you will appear in the search results for users searching for cat sitters in your area.",
+        "sub-header2": "Do I have to pay to start hosting?",
+        "p2-1": "Hosting is free with KattBNB!",
+        "sub-header3": "How much do I get paid for hosting?",
+        "p3-1": "You choose your daily rate and supplement yourself when you create your host profile. You can update these at any time. The new rates will apply for booking requests made after the update.",
+        "p3-2": "You can <1>contact us</1> if you would like an assistance with setting your rates.",
+        "sub-header4": "How do I get paid?",
+        "p4-1": "For the time being, KattBNB does not offer any integrated payment solution. After booking is finalized (cat host has approved the booking request) both users have entered a legally binding agreement. That means that the cat owner has agreed and is obliged to pay you the amount that is shown in booking details in return for your services. We trust our users to agree on payment form themselves.",
+        "list-item4-1": "Integrated payment solution - faster and safer!",
+        "sub-header5": "Why do I get a caution message when I fill in my address in my host profile?",
+        "p5-1": "Our website uses a Google service to check that your selected address is inside the geographic boundaries of your selected location. Google however, has all names written in English (e.g. Gothenburg), whereas out location selector has them written in Swedish (e.g. Göteborg). That’s why you still get a caution message. Since you know for sure that your declared address is inside the city boundaries declared in your user profile, continue without fear!"
     },
     "owner": {
         "top-header": "Cat owner",
@@ -40,8 +50,8 @@
         "p1-2": "Once registered and logged in, you can send a booking request to a cat host. They will then have 3 days to accept or decline your booking request. We will notify you by email about any changes in booking request status.",
         "p1-3": "By requesting a booking you agree and are obliged to pay the amount shown in booking details in return for cat sitter's services.",
         "sub-header2": "Can you guarantee that the cat hosts offering their services on your website are reliable and will not harm my cat(s)?",
-        "p2-2": "We offer a platform for cat owners and cat lovers to meet, communicate and arrange cat sitting services. We strive to eliminate fraud and misuse of our App, although it is not possible for us to review and contol all the information that is uploaded by our users. We recommend that you meet with the host beforehand and make sure that they are the best match for your cat.",
-        "list-item2-1": "reviews for cat hosts that will help you decide what is best for you and your cat",
-        "list-item2-2": "BankID login for that extra piece of mind"
+        "p2-1": "We offer a platform for cat owners and cat lovers to meet, communicate and arrange cat sitting services. We strive to eliminate fraud and misuse of our App, although it is not possible for us to review and contol all the information that is uploaded by our users. We recommend that you meet with the host beforehand and make sure that they are the best match for your cat.",
+        "list-item2-1": "Reviews for cat hosts that will help you decide what is best for you and your cat.",
+        "list-item2-2": "BankID login for that extra piece of mind."
     }
 }
