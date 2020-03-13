@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
 
 const DescriptionUpdateForm = (props) => {
+
+  const { t, ready } = useTranslation('DescriptionUpdateForm')
 
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
@@ -21,7 +25,7 @@ const DescriptionUpdateForm = (props) => {
       const payload = { description: newDescription }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          window.alert('Your description was succesfully updated!')
+          window.alert(t('DescriptionUpdateForm:update-success'))
           props.setElement('description', newDescription)
           props.closeAllForms()
         })
@@ -33,41 +37,43 @@ const DescriptionUpdateForm = (props) => {
     } else {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['The field is blank or unchanged!'])
+      setErrors(['DescriptionUpdateForm:update-error'])
     }
   }
 
-  return (
-    <>
-      <Divider />
-      <p className='small-centered-paragraph'>
-        Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search.
+  if (ready) {
+    return (
+      <>
+        <Divider />
+        <p className='small-centered-paragraph'>
+          {t('DescriptionUpdateForm:main-title')}
         </p>
-      <Form id='update-description'>
-        <Form.TextArea
-          required
-          id='newDescription'
-          value={newDescription}
-          onChange={e => setNewDescription(e.target.value)}
-        />
-      </Form>
-      {errorDisplay &&
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
-          <ul id='message-error-list'>
-            {errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
-      }
-      <div className='button-wrapper'>
-        <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>Close</Button>
-        <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateDescription()}>Save</Button>
-      </div>
-      <Divider style={{ 'marginBottom': '2rem' }} />
-    </>
-  )
+        <Form id='update-description'>
+          <Form.TextArea
+            required
+            id='newDescription'
+            value={newDescription}
+            onChange={e => setNewDescription(e.target.value)}
+          />
+        </Form>
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        }
+        <div className='button-wrapper'>
+          <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>{t('reusable:cta:close')}</Button>
+          <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateDescription()}>{t('reusable:cta:save')}</Button>
+        </div>
+        <Divider style={{ 'marginBottom': '2rem' }} />
+      </>
+    )
+  } else { return <Spinner /> }
 }
 
 export default DescriptionUpdateForm

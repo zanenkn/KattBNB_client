@@ -4,7 +4,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import Spinner from '../ReusableComponents/Spinner'
@@ -27,7 +27,7 @@ const SignUp = (props) => {
   const createUser = (e) => {
     setLoading(true)
     if (termsAccepted === false) {
-      setErrors(['You must accept the Terms and Conditions to continue!'])
+      setErrors(['SignUp:terms-error'])
       setErrorDisplay(true)
       setLoading(false)
     }
@@ -158,7 +158,11 @@ const SignUp = (props) => {
             <div className='toggle' onClick={() => setTermsAccepted(!termsAccepted)} >
               <Checkbox toggle checked={termsAccepted} />
             </div>
-            <label style={{ 'paddingLeft': '1.3em', 'color': termsAccepted ? 'grey' : 'silver' }}>I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined'>Terms & Conditions</Header></label>
+            <label style={{ 'paddingLeft': '1.3em', 'color': termsAccepted ? 'grey' : 'silver' }}>
+              <Trans i18nKey='SignUp:terms-label'>
+                I accept the <Header as={Link} to='/legal' target='_blank' className='fake-link-underlined'>Terms & Conditions</Header>
+              </Trans>
+            </label>
           </div>
 
           {errorDisplay &&

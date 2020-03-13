@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Icon } from 'semantic-ui-react'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
+import Spinner from '../ReusableComponents/Spinner'
 
 const AddressUpdateForm = (props) => {
+
+  const { t, ready } = useTranslation('AddressUpdateForm')
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(false)
@@ -24,7 +28,7 @@ const AddressUpdateForm = (props) => {
     if (props.fullAddress === newAddress || newAddress === '') {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['You have typed the same address or the field is empty!'])
+      setErrors(['AddressUpdateForm:update-error'])
     } else {
       const path = `/api/v1/host_profiles/${props.id}`
       const headers = {
@@ -41,7 +45,7 @@ const AddressUpdateForm = (props) => {
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
-          window.alert('Your address was succesfully updated!')
+          window.alert(t('AddressUpdateForm:update-success'))
           props.setElement('fullAddress', newAddress)
           props.closeAllForms()
         })
@@ -51,7 +55,6 @@ const AddressUpdateForm = (props) => {
           setErrors([error.response.data.errors.full_messages])
         })
     }
-
   }
 
   const geolocationDataAddress = () => {
@@ -60,7 +63,7 @@ const AddressUpdateForm = (props) => {
       response => {
         const { lat, lng } = response.results[0].geometry.location
         if (search(props.location, response.results[0].address_components) === undefined) {
-          if (window.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')) {
+          if (window.confirm(t('reusable:alerts.no-match-address'))) {
             setLatitude(lat)
             setLongitude(lng)
             setLat(lat - generateRandomNumber())
@@ -99,58 +102,60 @@ const AddressUpdateForm = (props) => {
     setLongitude('')
   }
 
-  return (
-    <>
-      <Divider />
-      <p className='small-centered-paragraph'>
-        You can update your address below by entering and searching your new address.
-      </p>
-      {addressErrorDisplay &&
-        <Message negative >
-          {addressError}
-        </Message>
-      }
-      {addressSearch ?
-        <div style={{ 'margin': 'auto', 'display': 'table', 'width': '100%' }}>
-          <Form.Input
-            style={{ 'width': '100%' }}
-            placeholder='Search...'
-            required
-            id='userInputAddress'
-            value={userInputAddress}
-            onChange={e => setUserInputAddress(e.target.value)}
-            onKeyPress={e => { e.key === 'Enter' && geolocationDataAddress() }}
-            iconPosition='right'
-            icon={<Icon id='search' name='search' link onClick={() => geolocationDataAddress()} style={{ 'color': '#c90c61' }} />}
-          />
-        </div>
-        :
-        <div className='required field'>
-          <p style={{ 'textAlign': 'center' }}>
-            {newAddress}&nbsp;
+  if (ready) {
+    return (
+      <>
+        <Divider />
+        <p className='small-centered-paragraph'>
+          {t('AddressUpdateForm:main-title')}
+        </p>
+        {addressErrorDisplay &&
+          <Message negative >
+            {addressError}
+          </Message>
+        }
+        {addressSearch ?
+          <div style={{ 'margin': 'auto', 'display': 'table', 'width': '100%' }}>
+            <Form.Input
+              style={{ 'width': '100%' }}
+              placeholder={t('AddressUpdateForm:address-search-plch')}
+              required
+              id='userInputAddress'
+              value={userInputAddress}
+              onChange={e => setUserInputAddress(e.target.value)}
+              onKeyPress={e => { e.key === 'Enter' && geolocationDataAddress() }}
+              iconPosition='right'
+              icon={<Icon id='search' name='search' link onClick={() => geolocationDataAddress()} style={{ 'color': '#c90c61' }} />}
+            />
+          </div>
+          :
+          <div className='required field'>
+            <p style={{ 'textAlign': 'center' }}>
+              {newAddress}&nbsp;
               <Header as='strong' id='change-address-link' onClick={() => backToSearch()} className='fake-link-underlined'>
-              Not right?
+                {t('AddressUpdateForm:not-right')}
               </Header>
-          </p>
+            </p>
+          </div>
+        }
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        }
+        <div className='button-wrapper'>
+          <Button secondary id='address-close-button' className='cancel-button' onClick={() => props.closeAllForms()}>{t('reusable:cta:close')}</Button>
+          <Button loading={loading} disabled={loading} id='address-submit-button' className='submit-button' onClick={() => updateAddress()}>{t('reusable:cta:save')}</Button>
         </div>
-      }
-      {errorDisplay &&
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
-          <ul id='message-error-list'>
-            {errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
-      }
-      <div className='button-wrapper'>
-        <Button secondary id='address-close-button' className='cancel-button' onClick={() => props.closeAllForms()}>Close</Button>
-        <Button loading={loading} disabled={loading} id='address-submit-button' className='submit-button' onClick={() => updateAddress()}>Save</Button>
-      </div>
-      <Divider style={{ 'marginBottom': '2rem' }} />
-    </>
-  )
+        <Divider style={{ 'marginBottom': '2rem' }} />
+      </>
+    )
+  } else { return <Spinner /> }
 }
 
 export default AddressUpdateForm

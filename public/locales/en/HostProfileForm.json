@@ -1,0 +1,22 @@
+{
+  "create-error-1": "Please check that all numeric fields are positive!",
+  "create-success": "You have successfully created your host profile!",
+  "address-label": "Your full address",
+  "create-error-2": "Host profile could not be saved because of following error(s):",
+  "create-profile": "Create host profile",
+  "create-profile-main-title": "Fill in this information about yourself and start hosting cats today!",
+  "about-you-label": "About you",
+  "about-you-plch": "Please write shortly about yourself and your experience with cats..",
+  "address-message": "Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!",
+  "rate-label": "Your rate",
+  "rate-plch": "Your daily rate in kr/day",
+  "max-cats-label": "Max cats accepted",
+  "max-cats-plch": "Max amount",
+  "supplement-label": "Supplement",
+  "explain-supplement-1": "What does this mean?",
+  "explain-supplement-2": "Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr",
+  "availability-title": "Availability",
+  "availability-details": "Please mark the dates when you are available to host!",
+  "address-search-plch": "Search..",
+  "not-right": "Not right?"
+}
