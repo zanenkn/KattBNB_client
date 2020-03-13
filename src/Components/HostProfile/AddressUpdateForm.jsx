@@ -63,7 +63,7 @@ const AddressUpdateForm = (props) => {
       response => {
         const { lat, lng } = response.results[0].geometry.location
         if (search(props.location, response.results[0].address_components) === undefined) {
-          if (window.confirm(t('AddressUpdateForm:address-select-notification'))) {
+          if (window.confirm(t('reusable:alerts.no-match-address'))) {
             setLatitude(lat)
             setLongitude(lng)
             setLat(lat - generateRandomNumber())

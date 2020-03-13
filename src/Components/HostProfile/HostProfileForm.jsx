@@ -76,7 +76,7 @@ class HostProfileForm extends Component {
       response => {
         const { lat, lng } = response.results[0].geometry.location
         if (search(this.props.location, response.results[0].address_components) === undefined) {
-          if (window.confirm(t('HostProfileForm:address-select-notification'))) {
+          if (window.confirm(t('reusable:alerts.no-match-address'))) {
             this.setState({
               latitude: lat,
               longitude: lng,
@@ -272,7 +272,7 @@ class HostProfileForm extends Component {
               <Form.Input
                 label={t('HostProfileForm:supplement-label')}
                 type='number'
-                placeholder={t('HostProfileForm:supplement-plch')}
+                placeholder={t('reusable:price.total-for-1')}
                 required
                 id='supplement'
                 value={this.state.supplement}

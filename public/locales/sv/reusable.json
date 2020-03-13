@@ -41,5 +41,8 @@
     "change": "Ändra",
     "save": "Spara",
     "close": "Stäng"
+  },
+  "alerts": {
+    "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
   }
 }

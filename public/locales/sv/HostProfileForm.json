@@ -13,12 +13,10 @@
   "max-cats-label": "Max antal katter",
   "max-cats-plch": "Max antal",
   "supplement-label": "Tillägg",
-  "supplement-plch": "+35kr/katt/dag",
   "explain-supplement-1": "Vad betyder det här?",
   "explain-supplement-2": "Låt oss säga att ditt pris är 120 kr/dag för en katt och ditt tillägg för ytterligare katter är 35 kr/dag. Det betyder att om du är kattvakt åt en katt under tre dagar är betalningen 120 x 3 = 360 kr. Om du däremot går med på att vara kattvakt för två katter från samma ägare i tre dagar är din betalning (120 + 35) x 3 = 465 kr",
   "availability-title": "Tillgänglighet",
   "availability-details": "Vänligen markera datumen då du är tillgänglig till att vara kattvakt",
-  "address-select-notification": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?",
-  "address-search-plch": "Sök...",
+  "address-search-plch": "Sök..",
   "not-right": "Inte rätt?"
 }
