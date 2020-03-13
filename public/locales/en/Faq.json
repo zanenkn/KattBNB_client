@@ -14,7 +14,7 @@
         "list-item2-2-1": "Requests (when you ask another person to host your cats and you wait for them to accept or decline)",
         "list-item2-2-2": "Upcoming (bookings you requested and someone else already accepted and you’ll have to drop off your cats to their house)",
         "list-item2-2-3": "History (bookings you requested and got declined or canceled by the system or accepted and you already dropped off and picked up your cats)",
-        "sub-header-3": "Why do I have to wait for my account to be deleted?",
+        "sub-header3": "Why do I have to wait for my account to be deleted?",
         "p3-1": "When you request to delete your account, our system checks all your incoming and outgoing bookings and deletes all of your history, requests as well as your host profile, if you have any, and your main account.",
         "p3-2": "For every outgoing upcoming booking you have at the time, your email address will be conveyed to the host if you opt to do so. If however you opt to not reveal your email address, then you will have to wait for all your outgoing upcoming bookings to resolve and then proceed to deleting your account.",
         "p3-3": "If you have any incoming bookings at the time of the request for an account deletion, then you must first take the following steps before your account can be deleted:",
@@ -23,8 +23,15 @@
         "list-item3-3": "Go to your incoming bookings. Check your requests. Accept or decline every request.",
         "list-item3-4": "Once you have 0 upcoming bookings, you can delete your account successfully.",
         "p3-4": "Conversations between two users (exchanged text messages and images) will be deleted from our database by an algorithm, if both users have successfully requested an account deletion or if one user has successfully requested an account deletion and the remaining active user deletes the conversation. Or will be deleted directly by the users, if both of them request to delete a specific conversation between them.",
-        "p3-5": "Reviews written by users will be deleted from our database by an algorithm, only if associated host successfully requests an account deletion."
-
+        "p3-5": "Reviews written by users will be deleted from our database by an algorithm, only if associated host successfully requests an account deletion.",
+        "sub-header4": "Why does the amount of my incoming bookings change from time to time?",
+        "p4-1": "We want to build a website you feel safe to use. And trust us that when you delete your account, all your data is wiped from our database. So when you request an account deletion, we delete all your outgoing bookings and along your user and/or host profile. Your outgoing bookings though, are someone else’s incoming bookings. And that someone else will no longer have access to them. That’s why the incoming bookings amount fluctuates from time to time.",
+        "sub-header5": "Does your website use cookies or other monitoring technologies?",
+        "p5-1": "Definitely not! We are living in an era where big companies abuse our freedom and profit from it. We disapprove of that behavior and we have sworn to not make the same mistake. Our website does not use any cookies or other tracking mechanisms.",
+        "sub-header6": "What password should I choose for my account?",
+        "p6-1": "As a general rule of thumb, you should always avoid putting you birthday, email or other publicly know details about you as password. Same of course goes for generic passwords like 123456, password, passwd, etc.",
+        "p6-2": "You should choose a combination of letters (both uppercase and lowercase), symbols and numbers. And of course the more characters your password has, the safer it is. Another very effective security measure, is to change your password every month or so.",
+        "p6-3": "Our website allows minimum passwords of 6 characters and can accept letters, symbols and numbers."
     },
     "host": {
         "top-header": "Host",

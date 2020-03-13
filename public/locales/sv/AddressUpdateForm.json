@@ -1,8 +1,7 @@
 {
-  "update-error": "",
-  "update-success": "",
-  "address-select-notification": "",
-  "main-title": "",
-  "address-search-plch": "",
-  "not-right": ""
+  "update-error": "Du har angett samma adress som innan eller så är fältet tomt!",
+  "update-success": "Din adress har uppdaterats!",
+  "main-title": "Du kan uppdatera din adress nedan genom att ange och söka efter din nya adress.",
+  "address-search-plch": "Sök..",
+  "not-right": "Inte rätt?"
 }

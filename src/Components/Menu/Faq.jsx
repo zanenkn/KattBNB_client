@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Header, Accordion, Icon, Label } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Header, Accordion, Icon, Label, Button, Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
-const Faq = () => {
+const Faq = (props) => {
   const [activeIndex, setActiveIndex] = useState()
 
   const handleClick = (e, titleProps) => {
@@ -55,6 +55,106 @@ const Faq = () => {
             <p>
               {t('Faq:general.p2-1')}
             </p>
+            <p>
+              {t('Faq:general.list-title2-1')}
+            </p>
+            <p>
+              <ul>
+                <li>{t('Faq:general.list-item2-1-1')}</li>
+                <li>{t('Faq:general.list-item2-1-2')}</li>
+                <li>{t('Faq:general.list-item2-1-3')}</li>
+              </ul>
+            </p>
+            <p>
+            {t('Faq:general.list-title2-2')}
+            </p>
+            <p>
+              <ul>
+                <li>{t('Faq:general.list-item2-2-1')}</li>
+                <li>{t('Faq:general.list-item2-2-2')}</li>
+                <li>{t('Faq:general.list-item2-2-3')}</li>
+              </ul>
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 103}
+            index={103}
+            onClick={handleClick}
+            style={{ 'color': 'grey', 'fontWeight': '600' }}
+          >
+            <Icon name='dropdown' style={{ 'color': '#c90c61' }} />
+            {t('Faq:general.sub-header3')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 103}>
+            <p>
+              {t('Faq:general.p3-1')}
+            </p>
+            <p>
+              {t('Faq:general.p3-2')}
+            </p>
+            <p>
+              {t('Faq:general.p3-3')}
+            </p>
+            <ul>
+              <li>{t('Faq:general.list-item3-1')}</li>
+              <li>{t('Faq:general.list-item3-2')}</li>
+              <li>{t('Faq:general.list-item3-3')}</li>
+              <li>{t('Faq:general.list-item3-4')}</li>
+            </ul>
+            <p>
+              {t('Faq:general.p3-4')}
+            </p>
+            <p>
+              {t('Faq:general.p3-5')}
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 104}
+            index={104}
+            onClick={handleClick}
+            style={{ 'color': 'grey', 'fontWeight': '600' }}
+          >
+            <Icon name='dropdown' style={{ 'color': '#c90c61' }} />
+            {t('Faq:general.sub-header4')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 104}>
+            <p>
+              {t('Faq:general.p4-1')}
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 105}
+            index={105}
+            onClick={handleClick}
+            style={{ 'color': 'grey', 'fontWeight': '600' }}
+          >
+            <Icon name='dropdown' style={{ 'color': '#c90c61' }} />
+            {t('Faq:general.sub-header5')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 105}>
+            <p>
+              {t('Faq:general.p5-1')}
+            </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 106}
+            index={106}
+            onClick={handleClick}
+            style={{ 'color': 'grey', 'fontWeight': '600' }}
+          >
+            <Icon name='dropdown' style={{ 'color': '#c90c61' }} />
+            {t('Faq:general.sub-header6')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 106}>
+            <p>
+              {t('Faq:general.p6-1')}
+            </p>
+            <p>
+              {t('Faq:general.p6-2')}
+            </p>
+            <p>
+              {t('Faq:general.p6-3')}
+            </p>
           </Accordion.Content>
         </Accordion>
 
@@ -75,9 +175,23 @@ const Faq = () => {
             <p>
               {t('Faq:host.p1-1')}
             </p>
+            {props.currentUserIn === false &&
+              <a href='https://www.kattbnb.com/sign-up' target='_blank' rel='noopener noreferrer'>
+                <Button style={{ 'margin': '1rem auto 1rem' }}>
+                  {t('reusable:title.signup')}
+                </Button>
+              </a>
+            }
             <p>
               {t('Faq:host.p1-2')}
             </p>
+            {props.currentUserIn &&
+              <a href='https://www.kattbnb.com/user-page' target='_blank' rel='noopener noreferrer'>
+                <Button style={{ 'margin': '1rem auto 1rem' }}>
+                  {t('reusable:cta.make-host-profile')}
+                </Button>
+              </a>
+            }
             <p>
               {t('Faq:host.p1-3')}
             </p>
@@ -109,8 +223,18 @@ const Faq = () => {
             <p>
               {t('Faq:host.p3-1')}
             </p>
+            <Segment raised style={{ 'paddingTop': '1rem', 'marginBottom': '1rem' }}>
+              <Label ribbon style={{ 'backgroundColor': 'grey', 'color': 'white', 'margin': '0 0 1rem' }}>
+                {t('reusable:labels.how-it-works')}
+              </Label>
+              <p style={{ 'padding': '0 1rem 1rem 1rem', 'textSize': 'small' }}>
+                {t('reusable:explain-supplement')}
+              </p>
+            </Segment>
             <p>
-              {t('Faq:host.p3-2')}
+              <Trans i18nKey='Faq:host.p3-2'>
+                You can <a href='https://www.kattbnb.com/contact-us' target='_blank' rel='noopener noreferrer'>contact us</a> if you would like an assistance with setting your rates.
+              </Trans>
             </p>
           </Accordion.Content>
           <Accordion.Title
@@ -126,9 +250,14 @@ const Faq = () => {
             <p>
               {t('Faq:host.p4-1')}
             </p>
-            <p>
-              {t('Faq:host.list-item4-1')}
-            </p>
+            <Segment raised style={{ 'paddingTop': '1rem' }}>
+              <Label ribbon style={{ 'backgroundColor': '#c90c61', 'color': 'white', 'margin': '0 0 1rem' }}>
+                {t('reusable:labels.coming-soon')}
+              </Label>
+              <p style={{ 'padding': '0 1rem 1rem 1rem' }}>
+                {t('Faq:host.list-item4-1')}
+              </p>
+            </Segment>
           </Accordion.Content>
           <Accordion.Title
             active={activeIndex === 205}
@@ -163,6 +292,13 @@ const Faq = () => {
             <p>
               {t('Faq:owner.p1-1')}
             </p>
+            {props.currentUserIn === false &&
+              <a href='https://www.kattbnb.com/sign-up' target='_blank' rel='noopener noreferrer'>
+                <Button id='sign-up-button' style={{ 'margin': '1rem auto 1rem' }}>
+                  {t('reusable:title.signup')}
+                </Button>
+              </a>
+            }
             <p>
               {t('Faq:owner.p1-2')}
             </p>
@@ -183,24 +319,30 @@ const Faq = () => {
             <p>
               {t('Faq:owner.p2-1')}
             </p>
-            <p>
-              {t('Faq:owner.list-item2-1')}
-            </p>
-            <Label size='tiny' style={{'backgroundColor': '#c90c61', 'color': 'white', 'margin': '0 0 0.5rem -1rem'}}>
-              Coming soon
-            </Label>
-            <p>
-              {t('Faq:owner.list-item2-2')}
-            </p>
+            <Segment raised style={{ 'paddingTop': '1rem' }}>
+              <Label ribbon style={{ 'backgroundColor': '#c90c61', 'color': 'white', 'margin': '0 0 1rem' }}>
+                {t('reusable:labels.coming-soon')}
+              </Label>
+              <ul>
+                <li>
+                  {t('Faq:owner.list-item2-1')}
+                </li>
+                <li>
+                  {t('Faq:owner.list-item2-2')}
+                </li>
+              </ul>
+            </Segment>
           </Accordion.Content>
-
         </Accordion>
-
-
-
       </div>
     )
   } else { return <Spinner /> }
 }
 
-export default Faq
+const mapStateToProps = (state) => {
+  return {
+    currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
+  }
+}
+
+export default connect(mapStateToProps)(Faq)

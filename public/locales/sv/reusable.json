@@ -2,7 +2,8 @@
   "price": {
     "per-day": "kr/dag",
     "total": "kr totalt",
-    "total-for-1": "kr/dag för 1 katt"
+    "total-for-1": "kr/dag för 1 katt",
+    "total-day": "kr/dag per katt"
   },
   "request-cta": {
     "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
@@ -34,12 +35,22 @@
     "legal": "Policy"
   },
   "errors": {
-    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:"
+    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
+    "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!"
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {
     "change": "Ändra",
     "save": "Spara",
-    "close": "Stäng"
-  }
+    "close": "Stäng",
+    "make-host-profile": ""
+  },
+  "alerts": {
+    "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
+  },
+  "labels": {
+    "coming-soon": "Kommer snart",
+    "how-it-works": ""
+  },
+  "explain-supplement": "Låt oss säga att ditt pris är 120 kr/dag för en katt och ditt tillägg för ytterligare katter är 35 kr/dag. Det betyder att om du är kattvakt åt en katt under tre dagar är betalningen 120 x 3 = 360 kr. Om du däremot går med på att vara kattvakt för två katter från samma ägare i tre dagar är din betalning (120 + 35) x 3 = 465 kr"
 }

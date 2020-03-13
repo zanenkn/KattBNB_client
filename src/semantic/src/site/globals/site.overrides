@@ -225,6 +225,17 @@ p {
   font-size: medium;
 }
 
+li {
+  color: grey;
+  font-size: medium;
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  padding: 0 0 0 20px;
+  margin: 0;
+}
+
 h4 {
   color: grey!important;
 }
