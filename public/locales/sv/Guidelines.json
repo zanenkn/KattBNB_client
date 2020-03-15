@@ -1,0 +1,41 @@
+{
+  "before-stay": {
+    "title": "",
+    "p1": "",
+    "list-item1": "",
+    "list-item2": "",
+    "list-item3": "",
+    "list-item4": ""
+  },
+  "owner": {
+    "title": "",
+    "list-item1": "",
+    "list-item2": "",
+    "list-item3": "",
+    "list-item4": "",
+    "checklist": {
+      "title": "",
+      "list-item1": "",
+      "list-item2": "",
+      "list-item3": "",
+      "list-item4": ""
+    },
+    "optional": {
+      "title": "",
+      "list-item1": "",
+      "list-item2": "",
+      "list-item3": ""
+    }
+  },
+  "host": {
+    "title": "",
+    "list-item1": "",
+    "list-item2": "",
+    "list-item3": "",
+    "list-item4": "",
+    "list-item5": "",
+    "list-item6": "",
+    "list-item7": "",
+    "list-item8": ""
+  }
+}
