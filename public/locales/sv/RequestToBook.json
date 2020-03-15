@@ -1,7 +1,7 @@
 {
     "error-1": "Skriv ett meddelande till kattvakten!",
     "error-2": "Meddelandet får inte överstiga 400 tecken!",
-    "error-header": "Bokning kunde inte efterfrågas på grund av följande fel:",
+    "error-header": "Bokning kunde inte as på grund av följande fel:",
     "title": "Bokningsförfrågan",
     "request-info": "Du efterfrågar en bokning för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7>.",
     "request-info_plural": "Du efterfrågar en bokning för <1>{{count}} katter</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7>.",
