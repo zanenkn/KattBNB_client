@@ -9,7 +9,11 @@ const SignupSuccess = (props) => {
   const { t, ready } = useTranslation('SignupSuccess')
 
   if (props.currentUserIn) {
-    window.localStorage.clear()
+    window.localStorage.removeItem('access-token')
+    window.localStorage.removeItem('token-type')
+    window.localStorage.removeItem('client')
+    window.localStorage.removeItem('uid')
+    window.localStorage.removeItem('expiry')
     setTimeout(function () { window.location.reload(true) }, 500)
   }
 

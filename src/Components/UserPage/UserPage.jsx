@@ -171,13 +171,21 @@ const UserPage = (props) => {
       }
       axios.delete(path, { headers: headers })
         .then(() => {
-          window.localStorage.clear()
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
           window.alert(t('UserPage:deletion-alert'))
           window.location.replace('/')
         })
         .catch(() => {
           window.alert(t('UserPage:deletion-error'))
-          window.localStorage.clear()
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
           window.location.replace('/login')
         })
     }
@@ -190,13 +198,21 @@ const UserPage = (props) => {
       }
       axios.delete(path, { headers: headers })
         .then(() => {
-          window.localStorage.clear()
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
           window.alert(t('UserPage:deletion-alert'))
           window.location.replace('/')
         })
         .catch(() => {
           window.alert(t('UserPage:deletion-error'))
-          window.localStorage.clear()
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
           window.location.replace('/login')
         })
     }

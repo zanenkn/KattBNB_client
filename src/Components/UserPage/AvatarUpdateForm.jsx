@@ -57,7 +57,11 @@ class AvatarUpdateForm extends Component {
 
   updateAvatar = (e) => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     } else if (this.state.image === '') {
       this.setState({
@@ -166,7 +170,7 @@ class AvatarUpdateForm extends Component {
                   corner='bottom right'
                   name='pencil alternate'
                   circular
-                  style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff' }}
+                  style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff', 'cursor': 'pointer' }}
                 />
               }
               position='top center'

@@ -27,7 +27,11 @@ class LocationUpdateForm extends Component {
     const { t } = this.props
     let address = this.props.fullAddress
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     } else if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
       this.setState({

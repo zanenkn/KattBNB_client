@@ -307,6 +307,7 @@ class Conversation extends Component {
                     onKeyPress={this.listenEnterKeyMessage}
                     onHeightChange={(height) => this.setState({ footerHeight: `${height}px` })}
                     disabled={this.props.location.state.user.id === null && true}
+                    style={{ 'paddingRight': '40px' }}
                   />
                   <div style={{
                     'display': this.state.newMessage === '' ? 'none' : 'block',

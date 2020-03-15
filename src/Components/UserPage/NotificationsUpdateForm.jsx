@@ -13,7 +13,11 @@ const NotificationsUpdateForm = (props) => {
 
   const updateMessageNotification = () => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     }
     else if (messageNotifications === props.messageNotifications) {
