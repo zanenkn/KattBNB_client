@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Header, Accordion, Icon, Label, Button, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
@@ -20,7 +21,11 @@ const Faq = (props) => {
         <Header as='h1'>
           {t('reusable:title.faq')}
         </Header>
-
+        <p style={{ 'textAlign': 'center' }}>
+          <Trans i18nKey='Faq:to-guidelines'>
+            Have you booked a stay already? Check out our helpful <Header as={Link} to='guidelines' className='fake-link-underlined-reg'>guidelines</Header>.
+          </Trans>
+        </p>
         <Header as='h3' style={{ 'textAlign': 'left' }} >
           {t('Faq:general.top-header')}
         </Header>
@@ -66,7 +71,7 @@ const Faq = (props) => {
               </ul>
             </p>
             <p>
-            {t('Faq:general.list-title2-2')}
+              {t('Faq:general.list-title2-2')}
             </p>
             <p>
               <ul>

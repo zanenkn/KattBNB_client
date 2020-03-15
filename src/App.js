@@ -8,6 +8,7 @@ import AboutUs from './Components/Menu/AboutUs'
 import ContactUs from './Components/Menu/ContactUs'
 import Faq from './Components/Menu/Faq'
 import Legal from './Components/Menu/Legal'
+import Guidelines from './Components/Menu/Guidelines'
 import Login from './Components/Authentication/Login'
 import SignUp from './Components/Authentication/SignUp'
 import SignupSuccess from './Components/Authentication/SignupSuccess'
@@ -120,6 +121,7 @@ class App extends Component {
                 <Route exact path='/booking-details' component={BookingDetails}></Route>
                 <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
                 <Route exact path='/partners' component={Partners}></Route>
+                <Route exact path='/guidelines' component={Guidelines}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}
