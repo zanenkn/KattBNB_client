@@ -43,14 +43,14 @@
     "change": "Ändra",
     "save": "Spara",
     "close": "Stäng",
-    "make-host-profile": ""
+    "make-host-profile": "Skapa en kattvaktsprofil"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
   },
   "labels": {
     "coming-soon": "Kommer snart",
-    "how-it-works": ""
+    "how-it-works": "Så fungerar det"
   },
   "explain-supplement": "Låt oss säga att ditt pris är 120 kr/dag för en katt och ditt tillägg för ytterligare katter är 35 kr/dag. Det betyder att om du är kattvakt åt en katt under tre dagar är betalningen 120 x 3 = 360 kr. Om du däremot går med på att vara kattvakt för två katter från samma ägare i tre dagar är din betalning (120 + 35) x 3 = 465 kr"
 }
