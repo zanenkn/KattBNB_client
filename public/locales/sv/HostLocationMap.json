@@ -1,4 +1,4 @@
 {
-  "under-map-txt": "",
-  "header-location": ""
+  "under-map-txt": "Detta är det närliggande området kring <1>{{nickname}}</1>. Du får den exakta platsen när bokningen bekräftats.",
+  "header-location": "Område"
 }
