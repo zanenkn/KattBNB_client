@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const WIP = () => {
+
   const { t, ready } = useTranslation('WorkInProgress')
+
   if (ready) {
     return (
       <Segment className='whitebox' >
