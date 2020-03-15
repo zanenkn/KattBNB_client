@@ -28,7 +28,11 @@ class PasswordUpdateForm extends Component {
   updatePassword = (e) => {
     const { t } = this.props
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
       this.setState({ loading: true })
@@ -51,8 +55,12 @@ class PasswordUpdateForm extends Component {
             errorDisplay: false
           })
           window.alert(t('PasswordUpdateForm:success-alert'))
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
           window.location.replace('/login')
-          window.localStorage.clear()
         })
         .catch(error => {
           this.setState({
