@@ -205,11 +205,7 @@ class AllBookings extends Component {
       </Segment>
     )
 
-    if (this.state.loadingIncoming && this.state.loadingOutgoing) {
-      page = (
-        <Spinner />
-      )
-    } else if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false) {
+    if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false) {
       page = (
         <div className='content-wrapper'>
           <Header as='h1'>
@@ -220,6 +216,10 @@ class AllBookings extends Component {
           </p>
           {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
         </div>
+      )
+    } else {
+      page = (
+        <Spinner />
       )
     }
 
