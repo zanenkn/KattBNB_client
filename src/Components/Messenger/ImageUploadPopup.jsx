@@ -50,11 +50,6 @@ const ImageUploadPopup = (props) => {
       >
         Send
       </Button>
-      <Button
-        onClick={props.rotateImage}
-      >
-        rotate 90
-      </Button>
     </>
   )
 }
