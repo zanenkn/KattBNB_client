@@ -3,6 +3,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 class LocationUpdateForm extends Component {
 
@@ -57,7 +58,7 @@ class LocationUpdateForm extends Component {
               errorDisplay: false,
               errors: ''
             })
-            window.alert(t('success-alert'))
+            window.alert(t('LocationUpdateForm:success-alert'))
             this.props.setElement('location', this.state.newLocation)
             this.props.closeLocationAndPasswordForms()
           })
@@ -143,7 +144,7 @@ class LocationUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else { return null }
+    } else { return <Spinner /> }
   }
 }
 
