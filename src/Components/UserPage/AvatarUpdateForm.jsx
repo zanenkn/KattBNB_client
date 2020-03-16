@@ -67,13 +67,13 @@ class AvatarUpdateForm extends Component {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['no-avatar-error']
+        errors: ['AvatarUpdateForm:no-avatar-error']
       })
     } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['file-type-error']
+        errors: ['AvatarUpdateForm:file-type-error']
       })
     }
     else {
