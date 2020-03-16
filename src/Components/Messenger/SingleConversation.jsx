@@ -8,6 +8,7 @@ import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
 import ImageUploadPopup from './ImageUploadPopup'
+import Resizer from 'react-image-file-resizer'
 
 class Conversation extends Component {
 
@@ -136,6 +137,30 @@ class Conversation extends Component {
     })
   }
 
+  dataURItoBlob = (dataURI) => {
+    let binary = atob(dataURI.split(',')[1])
+    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    let array = []
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i))
+    }
+    return new Blob([new Uint8Array(array)], { type: mimeString })
+  }
+
+  rotateImage = () => {
+    let file = this.dataURItoBlob(this.state.uploadedImage[0])
+    Resizer.imageFileResizer(
+      file,
+      10000,
+      10000,
+      'PNG',
+      100,
+      90,
+      uri => { this.setState({ uploadedImage: [uri] }) },
+      'base64'
+    )
+  }
+
   deleteConversation = () => {
     this.setState({ loading: true })
     if (window.confirm('Do you really want to delete this conversation?')) {
@@ -201,6 +226,7 @@ class Conversation extends Component {
                 uploadedImage={this.state.uploadedImage}
                 loadingUploadButton={this.state.loadingUploadButton}
                 clearImage={this.clearImage}
+                rotateImage={this.rotateImage.bind(this)}
               />
             </div>
           </Popup>

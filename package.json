@@ -20,6 +20,7 @@
     "react-dom": "^16.8.6",
     "react-geocode": "^0.1.2",
     "react-i18next": "^11.2.5",
+    "react-image-file-resizer": "^0.2.1",
     "react-images-upload": "^1.2.8",
     "react-netlify-form": "^2.1.5",
     "react-password-strength-bar": "^0.3.0",
