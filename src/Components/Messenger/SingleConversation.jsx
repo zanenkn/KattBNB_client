@@ -171,20 +171,22 @@ class Conversation extends Component {
       if (pictureFiles[0].type === 'image/jpeg' || pictureFiles[0].type === 'image/jpg') {
         let exifOrientationData = await exifr.orientation(pictureFiles[0])
         if (exifOrientationData > 1) {
+          //      let exifData = await exifr.parse(pictureFiles[0])
+          //      let imageHeight = exifData.ExifImageHeight > 300 ? 300 : exifData.ExifImageHeight
           this.setState({
             imageUploadButton: false,
-            uploadedImage: [await imagenation(pictureFiles[0])]
+            uploadedImage: [await imagenation(pictureFiles[0], 300)]
           })
         } else {
           this.setState({
             imageUploadButton: false,
-            uploadedImage: pictureDataURLs
+            uploadedImage: [await imagenation(pictureFiles[0], 300)]
           })
         }
       } else {
         this.setState({
           imageUploadButton: false,
-          uploadedImage: pictureDataURLs
+          uploadedImage: [await imagenation(pictureFiles[0], 300)]
         })
       }
     } else { this.clearImage() }
