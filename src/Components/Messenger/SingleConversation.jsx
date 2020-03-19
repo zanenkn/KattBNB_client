@@ -3,11 +3,13 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
-import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
+import { Icon, Message, Header, Container, Divider, Image } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
 import ImageUploadPopup from './ImageUploadPopup'
+import exifr from 'exifr'
+import imagenation from 'imagenation'
 
 class Conversation extends Component {
 
@@ -164,15 +166,28 @@ class Conversation extends Component {
     }
   }
 
-  onImageDropHandler = (pictureFiles, pictureDataURLs) => {
+  onImageDropHandler = async (pictureFiles, pictureDataURLs) => {
     if (pictureFiles.length > 0) {
-      this.setState({
-        imageUploadButton: false,
-        uploadedImage: pictureDataURLs
-      })
-    } else {
-      this.clearImage()
-    }
+      if (pictureFiles[0].type === 'image/jpeg' || pictureFiles[0].type === 'image/jpg') {
+        let exifOrientationData = await exifr.orientation(pictureFiles[0])
+        if (exifOrientationData > 1) {
+          this.setState({
+            imageUploadButton: false,
+            uploadedImage: [await imagenation(pictureFiles[0])]
+          })
+        } else {
+          this.setState({
+            imageUploadButton: false,
+            uploadedImage: pictureDataURLs
+          })
+        }
+      } else {
+        this.setState({
+          imageUploadButton: false,
+          uploadedImage: pictureDataURLs
+        })
+      }
+    } else { this.clearImage() }
   }
 
   componentWillMount() { this.createSocket() }

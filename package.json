@@ -5,9 +5,11 @@
   "dependencies": {
     "actioncable": "^5.2.4-1",
     "axios": "^0.19.0",
+    "exifr": "^4.3.3",
     "google-map-react": "^1.1.5",
     "i18next": "^19.0.1",
     "i18next-xhr-backend": "^3.2.2",
+    "imagenation": "^3.1.4",
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "node": "^10.16.0",
