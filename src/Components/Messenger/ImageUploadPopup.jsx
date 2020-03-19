@@ -24,7 +24,7 @@ const ImageUploadPopup = (props) => {
         withPreview={props.uploadedImage === '' ? false : true}
         singleImage={true}
         onChange={props.onImageDropHandler}
-        imgExtension={['.jpg', '.png', '.gif', '.jpeg']}
+        imgExtension={['.jpg', '.png', '.jpeg']}
         maxFileSize={5242880}
       />
       <div>
@@ -40,7 +40,7 @@ const ImageUploadPopup = (props) => {
         <p className='small-centered-paragraph' style={{ 'marginTop': '1rem' }}>
           Maximum file size: 5 MB
           <br />
-          Supported file formats: jpg, png, gif
+          Supported file formats: jpg, png
         </p>
       </div>
       <Button

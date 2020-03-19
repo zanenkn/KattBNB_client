@@ -3,11 +3,12 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
-import { Image, Icon, Message, Header, Container, Divider } from 'semantic-ui-react'
+import { Icon, Message, Header, Container, Divider, Image } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
 import ImageUploadPopup from './ImageUploadPopup'
+import imagenation from 'imagenation'
 
 class Conversation extends Component {
 
@@ -164,15 +165,13 @@ class Conversation extends Component {
     }
   }
 
-  onImageDropHandler = (pictureFiles, pictureDataURLs) => {
+  onImageDropHandler = async (pictureFiles) => {
     if (pictureFiles.length > 0) {
       this.setState({
         imageUploadButton: false,
-        uploadedImage: pictureDataURLs
+        uploadedImage: [await imagenation(pictureFiles[0], 750)]
       })
-    } else {
-      this.clearImage()
-    }
+    } else { this.clearImage() }
   }
 
   componentWillMount() { this.createSocket() }
