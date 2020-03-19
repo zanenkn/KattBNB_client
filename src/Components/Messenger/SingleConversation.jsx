@@ -8,7 +8,6 @@ import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
 import ImageUploadPopup from './ImageUploadPopup'
-import exifr from 'exifr'
 import imagenation from 'imagenation'
 
 class Conversation extends Component {
@@ -166,29 +165,12 @@ class Conversation extends Component {
     }
   }
 
-  onImageDropHandler = async (pictureFiles, pictureDataURLs) => {
+  onImageDropHandler = async (pictureFiles) => {
     if (pictureFiles.length > 0) {
-      if (pictureFiles[0].type === 'image/jpeg' || pictureFiles[0].type === 'image/jpg') {
-        let exifOrientationData = await exifr.orientation(pictureFiles[0])
-        if (exifOrientationData > 1) {
-          //      let exifData = await exifr.parse(pictureFiles[0])
-          //      let imageHeight = exifData.ExifImageHeight > 300 ? 300 : exifData.ExifImageHeight
-          this.setState({
-            imageUploadButton: false,
-            uploadedImage: [await imagenation(pictureFiles[0], 300)]
-          })
-        } else {
-          this.setState({
-            imageUploadButton: false,
-            uploadedImage: [await imagenation(pictureFiles[0], 300)]
-          })
-        }
-      } else {
-        this.setState({
-          imageUploadButton: false,
-          uploadedImage: [await imagenation(pictureFiles[0], 300)]
-        })
-      }
+      this.setState({
+        imageUploadButton: false,
+        uploadedImage: [await imagenation(pictureFiles[0], 750)]
+      })
     } else { this.clearImage() }
   }
 
