@@ -29,13 +29,12 @@ const ImageUploadPopup = (props) => {
       />
       <div>
         <svg
-          style={{ 'position': 'absolute', 'right': '1.3rem', 'top': '1.3rem', 'margin': '0', 'height': '2rem', 'display': (props.uploadedImage === '' || props.loadingUploadButton) ? 'none' : 'block' }}
+          style={{ 'cursor': 'pointer', 'position': 'absolute', 'right': '1.3rem', 'top': '1.3rem', 'margin': '0', 'height': '2rem', 'display': (props.uploadedImage === '' || props.loadingUploadButton) ? 'none' : 'block' }}
           onClick={props.clearImage}
-          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+          xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'
         >
-          <circle cx="50%" cy="50%" r="50%" fill="#ffffff" />
-          <path fill='#c90c61' d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83-1.41-1.41L10 8.59 7.17 5.76 5.76 7.17 8.59 10l-2.83 2.83 1.41 1.41L10 11.41l2.83 2.83 1.41-1.41L11.41 10z" />
-
+          <circle cx='50%' cy='50%' r='50%' fill='#ffffff' />
+          <path fill='#c90c61' d='M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83-1.41-1.41L10 8.59 7.17 5.76 5.76 7.17 8.59 10l-2.83 2.83 1.41 1.41L10 11.41l2.83 2.83 1.41-1.41L11.41 10z' />
         </svg>
         <p className='small-centered-paragraph' style={{ 'marginTop': '1rem' }}>
           Maximum file size: 5 MB
