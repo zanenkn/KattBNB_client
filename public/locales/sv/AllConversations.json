@@ -1,6 +1,6 @@
 {
-  "deleted-user": "",
-  "header": "",
-  "no-messages": "",
-  "no-messages-2": ""
+  "deleted-user": "Raderad användare",
+  "header": "Meddelanden",
+  "no-messages": "Du har inga meddelanden (än).",
+  "no-messages-2": "Inga meddelanden"
 }
