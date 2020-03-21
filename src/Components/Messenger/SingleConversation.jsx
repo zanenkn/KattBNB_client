@@ -324,9 +324,7 @@ class Conversation extends Component {
                       link
                       size='large'
                       onClick={(e) => this.handleSendEvent(e)}
-                      style={{
-                        'color': '#c90c61'
-                      }}
+                      style={{ 'color': '#c90c61' }}
                     />
                   </div>
                 </div>

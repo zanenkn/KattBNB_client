@@ -1,0 +1,9 @@
+{
+  "message-body-error": "The message cannot be empty or exceed 1000 characters!",
+  "del-conversation": "Do you really want to delete this conversation?",
+  "deleted-user": "Deleted user",
+  "no-messages-yet": "You don't have any messages in this conversation (yet).",
+  "error-message-header": "Could not send the message because of following error(s):",
+  "textarea-plch": "Say something..",
+  "remaining-char": "Remaining characters:"
+}
