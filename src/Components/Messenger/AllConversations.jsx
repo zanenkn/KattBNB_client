@@ -5,6 +5,7 @@ import { Image, Header, Grid, Divider } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
+import { withTranslation } from 'react-i18next'
 
 class AllConversations extends Component {
 
@@ -48,8 +49,9 @@ class AllConversations extends Component {
   }
 
   render() {
+    const { t } = this.props
     let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
-    let deleted_user = { nickname: 'Deleted user', avatar: null, location: 'none', id: null }
+    let deleted_user = { nickname: t('AllConversations:deleted-user'), avatar: null, location: 'none', id: null }
 
     if (this.state.loading) {
       return <Spinner />
@@ -58,14 +60,14 @@ class AllConversations extends Component {
         <>
           <div style={{ 'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
             <Header as='h1'>
-              Messages
+              {t('AllConversations:header')}
             </Header>
           </div>
           <div className='messenger-wrapper'>
             <Divider />
             {this.state.conversations.length < 1 ?
               <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-                You don't have any messages (yet).
+                {t('AllConversations:no-messages')}
               </p>
               :
               this.state.conversations.map(conversation => {
@@ -100,7 +102,7 @@ class AllConversations extends Component {
                         </p>
                       </Grid.Column>
                       <Grid.Column width={4} style={{ 'textAlign': 'right', 'paddingRight': '1.5rem' }}>
-                        <p style={{ 'fontSize': 'small' }}>{conversation.msg_created === null ? 'No messages' : moment(conversation.msg_created).format(time_format)}</p>
+                        <p style={{ 'fontSize': 'small' }}>{conversation.msg_created === null ? t('AllConversations:no-messages-2') : moment(conversation.msg_created).format(time_format)}</p>
                       </Grid.Column>
                     </Grid>
                     <Divider />
@@ -117,4 +119,4 @@ class AllConversations extends Component {
 
 const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
-export default connect(mapStateToProps)(AllConversations)
+export default withTranslation('AllConversations')(connect(mapStateToProps)(AllConversations))
