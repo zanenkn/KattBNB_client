@@ -9,6 +9,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
 import ImageUploadPopup from './ImageUploadPopup'
 import imagenation from 'imagenation'
+import { withTranslation } from 'react-i18next'
 
 class Conversation extends Component {
 
@@ -95,7 +96,7 @@ class Conversation extends Component {
       })
     }
     else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
-      this.handleError(['The message cannot be empty or exceed 1000 characters!'])
+      this.handleError(['SingleConversation:message-body-error'])
     } else {
       this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
       this.setState({ newMessage: '' })
@@ -138,8 +139,9 @@ class Conversation extends Component {
   }
 
   deleteConversation = () => {
+    const { t } = this.props
     this.setState({ loading: true })
-    if (window.confirm('Do you really want to delete this conversation?')) {
+    if (window.confirm(t('SingleConversation:del-conversation'))) {
       const path = `/api/v1/conversations/${this.props.location.state.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -177,6 +179,7 @@ class Conversation extends Component {
   componentWillMount() { this.createSocket() }
 
   render() {
+    const { t } = this.props
     let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
     let messageLength = 1000 - this.state.newMessage.length
 
@@ -242,7 +245,7 @@ class Conversation extends Component {
             <div className='single-conversation-wrapper'>
               {this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1 &&
                 <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
-                  You don't have any messages in this conversation (yet).
+                  {t('SingleConversation:no-messages-yet')}
                 </p>
               }
               {this.state.messagesHistory.length > 0 &&
@@ -278,11 +281,11 @@ class Conversation extends Component {
               {this.state.errorDisplay &&
                 <Message negative style={{ 'width': 'inherit' }} >
                   <Message.Header style={{ 'textAlign': 'center' }} >
-                    Could not send the message because of following error(s):
+                    {t('SingleConversation:error-message-header')}
                   </Message.Header>
                   <ul id='message-error-list'>
                     {this.state.errors.map(error => (
-                      <li key={error}>{error}</li>
+                      <li key={error}>{t(error)}</li>
                     ))}
                   </ul>
                 </Message>
@@ -299,7 +302,7 @@ class Conversation extends Component {
                     minRows={1}
                     maxRows={6}
                     className='expanding-textarea disable-scrollbars'
-                    placeholder='Say something..'
+                    placeholder={t('SingleConversation:textarea-plch')}
                     id='newMessage'
                     value={this.state.newMessage}
                     onChange={this.onChangeHandler}
@@ -324,15 +327,13 @@ class Conversation extends Component {
                       link
                       size='large'
                       onClick={(e) => this.handleSendEvent(e)}
-                      style={{
-                        'color': '#c90c61'
-                      }}
+                      style={{ 'color': '#c90c61' }}
                     />
                   </div>
                 </div>
               </div>
               <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'visibility': messageLength < 100 ? 'visible' : 'hidden', 'marginBottom': '0.5rem' }}>
-                Remaining characters: {messageLength}
+                {t('SingleConversation:remaining-char')} {messageLength}
               </p>
             </div>
           </div>
@@ -348,4 +349,4 @@ const mapStateToProps = state => ({
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar
 })
 
-export default connect(mapStateToProps)(Conversation)
+export default withTranslation('SingleConversation')(connect(mapStateToProps)(Conversation))
