@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Form, Button, Message } from 'semantic-ui-react'
+import Spinner from '../ReusableComponents/Spinner'
+import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
 
 class DeclineRequestPopup extends Component {
@@ -13,8 +15,9 @@ class DeclineRequestPopup extends Component {
 
   declineBooking = (e) => {
     e.preventDefault()
+    const { t } = this.props
     this.setState({ loading: true })
-    if (window.confirm('Do you really want to decline this booking request?')) {
+    if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
       if (this.state.message !== '' && this.state.message.length < 201) {
         const path = `/api/v1/bookings/${this.props.id}`
         const headers = {
@@ -41,9 +44,11 @@ class DeclineRequestPopup extends Component {
         this.setState({
           loading: false,
           errorDisplay: true,
-          errors: ["Message can't be blank or more than 200 characters!"]
+          errors: ['DeclineRequestPopup:decline-error']
         })
       }
+    } else {
+      this.setState({ loading: false })
     }
   }
 
@@ -52,47 +57,54 @@ class DeclineRequestPopup extends Component {
   }
 
   render() {
-    let errorDisplay
+    const { t } = this.props
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Request could not be declined because of following error(s):</Message.Header>
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </Message>
+    if (this.props.tReady) {
+      let errorDisplay
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('DeclineRequestPopup:error-message-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
+      return (
+        <>
+          <Header as='h2'>
+            {t('DeclineRequestPopup:page-header')}
+          </Header>
+          <p className='small-centered-paragraph'>
+            <Trans nickname={this.props.nickname} startDate={this.props.startDate} endDate={this.props.endDate} i18nKey='DeclineRequestPopup:page-desc' >
+              You are about to decline a booking request from <strong style={{ 'color': '#c90c61' }}>{{ nickname: this.props.nickname }}</strong> for the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: this.props.startDate }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: this.props.endDate }}</strong>
+            </Trans>
+          </p>
+          <Form>
+            <Form.TextArea
+              style={{ 'minHeight': '120px' }}
+              label={t('DeclineRequestPopup:text-area-label')}
+              placeholder={t('DeclineRequestPopup:text-area-plch')}
+              required
+              id='message'
+              value={this.state.message}
+              onChange={this.onChangeHandler}
+            />
+          </Form>
+          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+            {t('DeclineRequestPopup:remaining')} {200 - this.state.message.length}
+          </p>
+          {errorDisplay}
+          <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineBooking}>{t('DeclineRequestPopup:decline-cta')}</Button>
+        </>
       )
-    }
-    return (
-      <>
-        <Header as='h2'>
-          Decline a request
-        </Header>
-        <p className='small-centered-paragraph'>
-          You are about to decline a booking request from <strong style={{ 'color': '#c90c61' }}>{this.props.nickname}</strong> for the dates of <strong style={{ 'color': '#c90c61' }}>{this.props.startDate}</strong> until <strong style={{ 'color': '#c90c61' }}>{this.props.endDate}</strong>
-        </p>
-        <Form>
-          <Form.TextArea
-            style={{ 'minHeight': '120px' }}
-            label='Message'
-            placeholder='Let them know why..'
-            required
-            id='message'
-            value={this.state.message}
-            onChange={this.onChangeHandler}
-          />
-        </Form>
-        <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-          Remaining characters: {200 - this.state.message.length}
-        </p>
-        {errorDisplay}
-        <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineBooking}>Decline</Button>
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
-export default DeclineRequestPopup
+export default withTranslation('DeclineRequestPopup')(DeclineRequestPopup)
