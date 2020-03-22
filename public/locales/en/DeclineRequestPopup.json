@@ -1,0 +1,11 @@
+{
+  "confirm-decline": "Do you really want to decline this booking request?",
+  "decline-error": "Message can't be blank or more than 200 characters!",
+  "error-message-header": "Request could not be declined because of following error(s):",
+  "page-header": "Decline a request",
+  "page-desc": "You are about to decline a booking request from <1>{{nickname}}</1> for the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>",
+  "text-area-label": "Message",
+  "text-area-plch": "Let them know why..",
+  "remaining": "Remaining characters:",
+  "decline-cta": "Decline"
+}

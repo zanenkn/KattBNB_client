@@ -3,6 +3,7 @@ import { Header, Form, Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 
 class DeclineRequestPopup extends Component {
+
   state = {
     message: '',
     loading: false,
