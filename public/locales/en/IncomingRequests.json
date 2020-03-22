@@ -4,9 +4,11 @@
   "requests-to-display": "<1>You have received {{requests}} booking .</1>",
   "request": "request",
   "requests": "requests",
+  "cat": "cat",
+  "cats": "cats",
   "requests-desc": "These are booking requests from cat owners awaiting your decision.",
   "must-reply": "You must reply before <1>{{date}}</1>",
-  "book-a-stay": "<1>{{nickname}}</1> wants to book a stay for their <3>{{cats}}</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
+  "book-a-stay": "<0>{{nickname}}</0> wants to book a stay for their <2>{{cats}}</2> during the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
   "view-message": "View message",
   "no-requests": "You don't have any booking requests."
 }

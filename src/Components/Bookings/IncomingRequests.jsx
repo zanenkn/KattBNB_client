@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import { Segment, Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
+import Spinner from '../ReusableComponents/Spinner'
+import { withTranslation, Trans } from 'react-i18next'
 import IncRequestPopup from './IncRequestPopup'
 import DeclineRequestPopup from './DeclineRequestPopup'
 import axios from 'axios'
@@ -21,8 +23,9 @@ class IncomingRequests extends Component {
   }
 
   acceptRequest = (e) => {
+    const { t } = this.props
     e.preventDefault()
-    if (window.confirm('You are about to accept this booking request. Continue?')) {
+    if (window.confirm(t('IncomingRequests:accept-request'))) {
       const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -48,6 +51,7 @@ class IncomingRequests extends Component {
   }
 
   render() {
+    const { t } = this.props
     let sortedRequests = this.props.requests
     sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
     let priceWithDecimalsString, total, requestsToDisplay, errorDisplay
@@ -55,10 +59,10 @@ class IncomingRequests extends Component {
     if (this.state.errorDisplay) {
       errorDisplay = (
         <Message negative >
-          <Message.Header style={{ 'textAlign': 'center' }} >Request could not be accepted because of following error(s):</Message.Header>
+          <Message.Header style={{ 'textAlign': 'center' }} >{t('IncomingRequests:main-header-error')}</Message.Header>
           <ul id='message-error-list'>
             {this.state.errors.map(error => (
-              <li key={error}>{error}</li>
+              <li key={error}>{t(error)}</li>
             ))}
           </ul>
         </Message>
@@ -66,13 +70,16 @@ class IncomingRequests extends Component {
     }
 
     if (this.props.requests.length > 0) {
+      let test = t('IncomingRequests:request')
       requestsToDisplay = (
         <>
           <p className='small-centered-paragraph'>
-            <strong>You have received {this.props.requests.length} booking {this.props.requests.length > 1 ? 'requests' : 'request'}.</strong>
+            <Trans requests={this.props.requests.length} i18nKey='IncomingRequests:requests-to-display'>
+              <strong>You have received {{ requests: this.props.requests.length }} booking {this.props.requests.length > 1 ? test : t('IncomingRequests:request')}.</strong>
+            </Trans>
           </p>
           <p style={{ 'textAlign': 'center' }}>
-            These are booking requests from cat owners awaiting your decision.
+            {t('IncomingRequests:requests-desc')}
           </p>
           {sortedRequests.map(request => {
             priceWithDecimalsString = request.price_total.toFixed(2)
@@ -107,16 +114,20 @@ class IncomingRequests extends Component {
                   </Grid.Row>
                   <div>
                     <p style={{ 'color': '#ffffff', 'fontSize': 'small', 'marginBottom': '1rem', 'marginTop': '-0.5rem' }}>
-                      You must reply before <strong>{moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')}</strong>
+                      <Trans date={moment(request.created_at).add(3, 'days').format('YYYY-MM-DD')} i18nKey='IncomingRequests:must-reply'>
+                        You must reply before <strong>{{ date: moment(request.created_at).add(3, 'days').format('YYYY-MM-DD') }}</strong>
+                      </Trans>
                     </p>
                   </div>
                 </Grid>
                 <p className='small-centered-paragraph'>
-                  <strong style={{ 'color': '#c90c61' }}>{request.user.nickname}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{request.number_of_cats} {request.number_of_cats > 1 ? 'cats' : 'cat'}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[0]).format('YYYY-MM-DD')}</strong> until <strong style={{ 'color': '#c90c61' }}>{moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
+                  <Trans nickname={request.user.nickname} cats={request.number_of_cats} startDate={moment(request.dates[0]).format('YYYY-MM-DD')} endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')} i18nKey='IncomingRequests:book-a-stay'>
+                    <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ cats: request.number_of_cats }} {request.number_of_cats > 1 ? t('IncomingRequests:cats') : t('IncomingRequests:cat')}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                   </Trans>
                 </p>
                 <Popup modal trigger={
                   <p className='fake-link-underlined'>
-                    View message
+                    {t('IncomingRequests:view-message')}
                   </p>
                 }
                   position='top center'
@@ -140,7 +151,7 @@ class IncomingRequests extends Component {
       requestsToDisplay = (
         <>
           <p className='small-centered-paragraph'>
-            <strong>You don't have any booking requests.</strong>
+            <strong>{t('IncomingRequests:no-requests')}</strong>
           </p>
         </>
       )
@@ -155,4 +166,4 @@ class IncomingRequests extends Component {
   }
 }
 
-export default withRouter(IncomingRequests)
+export default withTranslation('IncomingRequests')(withRouter(IncomingRequests))
