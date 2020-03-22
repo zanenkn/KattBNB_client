@@ -69,9 +69,7 @@ class IncomingRequests extends Component {
       requestsToDisplay = (
         <>
           <p className='small-centered-paragraph'>
-            <strong>
-              You have received {this.props.requests.length} booking {this.props.requests.length > 1 ? 'requests' : 'request'}.
-            </strong>
+            <strong>You have received {this.props.requests.length} booking {this.props.requests.length > 1 ? 'requests' : 'request'}.</strong>
           </p>
           <p style={{ 'textAlign': 'center' }}>
             These are booking requests from cat owners awaiting your decision.
@@ -94,7 +92,7 @@ class IncomingRequests extends Component {
                       <Popup modal trigger={
                         <Icon id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                       }
-                        position="top center"
+                        position='top center'
                         closeOnDocumentClick={true}
                       >
                         <DeclineRequestPopup
@@ -121,7 +119,7 @@ class IncomingRequests extends Component {
                     View message
                   </p>
                 }
-                  position="top center"
+                  position='top center'
                   closeOnDocumentClick={true}
                 >
                   <IncRequestPopup
@@ -142,9 +140,7 @@ class IncomingRequests extends Component {
       requestsToDisplay = (
         <>
           <p className='small-centered-paragraph'>
-            <strong>
-              You don't have any booking requests.
-            </strong>
+            <strong>You don't have any booking requests.</strong>
           </p>
         </>
       )
