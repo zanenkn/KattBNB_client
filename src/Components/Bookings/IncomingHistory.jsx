@@ -5,6 +5,7 @@ import Popup from 'reactjs-popup'
 import IncRequestDeclinedPopup from './IncRequestDeclinedPopup'
 
 const IncomingHistory = (props) => {
+
   let sortedHistory = props.history
   sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
@@ -12,9 +13,7 @@ const IncomingHistory = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You have {props.history.length} past {props.history.length > 1 ? 'bookings' : 'booking'}.
-          </strong>
+          <strong>You have {props.history.length} past {props.history.length > 1 ? 'bookings' : 'booking'}.</strong>
         </p>
         {sortedHistory.map(booking => {
           if (booking.status === 'declined') {
@@ -74,9 +73,7 @@ const IncomingHistory = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You don't have any past bookings.
-          </strong>
+          <strong>You don't have any past bookings.</strong>
         </p>
       </>
     )
