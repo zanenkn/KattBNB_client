@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { withTranslation, Trans } from 'react-i18next'
 import { Header, Segment, Button } from 'semantic-ui-react'
 
 class AllBookings extends Component {
@@ -36,6 +37,7 @@ class AllBookings extends Component {
   }
 
   render() {
+    const { t } = this.props
     let outgoingRequests = []
     let outgoingUpcoming = []
     let outgoingHistory = []
@@ -59,14 +61,14 @@ class AllBookings extends Component {
       })
       outgoingBookingStats = (
         <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          Requests:&nbsp;{outgoingRequests.length}&thinsp;
-          Upcoming:&nbsp;{outgoingUpcoming.length}&thinsp;
-          History:&nbsp;{outgoingHistory.length}
+          {t('AllBookings:requests')}&nbsp;{outgoingRequests.length}&thinsp;
+          {t('AllBookings:upcoming')}&nbsp;{outgoingUpcoming.length}&thinsp;
+          {t('AllBookings:history')}&nbsp;{outgoingHistory.length}
         </p>
       )
       outgoingText = (
         <p style={{ 'textAlign': 'center' }}>
-          You booking your cat(s) to stay with hosts.
+          {t('AllBookings:outgoing-text')}
         </p>
       )
       outgoingCTA = (
@@ -80,17 +82,17 @@ class AllBookings extends Component {
                 outgoingHistory: outgoingHistory
               }
             })
-          }}>View</Header>
+          }}>{t('AllBookings:view')}</Header>
       )
     } else {
       outgoingBookingStats = (
         <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          None yet.
+          {t('AllBookings:outgoing-booking-stats')}
         </p>
       )
       outgoingText = (
         <p style={{ 'textAlign': 'center' }}>
-          Need someone to take care of your cat while you're away?
+          {t('AllBookings:outgoing-text-2')}
         </p>
       )
       outgoingCTA = (
@@ -99,7 +101,7 @@ class AllBookings extends Component {
           style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
           onClick={() => { this.props.history.push('/') }}
         >
-          Search and book
+          {t('AllBookings:outgoing-cta')}
         </Header>
       )
     }
@@ -116,16 +118,18 @@ class AllBookings extends Component {
       })
       incomingBookingStats = (
         <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          Requests:&nbsp;{incomingRequests.length}&thinsp;
-          Upcoming:&nbsp;{incomingUpcoming.length}&thinsp;
-          History:&nbsp;{incomingHistory.length}
+          {t('AllBookings:requests')}&nbsp;{incomingRequests.length}&thinsp;
+          {t('AllBookings:upcoming')}&nbsp;{incomingUpcoming.length}&thinsp;
+          {t('AllBookings:history')}&nbsp;{incomingHistory.length}
         </p>
       )
 
       if (incomingRequests.length > 0) {
         incomingText = (
           <p style={{ 'textAlign': 'center' }}>
-            You have <strong style={{ 'color': '#c90c61' }}>{incomingRequests.length} incoming booking {incomingRequests.length > 1 ? 'requests' : 'request'}</strong> awaiting your decision.
+            <Trans incomingRequests={incomingRequests.length} i18nKey='AllBookings:incoming-text'>
+              You have <strong style={{ 'color': '#c90c61' }}>{{ incomingRequests: incomingRequests.length }} incoming booking {incomingRequests.length > 1 ? t('AllBookings:request-plural') : t('AllBookings:request')}</strong> awaiting your decision.
+            </Trans>
           </p>
         )
         incomingCTA = (
@@ -139,12 +143,12 @@ class AllBookings extends Component {
                   incomingHistory: incomingHistory
                 }
               })
-            }}>View</Button>
+            }}>{t('AllBookings:view')}</Button>
         )
       } else {
         incomingText = (
           <p style={{ 'textAlign': 'center' }}>
-            You hosting other people's cats.
+            {t('AllBookings:incoming-text-2')}
           </p>
         )
         incomingCTA = (
@@ -158,18 +162,18 @@ class AllBookings extends Component {
                   incomingHistory: incomingHistory
                 }
               })
-            }}>View</Header>
+            }}>{t('AllBookings:view')}</Header>
         )
       }
     } else {
       incomingBookingStats = (
         <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          None yet.
+          {t('AllBookings:outgoing-booking-stats')}
         </p>
       )
       incomingText = (
         <p style={{ 'textAlign': 'center' }}>
-          Wanna take care of cats and make a bit of money?
+          {t('AllBookings:incoming-text-3')}
         </p>
       )
       incomingCTA = (
@@ -178,7 +182,7 @@ class AllBookings extends Component {
           style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
           onClick={() => { this.props.history.push('/faq') }}
         >
-          Become a cat host
+          {t('AllBookings:incoming-cta')}
         </Header>
       )
     }
@@ -186,7 +190,7 @@ class AllBookings extends Component {
     outgoingSegment = (
       <Segment className='whitebox'>
         <div className='topbox'>
-          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>Outgoing bookings</Header>
+          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:outgoing-segment')}</Header>
           {outgoingBookingStats}
         </div>
         {outgoingText}
@@ -197,7 +201,7 @@ class AllBookings extends Component {
     incomingSegment = (
       <Segment className='whitebox'>
         <div className='topbox'>
-          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>Incoming bookings</Header>
+          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:incoming-segment')}</Header>
           {incomingBookingStats}
         </div>
         {incomingText}
@@ -209,10 +213,10 @@ class AllBookings extends Component {
       page = (
         <div className='content-wrapper'>
           <Header as='h1'>
-            Hi, {this.props.username}!
+            {t('AllBookings:hi')} {this.props.username}!
           </Header>
           <p style={{ 'textAlign': 'center' }}>
-            Here you can manage your bookings.
+            {t('AllBookings:header-page')}
           </p>
           {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
         </div>
@@ -236,4 +240,4 @@ const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id
 })
 
-export default connect(mapStateToProps)(AllBookings)
+export default withTranslation('AllBookings')(connect(mapStateToProps)(AllBookings))
