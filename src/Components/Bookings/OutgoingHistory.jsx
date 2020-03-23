@@ -13,9 +13,7 @@ const OutgoingHistory = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You have {props.history.length} past {props.history.length > 1 ? 'bookings' : 'booking'}.
-          </strong>
+          <strong>You have {props.history.length} past {props.history.length > 1 ? 'bookings' : 'booking'}.</strong>
         </p>
         {sortedHistory.map(booking => {
           if (booking.status === 'declined') {
@@ -60,7 +58,7 @@ const OutgoingHistory = (props) => {
                     See why
                   </p>
                 }
-                  position="top center"
+                  position='top center'
                   closeOnDocumentClick={true}
                 >
                   <OutRequestCancelledPopup
@@ -90,9 +88,7 @@ const OutgoingHistory = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You don't have any past bookings.
-          </strong>
+          <strong>You don't have any past bookings.</strong>
         </p>
       </>
     )
