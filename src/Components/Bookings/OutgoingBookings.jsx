@@ -32,13 +32,13 @@ class OutgoingBookings extends Component {
     return (
       <>
         <div style={{ 'height': '26vh', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center' }}>
-          <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'align-self': 'flex-start' }}>
+          <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'alignSelf': 'flex-start' }}>
             Outgoing bookings
           </Header>
           <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
             Your cat(s) staying with hosts.
           </p>
-          <div style={{ 'display': 'flex', 'align-self': 'flex-end', 'margin': '0 auto' }}>
+          <div style={{ 'display': 'flex', 'alignSelf': 'flex-end', 'margin': '0 auto' }}>
             <Button.Group size='mini'>
               <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
                 Requests
