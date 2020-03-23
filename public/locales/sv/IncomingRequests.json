@@ -2,13 +2,11 @@
   "accept-request": "",
   "main-header-error": "",
   "requests-to-display": "",
-  "request": "",
-  "requests": "",
-  "cat": "",
-  "cats": "",
+  "requests-to-display_plural": "",
   "requests-desc": "",
   "must-reply": "",
   "book-a-stay": "",
+  "book-a-stay_plural": "",
   "view-message": "",
   "no-requests": ""
 }
