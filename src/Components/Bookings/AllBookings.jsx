@@ -127,8 +127,8 @@ class AllBookings extends Component {
       if (incomingRequests.length > 0) {
         incomingText = (
           <p style={{ 'textAlign': 'center' }}>
-            <Trans incomingRequests={incomingRequests.length} i18nKey='AllBookings:incoming-text'>
-              You have <strong style={{ 'color': '#c90c61' }}>{{ incomingRequests: incomingRequests.length }} incoming booking {incomingRequests.length > 1 ? t('AllBookings:request-plural') : t('AllBookings:request')}</strong> awaiting your decision.
+            <Trans count={incomingRequests.length} i18nKey='AllBookings:incoming-text'>
+              You have <strong style={{ 'color': '#c90c61' }}>{{ count: incomingRequests.length }} incoming booking request</strong> awaiting your decision.
             </Trans>
           </p>
         )
