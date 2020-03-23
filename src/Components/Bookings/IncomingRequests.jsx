@@ -75,7 +75,7 @@ class IncomingRequests extends Component {
         requestsToDisplay = (
           <>
             <p className='small-centered-paragraph'>
-              <Trans count={this.props.requests.length} i18nKey='IncomingRequests:requests-to-display'>
+              <Trans count={parseInt(this.props.requests.length)} i18nKey='IncomingRequests:requests-to-display'>
                 <strong>You have received {{ count: this.props.requests.length }} booking request.</strong>
               </Trans>
             </p>
@@ -122,7 +122,7 @@ class IncomingRequests extends Component {
                     </div>
                   </Grid>
                   <p className='small-centered-paragraph'>
-                    <Trans count={request.number_of_cats} i18nKey='IncomingRequests:book-a-stay'>
+                    <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
                       <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                      </Trans>
                   </p>

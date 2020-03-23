@@ -127,7 +127,7 @@ class AllBookings extends Component {
       if (incomingRequests.length > 0) {
         incomingText = (
           <p style={{ 'textAlign': 'center' }}>
-            <Trans count={incomingRequests.length} i18nKey='AllBookings:incoming-text'>
+            <Trans count={parseInt(incomingRequests.length)} i18nKey='AllBookings:incoming-text'>
               You have <strong style={{ 'color': '#c90c61' }}>{{ count: incomingRequests.length }} incoming booking request</strong> awaiting your decision.
             </Trans>
           </p>

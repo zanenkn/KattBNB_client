@@ -50,7 +50,7 @@ class IncomingUpcoming extends Component {
         page = (
           <>
             <p className='small-centered-paragraph'>
-              <Trans count={this.props.upcoming.length} i18nKey='IncomingUpcoming:main-title'>
+              <Trans count={parseInt(this.props.upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
                 <strong>You have {{ count: this.props.upcoming.length }} upcoming booking.</strong>
               </Trans>
             </p>
@@ -61,7 +61,7 @@ class IncomingUpcoming extends Component {
               return (
                 <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={upcoming.id} data-cy='incoming-upcoming' key={upcoming.id}>
                   <p className='small-centered-paragraph'>
-                    <Trans count={upcoming.number_of_cats} i18nKey='IncomingUpcoming:booking-info'>
+                    <Trans count={parseInt(upcoming.number_of_cats)} i18nKey='IncomingUpcoming:booking-info'>
                       You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong> <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
