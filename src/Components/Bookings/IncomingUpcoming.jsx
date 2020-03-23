@@ -73,7 +73,7 @@ class IncomingUpcoming extends Component {
           <p className='small-centered-paragraph'>
             <strong>
               You don't have any upcoming bookings.
-          </strong>
+            </strong>
           </p>
         </>
       )

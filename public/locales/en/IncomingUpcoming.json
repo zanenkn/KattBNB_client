@@ -1,0 +1,9 @@
+{
+  "main-title": "You have {{count}} upcoming booking.",
+  "main-title_plural": "You have {{count}} upcoming bookings.",
+  "main-desc": "These are finalized bookings coming up soon. Get in touch with these cat owners to organize the drop-off and pick-up.",
+  "booking-info": "You have approved a stay for <1>{{nickname}}'s</1> <2>{{count}} cat</2> for the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
+  "booking-info_plural": "You have approved a stay for <1>{{nickname}}'s</1> <2>{{count}} cats</2> for the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
+  "message": "Message",
+  "no-bookings": "You don't have any upcoming bookings."
+}
