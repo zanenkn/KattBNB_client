@@ -18,8 +18,8 @@ const IncomingHistory = (props) => {
       return (
         <>
           <p className='small-centered-paragraph'>
-            <Trans history={props.history.length} i18nKey='IncomingHistory:main-title'>
-              <strong>You have {{ history: props.history.length }} past {props.history.length > 1 ? t('IncomingHistory:bookings') : t('IncomingHistory:booking')}.</strong>
+            <Trans count={props.history.length} i18nKey='IncomingHistory:main-title'>
+              <strong>You have {{ count: props.history.length }} past booking.</strong>
             </Trans>
           </p>
           {sortedHistory.map(booking => {
@@ -30,8 +30,8 @@ const IncomingHistory = (props) => {
                     <strong>{t('IncomingHistory:declined-request')}</strong>
                   </p>
                   <p className='small-centered-paragraph'>
-                    <Trans nickname={booking.user.nickname} cats={booking.number_of_cats} startDate={moment(booking.dates[0]).format('YYYY-MM-DD')} endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')} i18nKey='IncomingHistory:declined-desc'>
-                      You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ cats: booking.number_of_cats }} {booking.number_of_cats > 1 ? t('IncomingHistory:cats') : t('IncomingHistory:cat')}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                    <Trans count={booking.number_of_cats} i18nKey='IncomingHistory:declined-desc'>
+                      You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
                   <Popup modal trigger={
@@ -59,8 +59,8 @@ const IncomingHistory = (props) => {
                     <strong>{t('IncomingHistory:canceled-request')}</strong>
                   </p>
                   <p className='small-centered-paragraph'>
-                    <Trans nickname={booking.user.nickname} cats={booking.number_of_cats} startDate={moment(booking.dates[0]).format('YYYY-MM-DD')} endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')} i18nKey='IncomingHistory:canceled-desc'>
-                      A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ cats: booking.number_of_cats }} {booking.number_of_cats > 1 ? t('IncomingHistory:cats') : t('IncomingHistory:cat')}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong> got canceled due to no answer from you within 3 days time.
+                    <Trans count={booking.number_of_cats} i18nKey='IncomingHistory:canceled-desc'>
+                      A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong> got canceled due to no answer from you within 3 days time.
                     </Trans>
                   </p>
                 </Container>
@@ -69,7 +69,7 @@ const IncomingHistory = (props) => {
               return (
                 <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
                   <p className='small-centered-paragraph'>
-                    <Trans nickname={booking.user.nickname} startDate={moment(booking.dates[0]).format('YYYY-MM-DD')} endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')} i18nKey='IncomingHistory:other-history'>
+                    <Trans i18nKey='IncomingHistory:other-history'>
                       You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>

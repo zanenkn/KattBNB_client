@@ -1,14 +1,13 @@
 {
   "main-title": "",
-  "booking": "",
-  "bookings": "",
+  "main-title_plural": "",
   "declined-request": "",
   "declined-desc": "",
-  "cat": "",
-  "cats": "",
+  "declined-desc_plural": "",
   "view-message": "",
   "canceled-request": "",
   "canceled-desc": "",
+  "canceled-desc_plural": "",
   "other-history": "",
   "view-review": "",
   "no-past-bookings": ""
