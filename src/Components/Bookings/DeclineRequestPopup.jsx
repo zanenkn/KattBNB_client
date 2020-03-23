@@ -81,7 +81,7 @@ class DeclineRequestPopup extends Component {
             {t('DeclineRequestPopup:page-header')}
           </Header>
           <p className='small-centered-paragraph'>
-            <Trans nickname={this.props.nickname} startDate={this.props.startDate} endDate={this.props.endDate} i18nKey='DeclineRequestPopup:page-desc' >
+            <Trans i18nKey='DeclineRequestPopup:page-desc' >
               You are about to decline a booking request from <strong style={{ 'color': '#c90c61' }}>{{ nickname: this.props.nickname }}</strong> for the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: this.props.startDate }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: this.props.endDate }}</strong>
             </Trans>
           </p>
