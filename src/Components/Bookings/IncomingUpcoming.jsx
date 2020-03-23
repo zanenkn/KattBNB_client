@@ -3,6 +3,8 @@ import moment from 'moment'
 import { Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import Spinner from '../ReusableComponents/Spinner'
+import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
 
 class IncomingUpcoming extends Component {
@@ -37,57 +39,60 @@ class IncomingUpcoming extends Component {
   }
 
   render() {
+    const { t } = this.props
 
-    let sortedUpcoming = this.props.upcoming
-    sortedUpcoming.sort((a, b) => (a.dates[0] - b.dates[0]))
-    let page
+    if (this.props.tReady) {
+      let sortedUpcoming = this.props.upcoming
+      sortedUpcoming.sort((a, b) => (a.dates[0] - b.dates[0]))
+      let page
 
-    if (this.props.upcoming.length > 0) {
-      page = (
+      if (this.props.upcoming.length > 0) {
+        page = (
+          <>
+            <p className='small-centered-paragraph'>
+              <Trans count={this.props.upcoming.length} i18nKey='IncomingUpcoming:main-title'>
+                <strong>You have {{ count: this.props.upcoming.length }} upcoming booking.</strong>
+              </Trans>
+            </p>
+            <p style={{ 'textAlign': 'center' }}>
+              {t('IncomingUpcoming:main-desc')}
+            </p>
+            {sortedUpcoming.map(upcoming => {
+              return (
+                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={upcoming.id} data-cy='incoming-upcoming' key={upcoming.id}>
+                  <p className='small-centered-paragraph'>
+                    <Trans count={upcoming.number_of_cats} i18nKey='IncomingUpcoming:booking-info'>
+                      You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong> <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                    </Trans>
+                  </p>
+                  <p className='fake-link-underlined' onClick={(e) => this.messageUser(e, upcoming.user_id, upcoming.user.avatar, upcoming.user.location, upcoming.user.nickname)}>
+                    {t('IncomingUpcoming:message')} {upcoming.user.nickname}
+                  </p>
+                </Container>
+              )
+            })}
+          </>
+        )
+      } else {
+        page = (
+          <>
+            <p className='small-centered-paragraph'>
+              <strong>{t('IncomingUpcoming:no-bookings')}</strong>
+            </p>
+          </>
+        )
+      }
+
+      return (
         <>
-          <p className='small-centered-paragraph'>
-            <strong>
-              You have {this.props.upcoming.length} upcoming {this.props.upcoming.length > 1 ? 'bookings' : 'booking'}.
-            </strong>
-          </p>
-          <p style={{ 'textAlign': 'center' }}>
-            These are finalized bookings coming up soon. Get in touch with these cat owners to organize the drop-off and pick-up.
-          </p>
-          {sortedUpcoming.map(upcoming => {
-            return (
-              <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={upcoming.id} data-cy='incoming-upcoming' key={upcoming.id}>
-                <p className='small-centered-paragraph'>
-                  You have approved a stay for <strong>{upcoming.user.nickname}'s</strong> <strong>{upcoming.number_of_cats} {upcoming.number_of_cats > 1 ? 'cats' : 'cat'}</strong> for the dates of <strong>{moment(upcoming.dates[0]).format('YYYY-MM-DD')}</strong> until <strong>{moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD')}</strong>.
-                </p>
-                <p className='fake-link-underlined' onClick={(e) => this.messageUser(e, upcoming.user_id, upcoming.user.avatar, upcoming.user.location, upcoming.user.nickname)}>
-                  Message {upcoming.user.nickname}
-                </p>
-              </Container>
-            )
-          })}
+          {page}
         </>
       )
-    } else {
-      page = (
-        <>
-          <p className='small-centered-paragraph'>
-            <strong>
-              You don't have any upcoming bookings.
-            </strong>
-          </p>
-        </>
-      )
-    }
-
-    return (
-      <>
-        {page}
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
 
 const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
-export default withRouter(connect(mapStateToProps)(IncomingUpcoming))
+export default withTranslation('IncomingUpcoming')(withRouter(connect(mapStateToProps)(IncomingUpcoming)))
