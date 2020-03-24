@@ -18,13 +18,13 @@
       "list-item1": "enough food for the stay",
       "list-item2": "litter box and enough sand for the stay",
       "list-item3": "insurance letter",
-      "list-item4": "toys and scratch furniture"
+      "list-item4": "toys and scratch furniture",
+      "list-item5": "any medicine needed"
     },
     "optional": {
       "title": "optional:",
       "list-item1": "Feliway pheromone spray",
-      "list-item2": "brush and claw clipper",
-      "list-item3": "any medicine needed"
+      "list-item2": "brush and claw clipper"
     }
   },
   "host": {
