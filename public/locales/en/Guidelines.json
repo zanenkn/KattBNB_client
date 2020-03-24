@@ -16,26 +16,27 @@
     "checklist": {
       "title": "Packing checklist:",
       "list-item1": "enough food for the stay",
-      "list-item2": "litter sand",
+      "list-item2": "litter box and enough sand for the stay",
       "list-item3": "insurance letter",
-      "list-item4": "toys and scratch furniture"
+      "list-item4": "toys and scratch furniture",
+      "list-item5": "any medicine needed"
     },
     "optional": {
       "title": "optional:",
       "list-item1": "Feliway pheromone spray",
-      "list-item2": "brush and claw clipper",
-      "list-item3": "any medicine needed"
+      "list-item2": "brush and claw clipper"
     }
   },
   "host": {
-    "title": "Do you have any poisonous plants? Discuss with the cat owner if those should be stored out of reach.",
-    "list-item1": "Make sure you never leave windows or doors open wide enough for the cat to be able to escape.",
-    "list-item2": "Do not let the cat outside or on the balcony.",
-    "list-item3": "Harnessed catwalks are an option but discuss this with the owner first.",
-    "list-item4": "Make sure that the cat owner is aware of any resident pets or young children in your home - some cats are sensitive like that.",
-    "list-item5": "Clean the litterbox daily.",
-    "list-item6": "Feed the cat(s) according to owners instructions.",
-    "list-item7": "Consult the veterinary professional immediatly if cat is sick, injured or showing any unusual behaviour.",
-    "list-item8": "Update the owner regularly and be reachable, they worry :)"
+    "title": "Some good advice for cat sitter:",
+    "list-item1": "Do you have any poisonous plants? Discuss with the cat owner if those should be stored out of reach.",
+    "list-item2": "Make sure you never leave windows or doors open wide enough for the cat to be able to escape.",
+    "list-item3": "Do not let the cat outside or on the balcony.",
+    "list-item4": "Harnessed catwalks are an option but discuss this with the owner first.",
+    "list-item5": "Make sure that the cat owner is aware of any resident pets or young children in your home - some cats are sensitive like that.",
+    "list-item6": "Clean the litterbox daily.",
+    "list-item7": "Feed the cat(s) according to owners instructions.",
+    "list-item8": "Consult the veterinary professional immediatly if cat is sick, injured or showing any unusual behaviour.",
+    "list-item9": "Update the owner regularly and be reachable, they worry :)"
   }
 }
