@@ -46,7 +46,7 @@ const Guidelines = () => {
           </li>
         </ul>
         <Segment raised style={{ 'paddingTop': '1rem', 'margin': '1rem 0' }}>
-          <Label ribbon style={{ 'backgroundColor': 'grey', 'color': 'white', 'margin': '0 0 1rem' }}>
+          <Label ribbon style={{ 'backgroundColor': '#c90c61', 'color': 'white', 'margin': '0 0 1rem' }}>
             {t('Guidelines:owner.checklist.title')}
           </Label>
           <p style={{ 'padding': '0 1rem 1rem 1rem', 'textSize': 'small' }}>
