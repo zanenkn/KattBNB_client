@@ -12,9 +12,7 @@ const OutgoingRequests = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You have made {props.requests.length} booking {props.requests.length > 1 ? 'requests' : 'request'}.
-          </strong>
+          <strong>You have made {props.requests.length} booking {props.requests.length > 1 ? 'requests' : 'request'}.</strong>
         </p>
         <p style={{ 'textAlign': 'center' }}>
           These are requests to book you have made awaiting confirmation from host(s).
@@ -54,9 +52,7 @@ const OutgoingRequests = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You don't have any booking requests.
-          </strong>
+          <strong>You don't have any booking requests.</strong>
         </p>
       </>
     )
