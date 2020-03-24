@@ -1,0 +1,9 @@
+{
+  "main-header": "<0>You have {{count}} upcoming booking.</0>",
+  "main-header_plural": "<0>You have {{count}} upcoming bookings.</0>",
+  "desc": "These are finalized bookings coming up soon. Get in touch with these hosts to organize the drop-off and pick-up.",
+  "upc-desc": "You have successfully booked a stay with <1>{{nickname}}</1> for your <3>{{count}} cat</3> for the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
+  "upc-desc_plural": "You have successfully booked a stay with <1>{{nickname}}</1> for your <3>{{count}} cats</3> for the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
+  "details": "View details",
+  "no-upc": "You don't have any upcoming bookings."
+}

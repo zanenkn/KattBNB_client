@@ -11,9 +11,7 @@ const OutgoingUpcoming = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You have {props.upcoming.length} upcoming {props.upcoming.length > 1 ? 'bookings' : 'booking'}.
-          </strong>
+          <strong>You have {props.upcoming.length} upcoming {props.upcoming.length > 1 ? 'bookings' : 'booking'}.</strong>
         </p>
         <p style={{ 'textAlign': 'center' }}>
           These are finalized bookings coming up soon. Get in touch with these hosts to organize the drop-off and pick-up.
@@ -58,9 +56,7 @@ const OutgoingUpcoming = (props) => {
     return (
       <>
         <p className='small-centered-paragraph'>
-          <strong>
-            You don't have any upcoming bookings.
-          </strong>
+          <strong>You don't have any upcoming bookings.</strong>
         </p>
       </>
     )
