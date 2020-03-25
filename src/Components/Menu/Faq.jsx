@@ -100,17 +100,8 @@ const Faq = (props) => {
             <p>
               {t('Faq:general.p3-3')}
             </p>
-            <ul>
-              <li>{t('Faq:general.list-item3-1')}</li>
-              <li>{t('Faq:general.list-item3-2')}</li>
-              <li>{t('Faq:general.list-item3-3')}</li>
-              <li>{t('Faq:general.list-item3-4')}</li>
-            </ul>
             <p>
               {t('Faq:general.p3-4')}
-            </p>
-            <p>
-              {t('Faq:general.p3-5')}
             </p>
           </Accordion.Content>
           <Accordion.Title
@@ -125,6 +116,12 @@ const Faq = (props) => {
           <Accordion.Content active={activeIndex === 104}>
             <p>
               {t('Faq:general.p4-1')}
+            </p>
+            <p>
+              {t('Faq:general.p4-2')}
+            </p>
+            <p>
+              {t('Faq:general.p4-3')}
             </p>
           </Accordion.Content>
           <Accordion.Title
@@ -154,11 +151,25 @@ const Faq = (props) => {
             <p>
               {t('Faq:general.p6-1')}
             </p>
+          </Accordion.Content>
+          <Accordion.Title
+            active={activeIndex === 107}
+            index={107}
+            onClick={handleClick}
+            style={{ 'color': 'grey', 'fontWeight': '600' }}
+          >
+            <Icon name='dropdown' style={{ 'color': '#c90c61' }} />
+            {t('Faq:general.sub-header7')}
+          </Accordion.Title>
+          <Accordion.Content active={activeIndex === 107}>
             <p>
-              {t('Faq:general.p6-2')}
+              {t('Faq:general.p7-1')}
             </p>
             <p>
-              {t('Faq:general.p6-3')}
+              {t('Faq:general.p7-2')}
+            </p>
+            <p>
+              {t('Faq:general.p7-3')}
             </p>
           </Accordion.Content>
         </Accordion>
