@@ -61,23 +61,51 @@ const Faq = (props) => {
               {t('Faq:general.p2-1')}
             </p>
             <p>
-              {t('Faq:general.list-title2-1')}
+              <Trans i18nKey='Faq:general.list-title2-1'>
+                <strong style={{ 'color': '#c90c61' }}></strong>
+              </Trans>
             </p>
             <p>
               <ul>
-                <li>{t('Faq:general.list-item2-1-1')}</li>
-                <li>{t('Faq:general.list-item2-1-2')}</li>
-                <li>{t('Faq:general.list-item2-1-3')}</li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-1-1'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-1-2'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-1-3'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
               </ul>
             </p>
             <p>
-              {t('Faq:general.list-title2-2')}
+              <Trans i18nKey='Faq:general.list-title2-2'>
+                <strong style={{ 'color': '#c90c61' }}></strong>
+              </Trans>
             </p>
             <p>
               <ul>
-                <li>{t('Faq:general.list-item2-2-1')}</li>
-                <li>{t('Faq:general.list-item2-2-2')}</li>
-                <li>{t('Faq:general.list-item2-2-3')}</li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-2-1'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-2-2'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey='Faq:general.list-item2-2-3'>
+                    <strong style={{ 'color': '#c90c61' }}></strong>
+                  </Trans>
+                </li>
               </ul>
             </p>
           </Accordion.Content>
@@ -97,11 +125,17 @@ const Faq = (props) => {
             <p>
               {t('Faq:general.p3-2')}
             </p>
+            <ul>
+              <li>{t('Faq:general.list-item3-2-1')}</li>
+              <li>{t('Faq:general.list-item3-2-2')}</li>
+            </ul>
             <p>
               {t('Faq:general.p3-3')}
             </p>
             <p>
-              {t('Faq:general.p3-4')}
+              <Trans i18nKey='Faq:general.p3-4'>
+              Please don't hesitate to <Header as={Link} to='contact-us' className='fake-link-underlined-reg'>contact us</Header>...
+              </Trans>
             </p>
           </Accordion.Content>
           <Accordion.Title
@@ -149,7 +183,9 @@ const Faq = (props) => {
           </Accordion.Title>
           <Accordion.Content active={activeIndex === 106}>
             <p>
-              {t('Faq:general.p6-1')}
+              <Trans i18nKey='Faq:general.p6-1'>
+                Our website does not use any cookies or other tracking mechanisms. You can read more about what data we collect in our <Header as={Link} to='legal' className='fake-link-underlined-reg'>Terms and conditions</Header>.
+              </Trans>
             </p>
           </Accordion.Content>
           <Accordion.Title
