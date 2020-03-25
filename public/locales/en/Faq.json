@@ -20,7 +20,7 @@
         "p3-3": "If you have any incoming upcoming bookings at the time you request to delete your account (you have agreed to take care of someone's cat), we can only delete your account after the booking has happened.",
         "p3-4": "Please don't hesitate to <1>contact us</1> if you have any further questions!",
         "sub-header4": "Do you keep any of my data after I have deleted my account?",
-        "p4-1": "When you delete your account, we delete your booking history, requests as well as your host profile, if you have any, and your main account.",
+        "p4-1": "When you delete your account, we delete your booking history, requests, host profile (if you have any) and your main account.",
         "p4-2": "Conversations between two users (exchanged text messages and images) will be deleted from our database if one of the following conditions are true: both users have deleted their accounts, both users have deleted the conversation, one user have deleted their account and the other user deletes the conversation.",
         "p4-3": "Reviews written by users will be deleted from our database, only if associated host deletes their account.",
         "sub-header5": "Why does the amount of my incoming bookings change from time to time?",
@@ -28,14 +28,14 @@
         "sub-header6": "Does your website use cookies?",
         "p6-1": "Our website does not use any cookies or other tracking mechanisms. You can read more about what data we collect in our <1>Terms and conditions</1>.",
         "sub-header7": "What password should I choose for my account?",
-        "p7-1": "As a general rule of thumb, you should always avoid putting you birthday, email or other publicly know details about you as password. Same of course goes for generic passwords like 123456, password, passwd, etc.",
+        "p7-1": "As a general rule of thumb, you should always avoid putting your birthday, email or other publicly know details about you as password. Same of course goes for generic passwords like '123456', 'password', 'passwd', etc.",
         "p7-2": "You should choose a combination of letters (both uppercase and lowercase), symbols and numbers. And of course the more characters your password has, the safer it is. Another very effective security measure, is to change your password every month or so.",
         "p7-3": "Our website allows minimum passwords of 6 characters and can accept letters, symbols and numbers."
     },
     "host": {
         "top-header": "Host",
         "sub-header1": "How do I become a cat host?",
-        "p1-1": "To start hosting cats you should sign up and verify your email address via confirmation email we send you.",
+        "p1-1": "To start hosting cats on KattBNB you should sign up and verify your email address via confirmation email we send you.",
         "p1-2": "After that, you should make a host profile. You can do that from your User page.",
         "p1-3": "Once you have the host profile set up, you will appear in the search results for users searching for cat sitters in your area.",
         "sub-header2": "Do I have to pay to start hosting?",
@@ -44,20 +44,20 @@
         "p3-1": "You choose your daily rate and supplement yourself when you create your host profile. You can update these at any time. The new rates will apply for booking requests made after the update.",
         "p3-2": "You can <1>contact us</1> if you would like an assistance with setting your rates.",
         "sub-header4": "How do I get paid?",
-        "p4-1": "For the time being, KattBNB does not offer any integrated payment solution. After booking is finalized (cat host has approved the booking request) both users have entered a legally binding agreement. That means that the cat owner has agreed and is obliged to pay you the amount that is shown in booking details in return for your services. We trust our users to agree on payment form themselves.",
+        "p4-1": "For the time being, KattBNB does not offer any integrated payment solution. After booking is confirmed (cat host has approved the booking request) both users have entered a legally binding agreement. That means that the cat owner has agreed and is obliged to pay you the amount that is shown in booking details in return for your services. We trust our users to agree on payment form themselves.",
         "list-item4-1": "Integrated payment solution - faster and safer!",
         "sub-header5": "Why do I get a caution message when I fill in my address in my host profile?",
-        "p5-1": "Our website uses a Google service to check that your selected address is inside the geographic boundaries of your selected location. Google however, has all names written in English (e.g. Gothenburg), whereas out location selector has them written in Swedish (e.g. Göteborg). That’s why you still get a caution message. Since you know for sure that your declared address is inside the city boundaries declared in your user profile, continue without fear!"
+        "p5-1": "Our website uses a Google service to check that your selected address is inside the geographic boundaries of your selected location. Google however, has all names written in English (e.g. Gothenburg), whereas our location selector has them written in Swedish (e.g. Göteborg). That’s why you still get a caution message. Since you know for sure that your declared address is inside the city boundaries declared in your user profile, continue without fear!"
     },
     "owner": {
         "top-header": "Cat owner",
         "sub-header1": "How do I book a cat host?",
-        "p1-1": "You can enter the requirements for your booking and see available cat hosts near you. In order to book someone you should sign up.",
+        "p1-1": "You can enter the requirements for your booking and see available cat hosts near you. In order to book someone you need to sign up.",
         "p1-2": "Once registered and logged in, you can send a booking request to a cat host. They will then have 3 days to accept or decline your booking request. We will notify you by email about any changes in booking request status.",
         "p1-3": "By requesting a booking you agree and are obliged to pay the amount shown in booking details in return for cat sitter's services.",
         "sub-header2": "Can you guarantee that the cat hosts offering their services on your website are reliable and will not harm my cat(s)?",
-        "p2-1": "We offer a platform for cat owners and cat lovers to meet, communicate and arrange cat sitting services. We strive to eliminate fraud and misuse of our App, although it is not possible for us to review and contol all the information that is uploaded by our users. We recommend that you meet with the host beforehand and make sure that they are the best match for your cat.",
-        "list-item2-1": "Reviews for cat hosts that will help you decide what is best for you and your cat.",
+        "p2-1": "We offer a platform for cat owners and cat lovers to meet, communicate and arrange cat sitting services. We strive to eliminate fraud and misuse of our App, although it is not possible for us to review and control all the information that is uploaded by our users. We recommend that you meet with the host beforehand and make sure that they are the best match for your cat(s).",
+        "list-item2-1": "Reviews for cat hosts that will help you decide what is best for you and your cat(s).",
         "list-item2-2": "BankID login for that extra piece of mind."
     },
     "to-guidelines": "Have you booked a stay already? Check out our helpful <1>guidelines</1>."
