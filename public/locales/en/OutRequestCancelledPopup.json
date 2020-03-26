@@ -1,6 +1,6 @@
 {
   "main-header": "CANCELLED",
   "desc": "Your booking request for the dates of <1>{{startDate}}</1> until <3>{{endDate}}</3> got cancelled.",
-  "explanation": "Your booking got automatically cancelled due to <1>{{nickname}}</1> not responding for 3 days.",
+  "explanation": "Your booking got automatically cancelled due to <1>{{nickname}}</1> not responding within 3 days.",
   "try-again": "Try to <1>search again</1>, we hope you find a perfect host soon!"
 }
