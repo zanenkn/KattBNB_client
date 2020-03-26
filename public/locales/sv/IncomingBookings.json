@@ -1,7 +1,7 @@
 {
-  "main-header": "",
-  "main-desc": "",
-  "requests": "",
-  "upcoming": "",
-  "history": ""
+  "main-header": "Inkommande bokningar",
+  "main-desc": "Du är kattvakt åt andras katter",
+  "requests": "Förfrågningar",
+  "upcoming": "Kommande",
+  "history": "Historik"
 }
