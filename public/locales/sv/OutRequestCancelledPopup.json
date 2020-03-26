@@ -1,6 +1,6 @@
 {
-  "main-header": "",
-  "desc": "",
-  "explanation": "",
-  "try-again": ""
+  "main-header": "AVBRUTEN",
+  "desc": "Din bokningsförfrågan för datumen <1>{{startDate}}</1> tills <3>{{endDate}}</3> avbröts.",
+  "explanation": "Din bokning avbröts automatiskt på grund av att <1>{{nickname}}</1> inte svarade inom tre dagar.",
+  "try-again": "Försök att <1>söka igen</1>, vi hoppas att du hittar den perfekta kattvakten snart!"
 }
