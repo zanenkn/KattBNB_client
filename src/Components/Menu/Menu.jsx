@@ -23,7 +23,11 @@ class Menu extends Component {
     }
     axios.delete(path, { headers: headers })
       .then(() => {
-        window.localStorage.clear()
+        window.localStorage.removeItem('access-token')
+        window.localStorage.removeItem('token-type')
+        window.localStorage.removeItem('client')
+        window.localStorage.removeItem('uid')
+        window.localStorage.removeItem('expiry')
         window.location.replace('/')
       })
       .catch(() => {

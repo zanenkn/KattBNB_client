@@ -5,7 +5,9 @@ import moment from 'moment'
 import { Trans, useTranslation } from 'react-i18next'
 
 const RequestToBookCTA = (props) => {
+
   const { t, ready } = useTranslation()
+
   if (ready) {
     return (
       <>
@@ -27,4 +29,5 @@ const RequestToBookCTA = (props) => {
     )
   } else { return <Spinner /> }
 }
+
 export default RequestToBookCTA

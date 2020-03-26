@@ -3,6 +3,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 
 class LocationUpdateForm extends Component {
 
@@ -27,7 +28,11 @@ class LocationUpdateForm extends Component {
     const { t } = this.props
     let address = this.props.fullAddress
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     } else if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
       this.setState({
@@ -53,7 +58,7 @@ class LocationUpdateForm extends Component {
               errorDisplay: false,
               errors: ''
             })
-            window.alert(t('success-alert'))
+            window.alert(t('LocationUpdateForm:success-alert'))
             this.props.setElement('location', this.state.newLocation)
             this.props.closeLocationAndPasswordForms()
           })
@@ -139,7 +144,7 @@ class LocationUpdateForm extends Component {
           <Divider style={{ 'marginBottom': '2rem' }} />
         </>
       )
-    } else { return null }
+    } else { return <Spinner /> }
   }
 }
 

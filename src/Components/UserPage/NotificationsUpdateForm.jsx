@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Checkbox, Divider, Button, Message } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 
 const NotificationsUpdateForm = (props) => {
 
-  const { t, ready } = useTranslation()
+  const { t, ready } = useTranslation('NotificationsUpdateForm')
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
@@ -13,12 +14,16 @@ const NotificationsUpdateForm = (props) => {
 
   const updateMessageNotification = () => {
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.clear()
+      window.localStorage.removeItem('access-token')
+      window.localStorage.removeItem('token-type')
+      window.localStorage.removeItem('client')
+      window.localStorage.removeItem('uid')
+      window.localStorage.removeItem('expiry')
       window.location.replace('/login')
     }
     else if (messageNotifications === props.messageNotifications) {
       setErrorDisplay(true)
-      setErrors(['No changes made to your settings!'])
+      setErrors(['NotificationsUpdateForm:update-error'])
     } else {
       setLoading(true)
       const path = '/api/v1/auth/'
@@ -30,7 +35,7 @@ const NotificationsUpdateForm = (props) => {
       }
       axios.put(path, payload, { headers: headers })
         .then(() => {
-          window.alert('Message notification settings updated!')
+          window.alert(t('NotificationsUpdateForm:update-success'))
           props.setElement('messageNotifications', messageNotifications)
           props.closeLocationAndPasswordForms()
         })
@@ -48,14 +53,14 @@ const NotificationsUpdateForm = (props) => {
           <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
             <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />
           </div>
-          <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>Receive notifications for every message</label>
+          <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>{t('NotificationsUpdateForm:label')}</label>
         </div>
         {errorDisplay &&
           <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }} >Update action could not be completed because of following error(s):</Message.Header>
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
             <ul id='message-error-list'>
               {errors.map(error => (
-                <li key={error}>{error}</li>
+                <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
@@ -67,7 +72,7 @@ const NotificationsUpdateForm = (props) => {
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>
     )
-  } else { return null }
+  } else { return <Spinner /> }
 }
 
 export default NotificationsUpdateForm
