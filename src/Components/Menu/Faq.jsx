@@ -228,7 +228,7 @@ const Faq = (props) => {
               {t('Faq:host.p1-1')}
             </p>
             {props.currentUserIn === false &&
-              <a href='https://www.kattbnb.com/sign-up' target='_blank' rel='noopener noreferrer'>
+              <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer'>
                 <Button style={{ 'margin': '1rem auto 1rem' }}>
                   {t('reusable:title.signup')}
                 </Button>
@@ -238,7 +238,7 @@ const Faq = (props) => {
               {t('Faq:host.p1-2')}
             </p>
             {props.currentUserIn &&
-              <a href='https://www.kattbnb.com/user-page' target='_blank' rel='noopener noreferrer'>
+              <a href='https://www.kattbnb.se/user-page' target='_blank' rel='noopener noreferrer'>
                 <Button style={{ 'margin': '1rem auto 1rem' }}>
                   {t('reusable:cta.make-host-profile')}
                 </Button>
@@ -285,7 +285,7 @@ const Faq = (props) => {
             </Segment>
             <p>
               <Trans i18nKey='Faq:host.p3-2'>
-                You can <a href='https://www.kattbnb.com/contact-us' target='_blank' rel='noopener noreferrer'>contact us</a> if you would like an assistance with setting your rates.
+                You can <a href='https://www.kattbnb.se/contact-us' target='_blank' rel='noopener noreferrer'>contact us</a> if you would like an assistance with setting your rates.
               </Trans>
             </p>
           </Accordion.Content>
@@ -345,7 +345,7 @@ const Faq = (props) => {
               {t('Faq:owner.p1-1')}
             </p>
             {props.currentUserIn === false &&
-              <a href='https://www.kattbnb.com/sign-up' target='_blank' rel='noopener noreferrer'>
+              <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer'>
                 <Button id='sign-up-button' style={{ 'margin': '1rem auto 1rem' }}>
                   {t('reusable:title.signup')}
                 </Button>
