@@ -1,7 +1,7 @@
 {
-  "main-header": "",
-  "desc": "",
-  "requests": "",
-  "upcoming": "",
-  "history": ""
+  "main-header": "Utgående bokningar",
+  "desc": "Din katt / dina katter bor hos kattvakter",
+  "requests": "Förfrågningar",
+  "upcoming": "Kommande",
+  "history": "Historik"
 }
