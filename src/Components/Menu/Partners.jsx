@@ -15,9 +15,11 @@ const Partners = () => {
         <p style={{ 'textAlign': 'center' }}>
           {t('Partners:p1')}
         </p>
-        <a href='https://craftacademy.se/' target='_blank' rel='noopener noreferrer'>
-          <Image src='craftacademylogo.png' style={{ 'maxWidth': '200px', 'margin': 'auto', 'cursor': 'pointer' }}></Image>
-        </a>
+        <div style={{'maxWidth': '200px', 'margin': 'auto'}}>
+          <a href='https://craftacademy.se/' target='_blank' rel='noopener noreferrer'>
+            <Image src='craftacademylogo.png' style={{ 'maxWidth': '200px', 'margin': 'auto', 'cursor': 'pointer' }}></Image>
+          </a>
+        </div>
       </div>
     )
   } else {
