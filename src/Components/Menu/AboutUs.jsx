@@ -7,11 +7,13 @@ const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs')
   if (ready) {
     return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          {t('reusable:title.about')}
-        </Header>
-        <div className='expanding-wrapper'>
+      <>
+        <div className='content-wrapper' style={{'marginBottom': '2rem'}} >
+          <Header as='h1'>
+            {t('reusable:title.about')}
+          </Header>
+        </div>
+        <div className='expanding-wrapper' style={{ 'paddingTop': '0' }}>
           <Header as='h2' >
             {t('AboutUs:idea-title')}
           </Header>
@@ -86,7 +88,7 @@ const AboutUs = () => {
           </Trans>
           </p>
         </div>
-      </div>
+      </>
     )
   } else { return <Spinner /> }
 }

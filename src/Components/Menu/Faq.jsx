@@ -17,15 +17,17 @@ const Faq = (props) => {
   const { t, ready } = useTranslation('Faq')
   if (ready) {
     return (
-      <div className='content-wrapper' >
-        <Header as='h1'>
-          {t('reusable:title.faq')}
-        </Header>
-        <p style={{ 'textAlign': 'center' }}>
-          <Trans i18nKey='Faq:to-guidelines'>
-            Have you booked a stay already? Check out our helpful <Header as={Link} to='guidelines' className='fake-link-underlined-reg'>guidelines</Header>.
-          </Trans>
-        </p>
+      <>
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
+          <Header as='h1'>
+            {t('reusable:title.faq')}
+          </Header>
+          <p style={{ 'textAlign': 'center' }}>
+            <Trans i18nKey='Faq:to-guidelines'>
+              Have you booked a stay already? Check out our helpful <Header as={Link} to='guidelines' className='fake-link-underlined-reg'>guidelines</Header>.
+            </Trans>
+          </p>
+        </div>
         <div className='expanding-wrapper'>
           <Header as='h3' style={{ 'textAlign': 'left' }} >
             {t('Faq:general.top-header')}
@@ -388,7 +390,7 @@ const Faq = (props) => {
             </Accordion.Content>
           </Accordion>
         </div>
-      </div>
+      </>
     )
   } else { return <Spinner /> }
 }

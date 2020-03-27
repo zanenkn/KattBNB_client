@@ -68,7 +68,7 @@ const HostProfileView = (props) => {
     }
 
     return (
-      <div className='expanding-wrapper'>
+      <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
         <Image id='avatar' src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
         <HostScore />
         <Header id='nickname' as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
