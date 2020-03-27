@@ -1,0 +1,12 @@
+{
+  "accept-request": "You are about to accept this booking request. Continue?",
+  "main-header-error": "Request could not be accepted because of following error(s):",
+  "requests-to-display": "<0>You have received {{count}} booking request.</0>",
+  "requests-to-display_plural": "<0>You have received {{count}} booking requests.</0>",
+  "requests-desc": "These are booking requests from cat owners awaiting your decision.",
+  "must-reply": "You must reply before <1>{{date}}</1>",
+  "book-a-stay": "<0>{{nickname}}</0> wants to book a stay for their <2>{{count}} cat</2> during the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
+  "book-a-stay_plural": "<0>{{nickname}}</0> wants to book a stay for their <2>{{count}} cats</2> during the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
+  "view-message": "View message",
+  "no-requests": "You don't have any booking requests."
+}
