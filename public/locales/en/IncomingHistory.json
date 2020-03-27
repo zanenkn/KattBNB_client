@@ -1,0 +1,14 @@
+{
+  "main-title": "<0>You have {{count}} past booking.</0>",
+  "main-title_plural": "<0>You have {{count}} past bookings.</0>",
+  "declined-request": "DECLINED REQUEST",
+  "declined-desc": "You declined a booking request from <1>{{nickname}}</1> for their <3>{{count}} cat</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
+  "declined-desc_plural": "You declined a booking request from <1>{{nickname}}</1> for their <3>{{count}} cats</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
+  "view-message": "View message",
+  "canceled-request": "CANCELED REQUEST",
+  "canceled-desc": "A booking request from <1>{{nickname}}</1> for their <3>{{count}} cat</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7> got canceled due to no answer from you within 3 days time.",
+  "canceled-desc_plural": "A booking request from <1>{{nickname}}</1> for their <3>{{count}} cats</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7> got canceled due to no answer from you within 3 days time.",
+  "other-history": "You hosted <1>{{nickname}}'s</1> cat(s) during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>.",
+  "view-review": "View review",
+  "no-past-bookings": "You don't have any past bookings."
+}

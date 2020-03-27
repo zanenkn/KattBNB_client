@@ -1,0 +1,11 @@
+{
+  "confirm-decline": "Vill du verkligen avslå den här bokningsförfrågan?",
+  "decline-error": "Meddelandet kan inte vara tomt eller innehålla mer än 200 tecken!",
+  "error-message-header": "Bokningsförfrågan kunde inte avlås på grund av följande fel:",
+  "page-header": "Avslå en bokningsförfrågan",
+  "page-desc": "Du är på väg att avslå en bokningsförfrågan från <1>{{nickname}}</1> för datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>",
+  "text-area-label": "Meddelande",
+  "text-area-plch": "Låt dem veta varför..",
+  "remaining": "Återstående tecken:",
+  "decline-cta": "Avslå"
+}
