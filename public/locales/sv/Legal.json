@@ -1,18 +1,18 @@
 {
   "intro": {
     "title": "Intro",
-    "p1": "Dessa villkor (Villkor) beskriver reglerna för användning av KattBNB webbaserade applikation (App). Genom att använda vår App accepterar du att vara bunden av Villkoren.",
+    "p1": "Dessa villkor (Villkoren) beskriver reglerna för användning av KattBNB webbaserade applikation (App). Genom att använda vår App accepterar du att vara bunden av Villkoren.",
     "p2": "Termen “oss“, “vi“, “vår“ eller “KattBNB“ hänvisar till ägarna av denna webbsida: KattBNB AB, reg. nr. xxxxxxxx, adress: Solståndsgatan 22, 41536 Göteborg, Sverige. Genom vår App tillhandahåller KattBNB en onlinemarknad som gör det möjligt för registrerade användare (Användare) som erbjuder kattpassningstjänster (Kattvakter) att publicera information om sina tjänster (Tjänster) och direkt kommunicera med Användare som vill boka sådana Tjänster (Kattägare). Kattägare och Kattvakt kallas kollektivt “du”, “dig” eller “Användare”.",
     "p3": "Genom att använda Appen gäller Villkoren automatiskt för dig - du bör därför se till att du läser dem noggrant innan du använder Appen. Du får inte kopiera eller modifiera Appen, någon del av Appen eller våra varumärken på något sätt. Det är inte tillåtet att försöka extrahera källkoden för Appen, och du bör inte heller försöka översätta Appen till andra språk eller skapa derivatversioner. Appen själv, alla varumärken, upphovsrätt, databasrättigheter och andra immateriella rättigheter relaterade till den tillhör fortfarande KattBNB.",
-    "p4": "KattBNB kan sluta tillhandahålla Appen och avbryta användningen av den när som helst utan att meddela dig om uppsägning. Om vi inte säger något annat kommer alla rättigheter och licenser som du beviljats i Villkor att upphöra vid en uppsägning.",
+    "p4": "KattBNB kan sluta tillhandahålla Appen och avbryta användningen av den när som helst utan att meddela dig om uppsägning. Om vi inte säger något annat kommer alla rättigheter och licenser som du beviljats i Villkoren att upphöra vid en uppsägning.",
     "p5": "KattBNB förbehåller sig rätten att uppdatera Villkoren. I så fall kommer du att meddelas via e-post till den e-postadress du har angett vid registreringen. Dessa ändringar träder i kraft omedelbart efter att de har publicerats på denna sida."
   },
   "registration": {
     "title": "Registrering",
     "p1": "För att registrera ett konto med appen gäller följande:",
     "li1": "Du måste vara minst 18 år.",
-    "li2": "Du måste inte ha djurförbud beslutat av mindigheterna.",
-    "li3": "Du får inte ha någon brottsregister som rör djurplågeri.",
+    "li2": "Du får inte ha djurförbud beslutat av myndigheterna.",
+    "li3": "Du får inte ha något brottsregister som rör djurplågeri.",
     "p2": "Genom att registrera dig bekräftar du att du har läst och godkänt Villkoren."
   },
   "general": {
@@ -24,9 +24,9 @@
     },
     "abuse-of-app": {
       "title": "Missbruk av Appen",
-      "p1": "Appen ska endast användas som en kontaktplattform mellan Användare om tjänsten.",
-      "p2": "I samband med att använda appen du skall inte:",
-      "li1": "Överför ditt konto till en annan part.",
+      "p1": "Appen ska endast användas som en kontaktplattform mellan Användare av tjänsten.",
+      "p2": "I samband med användning av appen skall du inte:",
+      "li1": "Överföra ditt konto till tredje part.",
       "li2": "Annonsera köp eller försäljning av husdjur.",
       "li3": "Utbyta personlig information med andra Användare, t.ex. telefonnummer eller e-postadress.",
       "li4": "Distribuera skräppost, virus eller annan teknik som kan skada KattBNB eller våra Användare.",
@@ -48,7 +48,7 @@
     "p2": "För närvarande tar KattBNB inte ut någon serviceavgift, deltar inte i betalningsprocessen och löser inte tvister mellan Användare.",
     "p3": "Genom att skicka en bokningsförfrågan i Appen samtycker Kattägaren till att betala det visade beloppet till Kattvakten som kompensation för att uppfylla Tjänsten. Involverade Användare kommer att komma överens om när och hur betalningen kommer att ske.",
     "p4": "Genom att acceptera bokningen samtycker Kattvakten till att uppfylla Tjänsten hemma mellan de datum som visas i Appen.",
-    "p5": "Det är Kattvaktens eget ansvar att deklarera eventuella inkomster som genereras genom att uppfylla Tjänsterna. Om du tar hand om husdjur som affärsverksamhet kan du vara berättigad till godkännande av svensk F-skatt. <1>Besöka Skatteverket för mer information.</1>",
+    "p5": "Det är Kattvaktens eget ansvar att deklarera eventuella inkomster som genereras genom att uppfylla Tjänsterna. Om du tar hand om husdjur som affärsverksamhet kan du vara berättigad till godkännande av svensk F-skatt. <1>Besök Skatteverket för mer information.</1>",
     "p6": "Kattvakter som professionellt tar hand om katter kan behöva tillstånd. <1>Se kapitel 6.1 i Djurskyddslagen för mer information.</1> Användarna är själva ansvariga för att avgöra om de behöver tillstånd att utföra Tjänsten och skaffa sådant tillstånd vid behov.",
     "p7": "Användare bör inte utbyta personlig information eftersom KattBNB inte kan garantera säkerheten för denna information. Kattvaktens fullständiga adress kommer att tillhandahållas Kattägaren när bokningen har godkänts av Kattvakten. Användare kan använda messenger-tjänst i Appen för att kommunicera alla frågor som skulle uppstå."
   },
@@ -64,7 +64,7 @@
   "emergency": {
     "title": "I nödsituationer",
     "p1": "Både Kattvakt och Kattägare bör vara kontaktbara under tjänsten.",
-    "p2": "I händelse av en veterinär nödsituation bör Kattägare konsulteras om lämplig veterinärvård. Om Kattägaren inte kan nås, bör Kattvakt se till att nödvändig akutvård tillhandahålls.",
+    "p2": "I händelse av en veterinär nödsituation bör Kattägaren konsulteras om lämplig veterinärvård. Om Kattägaren inte kan nås, bör Kattvakt se till att nödvändig akutvård tillhandahålls.",
     "p3": "Vi rekommenderar att Kattägarens katt(er) är försäkrade för veterinärvård innan Tjänsten påbörjas eftersom det underlättar tillgång till nödvändig behandling."
   },
   "owner-liability": {
