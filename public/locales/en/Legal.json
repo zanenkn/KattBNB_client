@@ -1,0 +1,18 @@
+{
+  "intro": {
+    "title": "Intro",
+    "p1": "These terms and conditions (Terms) outline the regulations for the use of KattBNB´s web application (App). By using our App, you agree to comply with and be bound by Terms.",
+    "p2": "The terms “us”, “we”, “our” or “KattBNB” refer to the owners of this website: KattBNB AB, reg. nr. xxxxxxxx, address: Solståndsgatan 22, 41536 Göteborg, Sweden. Through our App, KattBNB provides an online marketplace that enables registered users (Users) who offer cat sitting services (Cat Sitters) to publish information about their services (Services) and directly communicate with Users that are looking to book such Services (Cat Owners). Cat Owners and Cat Sitters are collectively referred to as “you”, “your” or “Users”.",
+    "p3": "By using the App, Terms will automatically apply to you – you should make sure therefore that you read them carefully before using the App. You’re not allowed to copy, or modify the App, any part of the App, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the App, and you also shouldn’t try to translate the App into other languages, or make derivative versions. The App itself, and all the trademarks, copyright, database rights and other intellectual property rights related to it, still belong to KattBNB.",
+    "p4": "KattBNB can stop providing the App and terminate the use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, the rights and licenses granted to you in Terms will end.",
+    "p5": "KattBNB reserves the right to update Terms. In that case you will be notified via email to the email address you have provided on registration. These changes are effective immediately after they are posted on this page."
+  },
+  "registration": {
+    "title": "Registration",
+    "p1": "To register an account with the App the following applies:",
+    "li1": "You must be at least 18 years old.",
+    "li2": "You must not have been banned from handling and keeping animals by the authorities.",
+    "li3": "You must not have any criminal records relating to animal cruelty.",
+    "p2": "By registering you confirm that you have read and agree to Terms."
+  }
+}
