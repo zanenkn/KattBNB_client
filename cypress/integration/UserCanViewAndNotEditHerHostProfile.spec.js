@@ -74,7 +74,7 @@ describe('User can view her host profile', () => {
 
   it('and if she logs out and visits the user-page path manually, she gets an error message', () => {
     cy.get('.hamburger-box').click()
-    cy.get('#app-content > #menu > #menu-grid > #menu-grid-column > #logout').click()
+    cy.get('#logout')
     cy.wait(2000)
     cy.visit('http://localhost:3000/user-page')
     cy.contains("Don't be a stranger. You need to log in to view this section!")

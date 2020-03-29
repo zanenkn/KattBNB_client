@@ -9,8 +9,9 @@
   "zane-txt": "Driving force behind the idea on the good days and crying force on the other ones",
   "george-title": "CTO and web developer",
   "george-txt": "Greek god of coding, the million dollar combo of stubbornness and patience",
-  "felix-title": "Advisor in business development",
-  "felix-txt": "Felix tells us what to do when we don’t know what to do",
+  "joel-title": "Head of translations",
+  "joel-txt": "Knower of Swedish, driver, promoter, moral supporter and a true nerd at heart",
   "acknowledgements-title": "Acknowledgements",
-  "acknowledgements-txt": "None of this would be possible without <1>Craft Academy</1>. These people taught us to code and all things beyond that."
+  "acknowledgements-felix": "Thank you <1>Felix Bonnier</1> for all the encouragement, advice in business development and the invaluable help with our very first pitch deck.",
+  "acknowledgements-clarissa": "Thank you <1>Clarissa Liljander</1> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a developer!"
 }

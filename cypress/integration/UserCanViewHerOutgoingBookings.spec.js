@@ -15,7 +15,7 @@ describe('User can view her outgoing bookings', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#bookings-icon').click({force: true})
+    cy.get('#bookings-icon').click({ force: true })
   })
 
   it('and see correct stats of her bookings', () => {
@@ -75,6 +75,6 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#6').within(() => {
       cy.get('.fake-link-underlined').click()
     })
-    cy.contains('Your booking got automatically cancelled due to Canceled1 not responding for 3 days.')
+    cy.get('.popup-content').contains('Your booking got automatically cancelled due to Canceled1 not responding within 3 days.')
   })
 })

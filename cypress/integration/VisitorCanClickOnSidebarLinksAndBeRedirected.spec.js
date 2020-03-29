@@ -11,7 +11,8 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
   })
 
   it('to ENG Sign Up page', () => {
-    cy.get('#signup').click()
+    cy.get('#login').click()
+    cy.get('#create-account').click()
     cy.contains('Sign up')
   })
 
@@ -45,7 +46,8 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
   it('to SE Sign Up page', () => {
     cy.get('#se').click()
     cy.get('.hamburger-box').click()
-    cy.get('#signup').click()
+    cy.get('#login').click()
+    cy.get('#create-account').click()
     cy.contains('Registrera dig')
   })
 

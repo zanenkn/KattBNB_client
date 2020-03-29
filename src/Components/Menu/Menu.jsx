@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Segment, Grid, Header, Button } from 'semantic-ui-react'
+import { Sidebar, Segment, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -15,6 +15,7 @@ class Menu extends Component {
 
   signOut = (e) => {
     e.preventDefault()
+    const { t } = this.props
     const path = '/api/v1/auth/sign_out'
     const headers = {
       uid: window.localStorage.getItem('uid'),
@@ -31,7 +32,7 @@ class Menu extends Component {
         window.location.replace('/')
       })
       .catch(() => {
-        window.alert('There was a problem signing you out. Please try again in a minute')
+        window.alert(t('reusable:errors:sign-out-error'))
       })
   }
 
@@ -44,10 +45,10 @@ class Menu extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let userLinks
+      let userLink
 
       if (this.props.currentUserIn) {
-        userLinks = (
+        userLink = (
           <Header
             id='logout'
             className='menu-link'
@@ -58,7 +59,7 @@ class Menu extends Component {
           </Header>
         )
       } else {
-        userLinks = (
+        userLink = (
           <>
             <Header
               id='login'
@@ -66,15 +67,7 @@ class Menu extends Component {
               as={Link}
               to='/login'
             >
-              {t('reusable:title.login')}
-            </Header>
-            <Header
-              id='signup'
-              className='menu-link'
-              as={Link}
-              to='/sign-up'
-            >
-              {t('reusable:title.signup')}
+              {t('reusable:title.login-signup')}
             </Header>
           </>
         )
@@ -87,65 +80,69 @@ class Menu extends Component {
           direction='left'
           visible={this.props.menuVisible}
         >
-          <Grid
-            verticalAlign='middle'
-            id='menu-grid'
+          {userLink}
+          <Header
+            id='about'
+            className='menu-link'
+            as={Link}
+            to='/about-us'
           >
-            <Grid.Column id='menu-grid-column'>
-              {userLinks}
-              <Header
-                id='about'
-                className='menu-link'
-                as={Link}
-                to='/about-us'
-              >
-                {t('reusable:title.about')}
-              </Header>
-              <Header
-                id='faq'
-                className='menu-link'
-                as={Link}
-                to='faq'
-              >
-                {t('reusable:title.faq')}
-              </Header>
-              <Header
-                id='contact'
-                className='menu-link'
-                as={Link}
-                to='/contact-us'
-              >
-                {t('reusable:title.contact')}
-              </Header>
-              <Header
-                id='legal'
-                className='menu-link'
-                as={Link}
-                to='/legal'
-              >
-                {t('reusable:title.legal')}
-              </Header>
-              <div>
-                <Button id='se' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('sv')}>Svenska</Button>
-                <Button id='en' size='mini' style={{ 'display': 'inline', 'marginTop': '2rem', 'marginLeft': '0.5rem', 'marginRight': '0.5rem' }} onClick={() => this.changeLng('en')}>English</Button>
-              </div>
-            </Grid.Column>
-          </Grid>
+            {t('reusable:title.about')}
+          </Header>
+          <Header
+            id='faq'
+            className='menu-link'
+            as={Link}
+            to='faq'
+          >
+            {t('reusable:title.faq')}
+          </Header>
+          <Header
+            id='contact'
+            className='menu-link'
+            as={Link}
+            to='/contact-us'
+          >
+            {t('reusable:title.contact')}
+          </Header>
+          <Header
+            id='partners'
+            className='menu-link'
+            as={Link}
+            to='/partners'
+          >
+            {t('reusable:title.partners')}
+          </Header>
+          <Header
+            id='legal'
+            className='menu-link'
+            as={Link}
+            to='/legal'
+          >
+            {t('reusable:title.legal')}
+          </Header>
+          <div style={{ 'display': 'flex', 'alignSelf': 'center' }}>
+            <Button id='se' className='lng-button' size='mini' onClick={() => this.changeLng('sv')}>Svenska</Button>
+            <Button id='en' className='lng-button' size='mini' onClick={() => this.changeLng('en')}>English</Button>
+          </div>
         </Sidebar>
       )
     } else { return null }
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     menuVisible: state.animation.menuVisible,
     currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
   }
 }
+
 const mapDispatchToProps = {
   menuVisbilityHandler: menuVisible => ({
     type: 'CHANGE_VISIBILITY',
     menuVisbible: menuVisible
   })
 }
+
 export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu)))
