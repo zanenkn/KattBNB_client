@@ -9,7 +9,7 @@
   },
   "registration": {
     "title": "Registrering",
-    "p1": "För att registrera ett konto med appen gäller följande:",
+    "p1": "För att registrera ett konto med Appen gäller följande:",
     "li1": "Du måste vara minst 18 år.",
     "li2": "Du får inte ha djurförbud beslutat av myndigheterna.",
     "li3": "Du får inte ha något brottsregister som rör djurplågeri.",
@@ -30,7 +30,7 @@
       "li2": "Annonsera köp eller försäljning av husdjur.",
       "li3": "Utbyta personlig information med andra Användare, t.ex. telefonnummer eller e-postadress.",
       "li4": "Distribuera skräppost, virus eller annan teknik som kan skada KattBNB eller våra Användare.",
-      "p3": "KattBNB förbehåller sig rätten att ta bort användarkontot med omedelbar verkan om vi tror att du bryter mot bestämmelser i Villkoren."
+      "p3": "KattBNB förbehåller sig rätten att ta bort Användarkontot med omedelbar verkan om vi tror att du bryter mot bestämmelser i Villkoren."
     },
     "liability": {
       "title": "KattBNB ansvar",
@@ -70,5 +70,36 @@
       "p1": "Det är Kattägarens ansvar att tillhandahålla mat och kattsand, samt att finansiera eventuella veterinärkostnader under tjänsten om inget annat avtalats.",
       "p2": "Det är Kattägarens ansvar att informera om andra förväntningar på Tjänsten (t.ex. administrera medicin under Tjänsten) när du skickar en bokningsförfrågning eller via App-messenger. Kattvakt är inte skyldig att acceptera några extra krav."
     }
+  },
+  "personal-data": {
+    "title": "Personuppgifter",
+    "in-general": {
+      "title": "Generellt",
+      "p1": "KattBNB lagrar och behandlar personuppgifter som du har tillhandahållit oss för att säkerställa funktionaliteten i Appen. Det är ditt ansvar att hålla tillgången till Appen säker.",
+      "p2": "Vi kan använda, lagra och bearbeta personlig information för att:",
+      "li1": "tillhandahålla, förstå, förbättra och utveckla Appen,",
+      "li2": "skapa och upprätthålla en pålitlig och säker miljö (som att uppfylla våra juridiska skyldigheter),",
+      "li3": "tillhandahålla, mäta och förbättra vår annonsering och marknadsföring.",
+      "p3": "Appen serveras via externa servrar och tjänster (Heroku, Amazon Web Services och Netlify). Vi ser till att våra externa partners agerar i enlighet med gällande Dataskyddslagstiftning.",
+      "p4": "KattBNB är skyldiga att avslöja all tillgänglig information om en Användare och deras transaktioner med Appen om ett giltigt domstolsbeslut finns.",
+      "p5": "KattBNB ansvarar för att skydda dina personuppgifter enligt <1>Svenska Dataskyddslagen</1>.",
+      "p6": "KattBNB använder inte någon form av kakor eller spårningsmekanismer för att övervaka Användaraktiviteter och säljer inte lagrade personuppgifter till tredje parts tjänster."
+    },
+    "in-detail": {
+      "title": "I detalj",
+      "p1": "Genom att registrera ett konto förstår du och samtycker till att information du tillhandahåller KattBNB (inklusive men inte begränsat till: tillgänglighet, kommun, beskrivning, avatar, pris per dag och tillägg till priset per dag) kommer att vara synliga för andra Användare.",
+      "p2": "Användarens e-postadress och fullständig hemadress kommer att avslöjas för andra Användare endast under speciella omständigheter som beskrivs nedan. Fullständiga hemadress av Kattvakt kommer endast att offentliggöras (till Kattägaren) efter att bokningsförfrågan har blivit godkänd av Kattvakt. E-postadressen kommer endast att avslöjas (till Kattvakt du har bokat med) om kontot raderas och endast efter Användarens samtycke.",
+      "p3": "KattBNB lagrar och använder denna information för att betjäna Appen och säkerställa dess funktioner, såvida inte Användaren har begärt att kontot ska raderas.",
+      "p4": "Tillgänglighet, plats, beskrivning, avatar, pris per dag och tillägg till priset per dag kommer att användas för att filtrera och visa resultat under sökningen i Appen. Denna information raderas från vår databas om Användaren begär kontoborttagning.",
+      "p5": "Vårt autentiseringssystem sparar Användarnas aktuella och senaste inloggnings-IP-adresser. När kontot tas bort raderas dessa adresser från vår databas.",
+      "p6": "Bokningsdetaljer som lagras i varje bokning (t.ex. datum, priser, antal katter) raderas från vår databas när Användaren begär kontoborttagning.",
+      "p7": "Konversationer mellan två Användare (textmeddelanden och bilder) kommer att raderas från vår databas om ett av följande stämmer: båda Användare har tagit bort sina konton, båda Användare har tagit bort konversationen, en Användare har tagit bort sitt konto och den andra Användaren tar bort konversationen.",
+      "p8": "Recensioner skrivna av borttagna Användare kommer endast att raderas från vår databas om respektive Kattvakt också raderar sitt konto.",
+      "p9": ""
+    }
+  },
+  "contact-us": {
+    "title": "",
+    "p1": ""
   }
 }

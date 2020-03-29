@@ -70,5 +70,36 @@
       "p1": "It is Cat Owner's responsibility to provide food and litter sand, as well as finance any veterinary expenses during the Service unless agreed otherwise.",
       "p2": "It is the Cat Owner's responsibility to inform about any other expectations for the Service (e.g. administrating medicine during the Service) when requesting the booking or via the in-App messenger. Cat Sitter is not obliged to agree to any extra requirements of the Service."
     }
+  },
+  "personal-data": {
+    "title": "Personal data",
+    "in-general": {
+      "title": "In general",
+      "p1": "KattBNB stores and processes personal data that you have provided to us, in order to ensure the functionality of the App. It’s your responsibility to keep access to the App secure.",
+      "p2": "We may use, store and process personal information to:",
+      "li1": "provide, understand, improve, and develop the App,",
+      "li2": "create and maintain a trusted and safe environment (such as to comply with our legal obligations),",
+      "li3": "provide, measure, and improve our advertising and marketing.",
+      "p3": "The App is served via external servers and services (Heroku, Amazon Web Services and Netlify). We ensure that our external partners are acting in accordance with current Data Protection legislation.",
+      "p4": "KattBNB is obliged to disclose any available information about a User and their transactions with the App, if a valid court order is present.",
+      "p5": "KattBNB is responsible to protect your personal data according to the <1>Swedish Data Protection act</1>.",
+      "p6": "KattBNB does not use any kind of cookies or tracking mechanisms to monitor User activities and does not sell the stored personal data to third party services."
+    },
+    "in-detail": {
+      "title": "In detail",
+      "p1": "By making an account, you understand and agree that information you provide to KattBNB (including but not limited to: availability, location, description, avatar, daily rate and supplement of the daily rate) will be visible to other Users.",
+      "p2": "User's email address and full home address will be disclosed to other Users only under special circumstances described below. Full home address of Cat Sitter will only be disclosed (to Cat Owner) after the booking is finalized (Cat Sitter has accepted the booking request). Email address will only be revealed (to a Cat Sitter you have booked with) in case of account deletion and only after User consent.",
+      "p3": "KattBNB will store and use this data to serve the App and ensure its features, unless User has requested account deletion.",
+      "p4": "Availability, location, description, avatar, daily rate and supplement of the daily rate will be used to filter and display results in the App during the search. This information is deleted from our database if the User requests an account deletion.",
+      "p5": "Our authentication system keeps Users' current and last sign in IP addresses. Upon account deletion these addresses are deleted from our database.",
+      "p6": "Bookings details stored in every booking (e.g. dates, prices, number of cats), are deleted from our database when the User requests an account deletion.",
+      "p7": "Conversations between two users (exchanged text messages and images) will be deleted from our database if one of the following conditions are true: both users have deleted their accounts, both users have deleted the conversation, one user have deleted their account and the other user deletes the conversation.",
+      "p8": "Reviews written by users will be deleted from our database, only if associated host deletes their account.",
+      "p9": "For a more detailed flow of what happens when Users request an account deletion, please refer to our <1>FAQ page.</1>"
+    }
+  },
+  "contact-us": {
+    "title": "Contact us",
+    "p1": "If you have any questions or suggestions about our Terms, do not hesitate to <1>contact us</1>."
   }
 }
