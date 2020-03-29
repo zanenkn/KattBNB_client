@@ -87,6 +87,52 @@ const Legal = () => {
           </ul>
         </p>
         <p>{t('Legal:during-service.p3')}</p>
+        <Header as='h3' style={{ 'textAlign': 'left' }} >
+          {t('Legal:during-service.emergency.title')}
+        </Header>
+        <p>{t('Legal:during-service.emergency.p1')}</p>
+        <p>{t('Legal:during-service.emergency.p2')}</p>
+        <p>{t('Legal:during-service.emergency.p3')}</p>
+        <Header as='h3' style={{ 'textAlign': 'left' }} >
+          {t('Legal:during-service.owner-liability.title')}
+        </Header>
+        <p>{t('Legal:during-service.owner-liability.p1')}</p>
+        <p>{t('Legal:during-service.owner-liability.p2')}</p>
+        <Header as='h2' >
+          {t('Legal:personal-data.title')}
+        </Header>
+        <Header as='h3' style={{ 'textAlign': 'left' }} >
+          {t('Legal:personal-data.in-general.title')}
+        </Header>
+        <p>{t('Legal:personal-data.in-general.p1')}</p>
+        <p>{t('Legal:personal-data.in-general.p2')}</p>
+        <p>
+          <ul>
+            <li>{t('Legal:personal-data.in-general.li1')}</li>
+            <li>{t('Legal:personal-data.in-general.li2')}</li>
+            <li>{t('Legal:personal-data.in-general.li3')}</li>
+          </ul>
+        </p>
+        <p>{t('Legal:personal-data.in-general.p3')}</p>
+        <p>{t('Legal:personal-data.in-general.p4')}</p>
+        <p>{t('Legal:personal-data.in-general.p5')}</p>
+        <p>{t('Legal:personal-data.in-general.p6')}</p>
+        <Header as='h3' style={{ 'textAlign': 'left' }} >
+          {t('Legal:personal-data.in-detail.title')}
+        </Header>
+        <p>{t('Legal:personal-data.in-detail.p1')}</p>
+        <p>{t('Legal:personal-data.in-detail.p2')}</p>
+        <p>{t('Legal:personal-data.in-detail.p3')}</p>
+        <p>{t('Legal:personal-data.in-detail.p4')}</p>
+        <p>{t('Legal:personal-data.in-detail.p5')}</p>
+        <p>{t('Legal:personal-data.in-detail.p6')}</p>
+        <p>{t('Legal:personal-data.in-detail.p7')}</p>
+        <p>{t('Legal:personal-data.in-detail.p8')}</p>
+        <p>{t('Legal:personal-data.in-detail.p9')}</p>
+        <Header as='h2' >
+          {t('Legal:contact-us.title')}
+        </Header>
+        <p>{t('Legal:contact-us.p1')}</p>
       </div>
     </>
   )
