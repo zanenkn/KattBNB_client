@@ -7,7 +7,9 @@ import Spinner from '../ReusableComponents/Spinner'
 class ContactUs extends Component {
 
   render() {
+
     const { t } = this.props
+
     if (this.props.tReady) {
       return (
         <div className='content-wrapper' >

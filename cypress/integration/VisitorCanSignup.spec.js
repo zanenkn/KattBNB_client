@@ -14,7 +14,8 @@ describe('Visitor can sign up', () => {
     })
 
     cy.get('.hamburger-box').click()
-    cy.get('#signup').click()
+    cy.get('#login').click()
+    cy.get('#create-account').click()
     cy.get('#signup-form').within(() => {
 
       let text = [
@@ -40,7 +41,8 @@ describe('Visitor can sign up', () => {
 
   it('and gets error message if captcha is invalid', () => {
     cy.get('.hamburger-box').click()
-    cy.get('#signup').click()
+    cy.get('#login').click()
+    cy.get('#create-account').click()
     cy.get('#signup-form').within(() => {
 
       let text = [
@@ -63,7 +65,8 @@ describe('Visitor can sign up', () => {
 
   it('and gets an error message if she does not accept Terms & Conditions', () => {
     cy.get('.hamburger-box').click()
-    cy.get('#signup').click()
+    cy.get('#login').click()
+    cy.get('#create-account').click()
     cy.get('#signup-form').within(() => {
 
       let text = [

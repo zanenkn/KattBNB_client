@@ -60,7 +60,7 @@ class BookingDetails extends Component {
 
       return (
         <>
-          <div className='expanding-wrapper'>
+          <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
             <Header as='h1'>
               {t('BookingDetails:booking-details')}
             </Header>

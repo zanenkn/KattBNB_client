@@ -281,7 +281,7 @@ class HostProfileForm extends Component {
               />
             </Form.Group>
             <p className='small-left-paragraph'>
-              <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('HostProfileForm:explain-supplement-2')}
+              <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('reusable:explain-supplement')}
             </p>
             <div className='required field' >
               <label for='availability' >

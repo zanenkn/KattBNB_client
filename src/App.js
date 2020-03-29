@@ -8,6 +8,7 @@ import AboutUs from './Components/Menu/AboutUs'
 import ContactUs from './Components/Menu/ContactUs'
 import Faq from './Components/Menu/Faq'
 import Legal from './Components/Menu/Legal'
+import Guidelines from './Components/Menu/Guidelines'
 import Login from './Components/Authentication/Login'
 import SignUp from './Components/Authentication/SignUp'
 import SignupSuccess from './Components/Authentication/SignupSuccess'
@@ -26,6 +27,7 @@ import AllConversations from './Components/Messenger/AllConversations'
 import Conversation from './Components/Messenger/SingleConversation'
 import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
 import NoAccess from './Components/ReusableComponents/NoAccess'
+import Partners from './Components/Menu/Partners'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -118,6 +120,8 @@ class App extends Component {
                 <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
                 <Route exact path='/booking-details' component={BookingDetails}></Route>
                 <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
+                <Route exact path='/partners' component={Partners}></Route>
+                <Route exact path='/guidelines' component={Guidelines}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}

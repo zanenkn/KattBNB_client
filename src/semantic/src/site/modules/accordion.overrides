@@ -1,3 +1,8 @@
 /*******************************
         User Overrides
 *******************************/
+
+.ui.accordion .title,
+.ui.accordion .accordion .title {
+  width: fit-content;
+}

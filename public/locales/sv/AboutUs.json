@@ -9,8 +9,9 @@
   "zane-txt": "Drivande kraft bakom affärsidén på en bra dag och gråtande kraft på övriga dagar",
   "george-title": "Teknisk chef och webbutvecklare",
   "george-txt": "Grekisk gud av kodning, den oslagbara kombinationen av envishet och tålamod",
-  "felix-title": "Affärsrådgivare",
-  "felix-txt": "Felix säger vad vi ska göra när vi inte vet vad vi ska göra",
+  "joel-title": "Översättare",
+  "joel-txt": "Svenskakännare, chaufför, promoter, moralisk supporter och innerst inne, en sann nörd",
   "acknowledgements-title": "Erkännanden",
-  "acknowledgements-txt": "Inget av detta skulle vara möjligt utan <1>Craft Academy</1>. Dessa människor lärde oss att koda och allting utöver det."
+  "acknowledgements-felix": "Tack <1>Felix Bonnier</1> för all uppmuntran, råd inom affärsutveckling och ovärderlig hjälp med vårt allra första pitch deck.",
+  "acknowledgements-clarissa": "Tack <1>Clarissa Liljander</1> för att du introducerade oss med i18n-lösningen för översättningar och hjälpte till med installationen, lycka till med din karriär som utvecklare!"
 }

@@ -14,7 +14,6 @@
   "max-cats-plch": "Max amount",
   "supplement-label": "Supplement",
   "explain-supplement-1": "What does this mean?",
-  "explain-supplement-2": "Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr",
   "availability-title": "Availability",
   "availability-details": "Please mark the dates when you are available to host!",
   "address-search-plch": "Search..",
