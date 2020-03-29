@@ -67,6 +67,7 @@
       "p3": "Vi rekommenderar att Kattägarens katt(er) är försäkrade för veterinärvård innan Tjänsten påbörjas eftersom det underlättar tillgång till nödvändig behandling."
     },
     "owner-liability": {
+      "title": "Kattägarens ansvar", 
       "p1": "Det är Kattägarens ansvar att tillhandahålla mat och kattsand, samt att finansiera eventuella veterinärkostnader under tjänsten om inget annat avtalats.",
       "p2": "Det är Kattägarens ansvar att informera om andra förväntningar på Tjänsten (t.ex. administrera medicin under Tjänsten) när du skickar en bokningsförfrågning eller via App-messenger. Kattvakt är inte skyldig att acceptera några extra krav."
     }
@@ -95,7 +96,7 @@
       "p6": "Bokningsdetaljer som lagras i varje bokning (t.ex. datum, priser, antal katter) raderas från vår databas när Användaren begär kontoborttagning.",
       "p7": "Konversationer mellan två Användare (textmeddelanden och bilder) kommer att raderas från vår databas om ett av följande stämmer: båda Användare har tagit bort sina konton, båda Användare har tagit bort konversationen, en Användare har tagit bort sitt konto och den andra Användaren tar bort konversationen.",
       "p8": "Recensioner skrivna av borttagna Användare kommer endast att raderas från vår databas om respektive Kattvakt också raderar sitt konto.",
-      "p9": "För ett mer detaljerat flöde av vad som händer när användare begär en radering av kontot, se våra <1>Frågor och svar</1>"
+      "p9": "För ett mer detaljerat flöde av vad som händer när användare begär en radering av kontot, se våra <1>Frågor och svar</1>."
     }
   },
   "contact-us": {
