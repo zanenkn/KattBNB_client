@@ -76,7 +76,7 @@
     "in-general": {
       "title": "Generellt",
       "p1": "KattBNB lagrar och behandlar personuppgifter som du har tillhandahållit oss för att säkerställa funktionaliteten i Appen. Det är ditt ansvar att hålla tillgången till Appen säker.",
-      "p2": "Vi kan använda, lagra och bearbeta personlig information för att:",
+      "p2": "Vi kan komma att använda, lagra och bearbeta personlig information för att:",
       "li1": "tillhandahålla, förstå, förbättra och utveckla Appen,",
       "li2": "skapa och upprätthålla en pålitlig och säker miljö (som att uppfylla våra juridiska skyldigheter),",
       "li3": "tillhandahålla, mäta och förbättra vår annonsering och marknadsföring.",
@@ -91,15 +91,15 @@
       "p2": "Användarens e-postadress och fullständig hemadress kommer att avslöjas för andra Användare endast under speciella omständigheter som beskrivs nedan. Fullständiga hemadress av Kattvakt kommer endast att offentliggöras (till Kattägaren) efter att bokningsförfrågan har blivit godkänd av Kattvakt. E-postadressen kommer endast att avslöjas (till Kattvakt du har bokat med) om kontot raderas och endast efter Användarens samtycke.",
       "p3": "KattBNB lagrar och använder denna information för att betjäna Appen och säkerställa dess funktioner, såvida inte Användaren har begärt att kontot ska raderas.",
       "p4": "Tillgänglighet, plats, beskrivning, avatar, pris per dag och tillägg till priset per dag kommer att användas för att filtrera och visa resultat under sökningen i Appen. Denna information raderas från vår databas om Användaren begär kontoborttagning.",
-      "p5": "Vårt autentiseringssystem sparar Användarnas aktuella och senaste inloggnings-IP-adresser. När kontot tas bort raderas dessa adresser från vår databas.",
+      "p5": "Vårt autentiseringssystem sparar Användarnas aktuella och senaste inloggnings-IP-adresser. Om kontot tas bort raderas dessa adresser från vår databas.",
       "p6": "Bokningsdetaljer som lagras i varje bokning (t.ex. datum, priser, antal katter) raderas från vår databas när Användaren begär kontoborttagning.",
       "p7": "Konversationer mellan två Användare (textmeddelanden och bilder) kommer att raderas från vår databas om ett av följande stämmer: båda Användare har tagit bort sina konton, båda Användare har tagit bort konversationen, en Användare har tagit bort sitt konto och den andra Användaren tar bort konversationen.",
       "p8": "Recensioner skrivna av borttagna Användare kommer endast att raderas från vår databas om respektive Kattvakt också raderar sitt konto.",
-      "p9": ""
+      "p9": "För ett mer detaljerat flöde av vad som händer när användare begär en radering av kontot, se våra <1>Frågor och svar</1>"
     }
   },
   "contact-us": {
-    "title": "",
-    "p1": ""
+    "title": "Kontakta oss",
+    "p1": "Om du har några frågor eller förslag om våra villkor, tveka inte att <1>kontakta oss</1>."
   }
 }
