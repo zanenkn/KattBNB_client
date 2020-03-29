@@ -15,6 +15,7 @@ class Menu extends Component {
 
   signOut = (e) => {
     e.preventDefault()
+    const { t } = this.props
     const path = '/api/v1/auth/sign_out'
     const headers = {
       uid: window.localStorage.getItem('uid'),
@@ -31,7 +32,7 @@ class Menu extends Component {
         window.location.replace('/')
       })
       .catch(() => {
-        window.alert('There was a problem signing you out. Please try again in a minute')
+        window.alert(t('reusable:errors:sign-out-error'))
       })
   }
 
@@ -129,16 +130,19 @@ class Menu extends Component {
     } else { return null }
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     menuVisible: state.animation.menuVisible,
     currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
   }
 }
+
 const mapDispatchToProps = {
   menuVisbilityHandler: menuVisible => ({
     type: 'CHANGE_VISIBILITY',
     menuVisbible: menuVisible
   })
 }
+
 export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu)))

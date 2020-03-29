@@ -17,6 +17,8 @@ const Faq = (props) => {
   const { t, ready } = useTranslation('Faq')
 
   if (ready) {
+    const content = (window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content')
+
     return (
       <>
         <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
@@ -139,7 +141,7 @@ const Faq = (props) => {
               <p>
                 <Trans i18nKey='Faq:general.p3-4'>
                   Please don't hesitate to <Header as={Link} to='contact-us' className='fake-link-underlined-reg'>contact us</Header>...
-              </Trans>
+                </Trans>
               </p>
             </Accordion.Content>
             <Accordion.Title
@@ -189,7 +191,7 @@ const Faq = (props) => {
               <p>
                 <Trans i18nKey='Faq:general.p6-1'>
                   Our website does not use any cookies or other tracking mechanisms. You can read more about what data we collect in our <Header as={Link} to='legal' className='fake-link-underlined-reg'>Terms and conditions</Header>.
-              </Trans>
+                </Trans>
               </p>
             </Accordion.Content>
             <Accordion.Title
@@ -232,7 +234,7 @@ const Faq = (props) => {
                 {t('Faq:host.p1-1')}
               </p>
               {props.currentUserIn === false &&
-                <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer'>
+                <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer' style={{ 'display': 'contents', 'width': content }}>
                   <Button style={{ 'margin': '1rem auto 1rem' }}>
                     {t('reusable:title.signup')}
                   </Button>
@@ -242,7 +244,7 @@ const Faq = (props) => {
                 {t('Faq:host.p1-2')}
               </p>
               {props.currentUserIn &&
-                <a href='https://www.kattbnb.se/user-page' target='_blank' rel='noopener noreferrer'>
+                <a href='https://www.kattbnb.se/user-page' target='_blank' rel='noopener noreferrer' style={{ 'display': 'contents', 'width': content }}>
                   <Button style={{ 'margin': '1rem auto 1rem' }}>
                     {t('reusable:cta.make-host-profile')}
                   </Button>
@@ -290,7 +292,7 @@ const Faq = (props) => {
               <p>
                 <Trans i18nKey='Faq:host.p3-2'>
                   You can <a href='https://www.kattbnb.se/contact-us' target='_blank' rel='noopener noreferrer'>contact us</a> if you would like an assistance with setting your rates.
-              </Trans>
+                </Trans>
               </p>
             </Accordion.Content>
             <Accordion.Title
@@ -349,7 +351,7 @@ const Faq = (props) => {
                 {t('Faq:owner.p1-1')}
               </p>
               {props.currentUserIn === false &&
-                <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer'>
+                <a href='https://www.kattbnb.se/sign-up' target='_blank' rel='noopener noreferrer' style={{ 'display': 'contents', 'width': content }}>
                   <Button id='sign-up-button' style={{ 'margin': '1rem auto 1rem' }}>
                     {t('reusable:title.signup')}
                   </Button>

@@ -36,7 +36,8 @@
   },
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
-    "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!"
+    "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!",
+    "sign-out-error": ""
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {

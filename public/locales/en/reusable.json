@@ -36,7 +36,8 @@
   },
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",
-    "update-number-fields": "The field is blank, unchanged or the number is invalid!"
+    "update-number-fields": "The field is blank, unchanged or the number is invalid!",
+    "sign-out-error": "There was a problem signing you out. Please try again in a minute"
   },
   "remaining-chars": "Remaining characters:",
   "cta": {

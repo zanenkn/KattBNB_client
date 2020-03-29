@@ -81,13 +81,13 @@ const AboutUs = () => {
           <p>
             <Trans i18nKey='AboutUs:acknowledgements-felix'>
               Thank you <a href='https://www.linkedin.com/in/felix-bonnier-90b4561/' target='_blank' rel='noopener noreferrer'>Felix Bonnier</a> for all the encouragement, advice in business development and the invaluable help with our very first pitch deck.
-          </Trans>
+            </Trans>
           </p>
           <Divider hidden />
           <p>
             <Trans i18nKey='AboutUs:acknowledgements-clarissa'>
               Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a developer!
-          </Trans>
+            </Trans>
           </p>
         </div>
       </>

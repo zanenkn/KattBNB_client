@@ -116,9 +116,7 @@ const Guidelines = () => {
         </ul>
       </div>
     )
-  } else {
-    return (<Spinner />)
-  }
+  } else { return <Spinner /> }
 }
 
 export default Guidelines
