@@ -20,7 +20,7 @@ describe('Visitor can view menu', () => {
   })
 
   it('and can see links to different homepage sections in SE', () => {
-    let links = ['Logga in', 'Registrera konto', 'Om oss', 'Frågor och svar', 'Kontakta oss', 'Policy']
+    let links = ['Logga in', 'Registrera', 'Om oss', 'Frågor och svar', 'Kontakta oss', 'Policy']
     cy.get('.hamburger-box').click()
     cy.get('#se').click()
     cy.get('.hamburger-box').click()

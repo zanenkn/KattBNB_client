@@ -86,7 +86,7 @@ const Login = (props) => {
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
               {t('Login:no-acc')}
               <br></br>
-              <Header as={Link} to='sign-up' className='fake-link'>
+              <Header as={Link} to='sign-up' className='fake-link' id='create-account'>
                 {t('Login:signup-link')}
               </Header>
             </p>
