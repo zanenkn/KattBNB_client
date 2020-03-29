@@ -4,11 +4,13 @@ import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const AboutUs = () => {
+
   const { t, ready } = useTranslation('AboutUs')
+
   if (ready) {
     return (
       <>
-        <div className='content-wrapper' style={{'marginBottom': '2rem'}} >
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }} >
           <Header as='h1'>
             {t('reusable:title.about')}
           </Header>

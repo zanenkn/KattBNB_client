@@ -1,10 +1,12 @@
 import React from 'react'
 import Spinner from '../ReusableComponents/Spinner'
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { Header, Segment, Label } from 'semantic-ui-react'
 
 const Guidelines = () => {
+
   const { t, ready } = useTranslation('Guidelines')
+
   if (ready) {
     return (
       <div className='content-wrapper' >
@@ -67,7 +69,7 @@ const Guidelines = () => {
                 {t('Guidelines:owner.checklist.list-item5')}
               </li>
             </ul>
-            <p style={{'fontStyle': 'italic', 'margin': '1rem 0 0.5rem'}}>
+            <p style={{ 'fontStyle': 'italic', 'margin': '1rem 0 0.5rem' }}>
               {t('Guidelines:owner.optional.title')}
             </p>
             <ul>

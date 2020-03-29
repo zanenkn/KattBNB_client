@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Sidebar, Segment, Grid, Header, Button } from 'semantic-ui-react'
+import { Sidebar, Segment, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -79,52 +79,51 @@ class Menu extends Component {
           direction='left'
           visible={this.props.menuVisible}
         >
-              {userLink}
-              <Header
-                id='about'
-                className='menu-link'
-                as={Link}
-                to='/about-us'
-              >
-                {t('reusable:title.about')}
-              </Header>
-              <Header
-                id='faq'
-                className='menu-link'
-                as={Link}
-                to='faq'
-              >
-                {t('reusable:title.faq')}
-              </Header>
-              <Header
-                id='contact'
-                className='menu-link'
-                as={Link}
-                to='/contact-us'
-              >
-                {t('reusable:title.contact')}
-              </Header>
-              <Header
-                id='partners'
-                className='menu-link'
-                as={Link}
-                to='/partners'
-              >
-                {t('reusable:title.partners')}
-              </Header>
-              <Header
-                id='legal'
-                className='menu-link'
-                as={Link}
-                to='/legal'
-              >
-                {t('reusable:title.legal')}
-              </Header>
-              <div style={{'display': 'flex', 'alignSelf': 'center'}}>
-                <Button id='se' className='lng-button' size='mini' onClick={() => this.changeLng('sv')}>Svenska</Button>
-                <Button id='en' className='lng-button' size='mini' onClick={() => this.changeLng('en')}>English</Button>
-              </div>
- 
+          {userLink}
+          <Header
+            id='about'
+            className='menu-link'
+            as={Link}
+            to='/about-us'
+          >
+            {t('reusable:title.about')}
+          </Header>
+          <Header
+            id='faq'
+            className='menu-link'
+            as={Link}
+            to='faq'
+          >
+            {t('reusable:title.faq')}
+          </Header>
+          <Header
+            id='contact'
+            className='menu-link'
+            as={Link}
+            to='/contact-us'
+          >
+            {t('reusable:title.contact')}
+          </Header>
+          <Header
+            id='partners'
+            className='menu-link'
+            as={Link}
+            to='/partners'
+          >
+            {t('reusable:title.partners')}
+          </Header>
+          <Header
+            id='legal'
+            className='menu-link'
+            as={Link}
+            to='/legal'
+          >
+            {t('reusable:title.legal')}
+          </Header>
+          <div style={{ 'display': 'flex', 'alignSelf': 'center' }}>
+            <Button id='se' className='lng-button' size='mini' onClick={() => this.changeLng('sv')}>Svenska</Button>
+            <Button id='en' className='lng-button' size='mini' onClick={() => this.changeLng('en')}>English</Button>
+          </div>
         </Sidebar>
       )
     } else { return null }

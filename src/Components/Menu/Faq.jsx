@@ -15,6 +15,7 @@ const Faq = (props) => {
   }
 
   const { t, ready } = useTranslation('Faq')
+
   if (ready) {
     return (
       <>
@@ -396,9 +397,7 @@ const Faq = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
-  }
+  return { currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn }
 }
 
 export default connect(mapStateToProps)(Faq)
