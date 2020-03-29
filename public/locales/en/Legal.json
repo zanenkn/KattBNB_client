@@ -40,26 +40,26 @@
       "p4": "KattBNB will use reasonable efforts to eliminate fraud and misuse of the App, although Users should be aware that by booking Services they enter into the contractual relationship with other Users at their own risk. KattBNB accepts no liability for financial or any other loss, direct or indirect, and will not issue any compensation.",
       "p5": "While we strive to maintain continuous, error-free access to our App and correct the eventual defects, we can not give any warranties about operation and availability of our App.",
       "p6": "The App requires an active internet connection. KattBNB cannot take responsibility for the App not working at full functionality if you don’t have access to internet connection. If you are using the App with wireless cellular connection (mobile data), terms of the agreement with your mobile network provider, including eventual roaming data charges, will apply."
-    },
-    "booking": {
-      "title": "Booking and payment",
-      "p1": "KattBNB is committed to ensuring that the App is as useful and efficient as possible. For that reason, we reserve the right to make changes to the App or to start charging for its services at any time. We will always be transparent and upfront about paid features of the App.",
-      "p2": "At this moment KattBNB does not charge any service fee, takes no part in the payment process and does not resolve any disputes between Users.",
-      "p3": "By requesting a booking in the App, the Cat Owner agrees to pay the shown amount to the Cat Sitter as a compensation for fulfilling the Service. Involved Users will agree on when and how the payment will take place.",
-      "p4": "By accepting the booking, Cat Sitter agrees to fulfill the Service at their own home between the dates shown in the App. ",
-      "p5": "It is Cat Sitter's own responsibility to declare any eventual income generated from fulfilling Services. If you take care for pets as a business activity you may be eligible for approval of Swedish F-tax. <1>Please refer to Swedish Tax Agency for more information.</1>",
-      "p6": "Cat Sitters who professionally care for cats may need a permit. <1>Please refer to Swedish Animal Welfare Act chapter 6.1 for more information.</1> Users are themselves responsible to determine if they require permit to perform the Service and obtain such permit if necessary.",
-      "p7": "Users should not exchange any personal information as KattBNB can not guarantee safety of this data. Full address of the Cat Sitter will be provided to the Cat Owner once the booking is approved by Cat Sitter. Users may use in-App messenger service to communicate any questions that should arise."
-    },
-    "during-service": {
-      "title": "During the Service",
-      "p1": "Upon the approval of booking request, a legally binding agreement is formed between Cat Owner and Cat Sitter. KattBNB clarifies that the agreement is between Users only.",
-      "p2": "By approving a Booking Request from a Cat Owner, Cat Sitter warrants to fulfill the Cat Sitting Service at their own home between the dates shown in the Booking Request, including but not limited to:",
-      "li1": "attending to Cat Owner's cat(s) at least twice a day according to <1>Swedish Law on the supervision of dogs and cats</1>,",
-      "li2": "keeping Cat Owner's cat(s) in a space that complies with animal welfare regulations,",
-      "li3": "immediately providing necessary veterinary care in an event of a sickness, injury or any kind of veterinary emergency.",
-      "p3": "It is both Cat Owner's and Cat Sitter's responsibility to examine the cat(s) before Service commences and agree on relevant matters. Users can use <1>KattBNB Guidelines</1> to facilitate this agreement."
-    },
+    }
+  },
+  "booking": {
+    "title": "Booking and payment",
+    "p1": "KattBNB is committed to ensuring that the App is as useful and efficient as possible. For that reason, we reserve the right to make changes to the App or to start charging for its services at any time. We will always be transparent and upfront about paid features of the App.",
+    "p2": "At this moment KattBNB does not charge any service fee, takes no part in the payment process and does not resolve any disputes between Users.",
+    "p3": "By requesting a booking in the App, the Cat Owner agrees to pay the shown amount to the Cat Sitter as a compensation for fulfilling the Service. Involved Users will agree on when and how the payment will take place.",
+    "p4": "By accepting the booking, Cat Sitter agrees to fulfill the Service at their own home between the dates shown in the App. ",
+    "p5": "It is Cat Sitter's own responsibility to declare any eventual income generated from fulfilling Services. If you take care for pets as a business activity you may be eligible for approval of Swedish F-tax. <1>Please refer to Swedish Tax Agency for more information.</1>",
+    "p6": "Cat Sitters who professionally care for cats may need a permit. <1>Please refer to Swedish Animal Welfare Act chapter 6.1 for more information.</1> Users are themselves responsible to determine if they require permit to perform the Service and obtain such permit if necessary.",
+    "p7": "Users should not exchange any personal information as KattBNB can not guarantee safety of this data. Full address of the Cat Sitter will be provided to the Cat Owner once the booking is approved by Cat Sitter. Users may use in-App messenger service to communicate any questions that should arise."
+  },
+  "during-service": {
+    "title": "During the Service",
+    "p1": "Upon the approval of booking request, a legally binding agreement is formed between Cat Owner and Cat Sitter. KattBNB clarifies that the agreement is between Users only.",
+    "p2": "By approving a Booking Request from a Cat Owner, Cat Sitter warrants to fulfill the Cat Sitting Service at their own home between the dates shown in the Booking Request, including but not limited to:",
+    "li1": "attending to Cat Owner's cat(s) at least twice a day according to <1>Swedish Law on the supervision of dogs and cats</1>,",
+    "li2": "keeping Cat Owner's cat(s) in a space that complies with animal welfare regulations,",
+    "li3": "immediately providing necessary veterinary care in an event of a sickness, injury or any kind of veterinary emergency.",
+    "p3": "It is both Cat Owner's and Cat Sitter's responsibility to examine the cat(s) before Service commences and agree on relevant matters. Users can use <1>KattBNB Guidelines</1> to facilitate this agreement.",
     "emergency": {
       "title": "In an event of emergency",
       "p1": "Both Cat Sitter and Cat Owner should be contactable during the time of the Service.",

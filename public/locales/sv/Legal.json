@@ -59,16 +59,16 @@
     "li1": "ta hand om Kattägarens katt(er) minst två gånger om dagen enligt <1> svensk Lag om tillsyn över hundar och katter</1>",
     "li2": "hålla kattägarens katt i ett utrymme som uppfyller djurskyddsbestämmelserna,",
     "li3": "omedelbart tillhandahålla nödvändig veterinärvård i händelse av sjukdom, skada eller någon form av veterinär nödsituation.",
-    "p3": "Det är både Kattägarens och Kattvaktens ansvar att undersöka katten innan Tjänsten påbörjas och enas om relevanta frågor. Användare kan använda <1>KattBNB riktlinjer</1> för att underlätta detta avtal."
-  },
-  "emergency": {
-    "title": "I nödsituationer",
-    "p1": "Både Kattvakt och Kattägare bör vara kontaktbara under tjänsten.",
-    "p2": "I händelse av en veterinär nödsituation bör Kattägaren konsulteras om lämplig veterinärvård. Om Kattägaren inte kan nås, bör Kattvakt se till att nödvändig akutvård tillhandahålls.",
-    "p3": "Vi rekommenderar att Kattägarens katt(er) är försäkrade för veterinärvård innan Tjänsten påbörjas eftersom det underlättar tillgång till nödvändig behandling."
-  },
-  "owner-liability": {
-    "p1": "Det är Kattägarens ansvar att tillhandahålla mat och kattsand, samt att finansiera eventuella veterinärkostnader under tjänsten om inget annat avtalats.",
-    "p2": "Det är Kattägarens ansvar att informera om andra förväntningar på Tjänsten (t.ex. administrera medicin under Tjänsten) när du skickar en bokningsförfrågning eller via App-messenger. Kattvakt är inte skyldig att acceptera några extra krav."
+    "p3": "Det är både Kattägarens och Kattvaktens ansvar att undersöka katten innan Tjänsten påbörjas och enas om relevanta frågor. Användare kan använda <1>KattBNB riktlinjer</1> för att underlätta detta avtal.",
+    "emergency": {
+      "title": "I nödsituationer",
+      "p1": "Både Kattvakt och Kattägare bör vara kontaktbara under tjänsten.",
+      "p2": "I händelse av en veterinär nödsituation bör Kattägaren konsulteras om lämplig veterinärvård. Om Kattägaren inte kan nås, bör Kattvakt se till att nödvändig akutvård tillhandahålls.",
+      "p3": "Vi rekommenderar att Kattägarens katt(er) är försäkrade för veterinärvård innan Tjänsten påbörjas eftersom det underlättar tillgång till nödvändig behandling."
+    },
+    "owner-liability": {
+      "p1": "Det är Kattägarens ansvar att tillhandahålla mat och kattsand, samt att finansiera eventuella veterinärkostnader under tjänsten om inget annat avtalats.",
+      "p2": "Det är Kattägarens ansvar att informera om andra förväntningar på Tjänsten (t.ex. administrera medicin under Tjänsten) när du skickar en bokningsförfrågning eller via App-messenger. Kattvakt är inte skyldig att acceptera några extra krav."
+    }
   }
 }
