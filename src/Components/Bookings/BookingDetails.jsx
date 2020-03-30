@@ -5,6 +5,7 @@ import { Header, Segment } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 
 class BookingDetails extends Component {
 
@@ -13,10 +14,12 @@ class BookingDetails extends Component {
     if (this.props.id === undefined) {
       this.props.history.push('/login')
     } else {
+      const lang = detectLanguage()
       const path = '/api/v1/conversations'
       const payload = {
         user1_id: this.props.id,
-        user2_id: this.props.location.state.hostId
+        user2_id: this.props.location.state.hostId,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -60,7 +63,7 @@ class BookingDetails extends Component {
 
       return (
         <>
-          <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
+          <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
             <Header as='h1'>
               {t('BookingDetails:booking-details')}
             </Header>
