@@ -6,6 +6,7 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
+import { detectLanguage } from '../Modules/detectLanguage'
 import { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
@@ -67,7 +68,8 @@ class Search extends Component {
   }
 
   async searchAxiosCall() {
-    await axios.get(`/api/v1/host_profiles?location=${this.state.location}`).then(response => {
+    const lang = detectLanguage()
+    await axios.get(`/api/v1/host_profiles?location=${this.state.location}&locale=${lang}`).then(response => {
       this.setState({
         searchData: response.data,
         loading: false,
