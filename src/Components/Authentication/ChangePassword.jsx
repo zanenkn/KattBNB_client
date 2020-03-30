@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button, Popup } from 'semantic-ui-react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -25,13 +26,15 @@ class ChangePassword extends Component {
     e.preventDefault()
     if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
       this.setState({ loading: true })
+      const lang = detectLanguage()
       const path = '/api/v1/auth/password'
       const payload = {
         password: this.state.password,
         password_confirmation: this.state.passwordConfirmation,
         uid: queryString.parse(this.props.location.search).uid,
         'access-token': queryString.parse(this.props.location.search).token,
-        client: queryString.parse(this.props.location.search).client
+        client: queryString.parse(this.props.location.search).client,
+        locale: lang
       }
       axios.put(path, payload)
         .then(() => {
