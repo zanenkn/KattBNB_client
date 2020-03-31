@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
@@ -14,6 +15,7 @@ const RateUpdateForm = (props) => {
   const [newRate, setNewRate] = useState(props.rate)
 
   const updateRate = () => {
+    const lang = detectLanguage()
     setLoading(true)
     if (newRate !== '' && newRate !== props.rate && newRate >= 0.01) {
       const path = `/api/v1/host_profiles/${props.id}`
@@ -22,7 +24,10 @@ const RateUpdateForm = (props) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = { price_per_day_1_cat: newRate }
+      const payload = {
+        price_per_day_1_cat: newRate,
+        locale: lang
+      }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert(t('RateUpdateForm:update-success'))
