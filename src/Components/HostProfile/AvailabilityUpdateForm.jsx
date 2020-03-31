@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -25,6 +26,7 @@ class AvailabilityUpdateForm extends Component {
   updateAvailability = (e) => {
     e.preventDefault()
     const { t } = this.props
+    const lang = detectLanguage()
     this.setState({ loading: true })
     if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.props.availability)) {
       const path = `/api/v1/host_profiles/${this.props.id}`
@@ -38,7 +40,10 @@ class AvailabilityUpdateForm extends Component {
         let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
         return value > (new Date(utc)).getTime() - 86400000
       })
-      const payload = { availability: filteredAvailability }
+      const payload = {
+        availability: filteredAvailability,
+        locale: lang
+      }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           this.setState({
