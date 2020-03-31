@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import HostProfileView from './HostProfileView'
 import Spinner from '../ReusableComponents/Spinner'
 
@@ -13,7 +14,8 @@ const HostProfileViewWrapper = (props) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get(`/api/v1/host_profiles?user_id=${props.location.state.userId}`)
+    const lang = detectLanguage()
+    axios.get(`/api/v1/host_profiles?user_id=${props.location.state.userId}&locale=${lang}`)
       .then((response) => {
         if (response.data.length > 0) {
           setHostProfile(response.data[0])
