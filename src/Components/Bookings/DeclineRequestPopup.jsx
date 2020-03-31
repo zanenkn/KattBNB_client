@@ -49,10 +49,17 @@ class DeclineRequestPopup extends Component {
           errorDisplay: true,
           errors: ['DeclineRequestPopup:decline-error']
         })
+        this.props.declModalCloseState(true)
       }
     } else {
       this.setState({ loading: false })
+      this.props.declModalCloseState(true)
     }
+  }
+
+  declineCTA = (e) => {
+    this.props.declModalCloseState(false)
+    this.declineBooking(e)
   }
 
   onChangeHandler = (e) => {
@@ -103,7 +110,7 @@ class DeclineRequestPopup extends Component {
             {t('DeclineRequestPopup:remaining')} {200 - this.state.message.length}
           </p>
           {errorDisplay}
-          <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineBooking}>{t('DeclineRequestPopup:decline-cta')}</Button>
+          <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineCTA}>{t('DeclineRequestPopup:decline-cta')}</Button>
         </>
       )
     } else { return <Spinner /> }

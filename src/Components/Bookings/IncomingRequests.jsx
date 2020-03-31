@@ -15,13 +15,18 @@ class IncomingRequests extends Component {
   state = {
     errorDisplay: false,
     errors: '',
-    iconsDisabled: false
+    iconsDisabled: false,
+    closeOnDocumentClick: true
   }
 
   componentDidMount() {
     if (this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/all-bookings' })
     }
+  }
+
+  declModalCloseState = (state) => {
+    this.setState({ closeOnDocumentClick: state })
   }
 
   acceptRequest = (e) => {
@@ -109,13 +114,14 @@ class IncomingRequests extends Component {
                           <Icon disabled={this.state.iconsDisabled} id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                         }
                           position='top center'
-                          closeOnDocumentClick={true}
+                          closeOnDocumentClick={this.state.closeOnDocumentClick}
                         >
                           <DeclineRequestPopup
                             id={request.id}
                             nickname={request.user.nickname}
                             startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
                             endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+                            declModalCloseState={this.declModalCloseState.bind(this)}
                           />
                         </Popup>
                         <Icon disabled={this.state.iconsDisabled} id={`accept-${request.id}`} onClick={this.acceptRequest} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
