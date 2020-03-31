@@ -6,15 +6,18 @@ import { withRouter } from 'react-router-dom'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 
 class IncomingUpcoming extends Component {
 
   messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
     e.preventDefault()
+    const lang = detectLanguage()
     const path = '/api/v1/conversations'
     const payload = {
       user1_id: this.props.id,
-      user2_id: userId
+      user2_id: userId,
+      locale: lang
     }
     const headers = {
       uid: window.localStorage.getItem('uid'),
