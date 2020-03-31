@@ -3,6 +3,7 @@ import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 import Spinner from '../ReusableComponents/Spinner'
@@ -122,6 +123,7 @@ class HostProfileForm extends Component {
 
   createHostProfile = (e) => {
     const { t } = this.props
+    const lang = detectLanguage()
     e.preventDefault()
     this.setState({ loading: true })
     if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
@@ -143,7 +145,8 @@ class HostProfileForm extends Component {
         long: this.state.long,
         latitude: this.state.latitude,
         longitude: this.state.longitude,
-        user_id: this.props.user_id
+        user_id: this.props.user_id,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),
