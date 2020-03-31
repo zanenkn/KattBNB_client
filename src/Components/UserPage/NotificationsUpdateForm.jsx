@@ -3,6 +3,7 @@ import { Checkbox, Divider, Button, Message } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 
 const NotificationsUpdateForm = (props) => {
 
@@ -26,8 +27,12 @@ const NotificationsUpdateForm = (props) => {
       setErrors(['NotificationsUpdateForm:update-error'])
     } else {
       setLoading(true)
+      const lang = detectLanguage()
       const path = '/api/v1/auth/'
-      const payload = { message_notification: messageNotifications }
+      const payload = {
+        message_notification: messageNotifications,
+        locale: lang
+      }
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
