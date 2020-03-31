@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
@@ -14,6 +15,7 @@ const DescriptionUpdateForm = (props) => {
   const [newDescription, setNewDescription] = useState(props.description)
 
   const updateDescription = () => {
+    const lang = detectLanguage()
     setLoading(true)
     if (newDescription !== '' && newDescription !== props.description) {
       const path = `/api/v1/host_profiles/${props.id}`
@@ -22,7 +24,10 @@ const DescriptionUpdateForm = (props) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = { description: newDescription }
+      const payload = {
+        description: newDescription,
+        locale: lang
+      }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert(t('DescriptionUpdateForm:update-success'))
