@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
@@ -30,12 +31,13 @@ class Conversation extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
+    const lang = detectLanguage()
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-    const path = `/api/v1/conversations/${this.props.location.state.id}`
+    const path = `/api/v1/conversations/${this.props.location.state.id}?locale=${lang}`
     axios.get(path, { headers: headers })
       .then(response => {
         const sortedResponse = response.data.message.sort(function (a, b) {
@@ -107,8 +109,9 @@ class Conversation extends Component {
     let uid = window.localStorage.getItem('uid')
     let client = window.localStorage.getItem('client')
     let token = window.localStorage.getItem('access-token')
+    const lang = detectLanguage()
     let path = (process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT)
-    let cable = Cable.createConsumer(`${path}/api/v1/cable/conversation/${this.props.location.state.id}?token=${token}&uid=${uid}&client=${client}`)
+    let cable = Cable.createConsumer(`${path}/api/v1/cable/conversation/${this.props.location.state.id}?token=${token}&uid=${uid}&client=${client}&locale=${lang}`)
     this.chats = cable.subscriptions.create({
       channel: 'ConversationsChannel',
       conversations_id: this.props.location.state.id
@@ -140,6 +143,7 @@ class Conversation extends Component {
 
   deleteConversation = () => {
     const { t } = this.props
+    const lang = detectLanguage()
     this.setState({ loading: true })
     if (window.confirm(t('SingleConversation:del-conversation'))) {
       const path = `/api/v1/conversations/${this.props.location.state.id}`
@@ -149,7 +153,8 @@ class Conversation extends Component {
         'access-token': window.localStorage.getItem('access-token')
       }
       const payload = {
-        hidden: this.props.id
+        hidden: this.props.id,
+        locale: lang
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
