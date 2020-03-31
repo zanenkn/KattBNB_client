@@ -7,13 +7,15 @@ import { withTranslation, Trans } from 'react-i18next'
 import IncRequestPopup from './IncRequestPopup'
 import DeclineRequestPopup from './DeclineRequestPopup'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { withRouter } from 'react-router-dom'
 
 
 class IncomingRequests extends Component {
   state = {
     errorDisplay: false,
-    errors: ''
+    errors: '',
+    iconsDisabled: false
   }
 
   componentDidMount() {
@@ -24,6 +26,8 @@ class IncomingRequests extends Component {
 
   acceptRequest = (e) => {
     const { t } = this.props
+    const lang = detectLanguage()
+    this.setState({ iconsDisabled: true })
     e.preventDefault()
     if (window.confirm(t('IncomingRequests:accept-request'))) {
       const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
@@ -34,7 +38,8 @@ class IncomingRequests extends Component {
       }
       const payload = {
         status: 'accepted',
-        host_message: 'accepted by host'
+        host_message: 'accepted by host',
+        locale: lang
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
@@ -44,9 +49,12 @@ class IncomingRequests extends Component {
         .catch(error => {
           this.setState({
             errorDisplay: true,
-            errors: error.response.data.error
+            errors: error.response.data.error,
+            iconsDisabled: false
           })
         })
+    } else {
+      this.setState({ iconsDisabled: false })
     }
   }
 
@@ -98,7 +106,7 @@ class IncomingRequests extends Component {
                       </Grid.Column>
                       <Grid.Column width={8}>
                         <Popup modal trigger={
-                          <Icon id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
+                          <Icon disabled={this.state.iconsDisabled} id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                         }
                           position='top center'
                           closeOnDocumentClick={true}
@@ -110,7 +118,7 @@ class IncomingRequests extends Component {
                             endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
                           />
                         </Popup>
-                        <Icon id={`accept-${request.id}`} onClick={this.acceptRequest} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
+                        <Icon disabled={this.state.iconsDisabled} id={`accept-${request.id}`} onClick={this.acceptRequest} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                       </Grid.Column>
                     </Grid.Row>
                     <div>
