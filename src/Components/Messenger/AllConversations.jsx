@@ -5,6 +5,7 @@ import { Image, Header, Grid, Divider } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { withTranslation } from 'react-i18next'
 
 class AllConversations extends Component {
@@ -17,12 +18,13 @@ class AllConversations extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
+    const lang = detectLanguage()
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token')
     }
-    const path = `/api/v1/conversations?user_id=${this.props.id}`
+    const path = `/api/v1/conversations?user_id=${this.props.id}&locale=${lang}`
     axios.get(path, { headers: headers })
       .then(response => {
         const shownConversations = []
