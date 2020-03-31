@@ -5,6 +5,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
 import { Header, Segment, Button, Divider } from 'semantic-ui-react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
@@ -41,7 +42,8 @@ const UserPage = (props) => {
 
   useEffect(() => {
     if (hostProfile.length === 1) {
-      const path = `/api/v1/host_profiles/${hostProfile[0].id}`
+      const lang = detectLanguage()
+      const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${lang}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -83,12 +85,13 @@ const UserPage = (props) => {
 
   useEffect(() => {
     async function asyncDidMount() {
-      const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}`)
+      const lang = detectLanguage()
+      const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`)
       setHostProfile(response.data)
       setLoading(false)
 
-      const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}`
-      const pathOutgoing = `/api/v1/bookings?user_id=${props.id}`
+      const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
+      const pathOutgoing = `/api/v1/bookings?user_id=${props.id}&locale=${lang}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
