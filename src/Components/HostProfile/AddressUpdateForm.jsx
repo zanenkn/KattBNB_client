@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { useTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Icon } from 'semantic-ui-react'
@@ -24,6 +25,7 @@ const AddressUpdateForm = (props) => {
   const [userInputAddress, setUserInputAddress] = useState(props.fullAddress)
 
   const updateAddress = () => {
+    const lang = detectLanguage()
     setLoading(true)
     if (props.fullAddress === newAddress || newAddress === '') {
       setLoading(false)
@@ -41,7 +43,8 @@ const AddressUpdateForm = (props) => {
         lat: lat,
         long: long,
         latitude: latitude,
-        longitude: longitude
+        longitude: longitude,
+        locale: lang
       }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
