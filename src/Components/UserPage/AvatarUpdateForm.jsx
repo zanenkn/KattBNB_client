@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
 import Spinner from '../ReusableComponents/Spinner'
@@ -78,10 +79,14 @@ class AvatarUpdateForm extends Component {
     }
     else {
       e.preventDefault()
+      const lang = detectLanguage()
       this.setState({ loading: true })
       const img = this.editor.getImageScaledToCanvas().toDataURL()
       const path = '/api/v1/auth/'
-      const payload = { avatar: img }
+      const payload = {
+        avatar: img,
+        locale: lang
+      }
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
