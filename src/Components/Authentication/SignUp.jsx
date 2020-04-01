@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } from 'semantic-ui-react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
@@ -37,8 +38,9 @@ const SignUp = (props) => {
       setLoading(false)
     } else {
       const { history, registerUser } = props
+      const lang = detectLanguage()
       const url = 'https://kattbnb.netlify.com/login'
-      registerUser({ email, password, passwordConfirmation, location, nickname, url })
+      registerUser({ email, password, passwordConfirmation, location, nickname, url, lang })
         .then(() => {
           setErrorDisplay(false)
           history.push('/signup-success')
