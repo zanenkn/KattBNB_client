@@ -6,6 +6,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
+import MomentLocaleUtils from 'react-day-picker/moment'
 import Spinner from '../ReusableComponents/Spinner'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
@@ -175,6 +176,7 @@ class HostProfileForm extends Component {
     if (this.props.tReady) {
       let addressSearch, addressErrorMessage, onCreateErrorMessage
       const today = new Date()
+      const lang = detectLanguage()
 
       if (this.state.addressSearch === true) {
         addressSearch = (
@@ -297,6 +299,8 @@ class HostProfileForm extends Component {
                 firstDayOfWeek={1}
                 selectedDays={this.state.selectedDays}
                 onDayClick={this.handleDayClick}
+                localeUtils={MomentLocaleUtils}
+                locale={lang}
               />
             </div>
             <p className='small-centered-paragraph'>
