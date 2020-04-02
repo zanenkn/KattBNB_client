@@ -4,7 +4,7 @@ describe('User cannot see her profile', () => {
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
       status: 200,
       response: 'fixture:search_results_list.json'
     })

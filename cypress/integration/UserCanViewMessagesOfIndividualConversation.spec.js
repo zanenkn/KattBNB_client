@@ -4,13 +4,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
     })
@@ -26,13 +26,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:no_user_messages.json'
     })
@@ -47,13 +47,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
     })
@@ -71,13 +71,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
     })
@@ -94,13 +94,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
     })
@@ -122,7 +122,7 @@ describe('User can see messages of individual conversation', () => {
     cy.get('#1').click()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations_delete.json'
     })
@@ -135,13 +135,13 @@ describe('User can see messages of individual conversation', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations/1',
+      url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
     })
