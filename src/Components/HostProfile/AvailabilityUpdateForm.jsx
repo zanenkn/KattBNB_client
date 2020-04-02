@@ -4,6 +4,7 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import DayPicker, { DateUtils } from 'react-day-picker'
+import MomentLocaleUtils from 'react-day-picker/moment'
 import '../../NpmPackageCSS/react-day-picker.css'
 import { Divider, Button, Message } from 'semantic-ui-react'
 
@@ -106,6 +107,7 @@ class AvailabilityUpdateForm extends Component {
 
     if (this.props.tReady) {
       let errorDisplay
+      const lang = detectLanguage()
       let disabledAvailabilityBookings = []
       let disabledAvailabilityDates = []
       let disabledDaysSorted = []
@@ -162,6 +164,8 @@ class AvailabilityUpdateForm extends Component {
               fromMonth={today}
               disabledDays={disabledDaysDates}
               onDayClick={this.handleDayClick}
+              localeUtils={MomentLocaleUtils}
+              locale={lang}
             />
           </div>
           {errorDisplay}
