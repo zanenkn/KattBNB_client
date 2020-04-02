@@ -52,8 +52,10 @@ class AllConversations extends Component {
 
   render() {
     const { t } = this.props
+    const lang = detectLanguage()
     let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
     let deleted_user = { nickname: t('AllConversations:deleted-user'), avatar: null, location: 'none', id: null }
+    moment.locale(lang)
 
     if (this.state.loading) {
       return <Spinner />
