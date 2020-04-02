@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { detectLanguage } from '../Modules/detectLanguage'
-import { formatDate, parseDate } from 'react-day-picker/moment'
+import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
 
@@ -140,6 +140,7 @@ class Search extends Component {
 
     if (this.props.tReady) {
       let errorDisplay
+      const lang = detectLanguage()
       const { from, to } = this.state
       const modifiers = { start: from, end: to }
       const today = new Date()
@@ -178,10 +179,13 @@ class Search extends Component {
                     dayPickerProps={{
                       selectedDays: [from, { from, to }],
                       disabledDays: { after: to, before: today },
+                      fromMonth: today,
                       toMonth: to,
                       modifiers,
                       numberOfMonths: 1,
                       firstDayOfWeek: 1,
+                      localeUtils: MomentLocaleUtils,
+                      locale: lang,
                       showWeekNumbers: true
                     }}
                     onDayChange={this.handleFromChange}
@@ -203,6 +207,8 @@ class Search extends Component {
                       showWeekNumbers: true,
                       month: from,
                       fromMonth: from,
+                      localeUtils: MomentLocaleUtils,
+                      locale: lang,
                       numberOfMonths: 1
                     }}
                     onDayChange={this.handleToChange}
