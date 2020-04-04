@@ -1,13 +1,19 @@
 describe('Visitor can view search results as a list', () => {
   before(function () {
     cy.server()
-    cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      status: 200,
+      response: ''
+    })
+    cy.visit('http://localhost:3000/')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
@@ -78,6 +84,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      status: 200,
+      response: ''
+    })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
@@ -127,6 +139,12 @@ describe('Visitor can view search results as a list', () => {
       url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      status: 200,
+      response: ''
     })
     cy.route({
       method: 'POST',

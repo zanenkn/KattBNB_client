@@ -27,7 +27,6 @@ class ChangePassword extends Component {
     const { t } = this.props
     if (window.navigator.onLine === false) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })

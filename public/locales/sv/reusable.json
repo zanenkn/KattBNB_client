@@ -40,7 +40,8 @@
     "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund.",
     "window-navigator": "",
     "500": "",
-    "401-password": ""
+    "401-password": "",
+    "401": ""
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {
