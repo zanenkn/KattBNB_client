@@ -6,7 +6,9 @@ import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const PasswordResetSuccess = (props) => {
+
   const { t, ready } = useTranslation('PasswordResetSuccess')
+
   if (props.currentUserIn) {
     window.localStorage.removeItem('access-token')
     window.localStorage.removeItem('token-type')

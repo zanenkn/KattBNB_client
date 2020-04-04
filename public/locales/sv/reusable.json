@@ -37,7 +37,10 @@
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
     "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!",
-    "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund."
+    "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund.",
+    "window-navigator": "",
+    "500": "",
+    "401-password": ""
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {

@@ -8,7 +8,9 @@ import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const Login = (props) => {
+
   const { t, ready } = useTranslation('Login')
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorDisplay, setErrorDisplay] = useState(false)
@@ -18,22 +20,34 @@ const Login = (props) => {
 
   const logInUser = () => {
     setLoading(true)
-    const locale = detectLanguage()
-    const { history, signInUser } = props
-    signInUser({ email, password, locale })
-      .then(() => {
-        setSuccessDisplay(true)
-        setErrorDisplay(false)
-        if (history.length <= 2) {
-          history.push('/')
-        } else {
-          history.go(-1)
-        }
-      }).catch(error => {
-        setErrorDisplay(true)
-        setErrors(error.response.data.errors[0])
-        setLoading(false)
-      })
+    if (window.navigator.onLine === false) {
+      setLoading(false)
+      setErrorDisplay(true)
+      setErrors(t('reusable:errors:window-navigator'))
+    } else {
+      const locale = detectLanguage()
+      const { history, signInUser } = props
+      signInUser({ email, password, locale })
+        .then(() => {
+          setSuccessDisplay(true)
+          setErrorDisplay(false)
+          if (history.length <= 2) {
+            history.push('/')
+          } else {
+            history.go(-1)
+          }
+        }).catch(error => {
+          if (error.response.status === 500) {
+            setLoading(false)
+            setErrorDisplay(true)
+            setErrors(t('reusable:errors:500'))
+          } else {
+            setLoading(false)
+            setErrorDisplay(true)
+            setErrors(error.response.data.errors[0])
+          }
+        })
+    }
   }
 
   if (ready) {

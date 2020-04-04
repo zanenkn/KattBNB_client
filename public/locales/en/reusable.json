@@ -37,7 +37,10 @@
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",
     "update-number-fields": "The field is blank, unchanged or the number is invalid!",
-    "sign-out-error": "There was a problem signing you out. Please try again in a minute."
+    "sign-out-error": "There was a problem signing you out. Please try again in a minute.",
+    "window-navigator": "It appears there is a problem with your internet connection. Please check it and try again.",
+    "500": "There was a problem contacting the server. Try again in a minute. If the problem persists, please contact KattBNB support.",
+    "401-password": "This link has expired! You'll be redirected to request a new one."
   },
   "remaining-chars": "Remaining characters:",
   "cta": {

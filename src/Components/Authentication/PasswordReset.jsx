@@ -12,7 +12,7 @@ class PasswordReset extends Component {
     errors: '',
     errorDisplay: false,
     loading: false,
-    url: 'https://kattbnb.netlify.com/change-password'
+    url: process.env.NODE_ENV === 'production' ? 'https://kattbnb.netlify.com/change-password' : 'http://localhost:3000/change-password'
   }
 
   onChangeHandler = (e) => {
@@ -22,26 +22,41 @@ class PasswordReset extends Component {
   resetPassword = (e) => {
     this.setState({ loading: true })
     e.preventDefault()
-    const lang = detectLanguage()
-    const path = '/api/v1/auth/password'
-    const payload = {
-      redirect_url: this.state.url,
-      email: this.state.email,
-      locale: lang
-    }
-
-    axios.post(path, payload)
-      .then(() => {
-        this.setState({ errorDisplay: false })
-        this.props.history.push('/password-reset-success')
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
-      .catch(error => {
-        this.setState({
-          loading: false,
-          errorDisplay: true,
-          errors: error.response.data.errors
+    } else {
+      const lang = detectLanguage()
+      const path = '/api/v1/auth/password'
+      const payload = {
+        redirect_url: this.state.url,
+        email: this.state.email,
+        locale: lang
+      }
+      axios.post(path, payload)
+        .then(() => {
+          this.setState({ errorDisplay: false })
+          this.props.history.push('/password-reset-success')
         })
-      })
+        .catch(error => {
+          if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: error.response.data.errors
+            })
+          }
+        })
+    }
   }
 
   listenEnterKey = (event) => {
@@ -61,7 +76,7 @@ class PasswordReset extends Component {
             <Message.Header style={{ 'textAlign': 'center' }} >{t('PasswordReset:error-header')}:</Message.Header>
             <ul id='message-error-list'>
               {this.state.errors.map(error => (
-                <li key={error}>{error}</li>
+                <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>

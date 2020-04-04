@@ -6,6 +6,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const SignupSuccess = (props) => {
+
   const { t, ready } = useTranslation('SignupSuccess')
 
   if (props.currentUserIn) {
