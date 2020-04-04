@@ -68,29 +68,51 @@ class Search extends Component {
   }
 
   async searchAxiosCall() {
-    const lang = detectLanguage()
-    await axios.get(`/api/v1/host_profiles?location=${this.state.location}&locale=${lang}`).then(response => {
+    if (window.navigator.onLine === false) {
       this.setState({
-        searchData: response.data,
         loading: false,
-        errors: '',
-        errorDisplay: false
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
-    })
-    let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
-    let msFrom = new Date(utcFrom).getTime()
-    let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
-    let msTo = new Date(utcTo).getTime()
-    this.props.history.push({
-      pathname: '/search-results',
-      state: {
-        from: msFrom,
-        to: msTo,
-        cats: this.state.cats,
-        location: this.state.location,
-        searchData: this.state.searchData
-      }
-    })
+    } else {
+      const lang = detectLanguage()
+      await axios.get(`/api/v1/host_profiles?location=${this.state.location}&locale=${lang}`).then(response => {
+        this.setState({
+          searchData: response.data,
+          loading: false,
+          errors: '',
+          errorDisplay: false
+        })
+      }).catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: ['reusable:errors:500']
+          })
+        } else {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.error
+          })
+        }
+      })
+      let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
+      let msFrom = new Date(utcFrom).getTime()
+      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
+      let msTo = new Date(utcTo).getTime()
+      this.props.history.push({
+        pathname: '/search-results',
+        state: {
+          from: msFrom,
+          to: msTo,
+          cats: this.state.cats,
+          location: this.state.location,
+          searchData: this.state.searchData
+        }
+      })
+    }
   }
 
   clearDates = () => {
