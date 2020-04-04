@@ -16,24 +16,33 @@ class Menu extends Component {
   signOut = (e) => {
     e.preventDefault()
     const { t } = this.props
-    const path = '/api/v1/auth/sign_out'
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
+    if (window.navigator.onLine === false) {
+      window.alert(t('reusable:errors:window-navigator'))
+    } else {
+      const path = '/api/v1/auth/sign_out'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.delete(path, { headers: headers })
+        .then(() => {
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
+          window.location.replace('/')
+        })
+        .catch(() => {
+          window.localStorage.removeItem('access-token')
+          window.localStorage.removeItem('token-type')
+          window.localStorage.removeItem('client')
+          window.localStorage.removeItem('uid')
+          window.localStorage.removeItem('expiry')
+          window.location.replace('/login')
+        })
     }
-    axios.delete(path, { headers: headers })
-      .then(() => {
-        window.localStorage.removeItem('access-token')
-        window.localStorage.removeItem('token-type')
-        window.localStorage.removeItem('client')
-        window.localStorage.removeItem('uid')
-        window.localStorage.removeItem('expiry')
-        window.location.replace('/')
-      })
-      .catch(() => {
-        window.alert(t('reusable:errors:sign-out-error'))
-      })
   }
 
   changeLng(lng) {

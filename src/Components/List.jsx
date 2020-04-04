@@ -7,6 +7,7 @@ import Spinner from './ReusableComponents/Spinner'
 import { Link } from 'react-router-dom'
 
 const List = (props) => {
+
   const { t, ready } = useTranslation('List')
 
   if (ready) {

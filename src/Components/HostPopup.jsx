@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
 
 const HostPopup = (props) => {
+
   const { t, ready } = useTranslation('HostPopup')
 
   if (ready) {

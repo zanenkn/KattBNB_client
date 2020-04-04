@@ -6,6 +6,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const Faq = (props) => {
+
   const [activeIndex, setActiveIndex] = useState()
 
   const handleClick = (e, titleProps) => {
