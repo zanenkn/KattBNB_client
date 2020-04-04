@@ -3,13 +3,13 @@ describe('User cannot create a booking request', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
       status: 200,
       response: 'fixture:search_results_list.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })

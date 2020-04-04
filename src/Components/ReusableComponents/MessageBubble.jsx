@@ -3,11 +3,13 @@ import Spinner from './Spinner'
 import { useTranslation } from 'react-i18next'
 import { Image } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import moment from 'moment'
 
 const MessageBubble = (props) => {
 
   const { t, ready } = useTranslation('MessageBubble')
+  const lang = detectLanguage()
 
   let textAlign, flexDirection, margin, border, avatar, nickname, content
   content = (window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content')
@@ -41,6 +43,8 @@ const MessageBubble = (props) => {
   }
 
   if (ready) {
+    moment.locale(lang)
+
     return (
       <div style={{ 'textAlign': textAlign }} data-cy='all-messages-individual-conversation'>
         <div style={{ 'display': 'flex', 'flexDirection': flexDirection, 'marginBottom': '0.5rem', 'alignItems': 'center' }}>

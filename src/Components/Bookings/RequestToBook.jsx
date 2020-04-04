@@ -4,6 +4,7 @@ import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
 import { Trans, withTranslation } from 'react-i18next'
 
@@ -43,6 +44,7 @@ class RequestToBook extends Component {
 
   createBooking = (e) => {
     e.preventDefault()
+    const lang = detectLanguage()
     this.setState({ loading: true })
     if (this.state.message === '') {
       this.setState({
@@ -73,7 +75,8 @@ class RequestToBook extends Component {
         host_nickname: this.props.location.state.nickname,
         price_per_day: this.state.perDay,
         price_total: this.state.orderTotal,
-        user_id: this.props.id
+        user_id: this.props.id,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),

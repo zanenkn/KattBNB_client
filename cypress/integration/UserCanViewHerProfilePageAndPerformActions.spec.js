@@ -3,7 +3,7 @@ describe('User can view her profile page', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:search_no_results.json',
     })

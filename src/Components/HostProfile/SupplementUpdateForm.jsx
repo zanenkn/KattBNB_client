@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
@@ -14,6 +15,7 @@ const SupplementUpdateForm = (props) => {
   const [newSupplement, setNewSupplement] = useState(props.supplement)
 
   const updateSupplement = () => {
+    const lang = detectLanguage()
     setLoading(true)
     if (newSupplement !== '' && newSupplement !== props.supplement && newSupplement >= 0) {
       const path = `/api/v1/host_profiles/${props.id}`
@@ -22,7 +24,10 @@ const SupplementUpdateForm = (props) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = { supplement_price_per_cat_per_day: newSupplement }
+      const payload = {
+        supplement_price_per_cat_per_day: newSupplement,
+        locale: lang
+      }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert(t('SupplementUpdateForm:update-success'))

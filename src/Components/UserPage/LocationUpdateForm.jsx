@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -26,6 +27,7 @@ class LocationUpdateForm extends Component {
 
   updateLocation = (e) => {
     const { t } = this.props
+    const lang = detectLanguage()
     let address = this.props.fullAddress
     if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
       window.localStorage.removeItem('access-token')
@@ -45,7 +47,10 @@ class LocationUpdateForm extends Component {
         this.setState({ loading: true })
         e.preventDefault()
         const path = '/api/v1/auth/'
-        const payload = { location: this.state.newLocation }
+        const payload = {
+          location: this.state.newLocation,
+          locale: lang
+        }
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -74,7 +79,10 @@ class LocationUpdateForm extends Component {
       this.setState({ loading: true })
       e.preventDefault()
       const path = '/api/v1/auth/'
-      const payload = { location: this.state.newLocation }
+      const payload = {
+        location: this.state.newLocation,
+        locale: lang
+      }
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),

@@ -3,8 +3,10 @@ import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
+import MomentLocaleUtils from 'react-day-picker/moment'
 import Spinner from '../ReusableComponents/Spinner'
 import { generateRandomNumber } from '../../Modules/locationRandomizer'
 import { search } from '../../Modules/addressLocationMatcher'
@@ -122,6 +124,7 @@ class HostProfileForm extends Component {
 
   createHostProfile = (e) => {
     const { t } = this.props
+    const lang = detectLanguage()
     e.preventDefault()
     this.setState({ loading: true })
     if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
@@ -143,7 +146,8 @@ class HostProfileForm extends Component {
         long: this.state.long,
         latitude: this.state.latitude,
         longitude: this.state.longitude,
-        user_id: this.props.user_id
+        user_id: this.props.user_id,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -172,6 +176,7 @@ class HostProfileForm extends Component {
     if (this.props.tReady) {
       let addressSearch, addressErrorMessage, onCreateErrorMessage
       const today = new Date()
+      const lang = detectLanguage()
 
       if (this.state.addressSearch === true) {
         addressSearch = (
@@ -294,6 +299,8 @@ class HostProfileForm extends Component {
                 firstDayOfWeek={1}
                 selectedDays={this.state.selectedDays}
                 onDayClick={this.handleDayClick}
+                localeUtils={MomentLocaleUtils}
+                locale={lang}
               />
             </div>
             <p className='small-centered-paragraph'>

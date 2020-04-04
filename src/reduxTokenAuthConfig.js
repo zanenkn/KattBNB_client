@@ -14,7 +14,8 @@ const config = {
     passwordConfirmation: 'password_confirmation',
     location: 'location',
     nickname: 'nickname',
-    url: 'confirm_success_url'
+    url: 'confirm_success_url',
+    lang: 'locale'
   },
 }
 

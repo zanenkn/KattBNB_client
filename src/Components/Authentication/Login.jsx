@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { signInUser } from '../../reduxTokenAuthConfig'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -17,8 +18,9 @@ const Login = (props) => {
 
   const logInUser = () => {
     setLoading(true)
+    const locale = detectLanguage()
     const { history, signInUser } = props
-    signInUser({ email, password })
+    signInUser({ email, password, locale })
       .then(() => {
         setSuccessDisplay(true)
         setErrorDisplay(false)

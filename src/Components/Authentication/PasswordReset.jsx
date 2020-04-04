@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
@@ -21,10 +22,12 @@ class PasswordReset extends Component {
   resetPassword = (e) => {
     this.setState({ loading: true })
     e.preventDefault()
+    const lang = detectLanguage()
     const path = '/api/v1/auth/password'
     const payload = {
       redirect_url: this.state.url,
-      email: this.state.email
+      email: this.state.email,
+      locale: lang
     }
 
     axios.post(path, payload)

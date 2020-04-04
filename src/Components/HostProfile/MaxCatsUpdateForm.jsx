@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
@@ -14,6 +15,7 @@ const MaxCatsUpdateForm = (props) => {
   const [newMaxCats, setNewMaxCats] = useState(props.maxCats)
 
   const updateMaxCats = () => {
+    const lang = detectLanguage()
     setLoading(true)
     if (newMaxCats !== '' && parseFloat(newMaxCats) !== props.maxCats && parseFloat(newMaxCats) >= 1) {
       const path = `/api/v1/host_profiles/${props.id}`
@@ -22,7 +24,10 @@ const MaxCatsUpdateForm = (props) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      const payload = { max_cats_accepted: newMaxCats }
+      const payload = {
+        max_cats_accepted: newMaxCats,
+        locale: lang
+      }
       axios.patch(path, payload, { headers: headers })
         .then(() => {
           window.alert(t('MaxCatsUpdateForm:update-success'))

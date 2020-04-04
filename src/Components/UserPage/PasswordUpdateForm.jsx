@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Message, Divider, Popup } from 'semantic-ui-react'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -38,11 +39,13 @@ class PasswordUpdateForm extends Component {
     } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
       this.setState({ loading: true })
       e.preventDefault()
+      const lang = detectLanguage()
       const path = '/api/v1/auth/password'
       const payload = {
         current_password: this.state.currentPassword,
         password: this.state.newPassword,
-        password_confirmation: this.state.newPasswordConfirmation
+        password_confirmation: this.state.newPasswordConfirmation,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),

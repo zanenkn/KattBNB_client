@@ -3,6 +3,7 @@ import { Header, Form, Button, Message } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 
 class DeclineRequestPopup extends Component {
 
@@ -16,6 +17,7 @@ class DeclineRequestPopup extends Component {
   declineBooking = (e) => {
     e.preventDefault()
     const { t } = this.props
+    const lang = detectLanguage()
     this.setState({ loading: true })
     if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
       if (this.state.message !== '' && this.state.message.length < 201) {
@@ -27,7 +29,8 @@ class DeclineRequestPopup extends Component {
         }
         const payload = {
           host_message: this.state.message,
-          status: 'declined'
+          status: 'declined',
+          locale: lang
         }
         axios.patch(path, payload, { headers: headers })
           .then(() => {
@@ -46,10 +49,17 @@ class DeclineRequestPopup extends Component {
           errorDisplay: true,
           errors: ['DeclineRequestPopup:decline-error']
         })
+        this.props.declModalCloseState(true)
       }
     } else {
       this.setState({ loading: false })
+      this.props.declModalCloseState(true)
     }
+  }
+
+  declineCTA = (e) => {
+    this.props.declModalCloseState(false)
+    this.declineBooking(e)
   }
 
   onChangeHandler = (e) => {
@@ -100,7 +110,7 @@ class DeclineRequestPopup extends Component {
             {t('DeclineRequestPopup:remaining')} {200 - this.state.message.length}
           </p>
           {errorDisplay}
-          <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineBooking}>{t('DeclineRequestPopup:decline-cta')}</Button>
+          <Button id='decline-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.declineCTA}>{t('DeclineRequestPopup:decline-cta')}</Button>
         </>
       )
     } else { return <Spinner /> }

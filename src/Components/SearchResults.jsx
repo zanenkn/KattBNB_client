@@ -9,6 +9,7 @@ import HostProfileView from './HostProfileView/HostProfileView'
 import moment from 'moment'
 import 'moment/locale/sv'
 import axios from 'axios'
+import { detectLanguage } from '../Modules/detectLanguage'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 import Spinner from './ReusableComponents/Spinner'
@@ -47,8 +48,9 @@ class SearchResults extends Component {
     if (this.props.history.location.state === undefined) {
       this.props.history.push({ pathname: '/' })
     } else {
+      const lang = detectLanguage()
       let allAvailableHosts = []
-      axios.get('/api/v1/host_profiles').then(response => {
+      axios.get(`/api/v1/host_profiles?locale=${lang}`).then(response => {
         if (response.data !== '' && response.data.length > 0) {
           let availableByDate = bookingSearch(response.data, this.props.history.location.state.from, this.props.history.location.state.to)
           availableByDate.map(host => {
@@ -88,7 +90,8 @@ class SearchResults extends Component {
   }
 
   getHostById(e) {
-    axios.get(`/api/v1/host_profiles?user_id=${e.target.id}`).then(response => {
+    const lang = detectLanguage()
+    axios.get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`).then(response => {
       this.setState({
         hostId: response.data[0].user.id,
         hostAvatar: response.data[0].user.avatar,
@@ -161,10 +164,12 @@ class SearchResults extends Component {
     if (this.props.id === undefined) {
       this.props.history.push('/login')
     } else {
+      const lang = detectLanguage()
       const path = '/api/v1/conversations'
       const payload = {
         user1_id: this.props.id,
-        user2_id: this.state.hostId
+        user2_id: this.state.hostId,
+        locale: lang
       }
       const headers = {
         uid: window.localStorage.getItem('uid'),

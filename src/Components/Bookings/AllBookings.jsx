@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
 import { connect } from 'react-redux'
 import { withTranslation, Trans } from 'react-i18next'
 import { Header, Segment, Button } from 'semantic-ui-react'
@@ -15,8 +16,9 @@ class AllBookings extends Component {
   }
 
   componentDidMount() {
-    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}`
-    const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}`
+    const lang = detectLanguage()
+    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
+    const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
