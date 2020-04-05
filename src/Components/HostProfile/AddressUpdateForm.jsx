@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { useTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import { Divider, Header, Form, Button, Message, Icon } from 'semantic-ui-react'
@@ -11,6 +12,7 @@ import Spinner from '../ReusableComponents/Spinner'
 const AddressUpdateForm = (props) => {
 
   const { t, ready } = useTranslation('AddressUpdateForm')
+
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(false)
@@ -27,36 +29,53 @@ const AddressUpdateForm = (props) => {
   const updateAddress = () => {
     const lang = detectLanguage()
     setLoading(true)
-    if (props.fullAddress === newAddress || newAddress === '') {
+    if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['AddressUpdateForm:update-error'])
+      setErrors(['reusable:errors:window-navigator'])
     } else {
-      const path = `/api/v1/host_profiles/${props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
+      if (props.fullAddress === newAddress || newAddress === '') {
+        setLoading(false)
+        setErrorDisplay(true)
+        setErrors(['AddressUpdateForm:update-error'])
+      } else {
+        const path = `/api/v1/host_profiles/${props.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          full_address: newAddress,
+          lat: lat,
+          long: long,
+          latitude: latitude,
+          longitude: longitude,
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then(() => {
+            window.alert(t('AddressUpdateForm:update-success'))
+            props.setElement('fullAddress', newAddress)
+            props.closeAllForms()
+            setErrorDisplay(false)
+            setErrors([])
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors([error.response.data.errors.full_messages])
+            }
+          })
       }
-      const payload = {
-        full_address: newAddress,
-        lat: lat,
-        long: long,
-        latitude: latitude,
-        longitude: longitude,
-        locale: lang
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          window.alert(t('AddressUpdateForm:update-success'))
-          props.setElement('fullAddress', newAddress)
-          props.closeAllForms()
-        })
-        .catch(error => {
-          setLoading(false)
-          setErrorDisplay(true)
-          setErrors([error.response.data.errors.full_messages])
-        })
     }
   }
 
@@ -92,10 +111,10 @@ const AddressUpdateForm = (props) => {
       error => {
         if (error.message === 'Server returned status code ZERO_RESULTS') {
           setAddressErrorDisplay(true)
-          setAddressError(t('AddressUpdateForm:google-error-1'))
+          setAddressError(t('reusable:errors:google-error-1'))
         } else if (error.message === 'Server returned status code REQUEST_DENIED') {
           setAddressErrorDisplay(true)
-          setAddressError(t('AddressUpdateForm:google-error-2'))
+          setAddressError(t('reusable:errors:google-error-2'))
         } else {
           setAddressErrorDisplay(true)
           setAddressError(error.message)

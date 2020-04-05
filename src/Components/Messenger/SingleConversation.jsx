@@ -69,7 +69,7 @@ class Conversation extends Component {
             })
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
-            wipeCredentials('/login')
+            wipeCredentials('/')
           } else {
             this.setState({
               loading: false,
@@ -150,7 +150,7 @@ class Conversation extends Component {
             this.handleError(['reusable:errors:500'])
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
-            wipeCredentials('/login')
+            wipeCredentials('/')
           } else {
             this.handleError(error.response.data.error)
           }
@@ -229,7 +229,7 @@ class Conversation extends Component {
               })
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
-              wipeCredentials('/login')
+              wipeCredentials('/')
             } else {
               this.setState({
                 loading: false,

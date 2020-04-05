@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -29,44 +30,64 @@ class AvailabilityUpdateForm extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     this.setState({ loading: true })
-    if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.props.availability)) {
-      const path = `/api/v1/host_profiles/${this.props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const filteredAvailability = this.state.newAvailability.filter(function (value) {
-        let date = new Date()
-        let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-        return value > (new Date(utc)).getTime() - 86400000
-      })
-      const payload = {
-        availability: filteredAvailability,
-        locale: lang
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false
-          })
-          window.alert(t('AvailabilityUpdateForm:success-update'))
-          window.location.reload()
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
+    if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['AvailabilityUpdateForm:update-error']
+        errors: ['reusable:errors:window-navigator']
       })
+    } else {
+      if (JSON.stringify(this.state.newAvailability) !== JSON.stringify(this.props.availability)) {
+        const path = `/api/v1/host_profiles/${this.props.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const filteredAvailability = this.state.newAvailability.filter(function (value) {
+          let date = new Date()
+          let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+          return value > (new Date(utc)).getTime() - 86400000
+        })
+        const payload = {
+          availability: filteredAvailability,
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then(() => {
+            this.setState({
+              loading: false,
+              errorDisplay: false,
+              errors: ''
+            })
+            window.alert(t('AvailabilityUpdateForm:success-update'))
+            window.location.reload()
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.errors.full_messages
+              })
+            }
+          })
+      } else {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['AvailabilityUpdateForm:update-error']
+        })
+      }
     }
   }
 

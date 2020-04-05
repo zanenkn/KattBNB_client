@@ -41,7 +41,9 @@
     "window-navigator": "It appears there is a problem with your internet connection. Please check it and try again.",
     "500": "There was a problem contacting the server. Try reloading the page in a minute. If the problem persists, please contact KattBNB support.",
     "401-password": "This link has expired! You'll be redirected to request a new one.",
-    "401": "This session has expired! You will have to login again."
+    "401": "This session has expired! You will have to login again.",
+    "google-error-1": "Address not found! Please try again.",
+    "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists conatct KattBNB support."
   },
   "remaining-chars": "Remaining characters:",
   "cta": {

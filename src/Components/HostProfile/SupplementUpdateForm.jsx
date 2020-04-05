@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Divider, Form, Button, Message } from 'semantic-ui-react'
@@ -17,32 +18,49 @@ const SupplementUpdateForm = (props) => {
   const updateSupplement = () => {
     const lang = detectLanguage()
     setLoading(true)
-    if (newSupplement !== '' && newSupplement !== props.supplement && newSupplement >= 0) {
-      const path = `/api/v1/host_profiles/${props.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        supplement_price_per_cat_per_day: newSupplement,
-        locale: lang
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          window.alert(t('SupplementUpdateForm:update-success'))
-          props.setElement('supplement', newSupplement)
-          props.closeAllForms()
-        })
-        .catch(error => {
-          setLoading(false)
-          setErrorDisplay(false)
-          setErrors([error.response.data.errors.full_messages])
-        })
-    } else {
+    if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)
-      setErrors(['reusable:errors:update-number-fields'])
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      if (newSupplement !== '' && newSupplement !== props.supplement && newSupplement >= 0) {
+        const path = `/api/v1/host_profiles/${props.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          supplement_price_per_cat_per_day: newSupplement,
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then(() => {
+            window.alert(t('SupplementUpdateForm:update-success'))
+            props.setElement('supplement', newSupplement)
+            props.closeAllForms()
+            setErrorDisplay(false)
+            setErrors([])
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors([error.response.data.errors.full_messages])
+            }
+          })
+      } else {
+        setLoading(false)
+        setErrorDisplay(true)
+        setErrors(['reusable:errors:update-number-fields'])
+      }
     }
   }
 

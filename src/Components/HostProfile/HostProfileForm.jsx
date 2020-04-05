@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import '../../NpmPackageCSS/react-day-picker.css'
 import MomentLocaleUtils from 'react-day-picker/moment'
@@ -86,7 +87,8 @@ class HostProfileForm extends Component {
               long: lng + generateRandomNumber(),
               address: response.results[0].formatted_address,
               addressSearch: false,
-              addressErrorDisplay: false
+              addressErrorDisplay: false,
+              addressError: ''
             })
           }
         } else {
@@ -97,15 +99,28 @@ class HostProfileForm extends Component {
             long: lng + generateRandomNumber(),
             address: response.results[0].formatted_address,
             addressSearch: false,
-            addressErrorDisplay: false
+            addressErrorDisplay: false,
+            addressError: ''
           })
         }
       },
       error => {
-        this.setState({
-          addressErrorDisplay: true,
-          addressError: error.message
-        })
+        if (error.message === 'Server returned status code ZERO_RESULTS') {
+          this.setState({
+            addressErrorDisplay: true,
+            addressError: t('reusable:errors:google-error-1')
+          })
+        } else if (error.message === 'Server returned status code REQUEST_DENIED') {
+          this.setState({
+            addressErrorDisplay: true,
+            addressError: t('reusable:errors:google-error-2')
+          })
+        } else {
+          this.setState({
+            addressErrorDisplay: true,
+            addressError: error.message
+          })
+        }
       }
     )
   }
@@ -127,46 +142,65 @@ class HostProfileForm extends Component {
     const lang = detectLanguage()
     e.preventDefault()
     this.setState({ loading: true })
-    if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
+    if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
-        errors: ['HostProfileForm:create-error-1'],
-        onCreateErrorDisplay: true
+        onCreateErrorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
     } else {
-      const path = '/api/v1/host_profiles'
-      const payload = {
-        description: this.state.description,
-        full_address: this.state.address,
-        price_per_day_1_cat: this.state.rate,
-        supplement_price_per_cat_per_day: this.state.supplement,
-        max_cats_accepted: this.state.maxCats,
-        availability: this.state.availability,
-        lat: this.state.lat,
-        long: this.state.long,
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
-        user_id: this.props.user_id,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.post(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({ onCreateErrorDisplay: false })
-          window.alert(t('HostProfileForm:create-success'))
-          setTimeout(function () { window.location.replace('/user-page') }, 500)
+      if (this.state.maxCats < 1 || this.state.rate < 0.01 || this.state.supplement < 0) {
+        this.setState({
+          loading: false,
+          errors: ['HostProfileForm:create-error-1'],
+          onCreateErrorDisplay: true
         })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errors: error.response.data.error,
-            onCreateErrorDisplay: true
+      } else {
+        const path = '/api/v1/host_profiles'
+        const payload = {
+          description: this.state.description,
+          full_address: this.state.address,
+          price_per_day_1_cat: this.state.rate,
+          supplement_price_per_cat_per_day: this.state.supplement,
+          max_cats_accepted: this.state.maxCats,
+          availability: this.state.availability,
+          lat: this.state.lat,
+          long: this.state.long,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          user_id: this.props.user_id,
+          locale: lang
+        }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.post(path, payload, { headers: headers })
+          .then(() => {
+            this.setState({ onCreateErrorDisplay: false })
+            window.alert(t('HostProfileForm:create-success'))
+            setTimeout(function () { window.location.replace('/user-page') }, 500)
           })
-        })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                onCreateErrorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                onCreateErrorDisplay: true,
+                errors: [error.response.data.errors.full_messages]
+              })
+            }
+          })
+      }
     }
   }
 
