@@ -6,6 +6,7 @@ import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withTranslation } from 'react-i18next'
 
 class AllConversations extends Component {
@@ -62,7 +63,7 @@ class AllConversations extends Component {
             })
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
-            window.location.replace('/login')
+            wipeCredentials('/login')
           } else {
             this.setState({
               loading: false,

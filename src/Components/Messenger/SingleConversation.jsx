@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
@@ -68,7 +69,7 @@ class Conversation extends Component {
             })
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
-            window.location.replace('/login')
+            wipeCredentials('/login')
           } else {
             this.setState({
               loading: false,
@@ -149,7 +150,7 @@ class Conversation extends Component {
             this.handleError(['reusable:errors:500'])
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
-            window.location.replace('/login')
+            wipeCredentials('/login')
           } else {
             this.handleError(error.response.data.error)
           }
@@ -228,7 +229,7 @@ class Conversation extends Component {
               })
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
-              window.location.replace('/login')
+              wipeCredentials('/login')
             } else {
               this.setState({
                 loading: false,

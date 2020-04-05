@@ -3,6 +3,7 @@ import { Sidebar, Segment, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import axios from 'axios'
 import i18n from '../../i18n'
 import { withTranslation } from 'react-i18next'
@@ -27,20 +28,10 @@ class Menu extends Component {
       }
       axios.delete(path, { headers: headers })
         .then(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/')
+          wipeCredentials('/')
         })
         .catch(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
+          wipeCredentials('/login')
         })
     }
   }

@@ -10,6 +10,7 @@ import moment from 'moment'
 import 'moment/locale/sv'
 import axios from 'axios'
 import { detectLanguage } from '../Modules/detectLanguage'
+import { wipeCredentials } from '../Modules/wipeCredentials'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 import Spinner from './ReusableComponents/Spinner'
@@ -245,7 +246,7 @@ class SearchResults extends Component {
               })
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
-              window.location.replace('/login')
+              wipeCredentials('/login')
             } else {
               this.setState({
                 errorDisplay: true,

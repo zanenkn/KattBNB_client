@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button, Popup } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -60,7 +61,7 @@ class ChangePassword extends Component {
               })
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401-password'))
-              window.location.replace('/password-reset')
+              wipeCredentials('/password-reset')
             } else {
               this.setState({
                 loading: false,
