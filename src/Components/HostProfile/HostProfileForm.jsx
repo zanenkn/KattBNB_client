@@ -196,7 +196,7 @@ class HostProfileForm extends Component {
               this.setState({
                 loading: false,
                 onCreateErrorDisplay: true,
-                errors: [error.response.data.errors.full_messages]
+                errors: error.response.data.error
               })
             }
           })
