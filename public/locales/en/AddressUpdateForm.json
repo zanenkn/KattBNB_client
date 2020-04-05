@@ -3,5 +3,7 @@
   "update-success": "Your address was succesfully updated!",
   "main-title": "You can update your address below by entering and searching your new address.",
   "address-search-plch": "Search..",
-  "not-right": "Not right?"
+  "not-right": "Not right?",
+  "google-error-1": "Address not found! Please try again.",
+  "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists conatct KattBNB support."
 }

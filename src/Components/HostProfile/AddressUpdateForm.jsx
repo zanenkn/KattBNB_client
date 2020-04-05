@@ -90,8 +90,16 @@ const AddressUpdateForm = (props) => {
         }
       },
       error => {
-        setAddressErrorDisplay(true)
-        setAddressError(error.message)
+        if (error.message === 'Server returned status code ZERO_RESULTS') {
+          setAddressErrorDisplay(true)
+          setAddressError(t('AddressUpdateForm:google-error-1'))
+        } else if (error.message === 'Server returned status code REQUEST_DENIED') {
+          setAddressErrorDisplay(true)
+          setAddressError(t('AddressUpdateForm:google-error-2'))
+        } else {
+          setAddressErrorDisplay(true)
+          setAddressError(error.message)
+        }
       }
     )
   }
