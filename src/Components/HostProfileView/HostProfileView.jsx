@@ -10,9 +10,11 @@ import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const HostProfileView = (props) => {
+
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
   let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice, sendMessage, requestToBook
+
   const { t, ready } = useTranslation('HostProfileView')
 
   if (ready) {
@@ -68,7 +70,7 @@ const HostProfileView = (props) => {
     }
 
     return (
-      <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
+      <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
         <Image id='avatar' src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
         <HostScore />
         <Header id='nickname' as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
