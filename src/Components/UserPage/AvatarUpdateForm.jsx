@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import ReactAvatarEditor from 'react-avatar-editor'
 import Popup from 'reactjs-popup'
 import Spinner from '../ReusableComponents/Spinner'
@@ -57,53 +58,69 @@ class AvatarUpdateForm extends Component {
   }
 
   updateAvatar = (e) => {
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.removeItem('access-token')
-      window.localStorage.removeItem('token-type')
-      window.localStorage.removeItem('client')
-      window.localStorage.removeItem('uid')
-      window.localStorage.removeItem('expiry')
-      window.location.replace('/login')
-    } else if (this.state.image === '') {
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['AvatarUpdateForm:no-avatar-error']
+        errors: ['reusable:errors:window-navigator']
       })
-    } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['AvatarUpdateForm:file-type-error']
-      })
-    }
-    else {
-      e.preventDefault()
-      const lang = detectLanguage()
-      this.setState({ loading: true })
-      const img = this.editor.getImageScaledToCanvas().toDataURL()
-      const path = '/api/v1/auth/'
-      const payload = {
-        avatar: img,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({ errorDisplay: false })
-          window.location.reload()
+    } else {
+      if (this.state.image === '') {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['AvatarUpdateForm:no-avatar-error']
         })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
+      } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['AvatarUpdateForm:file-type-error']
+        })
+      }
+      else {
+        e.preventDefault()
+        const lang = detectLanguage()
+        this.setState({ loading: true })
+        const img = this.editor.getImageScaledToCanvas().toDataURL()
+        const path = '/api/v1/auth/'
+        const payload = {
+          avatar: img,
+          locale: lang
+        }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.put(path, payload, { headers: headers })
+          .then(() => {
+            this.setState({
+              errorDisplay: false,
+              errors: []
+            })
+            window.location.reload()
           })
-        })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401 || error.response.status === 404) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.errors.full_messages
+              })
+            }
+          })
+      }
     }
   }
 

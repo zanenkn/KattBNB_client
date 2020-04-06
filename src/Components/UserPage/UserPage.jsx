@@ -15,6 +15,7 @@ import { useTranslation, Trans } from 'react-i18next'
 const UserPage = (props) => {
   const hostProfileElement = useRef()
   const { t, ready } = useTranslation('UserPage')
+
   const [form, setForm] = useState({
     editLocationForm: false,
     editPasswordForm: false,
@@ -22,7 +23,6 @@ const UserPage = (props) => {
     editNotificationsForm: false
   })
   const [hostProfile, setHostProfile] = useState([])
-
   const [element, setElement] = useState({
     description: '',
     fullAddress: '',
@@ -33,7 +33,6 @@ const UserPage = (props) => {
     location: props.location,
     messageNotifications: props.messageNotifications
   })
-
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
   const [outgoingBookings, setOutgoingBookings] = useState([])
