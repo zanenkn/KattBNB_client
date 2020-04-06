@@ -1,44 +1,75 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import { Container } from 'semantic-ui-react'
+import { Container, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Spinner from '../ReusableComponents/Spinner'
+import Popup from 'reactjs-popup'
 import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 class IncomingUpcoming extends Component {
 
+  state = {
+    errorDisplay: false,
+    errors: []
+  }
+
   messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
     e.preventDefault()
-    const lang = detectLanguage()
-    const path = '/api/v1/conversations'
-    const payload = {
-      user1_id: this.props.id,
-      user2_id: userId,
-      locale: lang
-    }
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    axios.post(path, payload, { headers: headers })
-      .then(response => {
-        this.props.history.push({
-          pathname: '/conversation',
-          state: {
-            id: response.data.id,
-            user: {
-              avatar: userAvatar,
-              id: userId,
-              location: userLocation,
-              nickname: userNickname
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      const lang = detectLanguage()
+      const path = '/api/v1/conversations'
+      const payload = {
+        user1_id: this.props.id,
+        user2_id: userId,
+        locale: lang
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(response => {
+          this.props.history.push({
+            pathname: '/conversation',
+            state: {
+              id: response.data.id,
+              user: {
+                avatar: userAvatar,
+                id: userId,
+                location: userLocation,
+                nickname: userNickname
+              }
             }
+          })
+        })
+        .catch(error => {
+          if (error.response.status === 500) {
+            this.setState({
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              errorDisplay: true,
+              errors: error.response.data.error
+            })
           }
         })
-      })
+    }
   }
 
   render() {
@@ -47,11 +78,34 @@ class IncomingUpcoming extends Component {
     if (this.props.tReady) {
       let sortedUpcoming = this.props.upcoming
       sortedUpcoming.sort((a, b) => (a.dates[0] - b.dates[0]))
-      let page
+      let page, errorDisplay
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
 
       if (this.props.upcoming.length > 0) {
         page = (
           <>
+            <Popup
+              modal
+              open={this.state.errorDisplay}
+              closeOnDocumentClick={true}
+              onClose={() => { this.setState({ errorDisplay: false, errors: [] }) }}
+              position='top center'
+            >
+              <div>
+                {errorDisplay}
+              </div>
+            </Popup>
             <p className='small-centered-paragraph'>
               <Trans count={parseInt(this.props.upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
                 <strong>You have {{ count: this.props.upcoming.length }} upcoming booking.</strong>

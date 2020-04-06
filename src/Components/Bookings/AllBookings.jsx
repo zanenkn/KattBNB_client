@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
+import Popup from 'reactjs-popup'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { connect } from 'react-redux'
 import { withTranslation, Trans } from 'react-i18next'
-import { Header, Segment, Button } from 'semantic-ui-react'
+import { Header, Segment, Button, Message } from 'semantic-ui-react'
 
 class AllBookings extends Component {
 
   state = {
+    errorDisplay: false,
+    errors: [],
     outgoingBookings: [],
     incomingBookings: [],
     loadingOutgoing: true,
@@ -17,25 +21,77 @@ class AllBookings extends Component {
 
   componentDidMount() {
     const lang = detectLanguage()
-    const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
-    const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loadingIncoming: false,
+        loadingOutgoing: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
+      const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.get(pathOutgoing, { headers: headers }).then(response => {
+        this.setState({
+          outgoingBookings: response.data,
+          loadingOutgoing: false,
+          errorDisplay: false,
+          errors: []
+        })
+      }).catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            loadingOutgoing: false,
+            loadingIncoming: false,
+            errorDisplay: true,
+            errors: ['reusable:errors:500']
+          })
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            loadingOutgoing: false,
+            loadingIncoming: false,
+            errorDisplay: true,
+            errors: [error.response.data.error]
+          })
+        }
+      })
+      axios.get(pathIncoming, { headers: headers }).then(response => {
+        this.setState({
+          incomingBookings: response.data,
+          loadingIncoming: false,
+          errorDisplay: false,
+          errors: []
+        })
+      }).catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            loadingOutgoing: false,
+            loadingIncoming: false,
+            errorDisplay: true,
+            errors: ['reusable:errors:500']
+          })
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            loadingOutgoing: false,
+            loadingIncoming: false,
+            errorDisplay: true,
+            errors: [error.response.data.error]
+          })
+        }
+      })
     }
-    axios.get(pathOutgoing, { headers: headers }).then(response => {
-      this.setState({
-        outgoingBookings: response.data,
-        loadingOutgoing: false
-      })
-    })
-    axios.get(pathIncoming, { headers: headers }).then(response => {
-      this.setState({
-        incomingBookings: response.data,
-        loadingIncoming: false
-      })
-    })
   }
 
   render() {
@@ -49,7 +105,19 @@ class AllBookings extends Component {
     let todaysDate = new Date()
     let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
     let today = new Date(utc).getTime()
-    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, page
+    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, page, errorDisplay
+
+    if (this.state.errorDisplay) {
+      errorDisplay = (
+        <Message negative >
+          <ul id='message-error-list'>
+            {this.state.errors.map(error => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Message>
+      )
+    }
 
     if (this.state.outgoingBookings.length > 0) {
       this.state.outgoingBookings.map(booking => {
@@ -211,7 +279,7 @@ class AllBookings extends Component {
       </Segment>
     )
 
-    if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false) {
+    if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false && this.state.errorDisplay === false) {
       page = (
         <div className='content-wrapper'>
           <Header as='h1'>
@@ -223,6 +291,11 @@ class AllBookings extends Component {
           {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
         </div>
       )
+    } else if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false && this.state.errorDisplay) {
+      page = (
+        <>
+        </>
+      )
     } else {
       page = (
         <Spinner />
@@ -231,6 +304,17 @@ class AllBookings extends Component {
 
     return (
       <>
+        <Popup
+          modal
+          open={this.state.errorDisplay}
+          closeOnDocumentClick={true}
+          onClose={() => { this.setState({ errors: [] }) }}
+          position='top center'
+        >
+          <div>
+            {errorDisplay}
+          </div>
+        </Popup>
         {page}
       </>
     )
