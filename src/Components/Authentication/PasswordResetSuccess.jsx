@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import Spinner from '../ReusableComponents/Spinner'
 
 const PasswordResetSuccess = (props) => {
@@ -10,11 +11,7 @@ const PasswordResetSuccess = (props) => {
   const { t, ready } = useTranslation('PasswordResetSuccess')
 
   if (props.currentUserIn) {
-    window.localStorage.removeItem('access-token')
-    window.localStorage.removeItem('token-type')
-    window.localStorage.removeItem('client')
-    window.localStorage.removeItem('uid')
-    window.localStorage.removeItem('expiry')
+    wipeCredentials()
     setTimeout(function () { window.location.reload(true) }, 500)
   }
 

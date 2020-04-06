@@ -9,6 +9,12 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 
 class BookingDetails extends Component {
 
+  componentDidMount() {
+    if (this.props.location.state === undefined || this.props.history.action === 'POP') {
+      this.props.history.push({ pathname: '/' })
+    }
+  }
+
   messageHost = (e) => {
     e.preventDefault()
     if (this.props.id === undefined) {
@@ -50,15 +56,11 @@ class BookingDetails extends Component {
     if (this.props.tReady) {
       let priceWithDecimalsString, total
 
-      if (this.props.location.state === undefined) {
-        this.props.history.push('/login')
+      priceWithDecimalsString = this.props.location.state.priceTotal.toFixed(2)
+      if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+        total = parseFloat(priceWithDecimalsString)
       } else {
-        priceWithDecimalsString = this.props.location.state.priceTotal.toFixed(2)
-        if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
-          total = parseFloat(priceWithDecimalsString)
-        } else {
-          total = priceWithDecimalsString
-        }
+        total = priceWithDecimalsString
       }
 
       return (

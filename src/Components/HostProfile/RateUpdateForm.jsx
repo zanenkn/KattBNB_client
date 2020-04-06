@@ -53,7 +53,7 @@ const RateUpdateForm = (props) => {
             } else {
               setLoading(false)
               setErrorDisplay(true)
-              setErrors([error.response.data.errors.full_messages])
+              setErrors([error.response.data.error])
             }
           })
       } else {

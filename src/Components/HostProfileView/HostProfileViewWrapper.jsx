@@ -9,6 +9,7 @@ import Spinner from '../ReusableComponents/Spinner'
 const HostProfileViewWrapper = (props) => {
 
   const { t } = useTranslation('HostProfileViewWrapper')
+
   const [hostProfile, setHostProfile] = useState([])
   const [lat, setLat] = useState(null)
   const [long, setLong] = useState(null)
@@ -17,6 +18,14 @@ const HostProfileViewWrapper = (props) => {
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
+    if (props.location.state === undefined || props.history.action === 'POP') {
+      window.location.replace('/')
+    } else {
+      axiosCall()
+    }
+  }, [props.location.state, props.history.action])
+
+  const axiosCall = () => {
     if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)
@@ -49,7 +58,7 @@ const HostProfileViewWrapper = (props) => {
           }
         })
     }
-  }, [props.location.state.userId])
+  }
 
   if (loading) {
     return <Spinner />

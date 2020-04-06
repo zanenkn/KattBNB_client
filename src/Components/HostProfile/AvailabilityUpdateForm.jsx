@@ -77,7 +77,7 @@ class AvailabilityUpdateForm extends Component {
               this.setState({
                 loading: false,
                 errorDisplay: true,
-                errors: error.response.data.errors.full_messages
+                errors: error.response.data.error
               })
             }
           })
