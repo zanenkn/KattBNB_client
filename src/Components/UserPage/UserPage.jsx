@@ -42,6 +42,7 @@ const UserPage = (props) => {
   const [loadingHostProfile, setLoadingHostProfile] = useState(true)
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
+  const [deleteDisplayNone, setDeleteDipslayNone] = useState(false)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -176,7 +177,9 @@ const UserPage = (props) => {
 
   const destroyAccount = async () => {
     avatarFormHandler()
+    setDeleteDipslayNone(true)
     if (window.navigator.onLine === false) {
+      setDeleteDipslayNone(false)
       setErrorDisplay(true)
       setErrors(['reusable:errors:window-navigator'])
     } else {
@@ -213,6 +216,7 @@ const UserPage = (props) => {
         }
         if (noAccountDeleteIncoming.length > 0) {
           window.alert(t('UserPage:delete-alert'))
+          setDeleteDipslayNone(false)
         }
         else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
           const path = '/api/v1/auth'
@@ -247,15 +251,19 @@ const UserPage = (props) => {
               window.alert(t('UserPage:deletion-error'))
               wipeCredentials('/')
             })
+        } else {
+          setDeleteDipslayNone(false)
         }
       } catch (error) {
         if (error.response.status === 500) {
+          setDeleteDipslayNone(false)
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'))
           wipeCredentials('/')
         } else {
+          setDeleteDipslayNone(false)
           setErrorDisplay(true)
           setErrors(error.response.data.error)
         }
@@ -387,7 +395,7 @@ const UserPage = (props) => {
         }
         <Divider hidden />
         <Header id='delete-account-link' onClick={() => destroyAccount()}
-          className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
+          className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem', 'display': deleteDisplayNone && 'none' }} >
           {t('UserPage:delete-cta')}
         </Header>
       </div>
