@@ -11,6 +11,7 @@ import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import NotificationsUpdateForm from './NotificationsUpdateForm'
 import { useTranslation, Trans } from 'react-i18next'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const UserPage = (props) => {
   const hostProfileElement = useRef()
@@ -173,22 +174,12 @@ const UserPage = (props) => {
       }
       axios.delete(path, { headers: headers })
         .then(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
           window.alert(t('UserPage:deletion-alert'))
-          window.location.replace('/')
+          wipeCredentials('/')
         })
         .catch(() => {
           window.alert(t('UserPage:deletion-error'))
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
+          wipeCredentials('/login')
         })
     }
     else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
@@ -200,22 +191,12 @@ const UserPage = (props) => {
       }
       axios.delete(path, { headers: headers })
         .then(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
           window.alert(t('UserPage:deletion-alert'))
-          window.location.replace('/')
+          wipeCredentials('/')
         })
         .catch(() => {
           window.alert(t('UserPage:deletion-error'))
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
+          wipeCredentials('/login')
         })
     }
   }
