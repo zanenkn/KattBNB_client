@@ -113,8 +113,16 @@ const UserPage = (props) => {
       } else {
         try {
           const lang = detectLanguage()
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
           const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`)
           setHostProfile(response.data)
+          const responseIncoming = await axios.get(pathIncoming, { headers: headers })
+          setIncomingBookings(responseIncoming.data)
           setLoading(false)
           setErrorDisplay(false)
           setErrors([])
@@ -122,6 +130,9 @@ const UserPage = (props) => {
           if (error.response.status === 500) {
             setErrorDisplay(true)
             setErrors(['reusable:errors:500'])
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
           } else {
             setErrorDisplay(true)
             setErrors(error.response.data.error)
@@ -129,7 +140,7 @@ const UserPage = (props) => {
         }
       }
     } asyncDidMount()
-  }, [props.id])
+  }, [props.username, props.id, t])
 
   const avatarFormHandler = () => {
     setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
