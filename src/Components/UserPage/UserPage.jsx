@@ -38,7 +38,6 @@ const UserPage = (props) => {
   })
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
-  const [outgoingBookings, setOutgoingBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingHostProfile, setLoadingHostProfile] = useState(true)
   const [errorDisplay, setErrorDisplay] = useState(false)
@@ -166,77 +165,90 @@ const UserPage = (props) => {
 
   const destroyAccount = async () => {
     avatarFormHandler()
-    const lang = detectLanguage()
-    const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
-    const pathOutgoing = `/api/v1/bookings?user_id=${props.id}&locale=${lang}`
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    try {
-      const responseIncoming = await axios.get(pathIncoming, { headers: headers })
-      const responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
-      setIncomingBookings(responseIncoming.data)
-      setOutgoingBookings(responseOutgoing.data)
-      let noAccountDeleteIncoming = []
-      let sendEmailToHostOutgoing = []
-      let todaysDate = new Date()
-      let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-      let today = new Date(utc).getTime()
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      const lang = detectLanguage()
+      const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
+      const pathOutgoing = `/api/v1/bookings?user_id=${props.id}&locale=${lang}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      try {
+        const responseIncoming = await axios.get(pathIncoming, { headers: headers })
+        const responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
+        let noAccountDeleteIncoming = []
+        let sendEmailToHostOutgoing = []
+        let todaysDate = new Date()
+        let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+        let today = new Date(utc).getTime()
 
-      if (incomingBookings.length > 0) {
-        incomingBookings.map(booking => {
-          if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
-            noAccountDeleteIncoming.push(booking)
-          }
-        })
-      }
-      if (outgoingBookings.length > 0) {
-        outgoingBookings.map(booking => {
-          if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-            sendEmailToHostOutgoing.push(booking)
-          }
-        })
-      }
-      if (noAccountDeleteIncoming.length > 0) {
-        window.alert(t('UserPage:delete-alert'))
-      }
-      else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
-        const path = '/api/v1/auth'
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
+        if (responseIncoming.data.length > 0) {
+          responseIncoming.data.map(booking => {
+            if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
+              noAccountDeleteIncoming.push(booking)
+            }
+          })
         }
-        axios.delete(path, { headers: headers })
-          .then(() => {
-            window.alert(t('UserPage:deletion-alert'))
-            wipeCredentials('/')
+        if (responseOutgoing.data.length > 0) {
+          responseOutgoing.data.map(booking => {
+            if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+              sendEmailToHostOutgoing.push(booking)
+            }
           })
-          .catch(() => {
-            window.alert(t('UserPage:deletion-error'))
-            wipeCredentials('/login')
-          })
-      }
-      else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
-        const path = '/api/v1/auth'
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
         }
-        axios.delete(path, { headers: headers })
-          .then(() => {
-            window.alert(t('UserPage:deletion-alert'))
-            wipeCredentials('/')
-          })
-          .catch(() => {
-            window.alert(t('UserPage:deletion-error'))
-            wipeCredentials('/login')
-          })
+        if (noAccountDeleteIncoming.length > 0) {
+          window.alert(t('UserPage:delete-alert'))
+        }
+        else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
+          const path = '/api/v1/auth'
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          axios.delete(path, { headers: headers })
+            .then(() => {
+              window.alert(t('UserPage:deletion-alert'))
+              wipeCredentials('/')
+            })
+            .catch(() => {
+              window.alert(t('UserPage:deletion-error'))
+              wipeCredentials('/')
+            })
+        }
+        else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
+          const path = '/api/v1/auth'
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          axios.delete(path, { headers: headers })
+            .then(() => {
+              window.alert(t('UserPage:deletion-alert'))
+              wipeCredentials('/')
+            })
+            .catch(() => {
+              window.alert(t('UserPage:deletion-error'))
+              wipeCredentials('/')
+            })
+        }
+      } catch (error) {
+        if (error.response.status === 500) {
+          setErrorDisplay(true)
+          setErrors(['reusable:errors:500'])
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          setErrorDisplay(true)
+          setErrors(error.response.data.error)
+        }
       }
-    } catch (error) {
     }
   }
 
