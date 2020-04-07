@@ -43,7 +43,7 @@
     "401-password": "This link has expired! You'll be redirected to request a new one.",
     "401": "This session has expired! You will have to login again.",
     "google-error-1": "Address not found! Please try again.",
-    "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists conatct KattBNB support."
+    "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists contact KattBNB support."
   },
   "remaining-chars": "Remaining characters:",
   "cta": {
