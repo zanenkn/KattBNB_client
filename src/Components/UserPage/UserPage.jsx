@@ -140,7 +140,7 @@ const UserPage = (props) => {
   }
 
   const destroyAccount = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))
+    avatarFormHandler()
 
     let noAccountDeleteIncoming = []
     let sendEmailToHostOutgoing = []
