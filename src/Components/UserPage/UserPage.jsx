@@ -3,18 +3,22 @@ import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
 import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
-import { Header, Segment, Button, Divider } from 'semantic-ui-react'
+import { Header, Segment, Button, Divider, Message } from 'semantic-ui-react'
 import axios from 'axios'
+import Popup from 'reactjs-popup'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import NotificationsUpdateForm from './NotificationsUpdateForm'
 import { useTranslation, Trans } from 'react-i18next'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const UserPage = (props) => {
+
   const hostProfileElement = useRef()
   const { t, ready } = useTranslation('UserPage')
+
   const [form, setForm] = useState({
     editLocationForm: false,
     editPasswordForm: false,
@@ -22,7 +26,6 @@ const UserPage = (props) => {
     editNotificationsForm: false
   })
   const [hostProfile, setHostProfile] = useState([])
-
   const [element, setElement] = useState({
     description: '',
     fullAddress: '',
@@ -33,79 +36,112 @@ const UserPage = (props) => {
     location: props.location,
     messageNotifications: props.messageNotifications
   })
-
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
-  const [outgoingBookings, setOutgoingBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingHostProfile, setLoadingHostProfile] = useState(true)
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [deleteDisplayNone, setDeleteDipslayNone] = useState(false)
 
   useEffect(() => {
-    if (hostProfile.length === 1) {
-      const lang = detectLanguage()
-      const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${lang}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.get(path, { headers: headers })
-        .then(resp => {
-          let rateToNumber = parseFloat(resp.data.price_per_day_1_cat)
-          let rateToString = rateToNumber.toFixed(2)
-          let finalRate
-          if (rateToString[rateToString.length - 1] === '0' && rateToString[rateToString.length - 2] === '0') {
-            finalRate = parseFloat(rateToString)
-          } else {
-            finalRate = rateToString
-          }
-          let supplementToNumber = parseFloat(resp.data.supplement_price_per_cat_per_day)
-          let supplementToString = supplementToNumber.toFixed(2)
-          let finalSupplement
-          if (supplementToString[supplementToString.length - 1] === '0' && supplementToString[supplementToString.length - 2] === '0') {
-            finalSupplement = parseFloat(supplementToString)
-          } else {
-            finalSupplement = supplementToString
-          }
-          setElement({
-            description: resp.data.description,
-            fullAddress: resp.data.full_address,
-            rate: finalRate,
-            maxCats: resp.data.max_cats_accepted,
-            supplement: finalSupplement,
-            availability: resp.data.availability,
-            location: props.location,
-            messageNotifications: props.messageNotifications
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      if (hostProfile.length === 1) {
+        const lang = detectLanguage()
+        const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${lang}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.get(path, { headers: headers })
+          .then(resp => {
+            let rateToNumber = parseFloat(resp.data.price_per_day_1_cat)
+            let rateToString = rateToNumber.toFixed(2)
+            let finalRate
+            if (rateToString[rateToString.length - 1] === '0' && rateToString[rateToString.length - 2] === '0') {
+              finalRate = parseFloat(rateToString)
+            } else {
+              finalRate = rateToString
+            }
+            let supplementToNumber = parseFloat(resp.data.supplement_price_per_cat_per_day)
+            let supplementToString = supplementToNumber.toFixed(2)
+            let finalSupplement
+            if (supplementToString[supplementToString.length - 1] === '0' && supplementToString[supplementToString.length - 2] === '0') {
+              finalSupplement = parseFloat(supplementToString)
+            } else {
+              finalSupplement = supplementToString
+            }
+            setElement({
+              description: resp.data.description,
+              fullAddress: resp.data.full_address,
+              rate: finalRate,
+              maxCats: resp.data.max_cats_accepted,
+              supplement: finalSupplement,
+              availability: resp.data.availability,
+              location: props.location,
+              messageNotifications: props.messageNotifications
+            })
+            setForbiddenDates(resp.data.forbidden_dates)
+            setLoadingHostProfile(false)
+            setErrorDisplay(false)
+            setErrors([])
           })
-          setForbiddenDates(resp.data.forbidden_dates)
-          setLoadingHostProfile(false)
-        })
+          .catch(error => {
+            if (error.response.status === 500) {
+              setErrorDisplay(true)
+              setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              setErrorDisplay(true)
+              setErrors(error.response.data.error)
+            }
+          })
+      }
     }
-  }, [hostProfile, props.messageNotifications, props.location])
+  }, [hostProfile, props.messageNotifications, props.location, t])
 
   useEffect(() => {
     async function asyncDidMount() {
-      const lang = detectLanguage()
-      const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`)
-      setHostProfile(response.data)
-      setLoading(false)
-
-      const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
-      const pathOutgoing = `/api/v1/bookings?user_id=${props.id}&locale=${lang}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
+      if (window.navigator.onLine === false) {
+        setErrorDisplay(true)
+        setErrors(['reusable:errors:window-navigator'])
+      } else {
+        try {
+          const lang = detectLanguage()
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
+          const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`)
+          setHostProfile(response.data)
+          const responseIncoming = await axios.get(pathIncoming, { headers: headers })
+          setIncomingBookings(responseIncoming.data)
+          setLoading(false)
+          setErrorDisplay(false)
+          setErrors([])
+        } catch (error) {
+          if (error.response.status === 500) {
+            setErrorDisplay(true)
+            setErrors(['reusable:errors:500'])
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            setErrorDisplay(true)
+            setErrors(error.response.data.error)
+          }
+        }
       }
-      axios.get(pathIncoming, { headers: headers }).then(response => {
-        setIncomingBookings(response.data)
-      })
-      axios.get(pathOutgoing, { headers: headers }).then(response => {
-        setOutgoingBookings(response.data)
-      })
-    }
-    asyncDidMount()
-  }, [props.id, props.username])
+    } asyncDidMount()
+  }, [props.username, props.id, t])
 
   const avatarFormHandler = () => {
     setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
@@ -139,91 +175,122 @@ const UserPage = (props) => {
     })
   }
 
-  const destroyAccount = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, createHostProfileForm: false }))
-
-    let noAccountDeleteIncoming = []
-    let sendEmailToHostOutgoing = []
-    let todaysDate = new Date()
-    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-    let today = new Date(utc).getTime()
-
-    if (incomingBookings.length > 0) {
-      incomingBookings.map(booking => {
-        if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
-          noAccountDeleteIncoming.push(booking)
-        }
-      })
-    }
-    if (outgoingBookings.length > 0) {
-      outgoingBookings.map(booking => {
-        if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-          sendEmailToHostOutgoing.push(booking)
-        }
-      })
-    }
-    if (noAccountDeleteIncoming.length > 0) {
-      window.alert(t('UserPage:delete-alert'))
-    }
-    else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
-      const path = '/api/v1/auth'
+  const destroyAccount = async () => {
+    avatarFormHandler()
+    setDeleteDipslayNone(true)
+    if (window.navigator.onLine === false) {
+      setDeleteDipslayNone(false)
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      const lang = detectLanguage()
+      const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
+      const pathOutgoing = `/api/v1/bookings?user_id=${props.id}&locale=${lang}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
-      axios.delete(path, { headers: headers })
-        .then(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.alert(t('UserPage:deletion-alert'))
-          window.location.replace('/')
-        })
-        .catch(() => {
-          window.alert(t('UserPage:deletion-error'))
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
-        })
-    }
-    else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
-      const path = '/api/v1/auth'
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
+      try {
+        const responseIncoming = await axios.get(pathIncoming, { headers: headers })
+        const responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
+        let noAccountDeleteIncoming = []
+        let sendEmailToHostOutgoing = []
+        let todaysDate = new Date()
+        let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+        let today = new Date(utc).getTime()
+
+        if (responseIncoming.data.length > 0) {
+          responseIncoming.data.map(booking => {
+            if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
+              noAccountDeleteIncoming.push(booking)
+            }
+          })
+        }
+        if (responseOutgoing.data.length > 0) {
+          responseOutgoing.data.map(booking => {
+            if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+              sendEmailToHostOutgoing.push(booking)
+            }
+          })
+        }
+        if (noAccountDeleteIncoming.length > 0) {
+          window.alert(t('UserPage:delete-alert'))
+          setDeleteDipslayNone(false)
+        }
+        else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
+          const path = '/api/v1/auth'
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          axios.delete(path, { headers: headers })
+            .then(() => {
+              window.alert(t('UserPage:deletion-alert'))
+              wipeCredentials('/')
+            })
+            .catch(() => {
+              window.alert(t('UserPage:deletion-error'))
+              wipeCredentials('/')
+            })
+        }
+        else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
+          const path = '/api/v1/auth'
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          axios.delete(path, { headers: headers })
+            .then(() => {
+              window.alert(t('UserPage:deletion-alert'))
+              wipeCredentials('/')
+            })
+            .catch(() => {
+              window.alert(t('UserPage:deletion-error'))
+              wipeCredentials('/')
+            })
+        } else {
+          setDeleteDipslayNone(false)
+        }
+      } catch (error) {
+        if (error.response.status === 500) {
+          setDeleteDipslayNone(false)
+          setErrorDisplay(true)
+          setErrors(['reusable:errors:500'])
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          setDeleteDipslayNone(false)
+          setErrorDisplay(true)
+          setErrors(error.response.data.error)
+        }
       }
-      axios.delete(path, { headers: headers })
-        .then(() => {
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.alert(t('UserPage:deletion-alert'))
-          window.location.replace('/')
-        })
-        .catch(() => {
-          window.alert(t('UserPage:deletion-error'))
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
-        })
     }
   }
 
-  if (ready === true && loading === false) {
+  if (ready && loading === false) {
     return (
       <div className='content-wrapper'>
+        <Popup
+          modal
+          open={errorDisplay}
+          closeOnDocumentClick={true}
+          onClose={() => { setErrorDisplay(false); setErrors([]) }}
+          position='top center'
+        >
+          <div>
+            <Message negative >
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          </div>
+        </Popup>
         <Segment className='whitebox'>
           <Header as='h2'>
             <Trans i18nKey='UserPage:greeting' values={{ username: props.username }} />
@@ -328,13 +395,34 @@ const UserPage = (props) => {
         }
         <Divider hidden />
         <Header id='delete-account-link' onClick={() => destroyAccount()}
-          className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem' }} >
+          className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem', 'display': deleteDisplayNone && 'none' }} >
           {t('UserPage:delete-cta')}
         </Header>
       </div>
     )
+  } else if (ready && loading) {
+    return (
+      <div className='content-wrapper'>
+        <Popup
+          modal
+          open={errorDisplay}
+          closeOnDocumentClick={true}
+          onClose={() => { setErrorDisplay(false); setErrors([]) }}
+          position='top center'
+        >
+          <div>
+            <Message negative >
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          </div>
+        </Popup>
+      </div>
+    )
   } else { return <Spinner /> }
-
 }
 
 const mapStateToProps = state => ({

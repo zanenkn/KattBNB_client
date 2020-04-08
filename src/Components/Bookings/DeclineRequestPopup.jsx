@@ -4,6 +4,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 class DeclineRequestPopup extends Component {
 
@@ -19,41 +20,63 @@ class DeclineRequestPopup extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     this.setState({ loading: true })
-    if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
-      if (this.state.message !== '' && this.state.message.length < 201) {
-        const path = `/api/v1/bookings/${this.props.id}`
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        const payload = {
-          host_message: this.state.message,
-          status: 'declined',
-          locale: lang
-        }
-        axios.patch(path, payload, { headers: headers })
-          .then(() => {
-            window.location.replace('/all-bookings')
-          })
-          .catch(error => {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: error.response.data.error
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+      this.props.declModalCloseState(true)
+    } else {
+      if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
+        if (this.state.message !== '' && this.state.message.length < 201) {
+          const path = `/api/v1/bookings/${this.props.id}`
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          const payload = {
+            host_message: this.state.message,
+            status: 'declined',
+            locale: lang
+          }
+          axios.patch(path, payload, { headers: headers })
+            .then(() => {
+              window.location.replace('/all-bookings')
             })
+            .catch(error => {
+              if (error.response.status === 500) {
+                this.setState({
+                  loading: false,
+                  errorDisplay: true,
+                  errors: ['reusable:errors:500']
+                })
+                this.props.declModalCloseState(true)
+              } else if (error.response.status === 401) {
+                window.alert(t('reusable:errors:401'))
+                wipeCredentials('/')
+              } else {
+                this.setState({
+                  loading: false,
+                  errorDisplay: true,
+                  errors: error.response.data.error
+                })
+                this.props.declModalCloseState(true)
+              }
+            })
+        } else {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: ['DeclineRequestPopup:decline-error']
           })
+          this.props.declModalCloseState(true)
+        }
       } else {
-        this.setState({
-          loading: false,
-          errorDisplay: true,
-          errors: ['DeclineRequestPopup:decline-error']
-        })
+        this.setState({ loading: false })
         this.props.declModalCloseState(true)
       }
-    } else {
-      this.setState({ loading: false })
-      this.props.declModalCloseState(true)
     }
   }
 

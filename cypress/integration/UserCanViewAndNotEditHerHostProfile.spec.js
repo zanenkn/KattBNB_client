@@ -25,6 +25,12 @@ describe('User can view her host profile', () => {
       status: 200,
       response: 'fixture:successful_signout.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: ''
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#user-icon').click({ force: true })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Icon, Container, Grid, Header } from 'semantic-ui-react'
+import { Form, Icon, Container, Grid, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import { bookingSearch, getBookingLength } from '../Modules/booking'
@@ -10,6 +10,7 @@ import moment from 'moment'
 import 'moment/locale/sv'
 import axios from 'axios'
 import { detectLanguage } from '../Modules/detectLanguage'
+import { wipeCredentials } from '../Modules/wipeCredentials'
 import Popup from 'reactjs-popup'
 import HostPopup from './HostPopup'
 import Spinner from './ReusableComponents/Spinner'
@@ -28,7 +29,9 @@ class SearchResults extends Component {
     results: 'list',
     openHostPopup: false,
     scrollOffset: 0,
-    loading: true
+    loading: true,
+    errorDisplay: false,
+    errors: []
   }
 
   geolocationDataAddress = () => {
@@ -48,35 +51,54 @@ class SearchResults extends Component {
     if (this.props.history.location.state === undefined) {
       this.props.history.push({ pathname: '/' })
     } else {
-      const lang = detectLanguage()
-      let allAvailableHosts = []
-      axios.get(`/api/v1/host_profiles?locale=${lang}`).then(response => {
-        if (response.data !== '' && response.data.length > 0) {
-          let availableByDate = bookingSearch(response.data, this.props.history.location.state.from, this.props.history.location.state.to)
-          availableByDate.map(host => {
-            if (host.max_cats_accepted >= this.props.history.location.state.cats && this.props.id !== host.user.id) {
-              let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.history.location.state.from, this.props.history.location.state.to))
-              allAvailableHosts.push(
-                {
-                  id: host.user.id,
-                  lat: parseFloat(host.lat),
-                  lng: parseFloat(host.long),
-                  total: total
-                }
-              )
-            }
-          })
-        }
-      })
-      this.setState({
-        checkInDate: this.props.history.location.state.from,
-        checkOutDate: this.props.history.location.state.to,
-        numberOfCats: this.props.history.location.state.cats,
-        location: this.props.history.location.state.location,
-        searchDataLocation: this.props.history.location.state.searchData,
-        allAvailableHosts: allAvailableHosts
-      })
-      this.geolocationDataAddress()
+      if (window.navigator.onLine === false) {
+        this.setState({
+          errorDisplay: true,
+          errors: ['reusable:errors:window-navigator']
+        })
+      } else {
+        const lang = detectLanguage()
+        let allAvailableHosts = []
+        axios.get(`/api/v1/host_profiles?locale=${lang}`).then(response => {
+          if (response.data !== '' && response.data.length > 0) {
+            let availableByDate = bookingSearch(response.data, this.props.history.location.state.from, this.props.history.location.state.to)
+            availableByDate.map(host => {
+              if (host.max_cats_accepted >= this.props.history.location.state.cats && this.props.id !== host.user.id) {
+                let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.history.location.state.from, this.props.history.location.state.to))
+                allAvailableHosts.push(
+                  {
+                    id: host.user.id,
+                    lat: parseFloat(host.lat),
+                    lng: parseFloat(host.long),
+                    total: total
+                  }
+                )
+              }
+            })
+          }
+        }).catch(error => {
+          if (error.response.status === 500) {
+            this.setState({
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else {
+            this.setState({
+              errorDisplay: true,
+              errors: error.response.data.error
+            })
+          }
+        })
+        this.setState({
+          checkInDate: this.props.history.location.state.from,
+          checkOutDate: this.props.history.location.state.to,
+          numberOfCats: this.props.history.location.state.cats,
+          location: this.props.history.location.state.location,
+          searchDataLocation: this.props.history.location.state.searchData,
+          allAvailableHosts: allAvailableHosts
+        })
+        this.geolocationDataAddress()
+      }
     }
   }
 
@@ -90,26 +112,45 @@ class SearchResults extends Component {
   }
 
   getHostById(e) {
-    const lang = detectLanguage()
-    axios.get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`).then(response => {
+    if (window.navigator.onLine === false) {
       this.setState({
-        hostId: response.data[0].user.id,
-        hostAvatar: response.data[0].user.avatar,
-        hostNickname: response.data[0].user.nickname,
-        hostLocation: response.data[0].user.location,
-        hostRate: response.data[0].price_per_day_1_cat,
-        hostSupplement: response.data[0].supplement_price_per_cat_per_day,
-        hostDescription: response.data[0].description,
-        hostLat: response.data[0].lat,
-        hostLong: response.data[0].long,
-        loading: false
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
-    })
+    } else {
+      const lang = detectLanguage()
+      axios.get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`).then(response => {
+        this.setState({
+          hostId: response.data[0].user.id,
+          hostAvatar: response.data[0].user.avatar,
+          hostNickname: response.data[0].user.nickname,
+          hostLocation: response.data[0].user.location,
+          hostRate: response.data[0].price_per_day_1_cat,
+          hostSupplement: response.data[0].supplement_price_per_cat_per_day,
+          hostDescription: response.data[0].description,
+          hostLat: response.data[0].lat,
+          hostLong: response.data[0].long,
+          loading: false,
+          openHostPopup: true
+        })
+      }).catch(error => {
+        if (error.response.status === 500) {
+          this.setState({
+            errorDisplay: true,
+            errors: ['reusable:errors:500']
+          })
+        } else {
+          this.setState({
+            errorDisplay: true,
+            errors: error.response.data.error
+          })
+        }
+      })
+    }
   }
 
   handleDatapointClick(e) {
     this.getHostById(e)
-    this.setState({ openHostPopup: true })
   }
 
   resetHost() {
@@ -161,44 +202,69 @@ class SearchResults extends Component {
 
   messageHost = (e) => {
     e.preventDefault()
-    if (this.props.id === undefined) {
-      this.props.history.push('/login')
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
     } else {
-      const lang = detectLanguage()
-      const path = '/api/v1/conversations'
-      const payload = {
-        user1_id: this.props.id,
-        user2_id: this.state.hostId,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.post(path, payload, { headers: headers })
-        .then(response => {
-          this.props.history.push({
-            pathname: '/conversation',
-            state: {
-              id: response.data.id,
-              user: {
-                avatar: this.state.hostAvatar,
-                id: this.state.hostId,
-                location: this.state.hostLocation,
-                nickname: this.state.hostNickname
+      if (this.props.id === undefined) {
+        this.props.history.push('/login')
+      } else {
+        const lang = detectLanguage()
+        const path = '/api/v1/conversations'
+        const payload = {
+          user1_id: this.props.id,
+          user2_id: this.state.hostId,
+          locale: lang
+        }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.post(path, payload, { headers: headers })
+          .then(response => {
+            this.props.history.push({
+              pathname: '/conversation',
+              state: {
+                id: response.data.id,
+                user: {
+                  avatar: this.state.hostAvatar,
+                  id: this.state.hostId,
+                  location: this.state.hostLocation,
+                  nickname: this.state.hostNickname
+                }
               }
+            })
+          }).catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                errorDisplay: true,
+                errors: error.response.data.error
+              })
             }
           })
-        })
+      }
     }
   }
+
   render() {
+
     const { t } = this.props
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
     let finalAvailableHosts = []
-    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results
+    let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results, errorDisplay
 
     if (this.props.tReady) {
       if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
@@ -307,6 +373,18 @@ class SearchResults extends Component {
         )
       }
 
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
       return (
         <>
           <Popup
@@ -331,6 +409,17 @@ class SearchResults extends Component {
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 />
               }
+            </div>
+          </Popup>
+          <Popup
+            modal
+            open={this.state.errorDisplay}
+            closeOnDocumentClick={true}
+            onClose={() => { this.setState({ errorDisplay: false, errors: [] }) }}
+            position='top center'
+          >
+            <div>
+              {errorDisplay}
             </div>
           </Popup>
           <div style={{ 'height': '26vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>

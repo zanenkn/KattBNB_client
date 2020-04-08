@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -29,21 +30,64 @@ class LocationUpdateForm extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     let address = this.props.fullAddress
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.removeItem('access-token')
-      window.localStorage.removeItem('token-type')
-      window.localStorage.removeItem('client')
-      window.localStorage.removeItem('uid')
-      window.localStorage.removeItem('expiry')
-      window.location.replace('/login')
-    } else if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
+    if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['no-location-error']
+        errors: ['reusable:errors:window-navigator']
       })
-    } else if (address !== '' && address.includes(this.state.newLocation) === false) {
-      if (window.confirm(t('LocationUpdateForm:no-match-alert'))) {
+    } else {
+      if (this.state.newLocation === this.props.location || this.state.newLocation === '') {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['no-location-error']
+        })
+      } else if (address !== '' && address.includes(this.state.newLocation) === false) {
+        if (window.confirm(t('LocationUpdateForm:no-match-alert'))) {
+          this.setState({ loading: true })
+          e.preventDefault()
+          const path = '/api/v1/auth/'
+          const payload = {
+            location: this.state.newLocation,
+            locale: lang
+          }
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          axios.put(path, payload, { headers: headers })
+            .then(() => {
+              this.setState({
+                loading: false,
+                errorDisplay: false,
+                errors: ''
+              })
+              window.alert(t('LocationUpdateForm:success-alert'))
+              this.props.setElement('location', this.state.newLocation)
+              this.props.closeLocationAndPasswordForms()
+            })
+            .catch(error => {
+              if (error.response.status === 500) {
+                this.setState({
+                  loading: false,
+                  errorDisplay: true,
+                  errors: ['reusable:errors:500']
+                })
+              } else if (error.response.status === 401 || error.response.status === 404) {
+                window.alert(t('reusable:errors:401'))
+                wipeCredentials('/')
+              } else {
+                this.setState({
+                  loading: false,
+                  errorDisplay: true,
+                  errors: error.response.data.errors.full_messages
+                })
+              }
+            })
+        }
+      } else {
         this.setState({ loading: true })
         e.preventDefault()
         const path = '/api/v1/auth/'
@@ -68,44 +112,24 @@ class LocationUpdateForm extends Component {
             this.props.closeLocationAndPasswordForms()
           })
           .catch(error => {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: error.response.data.errors.full_messages
-            })
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401 || error.response.status === 404) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.errors.full_messages
+              })
+            }
           })
       }
-    } else {
-      this.setState({ loading: true })
-      e.preventDefault()
-      const path = '/api/v1/auth/'
-      const payload = {
-        location: this.state.newLocation,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            loading: false,
-            errorDisplay: false,
-            errors: ''
-          })
-          window.alert(t('LocationUpdateForm:success-alert'))
-          this.props.setElement('location', this.state.newLocation)
-          this.props.closeLocationAndPasswordForms()
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
     }
   }
 

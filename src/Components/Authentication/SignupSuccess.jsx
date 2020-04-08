@@ -4,16 +4,14 @@ import { Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const SignupSuccess = (props) => {
+
   const { t, ready } = useTranslation('SignupSuccess')
 
   if (props.currentUserIn) {
-    window.localStorage.removeItem('access-token')
-    window.localStorage.removeItem('token-type')
-    window.localStorage.removeItem('client')
-    window.localStorage.removeItem('uid')
-    window.localStorage.removeItem('expiry')
+    wipeCredentials()
     setTimeout(function () { window.location.reload(true) }, 500)
   }
 

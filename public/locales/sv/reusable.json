@@ -37,7 +37,13 @@
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
     "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!",
-    "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund."
+    "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund.",
+    "window-navigator": "Det verkar som om det finns ett problem med din internetanslutning. Vänligen kontrollera den och försök igen.",
+    "500": "Det gick inte att kontakta servern. Försök att ladda om sidan om en stund. Om problemet kvarstår, kontakta KattBNB-supporten.",
+    "401-password": "Den här länken har upphört! Du kommer att omdirigeras för att begära en ny.",
+    "401": "Den här sessionen har upphört! Du måste logga in igen.",
+    "google-error-1": "Adress hittades inte! Vänligen försök igen.",
+    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support."
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {

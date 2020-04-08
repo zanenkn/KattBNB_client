@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Button, Message, Divider, Popup } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -29,55 +30,63 @@ class PasswordUpdateForm extends Component {
 
   updatePassword = (e) => {
     const { t } = this.props
-    if (window.localStorage.getItem('access-token') === '' || window.localStorage.getItem('access-token') === null) {
-      window.localStorage.removeItem('access-token')
-      window.localStorage.removeItem('token-type')
-      window.localStorage.removeItem('client')
-      window.localStorage.removeItem('uid')
-      window.localStorage.removeItem('expiry')
-      window.location.replace('/login')
-    } else if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
-      this.setState({ loading: true })
-      e.preventDefault()
-      const lang = detectLanguage()
-      const path = '/api/v1/auth/password'
-      const payload = {
-        current_password: this.state.currentPassword,
-        password: this.state.newPassword,
-        password_confirmation: this.state.newPasswordConfirmation,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.put(path, payload, { headers: headers })
-        .then(() => {
-          this.setState({
-            displayPasswordForm: false,
-            errorDisplay: false
-          })
-          window.alert(t('PasswordUpdateForm:success-alert'))
-          window.localStorage.removeItem('access-token')
-          window.localStorage.removeItem('token-type')
-          window.localStorage.removeItem('client')
-          window.localStorage.removeItem('uid')
-          window.localStorage.removeItem('expiry')
-          window.location.replace('/login')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else {
+    if (window.navigator.onLine === false) {
       this.setState({
+        loading: false,
         errorDisplay: true,
-        errors: ['PasswordUpdateForm:error']
+        errors: ['reusable:errors:window-navigator']
       })
+    } else {
+      if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
+        this.setState({ loading: true })
+        e.preventDefault()
+        const lang = detectLanguage()
+        const path = '/api/v1/auth/password'
+        const payload = {
+          current_password: this.state.currentPassword,
+          password: this.state.newPassword,
+          password_confirmation: this.state.newPasswordConfirmation,
+          locale: lang
+        }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.put(path, payload, { headers: headers })
+          .then(() => {
+            this.setState({
+              displayPasswordForm: false,
+              errorDisplay: false,
+              errors: ''
+            })
+            window.alert(t('PasswordUpdateForm:success-alert'))
+            wipeCredentials('/login')
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401 || error.response.status === 404) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.errors.full_messages
+              })
+            }
+          })
+      } else {
+        this.setState({
+          errorDisplay: true,
+          errors: ['PasswordUpdateForm:error']
+        })
+      }
     }
   }
 

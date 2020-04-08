@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
-import { Image, Header, Grid, Divider } from 'semantic-ui-react'
+import { Image, Header, Grid, Divider, Message } from 'semantic-ui-react'
 import timeFormat from '../../Modules/dateFormatting'
 import moment from 'moment'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withTranslation } from 'react-i18next'
 
 class AllConversations extends Component {
@@ -13,35 +14,65 @@ class AllConversations extends Component {
   state = {
     conversations: '',
     scrollYPosition: 0,
-    loading: true
+    loading: true,
+    errorDisplay: false,
+    errors: []
   }
 
   componentDidMount() {
+    const { t } = this.props
     window.addEventListener('scroll', this.handleScroll)
-    const lang = detectLanguage()
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    const path = `/api/v1/conversations?user_id=${this.props.id}&locale=${lang}`
-    axios.get(path, { headers: headers })
-      .then(response => {
-        const shownConversations = []
-        response.data.map(conversation => {
-          if (conversation.hidden !== this.props.id) {
-            shownConversations.push(conversation)
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      const lang = detectLanguage()
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const path = `/api/v1/conversations?user_id=${this.props.id}&locale=${lang}`
+      axios.get(path, { headers: headers })
+        .then(response => {
+          const shownConversations = []
+          response.data.map(conversation => {
+            if (conversation.hidden !== this.props.id) {
+              shownConversations.push(conversation)
+            }
+          })
+          const sortedResponse = shownConversations.sort(function (a, b) {
+            let dateA = new Date(a.msg_created), dateB = new Date(b.msg_created)
+            return dateB - dateA
+          })
+          this.setState({
+            conversations: sortedResponse,
+            loading: false,
+            errorDisplay: false,
+            errors: []
+          })
+        }).catch(error => {
+          if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: error.response.data.error
+            })
           }
         })
-        const sortedResponse = shownConversations.sort(function (a, b) {
-          let dateA = new Date(a.msg_created), dateB = new Date(b.msg_created)
-          return dateB - dateA
-        })
-        this.setState({
-          conversations: sortedResponse,
-          loading: false
-        })
-      })
+    }
   }
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
@@ -59,6 +90,18 @@ class AllConversations extends Component {
 
     if (this.state.loading) {
       return <Spinner />
+    } else if (this.state.errorDisplay) {
+      return (
+        <div className='content-wrapper' >
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        </div>
+      )
     } else {
       return (
         <>

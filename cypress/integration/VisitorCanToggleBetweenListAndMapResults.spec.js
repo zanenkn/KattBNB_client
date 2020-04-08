@@ -8,6 +8,12 @@ describe('Visitor can toggle between list and map results', () => {
       status: 200,
       response: 'fixture:search_results_list.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      status: 200,
+      response: ''
+    })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()

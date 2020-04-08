@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
@@ -30,26 +31,54 @@ class Conversation extends Component {
   }
 
   componentDidMount() {
+    const { t } = this.props
     window.addEventListener('scroll', this.handleScroll)
-    const lang = detectLanguage()
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token')
-    }
-    const path = `/api/v1/conversations/${this.props.location.state.id}?locale=${lang}`
-    axios.get(path, { headers: headers })
-      .then(response => {
-        const sortedResponse = response.data.message.sort(function (a, b) {
-          let dateA = new Date(a.created_at), dateB = new Date(b.created_at)
-          return dateA - dateB
-        })
-        this.setState({
-          messagesHistory: sortedResponse,
-          loading: false
-        })
-        this.bottom.scrollIntoView({ behavior: 'smooth' })
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
+    } else {
+      const lang = detectLanguage()
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      const path = `/api/v1/conversations/${this.props.location.state.id}?locale=${lang}`
+      axios.get(path, { headers: headers })
+        .then(response => {
+          const sortedResponse = response.data.message.sort(function (a, b) {
+            let dateA = new Date(a.created_at), dateB = new Date(b.created_at)
+            return dateA - dateB
+          })
+          this.setState({
+            messagesHistory: sortedResponse,
+            loading: false,
+            errorDisplay: false,
+            errors: ''
+          })
+          this.bottom.scrollIntoView({ behavior: 'smooth' })
+        }).catch(error => {
+          if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: error.response.data.error
+            })
+          }
+        })
+    }
   }
 
   scrollDown = () => {
@@ -90,18 +119,42 @@ class Conversation extends Component {
 
   handleSendEvent(event) {
     event.preventDefault()
-    if (this.state.uploadedImage !== '') {
-      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
-      this.setState({
-        newMessage: '',
-        loadingUploadButton: true
-      })
-    }
-    else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
-      this.handleError(['SingleConversation:message-body-error'])
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({ imageUploadPopupOpen: false })
+      this.handleError(['reusable:errors:window-navigator'])
     } else {
-      this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
-      this.setState({ newMessage: '' })
+      const path = '/api/v1/auth/validate_token'
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.get(path, { headers: headers })
+        .then(() => {
+          if (this.state.uploadedImage !== '') {
+            this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
+            this.setState({
+              newMessage: '',
+              loadingUploadButton: true
+            })
+          }
+          else if (this.state.newMessage.length < 1 || this.state.newMessage.length > 1000) {
+            this.handleError(['SingleConversation:message-body-error'])
+          } else {
+            this.chats.create(this.state.newMessage, this.state.uploadedImage, this.props.location.state.id, this.props.id)
+            this.setState({ newMessage: '' })
+          }
+        }).catch(error => {
+          if (error.response.status === 500) {
+            this.handleError(['reusable:errors:500'])
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.handleError(error.response.data.error)
+          }
+        })
     }
   }
 
@@ -145,30 +198,49 @@ class Conversation extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     this.setState({ loading: true })
-    if (window.confirm(t('SingleConversation:del-conversation'))) {
-      const path = `/api/v1/conversations/${this.props.location.state.id}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        hidden: this.props.id,
-        locale: lang
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          window.location.replace('/messenger')
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.error
-          })
-        })
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
     } else {
-      this.setState({ loading: false })
+      if (window.confirm(t('SingleConversation:del-conversation'))) {
+        const path = `/api/v1/conversations/${this.props.location.state.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          hidden: this.props.id,
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then(() => {
+            window.location.replace('/messenger')
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.error
+              })
+            }
+          })
+      } else {
+        this.setState({ loading: false })
+      }
     }
   }
 
@@ -248,7 +320,7 @@ class Conversation extends Component {
           <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
             <Divider />
             <div className='single-conversation-wrapper'>
-              {this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1 &&
+              {(this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1 && this.state.errorDisplay === false) &&
                 <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
                   {t('SingleConversation:no-messages-yet')}
                 </p>

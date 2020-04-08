@@ -57,6 +57,12 @@ describe('User can see messages of individual conversation', () => {
       status: 200,
       response: 'fixture:user_messages.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/auth/validate_token',
+      status: 200,
+      response: ''
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#messenger-icon').click({ force: true })
@@ -80,6 +86,12 @@ describe('User can see messages of individual conversation', () => {
       url: 'http://localhost:3007/api/v1/conversations/1?locale=en-US',
       status: 200,
       response: 'fixture:user_messages.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/auth/validate_token',
+      status: 200,
+      response: ''
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)

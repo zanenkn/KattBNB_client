@@ -1,46 +1,83 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import HostProfileView from '../HostProfileView/HostProfileView'
-import { Header, Segment } from 'semantic-ui-react'
+import { Header, Segment, Message } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
 import axios from 'axios'
+import Popup from 'reactjs-popup'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 class BookingDetails extends Component {
 
+  state = {
+    errorDisplay: false,
+    errors: []
+  }
+
+  componentDidMount() {
+    if (this.props.location.state === undefined || this.props.history.action === 'POP') {
+      this.props.history.push({ pathname: '/' })
+    }
+  }
+
   messageHost = (e) => {
+    const { t } = this.props
     e.preventDefault()
-    if (this.props.id === undefined) {
-      this.props.history.push('/login')
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
     } else {
-      const lang = detectLanguage()
-      const path = '/api/v1/conversations'
-      const payload = {
-        user1_id: this.props.id,
-        user2_id: this.props.location.state.hostId,
-        locale: lang
-      }
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.post(path, payload, { headers: headers })
-        .then(response => {
-          this.props.history.push({
-            pathname: '/conversation',
-            state: {
-              id: response.data.id,
-              user: {
-                avatar: this.props.location.state.avatar,
-                id: this.props.location.state.hostId,
-                location: this.props.location.state.location,
-                nickname: this.props.location.state.nickname
+      if (this.props.id === undefined) {
+        this.props.history.push('/')
+      } else {
+        const lang = detectLanguage()
+        const path = '/api/v1/conversations'
+        const payload = {
+          user1_id: this.props.id,
+          user2_id: this.props.location.state.hostId,
+          locale: lang
+        }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        axios.post(path, payload, { headers: headers })
+          .then(response => {
+            this.props.history.push({
+              pathname: '/conversation',
+              state: {
+                id: response.data.id,
+                user: {
+                  avatar: this.props.location.state.avatar,
+                  id: this.props.location.state.hostId,
+                  location: this.props.location.state.location,
+                  nickname: this.props.location.state.nickname
+                }
               }
+            })
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                errorDisplay: true,
+                errors: [error.response.data.error]
+              })
             }
           })
-        })
+      }
     }
   }
 
@@ -48,21 +85,40 @@ class BookingDetails extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let priceWithDecimalsString, total
+      let priceWithDecimalsString, total, errorDisplay
 
-      if (this.props.location.state === undefined) {
-        this.props.history.push('/login')
+      priceWithDecimalsString = this.props.location.state.priceTotal.toFixed(2)
+      if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+        total = parseFloat(priceWithDecimalsString)
       } else {
-        priceWithDecimalsString = this.props.location.state.priceTotal.toFixed(2)
-        if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
-          total = parseFloat(priceWithDecimalsString)
-        } else {
-          total = priceWithDecimalsString
-        }
+        total = priceWithDecimalsString
+      }
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
       }
 
       return (
         <>
+          <Popup
+            modal
+            open={this.state.errorDisplay}
+            closeOnDocumentClick={true}
+            onClose={() => window.location.replace('/all-bookings')}
+            position='top center'
+          >
+            <div>
+              {errorDisplay}
+            </div>
+          </Popup>
           <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
             <Header as='h1'>
               {t('BookingDetails:booking-details')}

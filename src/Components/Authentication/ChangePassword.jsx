@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Header, Segment, Form, Message, Button, Popup } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import queryString from 'query-string'
 import { withTranslation } from 'react-i18next'
 import PasswordStrengthBar from 'react-password-strength-bar'
@@ -24,43 +25,62 @@ class ChangePassword extends Component {
 
   changePassword = (e) => {
     e.preventDefault()
-    if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
-      this.setState({ loading: true })
-      const lang = detectLanguage()
-      const path = '/api/v1/auth/password'
-      const payload = {
-        password: this.state.password,
-        password_confirmation: this.state.passwordConfirmation,
-        uid: queryString.parse(this.props.location.search).uid,
-        'access-token': queryString.parse(this.props.location.search).token,
-        client: queryString.parse(this.props.location.search).client,
-        locale: lang
-      }
-      axios.put(path, payload)
-        .then(() => {
-          this.setState({
-            successDisplay: true,
-            errorDisplay: false
-          })
-          setTimeout(function () { window.location.replace('/login') }, 2000)
-        })
-        .catch(error => {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.errors.full_messages
-          })
-        })
-    } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
       this.setState({
-        errors: ['ChangePassword:error-1'],
-        errorDisplay: true
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
       })
     } else {
-      this.setState({
-        errors: ['ChangePassword:error-2'],
-        errorDisplay: true
-      })
+      if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length > 150) {
+        this.setState({ loading: true })
+        const lang = detectLanguage()
+        const path = '/api/v1/auth/password'
+        const payload = {
+          password: this.state.password,
+          password_confirmation: this.state.passwordConfirmation,
+          uid: queryString.parse(this.props.location.search).uid,
+          'access-token': queryString.parse(this.props.location.search).token,
+          client: queryString.parse(this.props.location.search).client,
+          locale: lang
+        }
+        axios.put(path, payload)
+          .then(() => {
+            this.setState({
+              successDisplay: true,
+              errorDisplay: false
+            })
+            setTimeout(function () { window.location.replace('/login') }, 2000)
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: ['reusable:errors:500']
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401-password'))
+              wipeCredentials('/password-reset')
+            } else {
+              this.setState({
+                loading: false,
+                errorDisplay: true,
+                errors: error.response.data.errors.full_messages
+              })
+            }
+          })
+      } else if (this.state.password === this.state.passwordConfirmation && this.state.password.length >= 6 && this.props.location.search.length < 150) {
+        this.setState({
+          errors: ['ChangePassword:error-1'],
+          errorDisplay: true
+        })
+      } else {
+        this.setState({
+          errors: ['ChangePassword:error-2'],
+          errorDisplay: true
+        })
+      }
     }
   }
 

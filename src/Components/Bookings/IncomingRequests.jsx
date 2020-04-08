@@ -8,6 +8,7 @@ import IncRequestPopup from './IncRequestPopup'
 import DeclineRequestPopup from './DeclineRequestPopup'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withRouter } from 'react-router-dom'
 
 
@@ -34,32 +35,51 @@ class IncomingRequests extends Component {
     const lang = detectLanguage()
     this.setState({ iconsDisabled: true })
     e.preventDefault()
-    if (window.confirm(t('IncomingRequests:accept-request'))) {
-      const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      const payload = {
-        status: 'accepted',
-        host_message: 'accepted by host',
-        locale: lang
-      }
-      axios.patch(path, payload, { headers: headers })
-        .then(() => {
-          const { history } = this.props
-          history.push({ pathname: '/request-accepted-success' })
-        })
-        .catch(error => {
-          this.setState({
-            errorDisplay: true,
-            errors: error.response.data.error,
-            iconsDisabled: false
-          })
-        })
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator'],
+        iconsDisabled: false
+      })
     } else {
-      this.setState({ iconsDisabled: false })
+      if (window.confirm(t('IncomingRequests:accept-request'))) {
+        const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          status: 'accepted',
+          host_message: 'accepted by host',
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then(() => {
+            const { history } = this.props
+            history.push({ pathname: '/request-accepted-success' })
+          })
+          .catch(error => {
+            if (error.response.status === 500) {
+              this.setState({
+                errorDisplay: true,
+                errors: ['reusable:errors:500'],
+                iconsDisabled: false
+              })
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              this.setState({
+                errorDisplay: true,
+                errors: error.response.data.error,
+                iconsDisabled: false
+              })
+            }
+          })
+      } else {
+        this.setState({ iconsDisabled: false })
+      }
     }
   }
 

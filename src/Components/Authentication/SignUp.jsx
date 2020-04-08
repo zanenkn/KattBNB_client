@@ -13,6 +13,7 @@ import Spinner from '../ReusableComponents/Spinner'
 const SignUp = (props) => {
 
   const { t, ready } = useTranslation('SignUp')
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -25,30 +26,42 @@ const SignUp = (props) => {
   const [userCaptcha, setUserCaptcha] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
 
-  const createUser = (e) => {
+  const createUser = () => {
     setLoading(true)
-    if (termsAccepted === false) {
-      setErrors(['SignUp:terms-error'])
-      setErrorDisplay(true)
-      setLoading(false)
-    }
-    else if (userCaptcha !== captcha) {
-      setErrors(["SignUp:You didn't input the captcha phrase correctly, please try again!"])
+    if (window.navigator.onLine === false) {
+      setErrors(['reusable:errors:window-navigator'])
       setErrorDisplay(true)
       setLoading(false)
     } else {
-      const { history, registerUser } = props
-      const lang = detectLanguage()
-      const url = 'https://kattbnb.netlify.com/login'
-      registerUser({ email, password, passwordConfirmation, location, nickname, url, lang })
-        .then(() => {
-          setErrorDisplay(false)
-          history.push('/signup-success')
-        }).catch(error => {
-          setErrors(error.response.data.errors.full_messages)
-          setErrorDisplay(true)
-          setLoading(false)
-        })
+      if (termsAccepted === false) {
+        setErrors(['SignUp:terms-error'])
+        setErrorDisplay(true)
+        setLoading(false)
+      }
+      else if (userCaptcha !== captcha) {
+        setErrors(["SignUp:You didn't input the captcha phrase correctly, please try again!"])
+        setErrorDisplay(true)
+        setLoading(false)
+      } else {
+        const { history, registerUser } = props
+        const lang = detectLanguage()
+        const url = process.env.NODE_ENV === 'production' ? 'https://kattbnb.netlify.com/login' : 'http://localhost:3000/login'
+        registerUser({ email, password, passwordConfirmation, location, nickname, url, lang })
+          .then(() => {
+            setErrorDisplay(false)
+            history.push('/signup-success')
+          }).catch(error => {
+            if (error.response.status === 500) {
+              setErrors(['reusable:errors:500'])
+              setErrorDisplay(true)
+              setLoading(false)
+            } else {
+              setErrors(error.response.data.errors.full_messages)
+              setErrorDisplay(true)
+              setLoading(false)
+            }
+          })
+      }
     }
   }
 
