@@ -21,11 +21,11 @@ const HostProfileViewWrapper = (props) => {
     if (props.location.state === undefined || props.history.action === 'POP') {
       window.location.replace('/')
     } else {
-      axiosCall()
+      getHostProfile()
     }
   }, [props.location.state, props.history.action])
 
-  const axiosCall = () => {
+  const getHostProfile = () => {
     if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)
