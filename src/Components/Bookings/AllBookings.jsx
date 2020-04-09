@@ -19,7 +19,7 @@ class AllBookings extends Component {
     loadingIncoming: true
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const lang = detectLanguage()
     const { t } = this.props
     if (window.navigator.onLine === false) {
@@ -30,50 +30,29 @@ class AllBookings extends Component {
         errors: ['reusable:errors:window-navigator']
       })
     } else {
-      const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
-      const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.get(pathOutgoing, { headers: headers }).then(response => {
+      try {
+        const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
+        const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        let responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
         this.setState({
-          outgoingBookings: response.data,
+          outgoingBookings: responseOutgoing.data,
           loadingOutgoing: false,
           errorDisplay: false,
           errors: []
         })
-      }).catch(error => {
-        if (error.response.status === 500) {
-          this.setState({
-            loadingOutgoing: false,
-            loadingIncoming: false,
-            errorDisplay: true,
-            errors: ['reusable:errors:500']
-          })
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'))
-          wipeCredentials('/')
-        } else {
-          this.setState({
-            loadingOutgoing: false,
-            loadingIncoming: false,
-            errorDisplay: true,
-            errors: [error.response.data.error]
-          })
-        }
-      })
-      axios.get(pathIncoming, { headers: headers }).then(response => {
+        let responseIncoming = await axios.get(pathIncoming, { headers: headers })
         this.setState({
-          incomingBookings: response.data,
+          incomingBookings: responseIncoming.data,
           loadingIncoming: false,
           errorDisplay: false,
           errors: []
         })
-      }).catch(error => {
+      } catch (error) {
         if (error.response.status === 500) {
           this.setState({
             loadingOutgoing: false,
@@ -94,7 +73,7 @@ class AllBookings extends Component {
             errors: [error.response.data.error]
           })
         }
-      })
+      }
     }
   }
 
