@@ -1,0 +1,170 @@
+[
+  {
+    "id": 3,
+    "number_of_cats": 2,
+    "dates": [
+      1585008000000,
+      1585094400000
+    ],
+    "status": "accepted",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "accept this. it will be history on the 25th of march",
+    "price_total": 80.0,
+    "host_message": "accepted by host",
+    "host_avatar": null,
+    "host_description": "test",
+    "host_full_address": "Vaxholm, Sweden",
+    "host_real_lat": "59.4032968",
+    "host_real_long": "18.3263804",
+    "created_at": "2020-03-23T12:57:25.301Z",
+    "updated_at": "2020-03-23T12:58:03.425Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  },
+  {
+    "id": 4,
+    "number_of_cats": 5,
+    "dates": [
+      1590796800000,
+      1590883200000
+    ],
+    "status": "accepted",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "accept this one. it will be in the upcomings.",
+    "price_total": 200.0,
+    "host_message": "accepted by host",
+    "host_avatar": null,
+    "host_description": "test",
+    "host_full_address": "Vaxholm, Sweden",
+    "host_real_lat": "59.4032968",
+    "host_real_long": "18.3263804",
+    "created_at": "2020-03-23T12:59:31.675Z",
+    "updated_at": "2020-03-23T13:00:03.142Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  },
+  {
+    "id": 5,
+    "number_of_cats": 2,
+    "dates": [
+      1585526400000,
+      1585612800000
+    ],
+    "status": "pending",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "leave that pending",
+    "price_total": 80.0,
+    "host_message": null,
+    "host_avatar": null,
+    "host_description": null,
+    "host_full_address": null,
+    "host_real_lat": null,
+    "host_real_long": null,
+    "created_at": "2020-03-23T13:01:21.931Z",
+    "updated_at": "2020-03-23T13:01:21.958Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  },
+  {
+    "id": 6,
+    "number_of_cats": 2,
+    "dates": [
+      1585353600000,
+      1585440000000
+    ],
+    "status": "declined",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "decline this",
+    "price_total": 80.0,
+    "host_message": "translation test...declined booking",
+    "host_avatar": null,
+    "host_description": null,
+    "host_full_address": null,
+    "host_real_lat": null,
+    "host_real_long": null,
+    "created_at": "2020-03-23T13:02:10.421Z",
+    "updated_at": "2020-03-23T13:02:47.145Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  },
+  {
+    "id": 7,
+    "number_of_cats": 2,
+    "dates": [
+      1590624000000,
+      1590710400000
+    ],
+    "status": "canceled",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "update that via terminal to 'canceled'",
+    "price_total": 80.0,
+    "host_message": null,
+    "host_avatar": null,
+    "host_description": null,
+    "host_full_address": null,
+    "host_real_lat": null,
+    "host_real_long": null,
+    "created_at": "2020-03-23T13:04:00.567Z",
+    "updated_at": "2020-03-23T13:05:24.455Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  },
+  {
+    "id": 8,
+    "number_of_cats": 2,
+    "dates": [
+      1586908800000,
+      1586995200000
+    ],
+    "status": "declined",
+    "host_id": 3,
+    "host_location": "Vaxholm",
+    "host_nickname": "GeorgeTheGreek",
+    "message": "plural!!!!",
+    "price_total": 80.0,
+    "host_message": "dkfhkdsfn",
+    "host_avatar": null,
+    "host_description": null,
+    "host_full_address": null,
+    "host_real_lat": null,
+    "host_real_long": null,
+    "created_at": "2020-03-23T13:20:25.562Z",
+    "updated_at": "2020-03-31T16:36:51.853Z",
+    "user_id": 2,
+    "user": {
+      "nickname": "Kimi",
+      "avatar": null,
+      "location": "Vaxholm"
+    }
+  }
+]
