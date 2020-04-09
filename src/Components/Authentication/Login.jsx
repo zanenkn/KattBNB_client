@@ -3,6 +3,7 @@ import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { signInUser } from '../../reduxTokenAuthConfig'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -41,6 +42,8 @@ const Login = (props) => {
             setLoading(false)
             setErrorDisplay(true)
             setErrors(t('reusable:errors:500'))
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
           } else {
             setLoading(false)
             setErrorDisplay(true)
