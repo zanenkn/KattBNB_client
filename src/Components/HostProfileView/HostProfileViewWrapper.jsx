@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Message } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import HostProfileView from './HostProfileView'
 import Spinner from '../ReusableComponents/Spinner'
 
@@ -51,6 +52,8 @@ const HostProfileViewWrapper = (props) => {
             setLoading(false)
             setErrorDisplay(true)
             setErrors(['reusable:errors:500'])
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
           } else {
             setLoading(false)
             setErrorDisplay(true)
