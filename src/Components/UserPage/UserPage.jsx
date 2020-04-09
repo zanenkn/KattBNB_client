@@ -94,6 +94,8 @@ const UserPage = (props) => {
             if (error.response.status === 500) {
               setErrorDisplay(true)
               setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
@@ -124,6 +126,8 @@ const UserPage = (props) => {
           if (error.response.status === 500) {
             setErrorDisplay(true)
             setErrors(['reusable:errors:500'])
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
           } else {
             setErrorDisplay(true)
             setErrors(error.response.data.error)
@@ -155,6 +159,8 @@ const UserPage = (props) => {
         if (error.response.status === 500) {
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'))
           wipeCredentials('/')
@@ -253,9 +259,13 @@ const UserPage = (props) => {
               window.alert(t('UserPage:deletion-alert'))
               wipeCredentials('/')
             })
-            .catch(() => {
-              window.alert(t('UserPage:deletion-error'))
-              wipeCredentials('/')
+            .catch(error => {
+              if (error.response.status === 503) {
+                wipeCredentials('/is-not-available?atm')
+              } else {
+                window.alert(t('UserPage:deletion-error'))
+                wipeCredentials('/')
+              }
             })
         }
         else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
@@ -270,9 +280,13 @@ const UserPage = (props) => {
               window.alert(t('UserPage:deletion-alert'))
               wipeCredentials('/')
             })
-            .catch(() => {
-              window.alert(t('UserPage:deletion-error'))
-              wipeCredentials('/')
+            .catch(error => {
+              if (error.response.status === 503) {
+                wipeCredentials('/is-not-available?atm')
+              } else {
+                window.alert(t('UserPage:deletion-error'))
+                wipeCredentials('/')
+              }
             })
         } else {
           setDeleteDipslayNone(false)
@@ -282,6 +296,8 @@ const UserPage = (props) => {
           setDeleteDipslayNone(false)
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'))
           wipeCredentials('/')

@@ -75,6 +75,8 @@ class LocationUpdateForm extends Component {
                   errorDisplay: true,
                   errors: ['reusable:errors:500']
                 })
+              } else if (error.response.status === 503) {
+                wipeCredentials('/is-not-available?atm')
               } else if (error.response.status === 401 || error.response.status === 404) {
                 window.alert(t('reusable:errors:401'))
                 wipeCredentials('/')
@@ -118,6 +120,8 @@ class LocationUpdateForm extends Component {
                 errorDisplay: true,
                 errors: ['reusable:errors:500']
               })
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401 || error.response.status === 404) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
