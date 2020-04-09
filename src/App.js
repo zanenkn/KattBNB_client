@@ -27,6 +27,7 @@ import AllConversations from './Components/Messenger/AllConversations'
 import Conversation from './Components/Messenger/SingleConversation'
 import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
 import NoAccess from './Components/ReusableComponents/NoAccess'
+import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
@@ -122,6 +123,7 @@ class App extends Component {
                 <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
                 <Route exact path='/partners' component={Partners}></Route>
                 <Route exact path='/guidelines' component={Guidelines}></Route>
+                <Route exact path='/is-not-available' component={Error503}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}
