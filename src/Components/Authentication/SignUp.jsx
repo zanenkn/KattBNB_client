@@ -3,6 +3,7 @@ import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } fro
 import { LOCATION_OPTIONS } from '../../Modules/locationData'
 import { registerUser } from '../../reduxTokenAuthConfig'
 import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
@@ -55,6 +56,8 @@ const SignUp = (props) => {
               setErrors(['reusable:errors:500'])
               setErrorDisplay(true)
               setLoading(false)
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm')
             } else {
               setErrors(error.response.data.errors.full_messages)
               setErrorDisplay(true)

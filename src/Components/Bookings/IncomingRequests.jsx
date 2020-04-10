@@ -66,6 +66,8 @@ class IncomingRequests extends Component {
                 errors: ['reusable:errors:500'],
                 iconsDisabled: false
               })
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')

@@ -53,6 +53,8 @@ class DeclineRequestPopup extends Component {
                   errors: ['reusable:errors:500']
                 })
                 this.props.declModalCloseState(true)
+              } else if (error.response.status === 503) {
+                wipeCredentials('/is-not-available?atm')
               } else if (error.response.status === 401) {
                 window.alert(t('reusable:errors:401'))
                 wipeCredentials('/')

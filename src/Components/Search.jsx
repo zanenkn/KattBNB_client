@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import '../NpmPackageCSS/react-day-picker-range.css'
 import { detectLanguage } from '../Modules/detectLanguage'
+import { wipeCredentials } from '../Modules/wipeCredentials'
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
@@ -90,6 +91,8 @@ class Search extends Component {
             errorDisplay: true,
             errors: ['reusable:errors:500']
           })
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
         } else {
           this.setState({
             loading: false,

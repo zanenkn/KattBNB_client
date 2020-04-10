@@ -110,7 +110,7 @@ describe('User can view her profile page', () => {
     cy.contains('No changes made to your settings!')
   })
 
-  it('and successfully deletes her account', () => {
+  it('and successfully deletes her account when no bookings are present', () => {
     cy.route({
       method: 'DELETE',
       url: 'http://localhost:3007/api/v1/auth',
@@ -118,6 +118,49 @@ describe('User can view her profile page', () => {
       response: 'fixture:successful_account_deletion.json',
     })
     cy.get('#delete-account-link').click()
+    cy.on('window:confirm', (str) => {
+      expect(str).to.equal('Do you really want to delete your account?')
+    })
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your account was succesfully deleted!')
+    })
+    cy.contains('Find a cat sitter!')
+  })
+
+  it('and gets alert to check FAQ cause of incoming bookings when deleting her account', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:no_delete_account.json'
+    })
+    cy.get('#delete-account-link').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('To delete your account, please follow relevant instructions in our FAQ page!')
+    })
+    cy.location('pathname').should('eq', '/user-page')
+  })
+
+  it('and gets alert to give her consent cause of outgoing bookings when deleting her account', () => {
+    cy.route({
+      method: 'DELETE',
+      url: 'http://localhost:3007/api/v1/auth',
+      status: 200,
+      response: 'fixture:successful_account_deletion.json',
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:delete_account_consent.json'
+    })
+    cy.get('#delete-account-link').click()
+    cy.on('window:confirm', (str) => {
+      expect(str).to.equal("You still have upcoming outgoing booking(s). By deleting your account, you consent to sending your email to the host(s). If you don't want to disclose your email, wait for the booking(s) to be resolved and try deleting your account again.")
+    })
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Your account was succesfully deleted!')
+    })
     cy.contains('Find a cat sitter!')
   })
 })
