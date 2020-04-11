@@ -45,9 +45,10 @@ const SignUp = (props) => {
         setLoading(false)
       } else {
         const { history, registerUser } = props
+        const langPref = detectLanguage()
         const lang = detectLanguage()
         const url = process.env.NODE_ENV === 'production' ? 'https://kattbnb.netlify.com/login' : 'http://localhost:3000/login'
-        registerUser({ email, password, passwordConfirmation, location, nickname, url, lang })
+        registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
           .then(() => {
             setErrorDisplay(false)
             history.push('/signup-success')
