@@ -11,6 +11,7 @@ import LocationUpdateForm from './LocationUpdateForm'
 import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import NotificationsUpdateForm from './NotificationsUpdateForm'
+import LangPrefUpdateForm from './LangPrefUpdateForm'
 import { useTranslation, Trans } from 'react-i18next'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -23,7 +24,8 @@ const UserPage = (props) => {
     editLocationForm: false,
     editPasswordForm: false,
     createHostProfileForm: false,
-    editNotificationsForm: false
+    editNotificationsForm: false,
+    editLangPrefForm: false
   })
   const [hostProfile, setHostProfile] = useState([])
   const [element, setElement] = useState({
@@ -34,7 +36,8 @@ const UserPage = (props) => {
     supplement: '',
     availability: [],
     location: props.location,
-    messageNotifications: props.messageNotifications
+    messageNotifications: props.messageNotifications,
+    langPref: props.langPref
   })
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [incomingBookings, setIncomingBookings] = useState([])
@@ -83,7 +86,8 @@ const UserPage = (props) => {
               supplement: finalSupplement,
               availability: resp.data.availability,
               location: props.location,
-              messageNotifications: props.messageNotifications
+              messageNotifications: props.messageNotifications,
+              langPref: props.langPref
             })
             setForbiddenDates(resp.data.forbidden_dates)
             setLoadingHostProfile(false)
@@ -184,10 +188,10 @@ const UserPage = (props) => {
   }
 
   const formHandler = (e) => {
-    let states = ['editLocationForm', 'editPasswordForm', 'createHostProfileForm', 'editNotificationsForm']
+    let states = ['editLocationForm', 'editPasswordForm', 'createHostProfileForm', 'editNotificationsForm', 'editLangPrefForm']
     states.forEach(stt => {
       if (stt === e.target.id) {
-        setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false, [stt]: !form[stt] }))
+        setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, editLangPrefForm: false, createHostProfileForm: false, [stt]: !form[stt] }))
       }
     })
     if (hostProfile.length === 1) {
@@ -396,6 +400,22 @@ const UserPage = (props) => {
                 />
               }
             </div>
+            <p>
+              <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
+              &nbsp;{t('UserPage:lang-pref-header')}&ensp;
+              <Header as='strong' id='editLangPrefForm' onClick={e => formHandler(e)} className='fake-link-underlined'>
+                {t('reusable:cta.change')}
+              </Header>
+            </p>
+            <div style={{ 'max-height': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+              {form.editLangPrefForm &&
+                <LangPrefUpdateForm
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  langPref={element.langPref}
+                  setElement={elementUpdateHandler.bind(this)}
+                />
+              }
+            </div>
           </div>
         </Segment>
         <Divider hidden />
@@ -470,7 +490,8 @@ const mapStateToProps = state => ({
   email: state.reduxTokenAuth.currentUser.attributes.uid,
   id: state.reduxTokenAuth.currentUser.attributes.id,
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
-  messageNotifications: state.reduxTokenAuth.currentUser.attributes.messageNotifications
+  messageNotifications: state.reduxTokenAuth.currentUser.attributes.messageNotifications,
+  langPref: state.reduxTokenAuth.currentUser.attributes.langPref
 })
 
 export default connect(mapStateToProps)(UserPage)
