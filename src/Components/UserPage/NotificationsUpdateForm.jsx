@@ -68,27 +68,29 @@ const NotificationsUpdateForm = (props) => {
 
   if (ready) {
     return (
-      <div style={{ 'maxWidth': '213px' }}>
+      <div>
         <Divider />
-        <div style={{ 'display': 'inline-flex' }}>
-          <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
-            <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />
+        <div style={{'maxWidth': '194px', 'margin': 'auto'}}>
+          <div style={{ 'display': 'inline-flex' }}>
+            <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
+              <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />
+            </div>
+            <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>{t('NotificationsUpdateForm:label')}</label>
           </div>
-          <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>{t('NotificationsUpdateForm:label')}</label>
-        </div>
-        {errorDisplay &&
-          <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {errors.map(error => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        }
-        <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-          <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
+          {errorDisplay &&
+            <Message negative >
+              <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          }
+          <div className='button-wrapper'>
+            <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
+            <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
+          </div>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>

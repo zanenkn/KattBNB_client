@@ -68,6 +68,14 @@ button:focus {
   left:-1rem; right:-1rem; 
 }
 
+.zondicon-wrapper {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*******************************
             NAVBAR
 *******************************/

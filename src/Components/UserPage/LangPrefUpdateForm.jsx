@@ -72,45 +72,47 @@ const LangPrefUpdateForm = (props) => {
 
   if (ready) {
     return (
-      <div style={{ 'maxWidth': '213px' }}>
+      <div>
         <Divider />
-        <div style={{ 'display': 'inline-flex' }}>
-          <Form>
-            <Form.Field>
-              <Checkbox
-                radio
-                label='Jag vill få epost från KattBNB på svenska'
-                name='checkboxRadioGroup'
-                id='sv-SE'
-                checked={langPref === 'sv-SE'}
-                onChange={(e) => handleLangPrefChange(e)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Checkbox
-                radio
-                label='I want to get emails from KattBNB in English'
-                name='checkboxRadioGroup'
-                id='en-US'
-                checked={langPref === 'en-US'}
-                onChange={(e) => handleLangPrefChange(e)}
-              />
-            </Form.Field>
-          </Form>
-        </div>
-        {errorDisplay &&
-          <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {errors.map(error => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        }
-        <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-          <Button id='email-language-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateLangPref()}>{t('reusable:cta.change')}</Button>
+        <div style={{'maxWidth': '194px', 'margin': 'auto'}}>
+          <div style={{ 'display': 'inline-flex' }}>
+            <Form>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={<label style={{ 'color': langPref === 'sv-SE' ? 'grey' : 'silver', 'fontSize': 'small' }}>Jag vill få epost från KattBNB på svenska</label>}
+                  name='checkboxRadioGroup'
+                  id='sv-SE'
+                  checked={langPref === 'sv-SE'}
+                  onChange={(e) => handleLangPrefChange(e)}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={<label style={{ 'color': langPref === 'en-US' ? 'grey' : 'silver', 'fontSize': 'small' }}>I want to get emails from KattBNB in English</label>}
+                  name='checkboxRadioGroup'
+                  id='en-US'
+                  checked={langPref === 'en-US'}
+                  onChange={(e) => handleLangPrefChange(e)}
+                />
+              </Form.Field>
+            </Form>
+          </div>
+          {errorDisplay &&
+            <Message negative >
+              <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          }
+          <div className='button-wrapper'>
+            <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
+            <Button id='email-language-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateLangPref()}>{t('reusable:cta.change')}</Button>
+          </div>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>
