@@ -110,7 +110,7 @@ const LangPrefUpdateForm = (props) => {
         }
         <div className='button-wrapper'>
           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-          <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateLangPref()}>{t('reusable:cta.change')}</Button>
+          <Button id='email-language-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateLangPref()}>{t('reusable:cta.change')}</Button>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
       </div>

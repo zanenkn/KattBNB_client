@@ -110,6 +110,27 @@ describe('User can view her profile page', () => {
     cy.contains('No changes made to your settings!')
   })
 
+  it('and change her email language preference settings successfully', () => {
+    cy.route({
+      method: 'PUT',
+      url: 'http://localhost:3007/api/v1/auth',
+      status: 200,
+      response: 'fixture:successful_location_change.json',
+    })
+    cy.get('#editLangPrefForm').click()
+    cy.get(':nth-child(2) > .ui > label').click()
+    cy.get('#email-language-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('Email language settings updated!')
+    })
+  })
+
+  it('and unsuccessfully tries to change her email language preference settings', () => {
+    cy.get('#editLangPrefForm').click()
+    cy.get('#email-language-submit-button').click()
+    cy.contains('No changes made to your settings!')
+  })
+
   it('and successfully deletes her account when no bookings are present', () => {
     cy.route({
       method: 'DELETE',
