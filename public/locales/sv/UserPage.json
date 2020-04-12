@@ -9,5 +9,6 @@
   "greeting": "Hej, {{username}}!",
   "user-profile-p": "Det här är din <1>användarprofil</1>. Här kan du uppdatera din avatar, plats och lösenord.",
   "delete-cta": "Radera ditt konto",
-  "notifications-header": "Inställningar för notifieringar"
+  "notifications-header": "Inställningar för notifieringar",
+  "lang-pref-header": "Epost språkspreferens"
 }

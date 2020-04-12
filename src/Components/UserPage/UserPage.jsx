@@ -184,7 +184,7 @@ const UserPage = (props) => {
   }
 
   const closeLocationAndPasswordForms = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, editLangPrefForm: false, createHostProfileForm: false }))
   }
 
   const formHandler = (e) => {
