@@ -110,7 +110,7 @@ const UserPage = (props) => {
           })
       }
     }
-  }, [hostProfile, props.messageNotifications, props.location, t])
+  }, [hostProfile, props.messageNotifications, props.location, props.langPref, t])
 
   useEffect(() => {
     fetchIncomingBookings()
@@ -156,7 +156,6 @@ const UserPage = (props) => {
         const pathIncoming = `/api/v1/bookings?host_nickname=${props.username}&locale=${lang}`
         const responseIncoming = await axios.get(pathIncoming, { headers: headers })
         setIncomingBookings(responseIncoming.data)
-        setLoading(false)
         setErrorDisplay(false)
         setErrors([])
       } catch (error) {
@@ -177,7 +176,7 @@ const UserPage = (props) => {
   }
 
   const avatarFormHandler = () => {
-    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, createHostProfileForm: false }))
+    setForm(old => ({ ...old, editLocationForm: false, editPasswordForm: false, editNotificationsForm: false, editLangPrefForm: false, createHostProfileForm: false }))
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms()
     }
@@ -340,7 +339,7 @@ const UserPage = (props) => {
           </Header>
           <p style={{ 'textAlign': 'center' }}>
             <Trans i18nKey='UserPage:user-profile-p'>
-              This is your <strong>user</strong> profile. Here you can update your avatar, location, and password.
+              This is your <strong>user</strong> profile. Here you can update your avatar, location, password and other settings.
             </Trans>
           </p>
           <AvatarUpdateForm

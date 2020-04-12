@@ -7,6 +7,7 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const LangPrefUpdateForm = (props) => {
+
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
@@ -68,6 +69,7 @@ const LangPrefUpdateForm = (props) => {
       }
     }
   }
+
   if (ready) {
     return (
       <div style={{ 'maxWidth': '213px' }}>
@@ -81,7 +83,7 @@ const LangPrefUpdateForm = (props) => {
                 name='checkboxRadioGroup'
                 id='sv-SE'
                 checked={langPref === 'sv-SE'}
-                onChange={(e) =>handleLangPrefChange(e)}
+                onChange={(e) => handleLangPrefChange(e)}
               />
             </Form.Field>
             <Form.Field>
@@ -91,7 +93,7 @@ const LangPrefUpdateForm = (props) => {
                 name='checkboxRadioGroup'
                 id='en-US'
                 checked={langPref === 'en-US'}
-                onChange={(e) =>handleLangPrefChange(e)}
+                onChange={(e) => handleLangPrefChange(e)}
               />
             </Form.Field>
           </Form>
