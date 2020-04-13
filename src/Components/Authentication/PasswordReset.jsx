@@ -13,7 +13,7 @@ class PasswordReset extends Component {
     errors: '',
     errorDisplay: false,
     loading: false,
-    url: process.env.NODE_ENV === 'production' ? 'https://kattbnb.netlify.com/change-password' : 'http://localhost:3000/change-password'
+    url: process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PASS_RESET : 'http://localhost:3000/change-password'
   }
 
   onChangeHandler = (e) => {

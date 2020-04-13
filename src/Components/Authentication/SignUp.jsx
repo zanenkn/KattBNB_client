@@ -47,7 +47,7 @@ const SignUp = (props) => {
         const { history, registerUser } = props
         const langPref = detectLanguage()
         const lang = detectLanguage()
-        const url = process.env.NODE_ENV === 'production' ? 'https://kattbnb.netlify.com/login' : 'http://localhost:3000/login'
+        const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login'
         registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
           .then(() => {
             setErrorDisplay(false)
