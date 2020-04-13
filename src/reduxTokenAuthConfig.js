@@ -8,14 +8,16 @@ const config = {
     location: 'location',
     username: 'nickname',
     avatar: 'avatar',
-    messageNotifications: 'message_notification'
+    messageNotifications: 'message_notification',
+    langPref: 'lang_pref'
   },
   userRegistrationAttributes: {
     passwordConfirmation: 'password_confirmation',
     location: 'location',
     nickname: 'nickname',
     url: 'confirm_success_url',
-    lang: 'locale'
+    lang: 'locale',
+    langPref: 'lang_pref'
   },
 }
 

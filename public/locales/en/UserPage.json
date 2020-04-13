@@ -7,7 +7,8 @@
   "no-host-profile": "You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.",
   "host-profile-cta": "Create host profile",
   "greeting": "Hi, {{username}}!",
-  "user-profile-p": "This is your <1>user</1> profile. Here you can update your avatar, location, and password.",
+  "user-profile-p": "This is your <1>user</1> profile. Here you can update your avatar, location, password and other settings.",
   "delete-cta": "Delete your account",
-  "notifications-header": "Notification settings"
+  "notifications-header": "Notification settings",
+  "lang-pref-header": "Email language"
 }

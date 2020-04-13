@@ -1,36 +1,40 @@
 import React, { useState } from 'react'
-import { Checkbox, Divider, Button, Message } from 'semantic-ui-react'
+import { Button, Message, Checkbox, Divider, Form } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
-const NotificationsUpdateForm = (props) => {
-
-  const { t, ready } = useTranslation('NotificationsUpdateForm')
+const LangPrefUpdateForm = (props) => {
 
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
-  const [messageNotifications, setMessageNotifications] = useState(props.messageNotifications)
+  const [langPref, setLangPref] = useState(props.langPref)
 
-  const updateMessageNotification = () => {
+  const { t, ready } = useTranslation('LangPrefUpdateForm')
+
+  const handleLangPrefChange = (e) => {
+    setLangPref(e.target.id)
+  }
+
+  const updateLangPref = () => {
     if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)
       setErrors(['reusable:errors:window-navigator'])
     } else {
-      if (messageNotifications === props.messageNotifications) {
+      if (langPref === props.langPref) {
         setLoading(false)
         setErrorDisplay(true)
-        setErrors(['NotificationsUpdateForm:update-error'])
+        setErrors(['LangPrefUpdateForm:update-error'])
       } else {
         setLoading(true)
         const lang = detectLanguage()
         const path = '/api/v1/auth/'
         const payload = {
-          message_notification: messageNotifications,
+          lang_pref: langPref,
           locale: lang
         }
         const headers = {
@@ -40,10 +44,10 @@ const NotificationsUpdateForm = (props) => {
         }
         axios.put(path, payload, { headers: headers })
           .then(() => {
-            window.alert(t('NotificationsUpdateForm:update-success'))
+            window.alert(t('LangPrefUpdateForm:update-success'))
             setErrorDisplay(false)
             setErrors([])
-            props.setElement('messageNotifications', messageNotifications)
+            props.setElement('langPref', langPref)
             props.closeLocationAndPasswordForms()
           })
           .catch(error => {
@@ -72,10 +76,28 @@ const NotificationsUpdateForm = (props) => {
         <Divider />
         <div style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
           <div style={{ 'display': 'inline-flex' }}>
-            <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
-              <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />
-            </div>
-            <label style={{ 'paddingLeft': '1.5em', 'color': messageNotifications ? 'grey' : 'silver', 'fontSize': 'small' }}>{t('NotificationsUpdateForm:label')}</label>
+            <Form>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={<label style={{ 'color': langPref === 'sv-SE' ? 'grey' : 'silver', 'fontSize': 'small' }}>Jag vill få epost från KattBNB på svenska</label>}
+                  name='checkboxRadioGroup'
+                  id='sv-SE'
+                  checked={langPref === 'sv-SE'}
+                  onChange={(e) => handleLangPrefChange(e)}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={<label style={{ 'color': langPref === 'en-US' ? 'grey' : 'silver', 'fontSize': 'small' }}>I want to get emails from KattBNB in English</label>}
+                  name='checkboxRadioGroup'
+                  id='en-US'
+                  checked={langPref === 'en-US'}
+                  onChange={(e) => handleLangPrefChange(e)}
+                />
+              </Form.Field>
+            </Form>
           </div>
           {errorDisplay &&
             <Message negative >
@@ -89,7 +111,7 @@ const NotificationsUpdateForm = (props) => {
           }
           <div className='button-wrapper'>
             <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>{t('reusable:cta.close')}</Button>
-            <Button id='notifications-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateMessageNotification()}>{t('reusable:cta.change')}</Button>
+            <Button id='email-language-submit-button' className='submit-button' loading={loading} disabled={loading} onClick={() => updateLangPref()}>{t('reusable:cta.change')}</Button>
           </div>
         </div>
         <Divider style={{ 'marginBottom': '2rem' }} />
@@ -98,4 +120,4 @@ const NotificationsUpdateForm = (props) => {
   } else { return <Spinner /> }
 }
 
-export default NotificationsUpdateForm
+export default LangPrefUpdateForm
