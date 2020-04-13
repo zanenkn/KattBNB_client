@@ -70,7 +70,7 @@ const NotificationsUpdateForm = (props) => {
     return (
       <div>
         <Divider />
-        <div style={{'maxWidth': '194px', 'margin': 'auto'}}>
+        <div style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
           <div style={{ 'display': 'inline-flex' }}>
             <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)} >
               <Checkbox style={{ 'marginRight': '1em', 'padding': '0.5em' }} toggle checked={messageNotifications} />

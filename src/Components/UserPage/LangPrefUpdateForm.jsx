@@ -74,7 +74,7 @@ const LangPrefUpdateForm = (props) => {
     return (
       <div>
         <Divider />
-        <div style={{'maxWidth': '194px', 'margin': 'auto'}}>
+        <div style={{ 'maxWidth': '194px', 'margin': 'auto' }}>
           <div style={{ 'display': 'inline-flex' }}>
             <Form>
               <Form.Field>
