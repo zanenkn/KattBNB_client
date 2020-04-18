@@ -27,7 +27,7 @@ describe('User can accept her booking request', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(1000)
-    cy.get('#bookings-icon').click({force:true})
+    cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-incoming-bookings').click()
   })
 
