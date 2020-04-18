@@ -679,13 +679,37 @@ h4 {
 }
 
 .deleteImage {
-  display: none
+  display: none;
 }
 
 .portrait-img {
-  max-height: 50vh
+  max-height: 50vh;
 }
 
 .landscape-img {
-  max-height: 30vh
+  max-height: 30vh;
+}
+
+/*******************************
+REACT ADD TO CALENDAR OVERRIDES
+*******************************/
+
+.react-add-to-calendar__button {
+  cursor: pointer !important;
+}
+
+.react-add-to-calendar__dropdown {
+  ul {
+    list-style-type: none !important;
+    padding-top: 0.5rem !important;
+    padding-left: 0.5rem !important;
+  }
+  li {
+    margin-bottom: 0.7rem !important;
+  }
+}
+
+.react-add-to-calendar {
+  text-align: left !important;
+  font-size: medium !important;
 }

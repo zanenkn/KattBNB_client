@@ -26,7 +26,7 @@ class RequestAcceptedSuccessfully extends Component {
     }
     let items = [
       { google: 'Google' },
-      { apple: 'iCal & Outlook desktop' }
+      { apple: 'Download calendar file' }
     ]
 
     if (this.props.tReady) {
@@ -45,6 +45,7 @@ class RequestAcceptedSuccessfully extends Component {
               event={event}
               displayItemIcons={false}
               listItems={items}
+              buttonLabel='Add to my calendar'
             />
           </Segment>
         </div>
