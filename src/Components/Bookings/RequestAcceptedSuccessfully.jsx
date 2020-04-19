@@ -26,7 +26,7 @@ class RequestAcceptedSuccessfully extends Component {
     }
 
     let event = {
-      title: `KattBNB - ${total}kr`,
+      title: `KattBNB - ${total} kr`,
       description: `Hosting the ${this.props.location.state.cats} cat(s) of ${this.props.location.state.user}`,
       location: t('RequestAcceptedSuccessfully:event-location'),
       startTime: this.props.location.state.inDate,
