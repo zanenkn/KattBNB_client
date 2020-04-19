@@ -29,6 +29,7 @@ import HostProfileViewWrapper from './Components/HostProfileView/HostProfileView
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
+import Counter from './Components/Counter'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -104,7 +105,7 @@ class App extends Component {
           >
             <ScrollToTop>
               <Switch>
-                <Route exact path='/' component={Search}></Route>
+                <Route exact path='/' component={Counter}></Route>
                 <Route exact path='/search-results' component={SearchResults}></Route>
                 <Route exact path='/about-us' component={AboutUs}></Route>
                 <Route exact path='/contact-us' component={ContactUs}></Route>
