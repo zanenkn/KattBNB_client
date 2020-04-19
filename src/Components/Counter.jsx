@@ -2,8 +2,10 @@ import React from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import Search from './Search'
 import { Button } from 'semantic-ui-react'
+import { useTranslation, Trans } from 'react-i18next'
 
 const Counter = (props) => {
+  const { t } = useTranslation('Counter')
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -23,18 +25,18 @@ const Counter = (props) => {
                 <td style={{}}><strong>{zeroPad(seconds)}</strong></td>
               </tr>
               <tr style={{ 'textTransform': 'uppercase', 'fontSize': 'x-small', 'letterSpacing': '2px', 'lineHeight': '1' }}>
-                <td>days</td>
+                <td>{t('Counter:days')}</td>
                 <td></td>
-                <td>hrs</td>
+                <td>{t('Counter:hours')}</td>
                 <td></td>
-                <td>min</td>
+                <td>{t('Counter:minutes')}</td>
                 <td></td>
-                <td>sec</td>
+                <td>{t('Counter:seconds')}</td>
               </tr>
             </table>
             <div>
-              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }}>Counting down until launch. <br></br>We may be small but we dream big. <br></br>We hope you'd like to join us.</p>
-              <Button style={{ 'marginTop': '1rem' }}>Sign up</Button>
+              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }} dangerouslySetInnerHTML={{__html: t('Counter:p')}}></p>
+              <Button style={{ 'marginTop': '1rem' }}>{t('reusable:title.signup')}</Button>
             </div>
           </div>
           <img src="cat.gif" style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '0' : '-25%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
