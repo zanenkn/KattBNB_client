@@ -16,17 +16,26 @@ class RequestAcceptedSuccessfully extends Component {
   render() {
 
     const { t } = this.props
+    let total
+
+    let priceWithDecimalsString = this.props.location.state.price.toFixed(2)
+    if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+      total = parseFloat(priceWithDecimalsString)
+    } else {
+      total = priceWithDecimalsString
+    }
 
     let event = {
-      title: `KattBNB - ${this.props.location.state.price} kr`,
-      description: `${this.props.location.state.cats} cat(s) - ${this.props.location.state.user}`,
-      location: 'My place',
+      title: `KattBNB - ${total}kr`,
+      description: `Hosting the ${this.props.location.state.cats} cat(s) of ${this.props.location.state.user}`,
+      location: t('RequestAcceptedSuccessfully:event-location'),
       startTime: this.props.location.state.inDate,
       endTime: this.props.location.state.outDate
     }
     let items = [
       { google: 'Google' },
-      { apple: 'Download calendar file' }
+      { apple: 'iCal' },
+      { outlook: 'Outlook Desktop' }
     ]
 
     if (this.props.tReady) {
@@ -45,7 +54,7 @@ class RequestAcceptedSuccessfully extends Component {
               event={event}
               displayItemIcons={false}
               listItems={items}
-              buttonLabel='Add to my calendar'
+              buttonLabel={t('RequestAcceptedSuccessfully:calendar-label')}
             />
           </Segment>
         </div>
