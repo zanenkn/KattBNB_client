@@ -46,7 +46,7 @@ const Counter = (props) => {
   }
   return (
     <Countdown
-      date={'2020-05-15T01:00:00'}
+      date={'2020-05-18T07:00:00'}
       renderer={renderer}
     />
   )
