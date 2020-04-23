@@ -12,7 +12,7 @@ describe('Visitor can view menu', () => {
   })
 
   it('and can see links to different homepage sections in ENG', () => {
-    let links = ['Log in', 'Sign up', 'About us', 'Legal', 'FAQ', 'Contact us']
+    let links = ['Log in', 'Sign up', 'About us', 'Användarvillkor', 'FAQ', 'Contact us']
     cy.get('.hamburger-box').click()
     links.forEach(link => {
       cy.contains(link)
@@ -20,7 +20,7 @@ describe('Visitor can view menu', () => {
   })
 
   it('and can see links to different homepage sections in SE', () => {
-    let links = ['Logga in', 'Registrera', 'Om oss', 'Frågor och svar', 'Kontakta oss', 'Policy']
+    let links = ['Logga in', 'Registrera', 'Om oss', 'Frågor och svar', 'Kontakta oss', 'Användarvillkor']
     cy.get('.hamburger-box').click()
     cy.get('#se').click()
     cy.get('.hamburger-box').click()
