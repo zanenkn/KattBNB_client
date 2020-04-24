@@ -15,6 +15,7 @@
     "points-cluster": "^0.1.4",
     "query-string": "^6.8.2",
     "react": "^16.8.6",
+    "react-add-to-calendar": "^0.1.5",
     "react-avatar-editor": "^11.0.7",
     "react-client-captcha": "^1.0.3",
     "react-day-picker": "^7.3.2",

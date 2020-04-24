@@ -30,11 +30,11 @@ class IncomingRequests extends Component {
     this.setState({ closeOnDocumentClick: state })
   }
 
-  acceptRequest = (e) => {
+  acceptRequest = (e, requestData) => {
+    e.preventDefault()
     const { t } = this.props
     const lang = detectLanguage()
     this.setState({ iconsDisabled: true })
-    e.preventDefault()
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
@@ -57,7 +57,16 @@ class IncomingRequests extends Component {
         axios.patch(path, payload, { headers: headers })
           .then(() => {
             const { history } = this.props
-            history.push({ pathname: '/request-accepted-success' })
+            history.push({
+              pathname: '/request-accepted-success',
+              state: {
+                cats: requestData.number_of_cats,
+                inDate: new Date(requestData.dates[0]),
+                outDate: new Date(requestData.dates[requestData.dates.length - 1]),
+                price: requestData.price_total,
+                user: requestData.user.nickname
+              }
+            })
           })
           .catch(error => {
             if (error.response.status === 500) {
@@ -146,7 +155,7 @@ class IncomingRequests extends Component {
                             declModalCloseState={this.declModalCloseState.bind(this)}
                           />
                         </Popup>
-                        <Icon disabled={this.state.iconsDisabled} id={`accept-${request.id}`} onClick={this.acceptRequest} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
+                        <Icon disabled={this.state.iconsDisabled} id={`accept-${request.id}`} onClick={(e) => this.acceptRequest(e, request)} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
                       </Grid.Column>
                     </Grid.Row>
                     <div>
