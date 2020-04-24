@@ -7,5 +7,7 @@ export default (
     <Route path='/about-us' />
     <Route path='/contact-us' />
     <Route path='/faq' />
+    <Route path='/login' />
+    <Route path='/sign-up' />
   </Route>
 )
