@@ -41,15 +41,15 @@ const Counter = (props) => {
             <div>
               <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }} dangerouslySetInnerHTML={{ __html: t('Counter:p') }}></p>
               {props.currentUserIn ?
-                <div style={{'display': 'flex', 'justify-content': 'center'}}>
-                  <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{'margin': '0 0.5rem', 'cursor': 'pointer'}}>
-                  <FacebookIcon height={'3rem'} fill={'#c90c61'}/>
+                <div style={{ 'display': 'flex', 'justify-content': 'center' }}>
+                  <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                    <FacebookIcon height={'3rem'} fill={'#c90c61'} />
                   </a>
-                  <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{'margin': '0 0.5rem', 'cursor': 'pointer'}}>
-                  <InstagramIcon height={'3rem'} fill={'#c90c61'} />
+                  <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                    <InstagramIcon height={'3rem'} fill={'#c90c61'} />
                   </a>
-                  <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{'margin': '0 0.5rem', 'cursor': 'pointer'}}>
-                  <LinkedinIcon height={'3rem'} fill={'#c90c61'}/>
+                  <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                    <LinkedinIcon height={'3rem'} fill={'#c90c61'} />
                   </a>
                 </div>
                 :
