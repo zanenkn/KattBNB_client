@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import FacebookIcon from './ReusableComponents/FacebookIcon'
 import InstagramIcon from './ReusableComponents/InstagramIcon'
 import LinkedinIcon from './ReusableComponents/LinkedinIcon'
+import { Helmet } from 'react-helmet'
 
 const Counter = (props) => {
   const { t } = useTranslation('Counter')
@@ -17,6 +18,11 @@ const Counter = (props) => {
     } else {
       return (
         <div className='content-wrapper' style={{ 'margin': '0', 'backgroundColor': '#E0E0E0', 'position': 'fixed', 'height': '90vh', 'width': '100vw', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center' }}>
+          <Helmet>
+            <title>KattBNB - Boka kattvakt online!</title>
+            <meta name="description" content="Vi arbetar hårt för att få igång den bästa kattpassningssidan där du kann enkelt hitta kattvakt på nätet." />	          <meta name="description" content="Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi bygger en hemsida för just det. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt!" />
+            <link rel="canonical" href="http://kattbnb.se" />
+          </Helmet>
           <div className='content-wrapper' style={{ 'marginTop': '3rem' }}>
             <table style={{ 'textAlign': 'center', 'margin': 'auto', 'color': '#3f3840' }}>
               <tr style={{ 'fontSize': '2rem', 'lineHeight': '1' }}>

@@ -4,6 +4,7 @@ import { Header, Accordion, Icon, Label, Button, Segment } from 'semantic-ui-rea
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
 
 const Faq = (props) => {
 
@@ -22,6 +23,11 @@ const Faq = (props) => {
 
     return (
       <>
+        <Helmet>
+          <title>Ställ inte in din semester. Boka kattvakt på KattBNB.</title>
+          <meta name="description" content="Fullbokat i kattpensionat? Vi känner igen frustrationen. Vi bryr oss om katterna och därför lanserar KattBNB - allt-i-ett kattpassningssida där du kan hitta en perfekt kattvakt till din katt. Frågor på det?" />
+          <link rel="canonical" href="http://kattbnb.se/faq" />
+        </Helmet>
         <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
           <Header as='h1'>
             {t('reusable:title.faq')}

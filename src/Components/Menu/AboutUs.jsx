@@ -2,6 +2,7 @@ import React from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
 
 const AboutUs = () => {
 
@@ -10,6 +11,12 @@ const AboutUs = () => {
   if (ready) {
     return (
       <>
+        <Helmet>
+          <title>KattBNB - Hitta kattvakt nära dig!</title>
+          <meta name="description" content="Vill du hitta en riktig kattälskare som ska passa din pälskling medan du är på semester? Då har du kommit rätt. Vi bygger en hemsida där du kommer att kunna boka kattpassning online." />
+          <link rel="canonical" href="http://kattbnb.se/about-us" />
+        </Helmet>
+
         <div className='content-wrapper' style={{ 'marginBottom': '2rem' }} >
           <Header as='h1'>
             {t('reusable:title.about')}

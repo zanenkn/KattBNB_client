@@ -11,6 +11,7 @@ import { wipeCredentials } from '../Modules/wipeCredentials'
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
 
 class Search extends Component {
 
@@ -185,6 +186,11 @@ class Search extends Component {
 
       return (
         <div className='content-wrapper' >
+          <Helmet>
+            <title>KattBNB - Boka kattvakt online!</title>
+            <meta name="description" content="Vi arbetar hårt för att få igång den bästa kattpassningssidan där du kann enkelt hitta kattvakt på nätet." />	          <meta name="description" content="Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi bygger en hemsida för just det. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt!" />
+            <link rel="canonical" href="http://kattbnb.se" />
+          </Helmet>	   ˝
           <Header as='h1'>
             {t('Search:title')}
           </Header>
