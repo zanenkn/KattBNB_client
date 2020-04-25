@@ -13,13 +13,13 @@ const AboutUs = () => {
       <>
         <Helmet>
           <title>KattBNB - hitta kattvakt nära dig!</title>
-          <meta name="description" content="Letar du efter kattvakt? Då har du kommit rätt. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online." />
-          <link rel="canonical" href="https://kattbnb.se/about-us" />
-          <meta property="og:title" content="KattBNB - hitta kattvakt nära dig!" />
-          <meta property="og:url" content="https://kattbnb.se/about-us" />
-          <meta property="og:type" content="website" />
-          <meta property="og:description" content="Vi bryr oss om katterna. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online." />
-          <meta property="og:image" content="https://kattbnb.se/KattBNB_og.jpg" />
+          <meta name='description' content='Letar du efter kattvakt? Då har du kommit rätt. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.' />
+          <link rel='canonical' href='https://kattbnb.se/about-us' />
+          <meta property='og:title' content='KattBNB - hitta kattvakt nära dig!' />
+          <meta property='og:url' content='https://kattbnb.se/about-us' />
+          <meta property='og:type' content='website' />
+          <meta property='og:description' content='Vi bryr oss om katterna. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.' />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
 
         <div className='content-wrapper' style={{ 'marginBottom': '2rem' }} >

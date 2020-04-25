@@ -16,13 +16,13 @@ class ContactUs extends Component {
         <>
           <Helmet>
             <title>KattBNB vill höra från dig!</title>
-            <meta name="description" content="Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!" />
-            <link rel="canonical" href="https://kattbnb.se/contact-us" />
-            <meta property="og:title" content="KattBNB vill höra från dig!" />
-            <meta property="og:url" content="https://kattbnb.se/contact-us"  />
-            <meta property="og:type" content="website" />
-            <meta property="og:description" content="Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!" />
-            <meta property="og:image" content="https://kattbnb.se/KattBNB_og.jpg" />
+            <meta name='description' content='Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!' />
+            <link rel='canonical' href='https://kattbnb.se/contact-us' />
+            <meta property='og:title' content='KattBNB vill höra från dig!' />
+            <meta property='og:url' content='https://kattbnb.se/contact-us'  />
+            <meta property='og:type' content='website' />
+            <meta property='og:description' content='Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!' />
+            <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
           <div className='content-wrapper' >
             <Header as='h1'>

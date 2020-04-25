@@ -20,13 +20,13 @@ const Counter = (props) => {
         <div className='content-wrapper' style={{ 'margin': '0', 'backgroundColor': '#E0E0E0', 'position': 'fixed', 'height': '90vh', 'width': '100vw', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center' }}>
           <Helmet>
             <title>KattBNB - boka kattvakt online!</title>
-            <meta name="description" content="Vi bryr oss om katterna. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag." />
-            <link rel="canonical" href="https://kattbnb.se" />
-            <meta property="og:title" content="KattBNB - boka kattvakt online!" />
-            <meta property="og:url" content="https://kattbnb.se"/>
-            <meta property="og:type" content="website" />
-            <meta property="og:description" content="På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag." />
-            <meta property="og:image" content="https://kattbnb.se/KattBNB_og.jpg" />
+            <meta name='description' content='Vi bryr oss om katterna. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag.' />
+            <link rel='canonical' href='https://kattbnb.se' />
+            <meta property='og:title' content='KattBNB - boka kattvakt online!' />
+            <meta property='og:url' content='https://kattbnb.se'/>
+            <meta property='og:type' content='website' />
+            <meta property='og:description' content='På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag.' />
+            <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
           <div className='content-wrapper' style={{ 'marginTop': '3rem' }}>
             <table style={{ 'textAlign': 'center', 'margin': 'auto', 'color': '#3f3840' }}>
@@ -68,7 +68,7 @@ const Counter = (props) => {
               }
             </div>
           </div>
-          <img src="cat.gif" style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '0' : '-25%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
+          <img src='cat.gif' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '0' : '-25%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
         </div>
       )
     }
