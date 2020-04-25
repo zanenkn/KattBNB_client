@@ -187,9 +187,14 @@ class Search extends Component {
       return (
         <div className='content-wrapper' >
           <Helmet>
-            <title>KattBNB - Boka kattvakt online!</title>
-            <meta name="description" content="Vi arbetar hårt för att få igång den bästa kattpassningssidan där du kann enkelt hitta kattvakt på nätet." />	          <meta name="description" content="Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi bygger en hemsida för just det. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt!" />
-            <link rel="canonical" href="http://kattbnb.se" />
+            <title>KattBNB - boka kattvakt online!</title>
+            <meta name="description" content="Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!" />
+            <link rel="canonical" href="https://kattbnb.se" />
+            <meta property="og:title" content="KattBNB - boka kattvakt online!" />
+            <meta property="og:url" content="https://kattbnb.se"/>
+            <meta property="og:type" content="website" />
+            <meta property="og:description" content="Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!" />
+            <meta property="og:image" content="https://kattbnb.se/KattBNB_og.jpg" />
           </Helmet>	   ˝
           <Header as='h1'>
             {t('Search:title')}

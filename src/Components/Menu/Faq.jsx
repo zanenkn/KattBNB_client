@@ -24,9 +24,14 @@ const Faq = (props) => {
     return (
       <>
         <Helmet>
-          <title>Ställ inte in din semester. Boka kattvakt på KattBNB.</title>
+          <title>KattBNB - äntligen ett svar på kattpassningsfrågan</title>
           <meta name="description" content="Fullbokat i kattpensionat? Vi känner igen frustrationen. Vi bryr oss om katterna och därför lanserar KattBNB - allt-i-ett kattpassningssida där du kan hitta en perfekt kattvakt till din katt. Frågor på det?" />
-          <link rel="canonical" href="http://kattbnb.se/faq" />
+          <link rel="canonical" href="https://kattbnb.se/faq" />
+          <meta property="og:title" content="KattBNB - frågor på det?" />
+          <meta property="og:url" content="https://kattbnb.se/faq" />
+          <meta property="og:type" content="website" />
+          <meta property="og:description" content="KattBNB - äntligen ett svar på kattpassningsfrågan" />
+          <meta property="og:image" content="https://kattbnb.se/KattBNB_og.jpg" />
         </Helmet>
         <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
           <Header as='h1'>
