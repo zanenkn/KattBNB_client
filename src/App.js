@@ -40,7 +40,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, landingRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -92,6 +92,16 @@ class App extends Component {
       )
     }
 
+    if (process.env.REACT_APP_OFFICIAL === 'yes' && process.env.NODE_ENV === 'production') {
+      landingRoute = (
+        <Route exact path='/' component={Counter}></Route>
+      )
+    } else {
+      landingRoute = (
+        <Route exact path='/' component={Search}></Route>
+      )
+    }
+
     return (
       <div ref={this.contextRef}>
         <Sticky context={this.contextRef}>
@@ -105,7 +115,7 @@ class App extends Component {
           >
             <ScrollToTop>
               <Switch>
-                <Route exact path='/' component={Counter}></Route>
+                {landingRoute}
                 <Route exact path='/search-results' component={SearchResults}></Route>
                 <Route exact path='/about-us' component={AboutUs}></Route>
                 <Route exact path='/contact-us' component={ContactUs}></Route>
