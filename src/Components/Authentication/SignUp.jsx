@@ -10,6 +10,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import ClientCaptcha from 'react-client-captcha'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import Spinner from '../ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
 
 const SignUp = (props) => {
 
