@@ -3,6 +3,9 @@ import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Helmet } from 'react-helmet'
+import FacebookIcon from '../ReusableComponents/FacebookIcon'
+import InstagramIcon from '../ReusableComponents/InstagramIcon'
+import LinkedinIcon from '../ReusableComponents/LinkedinIcon'
 
 const AboutUs = () => {
 
@@ -101,6 +104,17 @@ const AboutUs = () => {
               Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a developer!
             </Trans>
           </p>
+        </div>
+        <div style={{ 'display': 'flex', 'justify-content': 'center', 'margin': '1.5rem 0 1.5rem' }}>
+          <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <FacebookIcon height={'2rem'} fill={'silver'} />
+          </a>
+          <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <InstagramIcon height={'2rem'} fill={'silver'} />
+          </a>
+          <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <LinkedinIcon height={'2rem'} fill={'silver'} />
+          </a>
         </div>
       </>
     )

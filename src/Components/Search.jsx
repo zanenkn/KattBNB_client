@@ -195,7 +195,7 @@ class Search extends Component {
             <meta property='og:type' content='website' />
             <meta property='og:description' content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-          </Helmet>	   ˝
+          </Helmet>
           <Header as='h1'>
             {t('Search:title')}
           </Header>

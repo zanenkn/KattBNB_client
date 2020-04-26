@@ -4,6 +4,9 @@ import NetlifyForm from 'react-netlify-form'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Helmet } from 'react-helmet'
+import FacebookIcon from '../ReusableComponents/FacebookIcon'
+import InstagramIcon from '../ReusableComponents/InstagramIcon'
+import LinkedinIcon from '../ReusableComponents/LinkedinIcon'
 
 class ContactUs extends Component {
 
@@ -19,12 +22,12 @@ class ContactUs extends Component {
             <meta name='description' content='Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!' />
             <link rel='canonical' href='https://kattbnb.se/contact-us' />
             <meta property='og:title' content='KattBNB vill höra från dig!' />
-            <meta property='og:url' content='https://kattbnb.se/contact-us'  />
+            <meta property='og:url' content='https://kattbnb.se/contact-us' />
             <meta property='og:type' content='website' />
             <meta property='og:description' content='Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
-          <div className='content-wrapper' >
+          <div className='content-wrapper' style={{ 'marginBottom': '0' }}>
             <Header as='h1'>
               {t('reusable:title.contact')}
             </Header>
@@ -76,6 +79,17 @@ class ContactUs extends Component {
                 </NetlifyForm>
               </Form>
             </Segment>
+            <div style={{ 'display': 'flex', 'justify-content': 'center', 'marginTop': '1.5rem' }}>
+              <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                <FacebookIcon height={'2rem'} fill={'silver'} />
+              </a>
+              <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                <InstagramIcon height={'2rem'} fill={'silver'} />
+              </a>
+              <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                <LinkedinIcon height={'2rem'} fill={'silver'} />
+              </a>
+            </div>
           </div>
         </>
       )
