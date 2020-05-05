@@ -21,7 +21,7 @@ const Legal = () => {
           <meta property='og:description' content='Tack för att du väljer KattBNB. Vi vill att du känner dig trygg med att använda vår webbapp. Här är reglerna som gäller.' />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
-        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem', 'paddingBottom': '0' }}>
           <Header as='h1'>
             {t('reusable:title.legal')}
           </Header>

@@ -27,7 +27,7 @@ class ContactUs extends Component {
             <meta property='og:description' content='Vi vill bli bäst inom djurpassning! Hör av dig om du har en idé hur kan vi göra det ännu lättare för dig att hitta kattvakt!' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
-          <div className='content-wrapper' style={{ 'marginBottom': '0' }}>
+          <div className='content-wrapper' style={{ 'marginBottom': '0', 'paddingBottom': '0' }}>
             <Header as='h1'>
               {t('reusable:title.contact')}
             </Header>

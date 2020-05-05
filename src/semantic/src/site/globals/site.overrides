@@ -219,8 +219,8 @@ button:focus {
 .content-wrapper {
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-top: 5vw;
-  margin-bottom: 10vw;
+  padding-top: 5vw;
+  padding-bottom: 10vw;
 }
 
 .app-content {

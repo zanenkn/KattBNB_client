@@ -28,7 +28,7 @@ const Counter = (props) => {
             <meta property='og:description' content='På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag.' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
-          <div className='content-wrapper' style={{ 'marginTop': '3rem' }}>
+          <div className='content-wrapper' style={{ 'marginTop': '3rem', 'paddingTop': '0' }}>
             <table style={{ 'textAlign': 'center', 'margin': 'auto', 'color': '#3f3840' }}>
               <tr style={{ 'fontSize': '2rem', 'lineHeight': '1' }}>
                 <td style={{}}><strong>{zeroPad(days)}</strong></td>
