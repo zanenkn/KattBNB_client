@@ -136,7 +136,7 @@ class App extends Component {
                 <Route exact path='/partners' component={Partners}></Route>
                 <Route exact path='/guidelines' component={Guidelines}></Route>
                 <Route exact path='/is-not-available' component={Error503}></Route>
-                <Route exact path='/host-en' component={HostEn}></Route>
+                <Route exact path='/become-host' component={HostEn}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}
