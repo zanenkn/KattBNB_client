@@ -30,6 +30,7 @@ import NoAccess from './Components/ReusableComponents/NoAccess'
 import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
 import Counter from './Components/Counter'
+import HostEn from './Components/HostEn'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -135,6 +136,7 @@ class App extends Component {
                 <Route exact path='/partners' component={Partners}></Route>
                 <Route exact path='/guidelines' component={Guidelines}></Route>
                 <Route exact path='/is-not-available' component={Error503}></Route>
+                <Route exact path='/host-en' component={HostEn}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}
