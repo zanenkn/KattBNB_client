@@ -242,6 +242,7 @@ const Faq = (props) => {
               {t('Faq:host.sub-header1')}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 201}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p className='fake-link-underlined-reg' style={{'marginBottom': '1rem'}}>{t('Faq:host.video-link')}</p></Link>
               <p>
                 {t('Faq:host.p1-1')}
               </p>
