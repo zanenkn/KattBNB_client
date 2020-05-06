@@ -12,6 +12,7 @@ import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/momen
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
 import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 
 class Search extends Component {
 
@@ -287,7 +288,12 @@ class Search extends Component {
                 <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
               </div>
             </div>
+
+            <div style={{'textAlign': 'center', 'marginTop': '2rem'}}>
+          <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{'fontWeight': 'bold', 'color': 'silver'}}>{t('Search:become-host')}</p></Link>
+          </div>
           </Segment>
+          
         </div>
       )
     } else { return <Spinner /> }
