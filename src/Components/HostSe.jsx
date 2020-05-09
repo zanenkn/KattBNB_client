@@ -33,7 +33,7 @@ const HostSe = (props) => {
         <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
       </Helmet>
       <div style={{ 'position': 'relative', 'margin': 'auto', 'display': 'flex', 'flexDirection': 'column' }}>
-        <video width='100%' ref={vid} muted='muted' onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
+        <video width='100%' ref={vid} muted='muted' playsinline onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
           <source src='kattvakt.mp4' type='video/mp4'></source>
         </video>
         <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
