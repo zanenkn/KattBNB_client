@@ -12,7 +12,7 @@ describe('Visitor can view menu', () => {
   })
 
   it('and can see links to different homepage sections in ENG', () => {
-    let links = ['Log in', 'Sign up', 'About us', 'Användarvillkor', 'FAQ', 'Contact us']
+    let links = ['Log in', 'Sign up', 'About us', 'Terms & conditions', 'FAQ', 'Contact us']
     cy.get('.hamburger-box').click()
     links.forEach(link => {
       cy.contains(link)
@@ -32,7 +32,7 @@ describe('Visitor can view menu', () => {
   it('and can toggle menu visibility off by clicking outside the menu', () => {
     cy.get('.hamburger-box').click()
     cy.get('#menu').should('be.visible')
-    cy.get('.content-wrapper').click()
+    cy.get('h1.ui').click()
     cy.get('#menu').should('not.be.visible')
   })
 })
