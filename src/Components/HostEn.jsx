@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const HostEn = () => {
   const vid = useRef(null)
@@ -21,6 +22,16 @@ const HostEn = () => {
 
   return (
     <div className='content-wrapper' style={{ 'display': 'flex', 'minHeight': '90vh' }}>
+      <Helmet>
+        <title>Become a cat sitter on KattBNB!</title>
+        <meta name='description' content='Getting paid for chilling with cats. Sounds like a dream? Sign up today at KattBNB.' />
+        <link rel='canonical' href='https://kattbnb.se/become-host' />
+        <meta property='og:title' content='Become a cat sitter on KattBNB!' />
+        <meta property='og:url' content='https://kattbnb.se/become-host' />
+        <meta property='og:type' content='website' />
+        <meta property='og:description' content='Getting paid for looking after cats. Sounds like a dream? Sign up today at KattBNB.' />
+        <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
+      </Helmet>
       <div style={{ 'position': 'relative', 'margin': 'auto', 'display': 'flex', 'flexDirection': 'column' }}>
         <video width='100%' ref={vid} muted='muted' onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
           <source src='host.mp4' type='video/mp4'></source>

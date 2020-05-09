@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const HostSe = () => {
   const vid = useRef(null)
@@ -20,6 +21,16 @@ const HostSe = () => {
 
   return (
     <div className='content-wrapper' style={{ 'display': 'flex', 'minHeight': '90vh' }}>
+      <Helmet>
+        <title>Bli kattvakt på KattBNB!</title>
+        <meta name='description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
+        <link rel='canonical' href='https://kattbnb.se/bli-kattvakt' />
+        <meta property='og:title' content='Bli kattvakt på KattBNB!' />
+        <meta property='og:url' content='https://kattbnb.se/bli-kattvakt' />
+        <meta property='og:type' content='website' />
+        <meta property='og:description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
+        <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
+      </Helmet>
       <div style={{ 'position': 'relative', 'margin': 'auto', 'display': 'flex', 'flexDirection': 'column' }}>
         <video width='100%' ref={vid} muted='muted' onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
           <source src='kattvakt.mp4' type='video/mp4'></source>
