@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { connect } from 'react-redux'
 
-const HostEn = () => {
+const HostEn = (props) => {
   const vid = useRef(null)
 
   const [buttonOpacity, setButtonOpacity] = useState(0)
@@ -36,14 +37,18 @@ const HostEn = () => {
         <video width='100%' ref={vid} muted='muted' onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
           <source src='host.mp4' type='video/mp4'></source>
         </video>
-        <Link to='/sign-up'>
-          <Button style={{ 'position': 'absolute', 'marginLeft': '-44px', 'top': '55%', 'marginTop': '0', 'left': '50%', 'opacity': buttonOpacity }}>Sign up</Button>
+        <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
+          <Button style={{ 'position': 'absolute', 'marginLeft': '-44px', 'top': '55%', 'marginTop': '0', 'left': '50%', 'opacity': buttonOpacity }}>{props.currentUserIn ? 'My profile' : 'Sign up'}</Button>
         </Link>
       </div>
-      <Link to='/sign-up' style={{ 'margin': 'auto', 'position': 'absolute', 'bottom': skipLinkPosition, 'left': '0', 'width': '-webkit-fill-available', 'transition': 'bottom .35s ease-in-out' }}><p style={{ 'textTransform': 'uppercase', 'color': 'silver', 'textAlign': 'center' }}>Skip this</p></Link>
+      <Link to={props.currentUserIn ? '/user-page' : '/sign-up'} style={{ 'margin': 'auto', 'position': 'absolute', 'bottom': skipLinkPosition, 'left': '0', 'width': '-webkit-fill-available', 'transition': 'bottom .35s ease-in-out' }}><p style={{ 'textTransform': 'uppercase', 'color': 'silver', 'textAlign': 'center' }}>Skip this</p></Link>
     </div>
 
   )
 }
 
-export default HostEn
+const mapStateToProps = state => ({
+  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
+})
+
+export default connect(mapStateToProps)(HostEn)
