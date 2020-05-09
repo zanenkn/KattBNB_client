@@ -105,11 +105,11 @@ class App extends Component {
     }
 
     return (
-      <div ref={this.contextRef} style={{'minHeight': '100vh'}}>
+      <div ref={this.contextRef} style={{ 'minHeight': '100vh' }}>
         <Sticky context={this.contextRef}>
           <Navbar />
         </Sticky>
-        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }} style={{'minHeight': '90vh'}}>
+        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }} style={{ 'minHeight': '90vh' }}>
           <Sidebar.Pushable
             as={Container}
             id='app-content'

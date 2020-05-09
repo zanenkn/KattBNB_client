@@ -41,7 +41,6 @@ const HostSe = () => {
       </div>
       <Link to='/sign-up' style={{ 'margin': 'auto', 'position': 'absolute', 'bottom': skipLinkPosition, 'left': '0', 'width': '-webkit-fill-available', 'transition': 'bottom .35s ease-in-out' }}><p style={{ 'textTransform': 'uppercase', 'color': 'silver', 'textAlign': 'center' }}>Hoppa över</p></Link>
     </div>
-
   )
 }
 

@@ -23,7 +23,7 @@ const Counter = (props) => {
             <meta name='description' content='Vi bryr oss om katterna. På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag.' />
             <link rel='canonical' href='https://kattbnb.se' />
             <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-            <meta property='og:url' content='https://kattbnb.se'/>
+            <meta property='og:url' content='https://kattbnb.se' />
             <meta property='og:type' content='website' />
             <meta property='og:description' content='På KattBNB kommer du kunna boka kattvakt online - snabbt och enkelt! Registrera ditt konto idag.' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
