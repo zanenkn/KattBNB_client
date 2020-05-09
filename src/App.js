@@ -29,6 +29,9 @@ import HostProfileViewWrapper from './Components/HostProfileView/HostProfileView
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
+import Counter from './Components/Counter'
+import HostEn from './Components/HostEn'
+import HostSe from './Components/HostSe'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -39,7 +42,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, landingRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -91,12 +94,22 @@ class App extends Component {
       )
     }
 
+    if (process.env.REACT_APP_OFFICIAL === 'yes' && process.env.NODE_ENV === 'production') {
+      landingRoute = (
+        <Route exact path='/' component={Counter}></Route>
+      )
+    } else {
+      landingRoute = (
+        <Route exact path='/' component={Search}></Route>
+      )
+    }
+
     return (
-      <div ref={this.contextRef}>
+      <div ref={this.contextRef} style={{ 'minHeight': '100vh' }}>
         <Sticky context={this.contextRef}>
           <Navbar />
         </Sticky>
-        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}>
+        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }} style={{ 'minHeight': '90vh' }}>
           <Sidebar.Pushable
             as={Container}
             id='app-content'
@@ -104,7 +117,7 @@ class App extends Component {
           >
             <ScrollToTop>
               <Switch>
-                <Route exact path='/' component={Search}></Route>
+                {landingRoute}
                 <Route exact path='/search-results' component={SearchResults}></Route>
                 <Route exact path='/about-us' component={AboutUs}></Route>
                 <Route exact path='/contact-us' component={ContactUs}></Route>
@@ -124,6 +137,8 @@ class App extends Component {
                 <Route exact path='/partners' component={Partners}></Route>
                 <Route exact path='/guidelines' component={Guidelines}></Route>
                 <Route exact path='/is-not-available' component={Error503}></Route>
+                <Route exact path='/become-host' component={HostEn}></Route>
+                <Route exact path='/bli-kattvakt' component={HostSe}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}

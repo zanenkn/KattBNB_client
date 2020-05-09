@@ -4,6 +4,7 @@ import { Header, Accordion, Icon, Label, Button, Segment } from 'semantic-ui-rea
 import { connect } from 'react-redux'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
 
 const Faq = (props) => {
 
@@ -22,7 +23,17 @@ const Faq = (props) => {
 
     return (
       <>
-        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
+        <Helmet>
+          <title>KattBNB - äntligen ett svar på kattpassningsfrågan</title>
+          <meta name='description' content='Fullbokat i kattpensionat? Vi känner igen frustrationen. Vi bryr oss om katterna och därför lanserar KattBNB - allt-i-ett kattpassningssida där du kan hitta en perfekt kattvakt till din katt. Frågor på det?' />
+          <link rel='canonical' href='https://kattbnb.se/faq' />
+          <meta property='og:title' content='KattBNB - frågor på det?' />
+          <meta property='og:url' content='https://kattbnb.se/faq' />
+          <meta property='og:type' content='website' />
+          <meta property='og:description' content='KattBNB - äntligen ett svar på kattpassningsfrågan' />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem', 'paddingBottom': '0' }}>
           <Header as='h1'>
             {t('reusable:title.faq')}
           </Header>
@@ -231,6 +242,7 @@ const Faq = (props) => {
               {t('Faq:host.sub-header1')}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 201}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p className='fake-link-underlined-reg' style={{ 'marginBottom': '1rem' }}>{t('Faq:host.video-link')}</p></Link>
               <p>
                 {t('Faq:host.p1-1')}
               </p>

@@ -2,6 +2,10 @@ import React from 'react'
 import { Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
+import FacebookIcon from '../ReusableComponents/FacebookIcon'
+import InstagramIcon from '../ReusableComponents/InstagramIcon'
+import LinkedinIcon from '../ReusableComponents/LinkedinIcon'
 
 const AboutUs = () => {
 
@@ -10,7 +14,18 @@ const AboutUs = () => {
   if (ready) {
     return (
       <>
-        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }} >
+        <Helmet>
+          <title>KattBNB - hitta kattvakt nära dig!</title>
+          <meta name='description' content='Letar du efter kattvakt? Då har du kommit rätt. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.' />
+          <link rel='canonical' href='https://kattbnb.se/about-us' />
+          <meta property='og:title' content='KattBNB - hitta kattvakt nära dig!' />
+          <meta property='og:url' content='https://kattbnb.se/about-us' />
+          <meta property='og:type' content='website' />
+          <meta property='og:description' content='Vi bryr oss om katterna. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.' />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
+
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem', 'paddingBottom': '0' }} >
           <Header as='h1'>
             {t('reusable:title.about')}
           </Header>
@@ -89,6 +104,17 @@ const AboutUs = () => {
               Thank you <a href='https://se.linkedin.com/in/living-and-breathing-tdd' target='_blank' rel='noopener noreferrer'>Clarissa Liljander</a> for introducing us with i18n solution for translations and helping out with the setup, best of luck with you career as a developer!
             </Trans>
           </p>
+        </div>
+        <div style={{ 'display': 'flex', 'justify-content': 'center', 'margin': '1.5rem 0 1.5rem' }}>
+          <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <FacebookIcon height={'2rem'} fill={'silver'} />
+          </a>
+          <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <InstagramIcon height={'2rem'} fill={'silver'} />
+          </a>
+          <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+            <LinkedinIcon height={'2rem'} fill={'silver'} />
+          </a>
         </div>
       </>
     )

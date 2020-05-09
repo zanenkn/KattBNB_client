@@ -2,6 +2,7 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { useTranslation, Trans } from 'react-i18next'
+import { Helmet } from 'react-helmet'
 
 const Legal = () => {
 
@@ -10,7 +11,17 @@ const Legal = () => {
   if (ready) {
     return (
       <>
-        <div className='content-wrapper' style={{ 'marginBottom': '2rem' }}>
+        <Helmet>
+          <title>KattBNB - användarvillkor</title>
+          <meta name='description' content='Tack för att du väljer KattBNB. Vi vill att du känner dig trygg med att använda vår webbapp. Här är reglerna som gäller.' />
+          <link rel='canonical' href='https://kattbnb.se/legal' />
+          <meta property='og:title' content='KattBNB - användarvillkor' />
+          <meta property='og:url' content='https://kattbnb.se/legal' />
+          <meta property='og:type' content='website' />
+          <meta property='og:description' content='Tack för att du väljer KattBNB. Vi vill att du känner dig trygg med att använda vår webbapp. Här är reglerna som gäller.' />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
+        <div className='content-wrapper' style={{ 'marginBottom': '2rem', 'paddingBottom': '0' }}>
           <Header as='h1'>
             {t('reusable:title.legal')}
           </Header>

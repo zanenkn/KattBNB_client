@@ -23,7 +23,7 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
 
   it('to ENG Legal page', () => {
     cy.get('#legal').click()
-    cy.contains('Legal')
+    cy.contains('Terms & conditions')
   })
 
   it('to ENG FAQ page', () => {
@@ -62,7 +62,7 @@ describe('Visitor can click on sidebar links and be redirected depending on chos
     cy.get('#se').click()
     cy.get('.hamburger-box').click()
     cy.get('#legal').click()
-    cy.contains('Policy')
+    cy.contains('Användarvillkor')
   })
 
   it('to SE FAQ page', () => {

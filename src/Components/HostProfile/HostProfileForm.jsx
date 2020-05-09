@@ -212,6 +212,7 @@ class HostProfileForm extends Component {
     if (this.props.tReady) {
       let addressSearch, addressErrorMessage, onCreateErrorMessage
       const today = new Date()
+      const launch = new Date('2020-06-01')
       const lang = detectLanguage()
 
       if (this.state.addressSearch === true) {
@@ -330,8 +331,8 @@ class HostProfileForm extends Component {
               </label>
               <DayPicker
                 showWeekNumbers
-                fromMonth={today}
-                disabledDays={{ before: today }}
+                month={launch}
+                disabledDays={{ before: launch }}
                 firstDayOfWeek={1}
                 selectedDays={this.state.selectedDays}
                 onDayClick={this.handleDayClick}

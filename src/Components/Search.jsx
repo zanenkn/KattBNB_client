@@ -11,6 +11,8 @@ import { wipeCredentials } from '../Modules/wipeCredentials'
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
 import { withTranslation } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
+import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 
 class Search extends Component {
 
@@ -185,6 +187,16 @@ class Search extends Component {
 
       return (
         <div className='content-wrapper' >
+          <Helmet>
+            <title>KattBNB - boka kattvakt online!</title>
+            <meta name='description' content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!' />
+            <link rel='canonical' href='https://kattbnb.se' />
+            <meta property='og:title' content='KattBNB - boka kattvakt online!' />
+            <meta property='og:url' content='https://kattbnb.se'/>
+            <meta property='og:type' content='website' />
+            <meta property='og:description' content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
+            <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+          </Helmet>
           <Header as='h1'>
             {t('Search:title')}
           </Header>
@@ -276,7 +288,12 @@ class Search extends Component {
                 <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
               </div>
             </div>
+
+            <div style={{'textAlign': 'center', 'marginTop': '2rem'}}>
+          <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{'fontWeight': 'bold', 'color': 'silver'}}>{t('Search:become-host')}</p></Link>
+          </div>
           </Segment>
+          
         </div>
       )
     } else { return <Spinner /> }
