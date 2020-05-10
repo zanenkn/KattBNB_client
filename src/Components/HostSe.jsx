@@ -34,9 +34,9 @@ const HostSe = (props) => {
         <meta property='og:description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
         <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
       </Helmet>
-      <div style={{ 'position': 'relative', 'margin': '0 auto', 'paddingTop': '3rem', 'display': 'flex', 'flexDirection': 'column', 'overflow': 'hidden', 'height': 'max-content' }}>
+      <div style={{ 'position': 'relative', 'margin': '0 auto', 'paddingTop': '1rem', 'display': 'flex', 'flexDirection': 'column', 'overflow': 'hidden', 'height': 'max-content' }}>
         <video width='100%' ref={vid} muted='muted' playsinline='playsinline' webkit-playsinline autoplay onEnded={() => videoEnded()} style={{ 'maxWidth': '500px' }}>
-          <source src='kattvakt.mp4' type='video/mp4'></source>
+          <source src='kattvakt_480.mp4' type='video/mp4'></source>
         </video>
         <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
           <Button style={{ 'position': 'absolute', 'marginLeft': '-73px', 'bottom': '30%', 'marginTop': '0', 'left': '50%', 'opacity': buttonOpacity }}>{props.currentUserIn ? 'Min profil' : 'Registrera konto'}</Button>
