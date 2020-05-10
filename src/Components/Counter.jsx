@@ -69,7 +69,7 @@ const Counter = (props) => {
               </div>
             </div>
           </div>
-          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-20%' : window.innerWidth > 500 ? '0' : '-30%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
+          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-30%' : window.innerWidth > 500 ? '0' : '-36%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
         </div>
       )
     }
