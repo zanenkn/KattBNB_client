@@ -9,6 +9,7 @@ const HostSe = (props) => {
 
   const [buttonOpacity, setButtonOpacity] = useState(0)
   const [skipLinkPosition, setSkipLinkPosition] = useState('5vh')
+  const [skipLinkOpacity, setSkipLinkOpacity] = useState('1')
 
   useEffect(() => {
     vid.current.load()
@@ -18,6 +19,7 @@ const HostSe = (props) => {
   const videoEnded = () => {
     setButtonOpacity(1)
     setSkipLinkPosition('-5vh')
+    setSkipLinkOpacity('0')
   }
 
   return (
@@ -32,15 +34,15 @@ const HostSe = (props) => {
         <meta property='og:description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
         <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
       </Helmet>
-      <div style={{ 'position': 'relative', 'margin': 'auto', 'display': 'flex', 'flexDirection': 'column' }}>
-        <video width='100%' ref={vid} muted='muted' playsinline='playsinline' webkit-playsinline autoplay onEnded={() => videoEnded()} style={{ 'maxWidth': '500px', 'marginTop': '-5vh' }}>
+      <div style={{ 'position': 'relative', 'margin': '0 auto', 'paddingTop': '3rem', 'display': 'flex', 'flexDirection': 'column', 'overflow': 'hidden', 'height': 'max-content' }}>
+        <video width='100%' ref={vid} muted='muted' playsinline='playsinline' webkit-playsinline autoplay onEnded={() => videoEnded()} style={{ 'maxWidth': '500px' }}>
           <source src='kattvakt.mp4' type='video/mp4'></source>
         </video>
         <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
-          <Button style={{ 'position': 'absolute', 'marginLeft': '-73px', 'top': '55%', 'marginTop': '0', 'left': '50%', 'opacity': buttonOpacity }}>{props.currentUserIn ? 'Min profil' : 'Registrera konto'}</Button>
+          <Button style={{ 'position': 'absolute', 'marginLeft': '-73px', 'bottom': '30%', 'marginTop': '0', 'left': '50%', 'opacity': buttonOpacity }}>{props.currentUserIn ? 'Min profil' : 'Registrera konto'}</Button>
         </Link>
       </div>
-      <Link to={props.currentUserIn ? '/user-page' : '/sign-up'} style={{ 'margin': 'auto', 'position': 'absolute', 'bottom': skipLinkPosition, 'left': '0', 'width': '-webkit-fill-available', 'transition': 'bottom .35s ease-in-out' }}><p style={{ 'textTransform': 'uppercase', 'color': 'silver', 'textAlign': 'center' }}>Hoppa över</p></Link>
+      <Link to={props.currentUserIn ? '/user-page' : '/sign-up'} style={{ 'margin': 'auto', 'position': 'absolute', 'opacity': skipLinkOpacity, 'bottom': skipLinkPosition, 'left': '0', 'width': '100vw', 'transition': 'all .35s ease-in-out' }}><p style={{ 'textTransform': 'uppercase', 'color': 'silver', 'textAlign': 'center' }}>Hoppa över</p></Link>
     </div>
   )
 }
