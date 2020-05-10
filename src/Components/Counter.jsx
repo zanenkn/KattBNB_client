@@ -2,11 +2,12 @@ import React from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import Search from './Search'
 import { Button } from 'semantic-ui-react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import { connect } from 'react-redux'
 import FacebookIcon from './ReusableComponents/FacebookIcon'
 import InstagramIcon from './ReusableComponents/InstagramIcon'
 import LinkedinIcon from './ReusableComponents/LinkedinIcon'
+import {Link} from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 const Counter = (props) => {
@@ -50,25 +51,25 @@ const Counter = (props) => {
               </tr>
             </table>
             <div>
-              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }} dangerouslySetInnerHTML={{ __html: t('Counter:p') }}></p>
-              {props.currentUserIn ?
-                <div style={{ 'display': 'flex', 'justify-content': 'center' }}>
-                  <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
-                    <FacebookIcon height={'3rem'} fill={'#c90c61'} />
-                  </a>
-                  <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
-                    <InstagramIcon height={'3rem'} fill={'#c90c61'} />
-                  </a>
-                  <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
-                    <LinkedinIcon height={'3rem'} fill={'#c90c61'} />
-                  </a>
-                </div>
-                :
-                <Button style={{ 'marginTop': '1rem' }}>{t('reusable:title.signup')}</Button>
-              }
+              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }}>
+                <Trans i18nKey='Counter:p'>
+                  Counting down until launch. We may be small but we dream big. We hope you'd like to <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'} style={{'fontWeight': 'bold'}}>join us.</Link>
+                </Trans>
+              </p>
+              <div style={{ 'display': 'flex', 'justify-content': 'center' }}>
+                <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                  <FacebookIcon height={'3rem'} fill={'silver'} />
+                </a>
+                <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                  <InstagramIcon height={'3rem'} fill={'silver'} />
+                </a>
+                <a href='https://www.linkedin.com/company/28767809' target='_blank' rel='noopener noreferrer' style={{ 'margin': '0 0.5rem', 'cursor': 'pointer' }}>
+                  <LinkedinIcon height={'3rem'} fill={'silver'} />
+                </a>
+              </div>
             </div>
           </div>
-          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '0' : '-25%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
+          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerWidth > 320 && window.innerWidth < 500) ? '-20%' : window.innerWidth > 500 ? '0' : '-30%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth + 70}px` }} />
         </div>
       )
     }

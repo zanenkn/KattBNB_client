@@ -290,8 +290,8 @@ class Search extends Component {
             </div>
 
             <div style={{'textAlign': 'center', 'marginTop': '2rem'}}>
-          <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{'fontWeight': 'bold', 'color': 'silver'}}>{t('Search:become-host')}</p></Link>
-          </div>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{'fontWeight': 'bold', 'color': 'silver'}}>{t('Search:become-host')}</p></Link>
+            </div>
           </Segment>
           
         </div>

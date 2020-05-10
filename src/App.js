@@ -100,7 +100,7 @@ class App extends Component {
       )
     } else {
       landingRoute = (
-        <Route exact path='/' component={Search}></Route>
+        <Route exact path='/' component={Counter}></Route>
       )
     }
 
