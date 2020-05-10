@@ -13,10 +13,6 @@ import { Helmet } from 'react-helmet'
 const Counter = (props) => {
   const { t } = useTranslation('Counter')
 
-  useEffect(() => {
-    window.scrollTo(0,1);
-  }, [])
-
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       return <Search {...props} />
