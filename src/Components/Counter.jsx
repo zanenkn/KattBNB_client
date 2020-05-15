@@ -51,9 +51,9 @@ const Counter = (props) => {
               </tr>
             </table>
             <div>
-              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center' }}>
+              <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center', 'maxWidth': '312px' }}>
                 <Trans i18nKey='Counter:p'>
-                  Counting down until launch. We may be small but we dream big. We hope you'd like to <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'} style={{'fontWeight': 'bold'}}>join us.</Link>
+                  Hey there! We open for bookings the 1st of June but you can <Link to='/sign-up' style={{'fontWeight': 'bold'}}>sign up</Link> already now. Or maybe you want to <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'} style={{'fontWeight': 'bold'}}>become a cat sitter</Link>?
                 </Trans>
               </p>
               <div style={{ 'display': 'flex', 'justify-content': 'center' }}>
@@ -69,14 +69,14 @@ const Counter = (props) => {
               </div>
             </div>
           </div>
-          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerHeight < 540) ? '-42%' : (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '-50px' : '-18%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth}px` }} />
+          <img src='cat.gif' alt='' style={{ 'position': 'absolute', 'zIndex': '3500', 'bottom': (window.innerHeight < 540) ? '-42%' : (window.innerWidth > 320 && window.innerWidth < 500) ? '-15%' : window.innerWidth > 500 ? '-80px' : '-18%', 'maxWidth': window.innerWidth > 500 ? '500px' : `${window.innerWidth}px` }} />
         </div>
       )
     }
   }
   return (
     <Countdown
-      date={'2020-06-01T07:00:00'}
+      date={'2020-06-01T07:00:00'} start
       renderer={renderer}
     />
   )
