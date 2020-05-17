@@ -61,7 +61,9 @@ class Conversation extends Component {
           })
           this.bottom.scrollIntoView({ behavior: 'smooth' })
         }).catch(error => {
-          if (error.response.status === 500) {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
             this.setState({
               loading: false,
               errorDisplay: true,
@@ -148,7 +150,9 @@ class Conversation extends Component {
             this.setState({ newMessage: '' })
           }
         }).catch(error => {
-          if (error.response.status === 500) {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
             this.handleError(['reusable:errors:500'])
           } else if (error.response.status === 503) {
             wipeCredentials('/is-not-available?atm')
@@ -225,7 +229,9 @@ class Conversation extends Component {
             window.location.replace('/messenger')
           })
           .catch(error => {
-            if (error.response.status === 500) {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
                 errorDisplay: true,

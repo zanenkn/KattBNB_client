@@ -95,7 +95,9 @@ const UserPage = (props) => {
             setErrors([])
           })
           .catch(error => {
-            if (error.response.status === 500) {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 500) {
               setErrorDisplay(true)
               setErrors(['reusable:errors:500'])
             } else if (error.response.status === 503) {
@@ -127,7 +129,9 @@ const UserPage = (props) => {
           setErrorDisplay(false)
           setErrors([])
         } catch (error) {
-          if (error.response.status === 500) {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
             setErrorDisplay(true)
             setErrors(['reusable:errors:500'])
           } else if (error.response.status === 503) {
@@ -159,7 +163,9 @@ const UserPage = (props) => {
         setErrorDisplay(false)
         setErrors([])
       } catch (error) {
-        if (error.response.status === 500) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500) {
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
         } else if (error.response.status === 503) {
@@ -263,7 +269,9 @@ const UserPage = (props) => {
               wipeCredentials('/')
             })
             .catch(error => {
-              if (error.response.status === 503) {
+              if (error.response === undefined) {
+                wipeCredentials('/is-not-available?atm')
+              } else if (error.response.status === 503) {
                 wipeCredentials('/is-not-available?atm')
               } else {
                 window.alert(t('UserPage:deletion-error'))
@@ -284,7 +292,9 @@ const UserPage = (props) => {
               wipeCredentials('/')
             })
             .catch(error => {
-              if (error.response.status === 503) {
+              if (error.response === undefined) {
+                wipeCredentials('/is-not-available?atm')
+              } else if (error.response.status === 503) {
                 wipeCredentials('/is-not-available?atm')
               } else {
                 window.alert(t('UserPage:deletion-error'))
@@ -295,7 +305,9 @@ const UserPage = (props) => {
           setDeleteDipslayNone(false)
         }
       } catch (error) {
-        if (error.response.status === 500) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500) {
           setDeleteDipslayNone(false)
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
