@@ -14,7 +14,7 @@ i18n
     fallbackLng,
     ns: ['reusable'],
     lng: process.env.NODE_ENV === 'production' ? (window.localStorage.getItem('I18N_LANGUAGE') || 'sv') : 'en',
-    debug: true,
+    debug: process.env.NODE_ENV === 'production' ? false : true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],
 
