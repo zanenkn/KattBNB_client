@@ -183,7 +183,9 @@ class HostProfileForm extends Component {
             setTimeout(function () { window.location.replace('/user-page') }, 500)
           })
           .catch(error => {
-            if (error.response.status === 500) {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
                 onCreateErrorDisplay: true,
