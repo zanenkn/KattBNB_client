@@ -87,7 +87,9 @@ class Search extends Component {
           errorDisplay: false
         })
       }).catch(error => {
-        if (error.response.status === 500) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500) {
           this.setState({
             loading: false,
             errorDisplay: true,
@@ -161,7 +163,6 @@ class Search extends Component {
     }
   }
 
-
   render() {
     const { t } = this.props
 
@@ -192,7 +193,7 @@ class Search extends Component {
             <meta name='description' content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!' />
             <link rel='canonical' href='https://kattbnb.se' />
             <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-            <meta property='og:url' content='https://kattbnb.se'/>
+            <meta property='og:url' content='https://kattbnb.se' />
             <meta property='og:type' content='website' />
             <meta property='og:description' content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
@@ -288,12 +289,10 @@ class Search extends Component {
                 <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
               </div>
             </div>
-
-            <div style={{'textAlign': 'center', 'marginTop': '2rem'}}>
-              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{'fontWeight': 'bold', 'color': 'silver'}}>{t('Search:become-host')}</p></Link>
+            <div style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{ 'fontWeight': 'bold', 'color': 'silver' }}>{t('Search:become-host')}</p></Link>
             </div>
           </Segment>
-          
         </div>
       )
     } else { return <Spinner /> }
