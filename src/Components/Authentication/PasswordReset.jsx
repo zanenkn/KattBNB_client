@@ -43,7 +43,9 @@ class PasswordReset extends Component {
           this.props.history.push('/password-reset-success')
         })
         .catch(error => {
-          if (error.response.status === 500) {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
             this.setState({
               loading: false,
               errorDisplay: true,
