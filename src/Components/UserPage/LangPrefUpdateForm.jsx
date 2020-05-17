@@ -51,7 +51,9 @@ const LangPrefUpdateForm = (props) => {
             props.closeLocationAndPasswordForms()
           })
           .catch(error => {
-            if (error.response.status === 500) {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 500) {
               setLoading(false)
               setErrorDisplay(true)
               setErrors(['reusable:errors:500'])
