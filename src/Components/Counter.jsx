@@ -1,13 +1,12 @@
 import React from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import Search from './Search'
-import { Button } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 import { connect } from 'react-redux'
 import FacebookIcon from './ReusableComponents/FacebookIcon'
 import InstagramIcon from './ReusableComponents/InstagramIcon'
 import LinkedinIcon from './ReusableComponents/LinkedinIcon'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 const Counter = (props) => {
@@ -53,7 +52,7 @@ const Counter = (props) => {
             <div>
               <p style={{ 'marginTop': '2rem', 'color': '#3f3840', 'textAlign': 'center', 'maxWidth': '312px' }}>
                 <Trans i18nKey='Counter:p'>
-                  Hey there! We open for bookings the 1st of June but you can <Link to='/sign-up' style={{'fontWeight': 'bold'}}>sign up</Link> already now. Or maybe you want to <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'} style={{'fontWeight': 'bold'}}>become a cat sitter</Link>?
+                  Hey there! We open for bookings the 1st of June but you can <Link to='/sign-up' style={{ 'fontWeight': 'bold' }}>sign up</Link> already now. Or maybe you want to <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'} style={{ 'fontWeight': 'bold' }}>become a cat sitter</Link>?
                 </Trans>
               </p>
               <div style={{ 'display': 'flex', 'justify-content': 'center' }}>
