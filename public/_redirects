@@ -4,3 +4,10 @@ http://kattbnb.se/*       https://kattbnb.se/:splat   301!
 http://www.kattbnb.se/*   https://kattbnb.se/:splat   301!
 https://www.kattbnb.se/*  https://kattbnb.se/:splat   301!
 www.kattbnb.se/*          https://kattbnb.se/:splat   301!
+
+http://kattbnb.com/*       https://kattbnb.se/:splat   301!
+http://www.kattbnb.com/*   https://kattbnb.se/:splat   301!
+https://www.kattbnb.com/*  https://kattbnb.se/:splat   301!
+www.kattbnb.com/*          https://kattbnb.se/:splat   301!
+
+https://kattbnb.com/*       https://kattbnb.se/:splat  301!
