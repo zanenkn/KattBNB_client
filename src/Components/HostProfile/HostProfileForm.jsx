@@ -219,17 +219,21 @@ class HostProfileForm extends Component {
 
       if (this.state.addressSearch === true) {
         addressSearch = (
-          <Form.Input
-            label={t('HostProfileForm:address-label')}
-            placeholder={t('HostProfileForm:address-search-plch')}
-            required
-            id='userInputAddress'
-            value={this.state.userInputAddress}
-            onChange={this.onChangeHandler}
-            onKeyPress={this.listenEnterKeyAddress}
-            iconPosition='right'
-            icon={<Icon id='search' name='search' link onClick={this.geolocationDataAddress.bind(this)} style={{ 'color': '#c90c61' }} />}
-          />
+          <div style={{ 'display': 'flex', 'alignItems': 'flex-end' }}>
+            <Form.Input
+              style={{'paddingRight': '1rem'}}
+              label={t('HostProfileForm:address-label')}
+              placeholder={t('HostProfileForm:address-search-plch')}
+              required
+              id='userInputAddress'
+              value={this.state.userInputAddress}
+              onChange={this.onChangeHandler}
+              onKeyPress={this.listenEnterKeyAddress}
+            />
+            <div>
+              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>Confirm</Button>
+            </div>
+          </div>
         )
       } else {
         addressSearch = (

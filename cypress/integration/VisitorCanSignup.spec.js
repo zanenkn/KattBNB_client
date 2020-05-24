@@ -36,7 +36,7 @@ describe('Visitor can sign up', () => {
     cy.get('.fitted > label').click()
     cy.get('#sign-up-button').click()
     cy.visit('http://localhost:3000/signup-success')
-    cy.contains('Successful signup!')
+    cy.contains('Almost done!')
   })
 
   it('and gets error message if captcha is invalid', () => {
