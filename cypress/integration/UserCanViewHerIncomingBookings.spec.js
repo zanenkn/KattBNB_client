@@ -15,7 +15,7 @@ describe('User can view her incoming bookings', () => {
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
-    cy.get('#bookings-icon').click({force: true})
+    cy.get('#bookings-icon').click({ force: true })
     cy.wait(2000)
   })
 
@@ -50,11 +50,41 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-history]').last().contains('A booking request from Canceled1 for their 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled due to no answer from you within 3 days time.')
   })
 
+  it("and see 'Ask for review' link if there is no review", () => {
+    cy.get('#view-incoming-bookings').click()
+    cy.get('[data-cy=incoming-history]').first().contains('Ask for a review')
+  })
+
   it('and see a message she wrote when she declined a booking', () => {
     cy.get('#view-incoming-bookings').click()
     cy.get('#3').within(() => {
       cy.get('.fake-link-underlined').click()
     })
     cy.contains('Sorry, dude! I decline!')
+  })
+})
+
+describe('User can view her incoming bookings', () => {
+  it("and see 'View review' link if there is a review", () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:one_host_booking_review.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:all_user_bookings.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.wait(2000)
+
+    cy.get('#view-incoming-bookings').click()
+    cy.get('[data-cy=incoming-history]').first().contains('View review')
   })
 })
