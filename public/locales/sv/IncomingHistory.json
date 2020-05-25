@@ -10,5 +10,6 @@
   "canceled-desc_plural": "En bokningsförfrågan från <1>{{nickname}}</1> för deras <3>{{count}} katter</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7> avbröts på grund av att du inte svarade inom 3 dagar.",
   "other-history": "Du var kattvakt åt katten / katterna tillhörande <1>{{nickname}}</1> under datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>",
   "view-review": "Visa recension",
+  "ask-review": "",
   "no-past-bookings": "Du har inga tidigare bokningar."
 }
