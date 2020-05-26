@@ -13,6 +13,12 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/conversations',
+      status: 200,
+      response: 'fixture:create_conversation.json'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
@@ -50,9 +56,11 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-history]').last().contains('A booking request from Canceled1 for their 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled due to no answer from you within 3 days time.')
   })
 
-  it("and see 'Ask for review' link if there is no review", () => {
+  it("and see 'Ask for review' link if there is no review and get redirected to messenger when she clicks the link", () => {
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('Ask for a review')
+    cy.get('#ask-review').click()
+    cy.location('pathname').should('eq', '/conversation')
   })
 
   it('and see a message she wrote when she declined a booking', () => {
@@ -83,7 +91,6 @@ describe('User can view her incoming bookings', () => {
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
     cy.wait(2000)
-
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('View review')
   })

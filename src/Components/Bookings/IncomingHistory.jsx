@@ -134,7 +134,7 @@ const IncomingHistory = (props) => {
                     </Trans>
                     </p>
                     {booking.review === null ?
-                      <p className='fake-link-underlined' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.avatar, booking.user.location, booking.user.nickname)}>
+                      <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.avatar, booking.user.location, booking.user.nickname)}>
                         {t('IncomingHistory:ask-review')}
                       </p>
                       :
