@@ -29,7 +29,6 @@ import HostProfileViewWrapper from './Components/HostProfileView/HostProfileView
 import NoAccess from './Components/ReusableComponents/NoAccess'
 import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
-import Counter from './Components/Counter'
 import HostEn from './Components/HostEn'
 import HostSe from './Components/HostSe'
 import ScrollToTop from './Modules/ScrollToTop'
@@ -42,7 +41,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, landingRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -94,16 +93,6 @@ class App extends Component {
       )
     }
 
-    if (process.env.REACT_APP_OFFICIAL === 'yes' && process.env.NODE_ENV === 'production') {
-      landingRoute = (
-        <Route exact path='/' component={Counter}></Route>
-      )
-    } else {
-      landingRoute = (
-        <Route exact path='/' component={Search}></Route>
-      )
-    }
-
     return (
       <div ref={this.contextRef} style={{ 'minHeight': '100vh' }}>
         <Sticky context={this.contextRef}>
@@ -117,7 +106,7 @@ class App extends Component {
           >
             <ScrollToTop>
               <Switch>
-                {landingRoute}
+                <Route exact path='/' component={Search}></Route>
                 <Route exact path='/search-results' component={SearchResults}></Route>
                 <Route exact path='/about-us' component={AboutUs}></Route>
                 <Route exact path='/contact-us' component={ContactUs}></Route>
