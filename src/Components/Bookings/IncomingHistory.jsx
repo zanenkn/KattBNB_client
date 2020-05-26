@@ -61,6 +61,9 @@ const IncomingHistory = (props) => {
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'))
             wipeCredentials('/')
+          } else if (error.response.status === 422) {
+            setErrorDisplay(true)
+            setErrors(['reusable:errors:422-conversation'])
           } else {
             setErrorDisplay(true)
             setErrors(error.response.data.error)

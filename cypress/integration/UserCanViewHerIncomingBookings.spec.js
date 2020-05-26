@@ -95,3 +95,35 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-history]').first().contains('View review')
   })
 })
+
+describe('User can view her incoming bookings', () => {
+  it("and see 'Ask for review' link if there is no review and get error message if other user does not exist", () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:all_user_bookings.json'
+    })
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/conversations',
+      status: 422,
+      response: ''
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.wait(2000)
+    cy.get('#view-incoming-bookings').click()
+    cy.get('[data-cy=incoming-history]').first().contains('Ask for a review')
+    cy.get('#ask-review').click()
+    cy.contains('The user you are trying to reach has requested an account deletion!')
+  })
+})
