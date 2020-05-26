@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
+import { Header, Form, Button, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'
@@ -214,7 +214,6 @@ class HostProfileForm extends Component {
     if (this.props.tReady) {
       let addressSearch, addressErrorMessage, onCreateErrorMessage
       const today = new Date()
-      const launch = new Date('2020-06-01')
       const lang = detectLanguage()
 
       if (this.state.addressSearch === true) {
@@ -337,8 +336,8 @@ class HostProfileForm extends Component {
               </label>
               <DayPicker
                 showWeekNumbers
-                month={launch}
-                disabledDays={{ before: launch }}
+                fromMonth={today}
+                disabledDays={{ before: today }}
                 firstDayOfWeek={1}
                 selectedDays={this.state.selectedDays}
                 onDayClick={this.handleDayClick}
