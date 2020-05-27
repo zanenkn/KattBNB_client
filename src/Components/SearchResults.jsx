@@ -259,6 +259,11 @@ class SearchResults extends Component {
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
+            } else if (error.response.status === 422) {
+              this.setState({
+                errorDisplay: true,
+                errors: ['reusable:errors:422-conversation']
+              })
             } else {
               this.setState({
                 errorDisplay: true,

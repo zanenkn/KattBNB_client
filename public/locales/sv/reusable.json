@@ -42,6 +42,7 @@
     "500": "Det gick inte att kontakta servern. Försök att ladda om sidan om en stund. Om problemet kvarstår, kontakta KattBNB-supporten.",
     "401-password": "Den här länken har upphört! Du kommer att omdirigeras för att begära en ny.",
     "401": "Den här sessionen har upphört! Du måste logga in igen.",
+    "422-conversation": "Användaren du försöker att kontakta har raderat sitt konto!",
     "google-error-1": "Adress hittades inte! Vänligen försök igen.",
     "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support."
   },

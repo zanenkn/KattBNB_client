@@ -83,15 +83,20 @@ const OutgoingHistory = (props) => {
               )
             } else {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='outgoing-history' key={booking.id}>
+                <Container style={{ 'backgroundColor': booking.review === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='outgoing-history' key={booking.id}>
                   <p className='small-centered-paragraph'>
                     <Trans i18nKey='OutgoingHistory:req-desc'>
                       Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
-                  <p className='fake-link-underlined'>
-                    {t('OutgoingHistory:view-review')}
-                  </p>
+                  {booking.review === null ?
+                    <p className='fake-link-underlined'>
+                      {t('OutgoingHistory:write-review')}
+                    </p>
+                    :
+                    <p className='fake-link-underlined'>
+                      {t('OutgoingHistory:view-review')}
+                    </p>}
                 </Container>
               )
             }

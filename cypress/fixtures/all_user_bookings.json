@@ -184,6 +184,7 @@
     "user_id": 1,
     "user": {
       "nickname": "GeorgeTheGreek"
-    }
+    },
+    "review": null
   }
 ]

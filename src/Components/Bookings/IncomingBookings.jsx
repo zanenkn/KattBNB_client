@@ -79,7 +79,7 @@ class IncomingBookings extends Component {
                   {t('IncomingBookings:history')}
                 </Header>
                 <IncomingHistory
-                  history={this.props.location.state.incomingHistory}
+                  historyBookings={this.props.location.state.incomingHistory}
                 />
               </div>
               <div className='scroll-to-top '>

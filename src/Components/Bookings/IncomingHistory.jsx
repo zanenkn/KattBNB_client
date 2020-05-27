@@ -1,25 +1,87 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
-import { Container } from 'semantic-ui-react'
+import { Container, Message } from 'semantic-ui-react'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import Popup from 'reactjs-popup'
 import IncRequestDeclinedPopup from './IncRequestDeclinedPopup'
+import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
+import { withRouter } from 'react-router-dom'
 
 const IncomingHistory = (props) => {
 
   const { t, ready } = useTranslation('IncomingHistory')
 
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [errors, setErrors] = useState([])
+
+  const messageUser = (e, hostId, userId, userAvatar, userLocation, userNickname) => {
+    e.preventDefault()
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      const lang = detectLanguage()
+      const path = '/api/v1/conversations'
+      const payload = {
+        user1_id: hostId,
+        user2_id: userId,
+        locale: lang
+      }
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.post(path, payload, { headers: headers })
+        .then(response => {
+          props.history.push({
+            pathname: '/conversation',
+            state: {
+              id: response.data.id,
+              user: {
+                avatar: userAvatar,
+                id: userId,
+                location: userLocation,
+                nickname: userNickname
+              }
+            }
+          })
+        })
+        .catch(error => {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
+            setErrorDisplay(true)
+            setErrors(['reusable:errors:500'])
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else if (error.response.status === 422) {
+            setErrorDisplay(true)
+            setErrors(['reusable:errors:422-conversation'])
+          } else {
+            setErrorDisplay(true)
+            setErrors(error.response.data.error)
+          }
+        })
+    }
+  }
+
   if (ready) {
-    let sortedHistory = props.history
+    let sortedHistory = props.historyBookings
     sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
-    if (props.history.length > 0) {
+    if (props.historyBookings.length > 0) {
       return (
         <>
           <p className='small-centered-paragraph'>
-            <Trans count={parseInt(props.history.length)} i18nKey='IncomingHistory:main-title'>
-              <strong>You have {{ count: props.history.length }} past booking.</strong>
+            <Trans count={parseInt(props.historyBookings.length)} i18nKey='IncomingHistory:main-title'>
+              <strong>You have {{ count: props.historyBookings.length }} past booking.</strong>
             </Trans>
           </p>
           {sortedHistory.map(booking => {
@@ -67,19 +129,36 @@ const IncomingHistory = (props) => {
               )
             } else {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
-                  <p className='small-centered-paragraph'>
-                    <Trans i18nKey='IncomingHistory:other-history'>
-                      You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                <>
+                  <Container style={{ 'backgroundColor': booking.review === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                    <p className='small-centered-paragraph'>
+                      <Trans i18nKey='IncomingHistory:other-history'>
+                        You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
-                  </p>
-                  <p className='fake-link-underlined'>
-                    {t('IncomingHistory:view-review')}
-                  </p>
-                </Container>
+                    </p>
+                    {booking.review === null ?
+                      <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.avatar, booking.user.location, booking.user.nickname)}>
+                        {t('IncomingHistory:ask-review')}
+                      </p>
+                      :
+                      <p className='fake-link-underlined'>
+                        {t('IncomingHistory:view-review')}
+                      </p>}
+                  </Container>
+                  {errorDisplay &&
+                    <Message negative >
+                      <ul id='message-error-list'>
+                        {errors.map(error => (
+                          <li key={error}>{t(error)}</li>
+                        ))}
+                      </ul>
+                    </Message>
+                  }
+                </>
               )
             }
           })}
+
         </>
       )
     } else {
@@ -94,4 +173,4 @@ const IncomingHistory = (props) => {
   } else { return <Spinner /> }
 }
 
-export default IncomingHistory
+export default withRouter(IncomingHistory)

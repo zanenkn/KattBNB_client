@@ -43,6 +43,11 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
   })
 
+  it("and see 'Write a review' link if the booking has not been reviewed yet", () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('Write a review')
+  })
+
   it('and see her own message in request bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#2').within(() => {
@@ -76,5 +81,29 @@ describe('User can view her outgoing bookings', () => {
       cy.get('.fake-link-underlined').click()
     })
     cy.get('.popup-content').contains('Your booking got automatically cancelled due to Canceled1 not responding within 3 days.')
+  })
+})
+
+describe('User can view her outgoing bookings', () => {
+
+  it("and see 'View your review' link if the booking has already been reviewed", () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:one_user_booking_review.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('View your review')
   })
 })
