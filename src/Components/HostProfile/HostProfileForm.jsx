@@ -273,7 +273,7 @@ class HostProfileForm extends Component {
       }
 
       return (
-        <div id='host-profile-form' className='expanding-wrapper'>
+        <div id='host-profile-form'>
           <Header as='h2'>
             {t('HostProfileForm:create-profile')}
           </Header>

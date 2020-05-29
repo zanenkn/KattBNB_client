@@ -76,6 +76,11 @@ button:focus {
   align-items: center;
 }
 
+#host-profile-form {
+  max-width: 560px;
+  margin: auto;
+}
+
 /*******************************
             NAVBAR
 *******************************/
