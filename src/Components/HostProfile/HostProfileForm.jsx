@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Icon, Button, Message } from 'semantic-ui-react'
+import { Header, Form, Button, Message } from 'semantic-ui-react'
 import { withTranslation } from 'react-i18next'
 import Geocode from 'react-geocode'
 import axios from 'axios'

@@ -357,8 +357,8 @@ const UserPage = (props) => {
           <AvatarUpdateForm
             avatar={props.avatar}
             username={props.username}
-            closeAllForms={avatarFormHandler.bind(this)}
             userId={props.id}
+            closeAllForms={avatarFormHandler.bind(this)}
           />
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>
             <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
