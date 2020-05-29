@@ -45,7 +45,7 @@ class IncomingUpcoming extends Component {
             state: {
               id: response.data.id,
               user: {
-                avatar: userAvatar,
+                profile_avatar: userAvatar,
                 id: userId,
                 location: userLocation,
                 nickname: userNickname

@@ -239,7 +239,7 @@ class SearchResults extends Component {
               state: {
                 id: response.data.id,
                 user: {
-                  avatar: this.state.hostAvatar,
+                  profile_avatar: this.state.hostAvatar,
                   id: this.state.hostId,
                   location: this.state.hostLocation,
                   nickname: this.state.hostNickname
