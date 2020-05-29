@@ -50,6 +50,7 @@
     "change": "Change",
     "save": "Save",
     "close": "Close",
+    "confirm": "Confirm",
     "make-host-profile": "Make a host profile"
   },
   "alerts": {

@@ -231,7 +231,7 @@ class HostProfileForm extends Component {
               onKeyPress={this.listenEnterKeyAddress}
             />
             <div>
-              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>Confirm</Button>
+              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>{t('reusable:cta:confirm')}</Button>
             </div>
           </div>
         )
