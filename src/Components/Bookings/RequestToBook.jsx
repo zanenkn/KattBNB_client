@@ -194,7 +194,7 @@ class RequestToBook extends Component {
           <Segment className='box-shadow'>
             <div style={{ 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center' }}>
               <Icon name="info circle" size='big' className='pulsing' style={{ 'color': '#c90c61' }} />
-              <Header as="h3" style={{'marginTop': '0'}}>{t('RequestToBook:important')}</Header>
+              <Header as="h3" style={{ 'marginTop': '0' }}>{t('RequestToBook:important')}</Header>
             </div>
             <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
               {t('RequestToBook:explanation-1')}

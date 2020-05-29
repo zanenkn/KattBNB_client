@@ -93,7 +93,7 @@ class AvatarUpdateForm extends Component {
           'access-token': window.localStorage.getItem('access-token')
         }
 
-        axios.put(path, payload, {headers: headers} )
+        axios.put(path, payload, { headers: headers })
           .then(() => {
             this.setState({
               errorDisplay: false,
