@@ -84,17 +84,16 @@ class AvatarUpdateForm extends Component {
         const lang = detectLanguage()
         this.setState({ loading: true })
         const img = this.editor.getImageScaledToCanvas().toDataURL()
-        const path = '/api/v1/auth/'
+        const path = `/api/v1/users/${this.props.userId}`
+        const headers = { HTTP_ACCEPT: 'application/json' }
         const payload = {
-          avatar: img,
-          locale: lang
-        }
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
+          profile_avatar: Array.from(new Set([img])),
+          locale: lang,
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token')
         }
-        axios.put(path, payload, { headers: headers })
+
+        axios.put(path, payload, {headers: headers} )
           .then(() => {
             this.setState({
               errorDisplay: false,
