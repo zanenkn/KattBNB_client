@@ -85,7 +85,11 @@ class AvatarUpdateForm extends Component {
         this.setState({ loading: true })
         const img = this.editor.getImageScaledToCanvas().toDataURL()
         const path = `/api/v1/users/${this.props.userId}`
-        const headers = { HTTP_ACCEPT: 'application/json' }
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
         const payload = {
           profile_avatar: Array.from(new Set([img])),
           locale: lang,
@@ -111,14 +115,14 @@ class AvatarUpdateForm extends Component {
               })
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 401 || error.response.status === 404) {
+            } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
             } else {
               this.setState({
                 loading: false,
                 errorDisplay: true,
-                errors: error.response.data.errors.full_messages
+                errors: error.response.data.error
               })
             }
           })
