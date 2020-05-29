@@ -274,7 +274,7 @@ class HostProfileForm extends Component {
 
       return (
         <div id='host-profile-form'>
-          <Header as='h2'>
+          <Header as='h2' style={{'marginTop': '3rem'}}>
             {t('HostProfileForm:create-profile')}
           </Header>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>
