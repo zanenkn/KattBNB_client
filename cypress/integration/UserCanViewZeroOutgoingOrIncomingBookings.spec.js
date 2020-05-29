@@ -19,11 +19,11 @@ describe('User can view her outgoing or incoming bookings', () => {
   })
 
   it('and see relevant message if there are no outgoing bookings stored in the database', () => {
-    cy.get('.ui.segment.whitebox').first().contains("Need someone to take care of your cat while you're away?")
+    cy.get('.content-wrapper > :nth-child(3)').contains("Need someone to take care of your cat while you're away?")
   })
 
   it('and see relevant message if there are no incoming bookings stored in the database', () => {
-    cy.get('.ui.segment.whitebox').last().contains('Wanna take care of cats and make a bit of money?')
+    cy.get('.content-wrapper > :nth-child(4)').contains('Wanna take care of cats and make a bit of money?')
   })
 
   it("and get redirected to the main page when clicking on 'Search and book' link", () => {

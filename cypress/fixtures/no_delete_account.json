@@ -23,7 +23,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   },
@@ -51,7 +51,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   },
@@ -79,7 +79,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   },
@@ -107,7 +107,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   },
@@ -135,7 +135,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   },
@@ -163,7 +163,7 @@
     "user_id": 2,
     "user": {
       "nickname": "Kimi",
-      "avatar": null,
+      "profile_avatar": null,
       "location": "Vaxholm"
     }
   }
