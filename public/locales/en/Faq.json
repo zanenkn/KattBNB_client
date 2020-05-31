@@ -2,7 +2,7 @@
     "general": {
         "top-header": "General",
         "sub-header1": "I have signed up / reset my password successfully but I didn’t receive anything in my inbox. Why?",
-        "p1-1": "Make sure you check your spam folder, sometimes the confirmation email can end up there. If that is the case, please whitelist our address (meow-reply@kattbnb.se) via your email client settings. That way, you will receive every notification directly in your inbox.",
+        "p1-1": "Make sure you check your spam folder, sometimes the confirmation email can end up there. If that is the case, please <1>whitelist our address</1> (meow-reply@kattbnb.se) via your email client settings. That way, you will receive every notification directly in your inbox.",
         "p1-2": "Also, keep in mind that in some cases, the email message can take up to 30 minutes to be delivered.",
         "sub-header2": "What’s the difference between incoming and outgoing bookings?",
         "p2-1": "There are 6 types of bookings and you can see them by clicking the bookings icon in the top navigation bar:",

@@ -59,7 +59,9 @@ const Faq = (props) => {
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 101}>
               <p>
-                {t('Faq:general.p1-1')}
+                <Trans i18nKey='Faq:general.p1-1'>
+                  Make sure you check your spam folder, sometimes the confirmation email can end up there. If that is the case, please <a href='https://www.lifewire.com/how-to-whitelist-email-addresses-4588603' target='_blank' rel='noopener noreferrer' className='fake-link-underlined-reg'>whitelist our address</a> (meow-reply@kattbnb.se) via your email client settings. That way, you will receive every notification directly in your inbox.
+                </Trans>
               </p>
               <p>
                 {t('Faq:general.p1-2')}

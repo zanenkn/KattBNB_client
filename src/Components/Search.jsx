@@ -289,8 +289,10 @@ class Search extends Component {
                 <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
               </div>
             </div>
-            <div style={{ 'textAlign': 'center', 'marginTop': '2rem' }}>
-              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{ 'fontWeight': 'bold', 'color': 'silver' }}>{t('Search:become-host')}</p></Link>
+            <div className="slowly-pulsing">
+              <div style={{ 'textAlign': 'center', 'marginTop': '3rem' }}>
+                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{ 'fontWeight': 'bold', 'color': '#c90c61' }}>{t('Search:become-host')}</p></Link>
+              </div>
             </div>
           </Segment>
         </div>

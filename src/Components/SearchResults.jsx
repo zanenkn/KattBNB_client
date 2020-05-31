@@ -126,7 +126,7 @@ class SearchResults extends Component {
       axios.get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`).then(response => {
         this.setState({
           hostId: response.data[0].user.id,
-          hostAvatar: response.data[0].user.avatar,
+          hostAvatar: response.data[0].user.profile_avatar,
           hostNickname: response.data[0].user.nickname,
           hostLocation: response.data[0].user.location,
           hostRate: response.data[0].price_per_day_1_cat,
@@ -239,7 +239,7 @@ class SearchResults extends Component {
               state: {
                 id: response.data.id,
                 user: {
-                  avatar: this.state.hostAvatar,
+                  profile_avatar: this.state.hostAvatar,
                   id: this.state.hostId,
                   location: this.state.hostLocation,
                   nickname: this.state.hostNickname

@@ -50,7 +50,7 @@ const OutgoingRequests = (props) => {
                     id={request.id}
                     nickname={request.user.nickname}
                     message={request.message}
-                    avatar={request.user.avatar}
+                    avatar={request.user.profile_avatar}
                     startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
                     endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
                   />

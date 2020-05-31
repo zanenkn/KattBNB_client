@@ -187,7 +187,7 @@ class IncomingRequests extends Component {
                       startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
                       endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
                       message={request.message}
-                      avatar={request.user.avatar}
+                      avatar={request.user.profile_avatar}
                     />
                   </Popup>
                 </Segment>

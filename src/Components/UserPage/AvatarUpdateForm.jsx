@@ -84,13 +84,15 @@ class AvatarUpdateForm extends Component {
         const lang = detectLanguage()
         this.setState({ loading: true })
         const img = this.editor.getImageScaledToCanvas().toDataURL()
-        const path = '/api/v1/auth/'
-        const payload = {
-          avatar: img,
-          locale: lang
-        }
+        const path = `/api/v1/users/${this.props.userId}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          profile_avatar: Array.from(new Set([img])),
+          locale: lang,
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token')
         }
@@ -113,14 +115,14 @@ class AvatarUpdateForm extends Component {
               })
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 401 || error.response.status === 404) {
+            } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
             } else {
               this.setState({
                 loading: false,
                 errorDisplay: true,
-                errors: error.response.data.errors.full_messages
+                errors: error.response.data.error
               })
             }
           })
@@ -175,10 +177,10 @@ class AvatarUpdateForm extends Component {
           )
         } else {
           avatarRotateRight = (
-            <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateRight} />
+            <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8', 'cursor': 'pointer' }} onClick={this.rotateRight} />
           )
           avatarRotateLeft = (
-            <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} onClick={this.rotateLeft} />
+            <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8', 'cursor': 'pointer' }} onClick={this.rotateLeft} />
           )
         }
       }
@@ -221,7 +223,7 @@ class AvatarUpdateForm extends Component {
                   <div>
                     <label for='files'>
                       <Icon.Group>
-                        <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em' }} />
+                        <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'cursor': 'pointer' }} />
                         <Icon
                           corner='bottom right'
                           name='add'
