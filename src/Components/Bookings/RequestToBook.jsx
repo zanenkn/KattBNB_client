@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
+import { Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
@@ -177,7 +177,9 @@ class RequestToBook extends Component {
             </p>
             {errorDisplay}
             <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              {t('RequestToBook:agree-to-pay')}
+              <Trans i18nKey='RequestToBook:agree-to-pay-directly'>
+                By requesting to book, you agree to pay the following total cost to <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> directly:
+              </Trans>
             </p>
             <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
               {this.state.orderTotal} kr
@@ -188,6 +190,20 @@ class RequestToBook extends Component {
             <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading} onClick={this.createBooking}>
               {t('reusable:request-cta.btn')}
             </Button>
+          </Segment>
+          <Segment className='box-shadow'>
+            <div style={{ 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center' }}>
+              <Icon name="info circle" size='big' className='pulsing' style={{ 'color': '#c90c61' }} />
+              <Header as="h3" style={{ 'marginTop': '0' }}>{t('RequestToBook:important')}</Header>
+            </div>
+            <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+              {t('RequestToBook:explanation-1')}
+            </p>
+            <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+              <Trans i18nKey='RequestToBook:explanation-2'>
+                While online payment is under development we ask you kindly to <strong style={{ 'color': '#c90c61' }}>pay your cat sitter directly</strong>. We recommend that you discuss with your cat sitter the payment method and when will the payment take place.
+            </Trans>
+            </p>
           </Segment>
         </div>
       )

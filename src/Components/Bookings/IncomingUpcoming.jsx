@@ -45,7 +45,7 @@ class IncomingUpcoming extends Component {
             state: {
               id: response.data.id,
               user: {
-                avatar: userAvatar,
+                profile_avatar: userAvatar,
                 id: userId,
                 location: userLocation,
                 nickname: userNickname
@@ -131,7 +131,7 @@ class IncomingUpcoming extends Component {
                       You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong> <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
-                  <p className='fake-link-underlined' onClick={(e) => this.messageUser(e, upcoming.user_id, upcoming.user.avatar, upcoming.user.location, upcoming.user.nickname)}>
+                  <p className='fake-link-underlined' onClick={(e) => this.messageUser(e, upcoming.user_id, upcoming.user.profile_avatar, upcoming.user.location, upcoming.user.nickname)}>
                     {t('IncomingUpcoming:message')} {upcoming.user.nickname}
                   </p>
                 </Container>

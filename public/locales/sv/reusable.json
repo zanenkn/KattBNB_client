@@ -51,6 +51,7 @@
     "change": "Ändra",
     "save": "Spara",
     "close": "Stäng",
+    "confirm": "Bekräfta",
     "make-host-profile": "Skapa en kattvaktsprofil"
   },
   "alerts": {

@@ -220,7 +220,7 @@ class HostProfileForm extends Component {
         addressSearch = (
           <div style={{ 'display': 'flex', 'alignItems': 'flex-end' }}>
             <Form.Input
-              style={{'paddingRight': '1rem'}}
+              style={{ 'paddingRight': '1rem' }}
               label={t('HostProfileForm:address-label')}
               placeholder={t('HostProfileForm:address-search-plch')}
               required
@@ -230,7 +230,7 @@ class HostProfileForm extends Component {
               onKeyPress={this.listenEnterKeyAddress}
             />
             <div>
-              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>Confirm</Button>
+              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>{t('reusable:cta:confirm')}</Button>
             </div>
           </div>
         )
@@ -273,7 +273,7 @@ class HostProfileForm extends Component {
 
       return (
         <div id='host-profile-form'>
-          <Header as='h2'>
+          <Header as='h2' style={{ 'marginTop': '3rem' }}>
             {t('HostProfileForm:create-profile')}
           </Header>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '1rem' }}>

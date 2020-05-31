@@ -89,7 +89,7 @@ class AllConversations extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
-    let deleted_user = { nickname: t('AllConversations:deleted-user'), avatar: null, location: 'none', id: null }
+    let deleted_user = { nickname: t('AllConversations:deleted-user'), profile_avatar: null, location: 'none', id: null }
     moment.locale(lang)
 
     if (this.state.loading) {
@@ -141,7 +141,7 @@ class AllConversations extends Component {
                       <Grid.Column width={4} style={{ 'display': 'grid', 'alignContent': 'center', 'paddingLeft': '1.5rem' }}>
                         {other_user.id === null ?
                           <Image src={`https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
-                          : <Image src={other_user.avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
+                          : <Image src={other_user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${other_user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : other_user.profile_avatar} size='mini' style={{ 'borderRadius': '50%', 'margin': 'auto auto auto 0', 'maxWidth': '50px', 'width': '-webkit-fill-available' }}></Image>
                         }
                       </Grid.Column>
                       <Grid.Column width={8}>

@@ -357,6 +357,7 @@ const UserPage = (props) => {
           <AvatarUpdateForm
             avatar={props.avatar}
             username={props.username}
+            userId={props.id}
             closeAllForms={avatarFormHandler.bind(this)}
           />
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>

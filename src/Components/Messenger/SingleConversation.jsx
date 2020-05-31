@@ -306,7 +306,7 @@ class Conversation extends Component {
                       pathname: '/host-profile',
                       state: {
                         userId: this.props.location.state.user.id,
-                        avatar: this.props.location.state.user.avatar,
+                        avatar: this.props.location.state.user.profile_avatar,
                         nickname: this.props.location.state.user.nickname,
                         location: this.props.location.state.user.location,
                         errors: '',
@@ -316,9 +316,9 @@ class Conversation extends Component {
                 }}
               >
                 <Image
-                  src={this.props.location.state.user.avatar === null ?
+                  src={this.props.location.state.user.profile_avatar === null ?
                     `https://ui-avatars.com/api/?name=${this.props.location.state.user.nickname === 'Deleted user' ? '[x]' : this.props.location.state.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-                    : this.props.location.state.user.avatar}
+                    : this.props.location.state.user.profile_avatar}
 
                   size='mini' style={{ 'borderRadius': '50%', 'height': '2rem', 'width': '2rem', 'marginTop': '0', 'marginRight': '1rem' }} />
 
@@ -344,7 +344,7 @@ class Conversation extends Component {
                       <MessageBubble
                         currentUsername={this.props.username}
                         currentAvatar={this.props.avatar}
-                        otherAvatar={this.props.location.state.user.avatar}
+                        otherAvatar={this.props.location.state.user.profile_avatar}
                         message={message}
                         scrollDown={this.scrollDown.bind(this)}
                       />
@@ -359,7 +359,7 @@ class Conversation extends Component {
                       <MessageBubble
                         currentUsername={this.props.username}
                         currentAvatar={this.props.avatar}
-                        otherAvatar={this.props.location.state.user.avatar}
+                        otherAvatar={this.props.location.state.user.profile_avatar}
                         message={message}
                         scrollDown={this.scrollDown.bind(this)}
                       />

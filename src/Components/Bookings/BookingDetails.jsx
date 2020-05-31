@@ -53,7 +53,7 @@ class BookingDetails extends Component {
               state: {
                 id: response.data.id,
                 user: {
-                  avatar: this.props.location.state.avatar,
+                  profile_avatar: this.props.location.state.avatar,
                   id: this.props.location.state.hostId,
                   location: this.props.location.state.location,
                   nickname: this.props.location.state.nickname

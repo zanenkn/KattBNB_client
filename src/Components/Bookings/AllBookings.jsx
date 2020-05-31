@@ -243,7 +243,7 @@ class AllBookings extends Component {
     }
 
     outgoingSegment = (
-      <Segment className='whitebox'>
+      <Segment className='box-shadow'>
         <div className='topbox'>
           <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:outgoing-segment')}</Header>
           {outgoingBookingStats}
@@ -254,7 +254,7 @@ class AllBookings extends Component {
     )
 
     incomingSegment = (
-      <Segment className='whitebox'>
+      <Segment className='box-shadow'>
         <div className='topbox'>
           <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:incoming-segment')}</Header>
           {incomingBookingStats}

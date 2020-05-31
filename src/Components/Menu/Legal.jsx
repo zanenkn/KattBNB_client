@@ -85,17 +85,19 @@ const Legal = () => {
           <p>{t('Legal:booking.p2')}</p>
           <p>{t('Legal:booking.p3')}</p>
           <p>{t('Legal:booking.p4')}</p>
+          <p>{t('Legal:booking.p5')}</p>
+          <p>{t('Legal:booking.p6')}</p>
           <p>
-            <Trans i18nKey='Legal:booking.p5'>
+            <Trans i18nKey='Legal:booking.p7'>
               It is Cat Sitter's own responsibility to declare any eventual income generated from fulfilling Services. If you take care for pets as a business activity you may be eligible for approval of Swedish F-tax. <a href='https://skatteverket.se/' target='_blank' rel='noopener noreferrer'>Please refer to Swedish Tax Agency for more information.</a>
             </Trans>
           </p>
           <p>
-            <Trans i18nKey='Legal:booking.p6'>
+            <Trans i18nKey='Legal:booking.p8'>
               Cat Sitters who professionally care for cats may need a permit. <a href='https://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/djurskyddslag-20181192_sfs-2018-1192' target='_blank' rel='noopener noreferrer'>Please refer to Swedish Animal Welfare Act chapter 6.1 for more information.</a> Users are themselves responsible to determine if they require permit to perform the Service and obtain such permit if necessary.
             </Trans>
           </p>
-          <p>{t('Legal:booking.p7')}</p>
+          <p>{t('Legal:booking.p9')}</p>
           <Header as='h2' >
             {t('Legal:during-service.title')}
           </Header>
