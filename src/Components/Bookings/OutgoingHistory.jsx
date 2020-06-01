@@ -6,21 +6,22 @@ import { Trans, useTranslation } from 'react-i18next'
 import OutRequestDeclinedPopup from './OutRequestDeclinedPopup'
 import OutRequestCancelledPopup from './OutRequestCancelledPopup'
 import Popup from 'reactjs-popup'
+import { withRouter } from 'react-router-dom'
 
 const OutgoingHistory = (props) => {
 
   const { t, ready } = useTranslation('OutgoingHistory')
 
   if (ready) {
-    let sortedHistory = props.history
+    let sortedHistory = props.outHistoryBookings
     sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
-    if (props.history.length > 0) {
+    if (props.outHistoryBookings.length > 0) {
       return (
         <>
           <p className='small-centered-paragraph'>
-            <Trans count={parseInt(props.history.length)} i18nKey='OutgoingHistory:main-header'>
-              <strong>You have {{ count: props.history.length }} past booking.</strong>
+            <Trans count={parseInt(props.outHistoryBookings.length)} i18nKey='OutgoingHistory:main-header'>
+              <strong>You have {{ count: props.outHistoryBookings.length }} past booking.</strong>
             </Trans>
           </p>
           {sortedHistory.map(booking => {
@@ -90,7 +91,9 @@ const OutgoingHistory = (props) => {
                     </Trans>
                   </p>
                   {booking.review === null ?
-                    <p className='fake-link-underlined'>
+                    <p className='fake-link-underlined' onClick={()=> {
+                      props.history.push('/leave-a-review')
+                    }}>
                       {t('OutgoingHistory:write-review')}
                     </p>
                     :
@@ -115,4 +118,4 @@ const OutgoingHistory = (props) => {
   } else { return <Spinner /> }
 }
 
-export default OutgoingHistory
+export default withRouter(OutgoingHistory)

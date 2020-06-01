@@ -73,15 +73,15 @@ const IncomingHistory = (props) => {
   }
 
   if (ready) {
-    let sortedHistory = props.historyBookings
+    let sortedHistory = props.inHistoryBookings
     sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
-    if (props.historyBookings.length > 0) {
+    if (props.inHistoryBookings.length > 0) {
       return (
         <>
           <p className='small-centered-paragraph'>
-            <Trans count={parseInt(props.historyBookings.length)} i18nKey='IncomingHistory:main-title'>
-              <strong>You have {{ count: props.historyBookings.length }} past booking.</strong>
+            <Trans count={parseInt(props.inHistoryBookings.length)} i18nKey='IncomingHistory:main-title'>
+              <strong>You have {{ count: props.inHistoryBookings.length }} past booking.</strong>
             </Trans>
           </p>
           {sortedHistory.map(booking => {

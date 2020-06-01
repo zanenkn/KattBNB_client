@@ -31,6 +31,7 @@ import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
 import HostEn from './Components/HostEn'
 import HostSe from './Components/HostSe'
+import LeaveReview from './Components/Reviews/LeaveReview'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -41,7 +42,7 @@ class App extends Component {
   contextRef = createRef()
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute
+    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, leaveReviewRoute
 
     if (this.props.currentUserIn) {
       userPageRoute = (
@@ -67,6 +68,10 @@ class App extends Component {
       conversationRoute = (
         <Route exact path='/conversation' component={Conversation}></Route>
       )
+
+      leaveReviewRoute = (
+        <Route exact path='/leave-a-review' component={LeaveReview}></Route>
+      )
     } else {
       userPageRoute = (
         <NoAccess />
@@ -89,6 +94,10 @@ class App extends Component {
       )
 
       conversationRoute = (
+        <NoAccess />
+      )
+
+      leaveReviewRoute = (
         <NoAccess />
       )
     }
@@ -134,6 +143,7 @@ class App extends Component {
                 {incomingBookingsRoute}
                 {messengerRoute}
                 {conversationRoute}
+                {leaveReviewRoute}
               </Switch>
             </ScrollToTop>
             <Menu />
