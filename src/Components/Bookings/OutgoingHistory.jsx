@@ -91,10 +91,20 @@ const OutgoingHistory = (props) => {
                     </Trans>
                   </p>
                   {booking.review === null ?
-                    <p className='fake-link-underlined' onClick={()=> {
-                      props.history.push('/leave-a-review')
+                    <p className='fake-link-underlined' onClick={() => {
+                      props.history.push({
+                        pathname: '/leave-a-review',
+                        state: {
+                          userId: booking.user_id,
+                          hostProfileId: booking.host_profile_id,
+                          bookingId: booking.id,
+                          hostNickname: booking.host_nickname,
+                          startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                          endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')
+                        }
+                      })
                     }}>
-                      {t('OutgoingHistory:write-review')}
+                      {t('OutgoingHistory:leave-review')}
                     </p>
                     :
                     <p className='fake-link-underlined'>
