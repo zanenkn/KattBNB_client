@@ -17,7 +17,7 @@ const LeaveReview = (props) => {
   const [reviewBody, setReviewBody] = useState('')
 
   const onScoreClick = () => {
-    console.log("yo")
+    console.log('yo')
   }
 
   useEffect(() => {
@@ -36,11 +36,11 @@ const LeaveReview = (props) => {
     } else {
       if (reviewBody === '') {
         setLoading(false)
-        setErrors(['Review message cannot be empty!'])
+        setErrors(['LeaveReview:error-empty'])
         setErrorDisplay(true)
       } else if (reviewBody.length > 1000) {
         setLoading(false)
-        setErrors(['Review message cannot exceed 1000 characters!'])
+        setErrors(['LeaveReview:error-length'])
         setErrorDisplay(true)
       } else {
         const path = '/api/v1/reviews'
@@ -70,7 +70,7 @@ const LeaveReview = (props) => {
             } else if (error.response.status === 422) {
               setLoading(false)
               setErrorDisplay(true)
-              setErrors(['The host you are trying to review does not exist! Please go back to your bookings dashboard.'])
+              setErrors(['LeaveReview:error-no-host'])
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
@@ -90,17 +90,19 @@ const LeaveReview = (props) => {
     return (
       <div className='content-wrapper' >
         <Header as='h1'>
-          Leave a review
+          {t('LeaveReview:title')}
         </Header>
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-            Your cat(s) stayed with {props.location.state.hostNickname} during the dates of {props.location.state.startDate} until {props.location.state.endDate}.
+            <Trans i18nKey='LeaveReview:desc'>
+              Your cat(s) stayed with {{ host: props.location.state.hostNickname }} during the dates of {{ startDate: props.location.state.startDate }} until {{ endDate: props.location.state.endDate }}.
+            </Trans>
           </p>
           <ReviewScore setScore={() => onScoreClick()} />
           <Form>
             <Form.TextArea
-              label='Your review'
-              placeholder='Describe your experience with this host..'
+              label={t('LeaveReview:label')}
+              placeholder={t('LeaveReview:placeholder')}
               required
               id='review-body'
               value={reviewBody}
@@ -119,7 +121,7 @@ const LeaveReview = (props) => {
               </ul>
             </Message>
           }
-          <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>Save review</Button>
+          <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>{t('LeaveReview:cta')}</Button>
         </Segment>
       </div>
     )
