@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react'
-import { Header } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
+import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import ReviewScore from '../ReusableComponents/ReviewScore'
 
-
 const LeaveReview = (props) => {
+
+  const { t } = useTranslation()
+
+  const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [reviewBody, setReviewBody] = useState('')
 
   const onScoreClick = () => {
     console.log("yo")
@@ -19,48 +25,31 @@ const LeaveReview = (props) => {
     }
   }, [props.location.state, props.history.action])
 
-  const createReview = (e) => {
-    e.preventDefault()
-    const { t } = this.props
+  const createReview = () => {
     const lang = detectLanguage()
-    this.setState({ loading: true })
+    setLoading(true)
     if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errors: ['reusable:errors:window-navigator'],
-        errorDisplay: true
-      })
+      setLoading(false)
+      setErrors(['reusable:errors:window-navigator'])
+      setErrorDisplay(true)
     } else {
-      if (this.state.message === '') {
-        this.setState({
-          loading: false,
-          errors: ['RequestToBook:error-1'],
-          errorDisplay: true
-        })
-      } else if (this.state.message.length > 400) {
-        this.setState({
-          loading: false,
-          errors: ['RequestToBook:error-2'],
-          errorDisplay: true
-        })
+      if (reviewBody === '') {
+        setLoading(false)
+        setErrors(['body cannot be empty'])
+        setErrorDisplay(true)
+      } else if (reviewBody.length > 1000) {
+        setLoading(false)
+        setErrors(['no more than 1000 characters'])
+        setErrorDisplay(true)
       } else {
-        let booking = []
-        let startDate = this.props.location.state.checkInDate
-        let stopDate = this.props.location.state.checkOutDate
-        let currentDate = startDate
-        while (currentDate <= stopDate) {
-          booking.push(currentDate)
-          currentDate = currentDate + 86400000
-        }
-        const path = '/api/v1/bookings'
+        const path = '/api/v1/reviews'
         const payload = {
-          number_of_cats: this.props.location.state.numberOfCats,
-          message: this.state.message,
-          dates: booking,
-          host_nickname: this.props.location.state.nickname,
-          price_per_day: this.state.perDay,
-          price_total: this.state.orderTotal,
-          user_id: this.props.id,
+          score: 5,
+          body: reviewBody,
+          host_nickname: props.location.state.hostNickname,
+          user_id: props.location.state.userId,
+          booking_id: props.location.state.bookingId,
+          host_profile_id: props.location.state.hostProfileId,
           locale: lang
         }
         const headers = {
@@ -69,37 +58,23 @@ const LeaveReview = (props) => {
           'access-token': window.localStorage.getItem('access-token')
         }
         axios.post(path, payload, { headers: headers })
-          .then(() => {
-            this.props.history.push({
-              pathname: '/successful-request',
-              state: {
-                numberOfCats: this.props.location.state.numberOfCats,
-                checkInDate: this.props.location.state.checkInDate,
-                checkOutDate: this.props.location.state.checkOutDate,
-                nickname: this.props.location.state.nickname
-              }
-            })
-          })
+          .then(() => { props.history.push('/all-bookings') })
           .catch(error => {
             if (error.response === undefined) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 500) {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: ['reusable:errors:500']
-              })
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors(['reusable:errors:500'])
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'))
               wipeCredentials('/')
             } else {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: error.response.data.error
-              })
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors([error.response.data.error])
             }
           })
       }
@@ -111,7 +86,35 @@ const LeaveReview = (props) => {
       <Header as='h1'>
         Leave a review
       </Header>
-      <ReviewScore setScore={() => onScoreClick()}/>
+      <Segment className='whitebox'>
+        <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+
+        </p>
+        <ReviewScore setScore={() => onScoreClick()} />
+        <Form>
+          <Form.TextArea
+            label='leave your review'
+            placeholder='leave your review'
+            required
+            id='review-body'
+            value={reviewBody}
+            onChange={(e) => setReviewBody(e.target.value)}
+          />
+        </Form>
+        <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+          {t('reusable:remaining-chars')}
+        </p>
+        <Button onClick={() => createReview()}></Button>
+        {errorDisplay &&
+          <Message negative >
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        }
+      </Segment>
     </div>
   )
 }
