@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
+import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -8,7 +9,7 @@ import ReviewScore from '../ReusableComponents/ReviewScore'
 
 const LeaveReview = (props) => {
 
-  const { t } = useTranslation()
+  const { t, ready } = useTranslation()
 
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
@@ -85,42 +86,44 @@ const LeaveReview = (props) => {
     }
   }
 
-  return (
-    <div className='content-wrapper' >
-      <Header as='h1'>
-        Leave a review
-      </Header>
-      <Segment className='whitebox'>
-        <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-          Your cat(s) stayed with {props.location.state.hostNickname} during the dates of {props.location.state.startDate} until {props.location.state.endDate}.
-        </p>
-        <ReviewScore setScore={() => onScoreClick()} />
-        <Form>
-          <Form.TextArea
-            label='Your review'
-            placeholder='Describe your experience with this host..'
-            required
-            id='review-body'
-            value={reviewBody}
-            onChange={(e) => setReviewBody(e.target.value)}
-          />
-        </Form>
-        <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-          {t('reusable:remaining-chars')} {1000 - reviewBody.length}
-        </p>
-        {errorDisplay &&
-          <Message negative >
-            <ul id='message-error-list'>
-              {errors.map(error => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        }
-        <Button onClick={() => createReview()}>Save review</Button>
-      </Segment>
-    </div>
-  )
+  if (ready) {
+    return (
+      <div className='content-wrapper' >
+        <Header as='h1'>
+          Leave a review
+        </Header>
+        <Segment className='whitebox'>
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+            Your cat(s) stayed with {props.location.state.hostNickname} during the dates of {props.location.state.startDate} until {props.location.state.endDate}.
+          </p>
+          <ReviewScore setScore={() => onScoreClick()} />
+          <Form>
+            <Form.TextArea
+              label='Your review'
+              placeholder='Describe your experience with this host..'
+              required
+              id='review-body'
+              value={reviewBody}
+              onChange={(e) => setReviewBody(e.target.value)}
+            />
+          </Form>
+          <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+            {t('reusable:remaining-chars')} {1000 - reviewBody.length}
+          </p>
+          {errorDisplay &&
+            <Message negative >
+              <ul id='message-error-list'>
+                {errors.map(error => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          }
+          <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>Save review</Button>
+        </Segment>
+      </div>
+    )
+  } else { return <Spinner /> }
 }
 
 export default LeaveReview
