@@ -158,7 +158,6 @@ const IncomingHistory = (props) => {
               )
             }
           })}
-
         </>
       )
     } else {
