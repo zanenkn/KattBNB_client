@@ -4,8 +4,14 @@ import { Trans, useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
+import ReviewScore from '../ReusableComponents/ReviewScore'
+
 
 const LeaveReview = (props) => {
+
+  const onScoreClick = () => {
+    console.log("yo")
+  }
 
   useEffect(() => {
     if (props.location.state === undefined || props.history.action === 'POP') {
@@ -105,6 +111,7 @@ const LeaveReview = (props) => {
       <Header as='h1'>
         Leave a review
       </Header>
+      <ReviewScore setScore={() => onScoreClick()}/>
     </div>
   )
 }
