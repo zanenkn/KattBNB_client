@@ -35,11 +35,11 @@ const LeaveReview = (props) => {
     } else {
       if (reviewBody === '') {
         setLoading(false)
-        setErrors(['body cannot be empty'])
+        setErrors(['Review message cannot be empty!'])
         setErrorDisplay(true)
       } else if (reviewBody.length > 1000) {
         setLoading(false)
-        setErrors(['no more than 1000 characters'])
+        setErrors(['Review message cannot exceed 1000 characters!'])
         setErrorDisplay(true)
       } else {
         const path = '/api/v1/reviews'
@@ -66,6 +66,10 @@ const LeaveReview = (props) => {
               setLoading(false)
               setErrorDisplay(true)
               setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 422) {
+              setLoading(false)
+              setErrorDisplay(true)
+              setErrors(['The host you are trying to review does not exist! Please go back to your bookings dashboard.'])
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
@@ -88,13 +92,13 @@ const LeaveReview = (props) => {
       </Header>
       <Segment className='whitebox'>
         <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-
+          Your cat(s) stayed with {props.location.state.hostNickname} during the dates of {props.location.state.startDate} until {props.location.state.endDate}.
         </p>
         <ReviewScore setScore={() => onScoreClick()} />
         <Form>
           <Form.TextArea
-            label='leave your review'
-            placeholder='leave your review'
+            label='Your review'
+            placeholder='Describe your experience with this host..'
             required
             id='review-body'
             value={reviewBody}
@@ -102,9 +106,8 @@ const LeaveReview = (props) => {
           />
         </Form>
         <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-          {t('reusable:remaining-chars')}
+          {t('reusable:remaining-chars')} {1000 - reviewBody.length}
         </p>
-        <Button onClick={() => createReview()}></Button>
         {errorDisplay &&
           <Message negative >
             <ul id='message-error-list'>
@@ -114,6 +117,7 @@ const LeaveReview = (props) => {
             </ul>
           </Message>
         }
+        <Button onClick={() => createReview()}>Save review</Button>
       </Segment>
     </div>
   )
