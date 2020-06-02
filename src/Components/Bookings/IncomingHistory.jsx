@@ -130,13 +130,13 @@ const IncomingHistory = (props) => {
             } else {
               return (
                 <>
-                  <Container style={{ 'backgroundColor': booking.review === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                  <Container style={{ 'backgroundColor': booking.review_id === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
                     <p className='small-centered-paragraph'>
                       <Trans i18nKey='IncomingHistory:other-history'>
                         You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                     </p>
-                    {booking.review === null ?
+                    {booking.review_id === null ?
                       <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.profile_avatar, booking.user.location, booking.user.nickname)}>
                         {t('IncomingHistory:ask-review')}
                       </p>

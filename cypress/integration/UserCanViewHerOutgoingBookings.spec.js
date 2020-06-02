@@ -45,7 +45,7 @@ describe('User can view her outgoing bookings', () => {
 
   it("and see 'Write a review' link if the booking has not been reviewed yet", () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-history]').first().contains('Write a review')
+    cy.get('[data-cy=outgoing-history]').first().contains('Leave a review')
   })
 
   it('and see her own message in request bookings', () => {
