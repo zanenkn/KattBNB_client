@@ -9,7 +9,7 @@ import ReviewScore from '../ReusableComponents/ReviewScore'
 
 const LeaveReview = (props) => {
 
-  const { t, ready } = useTranslation()
+  const { t, ready } = useTranslation('LeaveReview')
 
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
