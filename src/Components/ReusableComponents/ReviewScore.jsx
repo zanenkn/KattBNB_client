@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const ReviewScore = (props) => {
+
   const [activeScore, setActiveScore] = useState("5")
-  const revScore = useRef(null) 
+  const revScore = useRef(null)
   const onScoreClick = (e) => {
     props.setScore()
     setActiveScore(e.currentTarget.id)
@@ -16,7 +17,7 @@ const ReviewScore = (props) => {
 
   return (
     <div ref={revScore} style={{ 'margin': 'auto', 'display': 'table' }}>
-      <svg onClick={(e)=> onScoreClick(e)} fill='#c90c61' id="1" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+      <svg onClick={(e) => onScoreClick(e)} fill='#c90c61' id="1" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
         <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
           C76.1,143.8,101.5,177.9,132.6,177.9z"/>
         <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5
@@ -31,7 +32,7 @@ const ReviewScore = (props) => {
         <path d="M89,197.9c0-33.1-19.6-59-44.5-59c-25,0-44.5,25.9-44.5,59c0,33.1,19.6,59,44.5,59S89,230.9,89,197.9z" />
       </svg>
       &thinsp;
-      <svg onClick={(e)=> onScoreClick(e)} fill='#c90c61' id="2" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+      <svg onClick={(e) => onScoreClick(e)} fill='#c90c61' id="2" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
         <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
           C76.1,143.8,101.5,177.9,132.6,177.9z"/>
         <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5
@@ -46,7 +47,7 @@ const ReviewScore = (props) => {
         <path d="M89,197.9c0-33.1-19.6-59-44.5-59c-25,0-44.5,25.9-44.5,59c0,33.1,19.6,59,44.5,59S89,230.9,89,197.9z" />
       </svg>
       &thinsp;
-      <svg onClick={(e)=> onScoreClick(e)} fill='#c90c61' id="3" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+      <svg onClick={(e) => onScoreClick(e)} fill='#c90c61' id="3" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
         <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
           C76.1,143.8,101.5,177.9,132.6,177.9z"/>
         <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5
@@ -61,7 +62,7 @@ const ReviewScore = (props) => {
         <path d="M89,197.9c0-33.1-19.6-59-44.5-59c-25,0-44.5,25.9-44.5,59c0,33.1,19.6,59,44.5,59S89,230.9,89,197.9z" />
       </svg>
       &thinsp;
-      <svg onClick={(e)=> onScoreClick(e)} fill='#c90c61' id="4" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+      <svg onClick={(e) => onScoreClick(e)} fill='#c90c61' id="4" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
         <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
           C76.1,143.8,101.5,177.9,132.6,177.9z"/>
         <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5
@@ -76,7 +77,7 @@ const ReviewScore = (props) => {
         <path d="M89,197.9c0-33.1-19.6-59-44.5-59c-25,0-44.5,25.9-44.5,59c0,33.1,19.6,59,44.5,59S89,230.9,89,197.9z" />
       </svg>
       &thinsp;
-      <svg onClick={(e)=> onScoreClick(e)} fill='#c90c61' id="5" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+      <svg onClick={(e) => onScoreClick(e)} fill='#c90c61' id="5" height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
         <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
           C76.1,143.8,101.5,177.9,132.6,177.9z"/>
         <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5

@@ -91,7 +91,7 @@ const OutgoingHistory = (props) => {
                     </Trans>
                   </p>
                   {booking.review_id === null ?
-                    <p className='fake-link-underlined' onClick={() => {
+                    <p className='fake-link-underlined' id='leave-review' onClick={() => {
                       props.history.push({
                         pathname: '/leave-a-review',
                         state: {

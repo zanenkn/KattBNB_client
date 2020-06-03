@@ -71,9 +71,8 @@ const LeaveReview = (props) => {
               setErrorDisplay(true)
               setErrors(['reusable:errors:500'])
             } else if (error.response.status === 422) {
-              setLoading(false)
-              setErrorDisplay(true)
-              setErrors(['LeaveReview:error-no-host'])
+              window.alert(t('LeaveReview:error-no-host'))
+              props.history.push('/all-bookings')
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
