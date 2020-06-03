@@ -22,9 +22,9 @@ const LeaveReview = (props) => {
 
   useEffect(() => {
     if (props.location.state === undefined || props.history.action === 'POP') {
-      window.location.replace('/all-bookings')
+      props.history.push('/all-bookings')
     }
-  }, [props.location.state, props.history.action])
+  }, [props.location.state, props.history])
 
   const createReview = () => {
     const lang = detectLanguage()
@@ -59,7 +59,10 @@ const LeaveReview = (props) => {
           'access-token': window.localStorage.getItem('access-token')
         }
         axios.post(path, payload, { headers: headers })
-          .then(() => { props.history.push('/all-bookings') })
+          .then(() => {
+            window.alert(t('LeaveReview:success'))
+            props.history.push('/all-bookings')
+          })
           .catch(error => {
             if (error.response === undefined) {
               wipeCredentials('/is-not-available?atm')
