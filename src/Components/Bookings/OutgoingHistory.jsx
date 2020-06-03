@@ -84,13 +84,13 @@ const OutgoingHistory = (props) => {
               )
             } else {
               return (
-                <Container style={{ 'backgroundColor': booking.review_id === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='outgoing-history' key={booking.id}>
+                <Container style={{ 'backgroundColor': booking.review_id === null && booking.host_profile_id !== null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='outgoing-history' key={booking.id}>
                   <p className='small-centered-paragraph'>
                     <Trans i18nKey='OutgoingHistory:req-desc'>
                       Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
-                  {booking.review_id === null ?
+                  {booking.review_id === null && booking.host_profile_id !== null ?
                     <p className='fake-link-underlined' id='leave-review' onClick={() => {
                       props.history.push({
                         pathname: '/leave-a-review',
@@ -106,10 +106,14 @@ const OutgoingHistory = (props) => {
                     }}>
                       {t('OutgoingHistory:leave-review')}
                     </p>
-                    :
-                    <p className='fake-link-underlined'>
-                      {t('OutgoingHistory:view-review')}
-                    </p>}
+                    : booking.review_id === null && booking.host_profile_id === null ?
+                      <p className='small-centered-paragraph'>
+                        {t('OutgoingHistory:no-host-no-review')}
+                      </p>
+                      :
+                      <p className='fake-link-underlined'>
+                        {t('OutgoingHistory:view-review')}
+                      </p>}
                 </Container>
               )
             }

@@ -179,3 +179,27 @@ describe('User can view her outgoing bookings', () => {
     cy.location('pathname').should('eq', '/all-bookings')
   })
 })
+
+describe('User can view her outgoing bookings', () => {
+
+  it('and sees relevant message if host has deleted her account before review of booking', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:one_user_booking_no_review_no_host.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('Booking cannot be reviewed because host does not exist!')
+  })
+})

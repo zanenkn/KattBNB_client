@@ -12,5 +12,6 @@
   "req-desc": "Your cat(s) stayed with <1>{{nickname}}</1> during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>.",
   "view-review": "View your review",
   "leave-review": "Leave a review",
-  "no-history": "You don't have any past bookings."
+  "no-history": "You don't have any past bookings.",
+  "no-host-no-review": "Booking cannot be reviewed because host does not exist!"
 }

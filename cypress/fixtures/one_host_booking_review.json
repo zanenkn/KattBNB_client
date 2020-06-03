@@ -17,6 +17,7 @@
     "message": "Please keep my cats, AcceptedOfThePast",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-15T08:14:16.828Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "AcceptedOfThePast"

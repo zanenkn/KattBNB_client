@@ -12,5 +12,6 @@
   "req-desc": "Din katt / dina katter bodde hos <1>{{nickname}}</1> under datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>",
   "view-review": "Visa din recension",
   "leave-review": "Skriv en recension",
-  "no-history": "Du har inga tidigare bokningar."
+  "no-history": "Du har inga tidigare bokningar.",
+  "no-host-no-review": ""
 }
