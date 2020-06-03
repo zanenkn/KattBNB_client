@@ -15,9 +15,10 @@ const LeaveReview = (props) => {
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [reviewBody, setReviewBody] = useState('')
+  const [reviewScore, setReviewScore] = useState(0)
 
-  const onScoreClick = () => {
-    console.log('yo')
+  const onScoreClick = (e) => {
+   setReviewScore(parseInt(e.currentTarget.id))
   }
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const LeaveReview = (props) => {
       } else {
         const path = '/api/v1/reviews'
         const payload = {
-          score: 5,
+          score: reviewScore,
           body: reviewBody,
           host_nickname: props.location.state.hostNickname,
           user_id: props.location.state.userId,
@@ -97,10 +98,10 @@ const LeaveReview = (props) => {
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
             <Trans i18nKey='LeaveReview:desc'>
-              Your cat(s) stayed with {{ host: props.location.state.hostNickname }} during the dates of {{ startDate: props.location.state.startDate }} until {{ endDate: props.location.state.endDate }}.
+              Your cat(s) stayed with <strong style={{ 'color': '#c90c61' }}>{{ host: props.location.state.hostNickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: props.location.state.startDate }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: props.location.state.endDate }}</strong>. Help us to improve KattBNB community by reviewing your experience.
             </Trans>
           </p>
-          <ReviewScore setScore={() => onScoreClick()} />
+          <ReviewScore setScore={(e) => onScoreClick(e)} activeScore={reviewScore} />
           <Form>
             <Form.TextArea
               label={t('LeaveReview:label')}

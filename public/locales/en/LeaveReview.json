@@ -4,7 +4,7 @@
   "success": "Your review was successfully submitted!",
   "error-no-host": "The host you are trying to review requested an account deletion! You cannot review this booking.",
   "title": "Leave a review",
-  "desc": "Your cat(s) stayed with <1>{{host}}</1> during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>.",
+  "desc": "Your cat(s) stayed with <1>{{host}}</1> during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>. Help us to improve KattBNB community by reviewing your experience.",
   "label": "Your review",
   "placeholder": "Describe your experience with this host..",
   "cta": "Save review"
