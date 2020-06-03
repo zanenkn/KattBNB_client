@@ -58,6 +58,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
     cy.get('#review-body').type('This is a successful review submission!')
     cy.get('.submit-button').click()
     cy.on('window:alert', (str) => {
@@ -70,6 +71,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
     cy.get('.submit-button').click()
     cy.contains('Review message cannot be empty!')
   })
@@ -78,9 +80,19 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
     cy.get('#review-body').type('No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters!')
     cy.get('.submit-button').click()
     cy.contains('Review message cannot exceed 1000 characters!')
+  })
+
+  it('and cannot leave a review if no score is selected', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#review-body').type('Nope!')
+    cy.get('.submit-button').click()
+    cy.contains('You must choose a score for your review!')
   })
 
   it('and see her own message in request bookings', () => {
@@ -171,6 +183,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
     cy.get('#review-body').type('This is not a successful review submission!')
     cy.get('.submit-button').click()
     cy.on('window:alert', (str) => {

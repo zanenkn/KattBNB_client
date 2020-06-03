@@ -18,7 +18,7 @@ const LeaveReview = (props) => {
   const [reviewScore, setReviewScore] = useState(0)
 
   const onScoreClick = (e) => {
-   setReviewScore(parseInt(e.currentTarget.id))
+    setReviewScore(parseInt(e.currentTarget.id))
   }
 
   useEffect(() => {
@@ -35,7 +35,11 @@ const LeaveReview = (props) => {
       setErrors(['reusable:errors:window-navigator'])
       setErrorDisplay(true)
     } else {
-      if (reviewBody === '') {
+      if (reviewScore < 1) {
+        setLoading(false)
+        setErrors(['LeaveReview:error-no-score'])
+        setErrorDisplay(true)
+      } else if (reviewBody === '') {
         setLoading(false)
         setErrors(['LeaveReview:error-empty'])
         setErrorDisplay(true)

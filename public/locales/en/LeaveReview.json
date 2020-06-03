@@ -1,4 +1,5 @@
 {
+  "error-no-score": "You must choose a score for your review!",
   "error-empty": "Review message cannot be empty!",
   "error-length": "Review message cannot exceed 1000 characters!",
   "success": "Your review was successfully submitted!",
