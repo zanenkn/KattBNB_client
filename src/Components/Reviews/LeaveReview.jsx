@@ -100,21 +100,25 @@ const LeaveReview = (props) => {
           {t('LeaveReview:title')}
         </Header>
         <Segment className='whitebox'>
-          <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+          <p className='small-centered-paragraph' style={{ 'marginBottom': '2rem' }}>
             <Trans i18nKey='LeaveReview:desc'>
               Your cat(s) stayed with <strong style={{ 'color': '#c90c61' }}>{{ host: props.location.state.hostNickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: props.location.state.startDate }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: props.location.state.endDate }}</strong>. Help us to improve KattBNB community by reviewing your experience.
             </Trans>
           </p>
-          <ReviewScore setScore={(e) => onScoreClick(e)} activeScore={reviewScore} />
           <Form>
-            <Form.TextArea
-              label={t('LeaveReview:label')}
-              placeholder={t('LeaveReview:placeholder')}
-              required
-              id='review-body'
-              value={reviewBody}
-              onChange={(e) => setReviewBody(e.target.value)}
-            />
+            <div className='required field' >
+              <label>
+                {t('LeaveReview:label')}
+              </label>
+              <ReviewScore setScore={(e) => onScoreClick(e)} activeScore={reviewScore} />
+              <Form.TextArea
+                placeholder={t('LeaveReview:placeholder')}
+                required
+                id='review-body'
+                value={reviewBody}
+                onChange={(e) => setReviewBody(e.target.value)}
+              />
+            </div>
           </Form>
           <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
             {t('reusable:remaining-chars')} {1000 - reviewBody.length}
