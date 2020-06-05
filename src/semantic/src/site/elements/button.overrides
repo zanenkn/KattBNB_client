@@ -23,3 +23,14 @@
 .ui.secondary.button:hover {
   background-color: grey;
 }
+
+.ui.button:active,
+.ui.active.button:active {
+  background-color: #bd0a5b;
+  color: #ffffff;
+}
+
+.ui.button:focus {
+  background-color: #bd0a5b;
+  color: #ffffff;
+}
