@@ -52,7 +52,7 @@
     "p6": "Även om KattBNB kan utföra en begränsad upplysning av Användarprofiler, gör vi inga bakgrundskontroller eller identitetsverifieringar just nu. KattBNB kan därför inte garantera att några sådana upplysningar är korrekta, fullständiga, avgörande eller aktuella.",
     "p7": "Det är Kattvaktens eget ansvar att deklarera eventuella inkomster som genereras genom att uppfylla Tjänsterna. Om du tar hand om husdjur som affärsverksamhet kan du vara berättigad till godkännande av svensk F-skatt. <1>Besök Skatteverket för mer information.</1>",
     "p8": "Kattvakter som professionellt tar hand om katter kan behöva tillstånd. <1>Se kapitel 6.1 i Djurskyddslagen för mer information.</1> Användarna är själva ansvariga för att avgöra om de behöver tillstånd att utföra Tjänsten och skaffa sådant tillstånd vid behov.",
-    "97": "Användare bör inte utbyta personlig information eftersom KattBNB inte kan garantera säkerheten för denna information. Kattvaktens fullständiga adress kommer att tillhandahållas Kattägaren när bokningen har godkänts av Kattvakten. Användare kan använda messenger-tjänst i Appen för att kommunicera alla frågor som skulle uppstå."
+    "p9": "Användare bör inte utbyta personlig information eftersom KattBNB inte kan garantera säkerheten för denna information. Kattvaktens fullständiga adress kommer att tillhandahållas Kattägaren när bokningen har godkänts av Kattvakten. Användare kan använda messenger-tjänst i Appen för att kommunicera alla frågor som skulle uppstå."
   },
   "during-service": {
     "title": "Under Tjänsten",
