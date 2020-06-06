@@ -2,7 +2,6 @@
   "error-no-score": "Please choose a score from 1 (poor) to 5 (excellent) for your review!",
   "error-empty": "Please leave a short description of your stay!",
   "error-length": "Review message cannot exceed 1000 characters!",
-  "success": "Your review was successfully submitted!",
   "error-no-host": "The host you are trying to review have deleted their account! You cannot review this booking.",
   "title": "Leave a review",
   "desc": "Your cat(s) stayed with <1>{{host}}</1> during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>. Help us to improve KattBNB community by reviewing your experience.",

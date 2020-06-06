@@ -32,6 +32,7 @@ import Partners from './Components/Menu/Partners'
 import HostEn from './Components/HostEn'
 import HostSe from './Components/HostSe'
 import LeaveReview from './Components/Reviews/LeaveReview'
+import SuccessfulReview from './Components/Reviews/SuccessfulReview'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sticky, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -137,6 +138,7 @@ class App extends Component {
                 <Route exact path='/is-not-available' component={Error503}></Route>
                 <Route exact path='/become-host' component={HostEn}></Route>
                 <Route exact path='/bli-kattvakt' component={HostSe}></Route>
+                <Route exact path='/successful-review' component={SuccessfulReview}></Route>
                 {userPageRoute}
                 {allBookingsRoute}
                 {outgoingBookingsRoute}

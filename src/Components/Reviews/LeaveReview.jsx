@@ -65,8 +65,7 @@ const LeaveReview = (props) => {
         }
         axios.post(path, payload, { headers: headers })
           .then(() => {
-            window.alert(t('LeaveReview:success'))
-            props.history.push('/all-bookings')
+            props.history.push('/successful-review')
           })
           .catch(error => {
             if (error.response === undefined) {
