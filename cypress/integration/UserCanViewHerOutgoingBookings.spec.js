@@ -73,7 +73,7 @@ describe('User can view her outgoing bookings', () => {
     cy.location('pathname').should('eq', '/leave-a-review')
     cy.get('#1').click()
     cy.get('.submit-button').click()
-    cy.contains('Review message cannot be empty!')
+    cy.contains('Please leave a short description of your stay!')
   })
 
   it('and cannot leave a review if the text is longer than 1000 characters', () => {
@@ -92,7 +92,7 @@ describe('User can view her outgoing bookings', () => {
     cy.location('pathname').should('eq', '/leave-a-review')
     cy.get('#review-body').type('Nope!')
     cy.get('.submit-button').click()
-    cy.contains('You must choose a score for your review!')
+    cy.contains('Please choose a score from 1 (poor) to 5 (excellent) for your review!')
   })
 
   it('and see her own message in request bookings', () => {
@@ -187,7 +187,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#review-body').type('This is not a successful review submission!')
     cy.get('.submit-button').click()
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('The host you are trying to review requested an account deletion! You cannot review this booking.')
+      expect(str).to.equal('The host you are trying to review have deleted their account! You cannot review this booking.')
     })
     cy.location('pathname').should('eq', '/all-bookings')
   })
