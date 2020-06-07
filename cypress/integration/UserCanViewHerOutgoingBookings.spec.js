@@ -54,7 +54,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').first().contains('Leave a review')
   })
 
-  it('and can succesfully review a booking', () => {
+  it.only('and can succesfully review a booking', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
@@ -64,7 +64,7 @@ describe('User can view her outgoing bookings', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your review was successfully submitted!')
     })
-    cy.location('pathname').should('eq', '/all-bookings')
+    cy.location('pathname').should('eq', '/successful-review')
   })
 
   it('and cannot leave a review if the text area is blank', () => {
