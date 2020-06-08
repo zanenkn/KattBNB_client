@@ -17,11 +17,11 @@
     "message": "Please keep my cats, AcceptedOfThePast",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-15T08:14:16.828Z",
-    "host_profile_id": 10,
+    "host_profile_id": null,
     "user_id": 1,
     "user": {
       "nickname": "GeorgeTheGreek"
     },
-    "review_id": 2
+    "review_id": null
   }
 ]

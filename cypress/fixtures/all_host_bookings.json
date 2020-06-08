@@ -12,6 +12,7 @@
     "message": "Please keep my cats, Pending2",
     "created_at": "2019-11-08T18:54:39.463Z",
     "updated_at": "2019-11-08T18:45:39.463Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Pending2"
@@ -30,6 +31,7 @@
     "message": "Please keep my cats, Pending1",
     "created_at": "2019-11-08T18:55:22.358Z",
     "updated_at": "2019-11-08T18:54:22.358Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Pending1"
@@ -51,6 +53,7 @@
     "host_message": "Sorry, dude! I decline!",
     "created_at": "2019-11-09T08:56:30.830Z",
     "updated_at": "2019-11-09T08:56:30.830Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Declined2"
@@ -71,6 +74,7 @@
     "message": "Please keep my cats, Declined1",
     "created_at": "2019-11-09T08:39:07.198Z",
     "updated_at": "2019-11-09T08:39:07.198Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Declined1"
@@ -91,6 +95,7 @@
     "message": "Please keep my cats, Canceled2",
     "created_at": "2019-11-09T09:06:48.090Z",
     "updated_at": "2019-11-09T09:06:48.090Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Canceled2"
@@ -113,6 +118,7 @@
     "message": "Please keep my cats, Canceled1",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-09T08:14:16.828Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Canceled1"
@@ -133,6 +139,7 @@
     "message": "Please keep my cats, Accepted2",
     "created_at": "2019-11-09T09:06:48.090Z",
     "updated_at": "2019-11-09T09:06:48.090Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Accepted2"
@@ -155,6 +162,7 @@
     "message": "Please keep my cats, Accepted1",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-09T08:14:16.828Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "Accepted1"
@@ -178,10 +186,11 @@
     "message": "Please keep my cats, AcceptedOfThePast",
     "created_at": "2019-11-09T18:14:16.828Z",
     "updated_at": "2019-11-15T08:14:16.828Z",
+    "host_profile_id": 10,
     "user_id": 1,
     "user": {
       "nickname": "AcceptedOfThePast"
     },
-    "review": null
+    "review_id": null
   }
 ]

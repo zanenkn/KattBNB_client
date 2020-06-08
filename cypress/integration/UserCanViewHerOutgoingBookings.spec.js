@@ -13,6 +13,12 @@ describe('User can view her outgoing bookings', () => {
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/reviews',
+      status: 200,
+      response: ''
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
@@ -43,9 +49,51 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
   })
 
-  it("and see 'Write a review' link if the booking has not been reviewed yet", () => {
+  it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-history]').first().contains('Write a review')
+    cy.get('[data-cy=outgoing-history]').first().contains('Leave a review')
+  })
+
+  it.only('and can succesfully review a booking', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
+    cy.get('#review-body').type('This is a successful review submission!')
+    cy.get('.submit-button').click()
+    cy.location('pathname').should('eq', '/successful-review')
+    cy.contains('Thank you for your review!')
+    cy.get('#back-to-bookings').click()
+    cy.location('pathname').should('eq', '/all-bookings')
+    cy.contains('Here you can manage your bookings.')
+  })
+
+  it('and cannot leave a review if the text area is blank', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
+    cy.get('.submit-button').click()
+    cy.contains('Please leave a short description of your stay!')
+  })
+
+  it('and cannot leave a review if the text is longer than 1000 characters', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
+    cy.get('#review-body').type('No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters!')
+    cy.get('.submit-button').click()
+    cy.contains('Review message cannot exceed 1000 characters!')
+  })
+
+  it('and cannot leave a review if no score is selected', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#review-body').type('Nope!')
+    cy.get('.submit-button').click()
+    cy.contains('Please choose a score from 1 (poor) to 5 (excellent) for your review!')
   })
 
   it('and see her own message in request bookings', () => {
@@ -105,5 +153,67 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().contains('View your review')
+  })
+})
+
+describe('User can view her outgoing bookings', () => {
+
+  it('and cannot leave a review cause the host requested an account deletion in the process', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:all_user_bookings.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.route({
+      method: 'POST',
+      url: 'http://localhost:3007/api/v1/reviews',
+      status: 422,
+      response: ''
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
+    cy.location('pathname').should('eq', '/leave-a-review')
+    cy.get('#1').click()
+    cy.get('#review-body').type('This is not a successful review submission!')
+    cy.get('.submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('The host you are trying to review have deleted their account! You cannot review this booking.')
+    })
+    cy.location('pathname').should('eq', '/all-bookings')
+  })
+})
+
+describe('User can view her outgoing bookings', () => {
+
+  it('and sees relevant message if host has deleted her account before review of booking', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:one_user_booking_no_review_no_host.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('Booking cannot be reviewed because host does not exist!')
   })
 })

@@ -42,7 +42,7 @@ const IncomingHistory = (props) => {
             state: {
               id: response.data.id,
               user: {
-                avatar: userAvatar,
+                profile_avatar: userAvatar,
                 id: userId,
                 location: userLocation,
                 nickname: userNickname
@@ -73,15 +73,15 @@ const IncomingHistory = (props) => {
   }
 
   if (ready) {
-    let sortedHistory = props.historyBookings
+    let sortedHistory = props.inHistoryBookings
     sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
 
-    if (props.historyBookings.length > 0) {
+    if (props.inHistoryBookings.length > 0) {
       return (
         <>
           <p className='small-centered-paragraph'>
-            <Trans count={parseInt(props.historyBookings.length)} i18nKey='IncomingHistory:main-title'>
-              <strong>You have {{ count: props.historyBookings.length }} past booking.</strong>
+            <Trans count={parseInt(props.inHistoryBookings.length)} i18nKey='IncomingHistory:main-title'>
+              <strong>You have {{ count: props.inHistoryBookings.length }} past booking.</strong>
             </Trans>
           </p>
           {sortedHistory.map(booking => {
@@ -130,14 +130,14 @@ const IncomingHistory = (props) => {
             } else {
               return (
                 <>
-                  <Container style={{ 'backgroundColor': booking.review === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                  <Container style={{ 'backgroundColor': booking.review_id === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
                     <p className='small-centered-paragraph'>
                       <Trans i18nKey='IncomingHistory:other-history'>
                         You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                     </p>
-                    {booking.review === null ?
-                      <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.avatar, booking.user.location, booking.user.nickname)}>
+                    {booking.review_id === null ?
+                      <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.profile_avatar, booking.user.location, booking.user.nickname)}>
                         {t('IncomingHistory:ask-review')}
                       </p>
                       :
@@ -158,7 +158,6 @@ const IncomingHistory = (props) => {
               )
             }
           })}
-
         </>
       )
     } else {
