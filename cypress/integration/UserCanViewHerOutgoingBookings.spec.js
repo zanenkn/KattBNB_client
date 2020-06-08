@@ -61,10 +61,11 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#1').click()
     cy.get('#review-body').type('This is a successful review submission!')
     cy.get('.submit-button').click()
-    cy.on('window:alert', (str) => {
-      expect(str).to.equal('Your review was successfully submitted!')
-    })
     cy.location('pathname').should('eq', '/successful-review')
+    cy.contains('Thank you for your review!')
+    cy.get('#back-to-bookings').click()
+    cy.location('pathname').should('eq', '/all-bookings')
+    cy.contains('Here you can manage your bookings.')
   })
 
   it('and cannot leave a review if the text area is blank', () => {

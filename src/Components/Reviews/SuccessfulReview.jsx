@@ -17,12 +17,11 @@ const SuccessfulReview = () => {
           <p>
             {t('SuccessfulReview:text')}
           </p>
-          <Link to='all-bookings' className='fake-link-underlined-reg'>{t('SuccessfulReview:bookings-cta')}</Link>
+          <Link to='all-bookings' id='back-to-bookings' className='fake-link-underlined-reg'>{t('SuccessfulReview:bookings-cta')}</Link>
         </Segment>
       </div>
     )
   } else { return <Spinner /> }
 }
-
 
 export default SuccessfulReview
