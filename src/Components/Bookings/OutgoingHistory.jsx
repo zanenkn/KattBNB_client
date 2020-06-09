@@ -122,6 +122,8 @@ const OutgoingHistory = (props) => {
                       >
                         <ViewYourReviewPopup
                           id={booking.review_id}
+                          startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                          endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
                         />
                       </Popup>
                   }
