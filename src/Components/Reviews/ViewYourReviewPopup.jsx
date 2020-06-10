@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
+import ReviewScore from '../ReusableComponents/ReviewScore'
 import { Trans, useTranslation } from 'react-i18next'
 import { Header, Message } from 'semantic-ui-react'
 import axios from 'axios'
@@ -14,6 +15,7 @@ const ViewYourReviewPopup = (props) => {
   const [errors, setErrors] = useState(null)
   const [errorDisplay, setErrorDisplay] = useState(null)
   const [reviewDate, setReviewDate] = useState(null)
+  const [score, setScore] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -34,6 +36,7 @@ const ViewYourReviewPopup = (props) => {
           setNickname(resp.data.host_nickname)
           setMessage(resp.data.body)
           setReviewDate(resp.data.created_at)
+          setScore(resp.data.score)
         })
         .catch(error => {
           if (error.response === undefined) {
@@ -74,13 +77,17 @@ const ViewYourReviewPopup = (props) => {
             </Trans>
             </p>
           </div>
-          <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
-          <div style={{'maxHeight': '200px', 'overflow': 'auto'}}>
-            <p style={{ 'fontSize': 'small', 'fontStyle': 'italic' }}>
-            {message}
-          </p>
+          <div style={{ 'display': 'flex' }}>
+            <ReviewScore score={score} clickable={false} />
           </div>
-          
+          <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic' }}>
+            <p>
+              {message}
+            </p>
+            <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
+
+          </div>
+
         </>
     )
   } else { return <Spinner /> }

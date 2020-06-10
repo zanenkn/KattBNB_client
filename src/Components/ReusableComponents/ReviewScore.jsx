@@ -7,8 +7,8 @@ const ReviewScore = (props) => {
     <div style={{ 'display': 'flex', 'margin': '1rem 0', 'alignItems': 'flex-end' }}>
       {score.map((sc) => {
         return (
-          <div id={sc} onClick={props.setScore} style={{ 'marginRight': '0.5rem', 'cursor': 'pointer' }}>
-            <svg fill={props.activeScore >= sc ? '#c90c61' : 'silver'} height='2em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
+          <div id={sc} onClick={props.setScore} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
+            <svg fill={props.score >= sc ? '#c90c61' : 'silver'} height='2em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
               <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
               C76.1,143.8,101.5,177.9,132.6,177.9z"/>
               <path d="M300.2,251.6c-1.2-1.6-2.3-3.1-2.9-4.3c-12.6-27-47.3-58.9-103.4-59.7l-2.2,0c-55.2,0-89.6,30.2-103.4,58.5
@@ -26,7 +26,7 @@ const ReviewScore = (props) => {
         )
       })}
       <p style={{ 'color': 'silver', 'marginLeft': '0.5rem' }}>
-        ({props.activeScore}/5)
+        ({props.score}/5)
       </p>
     </div>
   )
