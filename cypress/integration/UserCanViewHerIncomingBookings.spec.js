@@ -73,7 +73,7 @@ describe('User can view her incoming bookings', () => {
 })
 
 describe('User can view her incoming bookings', () => {
-  it("and see 'View review' link if there is a review", () => {
+  beforeEach(function () {
     cy.server()
     cy.route({
       method: 'GET',
@@ -87,12 +87,35 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews/5',
+      status: 200,
+      response: 'fixture:one_review_incoming.json'
+    })
+  })
+  
+  it("and see 'View review' link if there is a review", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
     cy.wait(2000)
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('View review')
+  })
+
+  it.only("and see 'View review' link and click it and view the review", () => {
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.wait(2000)
+    cy.get('#view-incoming-bookings').click()
+    cy.get('[data-cy=incoming-history]').first().contains('View review')
+    cy.get('.fake-link-underlined').click()
+    cy.contains("AcceptedOfThePast left you a review for a booking between the dates of 2019-11-26 and 2019-11-19.")
+    cy.contains("Excellent job George!")
+    cy.contains("5/5")
+    cy.contains("2020-05-20")
   })
 })
 

@@ -151,7 +151,7 @@ describe('User can view her outgoing bookings', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/reviews/2',
       status: 200,
-      response: 'fixture:one_review.json'
+      response: 'fixture:one_review_outgoing.json'
     })
   })
 
@@ -163,7 +163,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').first().contains('View your review')
   })
 
-  it.only("and click 'View your review' and view a review she wrote", () => {
+  it("and click 'View your review' and view a review she wrote", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
