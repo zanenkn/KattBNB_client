@@ -58,7 +58,7 @@ const ViewReviewPopup = (props) => {
             wipeCredentials('/')
           } else {
             setErrorDisplay(true)
-            setErrors(error.response.data.error)
+            setErrors([error.response.data.error])
           }
         })
     }
@@ -70,7 +70,7 @@ const ViewReviewPopup = (props) => {
     return (
       errorDisplay ?
         <Message negative style={{ 'textAlign': 'center' }} >
-          {t(errors)}
+          {t(errors[0])}
         </Message>
         :
         <>
