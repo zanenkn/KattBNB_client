@@ -34,8 +34,13 @@ const ViewReviewPopup = (props) => {
       const payload = { locale: lang }
       axios.get(path, payload, { headers: headers })
         .then(resp => {
-          setNickname(resp.data.user.nickname)
-          setAvatar(resp.data.user.profile_avatar)
+          if (resp.data.user === null) {
+            setNickname('Deleted user')
+            setAvatar('https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false')
+          } else {
+            setNickname(resp.data.user.nickname)
+            setAvatar(resp.data.user.profile_avatar)
+          }
           setMessage(resp.data.body)
           setReviewDate(resp.data.created_at)
           setScore(resp.data.score)
