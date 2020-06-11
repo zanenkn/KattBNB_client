@@ -34,7 +34,6 @@ const ViewReviewPopup = (props) => {
       const payload = { locale: lang }
       axios.get(path, payload, { headers: headers })
         .then(resp => {
-          debugger
           setNickname(resp.data.user.nickname)
           setAvatar(resp.data.user.profile_avatar)
           setMessage(resp.data.body)
