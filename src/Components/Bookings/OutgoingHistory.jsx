@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import OutRequestDeclinedPopup from './OutRequestDeclinedPopup'
 import OutRequestCancelledPopup from './OutRequestCancelledPopup'
 import Popup from 'reactjs-popup'
+import ViewYourReviewPopup from '../Reviews/ViewYourReviewPopup'
 import { withRouter } from 'react-router-dom'
 
 const OutgoingHistory = (props) => {
@@ -111,9 +112,21 @@ const OutgoingHistory = (props) => {
                         {t('OutgoingHistory:no-host-no-review')}
                       </p>
                       :
-                      <p className='fake-link-underlined'>
-                        {t('OutgoingHistory:view-review')}
-                      </p>}
+                      <Popup modal trigger={
+                        <p className='fake-link-underlined'>
+                          {t('OutgoingHistory:view-review')}
+                        </p>
+                      }
+                        position='top center'
+                        closeOnDocumentClick={true}
+                      >
+                        <ViewYourReviewPopup
+                          id={booking.review_id}
+                          startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                          endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+                        />
+                      </Popup>
+                  }
                 </Container>
               )
             }

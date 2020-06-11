@@ -1,0 +1,4 @@
+{
+  "main-header": "Review",
+  "desc": "<0>{{nickname}}</0> left you a review for a booking between the dates of <2>{{startDate}}</2> and <4>{{endDate}}</4>."
+}
