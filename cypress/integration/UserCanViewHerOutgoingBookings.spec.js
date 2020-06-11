@@ -54,7 +54,7 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-history]').first().contains('Leave a review')
   })
 
-  it.only('and can succesfully review a booking', () => {
+  it('and can succesfully review a booking', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click()
     cy.location('pathname').should('eq', '/leave-a-review')
@@ -133,8 +133,7 @@ describe('User can view her outgoing bookings', () => {
 })
 
 describe('User can view her outgoing bookings', () => {
-
-  it("and see 'View your review' link if the booking has already been reviewed", () => {
+  beforeEach(function () {
     cy.server()
     cy.route({
       method: 'GET',
@@ -148,11 +147,33 @@ describe('User can view her outgoing bookings', () => {
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews/2',
+      status: 200,
+      response: 'fixture:one_review.json'
+    })
+  })
+
+  it("and see 'View your review' link if the booking has already been reviewed", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().contains('View your review')
+  })
+
+  it.only("and click 'View your review' and view a review she wrote", () => {
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('View your review')
+    cy.get('.fake-link-underlined').click()
+    cy.contains('You reviewed your booking with AcceptedOfThePast for the dates of 2019-11-26 until 2019-11-19.')
+    cy.contains('Almost good!')
+    cy.contains('2020-06-01')
+    cy.contains('4/5')
   })
 })
 
