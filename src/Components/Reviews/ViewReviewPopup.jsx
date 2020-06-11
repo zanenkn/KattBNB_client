@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import ReviewScore from '../ReusableComponents/ReviewScore'
 import { Trans, useTranslation } from 'react-i18next'
-import { Header, Message } from 'semantic-ui-react'
+import { Header, Message, Image } from 'semantic-ui-react'
 import axios from 'axios'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import moment from 'moment'
 
-const ViewYourReviewPopup = (props) => {
-  const { t, ready } = useTranslation('ViewYourReviewPopup')
+const ViewReviewPopup = (props) => {
+  const { t, ready } = useTranslation('ViewReviewPopup')
   const [nickname, setNickname] = useState(null)
   const [message, setMessage] = useState(null)
   const [errors, setErrors] = useState(null)
   const [errorDisplay, setErrorDisplay] = useState(null)
   const [reviewDate, setReviewDate] = useState(null)
   const [score, setScore] = useState(null)
+  const [avatar, setAvatar] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -33,7 +34,9 @@ const ViewYourReviewPopup = (props) => {
       const payload = { locale: lang }
       axios.get(path, payload, { headers: headers })
         .then(resp => {
-          setNickname(resp.data.host_nickname)
+          debugger
+          setNickname(resp.data.user.nickname)
+          setAvatar(resp.data.user.profile_avatar)
           setMessage(resp.data.body)
           setReviewDate(resp.data.created_at)
           setScore(resp.data.score)
@@ -69,13 +72,19 @@ const ViewYourReviewPopup = (props) => {
         <>
           <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
             <Header as='h2' style={{ 'color': '#ffffff', 'textAlign': 'left' }}>
-              {t('ViewYourReviewPopup:main-header')}
+              {t('ViewReviewPopup:main-header')}
             </Header>
             <p style={{ 'color': '#ffffff', 'fontSize': 'small' }}>
-              <Trans i18nKey='ViewYourReviewPopup:desc'>
-                You reviewed your booking with <strong>{{ nickname: nickname }}</strong> for the dates of <strong>{{ startDate: props.startDate }}</strong> until <strong>{{ endDate: props.endDate }}</strong>.
+              <Trans i18nKey='ViewReviewPopup:desc'>
+                <strong>{{ nickname: nickname }}</strong> left you a review for a booking between the dates of <strong>{{ startDate: props.startDate }}</strong> and <strong>{{ endDate: props.endDate }}</strong>.
             </Trans>
             </p>
+          </div>
+          <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+            <Image src={avatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
+            <Header style={{ 'margin': '0 1rem' }}>
+              {nickname}
+            </Header>
           </div>
           <div style={{ 'display': 'flex' }}>
             <ReviewScore score={score} clickable={false} />
@@ -93,4 +102,4 @@ const ViewYourReviewPopup = (props) => {
   } else { return <Spinner /> }
 }
 
-export default ViewYourReviewPopup
+export default ViewReviewPopup

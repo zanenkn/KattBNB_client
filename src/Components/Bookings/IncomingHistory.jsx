@@ -9,6 +9,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withRouter } from 'react-router-dom'
+import ViewReviewPopup from '../Reviews/ViewReviewPopup'
 
 const IncomingHistory = (props) => {
 
@@ -141,9 +142,21 @@ const IncomingHistory = (props) => {
                         {t('IncomingHistory:ask-review')}
                       </p>
                       :
-                      <p className='fake-link-underlined'>
-                        {t('IncomingHistory:view-review')}
-                      </p>}
+                      <Popup modal trigger={
+                        <p className='fake-link-underlined'>
+                          {t('IncomingHistory:view-review')}
+                        </p>
+                      }
+                        position='top center'
+                        closeOnDocumentClick={true}
+                      >
+                        <ViewReviewPopup
+                          id={booking.review_id}
+                          startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                          endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+                        />
+                      </Popup>
+                    }
                   </Container>
                   {errorDisplay &&
                     <Message negative >
