@@ -46,7 +46,6 @@ const UserPage = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [deleteDisplayNone, setDeleteDipslayNone] = useState(false)
-  const [reviews, setReviews] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -94,7 +93,6 @@ const UserPage = (props) => {
             setLoadingHostProfile(false)
             setErrorDisplay(false)
             setErrors([])
-            setReviews(resp.data.review)
           })
           .catch(error => {
             if (error.response === undefined) {
@@ -458,7 +456,6 @@ const UserPage = (props) => {
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
             ref={hostProfileElement}
             setElement={elementUpdateHandler.bind(this)}
-            reviews={reviews}
           />}
         {hostProfile.length === 1 && loadingHostProfile === true &&
           <Spinner />

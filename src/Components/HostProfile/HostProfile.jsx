@@ -198,7 +198,9 @@ const HostProfile = forwardRef((props, ref) => {
         </Segment>
         <Segment>
           <div>
-            <AllReviews reviews={props.reviews}/>
+            <AllReviews
+              id={props.id}
+            />
           </div>
         </Segment>
       </>
