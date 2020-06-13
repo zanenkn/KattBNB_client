@@ -428,6 +428,7 @@ class SearchResults extends Component {
                   location={this.state.hostLocation}
                   rate={this.state.hostRate}
                   supplement={this.state.hostSupplement}
+                  score={this.state.score}
                   handleHostProfileClick={this.handleHostProfileClick.bind(this)}
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 />
