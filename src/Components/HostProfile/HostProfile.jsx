@@ -200,6 +200,7 @@ const HostProfile = forwardRef((props, ref) => {
           <div>
             <AllReviews
               id={props.id}
+              score={props.score}
             />
           </div>
         </Segment>
