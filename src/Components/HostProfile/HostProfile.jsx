@@ -199,7 +199,7 @@ const HostProfile = forwardRef((props, ref) => {
         <Segment>
           <div>
             <AllReviews
-              id={props.id}
+              hostProfileId={props.id}
               score={props.score}
             />
           </div>

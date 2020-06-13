@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Header } from 'semantic-ui-react'
 import HostScore from '../ReusableComponents/HostScore'
-import Reviews from '../ReusableComponents/Reviews'
+import AllReviews from '../Reviews/AllReviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import MessageHostCTA from '../ReusableComponents/MessageHostCTA'
@@ -82,7 +82,10 @@ const HostProfileView = (props) => {
           {props.description}
         </p>
         {sendMessage}
-        <Reviews />
+        <AllReviews
+          hostProfileId={props.hostProfileId}
+          score={props.score}
+        />
         {requestToBook}
         <HostLocationMap
           lat={props.lat}

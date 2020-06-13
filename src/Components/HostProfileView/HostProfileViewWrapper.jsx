@@ -94,6 +94,8 @@ const HostProfileViewWrapper = (props) => {
           lat={lat}
           long={long}
           noMessage={props.location.state.noMessage}
+          score={hostProfile.score}
+          hostProfileId={hostProfile.id}
         />
       </div>
     )

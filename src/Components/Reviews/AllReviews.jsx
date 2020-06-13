@@ -23,7 +23,7 @@ const AllReviews = (props) => {
       setErrors(['reusable:errors:window-navigator'])
       setErrorDisplay(true)
     } else {
-      axios.get(`/api/v1/reviews?host_profile_id=${props.id}&locale=${lang}`)
+      axios.get(`/api/v1/reviews?host_profile_id=${props.hostProfileId}&locale=${lang}`)
         .then(resp => {
           setReviews(resp.data)
           setLoading(false)
@@ -47,7 +47,7 @@ const AllReviews = (props) => {
           }
         })
     }
-  }, [props.id, t])
+  }, [props.hostProfileId, t])
 
   if (ready && loading === false) {
     return (
