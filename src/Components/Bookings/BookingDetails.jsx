@@ -164,6 +164,8 @@ class BookingDetails extends Component {
               lat={this.props.location.state.lat}
               long={this.props.location.state.long}
               address={this.props.location.state.address}
+              hostProfileId={this.props.location.state.hostProfileId}
+              score={this.props.location.state.score}
               messageHost={this.messageHost.bind(this)}
             />
           </>
