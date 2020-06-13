@@ -42,6 +42,11 @@ const ReviewScore = (props) => {
           )
         }
       })}
+      {props.displayNumerical &&
+        <p style={{ 'color': 'silver', 'marginLeft': '0.5rem' }}>
+         ({props.score}/5)
+        </p>
+      }
     </div>
   )
 }
