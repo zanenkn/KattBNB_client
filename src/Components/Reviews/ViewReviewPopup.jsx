@@ -9,7 +9,9 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 import moment from 'moment'
 
 const ViewReviewPopup = (props) => {
+
   const { t, ready } = useTranslation('ViewReviewPopup')
+
   const [nickname, setNickname] = useState(null)
   const [message, setMessage] = useState(null)
   const [errors, setErrors] = useState(null)
@@ -23,7 +25,6 @@ const ViewReviewPopup = (props) => {
       setErrorDisplay(true)
       setErrors('reusable:errors:window-navigator')
     } else {
-
       const lang = detectLanguage()
       const path = `/api/v1/reviews/${props.id}`
       const headers = {
@@ -62,9 +63,7 @@ const ViewReviewPopup = (props) => {
           }
         })
     }
-  }, [])
-
-
+  }, [props.id, t])
 
   if (ready) {
     return (
@@ -98,9 +97,7 @@ const ViewReviewPopup = (props) => {
               {message}
             </p>
             <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
-
           </div>
-
         </>
     )
   } else { return <Spinner /> }

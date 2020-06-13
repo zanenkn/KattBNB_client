@@ -16,7 +16,7 @@ const AllReviews = (props) => {
       .then(resp => {
         setReviews(resp.data)
       })
-  }, [])
+  }, [props.id])
 
   return (
     <>
