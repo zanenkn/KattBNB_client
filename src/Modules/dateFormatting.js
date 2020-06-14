@@ -13,19 +13,6 @@ const timeFormat = (created_at) => {
   return time_format
 }
 
-const relativeTimeFormat = (created_at) => {
-  let today = new Date()
-  let date = new Date(created_at)
-  let time_format
 
-  if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getYear() === today.getYear()) {
-    time_format = 'day'
-  } else if (date.getYear() !== today.getYear()) {
-    time_format = 'year'
-  } else {
-    time_format = 'hour'
-  }
-  return time_format
-}
 
-export { timeFormat, relativeTimeFormat }
+export default  timeFormat

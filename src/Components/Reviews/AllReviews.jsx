@@ -6,7 +6,6 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import axios from 'axios'
 import ReviewScore from '../ReusableComponents/ReviewScore'
-import { relativeTimeFormat } from '../../Modules/dateFormatting'
 import moment from 'moment'
 
 const AllReviews = (props) => {
@@ -82,8 +81,8 @@ const AllReviews = (props) => {
                         <Header style={{ 'margin': '0 1rem' }}>
                           {review.user.nickname}
                         </Header>
-                        <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
-                          {moment(review.created_at).startOf(relativeTimeFormat(review.created_at)).fromNow()}
+                        <p style={{ 'fontSize': 'small' }}>
+                          {moment(review.created_at).fromNow()}
                         </p>
                       </div>
                       <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
