@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Message } from 'semantic-ui-react'
+import { Message, Header, Image } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import axios from 'axios'
+import ReviewScore from '../ReusableComponents/ReviewScore'
+import { relativeTimeFormat } from '../../Modules/dateFormatting'
+import moment from 'moment'
 
 const AllReviews = (props) => {
 
@@ -14,10 +17,10 @@ const AllReviews = (props) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const lang = detectLanguage()
 
   useEffect(() => {
     setLoading(true)
-    const lang = detectLanguage()
     if (window.navigator.onLine === false) {
       setLoading(false)
       setErrors(['reusable:errors:window-navigator'])
@@ -50,6 +53,7 @@ const AllReviews = (props) => {
   }, [props.hostProfileId, t])
 
   if (ready && loading === false) {
+    moment.locale(lang)
     return (
       <>
         {
@@ -63,31 +67,32 @@ const AllReviews = (props) => {
           </Message>
         }
         {
-          reviews.length > 0 &&
-          <>
-            <p>
-              {parseFloat(props.score).toFixed(1)}
-            </p>
-            <p>
-              {reviews.length}
-            </p>
-          </>
-        }
-        {
-          reviews.length === 0 ?
-            t('AllReviews:no-reviews')
+          props.score === null ?
+            <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('AllReviews:no-reviews')}</p>
             :
-            reviews.map((review) => {
-              return (
-                <p key={review.id} id={`review-${review.id}`}>
-                  {review.score}
-                  {review.body}
-                  {review.user.nickname}
-                  {review.user.profile_avatar}
-                  {review.created_at}
-                </p>
-              )
-            })
+            <>
+              <ReviewScore score={props.score} displayNumerical={true} />
+              <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
+              {
+                reviews.map((review) => {
+                  return (
+                    <div key={review.id} id={`review-${review.id}`}>
+                      <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+                        <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
+                        <Header style={{ 'margin': '0 1rem' }}>
+                          {review.user.nickname}
+                        </Header>
+                        <p style={{ 'fontSize': 'small', 'marginBottom': '1rem' }}>
+                          {moment(review.created_at).startOf(relativeTimeFormat(review.created_at)).fromNow()}
+                        </p>
+                      </div>
+                      <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
+                      <p>{review.body}</p>
+                    </div>
+                  )
+                })
+              }
+            </>
         }
       </>
     )

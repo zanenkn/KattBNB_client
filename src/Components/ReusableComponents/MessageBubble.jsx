@@ -2,7 +2,7 @@ import React from 'react'
 import Spinner from './Spinner'
 import { useTranslation } from 'react-i18next'
 import { Image } from 'semantic-ui-react'
-import timeFormat from '../../Modules/dateFormatting'
+import { timeFormat } from '../../Modules/dateFormatting'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import moment from 'moment'
 

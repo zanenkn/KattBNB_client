@@ -44,7 +44,7 @@ const ReviewScore = (props) => {
       })}
       {props.displayNumerical &&
         <p style={{ 'color': 'silver', 'marginLeft': '0.5rem' }}>
-         ({props.score}/5)
+         ({props.score % 1 != 0 ? parseFloat(props.score).toFixed(1) : props.score}/5)
         </p>
       }
     </div>
