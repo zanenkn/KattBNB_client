@@ -295,6 +295,7 @@ class SearchResults extends Component {
             finalAvailableHosts.push(host)
           }
         })
+        finalAvailableHosts.sort((a,b) => (b.score - a.score))
       }
 
       switch (this.state.results) {
