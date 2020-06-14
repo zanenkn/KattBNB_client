@@ -82,6 +82,10 @@ const HostProfileView = (props) => {
           {props.description}
         </p>
         {sendMessage}
+
+        <Header as='h3' style={{ 'textAlign': 'left', 'margin': '4rem 0px 2rem' }}>
+          {t('HostProfileView:reviews-title')}
+        </Header>
         <AllReviews
           hostProfileId={props.hostProfileId}
           score={props.score}
