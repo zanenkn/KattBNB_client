@@ -443,6 +443,7 @@ const UserPage = (props) => {
           </div>
         </Segment>
         <Divider hidden />
+        <Divider hidden />
         {hostProfile.length === 1 && loadingHostProfile === false &&
           <HostProfile
             id={hostProfile[0].id}

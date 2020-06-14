@@ -4,7 +4,7 @@ const ReviewScore = (props) => {
 
   let score = [1, 2, 3, 4, 5]
   return (
-    <div style={{ 'display': 'flex', 'margin': '1rem 0', 'alignItems': 'flex-end', 'justifyContent': props.center ? 'center' : 'unset' }}>
+    <div style={{ 'display': 'flex', 'margin': props.margin || '1rem 0', 'alignItems': 'flex-end', 'justifyContent': props.center ? 'center' : 'unset' }}>
       {score.map((sc) => {
         if(props.score % 1 != 0 && Math.floor(props.score) + 1 === sc) {
           return (

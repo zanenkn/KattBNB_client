@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Message, Header, Image } from 'semantic-ui-react'
+import { Message, Header, Image, Divider } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -70,24 +70,30 @@ const AllReviews = (props) => {
             <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('AllReviews:no-reviews')}</p>
             :
             <>
-              <ReviewScore score={props.score} displayNumerical={true} />
-              <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
+              <ReviewScore score={props.score} displayNumerical={true} margin={'0'}/>
+              <p style={{ 'color': 'silver', 'fontStyle': 'italic', 'marginBottom': '3rem' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
+              <Divider/>
               {
                 reviews.map((review) => {
                   return (
-                    <div key={review.id} id={`review-${review.id}`}>
+                    <>
+                    <div key={review.id} id={`review-${review.id}`} style={{'margin': '2rem 0 3rem'}}>
                       <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                         <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
-                        <Header style={{ 'margin': '0 1rem' }}>
-                          {review.user.nickname}
-                        </Header>
-                        <p style={{ 'fontSize': 'small' }}>
-                          {moment(review.created_at).fromNow()}
-                        </p>
+                        <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
+                          <Header style={{ 'margin': '0 0.5rem' }}>
+                            {review.user.nickname}
+                          </Header>
+                          <p style={{ 'fontSize': 'small' }}>
+                            {moment(review.created_at).fromNow()}
+                          </p>
+                        </div>
                       </div>
                       <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                       <p>{review.body}</p>
                     </div>
+                    <Divider/>
+                    </>
                   )
                 })
               }
