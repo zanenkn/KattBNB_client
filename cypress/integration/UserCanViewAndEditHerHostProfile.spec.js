@@ -15,6 +15,12 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:one_user_reviews.json'
+    })
+    cy.route({
+      method: 'GET',
       url: 'https://maps.google.com/maps/api/geocode/json?address=arlanda%20airport&key=AIzaSyBocaDJSR80uzUcSvWfciq6at2729MC7kM',
       status: 200,
       response: 'fixture:successful_address_search.json'
@@ -122,5 +128,16 @@ describe('User can view her host profile', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your address was succesfully updated!')
     })
+  })
+
+  it('and see correct amount of her reviews sorted by date - latest first', () => {
+    cy.contains('Your reviews').should('exist')
+    cy.get('#all-reviews').children().first().should('have.id', 'review-33')
+    cy.get('#all-reviews').children().last().should('have.id', 'review-22')
+    cy.get('#all-reviews').children().should('have.length', '3')
+  })
+
+  it('and see her host profile score displayed', () => {
+    cy.contains('3.7/5').should('exist')
   })
 })

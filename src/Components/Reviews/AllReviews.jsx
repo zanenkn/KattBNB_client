@@ -75,10 +75,10 @@ const AllReviews = (props) => {
               <ReviewScore score={props.score} displayNumerical={true} margin={'0'} />
               <p style={{ 'color': 'silver', 'fontStyle': 'italic', 'marginBottom': '3rem' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
               <Divider />
-              {
-                reviews.map((review) => {
-                  return (
-                    <>
+              <div id='all-reviews'>
+                {
+                  reviews.map((review) => {
+                    return (                      
                       <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
                         <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                           <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
@@ -93,12 +93,12 @@ const AllReviews = (props) => {
                         </div>
                         <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                         <p>{review.body}</p>
+                        <Divider />
                       </div>
-                      <Divider />
-                    </>
-                  )
-                })
-              }
+                    )
+                  })
+                }
+              </div>
             </>
         }
       </>
