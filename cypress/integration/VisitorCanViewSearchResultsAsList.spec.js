@@ -31,6 +31,11 @@ describe('Visitor can view search results as a list', () => {
     cy.contains('3 result(s)')
   })
 
+  it.only('and see results sorted after host profile score', () => {
+    cy.get('div[class="list-card"]').first().should('have.id', '66')
+    cy.get('div[class="list-card"]').last().should('have.id', '33')
+  })
+
   it('and see correct prices', () => {
     cy.get('#22').within(() => {
       cy.contains('560 kr')
