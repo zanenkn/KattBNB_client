@@ -6,7 +6,7 @@ const ReviewScore = (props) => {
   return (
     <div style={{ 'display': 'flex', 'margin': props.margin || '1rem 0', 'alignItems': 'flex-end', 'justifyContent': props.center ? 'center' : 'unset' }}>
       {score.map((sc) => {
-        if(props.score % 1 != 0 && Math.floor(props.score) + 1 === sc) {
+        if (props.score % 1 != 0 && Math.floor(props.score) + 1 === sc) {
           return (
             <div id={sc} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
               <svg xmlns="http://www.w3.org/2000/svg" height={props.height || '2em'} viewBox="0 0 25 25">
@@ -44,7 +44,7 @@ const ReviewScore = (props) => {
       })}
       {props.displayNumerical &&
         <p style={{ 'color': 'silver', 'marginLeft': '0.5rem' }}>
-         ({props.score % 1 != 0 ? parseFloat(props.score).toFixed(1) : props.score}/5)
+          ({props.score % 1 != 0 ? parseFloat(props.score).toFixed(1) : props.score}/5)
         </p>
       }
     </div>

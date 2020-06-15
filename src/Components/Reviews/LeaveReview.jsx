@@ -109,7 +109,7 @@ const LeaveReview = (props) => {
               <label>
                 {t('LeaveReview:label')}
               </label>
-              <ReviewScore setScore={(e) => onScoreClick(e)} score={reviewScore} clickable={true} displayNumerical={true}/>
+              <ReviewScore setScore={(e) => onScoreClick(e)} score={reviewScore} clickable={true} displayNumerical={true} />
               <Form.TextArea
                 placeholder={t('LeaveReview:placeholder')}
                 required

@@ -78,7 +78,7 @@ const AllReviews = (props) => {
               <div id='all-reviews'>
                 {
                   reviews.map((review) => {
-                    return (                      
+                    return (
                       <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
                         <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                           <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
