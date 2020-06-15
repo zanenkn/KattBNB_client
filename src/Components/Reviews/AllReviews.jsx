@@ -81,10 +81,10 @@ const AllReviews = (props) => {
                     return (
                       <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
                         <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
-                          <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
+                          <Image src={review.user === null ? 'https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false' : review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
                           <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
                             <Header style={{ 'margin': '0 0.5rem' }}>
-                              {review.user.nickname}
+                              {review.user === null ? t('reusable:deleted-user') : review.user.nickname}
                             </Header>
                             <p style={{ 'fontSize': 'small' }}>
                               {moment(review.created_at).fromNow()}
