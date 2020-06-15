@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Message, Header, Image, Divider } from 'semantic-ui-react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -51,7 +51,7 @@ const AllReviews = (props) => {
           }
         })
     }
-  }, [props.hostProfileId, t])
+  }, [props.hostProfileId, lang, t])
 
   if (ready && loading === false) {
     moment.locale(lang)
@@ -78,7 +78,7 @@ const AllReviews = (props) => {
               <div id='all-reviews'>
                 {
                   reviews.map((review) => {
-                    return (                      
+                    return (
                       <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
                         <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                           <Image src={review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>

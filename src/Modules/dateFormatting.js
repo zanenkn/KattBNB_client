@@ -13,6 +13,4 @@ const timeFormat = (created_at) => {
   return time_format
 }
 
-
-
-export default  timeFormat
+export default timeFormat

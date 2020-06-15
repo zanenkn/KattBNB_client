@@ -46,7 +46,7 @@ const List = (props) => {
                       id={host.user.id}
                       onClick={props.handleListItemClick}
                     />
-                    {host.score != null && <ReviewScore score={host.score} height={'1rem'} center={true}/>}
+                    {host.score != null && <ReviewScore score={host.score} height={'1rem'} center={true} />}
                   </Grid.Column>
                   <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
                     <div>

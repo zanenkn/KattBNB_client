@@ -90,7 +90,7 @@ const ViewReviewPopup = (props) => {
             </Header>
           </div>
           <div style={{ 'display': 'flex' }}>
-            <ReviewScore score={score} displayNumerical={true}/>
+            <ReviewScore score={score} displayNumerical={true} />
           </div>
           <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic' }}>
             <p>
