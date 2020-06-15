@@ -104,7 +104,7 @@ describe('User can view her incoming bookings', () => {
     cy.get('[data-cy=incoming-history]').first().contains('View review')
   })
 
-  it.only("and see 'View review' link and click it and view the review", () => {
+  it("and see 'View review' link and click it and view the review", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })

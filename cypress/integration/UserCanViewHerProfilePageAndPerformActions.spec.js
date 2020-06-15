@@ -19,6 +19,12 @@ describe('User can view her profile page', () => {
       status: 200,
       response: ''
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: []
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#user-icon').click({ force: true })

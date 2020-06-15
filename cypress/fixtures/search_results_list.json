@@ -18,7 +18,8 @@
       "location": "Stockholm",
       "nickname": "zane",
       "profile_avatar": null
-    }
+    },
+    "score": null
   },
   {
     "id": 44,
@@ -114,7 +115,8 @@
       "location": "Stockholm",
       "nickname": "boa",
       "profile_avatar": null
-    }
+    },
+    "score": 3
   },
   {
     "id": 66,

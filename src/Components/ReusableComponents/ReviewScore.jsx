@@ -8,7 +8,7 @@ const ReviewScore = (props) => {
       {score.map((sc) => {
         if (props.score % 1 !== 0 && Math.floor(props.score) + 1 === sc) {
           return (
-            <div id={sc} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
+            <div onClick={props.setScore} id={sc} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
               <svg xmlns="http://www.w3.org/2000/svg" height={props.height || '2em'} viewBox="0 0 25 25">
                 <path fill="#C90C61" d="M8.5,11.4c2,0,3.6-2.2,3.6-4.9s-1.6-4.9-3.6-4.9S4.9,3.9,4.9,6.5C4.9,9.2,6.5,11.4,8.5,11.4z" />
                 <path fill="#C0C0C0" d="M16.2,11.4c2,0,3.6-2.2,3.6-4.9s-1.6-4.9-3.6-4.9c-2,0-3.6,2.2-3.6,4.9C12.6,9.2,14.2,11.4,16.2,11.4z" />
@@ -23,7 +23,7 @@ const ReviewScore = (props) => {
           )
         } else {
           return (
-            <div id={sc} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
+            <div onClick={props.setScore} id={sc} style={{ 'marginRight': '0.5rem', 'cursor': props.clickable ? 'pointer' : 'unset' }}>
               <svg fill={Math.floor(props.score) >= sc ? '#c90c61' : 'silver'} height={props.height || '2em'} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.1 390.1">
                 <path d="M132.6,177.9c31.2,0,56.5-34,56.5-75.8c0-41.8-25.3-75.8-56.5-75.8c-31.2,0-56.5,34-56.5,75.8
                 C76.1,143.8,101.5,177.9,132.6,177.9z"/>
