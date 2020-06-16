@@ -40,6 +40,7 @@ const UserPage = (props) => {
     langPref: props.langPref
   })
   const [forbiddenDates, setForbiddenDates] = useState([])
+  const [hostProfileScore, setHostProfileScore] = useState(null)
   const [incomingBookings, setIncomingBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingHostProfile, setLoadingHostProfile] = useState(true)
@@ -90,6 +91,7 @@ const UserPage = (props) => {
               langPref: props.langPref
             })
             setForbiddenDates(resp.data.forbidden_dates)
+            setHostProfileScore(resp.data.score)
             setLoadingHostProfile(false)
             setErrorDisplay(false)
             setErrors([])
@@ -441,6 +443,7 @@ const UserPage = (props) => {
           </div>
         </Segment>
         <Divider hidden />
+        <Divider hidden />
         {hostProfile.length === 1 && loadingHostProfile === false &&
           <HostProfile
             id={hostProfile[0].id}
@@ -451,6 +454,7 @@ const UserPage = (props) => {
             supplement={element.supplement}
             availability={element.availability}
             forbiddenDates={forbiddenDates}
+            score={hostProfileScore}
             location={props.location}
             incomingBookings={incomingBookings}
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}

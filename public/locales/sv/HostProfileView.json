@@ -1,5 +1,6 @@
 {
-    "questions": "Frågor?",
-    "send-msg": "Du kan skicka ett meddelande till <1>{{host}}</1> och ta reda på det.",
-    "send-cta": "Skicka nu"
+  "questions": "Frågor?",
+  "send-msg": "Du kan skicka ett meddelande till <1>{{host}}</1> och ta reda på det.",
+  "send-cta": "Skicka nu",
+  "reviews-title": "Recensioner"
 }

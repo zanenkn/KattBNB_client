@@ -24,7 +24,7 @@ const HostProfileViewWrapper = (props) => {
     } else {
       getHostProfile()
     }
-  }, [props.location.state, props.history.action])
+  }, [])
 
   const getHostProfile = () => {
     if (window.navigator.onLine === false) {
@@ -94,6 +94,8 @@ const HostProfileViewWrapper = (props) => {
           lat={lat}
           long={long}
           noMessage={props.location.state.noMessage}
+          score={hostProfile.score}
+          hostProfileId={hostProfile.id}
         />
       </div>
     )

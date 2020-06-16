@@ -25,6 +25,8 @@ class SearchResults extends Component {
     location: '',
     locationLat: '',
     locationLong: '',
+    hostProfileId: '',
+    score: '',
     searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
@@ -134,6 +136,8 @@ class SearchResults extends Component {
           hostDescription: response.data[0].description,
           hostLat: response.data[0].lat,
           hostLong: response.data[0].long,
+          hostProfileId: response.data[0].id,
+          score: response.data[0].score,
           loading: false,
           openHostPopup: true
         })
@@ -291,6 +295,7 @@ class SearchResults extends Component {
             finalAvailableHosts.push(host)
           }
         })
+        finalAvailableHosts.sort((a, b) => (b.score - a.score))
       }
 
       switch (this.state.results) {
@@ -356,6 +361,8 @@ class SearchResults extends Component {
                 description={this.state.hostDescription}
                 lat={this.state.hostLat}
                 long={this.state.hostLong}
+                hostProfileId={this.state.hostProfileId}
+                score={this.state.score}
                 requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 messageHost={this.messageHost.bind(this)}
               />
@@ -422,6 +429,7 @@ class SearchResults extends Component {
                   location={this.state.hostLocation}
                   rate={this.state.hostRate}
                   supplement={this.state.hostSupplement}
+                  score={this.state.score}
                   handleHostProfileClick={this.handleHostProfileClick.bind(this)}
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 />

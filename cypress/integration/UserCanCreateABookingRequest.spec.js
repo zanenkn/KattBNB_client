@@ -20,6 +20,12 @@ describe('User can create a booking request', () => {
       response: ''
     })
     cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: []
+    })
+    cy.route({
       method: 'POST',
       url: 'http://localhost:3007/api/v1/bookings',
       status: 200,
@@ -105,7 +111,7 @@ describe('User can create a booking request', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
-    cy.get('#2').click()
+    cy.get('#22').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.contains('Log in')

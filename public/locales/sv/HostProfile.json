@@ -3,5 +3,7 @@
   "main-title": "Det här är din <1>kattvaktsprofil</1>. Här kan du uppdatera all din kattvaktsinformation.",
   "availability": "Din tillgänglighet",
   "max-cats": "Max antal katter:",
-  "extra": "Extra"
+  "extra": "Extra",
+  "reviews-header": "Dina recensioner",
+  "reviews-title": "Här kan du se och svara på <1>recensionerna</1> som andra har skrivit om sina bokningar med dig."
 }

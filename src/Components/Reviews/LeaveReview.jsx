@@ -25,7 +25,7 @@ const LeaveReview = (props) => {
     if (props.location.state === undefined || props.history.action === 'POP') {
       props.history.push('/all-bookings')
     }
-  }, [props.location.state, props.history])
+  }, [])
 
   const createReview = () => {
     const lang = detectLanguage()
@@ -109,7 +109,7 @@ const LeaveReview = (props) => {
               <label>
                 {t('LeaveReview:label')}
               </label>
-              <ReviewScore setScore={(e) => onScoreClick(e)} score={reviewScore} clickable={true}/>
+              <ReviewScore setScore={(e) => onScoreClick(e)} score={reviewScore} clickable={true} displayNumerical={true} />
               <Form.TextArea
                 placeholder={t('LeaveReview:placeholder')}
                 required

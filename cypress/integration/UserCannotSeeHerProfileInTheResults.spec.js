@@ -17,6 +17,16 @@ describe('User cannot see her profile', () => {
         'uid': 'george@mail.com',
       }
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      status: 200,
+      response: '',
+      headers: {
+        'uid': 'george@mail.com',
+      }
+    })
+
     cy.visit('http://localhost:3000')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)

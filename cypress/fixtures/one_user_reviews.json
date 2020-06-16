@@ -1,0 +1,50 @@
+[
+  {
+    "body": "Very good host, I recommend!",
+    "created_at": "2020-01-01T17:40:26.350Z",
+    "host_avatar": null,
+    "host_nickname": "George",
+    "host_reply": null,
+    "id": 11,
+    "score": 5,
+    "updated_at": "2020-06-01T17:40:26.350Z",
+    "user": {
+      "id": 13,
+      "location": "Vaxholm",
+      "nickname": "Zane",
+      "profile_avatar": null
+    }
+  },
+  {
+    "body": "Yeah this was a very long time ago, just to test how the date formatting is working!",
+    "created_at": "2019-06-01T17:40:26.350Z",
+    "host_avatar": null,
+    "host_nickname": "George",
+    "host_reply": null,
+    "id": 22,
+    "score": 4,
+    "updated_at": "2020-06-01T17:40:26.350Z",
+    "user": {
+      "id": 13,
+      "location": "Vaxholm",
+      "nickname": "Carla",
+      "profile_avatar": null
+    }
+  },
+  {
+    "body": "A bad review for the sake of it",
+    "created_at": "2020-06-01T17:40:26.350Z",
+    "host_avatar": null,
+    "host_nickname": "AcceptedOfThePast",
+    "host_reply": null,
+    "id": 33,
+    "score": 2,
+    "updated_at": "2020-06-01T17:40:26.350Z",
+    "user": {
+      "id": 13,
+      "location": "Vaxholm",
+      "nickname": "Boa",
+      "profile_avatar": null
+    }
+  }
+]

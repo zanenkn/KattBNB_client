@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Grid, Image } from 'semantic-ui-react'
-import HostScore from './ReusableComponents/HostScore'
+import ReviewScore from './ReusableComponents/ReviewScore'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
@@ -46,7 +46,7 @@ const List = (props) => {
                       id={host.user.id}
                       onClick={props.handleListItemClick}
                     />
-                    <HostScore />
+                    {host.score != null && <ReviewScore score={host.score} height={'1rem'} center={true} />}
                   </Grid.Column>
                   <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
                     <div>
