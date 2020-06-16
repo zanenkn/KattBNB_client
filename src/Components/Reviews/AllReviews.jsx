@@ -51,7 +51,7 @@ const AllReviews = (props) => {
           }
         })
     }
-  }, [props.hostProfileId, lang, t])
+  }, [])
 
   if (ready && loading === false) {
     moment.locale(lang)

@@ -24,7 +24,7 @@ const HostProfileViewWrapper = (props) => {
     } else {
       getHostProfile()
     }
-  }, [props.location.state, props.history.action])
+  }, [])
 
   const getHostProfile = () => {
     if (window.navigator.onLine === false) {

@@ -63,7 +63,7 @@ const ViewReviewPopup = (props) => {
           }
         })
     }
-  }, [props.id, t])
+  }, [])
 
   if (ready) {
     return (

@@ -15,7 +15,7 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
       status: 200,
       response: []
     })

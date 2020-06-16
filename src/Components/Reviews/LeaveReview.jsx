@@ -25,7 +25,7 @@ const LeaveReview = (props) => {
     if (props.location.state === undefined || props.history.action === 'POP') {
       props.history.push('/all-bookings')
     }
-  }, [props.location.state, props.history])
+  }, [])
 
   const createReview = () => {
     const lang = detectLanguage()

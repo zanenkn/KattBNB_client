@@ -94,7 +94,7 @@ describe('User can view her incoming bookings', () => {
       response: 'fixture:one_review_incoming.json'
     })
   })
-  
+
   it("and see 'View review' link if there is a review", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)

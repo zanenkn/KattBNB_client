@@ -31,7 +31,7 @@ describe('Visitor can view search results as a list', () => {
     cy.contains('3 result(s)')
   })
 
-  it.only('and see results sorted after host profile score', () => {
+  it('and see results sorted after host profile score', () => {
     cy.get('div[class="list-card"]').first().should('have.id', '66')
     cy.get('div[class="list-card"]').last().should('have.id', '33')
   })
@@ -70,7 +70,7 @@ describe('Visitor can view search results as a list', () => {
       ],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
     ]
-    cy.get('#2').click({ force: true })
+    cy.get('img#2.ui.small.image').click({ force: true })
     cy.get('#more').click()
 
     hostData[0].forEach(data => {
@@ -112,7 +112,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
-    cy.get('#2').click({ force: true })
+    cy.get('img#2.ui.small.image').click({ force: true })
     cy.get('#more').click()
     cy.get('#send-message').click()
     cy.contains('Log in')
@@ -152,6 +152,12 @@ describe('Visitor can view search results as a list', () => {
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
     cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: []
+    })
+    cy.route({
       method: 'POST',
       url: 'http://localhost:3007/api/v1/auth/sign_in',
       status: 200,
@@ -166,7 +172,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:create_conversation.json'
     })
-    cy.get('#2').click({ force: true })
+    cy.get('img#2.ui.small.image').click({ force: true })
     cy.get('#more').click()
     cy.get('#send-message').click()
     cy.get('#email').type('george@mail.com')

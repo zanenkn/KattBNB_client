@@ -56,7 +56,7 @@ const ViewYourReviewPopup = (props) => {
           }
         })
     }
-  }, [props.id, t])
+  }, [])
 
   if (ready) {
     return (
