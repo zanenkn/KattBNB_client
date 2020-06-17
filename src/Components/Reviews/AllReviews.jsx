@@ -68,38 +68,40 @@ const AllReviews = (props) => {
           </Message>
         }
         {
-          props.score === null ?
+          props.score === null && reviews.length === 0 ?
             <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('AllReviews:no-reviews')}</p>
-            :
-            <>
-              <ReviewScore score={props.score} displayNumerical={true} margin={'0'} />
-              <p style={{ 'color': 'silver', 'fontStyle': 'italic', 'marginBottom': '3rem' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
-              <Divider />
-              <div id='all-reviews'>
-                {
-                  reviews.map((review) => {
-                    return (
-                      <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
-                        <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
-                          <Image src={review.user === null ? 'https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false' : review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
-                          <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
-                            <Header style={{ 'margin': '0 0.5rem' }}>
-                              {review.user === null ? t('reusable:deleted-user') : review.user.nickname}
-                            </Header>
-                            <p style={{ 'fontSize': 'small' }}>
-                              {moment(review.created_at).fromNow()}
-                            </p>
+            : props.score !== null && reviews.length === 0 ?
+              <p style={{ 'color': 'silver', 'fontStyle': 'italic' }}>{t('reusable:errors:index-no-host-2')}</p>
+              :
+              <>
+                <ReviewScore score={props.score} displayNumerical={true} margin={'0'} />
+                <p style={{ 'color': 'silver', 'fontStyle': 'italic', 'marginBottom': '3rem' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
+                <Divider />
+                <div id='all-reviews'>
+                  {
+                    reviews.map((review) => {
+                      return (
+                        <div key={review.id} id={`review-${review.id}`} style={{ 'margin': '2rem 0 3rem' }}>
+                          <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+                            <Image src={review.user === null ? 'https://ui-avatars.com/api/?name=[x]&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false' : review.user.profile_avatar === null ? `https://ui-avatars.com/api/?name=${review.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.user.profile_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
+                            <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
+                              <Header style={{ 'margin': '0 0.5rem' }}>
+                                {review.user === null ? t('reusable:deleted-user') : review.user.nickname}
+                              </Header>
+                              <p style={{ 'fontSize': 'small' }}>
+                                {moment(review.created_at).fromNow()}
+                              </p>
+                            </div>
                           </div>
+                          <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
+                          <p>{review.body}</p>
+                          <Divider />
                         </div>
-                        <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
-                        <p>{review.body}</p>
-                        <Divider />
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            </>
+                      )
+                    })
+                  }
+                </div>
+              </>
         }
       </>
     )

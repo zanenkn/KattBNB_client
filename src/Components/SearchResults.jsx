@@ -145,7 +145,7 @@ class SearchResults extends Component {
         } else {
           this.setState({
             errorDisplay: true,
-            errors: ['reusable:errors:index-no-host']
+            errors: ['reusable:errors:index-no-host-1']
           })
         }
 
