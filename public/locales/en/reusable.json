@@ -44,7 +44,8 @@
     "401": "This session has expired! You will have to login again.",
     "422-conversation": "The user you are trying to reach has requested an account deletion!",
     "google-error-1": "Address not found! Please try again.",
-    "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists contact KattBNB support."
+    "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists contact KattBNB support.",
+    "index-no-host": "This host does not exist! Please refresh the page."
   },
   "remaining-chars": "Remaining characters:",
   "cta": {

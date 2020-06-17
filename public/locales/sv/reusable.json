@@ -44,7 +44,8 @@
     "401": "Den här sessionen har upphört! Du måste logga in igen.",
     "422-conversation": "Användaren du försöker att kontakta har raderat sitt konto!",
     "google-error-1": "Adress hittades inte! Vänligen försök igen.",
-    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support."
+    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
+    "index-no-host": ""
   },
   "remaining-chars": "Återstående tecken:",
   "cta": {

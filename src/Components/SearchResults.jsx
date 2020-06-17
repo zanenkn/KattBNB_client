@@ -126,21 +126,29 @@ class SearchResults extends Component {
     } else {
       const lang = detectLanguage()
       axios.get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`).then(response => {
-        this.setState({
-          hostId: response.data[0].user.id,
-          hostAvatar: response.data[0].user.profile_avatar,
-          hostNickname: response.data[0].user.nickname,
-          hostLocation: response.data[0].user.location,
-          hostRate: response.data[0].price_per_day_1_cat,
-          hostSupplement: response.data[0].supplement_price_per_cat_per_day,
-          hostDescription: response.data[0].description,
-          hostLat: response.data[0].lat,
-          hostLong: response.data[0].long,
-          hostProfileId: response.data[0].id,
-          score: response.data[0].score,
-          loading: false,
-          openHostPopup: true
-        })
+        if (response.data.length === 1) {
+          this.setState({
+            hostId: response.data[0].user.id,
+            hostAvatar: response.data[0].user.profile_avatar,
+            hostNickname: response.data[0].user.nickname,
+            hostLocation: response.data[0].user.location,
+            hostRate: response.data[0].price_per_day_1_cat,
+            hostSupplement: response.data[0].supplement_price_per_cat_per_day,
+            hostDescription: response.data[0].description,
+            hostLat: response.data[0].lat,
+            hostLong: response.data[0].long,
+            hostProfileId: response.data[0].id,
+            score: response.data[0].score,
+            loading: false,
+            openHostPopup: true
+          })
+        } else {
+          this.setState({
+            errorDisplay: true,
+            errors: ['reusable:errors:index-no-host']
+          })
+        }
+
       }).catch(error => {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
