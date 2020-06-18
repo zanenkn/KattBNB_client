@@ -3,7 +3,7 @@ import ReviewScore from './ReusableComponents/ReviewScore'
 import { Image, Header } from 'semantic-ui-react'
 import { pricePerDay, total } from '../Modules/PriceCalculations'
 import RequestToBookCTA from './ReusableComponents/RequestToBookCTA'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
 
 const HostPopup = (props) => {
@@ -17,7 +17,14 @@ const HostPopup = (props) => {
     return (
       <>
         <Image src={props.avatar === null ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : props.avatar} size='small' style={{ 'borderRadius': '50%', 'margin': 'auto', 'marginBottom': '0.5rem' }}></Image>
-        {props.score != null && <ReviewScore score={props.score} height={'1rem'} center={true} />}
+        {props.score != null &&
+          <>
+            <ReviewScore score={props.score} height={'1rem'} center={true} />
+            <p style={{ 'marginBottom': '0', 'fontSize': 'small' }}>{(props.score).toFixed(1)}/5</p>
+            <Trans values={{ count: parseInt(props.reviewsCount) }} i18nKey='HostPopup:reviews'>
+              <p style={{ 'fontSize': 'small' }}>{{ count: props.reviewsCount }} review</p>
+            </Trans>
+          </>}
         <Header as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
           <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &ensp;{props.nickname}

@@ -46,7 +46,14 @@ const List = (props) => {
                       id={host.user.id}
                       onClick={props.handleListItemClick}
                     />
-                    {host.score != null && <ReviewScore score={host.score} height={'1rem'} center={true} />}
+                    {host.score != null &&
+                      <>
+                        <ReviewScore score={host.score} height={'1rem'} center={true} />
+                        <p style={{ 'marginBottom': '0', 'fontSize': 'small' }}>{(host.score).toFixed(1)}/5</p>
+                        <Trans values={{ count: parseInt(host.reviews_count) }} i18nKey='List:reviews'>
+                          <p style={{ 'fontSize': 'small' }}>{{ count: host.reviews_count }} review</p>
+                        </Trans>
+                      </>}
                   </Grid.Column>
                   <Grid.Column width={11} style={{ 'padding': '0', 'paddingLeft': '1.5rem', 'margin': 'auto' }}>
                     <div>

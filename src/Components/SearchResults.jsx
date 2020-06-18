@@ -27,6 +27,7 @@ class SearchResults extends Component {
     locationLong: '',
     hostProfileId: '',
     score: '',
+    reviewsCount: '',
     searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
@@ -139,6 +140,7 @@ class SearchResults extends Component {
             hostLong: response.data[0].long,
             hostProfileId: response.data[0].id,
             score: response.data[0].score,
+            reviewsCount: response.data[0].reviews_count,
             loading: false,
             openHostPopup: true
           })
@@ -438,6 +440,7 @@ class SearchResults extends Component {
                   rate={this.state.hostRate}
                   supplement={this.state.hostSupplement}
                   score={this.state.score}
+                  reviewsCount={this.state.reviewsCount}
                   handleHostProfileClick={this.handleHostProfileClick.bind(this)}
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 />
