@@ -86,11 +86,65 @@ button:focus {
 *******************************/
 
 #navbar {
-  height: 10vh;
+  height: 60px;
   margin: auto;
   background: #c90c61;
-  padding-left: 10vw;
-  padding-right: 10vw;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+.icon {
+  height: 25px;
+}
+
+#app-content {
+  margin: 0 auto;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+}
+
+#menu {
+  margin-top: 60px;
+  text-align: center;
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+  background: #ECECEC;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1rem 5rem;
+}
+
+@media screen and (min-height: 736px) {
+  #navbar {
+    height: 75px;
+  }
+  .icon {
+    height: 30px;
+  }
+  #app-content {
+    height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+  #menu {
+    margin-top: 75px;
+    height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+}
+
+@media screen and (min-height: 1024px) {
+  #navbar {
+    height: 90px;
+  }
+  .icon {
+    height: 30px;
+  }
+  #app-content {
+    height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+  #menu {
+    margin-top: 90px;
+    height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
 }
 
 .navlink {
@@ -113,9 +167,6 @@ button:focus {
   margin: auto;
 }
 
-.icon {
-  height: 4.5vh;
-}
 
 /*******************************
             HAMBURGER
@@ -226,11 +277,6 @@ button:focus {
   margin-right: 10vw;
   padding-top: 5vw;
   padding-bottom: 10vw;
-}
-
-.app-content {
-  margin: 0 auto;
-  width: 100%;
 }
 
 p {
@@ -468,18 +514,6 @@ h4 {
 /*******************************
               MENU
 *******************************/
-
-#menu {
-  margin-top: 10vh!important;
-  text-align: center;
-  height: 100% !important;
-  background: #ECECEC;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 90vh!important;
-  padding: 2rem 1rem 5rem;
-}
 
 .menu-link {
   color: #c90c61!important;
