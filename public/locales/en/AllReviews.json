@@ -1,6 +1,5 @@
 {
   "no-reviews": "No reviews yet.",
   "review-count": "{{count}} review received",
-  "review-count_plural": "{{count}} reviews received",
-  "host-reply": "Reply"
+  "review-count_plural": "{{count}} reviews received"
 }

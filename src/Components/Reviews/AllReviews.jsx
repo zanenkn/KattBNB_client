@@ -18,7 +18,7 @@ const AllReviews = (props) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
-  const [replyFormOpen, setReplyFormOpen] = useState(false)
+  
   const lang = detectLanguage()
 
   useEffect(() => {
@@ -100,9 +100,8 @@ const AllReviews = (props) => {
                           <p>{review.body}</p>
                           {
                             review.host_reply === null && review.host_nickname === props.username &&
-                              replyFormOpen ?
-                              <HostReplyReviewForm /> :
-                              <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('AllReviews:host-reply')}</p>
+                 
+                              <HostReplyReviewForm /> 
                           }
                           <Divider />
                         </div>
