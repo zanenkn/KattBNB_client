@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { Message, Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -95,6 +96,10 @@ const AllReviews = (props) => {
                           </div>
                           <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                           <p>{review.body}</p>
+                          {
+                            review.host_reply === null && review.host_nickname === props.username &&
+                            <p className='fake-link-underlined'>{t('AllReviews:host-reply')}</p>
+                          }
                           <Divider />
                         </div>
                       )
@@ -110,4 +115,8 @@ const AllReviews = (props) => {
   }
 }
 
-export default AllReviews
+const mapStateToProps = state => ({
+  username: state.reduxTokenAuth.currentUser.attributes.username
+})
+
+export default connect(mapStateToProps)(AllReviews)
