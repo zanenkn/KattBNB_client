@@ -61,7 +61,7 @@ export class GoogleMap extends React.PureComponent {
   render() {
 
     return (
-      <div style={{ 'width': '100%', 'height': '100%' }}>
+      <div id="map-wrapper">
         <GoogleMapReact
           defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
           center={this.state.mapOptions.center}

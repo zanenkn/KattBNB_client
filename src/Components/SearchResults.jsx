@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Icon, Container, Grid, Header, Message } from 'semantic-ui-react'
+import { Form, Icon, Grid, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
 import { bookingSearch, getBookingLength } from '../Modules/booking'
@@ -311,7 +311,7 @@ class SearchResults extends Component {
       switch (this.state.results) {
         case 'list':
           results = (
-            <Container style={{ 'background': '#ECECEC', 'minHeight': '64vh', 'marginTop': '26vh' }}>
+            <div id='search-results-wrapper'>
               <List
                 finalAvailableHosts={finalAvailableHosts}
                 numberOfCats={this.state.numberOfCats}
@@ -320,7 +320,7 @@ class SearchResults extends Component {
                 location={this.state.location}
                 handleListItemClick={this.handleDatapointClick.bind(this)}
               />
-            </Container>
+            </div>
           )
           mapButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
           listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
@@ -333,7 +333,7 @@ class SearchResults extends Component {
           break
         case 'map':
           results = (
-            <Container style={{ 'background': '#ECECEC', 'height': '64vh', 'marginTop': '26vh' }}>
+            <div id='search-results-wrapper'>
               <GoogleMap
                 numberOfCats={this.state.numberOfCats}
                 checkInDate={this.state.checkInDate}
@@ -343,7 +343,7 @@ class SearchResults extends Component {
                 allAvailableHosts={this.state.allAvailableHosts}
                 handleDatapointClick={this.handleDatapointClick.bind(this)}
               />
-            </Container>
+            </div>
           )
           mapButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
           listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
@@ -356,7 +356,7 @@ class SearchResults extends Component {
           break
         case 'profile':
           results = (
-            <Container style={{ 'minHeight': '64vh', 'marginTop': '26vh' }}>
+            <div id='search-results-wrapper' style={{'background': 'white'}}>
               <HostProfileView
                 numberOfCats={this.state.numberOfCats}
                 checkInDate={this.state.checkInDate}
@@ -376,7 +376,7 @@ class SearchResults extends Component {
                 requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                 messageHost={this.messageHost.bind(this)}
               />
-            </Container>
+            </div>
           )
           resultCounter = (
             <Header
@@ -458,7 +458,7 @@ class SearchResults extends Component {
               {errorDisplay}
             </div>
           </Popup>
-          <div style={{ 'height': '26vh', 'margin': '0', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+          <div id='search-results-criteria'>
             <div style={{ 'width': 'min-content', 'margin': 'auto' }}>
               <p style={{ 'color': '#c90c61', 'textAlign': 'left' }}>
                 <svg fill='#c90c61' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>

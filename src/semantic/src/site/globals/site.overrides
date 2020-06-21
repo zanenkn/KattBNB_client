@@ -93,6 +93,10 @@ button:focus {
   display: flex;
   flex-direction: row;
   align-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 5000;
+  width: 100%;
 }
 .icon {
   height: 25px;
@@ -102,6 +106,8 @@ button:focus {
   margin: 0 auto;
   width: 100%;
   height: calc(var(--vh, 1vh) * 100 - 60px);
+  position: relative;
+  padding-top: 60px;
 }
 
 #menu {
@@ -115,6 +121,28 @@ button:focus {
   padding: 2rem 1rem 5rem;
 }
 
+#search-results-criteria {
+  height: 150px; 
+  margin: 0;
+  padding: 1rem 2rem;
+  position: fixed;
+  background: white;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 0 20px -5px rgba(0,0,0,.2);
+}
+
+#search-results-wrapper {
+  background: #ECECEC; 
+  min-height: calc(var(--vh,1vh) * 100 - 60px);
+  padding-top: 150px;
+}
+
+#map-wrapper {
+  height: calc(var(--vh, 1vh) * 100 - 210px);
+  width: 100%;
+}
+
 @media screen and (min-height: 736px) {
   #navbar {
     height: 75px;
@@ -124,10 +152,20 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 75px);
+    padding-top: 70px;
   }
   #menu {
     margin-top: 75px;
     height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+  #search-results-criteria {
+    top: 75px;
+  }
+  #search-results-wrapper {
+    min-height: calc(var(--vh,1vh) * 100 - 75px);
+  }
+  #map-wrapper {
+    height: calc(var(--vh, 1vh) * 100 - 225px);
   }
 }
 
@@ -140,10 +178,20 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 90px);
+    padding-top: 90px;
   }
   #menu {
     margin-top: 90px;
     height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+  #search-results-criteria {
+    top: 90px;
+  }
+  #search-results-wrapper {
+    min-height: calc(var(--vh,1vh) * 100 - 90px);
+  }
+  #map-wrapper {
+    height: calc(var(--vh, 1vh) * 100 - 240px);
   }
 }
 
