@@ -8,7 +8,7 @@ import { Form, Message, Button } from 'semantic-ui-react'
 
 const HostReplyReviewForm = (props) => {
 
-  const { t, ready } = useTranslation('HostReplyReviewForm')
+  const { t, ready } = useTranslation('HostReplyReview')
 
   const [replyFormOpen, setReplyFormOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -75,7 +75,6 @@ const HostReplyReviewForm = (props) => {
   }
 
   if (ready) {
-
     switch (true) {
       case props.hostReply !== null:
         return (

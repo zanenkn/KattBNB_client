@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import HostReplyReviewForm from './HostReplyReviewForm'
+import HostReplyReview from './HostReplyReview'
 import { connect } from 'react-redux'
 import { Message, Header, Image, Divider } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
@@ -101,7 +101,7 @@ const AllReviews = (props) => {
                           <p>{review.body}</p>
                           {
                             review.host_nickname === props.username &&
-                            <HostReplyReviewForm
+                            <HostReplyReview
                               hostReply={review.host_reply}
                               reviewId={review.id}
                               reload={(reply) => setReload(reply)}
