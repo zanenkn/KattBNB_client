@@ -4,7 +4,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import Spinner from '../ReusableComponents/Spinner'
-import { Form, Message, Button } from 'semantic-ui-react'
+import { Form, Message, Button, Image } from 'semantic-ui-react'
 
 const HostReplyReviewForm = (props) => {
 
@@ -33,11 +33,11 @@ const HostReplyReviewForm = (props) => {
     } else {
       if (reply === '') {
         setLoading(false)
-        setErrors(['text cannot be empty'])
+        setErrors(['HostReplyReview:update-error-1'])
         setErrorDisplay(true)
       } else if (reply.length > 1000) {
         setLoading(false)
-        setErrors(['no more than 1000 characters'])
+        setErrors(['HostReplyReview:update-error-2'])
         setErrorDisplay(true)
       } else {
         const path = `/api/v1/reviews/${props.reviewId}`
@@ -78,7 +78,12 @@ const HostReplyReviewForm = (props) => {
     switch (true) {
       case props.hostReply !== null:
         return (
-          <p>{props.hostReply}</p>
+          <>
+            <p>{props.hostReply}</p>
+            <p>{props.hostNickname}</p>
+            <p>{props.reviewUpdatedAt}</p>
+            <Image src={props.hostAvatar} />
+          </>
         )
         break
       case replyFormOpen:
@@ -111,7 +116,7 @@ const HostReplyReviewForm = (props) => {
         break
       default:
         return (
-          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReviewForm:reply-cta')}</p>
+          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReview:reply-cta')}</p>
         )
     }
   } else {

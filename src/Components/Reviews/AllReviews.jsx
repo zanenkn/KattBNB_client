@@ -106,7 +106,7 @@ const AllReviews = (props) => {
                               reviewId={review.id}
                               hostAvatar={review.host_avatar}
                               hostNickname={review.host_nickname}
-                              reviewUpdatedAt={review.updated_at}
+                              reviewUpdatedAt={moment(review.updated_at).fromNow()}
                               reload={(reply) => setReload(reply)}
                             />
                           }
