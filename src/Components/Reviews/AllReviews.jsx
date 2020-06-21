@@ -100,7 +100,9 @@ const AllReviews = (props) => {
                           <p>{review.body}</p>
                           {
                             review.host_reply === null && review.host_nickname === props.username &&
-                            <HostReplyReviewForm />
+                            <HostReplyReviewForm
+                              reviewId={review.id}
+                            />
                           }
                           <Divider />
                         </div>

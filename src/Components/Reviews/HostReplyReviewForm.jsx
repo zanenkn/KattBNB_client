@@ -40,7 +40,7 @@ const HostReplyReviewForm = (props) => {
         setErrors(['no more than 1000 characters'])
         setErrorDisplay(true)
       } else {
-        const path = '/api/v1/reviews/id'
+        const path = `/api/v1/reviews/${props.reviewId}`
         const payload = {
           host_reply: reply,
           locale: lang
