@@ -104,6 +104,9 @@ const AllReviews = (props) => {
                             <HostReplyReview
                               hostReply={review.host_reply}
                               reviewId={review.id}
+                              hostAvatar={review.host_avatar}
+                              hostNickname={review.host_nickname}
+                              reviewUpdatedAt={review.updated_at}
                               reload={(reply) => setReload(reply)}
                             />
                           }
