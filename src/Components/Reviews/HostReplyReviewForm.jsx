@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
-import {Divider, Form, Message, Button} from 'semantic-ui-react'
- 
+import { Form, Message, Button } from 'semantic-ui-react'
+
 const HostReplyReviewForm = (props) => {
   const [replyFormOpen, setReplyFormOpen] = useState(false)
   const [loading, setLoading] = useState(false)

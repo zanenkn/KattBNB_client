@@ -18,7 +18,7 @@ const AllReviews = (props) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
-  
+
   const lang = detectLanguage()
 
   useEffect(() => {
@@ -100,8 +100,8 @@ const AllReviews = (props) => {
                           <p>{review.body}</p>
                           {
                             review.host_reply === null && review.host_nickname === props.username &&
-                 
-                              <HostReplyReviewForm /> 
+
+                            <HostReplyReviewForm />
                           }
                           <Divider />
                         </div>

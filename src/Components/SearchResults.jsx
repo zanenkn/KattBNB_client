@@ -356,7 +356,7 @@ class SearchResults extends Component {
           break
         case 'profile':
           results = (
-            <div id='search-results-wrapper' style={{'background': 'white'}}>
+            <div id='search-results-wrapper' style={{ 'background': 'white' }}>
               <HostProfileView
                 numberOfCats={this.state.numberOfCats}
                 checkInDate={this.state.checkInDate}
