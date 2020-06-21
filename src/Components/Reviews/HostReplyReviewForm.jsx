@@ -53,7 +53,7 @@ const HostReplyReviewForm = (props) => {
         axios.patch(path, payload, { headers: headers })
           .then(() => {
             window.alert('success!!!')
-            window.location.reload(true)
+            props.reload(reply)
           })
           .catch(error => {
             if (error.response === undefined) {
@@ -75,7 +75,11 @@ const HostReplyReviewForm = (props) => {
   }
 
   if (ready) {
-    if (replyFormOpen) {
+    if (props.hostReply) {
+      return (
+        <p>{props.hostReply}</p>
+      )
+    } else if (replyFormOpen) {
       return (
         <>
           <Form id='host-reply-form'>

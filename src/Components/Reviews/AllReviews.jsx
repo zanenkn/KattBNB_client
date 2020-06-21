@@ -18,6 +18,7 @@ const AllReviews = (props) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const [reload, setReload] = useState('')
 
   const lang = detectLanguage()
 
@@ -54,7 +55,7 @@ const AllReviews = (props) => {
           }
         })
     }
-  }, [])
+  }, [reload])
 
   if (ready && loading === false) {
     moment.locale(lang)
@@ -99,9 +100,11 @@ const AllReviews = (props) => {
                           <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                           <p>{review.body}</p>
                           {
-                            review.host_reply === null && review.host_nickname === props.username &&
+                            review.host_nickname === props.username &&
                             <HostReplyReviewForm
+                              hostReply={review.host_reply}
                               reviewId={review.id}
+                              reload={(reply) => setReload(reply)}
                             />
                           }
                           <Divider />
