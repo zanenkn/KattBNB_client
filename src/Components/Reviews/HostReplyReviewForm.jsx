@@ -103,7 +103,9 @@ const HostReplyReviewForm = (props) => {
         </>
       )
     } else {
-      return (<p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReviewForm:reply-cta')}</p>)
+      return (
+        <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReviewForm:reply-cta')}</p>
+      )
     }
   } else {
     return <Spinner />
