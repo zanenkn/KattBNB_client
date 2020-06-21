@@ -4,13 +4,20 @@ import Spinner from '../ReusableComponents/Spinner'
 import { Form, Message, Button } from 'semantic-ui-react'
 
 const HostReplyReviewForm = (props) => {
+
+  const { t, ready } = useTranslation('HostReplyReviewForm')
+
   const [replyFormOpen, setReplyFormOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [reply, setReply] = useState('')
 
-  const { t, ready } = useTranslation('HostReplyReviewForm')
+  const closeButton = () => {
+    setReplyFormOpen(false)
+    setReply('')
+  }
+
   if (ready) {
     if (replyFormOpen) {
       return (
@@ -34,8 +41,8 @@ const HostReplyReviewForm = (props) => {
             </Message>
           }
           <div className='button-wrapper'>
-            <Button secondary id='description-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
-            <Button id='description-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
+            <Button onClick={() => closeButton()} secondary id='host-reply-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
+            <Button id='host-reply-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
           </div>
         </>
       )

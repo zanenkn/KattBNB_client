@@ -100,7 +100,6 @@ const AllReviews = (props) => {
                           <p>{review.body}</p>
                           {
                             review.host_reply === null && review.host_nickname === props.username &&
-
                             <HostReplyReviewForm />
                           }
                           <Divider />
@@ -118,8 +117,6 @@ const AllReviews = (props) => {
   }
 }
 
-const mapStateToProps = state => ({
-  username: state.reduxTokenAuth.currentUser.attributes.username
-})
+const mapStateToProps = state => ({ username: state.reduxTokenAuth.currentUser.attributes.username })
 
 export default connect(mapStateToProps)(AllReviews)
