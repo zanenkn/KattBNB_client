@@ -75,41 +75,45 @@ const HostReplyReviewForm = (props) => {
   }
 
   if (ready) {
-    if (props.hostReply) {
-      return (
-        <p>{props.hostReply}</p>
-      )
-    } else if (replyFormOpen) {
-      return (
-        <>
-          <Form id='host-reply-form'>
-            <Form.TextArea
-              required
-              id='host-reply'
-              value={reply}
-              onChange={e => setReply(e.target.value)}
-            />
-          </Form>
-          {errorDisplay &&
-            <Message negative >
-              <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-              <ul id='message-error-list'>
-                {errors.map(error => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Message>
-          }
-          <div className='button-wrapper'>
-            <Button onClick={() => closeButton()} secondary id='host-reply-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
-            <Button onClick={() => hostReplyReview()} id='host-reply-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
-          </div>
-        </>
-      )
-    } else {
-      return (
-        <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReviewForm:reply-cta')}</p>
-      )
+
+    switch (true) {
+      case props.hostReply !== null:
+        return (
+          <p>{props.hostReply}</p>
+        )
+        break
+      case replyFormOpen:
+        return (
+          <>
+            <Form id='host-reply-form'>
+              <Form.TextArea
+                required
+                id='host-reply'
+                value={reply}
+                onChange={e => setReply(e.target.value)}
+              />
+            </Form>
+            {errorDisplay &&
+              <Message negative >
+                <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+                <ul id='message-error-list'>
+                  {errors.map(error => (
+                    <li key={error}>{t(error)}</li>
+                  ))}
+                </ul>
+              </Message>
+            }
+            <div className='button-wrapper'>
+              <Button onClick={() => closeButton()} secondary id='host-reply-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
+              <Button onClick={() => hostReplyReview()} id='host-reply-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
+            </div>
+          </>
+        )
+        break
+      default:
+        return (
+          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReviewForm:reply-cta')}</p>
+        )
     }
   } else {
     return <Spinner />
