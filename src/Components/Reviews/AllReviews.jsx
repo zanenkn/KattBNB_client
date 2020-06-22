@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import HostReplyReview from './HostReplyReview'
 import { connect } from 'react-redux'
 import { Message, Header, Image, Divider } from 'semantic-ui-react'
@@ -13,6 +13,16 @@ import moment from 'moment'
 const AllReviews = (props) => {
 
   const { t, ready } = useTranslation('AllReviews')
+
+  const allReviews = useCallback(node => {
+    if (node !== null) {
+      for (let i = 0; i < node.children.length; i++) {
+        if (node.children[i].id === window.location.hash.substr(1)) {
+          setTimeout(function () { window.scrollTo({ top: node.children[i].getBoundingClientRect().top - 90, behavior: 'smooth' }) }, 500)
+        }
+      }
+    }
+  }, [])
 
   const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(false)
@@ -81,7 +91,7 @@ const AllReviews = (props) => {
                 <ReviewScore score={props.score} displayNumerical={true} margin={'0'} />
                 <p style={{ 'color': 'silver', 'fontStyle': 'italic', 'marginBottom': '3rem' }}>{t('AllReviews:review-count', { count: reviews.length })}</p>
                 <Divider />
-                <div id='all-reviews'>
+                <div id='all-reviews' ref={allReviews}>
                   {
                     reviews.map((review) => {
                       return (
