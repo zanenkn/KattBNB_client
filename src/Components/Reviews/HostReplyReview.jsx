@@ -52,7 +52,7 @@ const HostReplyReviewForm = (props) => {
         }
         axios.patch(path, payload, { headers: headers })
           .then(() => {
-            window.alert('success!!!')
+            window.alert(t('HostReplyReview:update-success'))
             props.reload(reply)
           })
           .catch(error => {
@@ -85,7 +85,6 @@ const HostReplyReviewForm = (props) => {
             <Image src={props.hostAvatar} />
           </>
         )
-        break
       case replyFormOpen:
         return (
           <>
@@ -113,7 +112,6 @@ const HostReplyReviewForm = (props) => {
             </div>
           </>
         )
-        break
       default:
         return (
           <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReview:reply-cta')}</p>
