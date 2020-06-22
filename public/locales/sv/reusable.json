@@ -54,7 +54,8 @@
     "save": "Spara",
     "close": "Stäng",
     "confirm": "Bekräfta",
-    "make-host-profile": "Skapa en kattvaktsprofil"
+    "make-host-profile": "Skapa en kattvaktsprofil",
+    "reply": "Svara"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"

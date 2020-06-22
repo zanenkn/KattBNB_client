@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -15,6 +15,15 @@ const HostReplyReviewForm = (props) => {
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [reply, setReply] = useState('')
+
+  useEffect(() => {
+    if (window.location.hash !== '') {
+      let id = window.location.hash.split('-')[1]
+      if (parseInt(id) === props.reviewId) {
+        setReplyFormOpen(true)
+      }
+    }
+  }, [])
 
   const closeButton = () => {
     setReplyFormOpen(false)
@@ -114,7 +123,7 @@ const HostReplyReviewForm = (props) => {
         )
       default:
         return (
-          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('HostReplyReview:reply-cta')}</p>
+          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('reusable:cta:reply')}</p>
         )
     }
   } else {

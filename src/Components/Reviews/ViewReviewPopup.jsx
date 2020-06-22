@@ -3,6 +3,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import ReviewScore from '../ReusableComponents/ReviewScore'
 import { Trans, useTranslation } from 'react-i18next'
 import { Header, Message, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -97,6 +98,9 @@ const ViewReviewPopup = (props) => {
               {message}
             </p>
             <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
+          </div>
+          <div>
+            <Link to={`/user-page/#review-${props.id}`} className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>
           </div>
         </>
     )
