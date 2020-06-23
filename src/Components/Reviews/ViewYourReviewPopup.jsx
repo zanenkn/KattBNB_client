@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import ReviewScore from '../ReusableComponents/ReviewScore'
 import { Trans, useTranslation } from 'react-i18next'
-import { Header, Message } from 'semantic-ui-react'
+import { Header, Message, Image } from 'semantic-ui-react'
 import axios from 'axios'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -18,6 +18,9 @@ const ViewYourReviewPopup = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(null)
   const [reviewDate, setReviewDate] = useState(null)
   const [score, setScore] = useState(null)
+  const [hostReply, setHostReply] = useState(null)
+  const [hostAvatar, setHostAvatar] = useState(null)
+  const [reviewUpdatedAt, setReviewUpdatedAt] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -38,6 +41,9 @@ const ViewYourReviewPopup = (props) => {
           setMessage(resp.data.body)
           setReviewDate(resp.data.created_at)
           setScore(resp.data.score)
+          setHostReply(resp.data.host_reply)
+          setHostAvatar(resp.data.host_avatar)
+          setReviewUpdatedAt(resp.data.updated_at)
         })
         .catch(error => {
           if (error.response === undefined) {
@@ -85,6 +91,14 @@ const ViewYourReviewPopup = (props) => {
             </p>
             <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
           </div>
+          {
+            hostReply !== null &&
+            <>
+              <p>{hostReply}</p>
+              <Image src={hostAvatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : hostAvatar} />
+              <p>{moment(reviewUpdatedAt).format('YYYY-MM-DD')}</p>
+            </>
+          }
         </>
     )
   } else { return <Spinner /> }
