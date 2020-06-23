@@ -110,13 +110,19 @@ const AllReviews = (props) => {
                           <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                           <p>{review.body}</p>
                           {
+                            review.host_reply !== null &&
+                            <>
+                              <p>{review.host_reply}</p>
+                              <p>{review.host_nickname}</p>
+                              <Image src={review.host_avatar === null ? `https://ui-avatars.com/api/?name=${review.host_nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.host_avatar} />
+                              <p>{moment(review.updated_at).fromNow()}</p>
+                            </>
+                          }
+                          {
                             review.host_nickname === props.username &&
                             <HostReplyReview
                               hostReply={review.host_reply}
                               reviewId={review.id}
-                              hostAvatar={review.host_avatar}
-                              hostNickname={review.host_nickname}
-                              reviewUpdatedAt={moment(review.updated_at).fromNow()}
                               reload={(reply) => setReload(reply)}
                             />
                           }

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import Spinner from '../ReusableComponents/Spinner'
-import { Form, Message, Button, Image } from 'semantic-ui-react'
+import { Form, Message, Button } from 'semantic-ui-react'
 
 const HostReplyReviewForm = (props) => {
 
@@ -87,12 +87,7 @@ const HostReplyReviewForm = (props) => {
     switch (true) {
       case props.hostReply !== null:
         return (
-          <>
-            <p>{props.hostReply}</p>
-            <p>{props.hostNickname}</p>
-            <p>{props.reviewUpdatedAt}</p>
-            <Image src={props.hostAvatar} />
-          </>
+          null
         )
       case replyFormOpen:
         return (
