@@ -105,6 +105,9 @@ const HostReplyReviewForm = (props) => {
                 onChange={e => setReply(e.target.value)}
               />
             </Form>
+            <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+              {t('reusable:remaining-chars')} {1000 - reply.length}
+            </p>
             {errorDisplay &&
               <Message negative >
                 <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
