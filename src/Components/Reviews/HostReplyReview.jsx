@@ -101,6 +101,7 @@ const HostReplyReviewForm = (props) => {
               <Form.TextArea
                 required
                 id='host-reply'
+                placeholder={t('HostReplyReview:plch')}
                 value={reply}
                 onChange={e => setReply(e.target.value)}
               />
