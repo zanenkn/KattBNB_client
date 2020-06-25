@@ -84,46 +84,52 @@ const HostReplyReviewForm = (props) => {
   }
 
   if (ready) {
-    switch (true) {
-      case props.hostReply !== null:
-        return (
-          null
-        )
-      case replyFormOpen:
-        return (
-          <>
-            <Form id='host-reply-form'>
-              <Form.TextArea
-                required
-                id='host-reply'
-                placeholder={t('HostReplyReview:plch')}
-                value={reply}
-                onChange={e => setReply(e.target.value)}
-              />
-            </Form>
-            <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
-              {t('reusable:remaining-chars')} {1000 - reply.length}
-            </p>
-            {errorDisplay &&
-              <Message negative >
-                <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
-                <ul id='message-error-list'>
-                  {errors.map(error => (
-                    <li key={error}>{t(error)}</li>
-                  ))}
-                </ul>
-              </Message>
+    if (props.hostReply) {
+      return null
+    } else {
+      return (
+
+        <>
+          <div style={{ 'max-height': replyFormOpen ? '500px' : '20px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }} >
+            {replyFormOpen &&
+              <>
+                <Form id='host-reply-form'>
+                  <Form.TextArea
+                    required
+                    id='host-reply'
+                    placeholder={t('HostReplyReview:plch')}
+                    value={reply}
+                    onChange={e => setReply(e.target.value)}
+                  />
+                </Form>
+                <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
+                  {t('reusable:remaining-chars')} {1000 - reply.length}
+                </p>
+
+                {errorDisplay &&
+                  <Message negative >
+                    <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+                    <ul id='message-error-list'>
+                      {errors.map(error => (
+                        <li key={error}>{t(error)}</li>
+                      ))}
+                    </ul>
+                  </Message>
+                }
+                <div className='button-wrapper'>
+                  <Button onClick={() => closeButton()} secondary id='host-reply-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
+                  <Button onClick={() => hostReplyReview()} id='host-reply-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
+                </div>
+              </>
             }
-            <div className='button-wrapper'>
-              <Button onClick={() => closeButton()} secondary id='host-reply-close-button' className='cancel-button'>{t('reusable:cta:close')}</Button>
-              <Button onClick={() => hostReplyReview()} id='host-reply-submit-button' className='submit-button' disabled={loading} loading={loading}>{t('reusable:cta:save')}</Button>
-            </div>
+          </div >
+          <>
+            {!replyFormOpen &&
+              <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('reusable:cta:reply')}</p>
+            }
           </>
-        )
-      default:
-        return (
-          <p onClick={() => setReplyFormOpen(true)} className='fake-link-underlined'>{t('reusable:cta:reply')}</p>
-        )
+        </>
+      )
     }
   } else {
     return <Spinner />

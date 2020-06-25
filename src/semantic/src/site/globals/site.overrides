@@ -160,7 +160,7 @@ button:focus {
     height: 75px;
   }
   .icon {
-    height: 30px;
+    height: 35px;
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 75px);
@@ -186,7 +186,7 @@ button:focus {
     height: 90px;
   }
   .icon {
-    height: 30px;
+    height: 40px;
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 90px);

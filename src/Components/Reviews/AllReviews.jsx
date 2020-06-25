@@ -110,13 +110,23 @@ const AllReviews = (props) => {
                           <ReviewScore score={review.score} displayNumerical={true} height='1rem' />
                           <p>{review.body}</p>
                           {
-                            review.host_reply !== null &&
-                            <>
-                              <p>{review.host_reply}</p>
-                              <p>{review.host_nickname}</p>
-                              <Image src={review.host_avatar === null ? `https://ui-avatars.com/api/?name=${review.host_nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.host_avatar} />
-                              <p>{moment(review.updated_at).fromNow()}</p>
-                            </>
+                            review.host_reply &&
+                            <div style={{ 'padding': '1rem 0 1rem 2rem' }}>
+                              <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+                                <Image src={review.host_avatar === null ? `https://ui-avatars.com/api/?name=${review.host_nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : review.host_avatar} size='small' style={{ 'borderRadius': '50%', 'width': '2rem', 'height': '2rem' }}></Image>
+                                <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
+                                  <Header style={{ 'margin': '0 0.5rem' }}>
+                                    {review.host_nickname}
+                                  </Header>
+                                  <p style={{ 'fontSize': 'small' }}>
+                                    {moment(review.updated_at).fromNow()}
+                                  </p>
+                                </div>
+                              </div>
+                              <p style={{ 'paddingLeft': '2.5rem' }}>
+                                {review.host_reply}
+                              </p>
+                            </div>
                           }
                           {
                             review.host_nickname === props.username &&
