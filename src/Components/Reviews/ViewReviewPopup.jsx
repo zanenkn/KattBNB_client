@@ -20,6 +20,9 @@ const ViewReviewPopup = (props) => {
   const [reviewDate, setReviewDate] = useState(null)
   const [score, setScore] = useState(null)
   const [avatar, setAvatar] = useState(null)
+  const [hostReply, setHostReply] = useState(null)
+  const [hostAvatar, setHostAvatar] = useState(null)
+  const [reviewUpdatedAt, setReviewUpdatedAt] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -46,6 +49,9 @@ const ViewReviewPopup = (props) => {
           setMessage(resp.data.body)
           setReviewDate(resp.data.created_at)
           setScore(resp.data.score)
+          setHostReply(resp.data.host_reply)
+          setHostAvatar(resp.data.host_avatar)
+          setReviewUpdatedAt(resp.data.updated_at)
         })
         .catch(error => {
           if (error.response === undefined) {
@@ -99,9 +105,17 @@ const ViewReviewPopup = (props) => {
             </p>
             <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
           </div>
-          <div>
-            <Link to={`/user-page/#review-${props.id}`} className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>
-          </div>
+          {
+            hostReply !== null ?
+              <>
+                <p>{hostReply}</p>
+                <Image src={hostAvatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : hostAvatar} />
+                <p>{moment(reviewUpdatedAt).format('YYYY-MM-DD')}</p>
+              </> :
+              <div>
+                <Link to={`/user-page/#review-${props.id}`} className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>
+              </div>
+          }
         </>
     )
   } else { return <Spinner /> }
