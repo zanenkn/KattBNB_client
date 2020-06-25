@@ -20,6 +20,12 @@ describe('User can view her host profile', () => {
       response: 'fixture:one_user_reviews.json'
     })
     cy.route({
+      method: 'PATCH',
+      url: 'http://localhost:3007/api/v1/reviews/33',
+      status: 200,
+      response: ''
+    })
+    cy.route({
       method: 'GET',
       url: 'https://maps.google.com/maps/api/geocode/json?address=arlanda%20airport&key=AIzaSyBocaDJSR80uzUcSvWfciq6at2729MC7kM',
       status: 200,
@@ -139,5 +145,32 @@ describe('User can view her host profile', () => {
 
   it('and see her host profile score displayed', () => {
     cy.contains('3.7/5').should('exist')
+  })
+
+  it("and get a reply form to open when she clicks 'Reply'", () => {
+    cy.get('#review-33 > .fake-link-underlined').click()
+    cy.get('#host-reply').should('have.attr', 'placeholder').should('contain', 'Here, you can comment on a review another user has left for you..')
+  })
+
+  it('and unsuccessfully reply to a review cause she enters no text', () => {
+    cy.get('#review-33 > .fake-link-underlined').click()
+    cy.get('#host-reply-submit-button').click()
+    cy.contains('Reply cannot be empty!')
+  })
+
+  it('and unsuccessfully reply to a review cause she enters more than 1000 characters', () => {
+    cy.get('#review-33 > .fake-link-underlined').click()
+    cy.get('#host-reply').type('she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters she enters more than 1000 characters')
+    cy.get('#host-reply-submit-button').click()
+    cy.contains('Reply cannot exceed 1000 characters!')
+  })
+
+  it('and successfully reply to a review', () => {
+    cy.get('#review-33 > .fake-link-underlined').click()
+    cy.get('#host-reply').type('Very satisfied.')
+    cy.get('#host-reply-submit-button').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('You have successfully replied.')
+    })
   })
 })
