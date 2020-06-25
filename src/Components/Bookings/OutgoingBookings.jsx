@@ -36,14 +36,14 @@ class OutgoingBookings extends Component {
     if (this.props.tReady) {
       return (
         <>
-          <div id='secondary-sticky' style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center'}}>
+          <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>
             <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto' }}>
               {t('OutgoingBookings:main-header')}
             </Header>
             <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
               {t('OutgoingBookings:desc')}
             </p>
-            <div style={{ 'display': 'flex', 'justifyContent': 'center'}}>
+            <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
               <Button.Group size='mini'>
                 <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
                   {t('OutgoingBookings:requests')}
@@ -58,7 +58,7 @@ class OutgoingBookings extends Component {
             </div>
           </div>
           <Container style={{ 'marginTop': '150px' }}>
-            <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
+            <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
               <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
                   {t('OutgoingBookings:requests')}

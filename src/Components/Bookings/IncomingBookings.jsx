@@ -41,7 +41,7 @@ class IncomingBookings extends Component {
             <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
               {t('IncomingBookings:main-desc')}
             </p>
-            <div style={{ 'display': 'flex', 'justifyContent': 'center'}}>
+            <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
               <Button.Group size='mini'>
                 <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
                   {t('IncomingBookings:requests')}
