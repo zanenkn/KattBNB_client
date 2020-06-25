@@ -70,7 +70,7 @@ const List = (props) => {
                         <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'baseline' }}>
                           <Review fill={'grey'} height={'0.8em'} /> &ensp;
                           <p style={{ 'fontSize': 'small' }}>
-                            <strong>{t('List:reviews', { count: host.reviews_count })}</strong>
+                            <strong>{t('reusable:reviews', { count: host.reviews_count })}</strong>
                           </p>
                         </div>
                       }

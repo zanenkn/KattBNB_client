@@ -36,7 +36,7 @@ const HostPopup = (props) => {
           </span>
           {props.reviewsCount &&
             <span style={{ 'whiteSpace': 'nowrap' }}>
-              <Review fill={'grey'} height={'0.8em'} />&nbsp;{t('HostPopup:reviews', { count: parseInt(props.reviewsCount) })}
+              <Review fill={'grey'} height={'0.8em'} />&nbsp;{t('reusable:reviews', { count: parseInt(props.reviewsCount) })}
             </span>
           }
         </Header>

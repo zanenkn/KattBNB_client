@@ -49,6 +49,8 @@
     "index-no-host-2": ""
   },
   "remaining-chars": "Återstående tecken:",
+  "reviews": "{{count}} recension",
+  "reviews_plural": "{{count}} recensioner",
   "cta": {
     "change": "Ändra",
     "save": "Spara",

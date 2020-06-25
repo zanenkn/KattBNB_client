@@ -49,6 +49,8 @@
     "index-no-host-2": "This host does not exist! Please search again to get updated results."
   },
   "remaining-chars": "Remaining characters:",
+  "reviews": "{{count}} review",
+  "reviews_plural": "{{count}} reviews",
   "cta": {
     "change": "Change",
     "save": "Save",
