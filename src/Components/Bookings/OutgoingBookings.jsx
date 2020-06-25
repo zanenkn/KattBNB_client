@@ -36,14 +36,14 @@ class OutgoingBookings extends Component {
     if (this.props.tReady) {
       return (
         <>
-          <div style={{ 'height': '26vh', 'paddingLeft': '10vw', 'paddingRight': '10vw', 'paddingBottom': '1rem', 'paddingTop': '1rem', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'background': 'white', 'width': '100%', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center' }}>
-            <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'alignSelf': 'flex-start' }}>
+          <div id='secondary-sticky' style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center'}}>
+            <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto' }}>
               {t('OutgoingBookings:main-header')}
             </Header>
             <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
               {t('OutgoingBookings:desc')}
             </p>
-            <div style={{ 'display': 'flex', 'alignSelf': 'flex-end', 'margin': '0 auto' }}>
+            <div style={{ 'display': 'flex', 'justifyContent': 'center'}}>
               <Button.Group size='mini'>
                 <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
                   {t('OutgoingBookings:requests')}
@@ -57,7 +57,7 @@ class OutgoingBookings extends Component {
               </Button.Group>
             </div>
           </div>
-          <Container style={{ 'marginTop': '26vh' }}>
+          <Container style={{ 'marginTop': '150px' }}>
             <div className='expanding-wrapper' style={{'paddingTop': '2rem'}}>
               <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
