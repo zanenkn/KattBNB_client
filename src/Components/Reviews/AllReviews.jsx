@@ -17,7 +17,7 @@ const AllReviews = (props) => {
   const allReviews = useCallback(node => {
     if (node !== null) {
       for (let i = 0; i < node.children.length; i++) {
-        if (node.children[i].id === window.location.hash.substr(1)) {
+        if (node.children[i].id === window.location.hash.substr(1) && window.scrollY === 0) {
           setTimeout(function () { window.scrollTo({ top: node.children[i].getBoundingClientRect().top - 90, behavior: 'smooth' }) }, 500)
         }
       }
