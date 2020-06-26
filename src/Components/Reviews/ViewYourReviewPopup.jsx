@@ -80,17 +80,15 @@ const ViewYourReviewPopup = (props) => {
             <p style={{ 'color': '#ffffff', 'fontSize': 'small' }}>
               <Trans i18nKey='ViewYourReviewPopup:desc'>
                 You reviewed your booking with <strong>{{ nickname: nickname }}</strong> for the dates of <strong>{{ startDate: props.startDate }}</strong> until <strong>{{ endDate: props.endDate }}</strong>.
-            </Trans>
+              </Trans>
             </p>
           </div>
           <div style={{ 'display': 'flex' }}>
             <ReviewScore score={score} displayNumerical={true} />
           </div>
-
           <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
             <Header as='h4' style={{ 'margin': '0 0.5rem 0.5rem 0' }}>
               {t('ViewYourReviewPopup:you-said')}
-
             </Header>
             <p style={{ 'fontSize': 'small' }}>
               {moment(reviewDate).fromNow()}
@@ -104,8 +102,7 @@ const ViewYourReviewPopup = (props) => {
           {
             hostReply &&
             <>
-              <Divider style={{'marginTop': '2rem'}}/>
-
+              <Divider style={{ 'marginTop': '2rem' }} />
               <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                 <Image src={hostAvatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : hostAvatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
                 <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
@@ -117,7 +114,6 @@ const ViewYourReviewPopup = (props) => {
                   </p>
                 </div>
               </div>
-
               <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem auto' }}>
                 <p>
                   {hostReply}

@@ -22,7 +22,6 @@ const ViewReviewPopup = (props) => {
   const [score, setScore] = useState(null)
   const [avatar, setAvatar] = useState(null)
   const [hostReply, setHostReply] = useState(null)
-  const [hostNickname, setHostNickname] = useState(null)
   const [reviewUpdatedAt, setReviewUpdatedAt] = useState(null)
 
   useEffect(() => {
@@ -50,7 +49,6 @@ const ViewReviewPopup = (props) => {
           setReviewDate(resp.data.created_at)
           setScore(resp.data.score)
           setHostReply(resp.data.host_reply)
-          setHostNickname(resp.data.host_nickname)
           setReviewUpdatedAt(resp.data.updated_at)
         })
         .catch(error => {
@@ -104,22 +102,17 @@ const ViewReviewPopup = (props) => {
               </p>
             </div>
           </div>
-
           <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem auto' }}>
             <p>
               {message}
             </p>
           </div>
           {hostReply ?
-
-
             <>
-
-            <Divider />
+              <Divider />
               <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
-                <Header as='h4' style={{'margin': '0.5rem 0.5rem 0.5rem 0'}}>
+                <Header as='h4' style={{ 'margin': '0.5rem 0.5rem 0.5rem 0' }}>
                   {t('ViewReviewPopup:you-replied')}
-                  
                 </Header>
                 <p style={{ 'fontSize': 'small' }}>
                   {moment(reviewUpdatedAt).fromNow()}
@@ -129,9 +122,6 @@ const ViewReviewPopup = (props) => {
                 {hostReply}
               </p>
             </>
-
-
-
             :
             <div>
               <Link to={`/user-page/#review-${props.id}`} className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>

@@ -35,10 +35,10 @@ class IncomingBookings extends Component {
     if (this.props.tReady) {
       return (
         <>
-          <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>            
-          <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'alignSelf': 'flex-start' }}>
-            {t('IncomingBookings:main-header')}
-          </Header>
+          <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>
+            <Header as='h1' style={{ 'marginBottom': '0', 'margin': '0 auto', 'alignSelf': 'flex-start' }}>
+              {t('IncomingBookings:main-header')}
+            </Header>
             <p style={{ 'textAlign': 'center', 'margin': '0 auto 1rem' }}>
               {t('IncomingBookings:main-desc')}
             </p>
