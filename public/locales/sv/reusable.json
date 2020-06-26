@@ -45,8 +45,8 @@
     "422-conversation": "Användaren du försöker att kontakta har raderat sitt konto!",
     "google-error-1": "Adress hittades inte! Vänligen försök igen.",
     "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
-    "index-no-host-1": "",
-    "index-no-host-2": ""
+    "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
+    "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat."
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",
