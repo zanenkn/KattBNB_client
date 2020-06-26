@@ -149,7 +149,7 @@ describe('User can view her host profile', () => {
 
   it("and get a reply form to open when she clicks 'Reply'", () => {
     cy.get('#review-33 > .fake-link-underlined').click()
-    cy.get('#host-reply').should('have.attr', 'placeholder').should('contain', 'Here, you can comment on a review another user has left for you..')
+    cy.get('#host-reply').should('have.attr', 'placeholder').should('contain', 'Here, you can reply to a review another user has left for you..')
   })
 
   it('and unsuccessfully reply to a review cause she enters no text', () => {

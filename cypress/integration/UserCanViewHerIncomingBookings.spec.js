@@ -115,7 +115,6 @@ describe('User can view her incoming bookings', () => {
     cy.contains("AcceptedOfThePast left you a review for a booking between the dates of 2019-11-26 and 2019-11-19.")
     cy.contains("Excellent job George!")
     cy.contains("5/5")
-    cy.contains("2020-05-20")
   })
 })
 

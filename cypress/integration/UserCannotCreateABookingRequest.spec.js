@@ -60,7 +60,7 @@ describe('User cannot create a booking request', () => {
   })
 
   it('because another user booked the host', () => {
-    cy.get('#2').click()
+    cy.get('#22').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#message').type('Please take my cats for 4 days!')
