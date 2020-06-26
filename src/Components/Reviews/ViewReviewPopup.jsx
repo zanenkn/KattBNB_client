@@ -124,7 +124,7 @@ const ViewReviewPopup = (props) => {
             </>
             :
             <div>
-              <Link to={`/user-page/#review-${props.id}`} className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>
+              <Link to={`/user-page/#review-${props.id}`} id='reply-link' className='fake-link-underlined'>{t('reusable:cta:reply')}</Link>
             </div>
           }
         </>
