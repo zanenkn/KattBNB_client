@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import ReviewScore from '../ReusableComponents/ReviewScore'
 import { Trans, useTranslation } from 'react-i18next'
-import { Header, Message, Image } from 'semantic-ui-react'
+import { Header, Message, Image, Divider } from 'semantic-ui-react'
 import axios from 'axios'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -11,6 +11,7 @@ import moment from 'moment'
 const ViewYourReviewPopup = (props) => {
 
   const { t, ready } = useTranslation('ViewYourReviewPopup')
+  const lang = detectLanguage()
 
   const [nickname, setNickname] = useState(null)
   const [message, setMessage] = useState(null)
@@ -27,7 +28,6 @@ const ViewYourReviewPopup = (props) => {
       setErrorDisplay(true)
       setErrors('reusable:errors:window-navigator')
     } else {
-      const lang = detectLanguage()
       const path = `/api/v1/reviews/${props.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -65,6 +65,7 @@ const ViewYourReviewPopup = (props) => {
   }, [])
 
   if (ready) {
+    moment.locale(lang)
     return (
       errorDisplay ?
         <Message negative style={{ 'textAlign': 'center' }} >
@@ -72,7 +73,7 @@ const ViewYourReviewPopup = (props) => {
         </Message>
         :
         <>
-          <div style={{ 'margin': '-2rem -2rem 2rem', 'background': '#c90c61', 'padding': '2rem' }}>
+          <div style={{ 'margin': '-2rem -2rem 1rem', 'background': '#c90c61', 'padding': '2rem' }}>
             <Header as='h2' style={{ 'color': '#ffffff', 'textAlign': 'left' }}>
               {t('ViewYourReviewPopup:main-header')}
             </Header>
@@ -85,18 +86,43 @@ const ViewYourReviewPopup = (props) => {
           <div style={{ 'display': 'flex' }}>
             <ReviewScore score={score} displayNumerical={true} />
           </div>
+
+          <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
+            <Header as='h4' style={{ 'margin': '0 0.5rem 0.5rem 0' }}>
+              {t('ViewYourReviewPopup:you-said')}
+
+            </Header>
+            <p style={{ 'fontSize': 'small' }}>
+              {moment(reviewDate).fromNow()}
+            </p>
+          </div>
           <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic' }}>
             <p>
               {message}
             </p>
-            <p>{moment(reviewDate).format('YYYY-MM-DD')}</p>
           </div>
           {
-            hostReply !== null &&
+            hostReply &&
             <>
-              <p>{hostReply}</p>
-              <Image src={hostAvatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : hostAvatar} />
-              <p>{moment(reviewUpdatedAt).format('YYYY-MM-DD')}</p>
+              <Divider style={{'marginTop': '2rem'}}/>
+
+              <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+                <Image src={hostAvatar === null ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false` : hostAvatar} size='small' style={{ 'borderRadius': '50%', 'width': '3rem', 'height': '3rem' }}></Image>
+                <div style={{ 'display': 'flex', 'alignItems': 'baseline' }}>
+                  <Header style={{ 'margin': '0 0.5rem' }}>
+                    {nickname}
+                  </Header>
+                  <p style={{ 'fontSize': 'small' }}>
+                    {moment(reviewUpdatedAt).fromNow()}
+                  </p>
+                </div>
+              </div>
+
+              <div style={{ 'maxHeight': '200px', 'overflow': 'auto', 'fontSize': 'small', 'fontStyle': 'italic', 'margin': '1rem auto' }}>
+                <p>
+                  {hostReply}
+                </p>
+              </div>
             </>
           }
         </>

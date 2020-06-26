@@ -30,7 +30,6 @@ const ViewReviewPopup = (props) => {
       setErrorDisplay(true)
       setErrors('reusable:errors:window-navigator')
     } else {
-      const lang = detectLanguage()
       const path = `/api/v1/reviews/${props.id}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
