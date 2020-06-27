@@ -17,7 +17,7 @@ const NoAccess = () => {
         <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
           <p>
             <Trans i18nKey='NoAccess:description'>
-              Don't be a stranger. You need to <Header as={Link} to='login' className='fake-link' >log in</Header> to view this section!
+              Don't be a stranger. You need to <Header as={Link} to='/login' className='fake-link' >log in</Header> to view this section!
             </Trans>
           </p>
         </Segment>
