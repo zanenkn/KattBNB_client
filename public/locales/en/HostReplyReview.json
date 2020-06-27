@@ -1,0 +1,6 @@
+{
+  "update-success": "You have successfully replied.",
+  "update-error-1": "Reply cannot be empty!",
+  "update-error-2": "Reply cannot exceed 1000 characters!",
+  "plch": "Here, you can reply to a review another user has left for you.."
+}

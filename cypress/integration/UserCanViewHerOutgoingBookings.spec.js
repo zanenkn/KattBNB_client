@@ -172,7 +172,6 @@ describe('User can view her outgoing bookings', () => {
     cy.get('.fake-link-underlined').click()
     cy.contains('You reviewed your booking with AcceptedOfThePast for the dates of 2019-11-26 until 2019-11-19.')
     cy.contains('Almost good!')
-    cy.contains('2020-06-01')
     cy.contains('4/5')
   })
 })

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import './semantic/dist/semantic.min.css'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu/Menu'
@@ -34,13 +34,11 @@ import HostSe from './Components/HostSe'
 import LeaveReview from './Components/Reviews/LeaveReview'
 import SuccessfulReview from './Components/Reviews/SuccessfulReview'
 import ScrollToTop from './Modules/ScrollToTop'
-import { Container, Sticky, Sidebar } from 'semantic-ui-react'
+import { Container, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
 class App extends Component {
-
-  contextRef = createRef()
 
   render() {
     let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, leaveReviewRoute
@@ -104,54 +102,51 @@ class App extends Component {
     }
 
     return (
-      <div ref={this.contextRef} style={{ 'minHeight': '100vh' }}>
-        <Sticky context={this.contextRef}>
-          <Navbar />
-        </Sticky>
-        <div onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }} style={{ 'minHeight': '90vh', 'overflow': 'hidden' }}>
-          <Sidebar.Pushable
-            as={Container}
-            id='app-content'
-            className='disable-scrollbars'
-          >
-            <ScrollToTop>
-              <Switch>
-                <Route exact path='/' component={Search}></Route>
-                <Route exact path='/search-results' component={SearchResults}></Route>
-                <Route exact path='/about-us' component={AboutUs}></Route>
-                <Route exact path='/contact-us' component={ContactUs}></Route>
-                <Route exact path='/faq' component={Faq}></Route>
-                <Route exact path='/legal' component={Legal}></Route>
-                <Route exact path='/login' component={Login}></Route>
-                <Route exact path='/sign-up' component={SignUp}></Route>
-                <Route exact path='/signup-success' component={SignupSuccess}></Route>
-                <Route exact path='/password-reset' component={PasswordReset}></Route>
-                <Route exact path='/change-password' component={ChangePassword}></Route>
-                <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
-                <Route exact path='/request-to-book' component={RequestToBook}></Route>
-                <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
-                <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
-                <Route exact path='/booking-details' component={BookingDetails}></Route>
-                <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
-                <Route exact path='/partners' component={Partners}></Route>
-                <Route exact path='/guidelines' component={Guidelines}></Route>
-                <Route exact path='/is-not-available' component={Error503}></Route>
-                <Route exact path='/become-host' component={HostEn}></Route>
-                <Route exact path='/bli-kattvakt' component={HostSe}></Route>
-                <Route exact path='/successful-review' component={SuccessfulReview}></Route>
-                {userPageRoute}
-                {allBookingsRoute}
-                {outgoingBookingsRoute}
-                {incomingBookingsRoute}
-                {messengerRoute}
-                {conversationRoute}
-                {leaveReviewRoute}
-              </Switch>
-            </ScrollToTop>
-            <Menu />
-          </Sidebar.Pushable>
-        </div>
-      </div>
+      <>
+        <Navbar />
+        <Sidebar.Pushable
+          onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}
+          as={Container}
+          id='app-content'
+          className='disable-scrollbars'
+        >
+          <ScrollToTop>
+            <Switch>
+              <Route exact path='/' component={Search}></Route>
+              <Route exact path='/search-results' component={SearchResults}></Route>
+              <Route exact path='/about-us' component={AboutUs}></Route>
+              <Route exact path='/contact-us' component={ContactUs}></Route>
+              <Route exact path='/faq' component={Faq}></Route>
+              <Route exact path='/legal' component={Legal}></Route>
+              <Route exact path='/login' component={Login}></Route>
+              <Route exact path='/sign-up' component={SignUp}></Route>
+              <Route exact path='/signup-success' component={SignupSuccess}></Route>
+              <Route exact path='/password-reset' component={PasswordReset}></Route>
+              <Route exact path='/change-password' component={ChangePassword}></Route>
+              <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+              <Route exact path='/request-to-book' component={RequestToBook}></Route>
+              <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
+              <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
+              <Route exact path='/booking-details' component={BookingDetails}></Route>
+              <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
+              <Route exact path='/partners' component={Partners}></Route>
+              <Route exact path='/guidelines' component={Guidelines}></Route>
+              <Route exact path='/is-not-available' component={Error503}></Route>
+              <Route exact path='/become-host' component={HostEn}></Route>
+              <Route exact path='/bli-kattvakt' component={HostSe}></Route>
+              <Route exact path='/successful-review' component={SuccessfulReview}></Route>
+              {userPageRoute}
+              {allBookingsRoute}
+              {outgoingBookingsRoute}
+              {incomingBookingsRoute}
+              {messengerRoute}
+              {conversationRoute}
+              {leaveReviewRoute}
+            </Switch>
+          </ScrollToTop>
+          <Menu />
+        </Sidebar.Pushable>
+      </>
     )
   }
 }

@@ -93,6 +93,24 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:one_review_incoming.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_index.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_individual.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:one_user_reviews.json'
+    })
   })
 
   it("and see 'View review' link if there is a review", () => {
@@ -115,7 +133,17 @@ describe('User can view her incoming bookings', () => {
     cy.contains("AcceptedOfThePast left you a review for a booking between the dates of 2019-11-26 and 2019-11-19.")
     cy.contains("Excellent job George!")
     cy.contains("5/5")
-    cy.contains("2020-05-20")
+  })
+
+  it('and get redirected to her user page to reply to a review she received', () => {
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(2000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.wait(2000)
+    cy.get('#view-incoming-bookings').click()
+    cy.get('.fake-link-underlined').click()
+    cy.get('#reply-link').click()
+    cy.location('pathname').should('eq', '/user-page/')
   })
 })
 

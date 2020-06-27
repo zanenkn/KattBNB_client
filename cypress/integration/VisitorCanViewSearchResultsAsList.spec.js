@@ -70,7 +70,7 @@ describe('Visitor can view search results as a list', () => {
       ],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
     ]
-    cy.get('img#2.ui.small.image').click({ force: true })
+    cy.get('img#2.ui.image').click({ force: true })
     cy.get('#more').click()
 
     hostData[0].forEach(data => {
@@ -112,7 +112,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
-    cy.get('img#2.ui.small.image').click({ force: true })
+    cy.get('img#2.ui.image').click({ force: true })
     cy.get('#more').click()
     cy.get('#send-message').click()
     cy.contains('Log in')
@@ -172,13 +172,13 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:create_conversation.json'
     })
-    cy.get('img#2.ui.small.image').click({ force: true })
+    cy.get('img#2.ui.image').click({ force: true })
     cy.get('#more').click()
     cy.get('#send-message').click()
     cy.get('#email').type('george@mail.com')
     cy.get('#password').type('password')
     cy.get('.submit-button').click()
-    cy.get('#2').click({ force: true })
+    cy.get('img#2.ui.image').click({ force: true })
     cy.get('#more').click()
     cy.get('#send-message').click()
     cy.location('pathname').should('eq', '/conversation')

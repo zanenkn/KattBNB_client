@@ -44,15 +44,20 @@
     "401": "Den här sessionen har upphört! Du måste logga in igen.",
     "422-conversation": "Användaren du försöker att kontakta har raderat sitt konto!",
     "google-error-1": "Adress hittades inte! Vänligen försök igen.",
-    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support."
+    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
+    "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
+    "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat."
   },
   "remaining-chars": "Återstående tecken:",
+  "reviews": "{{count}} recension",
+  "reviews_plural": "{{count}} recensioner",
   "cta": {
     "change": "Ändra",
     "save": "Spara",
     "close": "Stäng",
     "confirm": "Bekräfta",
-    "make-host-profile": "Skapa en kattvaktsprofil"
+    "make-host-profile": "Skapa en kattvaktsprofil",
+    "reply": "Svara"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"

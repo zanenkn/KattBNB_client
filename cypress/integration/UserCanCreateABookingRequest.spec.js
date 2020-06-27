@@ -69,7 +69,7 @@ describe('User can create a booking request', () => {
   })
 
   it('successfully and get redirected', () => {
-    cy.get('#2').click()
+    cy.get('#22').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#message').type('Please take my cats for 4 days!')
@@ -79,7 +79,7 @@ describe('User can create a booking request', () => {
   })
 
   it('unsuccessfully and get an error message cause message field is empty', () => {
-    cy.get('#2').click()
+    cy.get('#22').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#request-to-book-button').click()
@@ -87,7 +87,7 @@ describe('User can create a booking request', () => {
   })
 
   it('unsuccessfully and get an error message cause message field contains more than 400 characters', () => {
-    cy.get('#2').click()
+    cy.get('#22').click()
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#message').type('Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!')

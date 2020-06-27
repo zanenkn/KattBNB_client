@@ -1,4 +1,5 @@
 {
   "main-header": "Recension",
-  "desc": "<0>{{nickname}}</0> lämnade en recension för en bokning mellan datumen <2>{{startDate}}</2> och <4>{{endDate}}</4>."
+  "desc": "<0>{{nickname}}</0> lämnade en recension för en bokning mellan datumen <2>{{startDate}}</2> och <4>{{endDate}}</4>.",
+  "you-replied": "Du svarade"
 }

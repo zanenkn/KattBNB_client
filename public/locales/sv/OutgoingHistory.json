@@ -13,5 +13,5 @@
   "view-review": "Visa din recension",
   "leave-review": "Skriv en recension",
   "no-history": "Du har inga tidigare bokningar.",
-  "no-host-no-review": ""
+  "no-host-no-review": "Bokning kan inte recenseras eftersom kattvakten inte existerar!"
 }
