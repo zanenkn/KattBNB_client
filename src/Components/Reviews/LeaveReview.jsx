@@ -6,6 +6,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import ReviewScore from '../ReusableComponents/ReviewScore'
+import queryString from 'query-string'
 
 const LeaveReview = (props) => {
 
@@ -21,9 +22,32 @@ const LeaveReview = (props) => {
     setReviewScore(parseInt(e.currentTarget.id))
   }
 
+  const [hostNickname, setHostNickname] = useState(null)
+  const [userId, setUserId] = useState(null)
+  const [bookingId, setBookingId] = useState(null)
+  const [profileId, setProfileId] = useState(null)
+  const [bookingStart, setBookingStart] = useState(null)
+  const [bookingEnd, setBookingEnd] = useState(null)
+
   useEffect(() => {
-    if (props.location.state === undefined || props.history.action === 'POP') {
+    window.onpopstate = (e) => {
       props.history.push('/all-bookings')
+    }
+
+    if (props.location.state) {
+      setHostNickname(props.location.state.hostNickname)
+      setUserId(props.location.state.userId)
+      setBookingId(props.location.state.bookingId)
+      setProfileId(props.location.state.hostProfileId)
+      setBookingStart(props.location.state.startDate)
+      setBookingEnd(props.location.state.endDate)
+    } else {
+      setHostNickname(queryString.parse(props.location.search).hostNickname)
+      setUserId(queryString.parse(props.location.search).userId)
+      setBookingId(queryString.parse(props.location.search).bookingId)
+      setProfileId(queryString.parse(props.location.search).hostProfileId)
+      setBookingStart(queryString.parse(props.location.search).startDate)
+      setBookingEnd(queryString.parse(props.location.search).endDate)
     }
   }, [])
 
@@ -52,10 +76,10 @@ const LeaveReview = (props) => {
         const payload = {
           score: reviewScore,
           body: reviewBody,
-          host_nickname: props.location.state.hostNickname,
-          user_id: props.location.state.userId,
-          booking_id: props.location.state.bookingId,
-          host_profile_id: props.location.state.hostProfileId,
+          host_nickname: hostNickname,
+          user_id: userId,
+          booking_id: bookingId,
+          host_profile_id: profileId,
           locale: lang
         }
         const headers = {
@@ -101,7 +125,7 @@ const LeaveReview = (props) => {
         <Segment className='whitebox'>
           <p className='small-centered-paragraph' style={{ 'marginBottom': '2rem' }}>
             <Trans i18nKey='LeaveReview:desc'>
-              Your cat(s) stayed with <strong style={{ 'color': '#c90c61' }}>{{ host: props.location.state.hostNickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: props.location.state.startDate }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: props.location.state.endDate }}</strong>. Help us to improve KattBNB community by reviewing your experience.
+              Your cat(s) stayed with <strong style={{ 'color': '#c90c61' }}>{{ host: hostNickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: bookingStart }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: bookingEnd }}</strong>. Help us to improve KattBNB community by reviewing your experience.
             </Trans>
           </p>
           <Form>
