@@ -18,10 +18,6 @@ const LeaveReview = (props) => {
   const [reviewBody, setReviewBody] = useState('')
   const [reviewScore, setReviewScore] = useState(0)
 
-  const onScoreClick = (e) => {
-    setReviewScore(parseInt(e.currentTarget.id))
-  }
-
   const [hostNickname, setHostNickname] = useState(null)
   const [userId, setUserId] = useState(null)
   const [bookingId, setBookingId] = useState(null)
@@ -33,7 +29,6 @@ const LeaveReview = (props) => {
     window.onpopstate = (e) => {
       props.history.push('/all-bookings')
     }
-
     if (props.location.state) {
       setHostNickname(props.location.state.hostNickname)
       setUserId(props.location.state.userId)
@@ -50,6 +45,10 @@ const LeaveReview = (props) => {
       setBookingEnd(queryString.parse(props.location.search).endDate)
     }
   }, [])
+
+  const onScoreClick = (e) => {
+    setReviewScore(parseInt(e.currentTarget.id))
+  }
 
   const createReview = () => {
     const lang = detectLanguage()
