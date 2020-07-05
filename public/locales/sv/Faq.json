@@ -59,9 +59,7 @@
       "p1-2": "När du är registrerad och inloggad så kan du skicka en bokningsförfrågan till en kattvakt. De kommer då att ha tre dagar på sig att acceptera eller avslå din bokningsförfrågan. Vi meddelar dig via e-post om eventuella ändringar i statusen på din bokningsförfrågning.",
       "p1-3": "Genom att skicka en bokningsförfrågan samtycker du till, och är skyldig, att betala det belopp som visas i bokningsinformationen i gengäld för kattvaktstjänster.",
       "sub-header2": "Kan ni garantera att kattvakterna som erbjuder sina tjänster på er webbplats är tillförlitliga och inte kommer att skada min katt / mina katter?",
-      "p2-1": "Vi erbjuder en plattform där kattägare och kattälskare kan träffas, kommunicera och ordna kattpassning. Vi strävar efter att eliminera bedrägeri och missbruk av vår app, även om det inte är möjligt för oss att granska och kontrollera all information som laddas upp av våra användare. Vi rekommenderar att du träffar kattvakten i förväg och ser till att de är den bästa matchningen för din katt / dina katter.",
-      "list-item2-1": "Recensioner för kattvakter som hjälper dig att avgöra vad som är bäst för dig och din katt / dina katter.",
-      "list-item2-2": "Inloggning med BankID för extra sinnesfrid"
+      "p2-1": "Vi erbjuder en plattform där kattägare och kattälskare kan träffas, kommunicera och ordna kattpassning. Vi strävar efter att eliminera bedrägeri och missbruk av vår app, även om det inte är möjligt för oss att granska och kontrollera all information som laddas upp av våra användare. Vi rekommenderar att du träffar kattvakten i förväg och ser till att de är den bästa matchningen för din katt / dina katter."
   },
   "to-guidelines": "Har du bokat en kattvakt redan? Kolla in våra användbara <1>riktlinjer</1>."
 }

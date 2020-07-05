@@ -392,19 +392,6 @@ const Faq = (props) => {
               <p>
                 {t('Faq:owner.p2-1')}
               </p>
-              <Segment raised style={{ 'paddingTop': '1rem' }}>
-                <Label ribbon style={{ 'backgroundColor': '#c90c61', 'color': 'white', 'margin': '0 0 1rem' }}>
-                  {t('reusable:labels.coming-soon')}
-                </Label>
-                <ul>
-                  <li>
-                    {t('Faq:owner.list-item2-1')}
-                  </li>
-                  <li>
-                    {t('Faq:owner.list-item2-2')}
-                  </li>
-                </ul>
-              </Segment>
             </Accordion.Content>
           </Accordion>
         </div>
