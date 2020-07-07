@@ -13,7 +13,7 @@ class AllBookings extends Component {
   state = {
     errorDisplay: false,
     errors: [],
-    stats: '',
+    stats: 'in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0',
     loading: true
   }
 
@@ -71,6 +71,12 @@ class AllBookings extends Component {
     const { t } = this.props
 
     if (this.props.tReady && this.state.loading === false) {
+      let outgoingRequests = this.state.stats.split('out_requests: ')[1].split(',')[0]
+      let outgoingUpcoming = this.state.stats.split('out_upcoming: ')[1].split(',')[0]
+      let outgoingHistory = this.state.stats.split('out_history: ')[1].split(',')[0]
+      let incomingRequests = this.state.stats.split('in_requests: ')[1].split(',')[0]
+      let incomingUpcoming = this.state.stats.split('in_upcoming: ')[1].split(',')[0]
+      let incomingHistory = this.state.stats.split('in_history: ')[1].split(',')[0]
       let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, errorDisplay
 
       if (this.state.errorDisplay) {
@@ -85,10 +91,7 @@ class AllBookings extends Component {
         )
       }
 
-      if (this.state.stats) {
-        let outgoingRequests = this.state.stats.split('out_requests: ')[1].split(',')[0]
-        let outgoingUpcoming = this.state.stats.split('out_upcoming: ')[1].split(',')[0]
-        let outgoingHistory = this.state.stats.split('out_history: ')[1].split(',')[0]
+      if (outgoingRequests !== '0' || outgoingUpcoming !== '0' || outgoingHistory !== '0') {
         outgoingBookingStats = (
           <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
             {t('AllBookings:requests')}&nbsp;{outgoingRequests}&thinsp;
@@ -103,16 +106,10 @@ class AllBookings extends Component {
         )
         outgoingCTA = (
           <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
-            onClick={() => {
-              this.props.history.push({
-                pathname: '/outgoing-bookings',
-                state: {
-                  outgoingRequests: outgoingRequests,
-                  outgoingUpcoming: outgoingUpcoming,
-                  outgoingHistory: outgoingHistory
-                }
-              })
-            }}>{t('AllBookings:view')}</Header>
+            onClick={() => { this.props.history.push('/outgoing-bookings') }}
+          >
+            {t('AllBookings:view')}
+          </Header>
         )
       } else {
         outgoingBookingStats = (
@@ -136,10 +133,7 @@ class AllBookings extends Component {
         )
       }
 
-      if (this.state.stats) {
-        let incomingRequests = this.state.stats.split('in_requests: ')[1].split(',')[0]
-        let incomingUpcoming = this.state.stats.split('in_upcoming: ')[1].split(',')[0]
-        let incomingHistory = this.state.stats.split('in_history: ')[1].split(',')[0]
+      if (incomingRequests !== '0' || incomingUpcoming !== '0' || incomingHistory !== '0') {
         incomingBookingStats = (
           <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
             {t('AllBookings:requests')}&nbsp;{incomingRequests}&thinsp;
@@ -148,7 +142,7 @@ class AllBookings extends Component {
           </p>
         )
 
-        if (incomingRequests) {
+        if (incomingRequests !== '0') {
           incomingText = (
             <p style={{ 'textAlign': 'center' }}>
               <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
@@ -158,16 +152,10 @@ class AllBookings extends Component {
           )
           incomingCTA = (
             <Button id='view-incoming-bookings'
-              onClick={() => {
-                this.props.history.push({
-                  pathname: '/incoming-bookings',
-                  state: {
-                    incomingRequests: incomingRequests,
-                    incomingUpcoming: incomingUpcoming,
-                    incomingHistory: incomingHistory
-                  }
-                })
-              }}>{t('AllBookings:view')}</Button>
+              onClick={() => { this.props.history.push('/incoming-bookings') }}
+            >
+              {t('AllBookings:view')}
+            </Button>
           )
         } else {
           incomingText = (
@@ -177,16 +165,10 @@ class AllBookings extends Component {
           )
           incomingCTA = (
             <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
-              onClick={() => {
-                this.props.history.push({
-                  pathname: '/incoming-bookings',
-                  state: {
-                    incomingRequests: incomingRequests,
-                    incomingUpcoming: incomingUpcoming,
-                    incomingHistory: incomingHistory
-                  }
-                })
-              }}>{t('AllBookings:view')}</Header>
+              onClick={() => { this.props.history.push('/incoming-bookings') }}
+            >
+              {t('AllBookings:view')}
+            </Header>
           )
         }
       } else {
@@ -253,7 +235,7 @@ class AllBookings extends Component {
             <p style={{ 'textAlign': 'center' }}>
               {t('AllBookings:header-page')}
             </p>
-            {this.state.incomingBookings ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
+            {incomingRequests !== '0' || incomingUpcoming !== '0' || incomingHistory !== '0' ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
           </div>
         </>
       )
