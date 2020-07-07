@@ -13,296 +13,251 @@ class AllBookings extends Component {
   state = {
     errorDisplay: false,
     errors: [],
-    outgoingBookings: [],
-    incomingBookings: [],
-    loadingOutgoing: true,
-    loadingIncoming: true
+    stats: '',
+    loading: true
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const lang = detectLanguage()
     const { t } = this.props
     if (window.navigator.onLine === false) {
       this.setState({
-        loadingIncoming: false,
-        loadingOutgoing: false,
+        loading: false,
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })
     } else {
-      try {
-        const pathOutgoing = `/api/v1/bookings?user_id=${this.props.id}&locale=${lang}`
-        const pathIncoming = `/api/v1/bookings?host_nickname=${this.props.username}&locale=${lang}`
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        let responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
-        this.setState({
-          outgoingBookings: responseOutgoing.data,
-          loadingOutgoing: false,
-          errorDisplay: false,
-          errors: []
-        })
-        let responseIncoming = await axios.get(pathIncoming, { headers: headers })
-        this.setState({
-          incomingBookings: responseIncoming.data,
-          loadingIncoming: false,
-          errorDisplay: false,
-          errors: []
-        })
-      } catch (error) {
-        if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 500) {
-          this.setState({
-            loadingOutgoing: false,
-            loadingIncoming: false,
-            errorDisplay: true,
-            errors: ['reusable:errors:500']
-          })
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'))
-          wipeCredentials('/')
-        } else {
-          this.setState({
-            loadingOutgoing: false,
-            loadingIncoming: false,
-            errorDisplay: true,
-            errors: [error.response.data.error]
-          })
-        }
+      const bookings = `/api/v1/bookings?stats=yes&user_id=${this.props.id}&host_nickname=${this.props.username}&locale=${lang}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
       }
+      axios.get(bookings, { headers: headers })
+        .then(response => {
+          this.setState({
+            stats: response.data.message,
+            loading: false,
+            errorDisplay: false,
+            errors: []
+          })
+        })
+        .catch(error => {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: [error.response.data.error]
+            })
+          }
+        })
     }
   }
 
   render() {
     const { t } = this.props
-    let outgoingRequests = []
-    let outgoingUpcoming = []
-    let outgoingHistory = []
-    let incomingRequests = []
-    let incomingUpcoming = []
-    let incomingHistory = []
-    let todaysDate = new Date()
-    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-    let today = new Date(utc).getTime()
-    let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, page, errorDisplay
 
-    if (this.state.errorDisplay) {
-      errorDisplay = (
-        <Message negative >
-          <ul id='message-error-list'>
-            {this.state.errors.map(error => (
-              <li key={error}>{t(error)}</li>
-            ))}
-          </ul>
-        </Message>
-      )
-    }
+    if (this.props.tReady && this.state.loading === false) {
+      let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, errorDisplay
 
-    if (this.state.outgoingBookings.length > 0) {
-      this.state.outgoingBookings.map(booking => {
-        if (booking.status === 'pending') {
-          outgoingRequests.push(booking)
-        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-          outgoingUpcoming.push(booking)
-        } else {
-          outgoingHistory.push(booking)
-        }
-      })
-      outgoingBookingStats = (
-        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          {t('AllBookings:requests')}&nbsp;{outgoingRequests.length}&thinsp;
-          {t('AllBookings:upcoming')}&nbsp;{outgoingUpcoming.length}&thinsp;
-          {t('AllBookings:history')}&nbsp;{outgoingHistory.length}
-        </p>
-      )
-      outgoingText = (
-        <p style={{ 'textAlign': 'center' }}>
-          {t('AllBookings:outgoing-text')}
-        </p>
-      )
-      outgoingCTA = (
-        <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
-          onClick={() => {
-            this.props.history.push({
-              pathname: '/outgoing-bookings',
-              state: {
-                outgoingRequests: outgoingRequests,
-                outgoingUpcoming: outgoingUpcoming,
-                outgoingHistory: outgoingHistory
-              }
-            })
-          }}>{t('AllBookings:view')}</Header>
-      )
-    } else {
-      outgoingBookingStats = (
-        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          {t('AllBookings:outgoing-booking-stats')}
-        </p>
-      )
-      outgoingText = (
-        <p style={{ 'textAlign': 'center' }}>
-          {t('AllBookings:outgoing-text-2')}
-        </p>
-      )
-      outgoingCTA = (
-        <Header
-          className='fake-link'
-          style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
-          onClick={() => { this.props.history.push('/') }}
-        >
-          {t('AllBookings:outgoing-cta')}
-        </Header>
-      )
-    }
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
 
-    if (this.state.incomingBookings.length > 0) {
-      this.state.incomingBookings.map(booking => {
-        if (booking.status === 'pending') {
-          incomingRequests.push(booking)
-        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-          incomingUpcoming.push(booking)
-        } else {
-          incomingHistory.push(booking)
-        }
-      })
-      incomingBookingStats = (
-        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          {t('AllBookings:requests')}&nbsp;{incomingRequests.length}&thinsp;
-          {t('AllBookings:upcoming')}&nbsp;{incomingUpcoming.length}&thinsp;
-          {t('AllBookings:history')}&nbsp;{incomingHistory.length}
-        </p>
-      )
-
-      if (incomingRequests.length > 0) {
-        incomingText = (
-          <p style={{ 'textAlign': 'center' }}>
-            <Trans count={parseInt(incomingRequests.length)} i18nKey='AllBookings:incoming-text'>
-              You have <strong style={{ 'color': '#c90c61' }}>{{ count: incomingRequests.length }} incoming booking request</strong> awaiting your decision.
-            </Trans>
+      if (this.state.stats) {
+        let outgoingRequests = this.state.stats.split('out_requests: ')[1].split(',')[0]
+        let outgoingUpcoming = this.state.stats.split('out_upcoming: ')[1].split(',')[0]
+        let outgoingHistory = this.state.stats.split('out_history: ')[1].split(',')[0]
+        outgoingBookingStats = (
+          <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
+            {t('AllBookings:requests')}&nbsp;{outgoingRequests}&thinsp;
+            {t('AllBookings:upcoming')}&nbsp;{outgoingUpcoming}&thinsp;
+            {t('AllBookings:history')}&nbsp;{outgoingHistory}
           </p>
         )
-        incomingCTA = (
-          <Button id='view-incoming-bookings'
-            onClick={() => {
-              this.props.history.push({
-                pathname: '/incoming-bookings',
-                state: {
-                  incomingRequests: incomingRequests,
-                  incomingUpcoming: incomingUpcoming,
-                  incomingHistory: incomingHistory
-                }
-              })
-            }}>{t('AllBookings:view')}</Button>
-        )
-      } else {
-        incomingText = (
+        outgoingText = (
           <p style={{ 'textAlign': 'center' }}>
-            {t('AllBookings:incoming-text-2')}
+            {t('AllBookings:outgoing-text')}
           </p>
         )
-        incomingCTA = (
-          <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
+        outgoingCTA = (
+          <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
             onClick={() => {
               this.props.history.push({
-                pathname: '/incoming-bookings',
+                pathname: '/outgoing-bookings',
                 state: {
-                  incomingRequests: incomingRequests,
-                  incomingUpcoming: incomingUpcoming,
-                  incomingHistory: incomingHistory
+                  outgoingRequests: outgoingRequests,
+                  outgoingUpcoming: outgoingUpcoming,
+                  outgoingHistory: outgoingHistory
                 }
               })
             }}>{t('AllBookings:view')}</Header>
         )
-      }
-    } else {
-      incomingBookingStats = (
-        <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
-          {t('AllBookings:outgoing-booking-stats')}
-        </p>
-      )
-      incomingText = (
-        <p style={{ 'textAlign': 'center' }}>
-          {t('AllBookings:incoming-text-3')}
-        </p>
-      )
-      incomingCTA = (
-        <Header
-          className='fake-link'
-          style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
-          onClick={() => { this.props.history.push('/faq') }}
-        >
-          {t('AllBookings:incoming-cta')}
-        </Header>
-      )
-    }
-
-    outgoingSegment = (
-      <Segment className='box-shadow'>
-        <div className='topbox'>
-          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:outgoing-segment')}</Header>
-          {outgoingBookingStats}
-        </div>
-        {outgoingText}
-        {outgoingCTA}
-      </Segment>
-    )
-
-    incomingSegment = (
-      <Segment className='box-shadow'>
-        <div className='topbox'>
-          <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:incoming-segment')}</Header>
-          {incomingBookingStats}
-        </div>
-        {incomingText}
-        {incomingCTA}
-      </Segment>
-    )
-
-    if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false && this.state.errorDisplay === false) {
-      page = (
-        <div className='content-wrapper'>
-          <Header as='h1'>
-            {t('AllBookings:hi')} {this.props.username}!
-          </Header>
-          <p style={{ 'textAlign': 'center' }}>
-            {t('AllBookings:header-page')}
+      } else {
+        outgoingBookingStats = (
+          <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
+            {t('AllBookings:outgoing-booking-stats')}
           </p>
-          {this.state.incomingBookings.length > 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
-        </div>
+        )
+        outgoingText = (
+          <p style={{ 'textAlign': 'center' }}>
+            {t('AllBookings:outgoing-text-2')}
+          </p>
+        )
+        outgoingCTA = (
+          <Header
+            className='fake-link'
+            style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
+            onClick={() => { this.props.history.push('/') }}
+          >
+            {t('AllBookings:outgoing-cta')}
+          </Header>
+        )
+      }
+
+      if (this.state.stats) {
+        let incomingRequests = this.state.stats.split('in_requests: ')[1].split(',')[0]
+        let incomingUpcoming = this.state.stats.split('in_upcoming: ')[1].split(',')[0]
+        let incomingHistory = this.state.stats.split('in_history: ')[1].split(',')[0]
+        incomingBookingStats = (
+          <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
+            {t('AllBookings:requests')}&nbsp;{incomingRequests}&thinsp;
+            {t('AllBookings:upcoming')}&nbsp;{incomingUpcoming}&thinsp;
+            {t('AllBookings:history')}&nbsp;{incomingHistory}
+          </p>
+        )
+
+        if (incomingRequests) {
+          incomingText = (
+            <p style={{ 'textAlign': 'center' }}>
+              <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
+                You have <strong style={{ 'color': '#c90c61' }}>{{ count: incomingRequests }} incoming booking request</strong> awaiting your decision.
+              </Trans>
+            </p>
+          )
+          incomingCTA = (
+            <Button id='view-incoming-bookings'
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/incoming-bookings',
+                  state: {
+                    incomingRequests: incomingRequests,
+                    incomingUpcoming: incomingUpcoming,
+                    incomingHistory: incomingHistory
+                  }
+                })
+              }}>{t('AllBookings:view')}</Button>
+          )
+        } else {
+          incomingText = (
+            <p style={{ 'textAlign': 'center' }}>
+              {t('AllBookings:incoming-text-2')}
+            </p>
+          )
+          incomingCTA = (
+            <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/incoming-bookings',
+                  state: {
+                    incomingRequests: incomingRequests,
+                    incomingUpcoming: incomingUpcoming,
+                    incomingHistory: incomingHistory
+                  }
+                })
+              }}>{t('AllBookings:view')}</Header>
+          )
+        }
+      } else {
+        incomingBookingStats = (
+          <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
+            {t('AllBookings:outgoing-booking-stats')}
+          </p>
+        )
+        incomingText = (
+          <p style={{ 'textAlign': 'center' }}>
+            {t('AllBookings:incoming-text-3')}
+          </p>
+        )
+        incomingCTA = (
+          <Header
+            className='fake-link'
+            style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
+            onClick={() => { this.props.history.push('/faq') }}
+          >
+            {t('AllBookings:incoming-cta')}
+          </Header>
+        )
+      }
+
+      outgoingSegment = (
+        <Segment className='box-shadow'>
+          <div className='topbox'>
+            <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:outgoing-segment')}</Header>
+            {outgoingBookingStats}
+          </div>
+          {outgoingText}
+          {outgoingCTA}
+        </Segment>
       )
-    } else if (this.state.loadingIncoming === false && this.state.loadingOutgoing === false && this.state.errorDisplay) {
-      page = (
+
+      incomingSegment = (
+        <Segment className='box-shadow'>
+          <div className='topbox'>
+            <Header as='h3' style={{ 'color': 'white', 'marginBottom': '0' }}>{t('AllBookings:incoming-segment')}</Header>
+            {incomingBookingStats}
+          </div>
+          {incomingText}
+          {incomingCTA}
+        </Segment>
+      )
+
+      return (
         <>
+          <Popup
+            modal
+            open={this.state.errorDisplay}
+            closeOnDocumentClick={true}
+            onClose={() => { this.setState({ errors: [] }) }}
+            position='top center'
+          >
+            <div>
+              {errorDisplay}
+            </div>
+          </Popup>
+          <div className='content-wrapper'>
+            <Header as='h1'>
+              {t('AllBookings:hi')} {this.props.username}!
+          </Header>
+            <p style={{ 'textAlign': 'center' }}>
+              {t('AllBookings:header-page')}
+            </p>
+            {this.state.incomingBookings ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
+          </div>
         </>
       )
-    } else {
-      page = (
-        <Spinner />
-      )
-    }
-
-    return (
-      <>
-        <Popup
-          modal
-          open={this.state.errorDisplay}
-          closeOnDocumentClick={true}
-          onClose={() => { this.setState({ errors: [] }) }}
-          position='top center'
-        >
-          <div>
-            {errorDisplay}
-          </div>
-        </Popup>
-        {page}
-      </>
-    )
+    } else { return <Spinner /> }
   }
 }
 
