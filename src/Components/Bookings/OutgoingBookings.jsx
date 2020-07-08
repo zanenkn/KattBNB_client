@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Button, Icon, Container } from 'semantic-ui-react'
+import { Header, Button, Icon, Container, Message } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
 import axios from 'axios'
@@ -93,6 +93,7 @@ class OutgoingBookings extends Component {
       let todaysDate = new Date()
       let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
       let today = new Date(utc).getTime()
+      let errorDisplay
       let outgoingRequests = []
       let outgoingUpcoming = []
       let outgoingHistory = []
@@ -105,6 +106,19 @@ class OutgoingBookings extends Component {
           outgoingHistory.push(booking)
         }
       })
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
       return (
         <>
           <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>
@@ -130,6 +144,7 @@ class OutgoingBookings extends Component {
           </div>
           <Container style={{ 'marginTop': '150px' }}>
             <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
+              {errorDisplay}
               <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
                   {t('OutgoingBookings:requests')}
