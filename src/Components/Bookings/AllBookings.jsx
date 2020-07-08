@@ -106,7 +106,12 @@ class AllBookings extends Component {
         )
         outgoingCTA = (
           <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
-            onClick={() => { this.props.history.push('/outgoing-bookings') }}
+            onClick={() => {
+              this.props.history.push({
+                pathname: '/outgoing-bookings',
+                state: { userId: this.props.id }
+              })
+            }}
           >
             {t('AllBookings:view')}
           </Header>
