@@ -157,7 +157,12 @@ class AllBookings extends Component {
           )
           incomingCTA = (
             <Button id='view-incoming-bookings'
-              onClick={() => { this.props.history.push('/incoming-bookings') }}
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/incoming-bookings',
+                  state: { hostNickname: this.props.username }
+                })
+              }}
             >
               {t('AllBookings:view')}
             </Button>
@@ -170,7 +175,12 @@ class AllBookings extends Component {
           )
           incomingCTA = (
             <Header className='fake-link' style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
-              onClick={() => { this.props.history.push('/incoming-bookings') }}
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/incoming-bookings',
+                  state: { hostNickname: this.props.username }
+                })
+              }}
             >
               {t('AllBookings:view')}
             </Header>

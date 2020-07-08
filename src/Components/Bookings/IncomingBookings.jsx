@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import { Header, Button, Icon, Container } from 'semantic-ui-react'
+import { Header, Button, Icon, Container, Message } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
+import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 import IncomingRequests from './IncomingRequests'
 import IncomingUpcoming from './IncomingUpcoming'
 import IncomingHistory from './IncomingHistory'
@@ -9,10 +12,63 @@ import IncomingHistory from './IncomingHistory'
 class IncomingBookings extends Component {
 
   state = {
-    scrollYPosition: 0
+    scrollYPosition: 0,
+    incomingBookings: [],
+    loading: true,
+    errorDisplay: false,
+    errors: []
   }
 
-  componentDidMount() { window.addEventListener('scroll', this.handleScroll) }
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
+    const lang = detectLanguage()
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      const inBookings = `/api/v1/bookings?stats=no&host_nickname=${this.props.location.state.hostNickname}&locale=${lang}`
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token')
+      }
+      axios.get(inBookings, { headers: headers })
+        .then(response => {
+          this.setState({
+            incomingBookings: response.data,
+            loading: false,
+            errorDisplay: false,
+            errors: []
+          })
+        })
+        .catch(error => {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500']
+            })
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: [error.response.data.error]
+            })
+          }
+        })
+    }
+  }
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
 
@@ -30,9 +86,39 @@ class IncomingBookings extends Component {
   }
 
   render() {
+
     const { t } = this.props
 
-    if (this.props.tReady) {
+    if (this.props.tReady && this.state.loading === false) {
+      let todaysDate = new Date()
+      let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
+      let today = new Date(utc).getTime()
+      let errorDisplay
+      let incomingRequests = []
+      let incomingUpcoming = []
+      let incomingHistory = []
+      this.state.incomingBookings.map(booking => {
+        if (booking.status === 'pending') {
+          incomingRequests.push(booking)
+        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+          incomingUpcoming.push(booking)
+        } else {
+          incomingHistory.push(booking)
+        }
+      })
+
+      if (this.state.errorDisplay) {
+        errorDisplay = (
+          <Message negative >
+            <ul id='message-error-list'>
+              {this.state.errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        )
+      }
+
       return (
         <>
           <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>
@@ -58,12 +144,13 @@ class IncomingBookings extends Component {
           </div>
           <Container style={{ 'marginTop': '150px' }}>
             <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
+              {errorDisplay}
               <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
                   {t('IncomingBookings:requests')}
                 </Header>
                 <IncomingRequests
-                  requests={this.props.location.state.incomingRequests}
+                  requests={incomingRequests}
                 />
               </div>
               <div ref={(el) => { this.upcoming = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
@@ -71,7 +158,7 @@ class IncomingBookings extends Component {
                   {t('IncomingBookings:upcoming')}
                 </Header>
                 <IncomingUpcoming
-                  upcoming={this.props.location.state.incomingUpcoming}
+                  upcoming={incomingUpcoming}
                 />
               </div>
               <div ref={(el) => { this.history = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
@@ -79,7 +166,7 @@ class IncomingBookings extends Component {
                   {t('IncomingBookings:history')}
                 </Header>
                 <IncomingHistory
-                  inHistoryBookings={this.props.location.state.incomingHistory}
+                  inHistoryBookings={incomingHistory}
                 />
               </div>
               <div className='scroll-to-top '>
