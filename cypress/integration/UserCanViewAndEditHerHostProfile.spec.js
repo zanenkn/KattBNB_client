@@ -26,12 +26,6 @@ describe('User can view her host profile', () => {
       response: ''
     })
     cy.route({
-      method: 'GET',
-      url: 'https://maps.google.com/maps/api/geocode/json?address=arlanda%20airport&key=AIzaSyBocaDJSR80uzUcSvWfciq6at2729MC7kM',
-      status: 200,
-      response: 'fixture:successful_address_search.json'
-    })
-    cy.route({
       method: 'PATCH',
       url: 'http://localhost:3007/api/v1/host_profiles/1',
       status: 200,
@@ -39,7 +33,7 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: ''
     })

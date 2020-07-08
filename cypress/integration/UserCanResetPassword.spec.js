@@ -16,18 +16,6 @@ describe('User can reset password', () => {
       status: 200,
       response: 'fixture:successful_password_reset.json',
     })
-    cy.route({
-      method: 'PUT',
-      url: 'http://localhost:3007/api/v1/auth/password',
-      status: 200,
-      response: 'fixture:successful_password_change.json',
-    })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
-      status: 200,
-      response: ''
-    })
     cy.get('#email').type('george@mail.com')
     cy.get('#reset-pass-button').click()
     cy.contains('Successful password reset request!')
@@ -57,12 +45,6 @@ describe('User can reset password', () => {
       url: 'http://localhost:3007/api/v1/auth/password',
       status: 200,
       response: 'fixture:successful_password_reset.json',
-    })
-    cy.route({
-      method: 'PUT',
-      url: 'http://localhost:3007/api/v1/auth/password',
-      status: 422,
-      response: 'fixture:unsuccessful_password_change.json',
     })
     cy.get('#email').type('george@mail.com')
     cy.get('#reset-pass-button').click()

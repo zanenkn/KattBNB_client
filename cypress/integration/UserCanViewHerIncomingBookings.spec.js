@@ -3,15 +3,15 @@ describe('User can view her incoming bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_user_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
@@ -22,7 +22,6 @@ describe('User can view her incoming bookings', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
-    cy.wait(2000)
   })
 
   it('and see correct stats of her bookings', () => {
@@ -77,15 +76,15 @@ describe('User can view her incoming bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: 'fixture:one_host_booking_review.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_user_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'GET',
@@ -105,19 +104,12 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:host_profile_individual.json'
     })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
-      status: 200,
-      response: 'fixture:one_user_reviews.json'
-    })
   })
 
   it("and see 'View review' link if there is a review", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
-    cy.wait(2000)
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('View review')
   })
@@ -126,7 +118,6 @@ describe('User can view her incoming bookings', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
-    cy.wait(2000)
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('View review')
     cy.get('.fake-link-underlined').click()
@@ -139,7 +130,6 @@ describe('User can view her incoming bookings', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
-    cy.wait(2000)
     cy.get('#view-incoming-bookings').click()
     cy.get('.fake-link-underlined').click()
     cy.get('#reply-link').click()
@@ -152,15 +142,15 @@ describe('User can view her incoming bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_user_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
@@ -171,7 +161,6 @@ describe('User can view her incoming bookings', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
-    cy.wait(2000)
     cy.get('#view-incoming-bookings').click()
     cy.get('[data-cy=incoming-history]').first().contains('Ask for a review')
     cy.get('#ask-review').click()

@@ -3,15 +3,15 @@ describe('User can view her outgoing bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_host_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
@@ -137,15 +137,15 @@ describe('User can view her outgoing bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:one_user_booking_review.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_host_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'GET',
@@ -182,15 +182,15 @@ describe('User can view her outgoing bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_host_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
@@ -220,15 +220,15 @@ describe('User can view her outgoing bookings', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
       status: 200,
       response: 'fixture:one_user_booking_no_review_no_host.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_host_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
