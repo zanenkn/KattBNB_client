@@ -62,11 +62,11 @@ class SearchResults extends Component {
       } else {
         const lang = detectLanguage()
         let allAvailableHosts = []
-        axios.get(`/api/v1/host_profiles?locale=${lang}`).then(response => {
+        axios.get(`/api/v1/host_profiles?startDate=${this.props.history.location.state.from}&endDate=${this.props.history.location.state.to}&cats=${this.props.history.location.state.cats}&locale=${lang}`).then(response => {
           if (response.data !== '' && response.data.length > 0) {
-            let availableByDate = bookingSearch(response.data, this.props.history.location.state.from, this.props.history.location.state.to)
+            let availableByDate = response.data
             availableByDate.map(host => {
-              if (host.max_cats_accepted >= this.props.history.location.state.cats && this.props.id !== host.user.id) {
+              if (this.props.id !== host.user.id) {
                 let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.history.location.state.from, this.props.history.location.state.to))
                 allAvailableHosts.push(
                   {
@@ -299,9 +299,9 @@ class SearchResults extends Component {
 
     if (this.props.tReady) {
       if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
-        let availableByDate = bookingSearch(this.state.searchDataLocation, this.state.checkInDate, this.state.checkOutDate)
+        let availableByDate = this.state.searchDataLocation
         availableByDate.map(host => {
-          if (host.max_cats_accepted >= this.state.numberOfCats && this.props.id !== host.user.id) {
+          if (this.props.id !== host.user.id) {
             finalAvailableHosts.push(host)
           }
         })
