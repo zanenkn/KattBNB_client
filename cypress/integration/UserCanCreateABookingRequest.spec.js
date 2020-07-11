@@ -3,7 +3,7 @@ describe('User can create a booking request', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: 'fixture:search_results_list.json'
     })
@@ -15,7 +15,7 @@ describe('User can create a booking request', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: ''
     })
