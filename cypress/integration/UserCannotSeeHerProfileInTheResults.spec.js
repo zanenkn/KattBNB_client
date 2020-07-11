@@ -4,7 +4,7 @@ describe('User cannot see her profile', () => {
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: 'fixture:search_results_list.json'
     })
@@ -19,7 +19,7 @@ describe('User cannot see her profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: '',
       headers: {
@@ -47,7 +47,7 @@ describe('User cannot see her profile', () => {
   })
 
   it('in the results if logged in', () => {
-    cy.contains('2 result(s)')
-    cy.get('#6').should('not.exist')
+    cy.contains('5 result(s)')
+    cy.get('#66').should('not.exist')
   })
 })
