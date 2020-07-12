@@ -3,13 +3,13 @@ describe('Visitor can view search results as a list', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list.json'
+      response: 'fixture:search_results_list_2.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: ''
     })
@@ -85,15 +85,21 @@ describe('Visitor can view search results as a list', () => {
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list.json'
+      response: 'fixture:search_results_list_2.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: ''
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: []
     })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
@@ -123,13 +129,13 @@ describe('Visitor can view search results as a list', () => {
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list.json'
+      response: 'fixture:search_results_list_2.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
       response: ''
     })
