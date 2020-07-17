@@ -224,41 +224,22 @@ const UserPage = (props) => {
       setErrors(['reusable:errors:window-navigator'])
     } else {
       const lang = detectLanguage()
-      const pathIncoming = `/api/v1/bookings?stats=no&host_nickname=${props.username}&locale=${lang}`
-      const pathOutgoing = `/api/v1/bookings?stats=no&user_id=${props.id}&locale=${lang}`
+      const bookings = `/api/v1/bookings?stats=yes&user_id=${props.id}&host_nickname=${props.username}&locale=${lang}`
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token')
       }
       try {
-        const responseIncoming = await axios.get(pathIncoming, { headers: headers })
-        const responseOutgoing = await axios.get(pathOutgoing, { headers: headers })
-        let noAccountDeleteIncoming = []
-        let sendEmailToHostOutgoing = []
-        let todaysDate = new Date()
-        let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate())
-        let today = new Date(utc).getTime()
-
-        if (responseIncoming.data.length > 0) {
-          responseIncoming.data.map(booking => {
-            if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)) {
-              noAccountDeleteIncoming.push(booking)
-            }
-          })
-        }
-        if (responseOutgoing.data.length > 0) {
-          responseOutgoing.data.map(booking => {
-            if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-              sendEmailToHostOutgoing.push(booking)
-            }
-          })
-        }
-        if (noAccountDeleteIncoming.length > 0) {
+        const response = await axios.get(bookings, { headers: headers })
+        let outgoingUpcoming = response.data.message.split('out_upcoming: ')[1].split(',')[0]
+        let incomingRequests = response.data.message.split('in_requests: ')[1].split(',')[0]
+        let incomingUpcoming = response.data.message.split('in_upcoming: ')[1].split(',')[0]
+        if (incomingRequests !== '0' || incomingUpcoming !== '0') {
           window.alert(t('UserPage:delete-alert'))
           setDeleteDipslayNone(false)
         }
-        else if (sendEmailToHostOutgoing.length > 0 && window.confirm(t('UserPage:delete-consent'))) {
+        else if (outgoingUpcoming !== '0' && window.confirm(t('UserPage:delete-consent'))) {
           const path = '/api/v1/auth'
           const headers = {
             uid: window.localStorage.getItem('uid'),
@@ -281,7 +262,7 @@ const UserPage = (props) => {
               }
             })
         }
-        else if (noAccountDeleteIncoming.length === 0 && sendEmailToHostOutgoing.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
+        else if (incomingRequests === '0' && incomingUpcoming === '0' && outgoingUpcoming === '0' && window.confirm(t('UserPage:delete-confirm'))) {
           const path = '/api/v1/auth'
           const headers = {
             uid: window.localStorage.getItem('uid'),
