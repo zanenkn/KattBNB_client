@@ -138,6 +138,12 @@ describe('User can view her profile page', () => {
       status: 200,
       response: 'fixture:successful_account_deletion.json',
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: { "message": "in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0" }
+    })
     cy.get('#delete-account-link').click()
     cy.on('window:confirm', (str) => {
       expect(str).to.equal('Do you really want to delete your account?')
@@ -155,6 +161,12 @@ describe('User can view her profile page', () => {
       status: 200,
       response: 'fixture:no_delete_account.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: { "message": "in_requests: 2, in_upcoming: 1, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0" }
+    })
     cy.get('#delete-account-link').click()
     cy.on('window:alert', (str) => {
       expect(str).to.equal('To delete your account, please follow relevant instructions in our FAQ page!')
@@ -171,9 +183,9 @@ describe('User can view her profile page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:delete_account_consent.json'
+      response: { "message": "in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 1, out_history: 0" }
     })
     cy.get('#delete-account-link').click()
     cy.on('window:confirm', (str) => {
