@@ -1,3 +1,10 @@
 {
-  "message": "in_requests: 2, in_upcoming: 2, in_history: 5, out_requests: 2, out_upcoming: 2, out_history: 5"
+  "stats": {
+    "in_requests": 2,
+    "in_upcoming": 2,
+    "in_history": 5,
+    "out_requests": 2,
+    "out_upcoming": 2,
+    "out_history": 5
+  }
 }

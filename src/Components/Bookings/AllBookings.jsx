@@ -36,7 +36,7 @@ class AllBookings extends Component {
       axios.get(bookings, { headers: headers })
         .then(response => {
           this.setState({
-            stats: response.data.message,
+            stats: response.data.stats,
             loading: false,
             errorDisplay: false,
             errors: []
@@ -71,12 +71,12 @@ class AllBookings extends Component {
     const { t } = this.props
 
     if (this.props.tReady && this.state.loading === false) {
-      let outgoingRequests = this.state.stats.split('out_requests: ')[1].split(',')[0]
-      let outgoingUpcoming = this.state.stats.split('out_upcoming: ')[1].split(',')[0]
-      let outgoingHistory = this.state.stats.split('out_history: ')[1].split(',')[0]
-      let incomingRequests = this.state.stats.split('in_requests: ')[1].split(',')[0]
-      let incomingUpcoming = this.state.stats.split('in_upcoming: ')[1].split(',')[0]
-      let incomingHistory = this.state.stats.split('in_history: ')[1].split(',')[0]
+      let outgoingRequests = parseInt(this.state.stats.out_requests)
+      let outgoingUpcoming = parseInt(this.state.stats.out_upcoming)
+      let outgoingHistory = parseInt(this.state.stats.out_history)
+      let incomingRequests = parseInt(this.state.stats.in_requests)
+      let incomingUpcoming = parseInt(this.state.stats.in_upcoming)
+      let incomingHistory = parseInt(this.state.stats.in_history)
       let incomingBookingStats, incomingSegment, incomingText, incomingCTA, outgoingBookingStats, outgoingSegment, outgoingText, outgoingCTA, errorDisplay
 
       if (this.state.errorDisplay) {
@@ -91,7 +91,7 @@ class AllBookings extends Component {
         )
       }
 
-      if (outgoingRequests !== '0' || outgoingUpcoming !== '0' || outgoingHistory !== '0') {
+      if (outgoingRequests !== 0 || outgoingUpcoming !== 0 || outgoingHistory !== 0) {
         outgoingBookingStats = (
           <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
             {t('AllBookings:requests')}&nbsp;{outgoingRequests}&thinsp;
@@ -138,7 +138,7 @@ class AllBookings extends Component {
         )
       }
 
-      if (incomingRequests !== '0' || incomingUpcoming !== '0' || incomingHistory !== '0') {
+      if (incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0) {
         incomingBookingStats = (
           <p className='small-centered-paragraph' style={{ 'color': 'white' }}>
             {t('AllBookings:requests')}&nbsp;{incomingRequests}&thinsp;
@@ -147,7 +147,7 @@ class AllBookings extends Component {
           </p>
         )
 
-        if (incomingRequests !== '0') {
+        if (incomingRequests !== 0) {
           incomingText = (
             <p style={{ 'textAlign': 'center' }}>
               <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
@@ -250,7 +250,7 @@ class AllBookings extends Component {
             <p style={{ 'textAlign': 'center' }}>
               {t('AllBookings:header-page')}
             </p>
-            {incomingRequests !== '0' || incomingUpcoming !== '0' || incomingHistory !== '0' ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
+            {incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0 ? <>{incomingSegment}{outgoingSegment}</> : <>{outgoingSegment}{incomingSegment}</>}
           </div>
         </>
       )
