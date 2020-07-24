@@ -232,14 +232,15 @@ const UserPage = (props) => {
       }
       try {
         const response = await axios.get(bookings, { headers: headers })
-        let outgoingUpcoming = response.data.message.split('out_upcoming: ')[1].split(',')[0]
-        let incomingRequests = response.data.message.split('in_requests: ')[1].split(',')[0]
-        let incomingUpcoming = response.data.message.split('in_upcoming: ')[1].split(',')[0]
-        if (incomingRequests !== '0' || incomingUpcoming !== '0') {
+        let outgoingUpcoming = parseInt(response.data.stats.out_upcoming)
+        let incomingRequests = parseInt(response.data.stats.in_requests)
+        let incomingUpcoming = parseInt(response.data.stats.in_upcoming)
+
+        if (incomingRequests !== 0 || incomingUpcoming !== 0) {
           window.alert(t('UserPage:delete-alert'))
           setDeleteDipslayNone(false)
         }
-        else if (outgoingUpcoming !== '0' && window.confirm(t('UserPage:delete-consent'))) {
+        else if (outgoingUpcoming !== 0 && window.confirm(t('UserPage:delete-consent'))) {
           const path = '/api/v1/auth'
           const headers = {
             uid: window.localStorage.getItem('uid'),
@@ -262,7 +263,7 @@ const UserPage = (props) => {
               }
             })
         }
-        else if (incomingRequests === '0' && incomingUpcoming === '0' && outgoingUpcoming === '0' && window.confirm(t('UserPage:delete-confirm'))) {
+        else if (incomingRequests === 0 && incomingUpcoming === 0 && outgoingUpcoming === 0 && window.confirm(t('UserPage:delete-confirm'))) {
           const path = '/api/v1/auth'
           const headers = {
             uid: window.localStorage.getItem('uid'),
