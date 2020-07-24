@@ -27,13 +27,14 @@ class SearchResults extends Component {
     hostProfileId: '',
     score: '',
     reviewsCount: '',
-    searchDataLocation: '',
     results: 'list',
     openHostPopup: false,
     scrollOffset: 0,
     loading: true,
     errorDisplay: false,
-    errors: []
+    errors: [],
+    availableByLocation: [],
+    availableAllLocations: []
   }
 
   geolocationDataAddress = () => {
@@ -60,23 +61,30 @@ class SearchResults extends Component {
         })
       } else {
         const lang = detectLanguage()
-        let allAvailableHosts = []
+        let availableAllLocations
+        let availableByLocation
+
+        if (this.props.history.location.state.searchData.length > 0) {
+          availableByLocation = this.props.history.location.state.searchData.filter(host => host.user.id !== this.props.id)
+          availableByLocation.sort((a, b) => (b.score - a.score))
+          this.setState({
+            availableByLocation: availableByLocation
+          })
+        }
+
         axios.get(`/api/v1/host_profiles?startDate=${this.props.history.location.state.from}&endDate=${this.props.history.location.state.to}&cats=${this.props.history.location.state.cats}&locale=${lang}`).then(response => {
           if (response.data !== '' && response.data.length > 0) {
-            let availableByDate = response.data
-            availableByDate.map(host => {
-              if (this.props.id !== host.user.id) {
-                let bookingLength = (this.props.history.location.state.to - this.props.history.location.state.from) / 86400000 + 1
-                let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * bookingLength
-                allAvailableHosts.push(
-                  {
-                    id: host.user.id,
-                    lat: parseFloat(host.lat),
-                    lng: parseFloat(host.long),
-                    total: total
-                  }
-                )
-              }
+            availableAllLocations = response.data.filter(host => host.user.id !== this.props.id)
+            availableAllLocations.map(host => {
+              let bookingLength = (this.props.history.location.state.to - this.props.history.location.state.from) / 86400000 + 1
+              let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * bookingLength
+              host.id = host.user.id
+              host.lat = parseFloat(host.lat)
+              host.lng = parseFloat(host.long)
+              host.total = total
+            })
+            this.setState({
+              availableAllLocations: availableAllLocations
             })
           }
         }).catch(error => {
@@ -101,8 +109,7 @@ class SearchResults extends Component {
           checkOutDate: this.props.history.location.state.to,
           numberOfCats: this.props.history.location.state.cats,
           location: this.props.history.location.state.location,
-          searchDataLocation: this.props.history.location.state.searchData,
-          allAvailableHosts: allAvailableHosts
+          availableByLocation: availableByLocation
         })
         this.geolocationDataAddress()
       }
@@ -294,26 +301,15 @@ class SearchResults extends Component {
     const { t } = this.props
     let inDate = moment(this.state.checkInDate).format('l')
     let outDate = moment(this.state.checkOutDate).format('l')
-    let finalAvailableHosts = []
     let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results, errorDisplay
 
     if (this.props.tReady) {
-      if (this.state.searchDataLocation !== '' && this.state.searchDataLocation.length > 0) {
-        let availableByDate = this.state.searchDataLocation
-        availableByDate.map(host => {
-          if (this.props.id !== host.user.id) {
-            finalAvailableHosts.push(host)
-          }
-        })
-        finalAvailableHosts.sort((a, b) => (b.score - a.score))
-      }
-
       switch (this.state.results) {
         case 'list':
           results = (
             <div id='search-results-wrapper'>
               <List
-                finalAvailableHosts={finalAvailableHosts}
+                finalAvailableHosts={this.state.availableByLocation}
                 numberOfCats={this.state.numberOfCats}
                 checkInDate={this.state.checkInDate}
                 checkOutDate={this.state.checkOutDate}
@@ -326,7 +322,7 @@ class SearchResults extends Component {
           listButtonStyle = ({ 'backgroundColor': '#c90c61', 'cursor': 'pointer' })
           resultCounter = (
             <Trans
-              values={{ count: finalAvailableHosts.length }}
+              values={{ count: this.state.availableByLocation.length }}
               i18nKey='SearchResults:counter'
             />
           )
@@ -340,7 +336,7 @@ class SearchResults extends Component {
                 checkOutDate={this.state.checkOutDate}
                 mapCenterLat={this.state.locationLat}
                 mapCenterLong={this.state.locationLong}
-                allAvailableHosts={this.state.allAvailableHosts}
+                allAvailableHosts={this.state.availableAllLocations}
                 handleDatapointClick={this.handleDatapointClick.bind(this)}
               />
             </div>
@@ -349,7 +345,7 @@ class SearchResults extends Component {
           listButtonStyle = ({ 'backgroundColor': 'grey', 'cursor': 'pointer' })
           resultCounter = (
             <Trans
-              values={{ count: finalAvailableHosts.length }}
+              values={{ count: this.state.availableByLocation.length }}
               i18nKey='SearchResults:counter'
             />
           )
