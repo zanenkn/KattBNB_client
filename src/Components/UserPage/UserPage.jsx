@@ -46,7 +46,7 @@ const UserPage = (props) => {
   const [loadingHostProfile, setLoadingHostProfile] = useState(true)
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
-  const [deleteDisplayNone, setDeleteDipslayNone] = useState(false)
+  const [deleteDisplayNone, setDeleteDisplayNone] = useState(false)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -217,9 +217,9 @@ const UserPage = (props) => {
 
   const destroyAccount = async () => {
     avatarFormHandler()
-    setDeleteDipslayNone(true)
+    setDeleteDisplayNone(true)
     if (window.navigator.onLine === false) {
-      setDeleteDipslayNone(false)
+      setDeleteDisplayNone(false)
       setErrorDisplay(true)
       setErrors(['reusable:errors:window-navigator'])
     } else {
@@ -238,7 +238,7 @@ const UserPage = (props) => {
 
         if (incomingRequests !== 0 || incomingUpcoming !== 0) {
           window.alert(t('UserPage:delete-alert'))
-          setDeleteDipslayNone(false)
+          setDeleteDisplayNone(false)
         }
         else if (outgoingUpcoming !== 0 && window.confirm(t('UserPage:delete-consent'))) {
           const path = '/api/v1/auth'
@@ -286,13 +286,13 @@ const UserPage = (props) => {
               }
             })
         } else {
-          setDeleteDipslayNone(false)
+          setDeleteDisplayNone(false)
         }
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 500) {
-          setDeleteDipslayNone(false)
+          setDeleteDisplayNone(false)
           setErrorDisplay(true)
           setErrors(['reusable:errors:500'])
         } else if (error.response.status === 503) {
@@ -301,7 +301,7 @@ const UserPage = (props) => {
           window.alert(t('reusable:errors:401'))
           wipeCredentials('/')
         } else {
-          setDeleteDipslayNone(false)
+          setDeleteDisplayNone(false)
           setErrorDisplay(true)
           setErrors(error.response.data.error)
         }
