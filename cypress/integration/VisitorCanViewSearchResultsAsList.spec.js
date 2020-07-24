@@ -36,7 +36,7 @@ describe('Visitor can view search results as a list', () => {
     cy.get('div[class="list-card"]').last().should('have.id', '33')
   })
 
-  it.only('and see correct prices', () => {
+  it('and see correct prices', () => {
     cy.get('#22').within(() => {
       cy.contains('560 kr')
     })

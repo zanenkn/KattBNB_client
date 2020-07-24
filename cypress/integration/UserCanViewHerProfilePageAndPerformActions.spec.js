@@ -142,7 +142,7 @@ describe('User can view her profile page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: { "message": "in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0" }
+      response: 'fixture:booking_stats_0.json'
     })
     cy.get('#delete-account-link').click()
     cy.on('window:confirm', (str) => {
@@ -165,7 +165,7 @@ describe('User can view her profile page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: { "message": "in_requests: 2, in_upcoming: 1, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0" }
+      response: 'fixture:booking_stats.json'
     })
     cy.get('#delete-account-link').click()
     cy.on('window:alert', (str) => {
@@ -174,7 +174,7 @@ describe('User can view her profile page', () => {
     cy.location('pathname').should('eq', '/user-page')
   })
 
-  it('and gets alert to give her consent cause of outgoing bookings when deleting her account', () => {
+  it.only('and gets alert to give her consent cause of outgoing bookings when deleting her account', () => {
     cy.route({
       method: 'DELETE',
       url: 'http://localhost:3007/api/v1/auth',
@@ -185,7 +185,16 @@ describe('User can view her profile page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: { "message": "in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 1, out_history: 0" }
+      response: {
+        "stats": {
+          "in_requests": 0,
+          "in_upcoming": 0,
+          "in_history": 0,
+          "out_requests": 0,
+          "out_upcoming": 1,
+          "out_history": 0
+        }
+      }
     })
     cy.get('#delete-account-link').click()
     cy.on('window:confirm', (str) => {
