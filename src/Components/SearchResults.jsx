@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Form, Icon, Grid, Header, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Geocode from 'react-geocode'
-import { getBookingLength } from '../Modules/booking'
 import List from './List'
 import GoogleMap from './Map/GoogleMap'
 import HostProfileView from './HostProfileView/HostProfileView'
@@ -67,7 +66,8 @@ class SearchResults extends Component {
             let availableByDate = response.data
             availableByDate.map(host => {
               if (this.props.id !== host.user.id) {
-                let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * parseFloat(getBookingLength(this.props.history.location.state.from, this.props.history.location.state.to))
+                let bookingLength = (this.props.history.location.state.to - this.props.history.location.state.from) / 86400000 + 1
+                let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * bookingLength
                 allAvailableHosts.push(
                   {
                     id: host.user.id,
