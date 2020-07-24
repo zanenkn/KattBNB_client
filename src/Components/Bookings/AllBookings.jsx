@@ -13,7 +13,7 @@ class AllBookings extends Component {
   state = {
     errorDisplay: false,
     errors: [],
-    stats: 'in_requests: 0, in_upcoming: 0, in_history: 0, out_requests: 0, out_upcoming: 0, out_history: 0',
+    stats: {},
     loading: true
   }
 
