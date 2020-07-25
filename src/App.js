@@ -26,7 +26,6 @@ import BookingDetails from './Components/Bookings/BookingDetails'
 import AllConversations from './Components/Messenger/AllConversations'
 import Conversation from './Components/Messenger/SingleConversation'
 import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
-import NoAccess from './Components/ReusableComponents/NoAccess'
 import Error503 from './Components/ReusableComponents/Error503'
 import Partners from './Components/Menu/Partners'
 import HostEn from './Components/HostEn'
@@ -41,66 +40,6 @@ import { Switch, Route } from 'react-router-dom'
 class App extends Component {
 
   render() {
-    let userPageRoute, allBookingsRoute, outgoingBookingsRoute, incomingBookingsRoute, messengerRoute, conversationRoute, leaveReviewRoute
-
-    if (this.props.currentUserIn) {
-      userPageRoute = (
-        <Route exact path='/user-page' component={UserPage}></Route>
-      )
-
-      allBookingsRoute = (
-        <Route exact path='/all-bookings' component={AllBookings}></Route>
-      )
-
-      outgoingBookingsRoute = (
-        <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
-      )
-
-      incomingBookingsRoute = (
-        <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
-      )
-
-      messengerRoute = (
-        <Route exact path='/messenger' component={AllConversations}></Route>
-      )
-
-      conversationRoute = (
-        <Route exact path='/conversation' component={Conversation}></Route>
-      )
-
-      leaveReviewRoute = (
-        <Route exact path='/leave-a-review' component={LeaveReview}></Route>
-      )
-    } else {
-      userPageRoute = (
-        <NoAccess />
-      )
-
-      allBookingsRoute = (
-        <NoAccess />
-      )
-
-      outgoingBookingsRoute = (
-        <NoAccess />
-      )
-
-      incomingBookingsRoute = (
-        <NoAccess />
-      )
-
-      messengerRoute = (
-        <NoAccess />
-      )
-
-      conversationRoute = (
-        <NoAccess />
-      )
-
-      leaveReviewRoute = (
-        <NoAccess />
-      )
-    }
-
     return (
       <>
         <Navbar />
@@ -135,13 +74,13 @@ class App extends Component {
               <Route exact path='/become-host' component={HostEn}></Route>
               <Route exact path='/bli-kattvakt' component={HostSe}></Route>
               <Route exact path='/successful-review' component={SuccessfulReview}></Route>
-              {userPageRoute}
-              {allBookingsRoute}
-              {outgoingBookingsRoute}
-              {incomingBookingsRoute}
-              {messengerRoute}
-              {conversationRoute}
-              {leaveReviewRoute}
+              <Route exact path='/user-page' component={UserPage}></Route>
+              <Route exact path='/all-bookings' component={AllBookings}></Route>
+              <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
+              <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
+              <Route exact path='/messenger' component={AllConversations}></Route>
+              <Route exact path='/conversation' component={Conversation}></Route>
+              <Route exact path='/leave-a-review' component={LeaveReview}></Route>
             </Switch>
           </ScrollToTop>
           <Menu />
@@ -153,7 +92,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   menuVisible: state.animation.menuVisible,
-  currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn
 })
 
 export default connect(mapStateToProps)(App)

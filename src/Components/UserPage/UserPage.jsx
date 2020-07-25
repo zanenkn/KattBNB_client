@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import withAuth from '../../HOC/withAuth'
 import HostProfileForm from '../HostProfile/HostProfileForm'
 import HostProfile from '../HostProfile/HostProfile'
 import Spinner from '../ReusableComponents/Spinner'
@@ -502,4 +503,4 @@ const mapStateToProps = state => ({
   langPref: state.reduxTokenAuth.currentUser.attributes.langPref
 })
 
-export default connect(mapStateToProps)(UserPage)
+export default connect(mapStateToProps)(withAuth(UserPage))

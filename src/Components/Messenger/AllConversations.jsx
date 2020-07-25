@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import withAuth from '../../HOC/withAuth'
 import Spinner from '../ReusableComponents/Spinner'
 import { connect } from 'react-redux'
 import { Image, Header, Grid, Divider, Message } from 'semantic-ui-react'
@@ -170,4 +171,4 @@ class AllConversations extends Component {
 
 const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
 
-export default withTranslation('AllConversations')(connect(mapStateToProps)(AllConversations))
+export default withTranslation('AllConversations')(connect(mapStateToProps)(withAuth(AllConversations)))

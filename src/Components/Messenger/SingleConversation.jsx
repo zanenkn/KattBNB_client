@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import withAuth from '../../HOC/withAuth'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -39,6 +40,9 @@ class Conversation extends Component {
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })
+    //This else if is needed to redirect to /messenger if the user enters the url manually (no props) --- delete this comment before merging
+    } else if (window.history.state === null) {
+      window.location.replace('/messenger')
     } else {
       const lang = detectLanguage()
       const headers = {
@@ -265,7 +269,11 @@ class Conversation extends Component {
     } else { this.clearImage() }
   }
 
-  componentWillMount() { this.createSocket() }
+  componentWillMount() {
+    if (window.history.state === null) {
+      window.location.replace('/messenger')
+    } else { this.createSocket() }
+  }
 
   render() {
     const { t } = this.props
@@ -438,4 +446,4 @@ const mapStateToProps = state => ({
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar
 })
 
-export default withTranslation('SingleConversation')(connect(mapStateToProps)(Conversation))
+export default withTranslation('SingleConversation')(connect(mapStateToProps)(withAuth(Conversation)))

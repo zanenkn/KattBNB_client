@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import withAuth from '../../HOC/withAuth'
 import { Header, Button, Icon, Container, Message } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
@@ -29,6 +30,9 @@ class IncomingBookings extends Component {
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })
+      //This else if is needed to redirect to /all-bookings if the user enters the url manually (no props) --- delete this comment before merging
+    } else if (window.history.state === null) {
+      window.location.replace('/all-bookings')
     } else {
       const inBookings = `/api/v1/bookings?stats=no&host_nickname=${this.props.location.state.hostNickname}&locale=${lang}`
       const headers = {
@@ -180,4 +184,4 @@ class IncomingBookings extends Component {
   }
 }
 
-export default withTranslation('IncomingBookings')(IncomingBookings)
+export default withTranslation('IncomingBookings')(withAuth(IncomingBookings))

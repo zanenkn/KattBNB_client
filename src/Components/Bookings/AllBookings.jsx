@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import withAuth from '../../HOC/withAuth'
 import Spinner from '../ReusableComponents/Spinner'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
@@ -263,4 +264,4 @@ const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id
 })
 
-export default withTranslation('AllBookings')(connect(mapStateToProps)(AllBookings))
+export default withTranslation('AllBookings')(connect(mapStateToProps)(withAuth(AllBookings)))
