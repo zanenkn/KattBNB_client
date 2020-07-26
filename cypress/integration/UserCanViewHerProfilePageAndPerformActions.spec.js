@@ -174,7 +174,7 @@ describe('User can view her profile page', () => {
     cy.location('pathname').should('eq', '/user-page')
   })
 
-  it.only('and gets alert to give her consent cause of outgoing bookings when deleting her account', () => {
+  it('and gets alert to give her consent cause of outgoing bookings when deleting her account', () => {
     cy.route({
       method: 'DELETE',
       url: 'http://localhost:3007/api/v1/auth',

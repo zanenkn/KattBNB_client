@@ -78,11 +78,11 @@ describe('User can view her host profile', () => {
     cy.contains('You have selected no avatar')
   })
 
-  it('and if she logs out and visits the user-page path manually, she gets an error message', () => {
+  it.only('and if she logs out and visits the user-page path manually, she gets redirected to the login page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout')
     cy.wait(2000)
     cy.visit('http://localhost:3000/user-page')
-    cy.contains("Don't be a stranger. You need to log in to view this section!")
+    cy.contains("Log in")
   })
 })

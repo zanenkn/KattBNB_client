@@ -109,7 +109,6 @@ class SearchResults extends Component {
           checkOutDate: this.props.history.location.state.to,
           numberOfCats: this.props.history.location.state.cats,
           location: this.props.history.location.state.location,
-          availableByLocation: availableByLocation
         })
         this.geolocationDataAddress()
       }
