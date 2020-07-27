@@ -6,13 +6,6 @@ describe('Visitor can sign up', () => {
   })
 
   it('successfully', () => {
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:3007/api/v1/auth',
-      status: 200,
-      response: 'fixture:successful_signup.json'
-    })
-
     cy.get('.hamburger-box').click()
     cy.get('#login').click()
     cy.get('#create-account').click()
@@ -32,7 +25,6 @@ describe('Visitor can sign up', () => {
 
     cy.get('#location').click()
     cy.get('.visible > .selected > .text').click()
-
     cy.get('.fitted > label').click()
     cy.get('#sign-up-button').click()
     cy.visit('http://localhost:3000/signup-success')
@@ -59,7 +51,6 @@ describe('Visitor can sign up', () => {
 
     cy.get('.fitted > label').click()
     cy.get('#sign-up-button').click()
-
     cy.contains("You didn't input the captcha phrase correctly, please try again!")
   })
 

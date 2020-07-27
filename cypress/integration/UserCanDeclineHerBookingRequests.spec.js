@@ -3,15 +3,15 @@ describe('User can decline her booking request', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_host_bookings.json'
+      response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: 'fixture:all_user_bookings.json'
+      response: 'fixture:all_host_bookings.json'
     })
     cy.route({
       method: 'PATCH',

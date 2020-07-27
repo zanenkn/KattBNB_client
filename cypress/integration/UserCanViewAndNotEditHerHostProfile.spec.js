@@ -20,12 +20,6 @@ describe('User can view her host profile', () => {
       response: []
     })
     cy.route({
-      method: 'GET',
-      url: 'https://maps.google.com/maps/api/geocode/json?address=charles%20de%20gaulle%20airport&key=AIzaSyBocaDJSR80uzUcSvWfciq6at2729MC7kM',
-      status: 200,
-      response: 'fixture:successful_address_search2.json'
-    })
-    cy.route({
       method: 'DELETE',
       url: 'http://localhost:3007/api/v1/auth/sign_out',
       status: 200,
@@ -33,7 +27,7 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: ''
     })
