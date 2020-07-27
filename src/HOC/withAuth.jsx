@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
   id: state.reduxTokenAuth.currentUser.attributes.id
 })
 
-//compose is a redux thing, needed to combine connect and our own HOC --- delete this comment before merging
 const withAuth = compose(
   connect(mapStateToProps, null), auth
 )

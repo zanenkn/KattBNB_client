@@ -78,7 +78,7 @@ describe('User can view her host profile', () => {
     cy.contains('You have selected no avatar')
   })
 
-  it.only('and if she logs out and visits the user-page path manually, she gets redirected to the login page', () => {
+  it('and if she logs out and visits the user-page path manually, she gets redirected to the login page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout')
     cy.wait(2000)

@@ -187,12 +187,12 @@ describe('User can view her profile page', () => {
       status: 200,
       response: {
         "stats": {
-          "in_requests": 0,
-          "in_upcoming": 0,
-          "in_history": 0,
-          "out_requests": 0,
-          "out_upcoming": 1,
-          "out_history": 0
+          "in_requests": "0",
+          "in_upcoming": "0",
+          "in_history": "0",
+          "out_requests": "0",
+          "out_upcoming": "1",
+          "out_history": "0"
         }
       }
     })

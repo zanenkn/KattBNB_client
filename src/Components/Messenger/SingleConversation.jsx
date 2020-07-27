@@ -40,7 +40,6 @@ class Conversation extends Component {
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })
-    //This else if is needed to redirect to /messenger if the user enters the url manually (no props) --- delete this comment before merging
     } else if (window.history.state === null) {
       window.location.replace('/messenger')
     } else {

@@ -32,7 +32,6 @@ const Login = (props) => {
         .then(() => {
           setSuccessDisplay(true)
           setErrorDisplay(false)
-          //this is needed to redirect correctly if user is not logged in and goes to protected component by entering url manually --- delete this comment before merging
           if (history === undefined) {
             window.location.reload()
           } else if (history.length <= 2) {
