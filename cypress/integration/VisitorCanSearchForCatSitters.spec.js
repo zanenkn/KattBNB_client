@@ -27,7 +27,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
   it('successfully, but there are no matching results and she gets a relevant message', () => {
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
       response: 'fixture:search_no_results.json'
     })
@@ -48,13 +48,13 @@ describe('Visitor can search for cat sitters on landing page', () => {
   it('successfully and can click on no matching results relevant message, get redirected and have the search criteria prefilled', () => {
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
       response: 'fixture:search_no_results.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
       response: ''
     })
@@ -84,7 +84,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
   it('and sees a secondary header with all the search criteria she selected', () => {
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=15&locale=en-US',
       status: 200,
       response: 'fixture:search_no_results.json'
     })

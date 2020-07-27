@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import withAuth from '../../HOC/withAuth'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'
 import { Trans, useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
@@ -161,4 +162,4 @@ const LeaveReview = (props) => {
   } else { return <Spinner /> }
 }
 
-export default LeaveReview
+export default withAuth(LeaveReview)

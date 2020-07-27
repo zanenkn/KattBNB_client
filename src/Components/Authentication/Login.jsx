@@ -32,7 +32,9 @@ const Login = (props) => {
         .then(() => {
           setSuccessDisplay(true)
           setErrorDisplay(false)
-          if (history.length <= 2) {
+          if (history === undefined) {
+            window.location.reload()
+          } else if (history.length <= 2) {
             history.push('/')
           } else {
             history.go(-1)

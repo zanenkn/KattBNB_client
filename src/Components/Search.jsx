@@ -79,7 +79,11 @@ class Search extends Component {
       })
     } else {
       const lang = detectLanguage()
-      await axios.get(`/api/v1/host_profiles?location=${this.state.location}&locale=${lang}`).then(response => {
+      let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
+      let msFrom = new Date(utcFrom).getTime()
+      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
+      let msTo = new Date(utcTo).getTime()
+      await axios.get(`/api/v1/host_profiles?location=${this.state.location}&startDate=${msFrom}&endDate=${msTo}&cats=${this.state.cats}&locale=${lang}`).then(response => {
         this.setState({
           searchData: response.data,
           loading: false,
@@ -105,10 +109,6 @@ class Search extends Component {
           })
         }
       })
-      let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
-      let msFrom = new Date(utcFrom).getTime()
-      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
-      let msTo = new Date(utcTo).getTime()
       this.props.history.push({
         pathname: '/search-results',
         state: {

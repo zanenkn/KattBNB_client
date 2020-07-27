@@ -4,15 +4,15 @@ describe('Visitor can view search results as a map', () => {
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list.json'
+      response: 'fixture:search_results_list_2.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list.json'
+      response: 'fixture:search_results_list_2.json'
     })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
@@ -79,6 +79,13 @@ describe('Visitor can view search results as a map', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: []
+    })
+
     let hostData = [
       [
         '#nickname', '#description', '#per-day',
@@ -86,6 +93,7 @@ describe('Visitor can view search results as a map', () => {
       ],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
     ]
+
     cy.get('#2').click({ force: true })
     cy.get('#more').click()
 
