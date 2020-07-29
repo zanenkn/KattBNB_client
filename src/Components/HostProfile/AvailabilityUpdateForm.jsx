@@ -133,13 +133,8 @@ class AvailabilityUpdateForm extends Component {
     if (this.props.tReady) {
       let errorDisplay
       const lang = detectLanguage()
-      let disabledAvailabilityBookings = []
-      let disabledAvailabilityDates = []
-      let disabledDaysSorted = []
 
       const today = new Date()
-      let utc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
-      let todaysDate = new Date(utc).getTime()
 
       let disabledDaysDates = [{ before: today }]
 
@@ -157,14 +152,7 @@ class AvailabilityUpdateForm extends Component {
       }
 
       if (this.state.incomingBookings.length > 0) {
-        this.state.incomingBookings.map(booking => {
-          if (booking.status === 'pending' || (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > todaysDate)) {
-            disabledAvailabilityBookings.push(booking.dates)
-          }
-          disabledAvailabilityDates = disabledAvailabilityBookings.flat()
-          disabledDaysSorted = disabledAvailabilityDates.sort()
-        })
-        disabledDaysSorted.map(day => {
+        this.state.incomingBookings.map(day => {
           disabledDaysDates.push(new Date(day))
         })
       }
