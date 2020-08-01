@@ -4,9 +4,9 @@ import NetlifyForm from 'react-netlify-form'
 import { withTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 import { Helmet } from 'react-helmet'
-import FacebookIcon from '../ReusableComponents/FacebookIcon'
-import InstagramIcon from '../ReusableComponents/InstagramIcon'
-import LinkedinIcon from '../ReusableComponents/LinkedinIcon'
+import FacebookIcon from '../Icons/FacebookIcon'
+import InstagramIcon from '../Icons/InstagramIcon'
+import LinkedinIcon from '../Icons/LinkedinIcon'
 
 class ContactUs extends Component {
 

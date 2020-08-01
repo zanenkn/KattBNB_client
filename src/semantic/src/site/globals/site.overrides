@@ -81,6 +81,11 @@ button:focus {
   margin: auto;
 }
 
+
+.some-icon:hover {
+  fill: #c90c61;
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -344,10 +349,13 @@ button:focus {
 }
 
 .landing-hero-wrapper {
-  height: calc(var(--vh, 1vh) * 100 - 60px);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.device-height {
+  height: calc(var(--vh, 1vh) * 100 - 60px);
 }
 
 .mobile > .landing-desktop-content {
@@ -362,15 +370,38 @@ button:focus {
   justify-content: center;
 }
 
+.desktop > .landing-mobile-content {
+  display: none;
+}
+
+.landing-mobile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  padding: 3rem 0;
+}
+
+.min-device-height {
+  min-height: calc(var(--vh, 1vh) * 100 - 60px);
+}
+
 @media screen and (min-height: 736px) {
-  .landing-hero-wrapper {
+  .device-height {
     height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+  .min-device-height {
+    min-height: calc(var(--vh, 1vh) * 100 - 75px);
   }
 }
 
 @media screen and (min-height: 1024px) {
-  .landing-hero-wrapper {
+  .device-height {
     height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+  .min-device-height {
+    min-height: calc(var(--vh, 1vh) * 100 - 90px);
   }
 }
 
