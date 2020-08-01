@@ -132,7 +132,7 @@ class AllBookings extends Component {
           <Header
             className='fake-link'
             style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-outgoing-bookings'
-            onClick={() => { this.props.history.push('/') }}
+            onClick={() => { this.props.history.push('/search') }}
           >
             {t('AllBookings:outgoing-cta')}
           </Header>
