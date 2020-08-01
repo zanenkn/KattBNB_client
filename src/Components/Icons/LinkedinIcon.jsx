@@ -2,7 +2,7 @@ import React from 'react'
 
 const LinkedinIcon = (props) => {
   return (
-    <svg height={props.height} fill={props.fill} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
+    <svg height={props.height} fill={props.fill} class={props.class} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
       <g>
         <g>
           <g>
