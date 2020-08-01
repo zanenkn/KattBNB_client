@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './semantic/dist/semantic.min.css'
+import Landing from './Components/Landing'
 import Navbar from './Components/Navbar'
 import Menu from './Components/Menu/Menu'
 import Search from './Components/Search'

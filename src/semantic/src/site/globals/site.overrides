@@ -329,6 +329,37 @@ button:focus {
 
 
 /*******************************
+         LANDING PAGE
+*******************************/
+
+.landing-hero-wrapper.mobile {
+  background-image: url(themes/assets/Kisse_mobile.jpg);
+}
+
+.landing-hero-wrapper.desktop {
+  background-image: url(themes/assets/Kisse_desktop.jpg);
+}
+
+.landing-hero-wrapper {
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (min-height: 736px) {
+  .landing-hero-wrapper {
+    height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+}
+
+@media screen and (min-height: 1024px) {
+  .landing-hero-wrapper {
+    height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+}
+
+/*******************************
             CONTENT
 *******************************/
 
