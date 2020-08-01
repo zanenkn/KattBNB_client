@@ -21,7 +21,7 @@ const List = (props) => {
               Your search did not yield any results! Try <Link className='fake-link'
                 style={{ 'textDecoration': 'underline' }}
                 to={{
-                  pathname: '/',
+                  pathname: '/search',
                   state: {
                     checkInDate: new Date(props.checkInDate),
                     checkOutDate: new Date(props.checkOutDate),
