@@ -338,6 +338,9 @@ button:focus {
 
 .landing-hero-wrapper.desktop {
   background-image: url(themes/assets/Kisse_desktop.jpg);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .landing-hero-wrapper {
@@ -345,6 +348,18 @@ button:focus {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.mobile > .landing-desktop-content {
+  display: none;
+}
+
+.landing-desktop-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (min-height: 736px) {
