@@ -52,7 +52,7 @@ const Landing = () => {
             </p>
           </div>
           <div className='landing-mobile-content'>
-            <KattBNBLogo width={'100px'} />
+            <KattBNBLogo class={'landing-mobile-logo'} />
             <div style={{ 'width': '165px' }}>
               <Link to={'/search'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>

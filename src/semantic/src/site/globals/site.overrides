@@ -387,6 +387,10 @@ button:focus {
   min-height: calc(var(--vh, 1vh) * 100 - 60px);
 }
 
+.landing-mobile-logo {
+  width: 100px;
+}
+
 @media screen and (min-height: 736px) {
   .device-height {
     height: calc(var(--vh, 1vh) * 100 - 75px);
@@ -402,6 +406,19 @@ button:focus {
   }
   .min-device-height {
     min-height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+}
+
+
+@media screen and (min-height: 1366px) {
+  .landing-mobile-content {
+    padding: 8rem 0;
+  }
+  .landing-mobile-logo {
+    margin-bottom: 2rem;
+  }
+  .landing-hero-wrapper > .landing-mobile-content {
+    justify-content: flex-end;
   }
 }
 
