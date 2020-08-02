@@ -2,6 +2,10 @@
          Site Overrides
 *******************************/
 
+body {
+  height: unset;
+}
+
 .disable-scrollbars::-webkit-scrollbar {
    width: 0px;
    background: transparent; /* Chrome/Safari/Webkit */
@@ -86,6 +90,30 @@ button:focus {
   fill: #c90c61;
 }
 
+.onboarding-video-wrapper {
+  position: relative; 
+  margin: 0 auto;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: max-content;
+  width: 100%
+}
+
+@media screen and (min-width: 425px) {
+  .onboarding-video-wrapper {
+    width: 425px;
+    padding-top: 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .onboarding-video-wrapper {
+    width: 450px;
+  }
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -112,7 +140,7 @@ button:focus {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100 - 60px);
   position: relative;
-  padding-top: 60px;
+  margin-top: 60px;
 }
 
 #menu {
@@ -169,7 +197,7 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 75px);
-    padding-top: 75px;
+    margin-top: 75px;
   }
   #menu {
     margin-top: 75px;
@@ -195,7 +223,7 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 90px);
-    padding-top: 90px;
+    margin-top: 90px;
   }
   #menu {
     margin-top: 90px;
