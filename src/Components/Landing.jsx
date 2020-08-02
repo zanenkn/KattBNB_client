@@ -32,7 +32,7 @@ const Landing = () => {
               <Link to={'/search'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
               </Link>
-              <Link to={'/sign-up'}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
               </Link>
             </div>
@@ -57,7 +57,7 @@ const Landing = () => {
               <Link to={'/search'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
               </Link>
-              <Link to={'/sign-up'}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
               </Link>
             </div>
@@ -71,7 +71,7 @@ const Landing = () => {
               <Link to={'/search'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
               </Link>
-              <Link to={'/sign-up'}>
+              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
                 <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
               </Link>
             </div>
