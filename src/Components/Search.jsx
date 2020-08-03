@@ -191,9 +191,9 @@ class Search extends Component {
           <Helmet>
             <title>KattBNB - boka kattvakt online!</title>
             <meta name='description' content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!' />
-            <link rel='canonical' href='https://kattbnb.se' />
+            <link rel='canonical' href='https://kattbnb.se/search' />
             <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-            <meta property='og:url' content='https://kattbnb.se' />
+            <meta property='og:url' content='https://kattbnb.se/search' />
             <meta property='og:type' content='website' />
             <meta property='og:description' content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />

@@ -5,6 +5,7 @@ import Spinner from './ReusableComponents/Spinner'
 import { useTranslation } from 'react-i18next'
 import { Header, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import FacebookIcon from './Icons/FacebookIcon'
 import InstagramIcon from './Icons/InstagramIcon'
 import LinkedinIcon from './Icons/LinkedinIcon'
@@ -32,6 +33,16 @@ const Landing = () => {
   if (ready) {
     return (
       <>
+        <Helmet>
+          <title>KattBNB - kattvakt online!</title>
+          <meta name='description' content='Att hitta en kattvakt du kan lita på är ingen enkel uppgift. Vi är här för att hjälpa dig. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
+          <link rel='canonical' href='https://kattbnb.se' />
+          <meta property='og:title' content='KattBNB - kattvakt online!' />
+          <meta property='og:url' content='https://kattbnb.se' />
+          <meta property='og:type' content='website' />
+          <meta property='og:description' content='Att hitta en kattvakt du kan lita på är ingen enkel uppgift. Vi är här för att hjälpa dig. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
         <div className={`device-height landing-hero-wrapper ${dimentions}`}>
           <div className='landing-desktop-content'>
             <KattBNBLogomark width={'100px'} />
@@ -71,7 +82,7 @@ const Landing = () => {
                   <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
                 </Link>
               </div>
-              <div className='scroll-down-cta' onClick={() => scrollDown()} style={{'visibility': ctaVisibility}}>
+              <div className='scroll-down-cta' onClick={() => scrollDown()} style={{ 'visibility': ctaVisibility }}>
                 <Icon link='#' name='angle down' size='huge' color='grey' />
               </div>
             </div>
