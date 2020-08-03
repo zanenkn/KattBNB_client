@@ -32,7 +32,7 @@ describe('Visitor can view menu', () => {
   it('and can toggle menu visibility off by clicking outside the menu', () => {
     cy.get('.hamburger-box').click()
     cy.get('#menu').should('be.visible')
-    cy.get('h1.ui').click()
+    cy.get('[width="100px"] > [fill="#C90B61"]').click({ force: true })
     cy.get('#menu').should('not.be.visible')
   })
 })

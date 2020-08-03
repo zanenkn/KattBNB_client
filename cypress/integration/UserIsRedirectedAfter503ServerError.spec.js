@@ -10,6 +10,6 @@ describe('User is redirected after 503 server error', () => {
 
   it('unsuccessfuly cause you cannot navigate manually to the path', () => {
     cy.visit('http://localhost:3000/is-not-available')
-    cy.contains('Find a cat sitter!')
+    cy.contains('Welcome to KattBNB!')
   })
 })

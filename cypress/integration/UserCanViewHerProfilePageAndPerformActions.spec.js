@@ -151,7 +151,7 @@ describe('User can view her profile page', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your account was succesfully deleted!')
     })
-    cy.contains('Find a cat sitter!')
+    cy.contains('Welcome to KattBNB!')
   })
 
   it('and gets alert to check FAQ cause of incoming bookings when deleting her account', () => {
@@ -203,6 +203,6 @@ describe('User can view her profile page', () => {
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your account was succesfully deleted!')
     })
-    cy.contains('Find a cat sitter!')
+    cy.contains('Welcome to KattBNB!')
   })
 })

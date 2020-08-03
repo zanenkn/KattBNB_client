@@ -13,7 +13,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: ''
     })
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/search')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
@@ -82,7 +82,7 @@ describe('Visitor can view search results as a list', () => {
 
   it('and send a message to the host only if she is logged in', () => {
     cy.server()
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/search')
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
@@ -126,7 +126,7 @@ describe('Visitor can view search results as a list', () => {
 
   it('and gets redirected to relevant route to send a message if she is logged in', () => {
     cy.server()
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/search')
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',

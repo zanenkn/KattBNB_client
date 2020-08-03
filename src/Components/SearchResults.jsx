@@ -52,7 +52,7 @@ class SearchResults extends Component {
 
   componentDidMount() {
     if (this.props.history.location.state === undefined) {
-      this.props.history.push({ pathname: '/' })
+      this.props.history.push({ pathname: '/search' })
     } else {
       if (window.navigator.onLine === false) {
         this.setState({
