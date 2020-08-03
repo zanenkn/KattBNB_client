@@ -160,7 +160,7 @@ const UserPage = (props) => {
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token')
         }
-        const pathIncoming = `/api/v1/bookings?stats=no&host_nickname=${props.username}&locale=${lang}`
+        const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${props.username}&locale=${lang}`
         const responseIncoming = await axios.get(pathIncoming, { headers: headers })
         setIncomingBookings(responseIncoming.data)
         setErrorDisplay(false)

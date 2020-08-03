@@ -27,9 +27,9 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
-      response: ''
+      response: []
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
