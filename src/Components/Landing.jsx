@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import KattBNBLogomark from './Icons/KattBNBLogomark'
 import KattBNBLogo from './Icons/KattBNBLogo'
 import Spinner from './ReusableComponents/Spinner'
@@ -11,13 +11,22 @@ import LinkedinIcon from './Icons/LinkedinIcon'
 
 const Landing = () => {
   const [dimentions, setDimentions] = useState('mobile')
+  const [ctaVisibility, setCtaVisibility] = useState('visible')
+  const mobileText = useRef(null)
 
   const { t, ready } = useTranslation('Landing')
+
+  const scrollDown = () => {
+    window.scrollTo({ top: mobileText.current.getBoundingClientRect().top - 60, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     window.innerHeight > window.innerWidth ? setDimentions('mobile') : setDimentions('desktop')
     window.addEventListener('resize', () => {
       window.innerHeight > window.innerWidth ? setDimentions('mobile') : setDimentions('desktop')
+    })
+    window.addEventListener('scroll', () => {
+      window.scrollY > 0 ? setCtaVisibility('hidden') : setCtaVisibility('visible')
     })
   }, [])
   if (ready) {
@@ -54,7 +63,7 @@ const Landing = () => {
           <div className='landing-mobile-content'>
             <KattBNBLogo class={'landing-mobile-logo'} />
             <div style={{ 'width': '165px' }}>
-              <div style={{'marginBottom': '1rem'}}>
+              <div style={{ 'marginBottom': '1rem' }}>
                 <Link to={'/search'}>
                   <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
                 </Link>
@@ -62,13 +71,13 @@ const Landing = () => {
                   <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
                 </Link>
               </div>
-              <div className='scroll-down-cta'>
+              <div className='scroll-down-cta' onClick={() => scrollDown()} style={{'visibility': ctaVisibility}}>
                 <Icon link='#' name='angle down' size='huge' color='grey' />
               </div>
             </div>
           </div>
         </div>
-        <div className={`min-device-height ${dimentions}`} style={{ 'alignItems': 'center', 'justifyContent': 'center', 'display': dimentions === 'mobile' ? 'flex' : 'none' }}>
+        <div ref={mobileText} className={`min-device-height ${dimentions}`} style={{ 'alignItems': 'center', 'justifyContent': 'center', 'display': dimentions === 'mobile' ? 'flex' : 'none' }}>
           <div style={{ 'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'padding': '3rem 2rem' }}>
             <Header as='h1'>{t('Landing:title')}</Header>
             <p style={{ 'textAlign': 'center', 'maxWidth': '300px' }} dangerouslySetInnerHTML={{ __html: t('Landing:text') }}></p>
