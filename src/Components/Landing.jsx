@@ -3,7 +3,7 @@ import KattBNBLogomark from './Icons/KattBNBLogomark'
 import KattBNBLogo from './Icons/KattBNBLogo'
 import Spinner from './ReusableComponents/Spinner'
 import { useTranslation } from 'react-i18next'
-import { Header, Button } from 'semantic-ui-react'
+import { Header, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import FacebookIcon from './Icons/FacebookIcon'
 import InstagramIcon from './Icons/InstagramIcon'
@@ -54,12 +54,17 @@ const Landing = () => {
           <div className='landing-mobile-content'>
             <KattBNBLogo class={'landing-mobile-logo'} />
             <div style={{ 'width': '165px' }}>
-              <Link to={'/search'}>
-                <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
-              </Link>
-              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
-              </Link>
+              <div style={{'marginBottom': '1rem'}}>
+                <Link to={'/search'}>
+                  <Button style={{ 'width': '100%' }}>{t('Landing:cta-find')}</Button>
+                </Link>
+                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
+                  <Button style={{ 'width': '100%' }}>{t('Landing:cta-become')}</Button>
+                </Link>
+              </div>
+              <div className='scroll-down-cta'>
+                <Icon link='#' name='angle down' size='huge' color='grey' />
+              </div>
             </div>
           </div>
         </div>

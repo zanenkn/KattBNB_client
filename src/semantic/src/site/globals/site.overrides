@@ -408,7 +408,7 @@ button:focus {
   align-items: center;
   height: 100%;
   justify-content: space-between;
-  padding: 3rem 0;
+  padding: 3rem 0 0;
 }
 
 .min-device-height {
@@ -437,10 +437,48 @@ button:focus {
   }
 }
 
+.scroll-down-cta {
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  -webkit-animation: jump 2s infinite 2s;
+  animation: jump 2s infinite 2s;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  transform: scale(1)
+}
+
+.scroll-down-cta:before {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 6px);
+  display: block;
+  width: 12px;
+  height: 12px;
+  content: "";
+}
+
+@keyframes jump {
+  0%, 100%, 20%, 50%, 80% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
 
 @media screen and (min-height: 1366px) {
   .landing-mobile-content {
-    padding: 8rem 0;
+    padding: 8rem 0 2rem;
   }
   .landing-mobile-logo {
     margin-bottom: 2rem;
