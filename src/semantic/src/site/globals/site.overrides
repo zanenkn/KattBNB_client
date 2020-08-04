@@ -114,6 +114,17 @@ button:focus {
   }
 }
 
+.booking-request {
+  box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.2);
+  margin: 0 0 2rem;
+}
+
+@media screen and (max-width: 700px) {
+  .booking-request {
+    margin: 0 -2rem 2rem;
+  }
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -133,6 +144,11 @@ button:focus {
 }
 .icon {
   height: 25px;
+}
+
+.booking-type-wrapper {
+  margin-top: -210px; 
+  padding-top: 210px;
 }
 
 #app-content {
@@ -212,6 +228,10 @@ button:focus {
   #map-wrapper {
     height: calc(var(--vh, 1vh) * 100 - 225px);
   }
+  .booking-type-wrapper {
+    margin-top: -225px; 
+    padding-top: 225px;
+  }
 }
 
 @media screen and (min-height: 1024px) {
@@ -237,6 +257,10 @@ button:focus {
   }
   #map-wrapper {
     height: calc(var(--vh, 1vh) * 100 - 240px);
+  }
+  .booking-type-wrapper {
+    margin-top: -240px; 
+    padding-top: 240px;
   }
 }
 
@@ -660,44 +684,24 @@ h4 {
 .messenger-wrapper {
   margin-left: auto;
   margin-right: auto;
-}
-
-@media screen and (min-width: 10px) {
-  .messenger-wrapper {
-    margin-top: 5rem;
-  }
-}
-
-@media screen and (min-width: 400px) {
-  .messenger-wrapper {
-    margin-top: 6rem;
-  }
+  padding-top: 66px;
 }
 
 @media screen and (min-width: 700px) {
   .messenger-wrapper {
-    margin-top: 7rem;
-    width: 560px
-  }
-}
-
-@media screen and (min-width: 870px) {
-  .messenger-wrapper {
-    margin-top: 8rem;
     width: 560px
   }
 }
 
 @media screen and (min-width: 992px) {
   .messenger-wrapper {
-    margin-top: 9rem;
     width: 600px
   }
 }
 
+
 @media screen and (min-width: 1200px) {
   .messenger-wrapper {
-    margin-top: 10.5rem;
     width: 660px
   }
 }

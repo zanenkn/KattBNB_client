@@ -145,18 +145,18 @@ class IncomingBookings extends Component {
               </Button.Group>
             </div>
           </div>
-          <Container style={{ 'marginTop': '150px' }}>
-            <div className='expanding-wrapper' style={{ 'paddingTop': '2rem' }}>
+          <Container style={{ 'paddingTop': '150px' }}>
+            <div className='expanding-wrapper'>
               {errorDisplay}
-              <div ref={(el) => { this.requests = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
-                <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '0' }}>
+              <div ref={(el) => { this.requests = el }} className='booking-type-wrapper'>
+                <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '2rem' }}>
                   {t('IncomingBookings:requests')}
                 </Header>
                 <IncomingRequests
                   requests={incomingRequests}
                 />
               </div>
-              <div ref={(el) => { this.upcoming = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
+              <div ref={(el) => { this.upcoming = el }} className='booking-type-wrapper'>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                   {t('IncomingBookings:upcoming')}
                 </Header>
@@ -164,7 +164,7 @@ class IncomingBookings extends Component {
                   upcoming={incomingUpcoming}
                 />
               </div>
-              <div ref={(el) => { this.history = el }} style={{ 'marginTop': '-36vh', 'paddingTop': '36vh' }}>
+              <div ref={(el) => { this.history = el }} className='booking-type-wrapper'>
                 <Header as='h2' style={{ 'marginBottom': '0', 'marginTop': '3rem' }}>
                   {t('IncomingBookings:history')}
                 </Header>

@@ -110,7 +110,7 @@ class AllConversations extends Component {
     } else {
       return (
         <>
-          <div style={{ 'margin': '0 auto', 'paddingTop': '5vw', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'paddingBottom': '1rem', 'boxShadow': boxShadow }}>
+          <div id='secondary-sticky' style={{'height': '80px', 'display': 'flex', 'flexDirection': 'column','justifyContent': 'center', 'boxShadow': boxShadow }}>
             <Header as='h1'>
               {t('AllConversations:header')}
             </Header>
