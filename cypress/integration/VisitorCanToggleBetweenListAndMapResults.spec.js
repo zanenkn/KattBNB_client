@@ -1,7 +1,7 @@
 describe('Visitor can toggle between list and map results', () => {
   before(function () {
     cy.server()
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/search')
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',

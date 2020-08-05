@@ -2,6 +2,10 @@
          Site Overrides
 *******************************/
 
+body {
+  height: unset;
+}
+
 .disable-scrollbars::-webkit-scrollbar {
    width: 0px;
    background: transparent; /* Chrome/Safari/Webkit */
@@ -81,6 +85,46 @@ button:focus {
   margin: auto;
 }
 
+
+.some-icon:hover {
+  fill: #c90c61;
+}
+
+.onboarding-video-wrapper {
+  position: relative; 
+  margin: 0 auto;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: max-content;
+  width: 100%
+}
+
+@media screen and (min-width: 425px) {
+  .onboarding-video-wrapper {
+    width: 425px;
+    padding-top: 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .onboarding-video-wrapper {
+    width: 450px;
+  }
+}
+
+.booking-request {
+  box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.2);
+  margin: 0 0 2rem;
+}
+
+@media screen and (max-width: 700px) {
+  .booking-request {
+    margin: 0 -2rem 2rem;
+  }
+}
+
 /*******************************
             NAVBAR
 *******************************/
@@ -102,12 +146,17 @@ button:focus {
   height: 25px;
 }
 
+.booking-type-wrapper {
+  margin-top: -210px; 
+  padding-top: 210px;
+}
+
 #app-content {
   margin: 0 auto;
   width: 100%;
   height: calc(var(--vh, 1vh) * 100 - 60px);
   position: relative;
-  padding-top: 60px;
+  margin-top: 60px;
 }
 
 #menu {
@@ -164,7 +213,7 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 75px);
-    padding-top: 75px;
+    margin-top: 75px;
   }
   #menu {
     margin-top: 75px;
@@ -179,6 +228,10 @@ button:focus {
   #map-wrapper {
     height: calc(var(--vh, 1vh) * 100 - 225px);
   }
+  .booking-type-wrapper {
+    margin-top: -225px; 
+    padding-top: 225px;
+  }
 }
 
 @media screen and (min-height: 1024px) {
@@ -190,7 +243,7 @@ button:focus {
   }
   #app-content {
     height: calc(var(--vh, 1vh) * 100 - 90px);
-    padding-top: 90px;
+    margin-top: 90px;
   }
   #menu {
     margin-top: 90px;
@@ -204,6 +257,10 @@ button:focus {
   }
   #map-wrapper {
     height: calc(var(--vh, 1vh) * 100 - 240px);
+  }
+  .booking-type-wrapper {
+    margin-top: -240px; 
+    padding-top: 240px;
   }
 }
 
@@ -327,6 +384,133 @@ button:focus {
   transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
 }
 
+
+/*******************************
+         LANDING PAGE
+*******************************/
+
+.landing-hero-wrapper.mobile {
+  background-image: url(themes/assets/Kisse_mobile.jpg);
+}
+
+.landing-hero-wrapper.desktop {
+  background-image: url(themes/assets/Kisse_desktop.jpg);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.landing-hero-wrapper {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.device-height {
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+}
+
+.mobile > .landing-desktop-content {
+  display: none;
+}
+
+.landing-desktop-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.desktop > .landing-mobile-content {
+  display: none;
+}
+
+.landing-mobile-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  padding: 3rem 0 0;
+}
+
+.min-device-height {
+  min-height: calc(var(--vh, 1vh) * 100 - 60px);
+}
+
+.landing-mobile-logo {
+  width: 100px;
+}
+
+@media screen and (min-height: 736px) {
+  .device-height {
+    height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+  .min-device-height {
+    min-height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
+}
+
+@media screen and (min-height: 1024px) {
+  .device-height {
+    height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+  .min-device-height {
+    min-height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+}
+
+.scroll-down-cta {
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  -webkit-animation: jump 2s infinite 2s;
+  animation: jump 2s infinite 2s;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  transform: scale(1)
+}
+
+.scroll-down-cta:before {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 6px);
+  display: block;
+  width: 12px;
+  height: 12px;
+  content: "";
+}
+
+@keyframes jump {
+  0%, 100%, 20%, 50%, 80% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+@media screen and (min-height: 1366px) {
+  .landing-mobile-content {
+    padding: 8rem 0 2rem;
+  }
+  .landing-mobile-logo {
+    margin-bottom: 2rem;
+  }
+  .landing-hero-wrapper > .landing-mobile-content {
+    justify-content: flex-end;
+  }
+}
 
 /*******************************
             CONTENT
@@ -500,44 +684,24 @@ h4 {
 .messenger-wrapper {
   margin-left: auto;
   margin-right: auto;
-}
-
-@media screen and (min-width: 10px) {
-  .messenger-wrapper {
-    margin-top: 5rem;
-  }
-}
-
-@media screen and (min-width: 400px) {
-  .messenger-wrapper {
-    margin-top: 6rem;
-  }
+  padding-top: 66px;
 }
 
 @media screen and (min-width: 700px) {
   .messenger-wrapper {
-    margin-top: 7rem;
-    width: 560px
-  }
-}
-
-@media screen and (min-width: 870px) {
-  .messenger-wrapper {
-    margin-top: 8rem;
     width: 560px
   }
 }
 
 @media screen and (min-width: 992px) {
   .messenger-wrapper {
-    margin-top: 9rem;
     width: 600px
   }
 }
 
+
 @media screen and (min-width: 1200px) {
   .messenger-wrapper {
-    margin-top: 10.5rem;
     width: 660px
   }
 }

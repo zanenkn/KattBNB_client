@@ -136,8 +136,8 @@ class IncomingRequests extends Component {
                 total = priceWithDecimalsString
               }
               return (
-                <Segment className='whitebox' data-cy='incoming-requests' key={request.id}>
-                  <Grid className='topbox'>
+                <div className='booking-request' data-cy='incoming-requests' key={request.id}>
+                  <Grid style={{ 'background': '#c90c61', 'margin': '0' }}>
                     <Grid.Row style={{ 'alignItems': 'center' }} >
                       <Grid.Column width={8}>
                         <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{total} kr</Header>
@@ -168,29 +168,31 @@ class IncomingRequests extends Component {
                       </p>
                     </div>
                   </Grid>
-                  <p className='small-centered-paragraph'>
-                    <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
-                      <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                  <div style={{'padding': '2rem'}}>
+                    <p className='small-centered-paragraph'>
+                      <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
+                        <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                      </Trans>
-                  </p>
-                  <Popup modal trigger={
-                    <p className='fake-link-underlined'>
-                      {t('IncomingRequests:view-message')}
                     </p>
-                  }
-                    position='top center'
-                    closeOnDocumentClick={true}
-                  >
-                    <IncRequestPopup
-                      nickname={request.user.nickname}
-                      number_of_cats={request.number_of_cats}
-                      startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
-                      endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-                      message={request.message}
-                      avatar={request.user.profile_avatar}
-                    />
-                  </Popup>
-                </Segment>
+                    <Popup modal trigger={
+                      <p className='fake-link-underlined'>
+                        {t('IncomingRequests:view-message')}
+                      </p>
+                    }
+                      position='top center'
+                      closeOnDocumentClick={true}
+                    >
+                      <IncRequestPopup
+                        nickname={request.user.nickname}
+                        number_of_cats={request.number_of_cats}
+                        startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+                        endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+                        message={request.message}
+                        avatar={request.user.profile_avatar}
+                      />
+                    </Popup>
+                  </div>
+                </div>
               )
             })}
           </>

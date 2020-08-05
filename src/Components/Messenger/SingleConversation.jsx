@@ -302,7 +302,7 @@ class Conversation extends Component {
               />
             </div>
           </Popup>
-          <div style={{ 'margin': '0 auto', 'padding': '5vw 1.5rem 1rem', 'background': 'white', 'position': 'fixed', 'top': '10vh', 'overflow': 'hidden', 'width': '100%', 'zIndex': '100', 'boxShadow': boxShadow }}>
+          <div id='secondary-sticky' style={{'height': '80px', 'display': 'flex', 'flexDirection': 'column','justifyContent': 'center', 'boxShadow': boxShadow }}>
             <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
               <div

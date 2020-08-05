@@ -2,7 +2,7 @@ import React from 'react'
 
 const InstagramIcon = (props) => {
   return (
-    <svg height={props.height} fill={props.fill} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
+    <svg height={props.height} fill={props.fill} class={props.class} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
       <g>
         <g>
           <path class="st0" d="M540,0C242.25,0,0,242.25,0,540s242.25,540,540,540s540-242.25,540-540S837.75,0,540,0z M883.12,670.73

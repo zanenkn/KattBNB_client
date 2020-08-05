@@ -28,7 +28,7 @@ const OutRequestCancelledPopup = (props) => {
         </p>
         <p style={{ 'margin': '1rem 0 0' }}>
           <Trans i18nKey='OutRequestCancelledPopup:try-again'>
-            Try to <Header as={Link} to='/' className='fake-link-underlined-reg' style={{ 'fontStyle': 'normal' }}>search again</Header>, we hope you find a perfect host soon!
+            Try to <Header as={Link} to='/search' className='fake-link-underlined-reg' style={{ 'fontStyle': 'normal' }}>search again</Header>, we hope you find a perfect host soon!
           </Trans>
         </p>
       </>

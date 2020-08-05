@@ -8,7 +8,7 @@ const HostSe = (props) => {
   const vid = useRef(null)
 
   const [buttonOpacity, setButtonOpacity] = useState(0)
-  const [skipLinkPosition, setSkipLinkPosition] = useState('5vh')
+  const [skipLinkPosition, setSkipLinkPosition] = useState('3rem')
   const [skipLinkOpacity, setSkipLinkOpacity] = useState('1')
 
   useEffect(() => {
@@ -18,12 +18,12 @@ const HostSe = (props) => {
 
   const videoEnded = () => {
     setButtonOpacity(1)
-    setSkipLinkPosition('-5vh')
+    setSkipLinkPosition('0')
     setSkipLinkOpacity('0')
   }
 
   return (
-    <div className='content-wrapper' style={{ 'display': 'flex', 'minHeight': '90vh' }}>
+    <div className='device-height' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'space-between' }}>
       <Helmet>
         <title>Bli kattvakt på KattBNB!</title>
         <meta name='description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
@@ -34,8 +34,8 @@ const HostSe = (props) => {
         <meta property='og:description' content='Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.' />
         <meta property='og:image' content='https://kattbnb.se/bli_kattvakt_og.png' />
       </Helmet>
-      <div style={{ 'position': 'relative', 'margin': '0 auto', 'paddingTop': '1rem', 'display': 'flex', 'flexDirection': 'column', 'overflow': 'hidden', 'height': 'max-content' }}>
-        <video width='100%' ref={vid} muted='muted' playsinline='playsinline' webkit-playsinline autoplay onEnded={() => videoEnded()} style={{ 'maxWidth': '500px' }}>
+      <div className='onboarding-video-wrapper'>
+        <video width='100%' ref={vid} muted='muted' playsinline='playsinline' webkit-playsinline autoplay onEnded={() => videoEnded()}>
           <source src='kattvakt_480.mp4' type='video/mp4'></source>
         </video>
         <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>

@@ -46,7 +46,7 @@ describe('User can create a booking request', () => {
         'uid': 'george@mail.com',
       }
     })
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/search')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.hamburger-box').click()
@@ -99,7 +99,7 @@ describe('User can create a booking request', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout').click()
 
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/search')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()

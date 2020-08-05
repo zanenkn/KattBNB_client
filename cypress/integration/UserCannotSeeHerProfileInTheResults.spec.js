@@ -27,7 +27,7 @@ describe('User cannot see her profile', () => {
       }
     })
 
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/search')
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.hamburger-box').click()

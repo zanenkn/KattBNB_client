@@ -1,7 +1,7 @@
 describe('Visitor can search for cat sitters on landing page', () => {
   beforeEach(function () {
     cy.server()
-    cy.visit('http://localhost:3000/')
+    cy.visit('http://localhost:3000/search')
   })
 
   it('and gets an error message if number of cats is outside criteria', () => {
