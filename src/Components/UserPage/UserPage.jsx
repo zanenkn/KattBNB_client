@@ -434,6 +434,7 @@ const UserPage = (props) => {
         {hostProfile.length === 1 && loadingHostProfile === false &&
           <HostProfile
             id={hostProfile[0].id}
+            email={props.email}
             description={element.description}
             fullAddress={element.fullAddress}
             rate={element.rate}
