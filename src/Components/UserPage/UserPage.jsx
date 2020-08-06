@@ -48,6 +48,8 @@ const UserPage = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [deleteDisplayNone, setDeleteDisplayNone] = useState(false)
+  const [hostStripeState, setHostStripeState] = useState(null)
+  const [hostStripeAccountId, setHostStripeAccountId] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -91,6 +93,8 @@ const UserPage = (props) => {
               messageNotifications: props.messageNotifications,
               langPref: props.langPref
             })
+            setHostStripeState(resp.data.stripe_state)
+            setHostStripeAccountId(resp.data.stripe_account_id)
             setForbiddenDates(resp.data.forbidden_dates)
             setHostProfileScore(resp.data.score)
             setLoadingHostProfile(false)
@@ -440,6 +444,8 @@ const UserPage = (props) => {
             score={hostProfileScore}
             location={props.location}
             incomingBookings={incomingBookings}
+            stripeState={hostStripeState}
+            stripeAccountId={hostStripeAccountId}
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
             ref={hostProfileElement}
             setElement={elementUpdateHandler.bind(this)}

@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { Divider, Header, Message, Segment } from 'semantic-ui-react'
+import { Divider, Header, Message, Segment, Button } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
@@ -214,6 +214,11 @@ const HostProfile = forwardRef((props, ref) => {
             />
           </div>
         </Segment>
+        {props.stripeAccountId === null ? 
+          <Button>Connect with Stripe</Button>
+          :
+          <p>Go to your stripe dashboard</p>
+        }
       </>
     )
   } else { return <Spinner /> }
