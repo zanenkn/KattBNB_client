@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
 import { Divider, Header, Message, Segment, Button } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
@@ -10,6 +10,10 @@ import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
 import AddressUpdateForm from './AddressUpdateForm'
 import AllReviews from '../Reviews/AllReviews'
 import Spinner from '../ReusableComponents/Spinner'
+import queryString from 'query-string'
+import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const HostProfile = forwardRef((props, ref) => {
 
@@ -25,6 +29,49 @@ const HostProfile = forwardRef((props, ref) => {
     editableCalendar: false,
     editAddress: false
   })
+
+  useEffect(() => {
+    if (queryString.parse(window.location.search).code && queryString.parse(window.location.search).state === props.stripeState) {
+      if (window.navigator.onLine === false) {
+        setErrorDisplay(true)
+        setErrors(['reusable:errors:window-navigator'])
+      } else {
+        const lang = detectLanguage()
+        const path = `/api/v1/host_profiles/${props.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          code: queryString.parse(window.location.search).code,
+          locale: lang
+        }
+        axios.patch(path, payload, { headers: headers })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch(error => {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 500) {
+              //setLoading(false)
+              setErrorDisplay(true)
+              setErrors(['reusable:errors:500'])
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm')
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'))
+              wipeCredentials('/')
+            } else {
+              //setLoading(false)
+              setErrorDisplay(true)
+              setErrors([error.response.data.error])
+            }
+          })
+      }
+    }
+  }, [])
 
   const closeAllForms = () => {
     setForm(old => ({
