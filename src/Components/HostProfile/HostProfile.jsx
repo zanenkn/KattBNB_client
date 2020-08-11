@@ -12,6 +12,7 @@ import AllReviews from '../Reviews/AllReviews'
 import Spinner from '../ReusableComponents/Spinner'
 import queryString from 'query-string'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -48,8 +49,8 @@ const HostProfile = forwardRef((props, ref) => {
           locale: lang
         }
         axios.patch(path, payload, { headers: headers })
-          .then((response) => {
-            console.log(response)
+          .then(() => {
+            props.history.replace('/user-page')
           })
           .catch(error => {
             if (error.response === undefined) {
@@ -272,4 +273,4 @@ const HostProfile = forwardRef((props, ref) => {
   } else { return <Spinner /> }
 })
 
-export default HostProfile
+export default withRouter(HostProfile)
