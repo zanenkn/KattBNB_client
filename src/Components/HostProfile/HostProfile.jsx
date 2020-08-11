@@ -262,10 +262,9 @@ const HostProfile = forwardRef((props, ref) => {
           </div>
         </Segment>
         {props.stripeAccountId === null ?
-          <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.NODE_ENV === 'production' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
+          <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
             <Button>Connect with Stripe</Button>
           </a>
-
           :
           <p>Go to your stripe dashboard</p>
         }
