@@ -38,7 +38,8 @@ const UserPage = (props) => {
     availability: [],
     location: props.location,
     messageNotifications: props.messageNotifications,
-    langPref: props.langPref
+    langPref: props.langPref,
+    stripeAccountId: null
   })
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [hostProfileScore, setHostProfileScore] = useState(null)
@@ -49,7 +50,6 @@ const UserPage = (props) => {
   const [errors, setErrors] = useState([])
   const [deleteDisplayNone, setDeleteDisplayNone] = useState(false)
   const [hostStripeState, setHostStripeState] = useState(null)
-  const [hostStripeAccountId, setHostStripeAccountId] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -91,10 +91,10 @@ const UserPage = (props) => {
               availability: resp.data.availability,
               location: props.location,
               messageNotifications: props.messageNotifications,
-              langPref: props.langPref
+              langPref: props.langPref,
+              stripeAccountId: resp.data.stripe_account_id
             })
             setHostStripeState(resp.data.stripe_state)
-            setHostStripeAccountId(resp.data.stripe_account_id)
             setForbiddenDates(resp.data.forbidden_dates)
             setHostProfileScore(resp.data.score)
             setLoadingHostProfile(false)
@@ -446,7 +446,7 @@ const UserPage = (props) => {
             location={props.location}
             incomingBookings={incomingBookings}
             stripeState={hostStripeState}
-            stripeAccountId={hostStripeAccountId}
+            stripeAccountId={element.stripeAccountId}
             closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
             ref={hostProfileElement}
             setElement={elementUpdateHandler.bind(this)}

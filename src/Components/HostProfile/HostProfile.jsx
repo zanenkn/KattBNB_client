@@ -49,7 +49,8 @@ const HostProfile = forwardRef((props, ref) => {
           locale: lang
         }
         axios.patch(path, payload, { headers: headers })
-          .then(() => {
+          .then((response) => {
+            props.setElement('stripeAccountId', response.data.id)
             props.history.replace('/user-page')
           })
           .catch(error => {
