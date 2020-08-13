@@ -5,5 +5,6 @@
   "max-cats": "Maximum cats:",
   "extra": "Extra",
   "reviews-header": "Your reviews",
-  "reviews-title": "Here you can see and reply to the <1>reviews</1> others have written about their bookings with you."
+  "reviews-title": "Here you can see and reply to the <1>reviews</1> others have written about their bookings with you.",
+  "stripe-success": "Payment details successfully updated!"
 }

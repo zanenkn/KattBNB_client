@@ -51,6 +51,7 @@ const HostProfile = forwardRef((props, ref) => {
         axios.patch(path, payload, { headers: headers })
           .then((response) => {
             props.setElement('stripeAccountId', response.data.id)
+            window.alert(t('HostProfile:stripe-success'))
             props.history.replace('/user-page')
           })
           .catch(error => {

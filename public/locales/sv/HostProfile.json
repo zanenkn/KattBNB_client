@@ -5,5 +5,6 @@
   "max-cats": "Max antal katter:",
   "extra": "Extra",
   "reviews-header": "Dina recensioner",
-  "reviews-title": "Här kan du se och svara på <1>recensionerna</1> som andra har skrivit om sina bokningar med dig."
+  "reviews-title": "Här kan du se och svara på <1>recensionerna</1> som andra har skrivit om sina bokningar med dig.",
+  "stripe-success": ""
 }
