@@ -9,6 +9,7 @@ import AvailabilityUpdateForm from './AvailabilityUpdateForm'
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
 import AddressUpdateForm from './AddressUpdateForm'
 import AllReviews from '../Reviews/AllReviews'
+import StripeAccountDetails from './StripeAccountDetails'
 import Spinner from '../ReusableComponents/Spinner'
 import queryString from 'query-string'
 import axios from 'axios'
@@ -267,7 +268,12 @@ const HostProfile = forwardRef((props, ref) => {
             <Button>Connect with Stripe</Button>
           </a>
           :
-          <p>Go to your stripe dashboard</p>
+          <>
+            <p>Go to your stripe dashboard</p>
+            <StripeAccountDetails
+              stripeAccountId={props.stripeAccountId}
+            />
+          </>
         }
       </>
     )
