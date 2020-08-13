@@ -271,7 +271,7 @@ const HostProfile = forwardRef((props, ref) => {
           <>
             <p>Go to your stripe dashboard</p>
             <StripeAccountDetails
-              stripeAccountId={props.stripeAccountId}
+              hostProfileId={props.id}
             />
           </>
         }
