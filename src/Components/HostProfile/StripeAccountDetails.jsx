@@ -14,22 +14,22 @@ const StripeAccountDetails = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
 
   useEffect(() => {
-    if (window.navigator.onLine === false) {
-      setErrorDisplay(true)
-      setErrors(['reusable:errors:window-navigator'])
-    } else {
-      const lang = detectLanguage()
-      const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}`
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.get(path, { headers: headers })
-        .then((response) => {
+    async function fetchStripeAccountDetails() {
+      if (window.navigator.onLine === false) {
+        setErrorDisplay(true)
+        setErrors(['reusable:errors:window-navigator'])
+      } else {
+        try {
+          const lang = detectLanguage()
+          const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}`
+          const headers = {
+            uid: window.localStorage.getItem('uid'),
+            client: window.localStorage.getItem('client'),
+            'access-token': window.localStorage.getItem('access-token')
+          }
+          const response = await axios.get(path, { headers: headers })
           console.log(response)
-        })
-        .catch(error => {
+        } catch (error) {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm')
           } else if (error.response.status === 503) {
@@ -41,8 +41,9 @@ const StripeAccountDetails = (props) => {
             setErrorDisplay(true)
             setErrors([error.response.data.error])
           }
-        })
-    }
+        }
+      }
+    } fetchStripeAccountDetails()
   }, [])
 
   if (ready) {
