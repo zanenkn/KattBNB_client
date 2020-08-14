@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Message } from 'semantic-ui-react'
 import axios from 'axios'
+import Spinner from '../ReusableComponents/Spinner'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -43,9 +45,23 @@ const StripeAccountDetails = (props) => {
     }
   }, [])
 
-  return (
-    'yay'
-  )
+  if (ready) {
+    return (
+      <>
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
+        }
+      'yay'
+      </>
+    )
+  } else { return <Spinner /> }
 }
 
 export default StripeAccountDetails
