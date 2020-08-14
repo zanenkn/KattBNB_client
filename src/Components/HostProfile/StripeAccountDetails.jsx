@@ -12,12 +12,14 @@ const StripeAccountDetails = (props) => {
 
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchStripeAccountDetails() {
       if (window.navigator.onLine === false) {
         setErrorDisplay(true)
         setErrors(['reusable:errors:window-navigator'])
+        setLoading(false)
       } else {
         try {
           const lang = detectLanguage()
@@ -29,6 +31,7 @@ const StripeAccountDetails = (props) => {
           }
           const response = await axios.get(path, { headers: headers })
           console.log(response)
+          setLoading(false)
         } catch (error) {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm')
@@ -40,13 +43,14 @@ const StripeAccountDetails = (props) => {
           } else {
             setErrorDisplay(true)
             setErrors([error.response.data.error])
+            setLoading(false)
           }
         }
       }
     } fetchStripeAccountDetails()
   }, [])
 
-  if (ready) {
+  if (ready && loading === false) {
     return (
       <>
         {errorDisplay &&
