@@ -30,9 +30,6 @@ const StripeAccountDetails = (props) => {
         .catch(error => {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm')
-          } else if (error.response.status === 400) {
-            setErrorDisplay(true)
-            setErrors([error.response.data.error])
           } else if (error.response.status === 503) {
             wipeCredentials('/is-not-available?atm')
           } else if (error.response.status === 401) {
