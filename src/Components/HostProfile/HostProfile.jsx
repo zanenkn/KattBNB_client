@@ -279,4 +279,6 @@ const HostProfile = forwardRef((props, ref) => {
   } else { return <Spinner /> }
 })
 
+HostProfile.displayName = 'HostProfile'
+
 export default HostProfile
