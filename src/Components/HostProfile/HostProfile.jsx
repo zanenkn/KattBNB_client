@@ -13,7 +13,6 @@ import StripeAccountDetails from './StripeAccountDetails'
 import Spinner from '../ReusableComponents/Spinner'
 import queryString from 'query-string'
 import axios from 'axios'
-import { withRouter } from 'react-router-dom'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -53,7 +52,7 @@ const HostProfile = forwardRef((props, ref) => {
           .then((response) => {
             props.setElement('stripeAccountId', response.data.id)
             window.alert(t('HostProfile:stripe-success'))
-            props.history.replace('/user-page')
+            window.location.replace('/user-page')
           })
           .catch(error => {
             if (error.response === undefined) {
@@ -280,4 +279,4 @@ const HostProfile = forwardRef((props, ref) => {
   } else { return <Spinner /> }
 })
 
-export default withRouter(HostProfile)
+export default HostProfile
