@@ -111,14 +111,14 @@ const HostProfile = forwardRef((props, ref) => {
     return (
       <>
         <Segment className='whitebox'>
-          <Header as='h1'>
-            {t('HostProfile:main-header')}
+          <Header as='h2'>
+            My host profile
           </Header>
-          <p style={{ 'textAlign': 'center' }}>
+          {/* <p style={{ 'textAlign': 'center' }}>
             <Trans i18nKey='HostProfile:main-title'>
               This is your <strong>host profile.</strong> Here you can update all your cat hosting information.
             </Trans>
-          </p>
+          </p> */}
           {errorDisplay &&
             <Message negative >
               <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
@@ -246,34 +246,6 @@ const HostProfile = forwardRef((props, ref) => {
         </Segment>
         <Divider hidden />
         <Divider hidden />
-        <Segment className='whitebox'>
-          <Header as='h1'>
-            {t('HostProfile:reviews-header')}
-          </Header>
-          <p style={{ 'textAlign': 'center', 'marginBottom': '2rem' }}>
-            <Trans i18nKey='HostProfile:reviews-title'>
-              Here you can see and reply to the <strong>reviews</strong> others have written about you.
-            </Trans>
-          </p>
-          <div>
-            <AllReviews
-              hostProfileId={props.id}
-              score={props.score}
-            />
-          </div>
-        </Segment>
-        {props.stripeAccountId === null ?
-          <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
-            <Button>Connect with Stripe</Button>
-          </a>
-          :
-          <>
-            <p>Go to your stripe dashboard</p>
-            <StripeAccountDetails
-              hostProfileId={props.id}
-            />
-          </>
-        }
       </>
     )
   } else { return <Spinner /> }

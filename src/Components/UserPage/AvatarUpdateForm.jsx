@@ -186,7 +186,7 @@ class AvatarUpdateForm extends Component {
       }
 
       return (
-        <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '2rem' }} >
+        <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '1rem' }} >
           <Icon.Group size='big' onClick={this.props.closeAllForms}>
             <Image src={this.props.avatar === null ? noAvatar : this.props.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
             <Popup

@@ -15,7 +15,9 @@ import NotificationsUpdateForm from './NotificationsUpdateForm'
 import LangPrefUpdateForm from './LangPrefUpdateForm'
 import { useTranslation, Trans } from 'react-i18next'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
-
+import Location from '../Icons/Location'
+import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar'
+import AllReviews from '../Reviews/AllReviews'
 const UserPage = (props) => {
 
   const hostProfileElement = useRef()
@@ -334,21 +336,83 @@ const UserPage = (props) => {
             </Message>
           </div>
         </Popup>
+
+        <AvatarUpdateForm
+          avatar={props.avatar}
+          username={props.username}
+          userId={props.id}
+          closeAllForms={avatarFormHandler.bind(this)}
+        />
+        <Header id='nickname' as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
+          <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+          &ensp;{props.username}
+        </Header>
+
+        <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem', 'justifyContent': 'center' }}>
+          <Location fill={'grey'} height={'1.2em'} />
+          <p style={{ 'margin': '0 0 0 0.5rem' }}>{element.location}</p>
+        </div>
+
+        <Divider hidden />
+        <Divider hidden />
+        {
+          hostProfile.length === 1 && loadingHostProfile === false &&
+          <>
+            <HostProfileProgressBar 
+              stripeAccountId={element.stripeAccountId} 
+              hostProfileId={hostProfile[0].id} 
+              stripeState={hostStripeState} 
+              email={props.email} 
+            />
+            
+            <HostProfile
+              id={hostProfile[0].id}
+              email={props.email}
+              description={element.description}
+              fullAddress={element.fullAddress}
+              rate={element.rate}
+              maxCats={element.maxCats}
+              supplement={element.supplement}
+              availability={element.availability}
+              forbiddenDates={forbiddenDates}
+              score={hostProfileScore}
+              location={props.location}
+              incomingBookings={incomingBookings}
+              stripeState={hostStripeState}
+              stripeAccountId={element.stripeAccountId}
+              closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
+              ref={hostProfileElement}
+              setElement={elementUpdateHandler.bind(this)}
+            />
+          </>
+        }
+        {
+          hostProfile.length === 1 && loadingHostProfile === true &&
+          <Spinner />
+        }
+        {
+          form.createHostProfileForm && hostProfile.length === 0 &&
+          <HostProfileForm
+            user_id={props.id}
+            closeForm={closeLocationAndPasswordForms.bind(this)}
+            location={props.location} />
+        }
+        {
+          form.createHostProfileForm === false && hostProfile.length === 0 &&
+          <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
+            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
+            <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
+              {t('UserPage:host-profile-cta')}
+            </Button>
+
+            <Divider hidden />
+            <Divider hidden />
+          </div>
+        }
         <Segment className='whitebox'>
           <Header as='h2'>
-            <Trans i18nKey='UserPage:greeting' values={{ username: props.username }} />
+            My settings
           </Header>
-          <p style={{ 'textAlign': 'center' }}>
-            <Trans i18nKey='UserPage:user-profile-p'>
-              This is your <strong>user</strong> profile. Here you can update your avatar, location, password and other settings.
-            </Trans>
-          </p>
-          <AvatarUpdateForm
-            avatar={props.avatar}
-            username={props.username}
-            userId={props.id}
-            closeAllForms={avatarFormHandler.bind(this)}
-          />
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>
             <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
@@ -429,51 +493,28 @@ const UserPage = (props) => {
             </div>
           </div>
         </Segment>
+
         <Divider hidden />
         <Divider hidden />
-        {hostProfile.length === 1 && loadingHostProfile === false &&
-          <HostProfile
-            id={hostProfile[0].id}
-            email={props.email}
-            description={element.description}
-            fullAddress={element.fullAddress}
-            rate={element.rate}
-            maxCats={element.maxCats}
-            supplement={element.supplement}
-            availability={element.availability}
-            forbiddenDates={forbiddenDates}
-            score={hostProfileScore}
-            location={props.location}
-            incomingBookings={incomingBookings}
-            stripeState={hostStripeState}
-            stripeAccountId={element.stripeAccountId}
-            closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
-            ref={hostProfileElement}
-            setElement={elementUpdateHandler.bind(this)}
-          />}
-        {hostProfile.length === 1 && loadingHostProfile === true &&
-          <Spinner />
-        }
-        {form.createHostProfileForm && hostProfile.length === 0 &&
-          <HostProfileForm
-            user_id={props.id}
-            closeForm={closeLocationAndPasswordForms.bind(this)}
-            location={props.location} />
-        }
-        {form.createHostProfileForm === false && hostProfile.length === 0 &&
-          <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
-            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
-            <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
-              {t('UserPage:host-profile-cta')}
-            </Button>
-          </div>
+        {hostProfile.length === 1 &&
+          <Segment className='whitebox'>
+            <Header as='h2'>
+              My reviews
+            </Header>
+            <div>
+              <AllReviews
+                hostProfileId={hostProfile[0].id}
+                score={hostProfileScore}
+              />
+            </div>
+          </Segment>
         }
         <Divider hidden />
         <Header id='delete-account-link' onClick={() => destroyAccount()}
           className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem', 'display': deleteDisplayNone && 'none' }} >
           {t('UserPage:delete-cta')}
         </Header>
-      </div>
+      </div >
     )
   } else if (ready && loading) {
     return (
