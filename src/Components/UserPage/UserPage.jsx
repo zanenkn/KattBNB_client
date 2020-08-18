@@ -14,11 +14,12 @@ import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import NotificationsUpdateForm from './NotificationsUpdateForm'
 import LangPrefUpdateForm from './LangPrefUpdateForm'
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import Location from '../Icons/Location'
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar'
 import AllReviews from '../Reviews/AllReviews'
+
 const UserPage = (props) => {
 
   const hostProfileElement = useRef()
@@ -413,7 +414,7 @@ const UserPage = (props) => {
         }
         <Segment className='whitebox'>
           <Header as='h2'>
-            My settings
+            {t('UserPage:settings-header')}
           </Header>
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>
             <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
@@ -501,7 +502,7 @@ const UserPage = (props) => {
         {hostProfile.length === 1 &&
           <Segment className='whitebox'>
             <Header as='h2'>
-              My reviews
+              {t('UserPage:reviews-header')}
             </Header>
             <div>
               <AllReviews

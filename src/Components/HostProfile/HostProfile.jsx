@@ -9,8 +9,6 @@ import SupplementUpdateForm from './SupplementUpdateForm'
 import AvailabilityUpdateForm from './AvailabilityUpdateForm'
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
 import AddressUpdateForm from './AddressUpdateForm'
-import AllReviews from '../Reviews/AllReviews'
-import StripeAccountDetails from './StripeAccountDetails'
 import Spinner from '../ReusableComponents/Spinner'
 import queryString from 'query-string'
 import axios from 'axios'
@@ -123,13 +121,8 @@ const HostProfile = forwardRef((props, ref) => {
       <>
         <Segment className='whitebox'>
           <Header as='h2'>
-            My host profile
+            {t('HostProfile:main-header')}
           </Header>
-          {/* <p style={{ 'textAlign': 'center' }}>
-            <Trans i18nKey='HostProfile:main-title'>
-              This is your <strong>host profile.</strong> Here you can update all your cat hosting information.
-            </Trans>
-          </p> */}
           {errorDisplay &&
             <Message negative >
               <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>

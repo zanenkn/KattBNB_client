@@ -1,10 +1,9 @@
 {
-  "main-header": "Din kattvaktsprofil",
+  "main-header": "Min kattvaktsprofil",
   "main-title": "Det här är din <1>kattvaktsprofil</1>. Här kan du uppdatera all din kattvaktsinformation.",
-  "availability": "Din tillgänglighet",
+  "availability": "Min tillgänglighet",
   "max-cats": "Max antal katter:",
   "extra": "Extra",
-  "reviews-header": "Dina recensioner",
   "reviews-title": "Här kan du se och svara på <1>recensionerna</1> som andra har skrivit om sina bokningar med dig.",
   "stripe-success": "Betalningsinformation uppdaterad!"
 }

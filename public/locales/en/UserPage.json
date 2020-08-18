@@ -10,5 +10,7 @@
   "user-profile-p": "This is your <1>user</1> profile. Here you can update your avatar, location, password and other settings.",
   "delete-cta": "Delete your account",
   "notifications-header": "Notification settings",
-  "lang-pref-header": "Email language"
+  "lang-pref-header": "Email language",
+  "settings-header": "My settings",
+  "reviews-header": "My reviews"
 }
