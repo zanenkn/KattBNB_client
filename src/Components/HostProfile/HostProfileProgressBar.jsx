@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import StripeAccountDetails from './StripeAccountDetails'
 import { Button } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -70,8 +69,8 @@ const HostProfileProgressBar = (props) => {
 
   if (!loading) {
     return (
-      <div style={{ 'marginBottom': '5rem' }}>
-        <div style={{ 'background': '#f5f5f5', 'padding': '1rem' }}>
+      <div style={{ 'margin': '0 auto 5rem', 'maxWidth': '560px' }}>
+        <div style={{ 'background': '#f5f5f5', 'padding': '1rem', 'width': 'max-content', 'margin': 'auto' }}>
           <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
             <div className='explained' style={{ 'marginBottom': '1rem' }}>
               <HostProfile height={'2rem'} fill={'#e0e0e0'} class={`step-explanation ${activeStep >= 1 && 'step-done-fill'}`} />
@@ -109,7 +108,7 @@ const HostProfileProgressBar = (props) => {
         </div>
         {props.stripeAccountId === null ?
           <>
-            <p style={{ 'textAlign': 'center', 'marginTop': '1rem', 'fontSize': 'unset' }}>
+            <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
               You made a host profile but have not provided us with your payment information. Without that we can not pay you for your gigs! <span className='fake-link-underlined'>How we handle payments and your information</span>
             </p>
             <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
