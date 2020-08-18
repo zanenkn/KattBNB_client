@@ -23,6 +23,7 @@ const HostProfile = forwardRef((props, ref) => {
 
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [form, setForm] = useState({
     editDescriptionForm: false,
     editMaxCatsForm: false,
@@ -32,12 +33,13 @@ const HostProfile = forwardRef((props, ref) => {
     editAddress: false
   })
 
-  useEffect(() => {
-    if (queryString.parse(window.location.search).code && queryString.parse(window.location.search).state === props.stripeState) {
-      if (window.navigator.onLine === false) {
-        setErrorDisplay(true)
-        setErrors(['reusable:errors:window-navigator'])
-      } else {
+  async function createStripeAccount() {
+    if (window.navigator.onLine === false) {
+      setLoading(false)
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      try {
         const lang = detectLanguage()
         const path = `/api/v1/host_profiles/${props.id}`
         const headers = {
@@ -49,29 +51,37 @@ const HostProfile = forwardRef((props, ref) => {
           code: queryString.parse(window.location.search).code,
           locale: lang
         }
-        axios.patch(path, payload, { headers: headers })
-          .then((response) => {
-            props.setElement('stripeAccountId', response.data.id)
-            window.alert(t('HostProfile:stripe-success'))
-            window.location.replace('/user-page')
-          })
-          .catch(error => {
-            if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 500 || error.response.status === 400) {
-              setErrorDisplay(true)
-              setErrors([error.response.data.error])
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'))
-              wipeCredentials('/')
-            } else {
-              setErrorDisplay(true)
-              setErrors([error.response.data.error])
-            }
-          })
+        const response = await axios.patch(path, payload, { headers: headers })
+        props.setElement('stripeAccountId', response.data.id)
+        setLoading(false)
+        window.alert(t('HostProfile:stripe-success'))
+        window.location.replace('/user-page')
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500 || error.response.status === 400) {
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.error])
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.error])
+        }
       }
+    }
+  }
+
+  useEffect(() => {
+    if (queryString.parse(window.location.search).code && queryString.parse(window.location.search).state === props.stripeState) {
+      createStripeAccount()
+    } else {
+      setLoading(false)
     }
   }, [])
 
@@ -108,7 +118,7 @@ const HostProfile = forwardRef((props, ref) => {
     props.closeLocPasForms()
   }
 
-  if (ready) {
+  if (ready && loading === false) {
     return (
       <>
         <Segment className='whitebox'>
