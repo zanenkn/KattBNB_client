@@ -1038,15 +1038,15 @@ REACT ADD TO CALENDAR OVERRIDES
 .progress-bar-wrapper {
   display: flex;
   position: relative;
-  max-width: 250px;
+  width: calc(100% - 60px);
   margin: auto;
 }
 
 .progress-bar-line {
   position: absolute;
-  top: 13px;
-  left: 15px;
-  right: 15px;
+  top: 10px;
+  left: 10px;
+  right: 10px;
   height: 4px;
   background: #e0e0e0;
 }
@@ -1077,9 +1077,10 @@ REACT ADD TO CALENDAR OVERRIDES
 }
 
 .progress-bar-step {
+  font-size: smaller;
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   background: #e0e0e0;
   color: #fff;
   display: flex;
@@ -1087,22 +1088,55 @@ REACT ADD TO CALENDAR OVERRIDES
   justify-content: center;
 }
 
-.step-done {
+.step-done-color {
   animation-name: color-change;
   animation-duration: 0.2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.step-done:nth-child(2) {
+.step-done-fill {
+  animation-name: fill-change;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.step-done-color:nth-child(2), .step-done-fill:nth-child(2) {
   animation-delay: 0.4s;
 }
 
-.step-done:nth-child(3) {
+.step-done-color:nth-child(3), .step-done-fill:nth-child(3) {
   animation-delay: 0.8s;
 }
 
 @keyframes color-change {
   from {background-color: silver;}
   to {background-color: #c90c61;}
+}
+
+@keyframes fill-change {
+  from {fill: silver;}
+  to {fill: #c90c61;}
+}
+
+.explained {
+  display: flex;
+  width: 100%;
+  font-size: small;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.step-explanation {
+  text-align: center;
+  width: 80px;
+}
+
+.step-explanation > p {
+  font-size: small;
+}
+
+.step-explanation > svg {
+  fill: #e0e0e0;
 }

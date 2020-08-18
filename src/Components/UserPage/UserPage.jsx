@@ -354,7 +354,6 @@ const UserPage = (props) => {
         </div>
 
         <Divider hidden />
-        <Divider hidden />
         {
           hostProfile.length === 1 && loadingHostProfile === false &&
           <>
@@ -386,6 +385,8 @@ const UserPage = (props) => {
             />
           </>
         }
+        <Divider hidden />
+
         {
           hostProfile.length === 1 && loadingHostProfile === true &&
           <Spinner />
