@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
 import { Divider, Header, Message, Segment, Button } from 'semantic-ui-react'

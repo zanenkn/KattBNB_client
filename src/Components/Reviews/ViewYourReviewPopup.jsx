@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import Spinner from '../ReusableComponents/Spinner'
 import ReviewScore from '../ReusableComponents/ReviewScore'

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import withAuth from '../../HOC/withAuth'
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react'

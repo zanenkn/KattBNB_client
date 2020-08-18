@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from 'react'
 import HostReplyReview from './HostReplyReview'
 import { connect } from 'react-redux'
