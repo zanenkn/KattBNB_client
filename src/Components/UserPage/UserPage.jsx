@@ -349,23 +349,20 @@ const UserPage = (props) => {
           <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &ensp;{props.username}
         </Header>
-
         <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem', 'justifyContent': 'center' }}>
           <Location fill={'grey'} height={'1.2em'} />
           <p style={{ 'margin': '0 0 0 0.5rem' }}>{element.location}</p>
         </div>
-
         <Divider hidden />
         {
           hostProfile.length === 1 && loadingHostProfile === false &&
           <>
-            <HostProfileProgressBar 
-              stripeAccountId={element.stripeAccountId} 
-              hostProfileId={hostProfile[0].id} 
-              stripeState={hostStripeState} 
-              email={props.email} 
+            <HostProfileProgressBar
+              stripeAccountId={element.stripeAccountId}
+              hostProfileId={hostProfile[0].id}
+              stripeState={hostStripeState}
+              email={props.email}
             />
-            
             <HostProfile
               id={hostProfile[0].id}
               email={props.email}
@@ -388,7 +385,6 @@ const UserPage = (props) => {
           </>
         }
         <Divider hidden />
-
         {
           hostProfile.length === 1 && loadingHostProfile === true &&
           <Spinner />
@@ -407,7 +403,6 @@ const UserPage = (props) => {
             <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
               {t('UserPage:host-profile-cta')}
             </Button>
-
             <Divider hidden />
             <Divider hidden />
           </div>
@@ -496,7 +491,6 @@ const UserPage = (props) => {
             </div>
           </div>
         </Segment>
-
         <Divider hidden />
         <Divider hidden />
         {hostProfile.length === 1 &&

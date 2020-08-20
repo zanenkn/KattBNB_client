@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
-import { useTranslation, Trans } from 'react-i18next'
-import { Divider, Header, Message, Segment, Button } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
+import { Divider, Header, Message, Segment } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
 import RateUpdateForm from './RateUpdateForm'
@@ -31,7 +31,7 @@ const HostProfile = forwardRef((props, ref) => {
     editAddress: false
   })
 
-  async function createStripeAccount() {
+  const createStripeAccount = async () => {
     if (window.navigator.onLine === false) {
       setLoading(false)
       setErrorDisplay(true)

@@ -11,6 +11,7 @@ import CreditCard from '../Icons/CreditCard'
 import Verified from '../Icons/Verified'
 
 const HostProfileProgressBar = (props) => {
+
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -18,10 +19,9 @@ const HostProfileProgressBar = (props) => {
   const [payoutSuccess, setPayoutSuccess] = useState(false)
   const [activeStep, setActiveStep] = useState(1)
 
-
   const { t, ready } = useTranslation('HostProfileProgressBar')
 
-  async function fetchStripeAccountDetails() {
+  const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
       setErrorDisplay(true)
       setErrors(['reusable:errors:window-navigator'])
@@ -36,13 +36,14 @@ const HostProfileProgressBar = (props) => {
           'access-token': window.localStorage.getItem('access-token')
         }
         const response = await axios.get(path, { headers: headers })
-        console.log(response)
-        setPayoutSuccess(response.data.payouts_enabled)
-        setStripeAccountErrors(response.data.requirements.errors)
-        if (response.data.payouts_enabled) {
-          setActiveStep(3)
-        } else if (response.data.requirements.errors.length > 0) {
-          setActiveStep(2)
+        if (!response.data.message) {
+          setPayoutSuccess(response.data.payouts_enabled)
+          setStripeAccountErrors(response.data.requirements.errors)
+          if (response.data.payouts_enabled) {
+            setActiveStep(3)
+          } else if (response.data.requirements.errors.length > 0 || response.data.requirements.pending_verification.length > 0) {
+            setActiveStep(2)
+          }
         }
         setLoading(false)
       } catch (error) {
@@ -121,7 +122,6 @@ const HostProfileProgressBar = (props) => {
             <>
               <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
-
             : stripeAccountErrors &&
             <>
               <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
@@ -135,9 +135,7 @@ const HostProfileProgressBar = (props) => {
         }
       </div>
     )
-  } else {
-    return <Spinner />
-  }
+  } else { return <Spinner /> }
 }
 
 export default HostProfileProgressBar
