@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import { Button } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
@@ -19,7 +19,7 @@ const HostProfileProgressBar = (props) => {
   const [activeStep, setActiveStep] = useState(1)
 
 
-  const { t, ready } = useTranslation('')
+  const { t, ready } = useTranslation('HostProfileProgressBar')
 
   async function fetchStripeAccountDetails() {
     if (window.navigator.onLine === false) {
@@ -67,7 +67,7 @@ const HostProfileProgressBar = (props) => {
   }, [])
 
 
-  if (!loading) {
+  if (!loading && ready) {
     return (
       <div style={{ 'margin': '0 auto 5rem', 'maxWidth': '560px' }}>
         <div style={{ 'background': '#f5f5f5', 'padding': '1rem', 'width': 'max-content', 'margin': 'auto' }}>
@@ -95,13 +95,13 @@ const HostProfileProgressBar = (props) => {
             </div>
             <div className='explained' style={{ 'marginTop': '1rem' }}>
               <div className='step-explanation'>
-                <p>Host profile made</p>
+                <p>{t('HostProfileProgressBar:step-1')}</p>
               </div>
               <div className='step-explanation'>
-                <p>Payout information provided</p>
+                <p>{t('HostProfileProgressBar:step-2')}</p>
               </div>
               <div className='step-explanation'>
-                <p>Verified by payment provider</p>
+                <p>{t('HostProfileProgressBar:step-3')}</p>
               </div>
             </div>
           </div>
@@ -109,24 +109,28 @@ const HostProfileProgressBar = (props) => {
         {props.stripeAccountId === null ?
           <>
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-              You made a host profile but have not provided us with your payment information. Without that we can not pay you for your gigs! <span className='fake-link-underlined'>How we handle payments and your information</span>
+              <Trans i18nKey={'HostProfileProgressBar:step-1-text'}>
+                You made a host profile but have not provided us with your payment information. Without that we can not pay you for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+              </Trans>
             </p>
             <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
-              <Button>Enter payment information</Button>
+              <Button>{t('HostProfileProgressBar:stripe-onboarding-cta')}</Button>
             </a>
           </>
           : payoutSuccess ?
             <>
-              <Button>My payment dashboard</Button>
+              <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
 
             : stripeAccountErrors &&
             <>
-              <p style={{ 'textAlign': 'center', 'marginTop': '1rem', 'fontSize': 'unset' }}>
-                You have entered your payment information but are not yet verified with our payment solution provider (Stripe). <span className='fake-link-underlined'>Why is that?</span>
+              <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
+                <Trans i18nKey={'HostProfileProgressBar:step-2-text'}>
+                  You have entered your payment information but are not yet verified with our payment solution provider (Stripe). <span className='fake-link-underlined'>Why is that?</span>
+                </Trans>
               </p>
               {/* <p>{stripeAccountErrors[0].reason}</p> */}
-              <Button>My payment dashboard</Button>
+              <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
       </div>

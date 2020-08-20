@@ -2,7 +2,7 @@ import React from 'react'
 
 const FacebookIcon = (props) => {
   return (
-    <svg height={props.height} fill={props.fill} class={props.class} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
+    <svg height={props.height} fill={props.fill} className={props.class} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" >
       <g>
         <path class="st0" d="M540,0C242.24,0,0,242.24,0,540c0,297.75,242.24,540,540,540s540-242.25,540-540C1080,242.24,837.76,0,540,0z
           M689.79,320.31c0,4.5-3.65,8.15-8.15,8.15H616.7c-15.94,0-28.85,12.92-28.85,28.86v67.99h92.36c4.77,0,8.52,4.08,8.12,8.84

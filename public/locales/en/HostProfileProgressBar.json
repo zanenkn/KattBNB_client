@@ -1,0 +1,9 @@
+{
+  "step-1": "Host profile made",
+  "step-2": "Payout information provided",
+  "step-3": "Verified by payment provider",
+  "step-1-text": "You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <1>Read more on how we handle payments and your information</1>",
+  "step-2-text": "You have entered your payment information but are not yet verified with our payment solution provider (Stripe). <1>Why is that?</1>",
+  "stripe-dashboard-cta": "My payment dashboard",
+  "stripe-onboarding-cta": "Enter payment information"
+}

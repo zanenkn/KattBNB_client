@@ -2,7 +2,7 @@ import React from 'react'
 
 const KattBNBLogo = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width={props.width} class={props.class}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width={props.width} className={props.class}>
       <path fill='#C90B61' d="M150,262.33L150,262.33c-72.44,0-131.16-58.72-131.16-131.16v0C18.84,58.72,77.56,0,150,0h0
 		c72.44,0,131.16,58.72,131.16,131.16v0C281.16,203.6,222.44,262.33,150,262.33z"/>
       <path fill='#ffffff' d="M110.57,87.58l-31.03,24.54c-1.24,0.98-3.06,0.1-3.06-1.48V74.07c0-3.1,3.07-5.27,5.98-4.23l27.82,14.58
