@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { Button } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -132,6 +132,16 @@ const HostProfileProgressBar = (props) => {
               {/* <p>{stripeAccountErrors[0].reason}</p> */}
               <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
+        }
+        {errorDisplay &&
+          <Message negative >
+            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+            <ul id='message-error-list'>
+              {errors.map(error => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Message>
         }
       </div>
     )
