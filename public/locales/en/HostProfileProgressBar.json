@@ -5,6 +5,8 @@
   "step-1-text": "You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <1>Read more on how we handle payments and your information</1>",
   "step-2-text": "You have entered your payment information but are not yet verified with our payment solution provider (Stripe).",
   "step-2-why": "Why is that?",
+  "step-2-pending": "Your verification is pending!",
+  "step-2-go-to-dashboard": "Visit your payment dashboard to complete your verification.",
   "stripe-dashboard-cta": "My payment dashboard",
   "stripe-onboarding-cta": "Enter payment information"
 }

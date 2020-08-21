@@ -5,6 +5,8 @@
   "step-1-text": "Du skapade en kattvaktsprofil men har inte gett oss din betalningsinformation. Utan den kan vi inte överföra pengarna för dina kattpassningar! <1>Läs mer om hur vi hanterar betalningar och din information</1>",
   "step-2-text": "Du har angett din betalningsinformation men har ännu inte bekräftats hos vår betalväxel (Stripe).",
   "step-2-why": "Vad beror det på?",
+  "step-2-pending": "",
+  "step-2-go-to-dashboard": "",
   "stripe-dashboard-cta": "Min betalningspanel",
   "stripe-onboarding-cta": "Ange betalningsinformation"
 }

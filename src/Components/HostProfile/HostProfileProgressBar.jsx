@@ -16,6 +16,7 @@ const HostProfileProgressBar = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [loading, setLoading] = useState(true)
   const [stripeAccountErrors, setStripeAccountErrors] = useState([])
+  const [stripePendingVerification, setStripePendingVerification] = useState(false)
   const [payoutSuccess, setPayoutSuccess] = useState(false)
   const [activeStep, setActiveStep] = useState(1)
 
@@ -39,6 +40,7 @@ const HostProfileProgressBar = (props) => {
         if (!response.data.message) {
           setPayoutSuccess(response.data.payouts_enabled)
           setStripeAccountErrors(response.data.requirements.errors)
+          setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false)
           if (response.data.payouts_enabled) {
             setActiveStep(3)
           } else if (response.data.requirements.errors.length > 0 || response.data.requirements.pending_verification.length > 0) {
@@ -128,13 +130,12 @@ const HostProfileProgressBar = (props) => {
                 {t('HostProfileProgressBar:step-2-text')}
               </p>
               <Popup
-                content='test'
+                content={stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
                 trigger={<p className='fake-link-underlined'>{t('HostProfileProgressBar:step-2-why')}</p>}
                 on={['hover', 'click']}
                 hideOnScroll={true}
               >
               </Popup>
-              {/* <p>{stripeAccountErrors[0].reason}</p> */}
               <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
