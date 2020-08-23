@@ -390,11 +390,9 @@ button:focus {
 *******************************/
 
 .landing-hero-wrapper.mobile {
-  background-image: url(themes/assets/Kisse_mobile.jpg);
 }
 
 .landing-hero-wrapper.desktop {
-  background-image: url(themes/assets/Kisse_desktop.jpg);
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -404,6 +402,18 @@ button:focus {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.lazy-img {
+  position: absolute;
+  z-index: -1;
+  max-height: 100%;
+}
+
+.lazy-img > img {
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+  object-fit: cover;
 }
 
 .device-height {
@@ -450,6 +460,9 @@ button:focus {
   .min-device-height {
     min-height: calc(var(--vh, 1vh) * 100 - 75px);
   }
+  .lazy-img > img {
+    height: calc(var(--vh, 1vh) * 100 - 75px);
+  }
 }
 
 @media screen and (min-height: 1024px) {
@@ -458,6 +471,9 @@ button:focus {
   }
   .min-device-height {
     min-height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+  .lazy-img > img {
+    height: calc(var(--vh, 1vh) * 100 - 90px);
   }
 }
 
