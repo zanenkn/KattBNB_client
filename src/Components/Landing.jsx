@@ -9,6 +9,8 @@ import { Helmet } from 'react-helmet'
 import FacebookIcon from './Icons/FacebookIcon'
 import InstagramIcon from './Icons/InstagramIcon'
 import LinkedinIcon from './Icons/LinkedinIcon'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
   const [dimentions, setDimentions] = useState('mobile')
@@ -44,6 +46,11 @@ const Landing = () => {
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
         <div className={`device-height landing-hero-wrapper ${dimentions}`}>
+          <LazyLoadImage
+            wrapperClassName='lazy-img'
+            effect='blur'
+            src={`Kisse_${dimentions}.jpg`}
+            />
           <div className='landing-desktop-content'>
             <KattBNBLogomark width={'100px'} />
             <Header as='h1'>{t('Landing:title')}</Header>
