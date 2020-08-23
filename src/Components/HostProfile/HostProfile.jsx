@@ -141,7 +141,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editDescriptionForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editDescriptionForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editDescriptionForm &&
               <DescriptionUpdateForm
                 description={props.description}
@@ -158,7 +158,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editAddress ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editAddress ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editAddress &&
               <AddressUpdateForm
                 fullAddress={props.fullAddress}
@@ -176,7 +176,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editMaxCatsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editMaxCatsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editMaxCatsForm &&
               <MaxCatsUpdateForm
                 maxCats={props.maxCats}
@@ -193,7 +193,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editRateForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editRateForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editRateForm &&
               <RateUpdateForm
                 rate={props.rate}
@@ -210,7 +210,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editSupplementForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editSupplementForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editSupplementForm &&
               <SupplementUpdateForm
                 supplement={props.supplement}

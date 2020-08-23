@@ -349,7 +349,7 @@ const UserPage = (props) => {
           <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
           &ensp;{props.username}
         </Header>
-        <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem', 'justifyContent': 'center' }}>
+        <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem', 'justifyContent': 'center' }}>
           <Location fill={'grey'} height={'1.2em'} />
           <p style={{ 'margin': '0 0 0 0.5rem' }}>{element.location}</p>
         </div>
@@ -412,13 +412,13 @@ const UserPage = (props) => {
             {t('UserPage:settings-header')}
           </Header>
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
               </div>
               <p style={{ 'margin': '0px 0.3rem 0 0.5rem' }}>{props.email}</p>
             </div>
-            <div id='user-location' style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div id='user-location' style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1.2em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
               </div>
@@ -427,7 +427,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLocationForm &&
                 <LocationUpdateForm
                   location={element.location}
@@ -437,7 +437,7 @@ const UserPage = (props) => {
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               </div>
@@ -446,14 +446,14 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
               </div>
@@ -462,7 +462,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
@@ -471,7 +471,7 @@ const UserPage = (props) => {
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-2.25a8 8 0 0 0 4-2.46V9a2 2 0 0 1-2-2V3.07a7.95 7.95 0 0 0-3-1V3a2 2 0 0 1-2 2v1a2 2 0 0 1-2 2v2h3a2 2 0 0 1 2 2v5.75zm-4 0V15a2 2 0 0 1-2-2v-1h-.5A1.5 1.5 0 0 1 4 10.5V8H2.25A8.01 8.01 0 0 0 8 17.75z" /></svg>
               </div>
@@ -480,7 +480,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLangPrefForm &&
                 <LangPrefUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}

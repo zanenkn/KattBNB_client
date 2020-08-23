@@ -91,7 +91,7 @@ const HostReplyReviewForm = (props) => {
       return (
 
         <>
-          <div style={{ 'max-height': replyFormOpen ? '500px' : '20px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }} >
+          <div style={{ 'maxHeight': replyFormOpen ? '500px' : '20px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }} >
             {replyFormOpen &&
               <>
                 <Form id='host-reply-form'>
