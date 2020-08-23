@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { Button, Message } from 'semantic-ui-react'
+import { Button, Message, Popup } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -16,6 +16,7 @@ const HostProfileProgressBar = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [loading, setLoading] = useState(true)
   const [stripeAccountErrors, setStripeAccountErrors] = useState([])
+  const [stripePendingVerification, setStripePendingVerification] = useState(false)
   const [payoutSuccess, setPayoutSuccess] = useState(false)
   const [activeStep, setActiveStep] = useState(1)
 
@@ -39,6 +40,7 @@ const HostProfileProgressBar = (props) => {
         if (!response.data.message) {
           setPayoutSuccess(response.data.payouts_enabled)
           setStripeAccountErrors(response.data.requirements.errors)
+          setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false)
           if (response.data.payouts_enabled) {
             setActiveStep(3)
           } else if (response.data.requirements.errors.length > 0 || response.data.requirements.pending_verification.length > 0) {
@@ -111,7 +113,7 @@ const HostProfileProgressBar = (props) => {
           <>
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
               <Trans i18nKey={'HostProfileProgressBar:step-1-text'}>
-                You made a host profile but have not provided us with your payment information. Without that we can not pay you for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+                You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
               </Trans>
             </p>
             <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
@@ -125,11 +127,15 @@ const HostProfileProgressBar = (props) => {
             : stripeAccountErrors &&
             <>
               <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                <Trans i18nKey={'HostProfileProgressBar:step-2-text'}>
-                  You have entered your payment information but are not yet verified with our payment solution provider (Stripe). <span className='fake-link-underlined'>Why is that?</span>
-                </Trans>
+                {t('HostProfileProgressBar:step-2-text')}
               </p>
-              {/* <p>{stripeAccountErrors[0].reason}</p> */}
+              <Popup
+                content={stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
+                trigger={<p className='fake-link-underlined'>{t('HostProfileProgressBar:step-2-why')}</p>}
+                on={['hover', 'click']}
+                hideOnScroll={true}
+              >
+              </Popup>
               <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
