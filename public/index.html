@@ -53,9 +53,23 @@
   <script>
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
+    if (window.innerHeight >= 1024) {
+      document.documentElement.style.setProperty('--nav', '90px')
+    } else if (window.innerHeight >= 736) {
+      document.documentElement.style.setProperty('--nav', '75px')
+    } else {
+      document.documentElement.style.setProperty('--nav', '60px')
+    }
     window.addEventListener('resize', () => {
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
+      if (window.innerHeight >= 1024) {
+        document.documentElement.style.setProperty('--nav', '90px')
+      } else if (window.innerHeight >= 736) {
+        document.documentElement.style.setProperty('--nav', '75px')
+      } else {
+        document.documentElement.style.setProperty('--nav', '60px')
+      }
     })
   </script>
 
