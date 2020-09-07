@@ -681,10 +681,22 @@ h4 {
   margin-bottom: 1rem;
 }
 
+
+.all-conversations {
+  height: calc(var(--vh, 1vh) * 100 - 60px);
+}
+
 .messenger-wrapper {
   margin-left: auto;
   margin-right: auto;
-  padding-top: 66px;
+  overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.messenger-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 @media screen and (min-width: 700px) {
@@ -706,8 +718,20 @@ h4 {
   }
 }
 
+@media screen and (min-height: 736px) {
+
+  .all-conversations {
+  height: calc(var(--vh, 1vh) * 100 - 75px);
+}
+}
+
+@media screen and (min-height: 1024px) {
+  .all-conversations {
+    height: calc(var(--vh, 1vh) * 100 - 90px);
+  }
+}
+
 .single-conversation-wrapper {
-  padding-top: 1rem!important;
   margin: 0 auto
 }
 
