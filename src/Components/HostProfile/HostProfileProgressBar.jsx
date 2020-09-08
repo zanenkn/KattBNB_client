@@ -98,13 +98,13 @@ const HostProfileProgressBar = (props) => {
             </div>
             <div className='explained' style={{ 'marginTop': '1rem' }}>
               <div className='step-explanation'>
-                <p>{t('HostProfileProgressBar:step-1')}</p>
+                <p style={{ 'fontSize': '12px' }} dangerouslySetInnerHTML={{ __html: t('HostProfileProgressBar:step-1') }}></p>
               </div>
               <div className='step-explanation'>
-                <p>{t('HostProfileProgressBar:step-2')}</p>
+                <p style={{ 'fontSize': '12px' }} dangerouslySetInnerHTML={{ __html: t('HostProfileProgressBar:step-2') }}></p>
               </div>
               <div className='step-explanation'>
-                <p>{t('HostProfileProgressBar:step-3')}</p>
+                <p style={{ 'fontSize': '12px' }} dangerouslySetInnerHTML={{ __html: t('HostProfileProgressBar:step-3') }}></p>
               </div>
             </div>
           </div>
