@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { Button, Message, Popup } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
@@ -127,15 +127,9 @@ const HostProfileProgressBar = (props) => {
             : stripeAccountErrors &&
             <>
               <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                {t('HostProfileProgressBar:step-2-text')}
+                {t('HostProfileProgressBar:step-2-text')}&ensp;
+                {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
               </p>
-              <Popup
-                content={stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
-                trigger={<p className='fake-link-underlined'>{t('HostProfileProgressBar:step-2-why')}</p>}
-                on={['hover', 'click']}
-                hideOnScroll={true}
-              >
-              </Popup>
               <Button>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
