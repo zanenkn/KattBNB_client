@@ -17,12 +17,12 @@ class AllConversations extends Component {
     scrollYPosition: 0,
     loading: true,
     errorDisplay: false,
-    errors: []
+    errors: [],
+    secondaryStickyStyle: {'boxShadow':'none', 'borderBottom': '1px solid rgba(34,36,38,.15)'}
   }
 
   componentDidMount() {
     const { t } = this.props
-    window.addEventListener('scroll', this.handleScroll)
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
@@ -80,16 +80,17 @@ class AllConversations extends Component {
     }
   }
 
-  componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
-
-  handleScroll = () => {
-    this.setState({ scrollYPosition: window.scrollY })
+  handleScroll = (e) => {
+    let secondaryStickyStyle = e.target.scrollTop > 0 ? {'boxShadow':'0 0 20px -5px rgba(0,0,0,.2)', 'borderBottom': 'none'} : {'boxShadow':'none', 'borderBottom': '1px solid rgba(34,36,38,.15)'}
+    console.log(e.target.scrollTop)
+    this.setState({
+      secondaryStickyStyle: secondaryStickyStyle
+    })
   }
 
   render() {
     const { t } = this.props
     const lang = detectLanguage()
-    let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
     let deleted_user = { nickname: t('AllConversations:deleted-user'), profile_avatar: null, location: 'none', id: null }
     moment.locale(lang)
 
@@ -110,13 +111,12 @@ class AllConversations extends Component {
     } else {
       return (
         <>
-          <div id='secondary-sticky' style={{'height': '80px', 'display': 'flex', 'flexDirection': 'column','justifyContent': 'center', 'boxShadow': boxShadow }}>
-            <Header as='h1'>
-              {t('AllConversations:header')}
-            </Header>
+          <div id='secondary-sticky' style={{ 'height': '80px', 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', ...this.state.secondaryStickyStyle }}>            
+          <Header as='h1'>
+            {t('AllConversations:header')}
+          </Header>
           </div>
-          <div className='messenger-wrapper'>
-            <Divider />
+          <div className='messenger-wrapper all-conversations' style={{ 'paddingTop': '96px' }} onScroll={this.handleScroll}>
             {this.state.conversations.length < 1 ?
               <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
                 {t('AllConversations:no-messages')}

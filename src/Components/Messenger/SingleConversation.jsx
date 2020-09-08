@@ -6,7 +6,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { connect } from 'react-redux'
 import Spinner from '../ReusableComponents/Spinner'
 import MessageBubble from '../ReusableComponents/MessageBubble'
-import { Icon, Message, Header, Container, Divider, Image } from 'semantic-ui-react'
+import { Icon, Message, Header, Image } from 'semantic-ui-react'
 import Cable from 'actioncable'
 import TextareaAutosize from 'react-textarea-autosize'
 import Popup from 'reactjs-popup'
@@ -24,16 +24,16 @@ class Conversation extends Component {
     errors: '',
     scrollYPosition: 0,
     loading: true,
-    footerHeight: '32px',
+    footerHeight: '38px',
     imageUploadPopupOpen: false,
     imageUploadButton: true,
     uploadedImage: '',
-    loadingUploadButton: false
+    loadingUploadButton: false,
+    secondaryStickyStyle: {'boxShadow':'none', 'borderBottom': '1px solid rgba(34,36,38,.15)'}
   }
 
   componentDidMount() {
     const { t } = this.props
-    window.addEventListener('scroll', this.handleScroll)
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
@@ -62,7 +62,7 @@ class Conversation extends Component {
             errorDisplay: false,
             errors: ''
           })
-          this.bottom.scrollIntoView({ behavior: 'smooth' })
+          typeof this.bottom !== 'undefined' && this.bottom.scrollIntoView({ behavior: 'smooth' })
         }).catch(error => {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm')
@@ -89,7 +89,7 @@ class Conversation extends Component {
   }
 
   scrollDown = () => {
-    this.bottom.scrollIntoView({ behavior: 'smooth' })
+    typeof this.bottom !== 'undefined' && this.bottom.scrollIntoView({ behavior: 'smooth' })
     this.setState({
       imageUploadPopupOpen: false,
       loadingUploadButton: false
@@ -98,8 +98,12 @@ class Conversation extends Component {
 
   componentWillUnmount() { window.removeEventListener('scroll', this.handleScroll) }
 
-  handleScroll = () => {
-    this.setState({ scrollYPosition: window.scrollY })
+  handleScroll = (e) => {
+    let secondaryStickyStyle = e.target.scrollTop > 0 ? {'boxShadow':'0 0 20px -5px rgba(0,0,0,.2)', 'borderBottom': 'none'} : {'boxShadow':'none', 'borderBottom': '1px solid rgba(34,36,38,.15)'}
+
+    this.setState({
+      secondaryStickyStyle: secondaryStickyStyle
+    })
   }
 
   listenEnterKeyMessage = (event) => {
@@ -121,7 +125,7 @@ class Conversation extends Component {
       errors: errors,
       errorDisplay: true
     })
-    this.bottom.scrollIntoView({ behavior: 'smooth' })
+    typeof this.bottom !== 'undefined' && this.bottom.scrollIntoView({ behavior: 'smooth' })
   }
 
   handleSendEvent(event) {
@@ -185,7 +189,7 @@ class Conversation extends Component {
         let chatLogs = this.state.chatLogs
         chatLogs.push(data.message)
         this.setState({ chatLogs: chatLogs })
-        this.bottom.scrollIntoView({ behavior: 'smooth' })
+        typeof this.bottom !== 'undefined' && this.bottom.scrollIntoView({ behavior: 'smooth' })
       },
       create: function (msg, img, conv_id, user_id) {
         this.perform('send_message', {
@@ -276,7 +280,6 @@ class Conversation extends Component {
 
   render() {
     const { t } = this.props
-    let boxShadow = this.state.scrollYPosition > 0 ? '0 0 20px -5px rgba(0,0,0,.2)' : 'none'
     let messageLength = 1000 - this.state.newMessage.length
 
     if (this.state.loading) {
@@ -302,7 +305,7 @@ class Conversation extends Component {
               />
             </div>
           </Popup>
-          <div id='secondary-sticky' style={{'height': '80px', 'display': 'flex', 'flexDirection': 'column','justifyContent': 'center', 'boxShadow': boxShadow }}>
+          <div id='secondary-sticky' style={{'height': '80px', 'display': 'flex', 'flexDirection': 'column','justifyContent': 'center', ...this.state.secondaryStickyStyle}}>
             <div className='max-width-wrapper' style={{ 'display': 'flex', 'alignItems': 'center' }}>
               <Icon name='arrow left' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={() => { this.props.history.push('/messenger') }} />
               <div
@@ -336,9 +339,9 @@ class Conversation extends Component {
               <Icon id='delete-conversation' name='trash alternate outline' size='large' style={{ 'color': '#c90c61', 'cursor': 'pointer' }} onClick={this.deleteConversation} />
             </div>
           </div>
-          <Container className='messenger-wrapper' style={{ 'marginBottom': `${70 + parseInt(this.state.footerHeight)}px` }}>
-            <Divider />
-            <div className='single-conversation-wrapper'>
+          <div className='messenger-wrapper single-conversation' style={{ 'overflow': 'scroll', 'marginBottom': parseInt(this.state.footerHeight) === 38? '80px' : `${30 + parseInt(this.state.footerHeight)}px`, 'height': `calc(var(--vh, 1vh) * 100 - var(--nav) - ${parseInt(this.state.footerHeight) === 38? '80px' : `${30 + parseInt(this.state.footerHeight)}px`})`}} onScroll={this.handleScroll}>
+            <div className='single-conversation-wrapper' style={{'paddingTop': '80px'}} >
+              <div style={{'height': '1rem'}}></div>
               {(this.state.messagesHistory.length < 1 && this.state.chatLogs.length < 1 && this.state.errorDisplay === false) &&
                 <p style={{ 'textAlign': 'center', 'fontStyle': 'italic' }}>
                   {t('SingleConversation:no-messages-yet')}
@@ -386,12 +389,12 @@ class Conversation extends Component {
                   </ul>
                 </Message>
               }
-              <div ref={(el) => { this.bottom = el }}></div>
             </div>
-          </Container>
-          <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)' }}>
+            <div ref={(el) => { this.bottom = el }} style={{'height': '1px'}}></div>
+          </div>
+          <div style={{ 'minHeight': '80px', 'width': '100%', 'position': 'fixed', 'bottom': '0', 'background': 'white', 'zIndex': '100', 'boxShadow': '0 0 20px -5px rgba(0,0,0,.2)', 'paddingTop': '1rem' }}>
             <div className='single-conversation-wrapper' >
-              <div style={{ 'display': 'inline-flex', 'width': '100%', 'paddingTop': '0.2rem' }}>
+              <div style={{ 'display': 'inline-flex', 'width': '100%' }}>
                 <Icon id='upload-image' name='photo' size='big' style={{ 'display': (this.props.location.state.user.id === null || this.state.newMessage.length > 0) && 'none', 'cursor': 'pointer', 'color': '#d8d8d8', 'fontSize': '2.5em', 'marginRight': '0.5rem', 'alignSelf': 'flex-end' }} onClick={() => { this.setState({ imageUploadPopupOpen: true }) }} />
                 <div style={{ 'width': '100%', 'alignSelf': 'flex-end', 'minHeight': '2.5em', 'position': 'relative', 'bottom': '0px', 'display': 'flex', 'flexDirection': 'column-reverse', 'height': this.state.footerHeight }}>
                   <TextareaAutosize
@@ -428,7 +431,7 @@ class Conversation extends Component {
                   </div>
                 </div>
               </div>
-              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'visibility': messageLength < 100 ? 'visible' : 'hidden', 'marginBottom': '0.5rem' }}>
+              <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic', 'visibility': messageLength < 100 ? 'visible' : 'hidden' }}>
                 {t('SingleConversation:remaining-char')} {messageLength}
               </p>
             </div>

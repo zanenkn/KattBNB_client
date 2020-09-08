@@ -25,6 +25,7 @@
     "react-helmet": "^6.0.0",
     "react-i18next": "^11.2.5",
     "react-images-upload": "^1.2.8",
+    "react-lazy-load-image-component": "^1.5.0",
     "react-netlify-form": "^2.1.5",
     "react-password-strength-bar": "^0.3.0",
     "react-redux": "^7.1.0",
