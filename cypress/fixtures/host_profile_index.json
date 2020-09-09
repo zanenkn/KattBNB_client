@@ -15,6 +15,8 @@
     ],
     "lat": "57.7453888",
     "long": "12.0282874",
+    "stripe_state": "arandomtextfrostripe",
+    "stripe_account_id": null,
     "user": {
       "id": 1,
       "location": "Stockholm",
