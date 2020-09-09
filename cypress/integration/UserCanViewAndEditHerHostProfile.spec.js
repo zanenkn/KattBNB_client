@@ -15,6 +15,12 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      status: 200,
+      response: { "message": "No account" }
+    })
+    cy.route({
+      method: 'GET',
       url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
       status: 200,
       response: 'fixture:one_user_reviews.json'
@@ -131,7 +137,7 @@ describe('User can view her host profile', () => {
   })
 
   it('and see correct amount of her reviews sorted by date - latest first', () => {
-    cy.contains('Your reviews').should('exist')
+    cy.contains('My reviews').should('exist')
     cy.get('#all-reviews').children().first().should('have.id', 'review-33')
     cy.get('#all-reviews').children().last().should('have.id', 'review-22')
     cy.get('#all-reviews').children().should('have.length', '3')
