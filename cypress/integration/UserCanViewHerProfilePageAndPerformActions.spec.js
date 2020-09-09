@@ -25,7 +25,7 @@ describe('User can view her profile page', () => {
   })
 
   it('successfully', () => {
-    cy.contains('Hi, GeorgeTheGreek!')
+    cy.contains('GeorgeTheGreek')
   })
 
   it('and change her location successfully', () => {
