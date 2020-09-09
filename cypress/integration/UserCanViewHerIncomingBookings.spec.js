@@ -45,7 +45,7 @@ describe('User can view her incoming bookings', () => {
 
   it('and see the message left by the user when she clicks the relevant link of a requested booking', () => {
     cy.get('#view-incoming-bookings').click()
-    cy.get(':nth-child(1) > :nth-child(4) > .fake-link-underlined').click()
+    cy.get(':nth-child(4) > [style="padding: 2rem;"] > .fake-link-underlined').click()
     cy.contains('Please keep my cats, Pending1')
   })
 
