@@ -1,0 +1,12 @@
+{
+  "payouts_enabled": true,
+  "requirements": {
+    "current_deadline": null,
+    "currently_due": [],
+    "disabled_reason": "",
+    "errors": [],
+    "eventually_due": [],
+    "past_due": [],
+    "pending_verification": []
+  }
+}

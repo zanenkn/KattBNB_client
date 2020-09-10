@@ -27,9 +27,6 @@
       "individual.verification.additional_document",
       "individual.verification.document"
     ],
-    "pending_verification": [
-      "individual.verification.additional_document",
-      "individual.verification.document"
-    ]
+    "pending_verification": []
   }
 }

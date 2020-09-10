@@ -64,20 +64,63 @@ describe('User can see host profile progress bar from her User Page', () => {
       response: 'fixture:stripe_pending_verification.json'
     })
     cy.get('#user-icon').click({ force: true })
-    cy.contains('You have entered your payment information but are not yet verified with our payment provider')
+    cy.contains('Your verification is pending, please check back later.')
     cy.get('#progress-bar-cta').contains('My payment dashboard')
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color')
   })
 
-  it('and see step-3 when payment verification is complete', () => {
+  it('and see step-2 when payment information have been provided, verification is complete and erros exist', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_index.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_individual_stripe.json'
+    })
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
       status: 200,
-      response: ''
+      response: 'fixture:stripe_verification_errors.json'
     })
-    cy.contains('Maximum cats: 5').should('not.exist')
+    cy.get('#user-icon').click({ force: true })
+    cy.contains('Please visit your payment dashboard to complete your verification.')
+    cy.get('#progress-bar-cta').contains('My payment dashboard')
+    cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color')
+    cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color')
+    cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color')
+  })
+
+  it('and see step-3 when payment verification is complete without errors', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_index.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_individual_stripe.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors.json'
+    })
+    cy.get('#user-icon').click({ force: true })
+    cy.get('#progress-bar-cta').contains('My payment dashboard')
+    cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color')
+    cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color')
+    cy.get('.progress-bar-steps>div').eq(2).should('have.class', 'step-done-color')
   })
 })
