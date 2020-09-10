@@ -30,7 +30,7 @@ const HostProfileProgressBar = (props) => {
     } else {
       try {
         const lang = detectLanguage()
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}`
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=retrieve`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
