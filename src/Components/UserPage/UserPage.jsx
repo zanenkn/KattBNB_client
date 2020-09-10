@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react'
 import withAuth from '../../HOC/withAuth'
 import HostProfileForm from '../HostProfile/HostProfileForm'
@@ -13,8 +14,11 @@ import PasswordUpdateForm from './PasswordUpdateForm'
 import AvatarUpdateForm from './AvatarUpdateForm'
 import NotificationsUpdateForm from './NotificationsUpdateForm'
 import LangPrefUpdateForm from './LangPrefUpdateForm'
-import { useTranslation, Trans } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
+import Location from '../Icons/Location'
+import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar'
+import AllReviews from '../Reviews/AllReviews'
 
 const UserPage = (props) => {
 
@@ -38,7 +42,8 @@ const UserPage = (props) => {
     availability: [],
     location: props.location,
     messageNotifications: props.messageNotifications,
-    langPref: props.langPref
+    langPref: props.langPref,
+    stripeAccountId: null
   })
   const [forbiddenDates, setForbiddenDates] = useState([])
   const [hostProfileScore, setHostProfileScore] = useState(null)
@@ -48,6 +53,7 @@ const UserPage = (props) => {
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [errors, setErrors] = useState([])
   const [deleteDisplayNone, setDeleteDisplayNone] = useState(false)
+  const [hostStripeState, setHostStripeState] = useState(null)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -89,8 +95,10 @@ const UserPage = (props) => {
               availability: resp.data.availability,
               location: props.location,
               messageNotifications: props.messageNotifications,
-              langPref: props.langPref
+              langPref: props.langPref,
+              stripeAccountId: resp.data.stripe_account_id
             })
+            setHostStripeState(resp.data.stripe_state)
             setForbiddenDates(resp.data.forbidden_dates)
             setHostProfileScore(resp.data.score)
             setLoadingHostProfile(false)
@@ -330,29 +338,87 @@ const UserPage = (props) => {
             </Message>
           </div>
         </Popup>
+
+        <AvatarUpdateForm
+          avatar={props.avatar}
+          username={props.username}
+          userId={props.id}
+          closeAllForms={avatarFormHandler.bind(this)}
+        />
+        <Header id='nickname' as='h2' style={{ 'marginTop': '0.5rem', 'marginBottom': '0.5rem' }}>
+          <svg fill='#c90c61' height='0.8em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" /></svg>
+          &ensp;{props.username}
+        </Header>
+        <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem', 'justifyContent': 'center' }}>
+          <Location fill={'grey'} height={'1.2em'} />
+          <p style={{ 'margin': '0 0 0 0.5rem' }}>{element.location}</p>
+        </div>
+        <Divider hidden />
+        {
+          hostProfile.length === 1 && loadingHostProfile === false &&
+          <>
+            <HostProfileProgressBar
+              stripeAccountId={element.stripeAccountId}
+              hostProfileId={hostProfile[0].id}
+              stripeState={hostStripeState}
+              email={props.email}
+            />
+            <HostProfile
+              id={hostProfile[0].id}
+              email={props.email}
+              description={element.description}
+              fullAddress={element.fullAddress}
+              rate={element.rate}
+              maxCats={element.maxCats}
+              supplement={element.supplement}
+              availability={element.availability}
+              forbiddenDates={forbiddenDates}
+              score={hostProfileScore}
+              location={props.location}
+              incomingBookings={incomingBookings}
+              stripeState={hostStripeState}
+              stripeAccountId={element.stripeAccountId}
+              closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
+              ref={hostProfileElement}
+              setElement={elementUpdateHandler.bind(this)}
+            />
+          </>
+        }
+        <Divider hidden />
+        {
+          hostProfile.length === 1 && loadingHostProfile === true &&
+          <Spinner />
+        }
+        {
+          form.createHostProfileForm && hostProfile.length === 0 &&
+          <HostProfileForm
+            user_id={props.id}
+            closeForm={closeLocationAndPasswordForms.bind(this)}
+            location={props.location} />
+        }
+        {
+          form.createHostProfileForm === false && hostProfile.length === 0 &&
+          <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
+            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
+            <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
+              {t('UserPage:host-profile-cta')}
+            </Button>
+            <Divider hidden />
+            <Divider hidden />
+          </div>
+        }
         <Segment className='whitebox'>
           <Header as='h2'>
-            <Trans i18nKey='UserPage:greeting' values={{ username: props.username }} />
+            {t('UserPage:settings-header')}
           </Header>
-          <p style={{ 'textAlign': 'center' }}>
-            <Trans i18nKey='UserPage:user-profile-p'>
-              This is your <strong>user</strong> profile. Here you can update your avatar, location, password and other settings.
-            </Trans>
-          </p>
-          <AvatarUpdateForm
-            avatar={props.avatar}
-            username={props.username}
-            userId={props.id}
-            closeAllForms={avatarFormHandler.bind(this)}
-          />
           <div style={{ 'width': 'max-content', 'margin': 'auto' }}>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></svg>
               </div>
               <p style={{ 'margin': '0px 0.3rem 0 0.5rem' }}>{props.email}</p>
             </div>
-            <div id='user-location' style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div id='user-location' style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1.2em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>
               </div>
@@ -361,7 +427,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editLocationForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLocationForm &&
                 <LocationUpdateForm
                   location={element.location}
@@ -371,7 +437,7 @@ const UserPage = (props) => {
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' /></svg>
               </div>
@@ -380,14 +446,14 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center', 'marginBottom': '1rem' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z" /></svg>
               </div>
@@ -396,7 +462,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
@@ -405,7 +471,7 @@ const UserPage = (props) => {
                 />
               }
             </div>
-            <div style={{ 'display': 'flex', 'flex-direction': 'row', 'alignItems': 'center' }}>
+            <div style={{ 'display': 'flex', 'flexDirection': 'row', 'alignItems': 'center' }}>
               <div className='zondicon-wrapper'>
                 <svg fill='grey' height='1em' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-2.25a8 8 0 0 0 4-2.46V9a2 2 0 0 1-2-2V3.07a7.95 7.95 0 0 0-3-1V3a2 2 0 0 1-2 2v1a2 2 0 0 1-2 2v2h3a2 2 0 0 1 2 2v5.75zm-4 0V15a2 2 0 0 1-2-2v-1h-.5A1.5 1.5 0 0 1 4 10.5V8H2.25A8.01 8.01 0 0 0 8 17.75z" /></svg>
               </div>
@@ -414,7 +480,7 @@ const UserPage = (props) => {
                 {t('reusable:cta.change')}
               </Header>
             </div>
-            <div style={{ 'max-height': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+            <div style={{ 'maxHeight': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLangPrefForm &&
                 <LangPrefUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
@@ -427,46 +493,25 @@ const UserPage = (props) => {
         </Segment>
         <Divider hidden />
         <Divider hidden />
-        {hostProfile.length === 1 && loadingHostProfile === false &&
-          <HostProfile
-            id={hostProfile[0].id}
-            description={element.description}
-            fullAddress={element.fullAddress}
-            rate={element.rate}
-            maxCats={element.maxCats}
-            supplement={element.supplement}
-            availability={element.availability}
-            forbiddenDates={forbiddenDates}
-            score={hostProfileScore}
-            location={props.location}
-            incomingBookings={incomingBookings}
-            closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
-            ref={hostProfileElement}
-            setElement={elementUpdateHandler.bind(this)}
-          />}
-        {hostProfile.length === 1 && loadingHostProfile === true &&
-          <Spinner />
-        }
-        {form.createHostProfileForm && hostProfile.length === 0 &&
-          <HostProfileForm
-            user_id={props.id}
-            closeForm={closeLocationAndPasswordForms.bind(this)}
-            location={props.location} />
-        }
-        {form.createHostProfileForm === false && hostProfile.length === 0 &&
-          <div style={{ 'maxWidth': '300px', 'margin': 'auto' }}>
-            <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
-            <Button id='createHostProfileForm' onClick={e => formHandler(e)}>
-              {t('UserPage:host-profile-cta')}
-            </Button>
-          </div>
+        {hostProfile.length === 1 &&
+          <Segment className='whitebox'>
+            <Header as='h2'>
+              {t('UserPage:reviews-header')}
+            </Header>
+            <div>
+              <AllReviews
+                hostProfileId={hostProfile[0].id}
+                score={hostProfileScore}
+              />
+            </div>
+          </Segment>
         }
         <Divider hidden />
         <Header id='delete-account-link' onClick={() => destroyAccount()}
           className='fake-link-underlined' style={{ 'color': 'silver', 'marginBottom': '1rem', 'display': deleteDisplayNone && 'none' }} >
           {t('UserPage:delete-cta')}
         </Header>
-      </div>
+      </div >
     )
   } else if (ready && loading) {
     return (

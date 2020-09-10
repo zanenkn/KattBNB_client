@@ -10,5 +10,7 @@
   "user-profile-p": "Det här är din <1>användarprofil</1>. Här kan du uppdatera din avatar, plats, lösenord och andra inställningar.",
   "delete-cta": "Radera ditt konto",
   "notifications-header": "Inställningar för notifieringar",
-  "lang-pref-header": "Epost språkspreferens"
+  "lang-pref-header": "Epost språkspreferens",
+  "settings-header": "Mina inställningar",
+  "reviews-header": "Mina recensioner"
 }

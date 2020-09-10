@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import { Segment, Header, Grid, Icon, Message } from 'semantic-ui-react'
+import { Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'

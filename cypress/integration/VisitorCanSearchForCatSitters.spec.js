@@ -31,6 +31,12 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: 'fixture:search_no_results.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
+      status: 200,
+      response: ''
+    })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('#cats').type('1')

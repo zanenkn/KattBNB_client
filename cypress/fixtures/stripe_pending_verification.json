@@ -1,0 +1,35 @@
+{
+  "payouts_enabled": false,
+  "requirements": {
+    "current_deadline": null,
+    "currently_due": [
+      "individual.verification.additional_document",
+      "individual.verification.document"
+    ],
+    "disabled_reason": "requirements.past_due",
+    "errors": [
+      {
+        "code": "verification_failed_keyed_identity",
+        "reason": "The identity information you entered cannot be verified. Please correct any errors or upload a document that matches the identity fields (e.g., name and date of birth) that you entered.",
+        "requirement": "individual.verification.additional_document"
+      },
+      {
+        "code": "verification_failed_keyed_identity",
+        "reason": "The identity information you entered cannot be verified. Please correct any errors or upload a document that matches the identity fields (e.g., name and date of birth) that you entered.",
+        "requirement": "individual.verification.document"
+      }
+    ],
+    "eventually_due": [
+      "individual.verification.additional_document",
+      "individual.verification.document"
+    ],
+    "past_due": [
+      "individual.verification.additional_document",
+      "individual.verification.document"
+    ],
+    "pending_verification": [
+      "individual.verification.additional_document",
+      "individual.verification.document"
+    ]
+  }
+}

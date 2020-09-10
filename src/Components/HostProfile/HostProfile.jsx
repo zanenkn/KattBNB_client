@@ -1,5 +1,6 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react'
-import { useTranslation, Trans } from 'react-i18next'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Divider, Header, Message, Segment } from 'semantic-ui-react'
 import MaxCatsUpdateForm from './MaxCatsUpdateForm'
 import DescriptionUpdateForm from './DescriptionUpdateForm'
@@ -8,8 +9,11 @@ import SupplementUpdateForm from './SupplementUpdateForm'
 import AvailabilityUpdateForm from './AvailabilityUpdateForm'
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode'
 import AddressUpdateForm from './AddressUpdateForm'
-import AllReviews from '../Reviews/AllReviews'
 import Spinner from '../ReusableComponents/Spinner'
+import queryString from 'query-string'
+import axios from 'axios'
+import { detectLanguage } from '../../Modules/detectLanguage'
+import { wipeCredentials } from '../../Modules/wipeCredentials'
 
 const HostProfile = forwardRef((props, ref) => {
 
@@ -17,6 +21,7 @@ const HostProfile = forwardRef((props, ref) => {
 
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [form, setForm] = useState({
     editDescriptionForm: false,
     editMaxCatsForm: false,
@@ -25,6 +30,58 @@ const HostProfile = forwardRef((props, ref) => {
     editableCalendar: false,
     editAddress: false
   })
+
+  const createStripeAccount = async () => {
+    if (window.navigator.onLine === false) {
+      setLoading(false)
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      try {
+        const lang = detectLanguage()
+        const path = `/api/v1/host_profiles/${props.id}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const payload = {
+          code: queryString.parse(window.location.search).code,
+          locale: lang
+        }
+        const response = await axios.patch(path, payload, { headers: headers })
+        props.setElement('stripeAccountId', response.data.id)
+        setLoading(false)
+        window.alert(t('HostProfile:stripe-success'))
+        window.location.replace('/user-page')
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500 || error.response.status === 400) {
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.error])
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          setLoading(false)
+          setErrorDisplay(true)
+          setErrors([error.response.data.error])
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (queryString.parse(window.location.search).code && queryString.parse(window.location.search).state === props.stripeState) {
+      createStripeAccount()
+    } else {
+      setLoading(false)
+    }
+  }, [])
 
   const closeAllForms = () => {
     setForm(old => ({
@@ -59,18 +116,13 @@ const HostProfile = forwardRef((props, ref) => {
     props.closeLocPasForms()
   }
 
-  if (ready) {
+  if (ready && loading === false) {
     return (
       <>
         <Segment className='whitebox'>
-          <Header as='h1'>
+          <Header as='h2'>
             {t('HostProfile:main-header')}
           </Header>
-          <p style={{ 'textAlign': 'center' }}>
-            <Trans i18nKey='HostProfile:main-title'>
-              This is your <strong>host profile.</strong> Here you can update all your cat hosting information.
-            </Trans>
-          </p>
           {errorDisplay &&
             <Message negative >
               <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
@@ -89,7 +141,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editDescriptionForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editDescriptionForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editDescriptionForm &&
               <DescriptionUpdateForm
                 description={props.description}
@@ -106,7 +158,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editAddress ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editAddress ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editAddress &&
               <AddressUpdateForm
                 fullAddress={props.fullAddress}
@@ -124,7 +176,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editMaxCatsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editMaxCatsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editMaxCatsForm &&
               <MaxCatsUpdateForm
                 maxCats={props.maxCats}
@@ -141,7 +193,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editRateForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editRateForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editRateForm &&
               <RateUpdateForm
                 rate={props.rate}
@@ -158,7 +210,7 @@ const HostProfile = forwardRef((props, ref) => {
               {t('reusable:cta:change')}
             </Header>
           </p>
-          <div style={{ 'max-height': form.editSupplementForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
+          <div style={{ 'maxHeight': form.editSupplementForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
             {form.editSupplementForm &&
               <SupplementUpdateForm
                 supplement={props.supplement}
@@ -198,25 +250,11 @@ const HostProfile = forwardRef((props, ref) => {
         </Segment>
         <Divider hidden />
         <Divider hidden />
-        <Segment className='whitebox'>
-          <Header as='h1'>
-            {t('HostProfile:reviews-header')}
-          </Header>
-          <p style={{ 'textAlign': 'center', 'marginBottom': '2rem' }}>
-            <Trans i18nKey='HostProfile:reviews-title'>
-              Here you can see and reply to the <strong>reviews</strong> others have written about you.
-            </Trans>
-          </p>
-          <div>
-            <AllReviews
-              hostProfileId={props.id}
-              score={props.score}
-            />
-          </div>
-        </Segment>
       </>
     )
   } else { return <Spinner /> }
 })
+
+HostProfile.displayName = 'HostProfile'
 
 export default HostProfile
