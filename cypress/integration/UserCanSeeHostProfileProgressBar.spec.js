@@ -51,11 +51,14 @@ describe('User can see host profile progress bar from her User Page', () => {
       status: 200,
       response: 'fixture:host_profile_index.json'
     })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
-      status: 200,
-      response: 'fixture:host_profile_individual_stripe.json'
+    cy.fixture('host_profile_individual.json').then((host_profile) => {
+      host_profile.stripe_account_id = 'acct-852147963'
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+        status: 200,
+        response: host_profile
+      })
     })
     cy.route({
       method: 'GET',
@@ -78,11 +81,14 @@ describe('User can see host profile progress bar from her User Page', () => {
       status: 200,
       response: 'fixture:host_profile_index.json'
     })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
-      status: 200,
-      response: 'fixture:host_profile_individual_stripe.json'
+    cy.fixture('host_profile_individual.json').then((host_profile) => {
+      host_profile.stripe_account_id = 'acct-852147963'
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+        status: 200,
+        response: host_profile
+      })
     })
     cy.route({
       method: 'GET',
@@ -105,11 +111,14 @@ describe('User can see host profile progress bar from her User Page', () => {
       status: 200,
       response: 'fixture:host_profile_index.json'
     })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
-      status: 200,
-      response: 'fixture:host_profile_individual_stripe.json'
+    cy.fixture('host_profile_individual.json').then((host_profile) => {
+      host_profile.stripe_account_id = 'acct-852147963'
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+        status: 200,
+        response: host_profile
+      })
     })
     cy.route({
       method: 'GET',
@@ -131,11 +140,14 @@ describe('User can see host profile progress bar from her User Page', () => {
       status: 200,
       response: 'fixture:host_profile_index.json'
     })
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
-      status: 200,
-      response: 'fixture:host_profile_individual_stripe.json'
+    cy.fixture('host_profile_individual.json').then((host_profile) => {
+      host_profile.stripe_account_id = 'acct-852147963'
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+        status: 200,
+        response: host_profile
+      })
     })
     cy.route({
       method: 'GET',
