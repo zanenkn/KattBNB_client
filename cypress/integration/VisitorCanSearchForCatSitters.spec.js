@@ -29,7 +29,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: 'fixture:search_no_results.json'
+      response: []
     })
     cy.route({
       method: 'GET',
@@ -56,7 +56,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: 'fixture:search_no_results.json'
+      response: []
     })
     cy.route({
       method: 'GET',
@@ -92,7 +92,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=15&locale=en-US',
       status: 200,
-      response: 'fixture:search_no_results.json'
+      response: []
     })
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
