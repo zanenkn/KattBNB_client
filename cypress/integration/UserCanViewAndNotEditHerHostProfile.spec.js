@@ -87,7 +87,6 @@ describe('User can view her host profile', () => {
   it('and if she logs out and visits the user-page path manually, she gets redirected to the login page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout')
-    cy.wait(2000)
     cy.visit('http://localhost:3000/user-page')
     cy.contains("Log in")
   })

@@ -143,7 +143,6 @@ describe('User can see messages of individual conversation', () => {
       })
     })
     cy.get('#delete-conversation').click()
-    cy.wait(1000)
     cy.get('#1').should('not.exist')
   })
 

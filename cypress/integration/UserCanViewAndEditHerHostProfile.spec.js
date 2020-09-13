@@ -129,7 +129,6 @@ describe('User can view her host profile', () => {
     cy.get('#userInputAddress').clear()
     cy.get('#userInputAddress').type('arlanda airport')
     cy.get('#search').click()
-    cy.wait(1000)
     cy.get('#address-submit-button').click()
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Your address was succesfully updated!')

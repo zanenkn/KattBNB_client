@@ -56,7 +56,6 @@ describe('User can create a booking request', () => {
       cy.get('#password').type('password')
     })
     cy.get('.submit-button').click()
-    cy.wait(2000)
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })

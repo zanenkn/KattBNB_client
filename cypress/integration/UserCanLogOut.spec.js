@@ -16,7 +16,6 @@ describe('User can sign out', () => {
     cy.wait(1000)
     cy.get('.hamburger-box').click()
     cy.get('#logout').click()
-    cy.wait(1000)
     cy.contains('Welcome to KattBNB!')
   })
 })

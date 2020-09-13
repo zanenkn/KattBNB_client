@@ -23,7 +23,6 @@ describe('User can reset password', () => {
     cy.get('#password').type('new_password')
     cy.get('#passwordConfirmation').type('new_password')
     cy.get('#change-pass-button').click()
-    cy.wait(3000)
     cy.contains('Log in')
   })
 
