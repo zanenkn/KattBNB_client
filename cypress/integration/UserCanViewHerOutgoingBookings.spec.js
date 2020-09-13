@@ -218,11 +218,15 @@ describe('User can view her outgoing bookings', () => {
 
   it('and sees relevant message if host has deleted her account before review of booking', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
-      status: 200,
-      response: 'fixture:one_user_booking_no_review_no_host.json'
+    cy.fixture('one_user_booking_review.json').then((booking_review) => {
+      booking_review[0].host_profile_id = null
+      booking_review[0].review_id = null
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+        status: 200,
+        response: booking_review
+      })
     })
     cy.route({
       method: 'GET',
