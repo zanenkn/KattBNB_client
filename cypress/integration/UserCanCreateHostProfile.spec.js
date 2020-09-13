@@ -1,15 +1,18 @@
+const api = 'http://localhost:3007/api/v1'
+const host_profiles = `${api}/host_profiles`
+
 describe('User can create a host profile', () => {
   beforeEach(function () {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      url: `${host_profiles}?user_id=1&locale=en-US`,
       status: 200,
       response: []
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: []
     })
@@ -20,7 +23,7 @@ describe('User can create a host profile', () => {
   it('successfully', () => {
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/host_profiles',
+      url: `${host_profiles}`,
       status: 200,
       response: 'fixture:successful_host_profile_creation.json'
     })
@@ -59,7 +62,7 @@ describe('User can create a host profile', () => {
   it('unsuccessfully', () => {
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/host_profiles',
+      url: `${host_profiles}`,
       status: 422,
       response: 'fixture:unsuccessful_host_profile_creation.json'
     })

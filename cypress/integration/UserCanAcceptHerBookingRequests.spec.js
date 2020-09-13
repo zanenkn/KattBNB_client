@@ -1,21 +1,23 @@
+const bookings = 'http://localhost:3007/api/v1/bookings'
+
 describe('User can accept her booking request', () => {
   beforeEach(function () {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:all_host_bookings.json'
     })
     cy.route({
       method: 'PATCH',
-      url: 'http://localhost:3007/api/v1/bookings/2',
+      url: `${bookings}/2`,
       status: 200,
       response: 'fixture:successful_booking_update.json'
     })
