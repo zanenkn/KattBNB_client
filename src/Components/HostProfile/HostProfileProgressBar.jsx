@@ -15,6 +15,7 @@ const HostProfileProgressBar = (props) => {
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false)
   const [stripeAccountErrors, setStripeAccountErrors] = useState([])
   const [stripePendingVerification, setStripePendingVerification] = useState(false)
   const [payoutSuccess, setPayoutSuccess] = useState(false)
@@ -71,6 +72,7 @@ const HostProfileProgressBar = (props) => {
       setErrors(['reusable:errors:window-navigator'])
     } else {
       try {
+        setStripeDashboardButtonLoading(true)
         const lang = detectLanguage()
         const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=login_link`
         const headers = {
@@ -80,6 +82,7 @@ const HostProfileProgressBar = (props) => {
         }
         const response = await axios.get(path, { headers: headers })
         window.open(response.data.url)
+        setStripeDashboardButtonLoading(false)
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
@@ -91,7 +94,7 @@ const HostProfileProgressBar = (props) => {
         } else {
           setErrorDisplay(true)
           setErrors([error.response.data.error])
-          setLoading(false)
+          setStripeDashboardButtonLoading(false)
         }
       }
     }
@@ -154,7 +157,7 @@ const HostProfileProgressBar = (props) => {
           </>
           : payoutSuccess ?
             <>
-              <Button onClick={() => fetchStripeDashboardLink()} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
             : stripeAccountErrors &&
             <>
@@ -162,7 +165,7 @@ const HostProfileProgressBar = (props) => {
                 {t('HostProfileProgressBar:step-2-text')}&ensp;
                 {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
               </p>
-              <Button onClick={() => fetchStripeDashboardLink()} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
         {errorDisplay &&
