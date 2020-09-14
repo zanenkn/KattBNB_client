@@ -15,7 +15,7 @@ describe('User can view her host profile', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 200,
       response: { "message": "No account" }
     })
