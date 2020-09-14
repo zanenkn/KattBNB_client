@@ -11,18 +11,57 @@ import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withRouter } from 'react-router-dom'
 
-
 class IncomingRequests extends Component {
   state = {
     errorDisplay: false,
     errors: '',
     iconsDisabled: false,
-    closeOnDocumentClick: true
+    closeOnDocumentClick: true,
+    payoutsEnabled: false
+  }
+
+  fetchStripeAccountDetails = async () => {
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      try {
+        const lang = detectLanguage()
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=retrieve`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const response = await axios.get(path, { headers: headers })
+        this.setState({ payoutsEnabled: response.data.payouts_enabled })
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            errorDisplay: true,
+            errors: [error.response.data.error]
+          })
+        }
+      }
+    }
   }
 
   componentDidMount() {
     if (this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/all-bookings' })
+    }
+    if (this.props.requests.length > 0) {
+      this.fetchStripeAccountDetails()
     }
   }
 
@@ -168,7 +207,7 @@ class IncomingRequests extends Component {
                       </p>
                     </div>
                   </Grid>
-                  <div style={{'padding': '2rem'}}>
+                  <div style={{ 'padding': '2rem' }}>
                     <p className='small-centered-paragraph'>
                       <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
                         <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
