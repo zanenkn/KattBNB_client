@@ -19,6 +19,12 @@ describe('User can accept her booking request', () => {
       status: 200,
       response: 'fixture:successful_booking_update.json'
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=10&occasion=retrieve',
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(1000)
     cy.get('#bookings-icon').click({ force: true })
