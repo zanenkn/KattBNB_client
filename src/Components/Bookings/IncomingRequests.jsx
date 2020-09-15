@@ -196,7 +196,14 @@ class IncomingRequests extends Component {
                             declModalCloseState={this.declModalCloseState.bind(this)}
                           />
                         </Popup>
-                        <Icon disabled={this.state.iconsDisabled} id={`accept-${request.id}`} onClick={(e) => this.acceptRequest(e, request)} name='check circle' style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }} size='big' />
+                        <Icon
+                          disabled={(this.state.iconsDisabled || this.state.payoutsEnabled === false || this.state.payoutsEnabled === undefined) ? true : false}
+                          id={`accept-${request.id}`}
+                          onClick={(e) => this.acceptRequest(e, request)}
+                          name='check circle'
+                          style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
+                          size='big'
+                        />
                       </Grid.Column>
                     </Grid.Row>
                     <div>
