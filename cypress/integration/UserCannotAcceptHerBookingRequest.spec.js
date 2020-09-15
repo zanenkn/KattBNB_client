@@ -1,4 +1,4 @@
-describe('User can accept her booking request', () => {
+describe('User cannot accept her booking request', () => {
   beforeEach(function () {
     cy.server()
     cy.route({
@@ -19,20 +19,30 @@ describe('User can accept her booking request', () => {
       status: 200,
       response: 'fixture:successful_booking_update.json'
     })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(1000)
+    cy.get('#bookings-icon').click({ force: true })
+  })
+
+  it('cause she does not have an account with Stripe', () => {
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=10&occasion=retrieve',
       status: 200,
-      response: 'fixture:stripe_verification_no_errors'
+      response: { "message": "No account" }
     })
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
-    cy.wait(1000)
-    cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-incoming-bookings').click()
+    cy.get('#accept-2').should('have.class', 'disabled')
   })
 
-  it('successfully', () => {
-    cy.get('#accept-2').click()
-    cy.contains('You have successfully accepted a booking request.')
+  it('cause she is not verified by Stripe', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=10&occasion=retrieve',
+      status: 200,
+      response: 'fixture:stripe_verification_errors'
+    })
+    cy.get('#view-incoming-bookings').click()
+    cy.get('#accept-2').should('have.class', 'disabled')
   })
 })

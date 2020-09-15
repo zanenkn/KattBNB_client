@@ -15,6 +15,7 @@ const HostProfileProgressBar = (props) => {
   const [errors, setErrors] = useState([])
   const [errorDisplay, setErrorDisplay] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false)
   const [stripeAccountErrors, setStripeAccountErrors] = useState([])
   const [stripePendingVerification, setStripePendingVerification] = useState(false)
   const [payoutSuccess, setPayoutSuccess] = useState(false)
@@ -30,7 +31,7 @@ const HostProfileProgressBar = (props) => {
     } else {
       try {
         const lang = detectLanguage()
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}`
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=retrieve`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -60,6 +61,40 @@ const HostProfileProgressBar = (props) => {
           setErrorDisplay(true)
           setErrors([error.response.data.error])
           setLoading(false)
+        }
+      }
+    }
+  }
+
+  const fetchStripeDashboardLink = async () => {
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true)
+      setErrors(['reusable:errors:window-navigator'])
+    } else {
+      try {
+        setStripeDashboardButtonLoading(true)
+        const lang = detectLanguage()
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=login_link`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const response = await axios.get(path, { headers: headers })
+        window.open(response.data.url)
+        setStripeDashboardButtonLoading(false)
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          setErrorDisplay(true)
+          setErrors([error.response.data.error])
+          setStripeDashboardButtonLoading(false)
         }
       }
     }
@@ -122,7 +157,7 @@ const HostProfileProgressBar = (props) => {
           </>
           : payoutSuccess ?
             <>
-              <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
             : stripeAccountErrors &&
             <>
@@ -130,7 +165,7 @@ const HostProfileProgressBar = (props) => {
                 {t('HostProfileProgressBar:step-2-text')}&ensp;
                 {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
               </p>
-              <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
         {errorDisplay &&

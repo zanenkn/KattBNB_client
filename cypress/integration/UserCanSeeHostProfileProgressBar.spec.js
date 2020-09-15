@@ -32,7 +32,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 200,
       response: { "message": "No account" }
     })
@@ -59,7 +59,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 200,
       response: 'fixture:stripe_pending_verification.json'
     })
@@ -86,7 +86,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 200,
       response: 'fixture:stripe_verification_errors.json'
     })
@@ -113,7 +113,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 200,
       response: 'fixture:stripe_verification_no_errors.json'
     })
@@ -122,6 +122,46 @@ describe('User can see host profile progress bar from her User Page', () => {
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(2).should('have.class', 'step-done-color')
+  })
+
+  it('and visit Stripe dashboard in a new window', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_index.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_individual_stripe.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=login_link',
+      status: 200,
+      response: { "url": "https://stripe.com/" }
+    })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com',
+      status: 200,
+      response: 'fixture:validate_token.json'
+    })
+    cy.visit('http://localhost:3000/user-page', {
+      onBeforeLoad(win) {
+        cy.stub(win, 'open')
+      }
+    })
+    cy.get('#progress-bar-cta').click()
+    cy.window().its('open').should('be.calledWith', 'https://stripe.com/')
   })
 
   it('and see an error if connection with Stripe is unavailable', () => {
@@ -139,7 +179,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
       status: 500,
       response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
     })
