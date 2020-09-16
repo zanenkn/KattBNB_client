@@ -80,21 +80,6 @@ describe('User can see host profile progress bar from her User Page', () => {
   it('and see step-2 when payment information have been provided, verification is complete and erros exist', () => {
     cy.route({
       method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
-      status: 200,
-      response: 'fixture:host_profile_index.json'
-    })
-    cy.fixture('host_profile_individual.json').then((host_profile) => {
-      host_profile.stripe_account_id = 'acct-852147963'
-      cy.route({
-        method: 'GET',
-        url: `${url.host_profile}`,
-        status: 200,
-        response: host_profile
-      })
-    })
-    cy.route({
-      method: 'GET',
       url: `${url.stripe}`,
       status: 200,
       response: 'fixture:stripe_verification_errors.json'
@@ -110,21 +95,6 @@ describe('User can see host profile progress bar from her User Page', () => {
   it('and see step-3 when payment verification is complete without errors', () => {
     cy.route({
       method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
-      status: 200,
-      response: 'fixture:host_profile_index.json'
-    })
-    cy.fixture('host_profile_individual.json').then((host_profile) => {
-      host_profile.stripe_account_id = 'acct-852147963'
-      cy.route({
-        method: 'GET',
-        url: `${url.host_profile}`,
-        status: 200,
-        response: host_profile
-      })
-    })
-    cy.route({
-      method: 'GET',
       url: `${url.stripe}`,
       status: 200,
       response: 'fixture:stripe_verification_no_errors.json'
@@ -137,21 +107,6 @@ describe('User can see host profile progress bar from her User Page', () => {
   })
 
   it('and visit Stripe dashboard in a new window', () => {
-    cy.route({
-      method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
-      status: 200,
-      response: 'fixture:host_profile_index.json'
-    })
-    cy.fixture('host_profile_individual.json').then((host_profile) => {
-      host_profile.stripe_account_id = 'acct-852147963'
-      cy.route({
-        method: 'GET',
-        url: `${url.host_profile}`,
-        status: 200,
-        response: host_profile
-      })
-    })
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
@@ -180,18 +135,6 @@ describe('User can see host profile progress bar from her User Page', () => {
   })
 
   it('and see an error if connection with Stripe is unavailable', () => {
-    cy.route({
-      method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
-      status: 200,
-      response: 'fixture:host_profile_index.json'
-    })
-    cy.route({
-      method: 'GET',
-      url: `${url.host_profile}`,
-      status: 200,
-      response: 'fixture:host_profile_individual_stripe.json'
-    })
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,

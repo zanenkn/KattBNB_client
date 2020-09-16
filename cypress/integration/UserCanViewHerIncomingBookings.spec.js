@@ -68,7 +68,7 @@ describe('User can view her incoming bookings', () => {
 })
 
 describe('User can view her incoming bookings', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
