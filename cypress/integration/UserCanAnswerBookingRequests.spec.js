@@ -3,7 +3,7 @@ const bookings = `${api}/bookings`
 const auth_token_validation = `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com`
 
 describe('User can answer her booking request', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
@@ -29,6 +29,12 @@ describe('User can answer her booking request', () => {
       url: `${auth_token_validation}`,
       status: 200,
       response: 'fixture:validate_token.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors'
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(1000)

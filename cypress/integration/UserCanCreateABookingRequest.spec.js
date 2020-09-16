@@ -1,7 +1,7 @@
 const api_url = 'http://localhost:3007/api/v1'
 
 describe('User can create a booking request', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',

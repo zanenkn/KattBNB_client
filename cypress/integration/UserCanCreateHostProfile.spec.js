@@ -2,7 +2,7 @@ const api = 'http://localhost:3007/api/v1'
 const host_profiles = `${api}/host_profiles`
 
 describe('User can create a host profile', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
