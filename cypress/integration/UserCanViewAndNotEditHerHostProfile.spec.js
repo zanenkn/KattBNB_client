@@ -1,39 +1,41 @@
+const api = 'http://localhost:3007/api/v1'
+
 describe('User can view her host profile', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      url: `${api}/host_profiles?user_id=1&locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_index.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles/1?locale=en-US',
+      url: `${api}/host_profiles/1?locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_individual.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=1&occasion=retrieve',
+      url: `${api}/stripe?locale=en-US&host_profile_id=1&occasion=retrieve`,
       status: 200,
       response: { "message": "No account" }
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=1&locale=en-US',
+      url: `${api}/reviews?host_profile_id=1&locale=en-US`,
       status: 200,
       response: []
     })
     cy.route({
       method: 'DELETE',
-      url: 'http://localhost:3007/api/v1/auth/sign_out',
+      url: `${api}/auth/sign_out`,
       status: 200,
       response: 'fixture:successful_signout.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: []
     })
