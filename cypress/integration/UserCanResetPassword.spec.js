@@ -8,8 +8,6 @@ const url = {
   client: 'http://localhost:3000'
 }
 
-
-
 describe('User can reset password', () => {
   beforeEach(() => {
     cy.server()

@@ -1,5 +1,5 @@
 describe('User cannot see a list of conversations', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
@@ -12,7 +12,7 @@ describe('User cannot see a list of conversations', () => {
     cy.get('#messenger-icon').click({force: true})
   })
 
-  it('cause she has no messages', () => {
+  it('cause has no messages', () => {
     cy.contains("You don't have any messages (yet).")
   })
 })
