@@ -1,29 +1,32 @@
+const api = 'http://localhost:3007/api/v1'
+const email = 'george@mail.com'
+
 describe('User cannot see her profile', () => {
-  before(function () {
+  before(() => {
     cy.server()
     cy.visit('http://localhost:3000/')
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api}/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: 'fixture:search_results_list.json'
     })
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/auth/sign_in',
+      url: `${api}/auth/sign_in`,
       status: 200,
       response: 'fixture:successful_login.json',
       headers: {
-        'uid': 'george@mail.com',
+        'uid': email,
       }
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api}/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: '',
       headers: {
-        'uid': 'george@mail.com',
+        'uid': email,
       }
     })
 
@@ -33,11 +36,10 @@ describe('User cannot see her profile', () => {
     cy.get('.hamburger-box').click()
     cy.get('#login').click()
     cy.get('#login-form').within(() => {
-      cy.get('#email').type('george@mail.com')
+      cy.get('#email').type(email)
       cy.get('#password').type('password')
     })
     cy.get('.submit-button').click()
-    cy.wait(2000)
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })

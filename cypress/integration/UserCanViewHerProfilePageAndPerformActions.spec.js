@@ -5,7 +5,7 @@ describe('User can view her profile page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
       status: 200,
-      response: 'fixture:search_no_results.json',
+      response: []
     })
     cy.route({
       method: 'GET',
@@ -17,7 +17,7 @@ describe('User can view her profile page', () => {
       method: 'GET',
       url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
       status: 200,
-      response: ''
+      response: []
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)

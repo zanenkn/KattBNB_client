@@ -132,14 +132,17 @@ describe('User can see messages of individual conversation', () => {
     cy.wait(2000)
     cy.get('#messenger-icon').click({ force: true })
     cy.get('#1').click()
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
-      status: 200,
-      response: 'fixture:all_user_conversations_delete.json'
+    cy.fixture('all_user_conversations.json').then((all_conversations) => {
+      //deletes first conversation
+      all_conversations[0].hidden = 1
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
+        status: 200,
+        response: all_conversations
+      })
     })
     cy.get('#delete-conversation').click()
-    cy.wait(1000)
     cy.get('#1').should('not.exist')
   })
 

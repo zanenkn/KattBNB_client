@@ -1,45 +1,47 @@
+const api_url = 'http://localhost:3007/api/v1'
+
 describe('User can create a booking request', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api_url}/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: 'fixture:search_results_list.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: `${api_url}/host_profiles?user_id=2&locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api_url}/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: ''
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      url: `${api_url}/reviews?host_profile_id=2&locale=en-US`,
       status: 200,
       response: []
     })
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/bookings',
+      url: `${api_url}/bookings`,
       status: 200,
       response: 'fixture:successful_host_profile_creation.json'
     })
     cy.route({
       method: 'DELETE',
-      url: 'http://localhost:3007/api/v1/auth/sign_out',
+      url: `${api_url}/auth/sign_out`,
       status: 200,
       response: 'fixture:successful_signout.json'
     })
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/auth/sign_in',
+      url: `${api_url}/auth/sign_in`,
       status: 200,
       response: 'fixture:successful_login.json',
       headers: {
@@ -56,7 +58,6 @@ describe('User can create a booking request', () => {
       cy.get('#password').type('password')
     })
     cy.get('.submit-button').click()
-    cy.wait(2000)
     cy.get('.ui > #search-form > .required > .ui > #cats').click()
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2')
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true })

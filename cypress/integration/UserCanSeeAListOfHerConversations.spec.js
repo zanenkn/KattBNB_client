@@ -1,5 +1,5 @@
 describe('User can see a list of all her conversations', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',

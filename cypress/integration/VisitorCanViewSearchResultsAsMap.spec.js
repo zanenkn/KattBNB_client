@@ -25,7 +25,6 @@ describe('Visitor can view search results as a map', () => {
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)').click()
     cy.get('.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)').last().click()
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true })
-    cy.wait(2000)
     cy.clock().then((clock) => {
       clock.restore()
     })

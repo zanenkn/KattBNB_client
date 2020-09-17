@@ -1,21 +1,23 @@
+const api = 'http://localhost:3007/api/v1'
+
 describe('User can view her outgoing bookings', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/reviews',
+      url: `${api}/reviews`,
       status: 200,
       response: ''
     })
@@ -133,23 +135,23 @@ describe('User can view her outgoing bookings', () => {
 })
 
 describe('User can view her outgoing bookings', () => {
-  beforeEach(function () {
+  beforeEach(() => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
       status: 200,
       response: 'fixture:one_user_booking_review.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews/2',
+      url: `${api}/reviews/2`,
       status: 200,
       response: 'fixture:one_review_outgoing.json'
     })
@@ -177,24 +179,23 @@ describe('User can view her outgoing bookings', () => {
 })
 
 describe('User can view her outgoing bookings', () => {
-
   it('and cannot leave a review cause the host requested an account deletion in the process', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
       status: 200,
       response: 'fixture:all_user_bookings.json'
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json'
     })
     cy.route({
       method: 'POST',
-      url: 'http://localhost:3007/api/v1/reviews',
+      url: `${api}/reviews`,
       status: 422,
       response: ''
     })
@@ -218,15 +219,19 @@ describe('User can view her outgoing bookings', () => {
 
   it('and sees relevant message if host has deleted her account before review of booking', () => {
     cy.server()
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
-      status: 200,
-      response: 'fixture:one_user_booking_no_review_no_host.json'
+    cy.fixture('one_user_booking_review.json').then((booking_review) => {
+      booking_review[0].host_profile_id = null
+      booking_review[0].review_id = null
+      cy.route({
+        method: 'GET',
+        url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
+        status: 200,
+        response: booking_review
+      })
     })
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json'
     })
