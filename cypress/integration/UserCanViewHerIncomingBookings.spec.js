@@ -21,6 +21,12 @@ describe('User can view her incoming bookings', () => {
       status: 200,
       response: 'fixture:create_conversation.json'
     })
+    cy.route({
+      method: 'GET',
+      url: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors'
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
@@ -153,6 +159,12 @@ describe('User can view her incoming bookings', () => {
       url: `${api}/conversations`,
       status: 422,
       response: ''
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors'
     })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
