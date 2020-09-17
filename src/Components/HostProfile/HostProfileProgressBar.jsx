@@ -104,6 +104,17 @@ const HostProfileProgressBar = (props) => {
     fetchStripeAccountDetails()
   }, [])
 
+  let redirectStripe
+
+  if (process.env.REACT_APP_OFFICIAL === 'yes') {
+    redirectStripe = 'https://kattbnb.se/user-page'
+  } else {
+    if (process.env.NODE_ENV === 'production') {
+      redirectStripe = 'https://kattbnb.netlify.app/user-page'
+    } else {
+      redirectStripe = 'http://localhost:3000/user-page'
+    }
+  }
 
   if (!loading && ready) {
     return (
@@ -151,7 +162,7 @@ const HostProfileProgressBar = (props) => {
                 You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
               </Trans>
             </p>
-            <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
+            <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>
               <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-onboarding-cta')}</Button>
             </a>
           </>
