@@ -14,6 +14,12 @@ class ContactUs extends Component {
 
     const { t } = this.props
 
+    const validate = values => {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const invalid = !values.email || !emailRegex.test(values.email) 
+      return invalid
+    }
+
     if (this.props.tReady) {
       return (
         <>
@@ -54,7 +60,8 @@ class ContactUs extends Component {
                           />
                           <Form.Input
                             as='input'
-                            pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                            type="email"
+                            validate={validate}
                             required
                             name='email'
                             placeholder={t('ContactUs:email-placeholder')}
