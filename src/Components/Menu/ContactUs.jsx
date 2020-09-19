@@ -54,7 +54,7 @@ class ContactUs extends Component {
                           />
                           <Form.Input
                             as='input'
-                            type='email'
+                            pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                             required
                             name='email'
                             placeholder={t('ContactUs:email-placeholder')}
