@@ -8,12 +8,37 @@ import FacebookIcon from '../Icons/FacebookIcon'
 import InstagramIcon from '../Icons/InstagramIcon'
 import LinkedinIcon from '../Icons/LinkedinIcon'
 
+const encode = (data) => {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+}
+
 class ContactUs extends Component {
+  state = {
+    name: '', 
+    email: '', 
+    message: '' 
+  };
+
+  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleSubmit = e => {
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact-us", ...this.state })
+    })
+      .then(() => alert("Success!"))
+      .catch(error => alert(error));
+
+    e.preventDefault();
+  };
 
   render() {
-
     const { t } = this.props
-
+    const { name, email, message } = this.state;
+  
     if (this.props.tReady) {
       return (
         <>
@@ -32,7 +57,7 @@ class ContactUs extends Component {
               {t('reusable:title.contact')}
             </Header>
             <Segment className='whitebox'>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <NetlifyForm name='contact-us'>
                   {({ error, success }) => (
                     <>
@@ -51,6 +76,8 @@ class ContactUs extends Component {
                             name='name'
                             placeholder={t('ContactUs:name-placeholder')}
                             style={{ 'marginBottom': '1rem' }}
+                            value={name}
+                            onChange={this.handleChange}
                           />
                           <Form.Input
                             as='input'
@@ -59,12 +86,16 @@ class ContactUs extends Component {
                             name='email'
                             placeholder={t('ContactUs:email-placeholder')}
                             style={{ 'marginBottom': '1rem' }}
+                            value={email}
+                            onChange={this.handleChange}
                           />
                           <TextArea
                             as='textarea'
                             required
                             name='message'
                             placeholder={t('ContactUs:message-placeholder')}
+                            value={message}
+                            onChange={this.handleChange}
                           />
                           <Button className='submit-button'>{t('ContactUs:send-btn')} </Button>
                         </>
