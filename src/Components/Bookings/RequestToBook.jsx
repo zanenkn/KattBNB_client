@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Header, Form, Button, Message, Segment, Icon } from 'semantic-ui-react'
+import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
@@ -24,6 +24,43 @@ class RequestToBook extends Component {
     nickname: ''
   }
 
+  createPaymentIntent = async () => {
+    const { t } = this.props
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      try {
+        const lang = detectLanguage()
+        const amount = total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
+        const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const response = await axios.get(path, { headers: headers })
+        console.log(response)
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            errorDisplay: true,
+            errors: [error.response.data.error]
+          })
+        }
+      }
+    }
+  }
+
   componentDidMount() {
     if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/' })
@@ -36,6 +73,7 @@ class RequestToBook extends Component {
         numberOfCats: this.props.location.state.numberOfCats,
         nickname: this.props.location.state.nickname
       })
+      this.createPaymentIntent()
     }
   }
 
@@ -190,20 +228,6 @@ class RequestToBook extends Component {
             <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading} onClick={this.createBooking}>
               {t('reusable:request-cta.btn')}
             </Button>
-          </Segment>
-          <Segment className='box-shadow'>
-            <div style={{ 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center' }}>
-              <Icon name="info circle" size='big' className='pulsing' style={{ 'color': '#c90c61' }} />
-              <Header as="h3" style={{ 'marginTop': '0' }}>{t('RequestToBook:important')}</Header>
-            </div>
-            <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              {t('RequestToBook:explanation-1')}
-            </p>
-            <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              <Trans i18nKey='RequestToBook:explanation-2'>
-                While online payment is under development we ask you kindly to <strong style={{ 'color': '#c90c61' }}>pay your cat sitter directly</strong>. We recommend that you discuss with your cat sitter the payment method and when will the payment take place.
-            </Trans>
-            </p>
           </Segment>
         </div>
       )
