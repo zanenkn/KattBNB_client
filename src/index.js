@@ -9,12 +9,15 @@ import { verifyCredentials } from './reduxTokenAuthConfig'
 import axios from 'axios'
 import './i18n'
 import smoothscroll from 'smoothscroll-polyfill'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
+process.env.NODE_ENV === 'production' && disableReactDevTools()
 
 axios.defaults.baseURL = (process.env.NODE_ENV === 'development' ? 'http://localhost:3007' : process.env.REACT_APP_API_ENDPOINT)
 
 const store = configureStore()
 verifyCredentials(store)
+
 smoothscroll.polyfill()
 
 ReactDOM.render(
