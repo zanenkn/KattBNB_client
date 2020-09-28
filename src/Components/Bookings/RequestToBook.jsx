@@ -21,7 +21,8 @@ class RequestToBook extends Component {
     perDay: '',
     orderTotal: '',
     numberOfCats: '',
-    nickname: ''
+    nickname: '',
+    paymentIntent: ''
   }
 
   createPaymentIntent = async () => {
@@ -42,7 +43,7 @@ class RequestToBook extends Component {
           'access-token': window.localStorage.getItem('access-token')
         }
         const response = await axios.get(path, { headers: headers })
-        console.log(response)
+        this.setState({ paymentIntent: response.data.intent_id })
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
