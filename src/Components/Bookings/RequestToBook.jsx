@@ -4,6 +4,7 @@ import { Header, Form, Button, Message, Segment } from 'semantic-ui-react'
 import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
+import StripeCardDetails from './StripeCardDetails'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
@@ -229,6 +230,7 @@ class RequestToBook extends Component {
             <Button id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading} onClick={this.createBooking}>
               {t('reusable:request-cta.btn')}
             </Button>
+            <StripeCardDetails />
           </Segment>
         </div>
       )
