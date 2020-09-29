@@ -85,9 +85,8 @@ class RequestToBook extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit = async (event, stripe, elements) => {
     event.preventDefault()
-    const { stripe, elements } = this.props
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make  sure to disable form submission until Stripe.js has loaded.
@@ -105,6 +104,7 @@ class RequestToBook extends Component {
       // Show error to your customer (e.g., insufficient funds)
       console.log(result.error.message);
     } else {
+      console.log('yes!!!!')
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
         // Show a success message to your customer
@@ -112,6 +112,7 @@ class RequestToBook extends Component {
         // execution. Set up a webhook or plugin to listen for the
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
+        console.log('success')
       }
     }
   }
@@ -270,14 +271,16 @@ class RequestToBook extends Component {
             />
             <ElementsConsumer>
               {({ stripe, elements }) => (
-                <StripeCardDetails
-                  stripe={stripe}
-                  elements={elements}
-                />)}
+                <>
+                  <StripeCardDetails
+                    stripe={stripe}
+                    elements={elements}
+                  />
+                  <Button onClick={(e) => this.handleSubmit(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
+                    {t('reusable:request-cta.btn')}
+                  </Button>
+                </>)}
             </ElementsConsumer>
-            <Button onClick={this.handleSubmit} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
-              {t('reusable:request-cta.btn')}
-            </Button>
           </Segment>
         </div>
       )
