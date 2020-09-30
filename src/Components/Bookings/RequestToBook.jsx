@@ -85,34 +85,50 @@ class RequestToBook extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  handleSubmit = async (event, stripe, elements) => {
+  createBookingAndPay = async (event, stripe, elements) => {
     event.preventDefault()
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make  sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-    const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: this.state.cardholderName,
-        },
-      }
+    this.setState({
+      loading: true,
+      errorDisplay: false,
+      errors: ''
     })
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
+    if (window.navigator.onLine === false) {
+      this.setState({
+        loading: false,
+        errors: ['reusable:errors:window-navigator'],
+        errorDisplay: true
+      })
     } else {
-      console.log('yes!!!!')
-      // The payment has been processed!
-      if (result.paymentIntent.status === 'succeeded') {
-        // Show a success message to your customer
-        // There's a risk of the customer closing the window before callback
-        // execution. Set up a webhook or plugin to listen for the
-        // payment_intent.succeeded event that handles any business critical
-        // post-payment actions.
-        console.log('success')
+      if (!stripe || !elements) {
+        this.setState({
+          loading: false,
+          errorDisplay: true,
+          errors: ['Our payments provider is temporarily unavailable. Try again later.']
+        })
+        return
+      }
+      const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: this.state.cardholderName,
+          }
+        }
+      })
+      if (result.error) {
+        // Show error to your customer (e.g., insufficient funds)
+        console.log(result.error.message);
+      } else {
+        console.log('yes!!!!')
+        // The payment has been processed!
+        if (result.paymentIntent.status === 'succeeded') {
+          // Show a success message to your customer
+          // There's a risk of the customer closing the window before callback
+          // execution. Set up a webhook or plugin to listen for the
+          // payment_intent.succeeded event that handles any business critical
+          // post-payment actions.
+          console.log('success')
+        }
       }
     }
   }
@@ -276,7 +292,7 @@ class RequestToBook extends Component {
                     stripe={stripe}
                     elements={elements}
                   />
-                  <Button onClick={(e) => this.handleSubmit(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
+                  <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
                     {t('reusable:request-cta.btn')}
                   </Button>
                 </>)}
