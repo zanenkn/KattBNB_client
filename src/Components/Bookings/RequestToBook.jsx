@@ -116,12 +116,15 @@ class RequestToBook extends Component {
         }
       })
       if (result.error) {
-        // Show error to your customer (e.g., insufficient funds)
-        console.log(result.error.message);
+        this.setState({
+          loading: false,
+          errors: [result.error.message],
+          errorDisplay: true
+        })
       } else {
         console.log('yes!!!!')
         // The payment has been processed!
-        if (result.paymentIntent.status === 'succeeded') {
+        if (result.paymentIntent.status === 'requires_capture') {
           // Show a success message to your customer
           // There's a risk of the customer closing the window before callback
           // execution. Set up a webhook or plugin to listen for the
