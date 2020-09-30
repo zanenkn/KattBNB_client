@@ -86,7 +86,7 @@ class RequestToBook extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
-  createBooking = () => {
+  createBooking = (paymentIntentId) => {
     const { t } = this.props
     const lang = detectLanguage()
     let booking = []
@@ -106,6 +106,7 @@ class RequestToBook extends Component {
       price_per_day: this.state.perDay,
       price_total: this.state.orderTotal,
       user_id: this.props.id,
+      payment_intent_id: paymentIntentId,
       locale: lang
     }
     const headers = {
@@ -207,7 +208,7 @@ class RequestToBook extends Component {
         } else {
           this.setState({ successDisplay: true })
           if (result.paymentIntent.status === 'requires_capture') {
-            this.createBooking()
+            this.createBooking(result.paymentIntent.id)
           }
         }
       }
