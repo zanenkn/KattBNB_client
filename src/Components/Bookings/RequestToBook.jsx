@@ -86,6 +86,69 @@ class RequestToBook extends Component {
     this.setState({ [e.target.id]: e.target.value })
   }
 
+  createBooking = () => {
+    const { t } = this.props
+    const lang = detectLanguage()
+    let booking = []
+    let startDate = this.props.location.state.checkInDate
+    let stopDate = this.props.location.state.checkOutDate
+    let currentDate = startDate
+    while (currentDate <= stopDate) {
+      booking.push(currentDate)
+      currentDate = currentDate + 86400000
+    }
+    const path = '/api/v1/bookings'
+    const payload = {
+      number_of_cats: this.props.location.state.numberOfCats,
+      message: this.state.message,
+      dates: booking,
+      host_nickname: this.props.location.state.nickname,
+      price_per_day: this.state.perDay,
+      price_total: this.state.orderTotal,
+      user_id: this.props.id,
+      locale: lang
+    }
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token')
+    }
+    axios.post(path, payload, { headers: headers })
+      .then(() => {
+        this.props.history.push({
+          pathname: '/successful-request',
+          state: {
+            numberOfCats: this.props.location.state.numberOfCats,
+            checkInDate: this.props.location.state.checkInDate,
+            checkOutDate: this.props.location.state.checkOutDate,
+            nickname: this.props.location.state.nickname
+          }
+        })
+      })
+      .catch(error => {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500) {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: ['reusable:errors:500']
+          })
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            loading: false,
+            errorDisplay: true,
+            errors: error.response.data.error
+          })
+        }
+      })
+  }
+
   createBookingAndPay = async (event, stripe, elements) => {
     event.preventDefault()
     this.setState({
@@ -108,46 +171,6 @@ class RequestToBook extends Component {
         })
         return
       }
-      const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: {
-            name: this.state.cardholderName,
-          }
-        }
-      })
-      if (result.error) {
-        this.setState({
-          loading: false,
-          errors: [result.error.message],
-          errorDisplay: true
-        })
-      } else {
-        this.setState({ successDisplay: true })
-        if (result.paymentIntent.status === 'requires_capture') {
-          // Show a success message to your customer
-          // There's a risk of the customer closing the window before callback
-          // execution. Set up a webhook or plugin to listen for the
-          // payment_intent.succeeded event that handles any business critical
-          // post-payment actions.
-          console.log('success')
-        }
-      }
-    }
-  }
-
-  createBooking = (e) => {
-    e.preventDefault()
-    const { t } = this.props
-    const lang = detectLanguage()
-    this.setState({ loading: true })
-    if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errors: ['reusable:errors:window-navigator'],
-        errorDisplay: true
-      })
-    } else {
       if (this.state.message === '') {
         this.setState({
           loading: false,
@@ -160,65 +183,33 @@ class RequestToBook extends Component {
           errors: ['RequestToBook:error-2'],
           errorDisplay: true
         })
+      } else if (this.state.cardholderName === '') {
+        this.setState({
+          loading: false,
+          errors: ['You have to provide the cardholder name!'],
+          errorDisplay: true
+        })
       } else {
-        let booking = []
-        let startDate = this.props.location.state.checkInDate
-        let stopDate = this.props.location.state.checkOutDate
-        let currentDate = startDate
-        while (currentDate <= stopDate) {
-          booking.push(currentDate)
-          currentDate = currentDate + 86400000
-        }
-        const path = '/api/v1/bookings'
-        const payload = {
-          number_of_cats: this.props.location.state.numberOfCats,
-          message: this.state.message,
-          dates: booking,
-          host_nickname: this.props.location.state.nickname,
-          price_per_day: this.state.perDay,
-          price_total: this.state.orderTotal,
-          user_id: this.props.id,
-          locale: lang
-        }
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        axios.post(path, payload, { headers: headers })
-          .then(() => {
-            this.props.history.push({
-              pathname: '/successful-request',
-              state: {
-                numberOfCats: this.props.location.state.numberOfCats,
-                checkInDate: this.props.location.state.checkInDate,
-                checkOutDate: this.props.location.state.checkOutDate,
-                nickname: this.props.location.state.nickname
-              }
-            })
-          })
-          .catch(error => {
-            if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 500) {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: ['reusable:errors:500']
-              })
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm')
-            } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'))
-              wipeCredentials('/')
-            } else {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: error.response.data.error
-              })
+        const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: this.state.cardholderName,
             }
+          }
+        })
+        if (result.error) {
+          this.setState({
+            loading: false,
+            errors: [result.error.message],
+            errorDisplay: true
           })
+        } else {
+          this.setState({ successDisplay: true })
+          if (result.paymentIntent.status === 'requires_capture') {
+            this.createBooking()
+          }
+        }
       }
     }
   }
@@ -307,7 +298,8 @@ class RequestToBook extends Component {
                   <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
                     {t('reusable:request-cta.btn')}
                   </Button>
-                </>)}
+                </>
+              )}
             </ElementsConsumer>
           </Segment>
         </div>
