@@ -18,6 +18,7 @@ class RequestToBook extends Component {
     loading: false,
     errorDisplay: false,
     errors: '',
+    successDisplay: false,
     checkIn: '',
     checkOut: '',
     perDay: '',
@@ -122,8 +123,7 @@ class RequestToBook extends Component {
           errorDisplay: true
         })
       } else {
-        console.log('yes!!!!')
-        // The payment has been processed!
+        this.setState({ successDisplay: true })
         if (result.paymentIntent.status === 'requires_capture') {
           // Show a success message to your customer
           // There's a risk of the customer closing the window before callback
@@ -227,7 +227,7 @@ class RequestToBook extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let errorDisplay, messageLength
+      let errorDisplay, messageLength, successDisplay
 
       messageLength = 400 - this.state.message.length
 
@@ -240,6 +240,14 @@ class RequestToBook extends Component {
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
+          </Message>
+        )
+      }
+
+      if (this.state.successDisplay) {
+        successDisplay = (
+          <Message success style={{ 'textAlign': 'center' }} >
+            Your payment is being processed..
           </Message>
         )
       }
@@ -268,7 +276,6 @@ class RequestToBook extends Component {
             <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
               {t('reusable:remaining-chars')} {messageLength}
             </p>
-            {errorDisplay}
             <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
               <Trans i18nKey='RequestToBook:agree-to-pay-directly'>
                 By requesting to book, you agree to pay the following total cost to <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> directly:
@@ -280,6 +287,8 @@ class RequestToBook extends Component {
             <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
               ({this.state.perDay} {t('reusable:price.per-day')})
             </Header>
+            {errorDisplay}
+            {successDisplay}
             <Form.Input
               type='text'
               placeholder='cardholder name'
