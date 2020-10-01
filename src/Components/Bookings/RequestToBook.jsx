@@ -132,6 +132,7 @@ class RequestToBook extends Component {
         } else if (error.response.status === 500) {
           this.setState({
             loading: false,
+            successDisplay: false,
             errorDisplay: true,
             errors: ['reusable:errors:500']
           })
@@ -143,6 +144,7 @@ class RequestToBook extends Component {
         } else {
           this.setState({
             loading: false,
+            successDisplay: false,
             errorDisplay: true,
             errors: error.response.data.error
           })
