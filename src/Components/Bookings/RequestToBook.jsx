@@ -51,6 +51,17 @@ class RequestToBook extends Component {
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 500) {
+          window.alert('There was a problem connecting to our payments infrastructure provider. Please make your booking request again.')
+          this.props.history.push({
+            pathname: '/search',
+            state: {
+              checkInDate: new Date(this.props.location.state.checkInDate),
+              checkOutDate: new Date(this.props.location.state.checkOutDate),
+              location: this.props.locationRedux,
+              numberOfCats: this.props.location.state.numberOfCats
+            }
+          })
         } else if (error.response.status === 503) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 401) {
@@ -311,6 +322,9 @@ class RequestToBook extends Component {
   }
 }
 
-const mapStateToProps = state => ({ id: state.reduxTokenAuth.currentUser.attributes.id })
+const mapStateToProps = state => ({
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+  locationRedux: state.reduxTokenAuth.currentUser.attributes.location
+})
 
 export default withTranslation('RequestToBook')(connect(mapStateToProps)(RequestToBook))
