@@ -1180,3 +1180,80 @@ REACT ADD TO CALENDAR OVERRIDES
 .step-explanation > svg {
   fill: #e0e0e0;
 }
+
+/*******************************
+        STRIPE ELEMENTS
+*******************************/
+
+.stripe-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.stripe-wrapper > input::placeholder {
+  font-style: italic;
+}
+
+.stripe-wrapper > .field {
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.stripe-secondary-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  width: 100%;
+  align-self: flex-end;
+}
+
+@media screen and (min-width: 425px) {
+  .stripe-wrapper > .field {
+    padding-right: 4px;
+  }
+  .stripe-wrapper > .field {
+    width: 50%;
+  }
+  .stripe-secondary-wrapper {
+    width: 50%;
+  }
+  .stripe-card-element-full {
+    width: 100%;
+  }
+}
+
+.stripe-card-element-small {
+  margin: 0;
+  flex: 1 0 auto;
+  outline: 0;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  text-align: left;
+  line-height: 1.21428571em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  padding: .67857143em 1em;
+  background: #fff;
+  border: 1px solid rgba(34,36,38,.15);
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  transition: box-shadow .1s ease,border-color .1s ease;
+  box-shadow: none;
+}
+
+.stripe-card-element-full {
+  margin: 0 0 4px;
+  width: 50%;
+  flex: 1 0 auto;
+  outline: 0;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  text-align: left;
+  line-height: 1.21428571em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  padding: .67857143em 1em;
+  background: #fff;
+  border: 1px solid rgba(34,36,38,.15);
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  transition: box-shadow .1s ease,border-color .1s ease;
+  box-shadow: none;
+}

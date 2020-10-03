@@ -5,7 +5,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import moment from 'moment'
 import axios from 'axios'
 import StripeCardDetails from './StripeCardDetails'
-import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js'
+import { ElementsConsumer, CardNumberElement } from '@stripe/react-stripe-js'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { pricePerDay, total } from '../../Modules/PriceCalculations'
@@ -170,6 +170,7 @@ class RequestToBook extends Component {
       errorDisplay: false,
       errors: ''
     })
+    debugger
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
@@ -206,7 +207,7 @@ class RequestToBook extends Component {
       } else {
         const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
           payment_method: {
-            card: elements.getElement(CardElement),
+            card: elements.getElement(CardNumberElement),
             billing_details: {
               name: this.state.cardholderName,
             }
@@ -226,6 +227,10 @@ class RequestToBook extends Component {
         }
       }
     }
+  }
+
+  cardholderNameHandler = (e) => {
+    this.setState({cardholderName: e.target.value})
   }
 
   render() {
@@ -281,34 +286,30 @@ class RequestToBook extends Component {
             <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
               {t('reusable:remaining-chars')} {messageLength}
             </p>
-            <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              <Trans i18nKey='RequestToBook:agree-to-pay-directly'>
-                By requesting to book, you agree to pay the following total cost to <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> directly:
-              </Trans>
-            </p>
-            <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
-              {this.state.orderTotal} kr
-            </Header>
-            <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
-              ({this.state.perDay} {t('reusable:price.per-day')})
-            </Header>
-            {errorDisplay}
-            {successDisplay}
-            <Form.Input
-              type='text'
-              placeholder='cardholder name'
-              required
-              id='cardholderName'
-              value={this.state.cardholderName}
-              onChange={this.onChangeHandler}
-            />
+
+
             <ElementsConsumer>
               {({ stripe, elements }) => (
                 <>
                   <StripeCardDetails
+                    onChange={this.cardholderNameHandler}
+                    cardholderName={this.state.cardholderName}
                     stripe={stripe}
                     elements={elements}
                   />
+                  <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
+                    <Trans i18nKey='RequestToBook:agree-to-pay-directly'>
+                      By requesting to book, you agree to pay the following total cost to <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> directly:
+                    </Trans>
+                  </p>
+                  <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
+                    {this.state.orderTotal} kr
+                  </Header>
+                  <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
+                    ({this.state.perDay} {t('reusable:price.per-day')})
+                  </Header>
+                  {errorDisplay}
+                  {successDisplay}
                   <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
                     {t('reusable:request-cta.btn')}
                   </Button>
