@@ -559,6 +559,11 @@ h4 {
   color: grey!important;
 }
 
+.smallprint {
+  font-size: 10px;
+  text-align: center;
+}
+
 .box-shadow {
   margin-top: 2rem!important;
   padding: 2rem!important;
@@ -1216,10 +1221,10 @@ REACT ADD TO CALENDAR OVERRIDES
     width: 50%;
   }
   .stripe-secondary-wrapper {
-    width: 50%;
+    width: calc(50% - 2px);
   }
   .stripe-card-element-full {
-    width: 100%;
+    width: calc(50% - 2px) !important;
   }
 }
 
@@ -1241,9 +1246,8 @@ REACT ADD TO CALENDAR OVERRIDES
 }
 
 .stripe-card-element-full {
-  margin: 0 0 4px;
-  width: 50%;
-  flex: 1 0 auto;
+  margin: 0 0 4px !important;
+  width: 100%;
   outline: 0;
   -webkit-tap-highlight-color: rgba(255,255,255,0);
   text-align: left;

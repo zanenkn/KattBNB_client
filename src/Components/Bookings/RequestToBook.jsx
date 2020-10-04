@@ -230,7 +230,7 @@ class RequestToBook extends Component {
   }
 
   cardholderNameHandler = (e) => {
-    this.setState({cardholderName: e.target.value})
+    this.setState({ cardholderName: e.target.value })
   }
 
   render() {
@@ -286,8 +286,6 @@ class RequestToBook extends Component {
             <p style={{ 'textAlign': 'end', 'fontSize': 'smaller', 'fontStyle': 'italic' }}>
               {t('reusable:remaining-chars')} {messageLength}
             </p>
-
-
             <ElementsConsumer>
               {({ stripe, elements }) => (
                 <>
@@ -297,10 +295,8 @@ class RequestToBook extends Component {
                     stripe={stripe}
                     elements={elements}
                   />
-                  <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-                    <Trans i18nKey='RequestToBook:agree-to-pay-directly'>
-                      By requesting to book, you agree to pay the following total cost to <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> directly:
-                    </Trans>
+                  <p className='small-centered-paragraph' style={{ 'margin': '2rem 0 0.5rem' }}>
+                    Total cost of this booking:
                   </p>
                   <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
                     {this.state.orderTotal} kr
@@ -313,6 +309,9 @@ class RequestToBook extends Component {
                   <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
                     {t('reusable:request-cta.btn')}
                   </Button>
+                  <p className='smallprint' style={{'marginTop': '2rem'}}>
+                    Our payment provider is <span><a href='#'>Stripe</a></span>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days. You can read more on how we handle payments <span><a href='#'>in our FAQ</a></span>.
+                  </p>
                 </>
               )}
             </ElementsConsumer>
