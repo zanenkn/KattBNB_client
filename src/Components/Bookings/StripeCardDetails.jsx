@@ -4,7 +4,6 @@ import { Form } from 'semantic-ui-react'
 
 const StripeCardDetails = (props) => {
   let style = {
-
     base: {
       fontSize: '13px',
       '::placeholder': {
@@ -21,7 +20,7 @@ const StripeCardDetails = (props) => {
           Your card details
           </label>
         <div className='stripe-wrapper'>
-        <input className='stripe-card-element-full'
+          <input className='stripe-card-element-full'
             type='text'
             placeholder='Cardholder name'
             id='cardholderName'
