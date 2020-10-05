@@ -18,7 +18,7 @@ const StripeCardDetails = (props) => {
       <div className='required field' style={{ 'display': 'flex', 'flexDirection': 'column' }}>
         <label>
           Your card details
-          </label>
+        </label>
         <div className='stripe-wrapper'>
           <input className='stripe-card-element-full'
             type='text'

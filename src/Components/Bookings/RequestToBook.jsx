@@ -170,7 +170,6 @@ class RequestToBook extends Component {
       errorDisplay: false,
       errors: ''
     })
-    debugger
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
@@ -310,7 +309,7 @@ class RequestToBook extends Component {
                     {t('reusable:request-cta.btn')}
                   </Button>
                   <p className='smallprint' style={{ 'marginTop': '2rem' }}>
-                    Our payment provider is <span><a href='#'>Stripe</a></span>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days. You can read more on how we handle payments <span><a href='#'>in our FAQ</a></span>.
+                    Our payment provider is <span><a href='https://stripe.com/about'>Stripe</a></span>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days. You can read more on how we handle payments <span><a href='#'>in our FAQ</a></span>.
                   </p>
                 </>
               )}
