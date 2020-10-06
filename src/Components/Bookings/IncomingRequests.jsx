@@ -116,6 +116,9 @@ class IncomingRequests extends Component {
                 errors: ['reusable:errors:500'],
                 iconsDisabled: false
               })
+            } else if (error.response.status === 555) {
+              window.alert(error.response.data.error)
+              this.props.history.push('/all-bookings')
             } else if (error.response.status === 503) {
               wipeCredentials('/is-not-available?atm')
             } else if (error.response.status === 401) {
