@@ -41,6 +41,11 @@ class IncomingRequests extends Component {
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 555) {
+          this.setState({
+            errorDisplay: true,
+            errors: [error.response.data.error]
+          })
         } else if (error.response.status === 503) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 401) {

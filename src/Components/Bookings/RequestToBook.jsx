@@ -51,7 +51,7 @@ class RequestToBook extends Component {
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 500) {
+        } else if (error.response.status === 555) {
           window.alert('There was a problem connecting to our payments infrastructure provider. Please make your booking request again.')
           this.props.history.push({
             pathname: '/search',
