@@ -18,7 +18,7 @@ class RequestToBook extends Component {
     loading: false,
     errorDisplay: false,
     errors: '',
-    successDisplay: false,
+    stripePaymentProcessingDisplay: false,
     checkIn: '',
     checkOut: '',
     perDay: '',
@@ -146,7 +146,7 @@ class RequestToBook extends Component {
         } else if (error.response.status === 500) {
           this.setState({
             loading: false,
-            successDisplay: false,
+            stripePaymentProcessingDisplay: false,
             errorDisplay: true,
             errors: ['reusable:errors:500']
           })
@@ -158,7 +158,7 @@ class RequestToBook extends Component {
         } else {
           this.setState({
             loading: false,
-            successDisplay: false,
+            stripePaymentProcessingDisplay: false,
             errorDisplay: true,
             errors: error.response.data.error
           })
@@ -207,6 +207,7 @@ class RequestToBook extends Component {
           errorDisplay: true
         })
       } else {
+        this.setState({ stripePaymentProcessingDisplay: true })
         const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
           payment_method: {
             card: elements.getElement(CardNumberElement),
@@ -221,11 +222,11 @@ class RequestToBook extends Component {
         if (result.error) {
           this.setState({
             loading: false,
+            stripePaymentProcessingDisplay: false,
             errors: [result.error.message],
             errorDisplay: true
           })
         } else {
-          this.setState({ successDisplay: true })
           if (result.paymentIntent.status === 'requires_capture') {
             this.createBooking(result.paymentIntent.id)
           }
@@ -238,7 +239,7 @@ class RequestToBook extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let errorDisplay, messageLength, successDisplay
+      let errorDisplay, messageLength, stripePaymentProcessingDisplay
 
       messageLength = 400 - this.state.message.length
 
@@ -255,11 +256,14 @@ class RequestToBook extends Component {
         )
       }
 
-      if (this.state.successDisplay) {
-        successDisplay = (
-          <Message success style={{ 'textAlign': 'center' }} >
-            Your payment is being processed..
-          </Message>
+      if (this.state.stripePaymentProcessingDisplay) {
+        stripePaymentProcessingDisplay = (
+          <Message
+            warning
+            style={{ 'textAlign': 'center' }}
+            header='Your payment is being processed..'
+            content='Please avoid any interaction with your browser!'
+          />
         )
       }
 
@@ -308,7 +312,7 @@ class RequestToBook extends Component {
                     ({this.state.perDay} {t('reusable:price.per-day')})
                   </Header>
                   {errorDisplay}
-                  {successDisplay}
+                  {stripePaymentProcessingDisplay}
                   <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' className='submit-button' style={{ 'marginTop': '0' }} disabled={this.state.loading} loading={this.state.loading}>
                     {t('reusable:request-cta.btn')}
                   </Button>
