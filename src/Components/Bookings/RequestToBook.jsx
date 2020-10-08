@@ -26,7 +26,8 @@ class RequestToBook extends Component {
     numberOfCats: '',
     nickname: '',
     paymentIntent: '',
-    cardholderName: ''
+    cardholderName: '',
+    postalCode: ''
   }
 
   createPaymentIntent = async () => {
@@ -93,9 +94,11 @@ class RequestToBook extends Component {
     }
   }
 
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
-  }
+  onChangeHandler = (e) => { this.setState({ [e.target.id]: e.target.value }) }
+
+  cardholderNameHandler = (e) => { this.setState({ cardholderName: e.target.value }) }
+
+  postalCodeNameHandler = (e) => { this.setState({ postalCode: e.target.value }) }
 
   createBooking = (paymentIntentId) => {
     const { t } = this.props
@@ -197,10 +200,10 @@ class RequestToBook extends Component {
           errors: ['RequestToBook:error-2'],
           errorDisplay: true
         })
-      } else if (this.state.cardholderName === '') {
+      } else if (this.state.cardholderName === '' || this.state.postalCode === '' || this.state.postalCode < 0 || this.state.postalCode.length !== 5) {
         this.setState({
           loading: false,
-          errors: ['You have to provide the cardholder name!'],
+          errors: ['You have to provide both the cardholder name and a valid postal code!'],
           errorDisplay: true
         })
       } else {
@@ -209,6 +212,9 @@ class RequestToBook extends Component {
             card: elements.getElement(CardNumberElement),
             billing_details: {
               name: this.state.cardholderName,
+              address: {
+                postal_code: this.state.postalCode
+              }
             }
           }
         })
@@ -226,10 +232,6 @@ class RequestToBook extends Component {
         }
       }
     }
-  }
-
-  cardholderNameHandler = (e) => {
-    this.setState({ cardholderName: e.target.value })
   }
 
   render() {
@@ -289,8 +291,10 @@ class RequestToBook extends Component {
               {({ stripe, elements }) => (
                 <>
                   <StripeCardDetails
-                    onChange={this.cardholderNameHandler}
+                    onChangeCardHolder={this.cardholderNameHandler}
+                    onChangePostalCode={this.postalCodeNameHandler}
                     cardholderName={this.state.cardholderName}
+                    postalCode={this.state.postalCode}
                     stripe={stripe}
                     elements={elements}
                   />
@@ -309,7 +313,7 @@ class RequestToBook extends Component {
                     {t('reusable:request-cta.btn')}
                   </Button>
                   <p className='smallprint' style={{ 'marginTop': '2rem' }}>
-                    Our payment provider is <span><a href='https://stripe.com/about'>Stripe</a></span>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days. You can read more on how we handle payments <span><a href='#'>in our FAQ</a></span>.
+                    Our payment provider is <span><a href='https://stripe.com/about'>Stripe</a></span>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days of the initial request date. You can read more on how we handle payments <span><a href='#'>in our FAQ</a></span>.
                   </p>
                 </>
               )}

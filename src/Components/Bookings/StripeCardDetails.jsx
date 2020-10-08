@@ -25,7 +25,14 @@ const StripeCardDetails = (props) => {
             placeholder='Cardholder name'
             id='cardholderName'
             value={props.cardholderName}
-            onChange={props.onChange}>
+            onChange={props.onChangeCardHolder}>
+          </input>
+          <input className='stripe-card-element-full'
+            type='number'
+            placeholder='Postal code'
+            id='postalCode'
+            value={props.postalCode}
+            onChange={props.onChangePostalCode}>
           </input>
           <div className='stripe-card-element-full'>
             <CardNumberElement options={{ style: style, placeholder: 'Card number' }} />
