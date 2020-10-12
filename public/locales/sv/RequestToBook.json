@@ -11,5 +11,8 @@
   "agree-to-pay-directly": "Genom att skicka en bokningsförfrågan samtycker du till att betala följande totala kostnad direkt till <1>{{host}}</1>:",
   "explanation-1": "Vi arbetar hårt för att leverera en integrerad betalningslösning där du på ett säkert sätt kan betala din kattvakt direkt här på KattBNB.",
   "explanation-2": "Under tiden som onlinebetalning är under utveckling så ber vi dig vänligen att <1>betala din kattvakt direkt</1>. Vi rekommenderar att du diskuterar betalningsmetoden med din kattvakt och när betalningen ska ske.",
-  "important": "Viktigt!"
+  "important": "Viktigt!",
+  "smallprint": "Vår betalväxel är <1>Stripe</1>. När du skickar en bokningsförfrågan så reserverar vi beloppet som visas ovan från ditt bankkort. Kattvakten har då tre dagar på sig att acceptera eller avvisa din bokningsförfrågan. I en i händelse av avbokad eller avvisad bokningsförfrågan så kommer det reserverade beloppet att frigöras inom sju dagar från det ursprungliga förfrågningsdatumet. Du kan läsa mer om hur vi hanterar betalningar <3>i vår FAQ</3>.",
+  "payment-processed-header": "Din betalning behandlas..",
+  "payment-processed-text": "Stäng inte det här fönstret eller klicka på Tillbaka-knappen i din webbläsare."
 }

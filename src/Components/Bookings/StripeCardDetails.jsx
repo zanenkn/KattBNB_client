@@ -31,7 +31,7 @@ const StripeCardDetails = (props) => {
             onChange={props.onChangeCardHolder}>
           </input>
           <div className='stripe-card-element-full'>
-            <CardNumberElement options={{ style: style, placeholder: t('StripeCardDetails:card-number') }} />
+            <CardNumberElement options={{ style: style, placeholder: t('StripeCardDetails:card-number'), showIcon: true }} />
           </div>
           <div className='stripe-secondary-wrapper'>
             <div className='stripe-card-element-small'>
