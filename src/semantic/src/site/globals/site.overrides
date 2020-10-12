@@ -1191,9 +1191,7 @@ REACT ADD TO CALENDAR OVERRIDES
 *******************************/
 
 .stripe-wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  width: 224px !important;
 }
 
 .stripe-wrapper > input::placeholder {
@@ -1207,30 +1205,47 @@ REACT ADD TO CALENDAR OVERRIDES
 
 .stripe-secondary-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   flex-wrap: wrap;
-  width: 100%;
-  align-self: flex-end;
 }
 
-@media screen and (min-width: 425px) {
-  .stripe-wrapper > .field {
-    padding-right: 4px;
-  }
-  .stripe-wrapper > .field {
+.stripe-secondary-wrapper > input {
+  width: 110px !important;
+}
+
+.order-total {
+  padding: 2rem;
+  background: #e8e8e8;
+  margin-top: 0;
+  margin-bottom: 23px;
+}
+
+.payment-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (min-width: 700px) {
+  .stripe-wrapper {
     width: 50%;
   }
-  .stripe-secondary-wrapper {
-    width: calc(50% - 2px);
+  .payment-wrapper {
+    flex-direction: row;
+    align-items: normal;
   }
-  .stripe-card-element-full {
-    width: calc(50% - 2px) !important;
+  .order-total {
+    width: 45%;
+    margin-top: 23px;
+    margin-bottom: 0px;
   }
 }
+    
 
 .stripe-card-element-small {
+  width: 110px !important;
   margin: 0;
-  flex: 1 0 auto;
   outline: 0;
   -webkit-tap-highlight-color: rgba(255,255,255,0);
   text-align: left;

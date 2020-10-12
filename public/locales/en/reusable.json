@@ -8,7 +8,8 @@
   "request-cta": {
     "txt": "The stay for <1>{{count}} cat</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7> would in total cost",
     "txt_plural": "The stay for <1>{{count}} cats</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7> would in total cost",
-    "btn": "Request to book"
+    "btn": "Request to book",
+    "pay-btn": "Pay"
   },
   "plch": {
     "email": "Email",
