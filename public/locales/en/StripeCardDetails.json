@@ -1,4 +1,5 @@
 {
+  "label": "Your card details",
   "cardholder": "Name on card",
   "card-number": "Card number",
   "expiry": "MM/YY",

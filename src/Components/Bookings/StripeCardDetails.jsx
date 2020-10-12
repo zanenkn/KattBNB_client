@@ -21,9 +21,8 @@ const StripeCardDetails = (props) => {
       <Form className='stripe-wrapper'>
         <div className='required field' style={{ 'display': 'flex', 'flexDirection': 'column' }}>
           <label>
-            Your card details
+            {t('StripeCardDetails:label')}
           </label>
-
           <input className='stripe-card-element-full'
             type='text'
             placeholder={t('StripeCardDetails:cardholder')}
@@ -34,7 +33,6 @@ const StripeCardDetails = (props) => {
           <div className='stripe-card-element-full'>
             <CardNumberElement options={{ style: style, placeholder: t('StripeCardDetails:card-number') }} />
           </div>
-
           <div className='stripe-secondary-wrapper'>
             <div className='stripe-card-element-small'>
               <CardExpiryElement options={{ style: style, placeholder: t('StripeCardDetails:expiry') }} />
