@@ -84,19 +84,19 @@ class RequestToBook extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
-    //   this.props.history.push({ pathname: '/' })
-    // } else {
-    //   this.setState({
-    //     checkIn: moment(this.props.location.state.checkInDate).format('l'),
-    //     checkOut: moment(this.props.location.state.checkOutDate).format('l'),
-    //     perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement),
-    //     orderTotal: total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
-    //     numberOfCats: this.props.location.state.numberOfCats,
-    //     nickname: this.props.location.state.nickname
-    //   })
-    //   this.createPaymentIntent()
-    // }
+    if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
+      this.props.history.push({ pathname: '/' })
+    } else {
+      this.setState({
+        checkIn: moment(this.props.location.state.checkInDate).format('l'),
+        checkOut: moment(this.props.location.state.checkOutDate).format('l'),
+        perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement),
+        orderTotal: total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
+        numberOfCats: this.props.location.state.numberOfCats,
+        nickname: this.props.location.state.nickname
+      })
+      this.createPaymentIntent()
+    }
   }
 
   onChangeHandler = (e) => { this.setState({ [e.target.id]: e.target.value }) }
@@ -244,7 +244,7 @@ class RequestToBook extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let errorDisplay, messageLength, stripePaymentProcessingDisplay
+      let errorDisplay, messageLength
 
       messageLength = 400 - this.state.message.length
 
@@ -317,9 +317,7 @@ class RequestToBook extends Component {
 
                     </div>
                   </div>
-
                   {errorDisplay}
-
                   <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' disabled={this.state.loading} loading={this.state.loading}>
                     <Icon fitted name='lock' /> &nbsp; {t('reusable:request-cta.pay-btn')} {this.state.orderTotal} kr
                   </Button>
@@ -343,7 +341,6 @@ class RequestToBook extends Component {
               <Header>{t('RequestToBook:payment-processed-header')}</Header>
               <p>{t('RequestToBook:payment-processed-text')}</p>
               </div>
-              
             </div>
           }
         </div>

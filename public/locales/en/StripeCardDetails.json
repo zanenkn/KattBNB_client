@@ -1,0 +1,7 @@
+{
+  "cardholder": "Name on card",
+  "card-number": "Card number",
+  "expiry": "MM/YY",
+  "cvc": "CVC",
+  "postal-code": "Postal code"
+}
