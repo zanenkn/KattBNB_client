@@ -314,7 +314,6 @@ class RequestToBook extends Component {
                       <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
                         ({this.state.perDay} {t('reusable:price.per-day')})
                       </Header>
-
                     </div>
                   </div>
                   {errorDisplay}
@@ -337,9 +336,9 @@ class RequestToBook extends Component {
           {this.state.stripePaymentProcessingDisplay &&
             <div style={{ 'width': '100vw', 'height': '100vh', 'position': 'absolute', 'top': '0', 'left': '0', 'backdropFilter': 'blur(2rem)' }}>
               <Spinner />
-              <div style={{'textAlign': 'center', 'margin': '2rem auto', 'maxWidth': '300px'}}>
-              <Header>{t('RequestToBook:payment-processed-header')}</Header>
-              <p>{t('RequestToBook:payment-processed-text')}</p>
+              <div style={{ 'textAlign': 'center', 'margin': '2rem auto', 'maxWidth': '300px' }}>
+                <Header>{t('RequestToBook:payment-processed-header')}</Header>
+                <p>{t('RequestToBook:payment-processed-text')}</p>
               </div>
             </div>
           }
