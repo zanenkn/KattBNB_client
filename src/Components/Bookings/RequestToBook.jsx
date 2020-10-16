@@ -172,6 +172,7 @@ class RequestToBook extends Component {
   }
 
   createBookingAndPay = async (event, stripe, elements) => {
+    const { t } = this.props
     event.preventDefault()
     this.setState({
       loading: true,
@@ -213,27 +214,68 @@ class RequestToBook extends Component {
         })
       } else {
         this.setState({ stripePaymentProcessingDisplay: true })
-        const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
-          payment_method: {
-            card: elements.getElement(CardNumberElement),
-            billing_details: {
-              name: this.state.cardholderName,
-              address: {
-                postal_code: this.state.postalCode
+        const lang = detectLanguage()
+        let booking = []
+        let startDate = this.props.location.state.checkInDate
+        let stopDate = this.props.location.state.checkOutDate
+        let currentDate = startDate
+        while (currentDate <= stopDate) {
+          booking.push(currentDate)
+          currentDate = currentDate + 86400000
+        }
+        const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${this.props.location.state.numberOfCats}&message=${this.state.message}&dates=${booking}&host_nickname=${this.props.location.state.nickname}&price_per_day=${this.state.perDay}&price_total=${this.state.orderTotal}&user_id=${this.props.id}&payment_intent_id=${this.state.paymentIntent}`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        try {
+          const responseUpdateIntent = await axios.get(path, { headers: headers })
+          const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
+            payment_method: {
+              card: elements.getElement(CardNumberElement),
+              billing_details: {
+                name: this.state.cardholderName,
+                address: {
+                  postal_code: this.state.postalCode
+                }
               }
             }
-          }
-        })
-        if (result.error) {
-          this.setState({
-            loading: false,
-            stripePaymentProcessingDisplay: false,
-            errors: [result.error.message],
-            errorDisplay: true
           })
-        } else {
-          if (result.paymentIntent.status === 'requires_capture') {
-            this.createBooking(result.paymentIntent.id)
+          if (result.error) {
+            this.setState({
+              loading: false,
+              stripePaymentProcessingDisplay: false,
+              errors: [result.error.message],
+              errorDisplay: true
+            })
+          } else {
+            if (result.paymentIntent.status === 'requires_capture') {
+              this.createBooking(result.paymentIntent.id)
+            }
+          }
+        } catch (error) {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 555) {
+            this.setState({
+              loading: false,
+              stripePaymentProcessingDisplay: false,
+              errors: [error.response.data.error],
+              errorDisplay: true
+            })
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm')
+          } else if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'))
+            wipeCredentials('/')
+          } else {
+            this.setState({
+              loading: false,
+              stripePaymentProcessingDisplay: false,
+              errors: [error.response.data.error],
+              errorDisplay: true
+            })
           }
         }
       }
