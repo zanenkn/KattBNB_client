@@ -58,7 +58,7 @@ class RequestToBook extends Component {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 555) {
-          window.alert('There was a problem connecting to our payments infrastructure provider. Please make your booking request again.')
+          window.alert(t('RequestToBook:error-555'))
           this.props.history.push({
             pathname: '/search',
             state: {
@@ -190,7 +190,7 @@ class RequestToBook extends Component {
         this.setState({
           loading: false,
           errorDisplay: true,
-          errors: ['Our payments provider is temporarily unavailable. Try again later.']
+          errors: ['RequestToBook:stripe-elements-error']
         })
         return
       }
@@ -209,7 +209,7 @@ class RequestToBook extends Component {
       } else if (this.state.cardholderName === '' || this.state.postalCode === '' || this.state.postalCode < 0 || this.state.postalCode.length !== 5) {
         this.setState({
           loading: false,
-          errors: ['You have to provide both the cardholder name and a valid postal code!'],
+          errors: ['RequestToBook:card-details-error'],
           errorDisplay: true
         })
       } else {
