@@ -376,8 +376,10 @@ class RequestToBook extends Component {
             </ElementsConsumer>
           </Segment>
           {this.state.stripePaymentProcessingDisplay &&
-            <div style={{ 'width': '100vw', 'height': '100vh', 'position': 'absolute', 'top': '0', 'left': '0', 'backdropFilter': 'blur(2rem)' }}>
-              <Spinner />
+            <div style={{ 'width': '100vw', 'height': '100vh', 'position': 'fixed', 'top': '0', 'left': '0', 'backdropFilter': 'blur(2rem)' }}>
+              <div style={{ 'margin': '13rem auto 0' }}>
+                <Spinner />
+              </div>
               <div style={{ 'textAlign': 'center', 'margin': '2rem auto', 'maxWidth': '300px' }}>
                 <Header>{t('RequestToBook:payment-processed-header')}</Header>
                 <p>{t('RequestToBook:payment-processed-text')}</p>
