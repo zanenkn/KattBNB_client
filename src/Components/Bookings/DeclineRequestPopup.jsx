@@ -120,7 +120,7 @@ const DeclineRequestPopup = (props) => {
         <Button id='decline-button' disabled={loading} loading={loading} onClick={declineCTA}>{t('DeclineRequestPopup:decline-cta')}</Button>
       </>
     )
-  } else return <Spinner />
+  } else { return <Spinner /> }
 }
 
 export default DeclineRequestPopup

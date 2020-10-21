@@ -1,5 +1,22 @@
 const api_url = 'http://localhost:3007/api/v1'
 
+function fillInStripeForm() {
+  const input = [
+    ['cardnumber', '4242424242424242'],
+    ['exp-date', '1250'],
+    ['cvc', '123'],
+  ]
+  cy.wait(1000)
+  cy.get('.__PrivateStripeElement > iframe').each(($element, index) => {
+    cy.get($element).then(($iframe) => {
+      const body = $iframe.contents().find('body')
+      cy.wrap(body)
+        .find(`input[name=${input[index][0]}]`)
+        .type(input[index][1], { delay: 10 })
+    })
+  })
+}
+
 describe('User can create a booking request', () => {
   beforeEach(() => {
     cy.server()
@@ -40,6 +57,18 @@ describe('User can create a booking request', () => {
       response: 'fixture:successful_signout.json'
     })
     cy.route({
+      method: 'GET',
+      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=560&currency=sek`,
+      status: 200,
+      response: { "intent_id": "pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK" }
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=140&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      status: 200,
+      response: {}
+    })
+    cy.route({
       method: 'POST',
       url: `${api_url}/auth/sign_in`,
       status: 200,
@@ -74,9 +103,11 @@ describe('User can create a booking request', () => {
     cy.get('#more').click()
     cy.get('#request-to-book').click()
     cy.get('#message').type('Please take my cats for 4 days!')
+    cy.get('#cardholderName').type('George')
+    fillInStripeForm()
+    cy.get('#postalCode').type('15987')
     cy.get('#request-to-book-button').click()
-    cy.contains('Success!')
-    cy.contains('You have successfully requested a booking for')
+    cy.contains('Your payment is being processed')
   })
 
   it('unsuccessfully and get an error message cause message field is empty', () => {
@@ -99,8 +130,7 @@ describe('User can create a booking request', () => {
   it('only if she is logged in or she will be redirected to the log in page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout').click()
-
-    cy.visit('http://localhost:3000/search')
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()
