@@ -45,4 +45,16 @@ describe('User cannot accept her booking request', () => {
     cy.get('#view-incoming-bookings').click()
     cy.get('#accept-2').should('have.class', 'disabled')
   })
+
+  it('cause of Stripe error during information retrieval', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/stripe?locale=en-US&host_profile_id=10&occasion=retrieve',
+      status: 555,
+      response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
+    })
+    cy.get('#view-incoming-bookings').click()
+    cy.get('#accept-2').should('have.class', 'disabled')
+    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.')
+  })
 })
