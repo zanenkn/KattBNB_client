@@ -122,6 +122,10 @@ class IncomingBookings extends Component {
         )
       }
 
+      const IncomingBookingsButton = (
+        <Button style={{ 'marginTop': '0' }} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }} />
+      )
+
       return (
         <>
           <div id='secondary-sticky' style={{ 'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center' }}>
@@ -133,15 +137,15 @@ class IncomingBookings extends Component {
             </p>
             <div style={{ 'display': 'flex', 'justifyContent': 'center' }}>
               <Button.Group size='mini'>
-                <Button style={{ 'marginTop': '0' }} onClick={() => { this.requests.scrollIntoView({ behavior: 'smooth' }) }}>
+                <IncomingBookingsButton>
                   {t('IncomingBookings:requests')}
-                </Button>
-                <Button style={{ 'marginTop': '0' }} onClick={() => { this.upcoming.scrollIntoView({ behavior: 'smooth' }) }}>
+                </IncomingBookingsButton>
+                <IncomingBookingsButton>
                   {t('IncomingBookings:upcoming')}
-                </Button>
-                <Button style={{ 'marginTop': '0' }} onClick={() => { this.history.scrollIntoView({ behavior: 'smooth' }) }}>
+                </IncomingBookingsButton>
+                <IncomingBookingsButton>
                   {t('IncomingBookings:history')}
-                </Button>
+                </IncomingBookingsButton>
               </Button.Group>
             </div>
           </div>
