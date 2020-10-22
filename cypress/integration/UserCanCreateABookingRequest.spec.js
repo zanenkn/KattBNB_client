@@ -127,6 +127,64 @@ describe('User can create a booking request', () => {
     cy.contains('The message cannot exceed 400 characters!')
   })
 
+  it('unsuccessfully and get an error message cause postal code does not consist of 5 numbers', () => {
+    cy.get('#22').click()
+    cy.get('#more').click()
+    cy.get('#request-to-book').click()
+    cy.get('#message').type('Please take my cats for 4 days!')
+    cy.get('#cardholderName').type('George')
+    cy.get('#postalCode').type('123654')
+    cy.get('#request-to-book-button').click()
+    cy.contains('You have to provide both the cardholder name and a valid postal code!')
+  })
+
+  it('unsuccessfully and get an error message cause cardholder name is not filled in', () => {
+    cy.get('#22').click()
+    cy.get('#more').click()
+    cy.get('#request-to-book').click()
+    cy.get('#message').type('Please take my cats for 4 days!')
+    cy.get('#postalCode').type('13654')
+    cy.get('#request-to-book-button').click()
+    cy.contains('You have to provide both the cardholder name and a valid postal code!')
+  })
+
+  it('unsuccessfully and get an error alert cause of Stripe error while creating the payment intent and get redirected to search with all criteria prefilled', () => {
+    cy.route({
+      method: 'GET',
+      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=560&currency=sek`,
+      status: 555,
+      response: {}
+    })
+    cy.get('#22').click()
+    cy.get('#more').click()
+    cy.get('#request-to-book').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('There was a problem connecting to our payments infrastructure provider. Please make your booking request again.')
+    })
+    cy.location('pathname').should('eq', '/search')
+    cy.contains('Stockholm')
+    cy.contains('2')
+    cy.get(':nth-child(2) > .DayPickerInput > input').should('have.value', 'October 8, 2019')
+    cy.get('[style="margin-top: 0.5em;"] > .DayPickerInput > input').should('have.value', 'October 11, 2019')
+  })
+
+  it('unsuccessfully and get an error message cause of Stripe error while updating the payment intent', () => {
+    cy.route({
+      method: 'GET',
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=140&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      status: 555,
+      response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
+    })
+    cy.get('#22').click()
+    cy.get('#more').click()
+    cy.get('#request-to-book').click()
+    cy.get('#message').type('Please take my cats for 4 days!')
+    cy.get('#cardholderName').type('George')
+    cy.get('#postalCode').type('15987')
+    cy.get('#request-to-book-button').click()
+    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.')
+  })
+
   it('only if she is logged in or she will be redirected to the log in page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout').click()
