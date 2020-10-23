@@ -559,6 +559,11 @@ h4 {
   color: grey!important;
 }
 
+.smallprint {
+  font-size: 10px;
+  text-align: center;
+}
+
 .box-shadow {
   margin-top: 2rem!important;
   padding: 2rem!important;
@@ -1179,4 +1184,95 @@ REACT ADD TO CALENDAR OVERRIDES
 
 .step-explanation > svg {
   fill: #e0e0e0;
+}
+
+/*******************************
+        STRIPE ELEMENTS
+*******************************/
+
+.stripe-wrapper {
+  width: 224px !important;
+}
+
+.stripe-wrapper > input::placeholder {
+  font-style: italic;
+}
+
+.stripe-wrapper > .field {
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.stripe-secondary-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.stripe-secondary-wrapper > input {
+  width: 110px !important;
+}
+
+.order-total {
+  padding: 2rem;
+  background: #e8e8e8;
+  margin-top: 0;
+  margin-bottom: 23px;
+}
+
+.payment-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (min-width: 700px) {
+  .stripe-wrapper {
+    width: 50%;
+  }
+  .payment-wrapper {
+    flex-direction: row;
+    align-items: normal;
+  }
+  .order-total {
+    width: 45%;
+    margin-top: 23px;
+    margin-bottom: 0px;
+  }
+}
+    
+
+.stripe-card-element-small {
+  width: 110px !important;
+  margin: 0;
+  outline: 0;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  text-align: left;
+  line-height: 1.21428571em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  padding: .67857143em 1em;
+  background: #fff;
+  border: 1px solid rgba(34,36,38,.15);
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  transition: box-shadow .1s ease,border-color .1s ease;
+  box-shadow: none;
+}
+
+.stripe-card-element-full {
+  margin: 0 0 4px !important;
+  width: 100%;
+  outline: 0;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  text-align: left;
+  line-height: 1.21428571em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  padding: .67857143em 1em;
+  background: #fff;
+  border: 1px solid rgba(34,36,38,.15);
+  color: rgba(0,0,0,.87);
+  border-radius: .28571429rem;
+  transition: box-shadow .1s ease,border-color .1s ease;
+  box-shadow: none;
 }

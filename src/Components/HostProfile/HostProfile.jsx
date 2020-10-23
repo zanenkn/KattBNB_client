@@ -57,7 +57,7 @@ const HostProfile = forwardRef((props, ref) => {
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 500 || error.response.status === 400) {
+        } else if (error.response.status === 555 || error.response.status === 455) {
           setLoading(false)
           setErrorDisplay(true)
           setErrors([error.response.data.error])

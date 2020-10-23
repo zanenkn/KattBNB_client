@@ -1,7 +1,7 @@
 describe('Visitor can view search results as a map', () => {
   before(function () {
     cy.server()
-    cy.visit('http://localhost:3000/search')
+    cy.visit('http://localhost:3000')
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
@@ -14,6 +14,7 @@ describe('Visitor can view search results as a map', () => {
       status: 200,
       response: 'fixture:search_results_list_2.json'
     })
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
     cy.get('.ui > #search-form > .required > #location > .default').click()

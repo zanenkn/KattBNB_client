@@ -68,3 +68,42 @@ describe('User can answer her booking request', () => {
     cy.get('.popup-content').contains("Message can't be blank or contain more than 200 characters!")
   })
 })
+
+describe('User encounters error when accepting a booking request', () => {
+  it('cause of Stripe error', () => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:booking_stats.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.route({
+      method: 'PATCH',
+      url: `${bookings}/2`,
+      status: 555,
+      response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors'
+    })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(1000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-incoming-bookings').click()
+    cy.get('#accept-2').click()
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('There was a problem connecting to our payments infrastructure provider. Please try again later.')
+    })
+    cy.location('pathname').should('eq', '/all-bookings')
+  })
+})

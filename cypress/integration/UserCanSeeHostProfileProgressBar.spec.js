@@ -49,7 +49,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     cy.get('.progress-bar-steps>div').eq(1).should('not.have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color')
   })
-  
+
   beforeEach(() => {
     cy.fixture('host_profile_individual.json').then((host_profile) => {
       host_profile.stripe_account_id = 'acct-852147963'
@@ -61,7 +61,7 @@ describe('User can see host profile progress bar from her User Page', () => {
       })
     })
   })
-   
+
   it('and see step-2 when payment information have been provided and verification is pending', () => {
     cy.route({
       method: 'GET',
@@ -134,11 +134,35 @@ describe('User can see host profile progress bar from her User Page', () => {
     cy.window().its('open').should('be.calledWith', 'https://stripe.com/')
   })
 
+  it('and see an error when trying to visit Stripe dashboard', () => {
+    cy.route({
+      method: 'GET',
+      url: `${url.stripe}`,
+      status: 200,
+      response: 'fixture:stripe_verification_no_errors.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api}/stripe?locale=en-US&host_profile_id=1&occasion=login_link`,
+      status: 555,
+      response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
+    })
+    cy.route({
+      method: 'GET',
+      url: `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com`,
+      status: 200,
+      response: 'fixture:validate_token.json'
+    })
+    cy.visit('http://localhost:3000/user-page')
+    cy.get('#progress-bar-cta').click()
+    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.')
+  })
+
   it('and see an error if connection with Stripe is unavailable', () => {
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
-      status: 500,
+      status: 555,
       response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
     })
     cy.get('#user-icon').click({ force: true })
