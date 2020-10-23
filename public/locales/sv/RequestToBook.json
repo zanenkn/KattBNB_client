@@ -1,9 +1,9 @@
 {
   "error-1": "Skriv ett meddelande till kattvakten!",
   "error-2": "Meddelandet får inte överstiga 400 tecken!",
-  "error-555": "",
-  "stripe-elements-error": "",
-  "card-details-error": "",
+  "error-555": "Det gick inte att ansluta till vår betalningsinfrastruktursleverantör. Vänligen gör om din bokningsförfrågan.",
+  "stripe-elements-error": "Vår betalväxel är för tillfället otillgänglig. Försök igen senare.",
+  "card-details-error": "Du måste ange både kortinnehavarens namn och ett giltigt postnummer!",
   "error-header": "Bokningsförfrågan kunde inte skickas på grund av följande fel:",
   "title": "Bokningsförfrågan",
   "request-info": "Du efterfrågar en bokning för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7>.",
