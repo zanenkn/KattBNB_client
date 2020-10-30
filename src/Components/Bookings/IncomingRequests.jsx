@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import { Header, Grid, Icon, Message } from 'semantic-ui-react'
+import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
 import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation, Trans } from 'react-i18next'
@@ -17,7 +17,11 @@ class IncomingRequests extends Component {
     errors: '',
     iconsDisabled: false,
     closeOnDocumentClick: true,
-    payoutsEnabled: false
+    payoutsEnabled: false,
+    stripeAccountErrors: [],
+    stripeAccountId: '',
+    stripePendingVerification: false,
+    stripeDashboardButtonLoading: false
   }
 
   fetchStripeAccountDetails = async () => {
@@ -37,7 +41,16 @@ class IncomingRequests extends Component {
           'access-token': window.localStorage.getItem('access-token')
         }
         const response = await axios.get(path, { headers: headers })
-        this.setState({ payoutsEnabled: response.data.payouts_enabled })
+        if (!response.data.message) {
+          this.setState({ 
+            payoutsEnabled: response.data.payouts_enabled, 
+            stripeAccountErrors: response.data.requirements.errors,
+            stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false
+        })} else {
+          this.setState({
+            stripeAccountId: null
+          })
+        } 
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
@@ -143,8 +156,71 @@ class IncomingRequests extends Component {
     }
   }
 
+  fetchStripeDashboardLink = async () => {
+    const { t } = this.props
+
+    if (window.navigator.onLine === false) {
+      this.setState({
+        errorDisplay: true,
+        errors: ['reusable:errors:window-navigator']
+      })
+    } else {
+      try {
+        this.setState({
+          stripeDashboardButtonLoading: true
+        })
+        const lang = detectLanguage()
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token')
+        }
+        const response = await axios.get(path, { headers: headers })
+        window.open(response.data.url)
+        this.setState({
+          stripeDashboardButtonLoading: false
+        })
+      } catch (error) {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 555) {
+          this.setState({
+            errorDisplay: true,
+            errors:[error.response.data.error],
+            stripeDashboardButtonLoading: false
+          })
+        } else if (error.response.status === 503) {
+          wipeCredentials('/is-not-available?atm')
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'))
+          wipeCredentials('/')
+        } else {
+          this.setState({
+            errorDisplay: true,
+            errors:[error.response.data.error],
+            stripeDashboardButtonLoading: false
+          })
+        }
+      }
+    }
+  }
+
   render() {
     const { t } = this.props
+    const { payoutSuccess, stripeAccountId, stripeAccountErrors, stripeDashboardButtonLoading, stripePendingVerification } = this.state
+    
+    let redirectStripe
+
+    if (process.env.REACT_APP_OFFICIAL === 'yes') {
+      redirectStripe = 'https://kattbnb.se/user-page'
+    } else {
+      if (process.env.NODE_ENV === 'production') {
+        redirectStripe = 'https://kattbnb.netlify.app/user-page'
+      } else {
+        redirectStripe = 'http://localhost:3000/user-page'
+      }
+    }
 
     if (this.props.tReady) {
       let sortedRequests = this.props.requests
@@ -175,6 +251,32 @@ class IncomingRequests extends Component {
             <p style={{ 'textAlign': 'center' }}>
               {t('IncomingRequests:requests-desc')}
             </p>
+            
+            {stripeAccountId === null ?
+              <>
+                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
+                  <Trans i18nKey={'HostProfileProgressBar:step-1-text'}>
+                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+                  </Trans>
+                </p>
+                {/* <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${stripeState}&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${email}&stripe_user[country]=SE`}>
+                  <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-onboarding-cta')}</Button>
+                </a> */}
+              </>
+            : payoutSuccess ?
+              <>
+                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              </>
+              : stripeAccountErrors &&
+              <>
+                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
+                  {t('HostProfileProgressBar:step-2-text')}&ensp;
+                  {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
+                </p>
+                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              </>
+            }
+
             {sortedRequests.map(request => {
               priceWithDecimalsString = request.price_total.toFixed(2)
               if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
