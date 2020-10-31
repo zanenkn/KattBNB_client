@@ -176,7 +176,7 @@ const HostProfileProgressBar = (props) => {
           </>
           : payoutSuccess ?
             <>
-              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('resuable:stripe:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
             </>
             : stripeAccountErrors &&
             <>

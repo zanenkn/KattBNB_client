@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
@@ -247,6 +248,7 @@ class IncomingRequests extends Component {
                   <Trans i18nKey={'reusable:stripe:step-1-text'}>
                     You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
                   </Trans>
+                  Please visit your <Link to={'/user-page'}><p className='fake-link-underlined-reg'>profile page</p></Link> to do that.
                 </p>
               </>
               : stripeAccountErrors.length > 0 &&
