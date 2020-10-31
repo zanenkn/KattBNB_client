@@ -290,7 +290,7 @@ class IncomingRequests extends Component {
                           />
                         </Popup>
                         <Icon
-                          disabled={(this.state.iconsDisabled || this.state.payoutSuccess === false || this.state.payoutSuccess === undefined) ? true : false}
+                          disabled={(this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined) ? true : false}
                           id={`accept-${request.id}`}
                           onClick={(e) => this.acceptRequest(e, request)}
                           name='check circle'
