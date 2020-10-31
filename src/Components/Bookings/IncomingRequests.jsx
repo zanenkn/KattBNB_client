@@ -42,15 +42,14 @@ class IncomingRequests extends Component {
         }
         const response = await axios.get(path, { headers: headers })
         if (!response.data.message) {
-          this.setState({ 
-            payoutsEnabled: response.data.payouts_enabled, 
+          this.setState({
+            payoutsEnabled: response.data.payouts_enabled,
             stripeAccountErrors: response.data.requirements.errors,
             stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false
-        })} else {
-          this.setState({
-            stripeAccountId: null
           })
-        } 
+        } else {
+          this.setState({ stripeAccountId: null })
+        }
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
@@ -158,7 +157,6 @@ class IncomingRequests extends Component {
 
   fetchStripeDashboardLink = async () => {
     const { t } = this.props
-
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
@@ -166,9 +164,7 @@ class IncomingRequests extends Component {
       })
     } else {
       try {
-        this.setState({
-          stripeDashboardButtonLoading: true
-        })
+        this.setState({ stripeDashboardButtonLoading: true })
         const lang = detectLanguage()
         const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`
         const headers = {
@@ -178,16 +174,14 @@ class IncomingRequests extends Component {
         }
         const response = await axios.get(path, { headers: headers })
         window.open(response.data.url)
-        this.setState({
-          stripeDashboardButtonLoading: false
-        })
+        this.setState({ stripeDashboardButtonLoading: false })
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 555) {
           this.setState({
             errorDisplay: true,
-            errors:[error.response.data.error],
+            errors: [error.response.data.error],
             stripeDashboardButtonLoading: false
           })
         } else if (error.response.status === 503) {
@@ -198,7 +192,7 @@ class IncomingRequests extends Component {
         } else {
           this.setState({
             errorDisplay: true,
-            errors:[error.response.data.error],
+            errors: [error.response.data.error],
             stripeDashboardButtonLoading: false
           })
         }
@@ -209,18 +203,6 @@ class IncomingRequests extends Component {
   render() {
     const { t } = this.props
     const { payoutSuccess, stripeAccountId, stripeAccountErrors, stripeDashboardButtonLoading, stripePendingVerification } = this.state
-    
-    let redirectStripe
-
-    if (process.env.REACT_APP_OFFICIAL === 'yes') {
-      redirectStripe = 'https://kattbnb.se/user-page'
-    } else {
-      if (process.env.NODE_ENV === 'production') {
-        redirectStripe = 'https://kattbnb.netlify.app/user-page'
-      } else {
-        redirectStripe = 'http://localhost:3000/user-page'
-      }
-    }
 
     if (this.props.tReady) {
       let sortedRequests = this.props.requests
@@ -251,7 +233,6 @@ class IncomingRequests extends Component {
             <p style={{ 'textAlign': 'center' }}>
               {t('IncomingRequests:requests-desc')}
             </p>
-            
             {stripeAccountId === null ?
               <>
                 <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
@@ -263,20 +244,19 @@ class IncomingRequests extends Component {
                   <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-onboarding-cta')}</Button>
                 </a> */}
               </>
-            : payoutSuccess ?
-              <>
-                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
-              </>
-              : stripeAccountErrors &&
-              <>
-                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                  {t('HostProfileProgressBar:step-2-text')}&ensp;
-                  {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
-                </p>
-                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
-              </>
+              : payoutSuccess ?
+                <>
+                  <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+                </>
+                : stripeAccountErrors &&
+                <>
+                  <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
+                    {t('HostProfileProgressBar:step-2-text')}&ensp;
+                    {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
+                  </p>
+                  <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+                </>
             }
-
             {sortedRequests.map(request => {
               priceWithDecimalsString = request.price_total.toFixed(2)
               if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
