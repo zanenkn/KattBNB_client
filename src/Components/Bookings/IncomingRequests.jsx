@@ -11,6 +11,7 @@ import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { withRouter } from 'react-router-dom'
+import { Popup as SemanticPopup } from 'semantic-ui-react'
 
 class IncomingRequests extends Component {
   state = {
@@ -244,11 +245,10 @@ class IncomingRequests extends Component {
             </p>
             {stripeAccountId === null ?
               <>
-                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                  <Trans i18nKey={'reusable:stripe:step-1-text'}>
-                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+                <p style={{ 'textAlign': 'center', 'margin': '2rem 0' }}>
+                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
+                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
                   </Trans>
-                  Please visit your <Link to={'/user-page'}><p className='fake-link-underlined-reg'>profile page</p></Link> to do that.
                 </p>
               </>
               : stripeAccountErrors.length > 0 &&
@@ -257,7 +257,17 @@ class IncomingRequests extends Component {
                   {t('reusable:stripe:step-2-text')}&ensp;
                     {stripePendingVerification ? t('reusable:stripe:step-2-pending') : t('reusable:stripe:step-2-go-to-dashboard')}
                 </p>
-                <Button onClick={() => this.fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
+                {!stripePendingVerification &&
+                  <Button
+                    onClick={() => this.fetchStripeDashboardLink()}
+                    loading={stripeDashboardButtonLoading}
+                    disabled={stripeDashboardButtonLoading}
+                    id='progress-bar-cta'
+                    style={{ marginBottom: '2rem' }}
+                  >
+                    {t('reusable:stripe:stripe-dashboard-cta')}
+                  </Button>
+                }
               </>
             }
             {sortedRequests.map(request => {
@@ -289,14 +299,43 @@ class IncomingRequests extends Component {
                             declModalCloseState={this.declModalCloseState.bind(this)}
                           />
                         </Popup>
-                        <Icon
-                          disabled={(this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined) ? true : false}
-                          id={`accept-${request.id}`}
-                          onClick={(e) => this.acceptRequest(e, request)}
-                          name='check circle'
-                          style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
-                          size='big'
+                        <SemanticPopup
+                          hoverable
+                          hideOnScroll
+                          disabled={payoutSuccess}
+                          content={
+                            stripeAccountId === null ?
+                              <>
+                                <p style={{ 'textAlign': 'center' }}>
+                                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
+                                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
+                                  </Trans>
+                                </p>
+                              </>
+                              : stripeAccountErrors.length > 0 &&
+                              <>
+                                <p style={{ 'textAlign': 'center', 'fontSize': 'unset' }}>
+                                  {t('reusable:stripe:step-2-text')}&ensp;
+                                    {stripePendingVerification ? t('reusable:stripe:step-2-pending') :
+                                    <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
+                                      In order for you to accept a request, you should <span onClick={() => this.fetchStripeDashboardLink()} className='fake-link-underlined'>complete your verification</span> with our payment provider (Stripe).
+                                    </Trans>
+                                  }
+                                </p>
+                              </>
+                          }
+                          trigger={
+                            <Icon
+                              disabled={(this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined) ? true : false}
+                              id={`accept-${request.id}`}
+                              onClick={(e) => this.acceptRequest(e, request)}
+                              name='check circle'
+                              style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
+                              size='big'
+                            />
+                          }
                         />
+
                       </Grid.Column>
                     </Grid.Row>
                     <div>
