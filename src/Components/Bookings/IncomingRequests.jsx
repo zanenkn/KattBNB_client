@@ -300,6 +300,7 @@ class IncomingRequests extends Component {
                           />
                         </Popup>
                         <SemanticPopup
+                          basic
                           hoverable
                           hideOnScroll
                           disabled={payoutSuccess}

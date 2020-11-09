@@ -8,5 +8,7 @@
   "book-a-stay": "<0>{{nickname}}</0> vill boka en vistelse för deras <2>{{count}} katt</2> under datumen <4>{{startDate}}</4> till <6>{{endDate}}</6>.",
   "book-a-stay_plural": "<0>{{nickname}}</0> vill boka en vistelse för deras <2>{{count}} katter</2> under datumen <4>{{startDate}}</4> till <6>{{endDate}}</6>.",
   "view-message": "Visa meddelanden",
-  "no-requests": "Du har inga bokningsförfrågningar"
+  "no-requests": "Du har inga bokningsförfrågningar",
+  "stripe-step1": "",
+  "stripe-step2-complete-verification": ""
 }
