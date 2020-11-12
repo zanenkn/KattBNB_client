@@ -336,7 +336,6 @@ class IncomingRequests extends Component {
                             />
                           }
                         />
-
                       </Grid.Column>
                     </Grid.Row>
                     <div>

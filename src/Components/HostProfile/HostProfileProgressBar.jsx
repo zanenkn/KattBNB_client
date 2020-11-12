@@ -178,7 +178,7 @@ const HostProfileProgressBar = (props) => {
             <>
               <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
-            : stripeAccountErrors &&
+            : stripeAccountErrors.length > 0 &&
             <>
               <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
                 {t('HostProfileProgressBar:step-2-text')}&ensp;
