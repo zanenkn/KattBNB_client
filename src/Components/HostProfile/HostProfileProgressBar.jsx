@@ -166,7 +166,7 @@ const HostProfileProgressBar = (props) => {
         {props.stripeAccountId === null ?
           <>
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-              <Trans i18nKey={'reusable:stripe:step-1-text'}>
+              <Trans i18nKey={'HostProfileProgressBar:step-1-text'}>
                 You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
               </Trans>
             </p>
@@ -176,15 +176,15 @@ const HostProfileProgressBar = (props) => {
           </>
           : payoutSuccess ?
             <>
-              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
             : stripeAccountErrors &&
             <>
               <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                {t('reusable:stripe:step-2-text')}&ensp;
-                {stripePendingVerification ? t('reusable:stripe:step-2-pending') : t('reusable:stripe:step-2-go-to-dashboard')}
+                {t('HostProfileProgressBar:step-2-text')}&ensp;
+                {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
               </p>
-              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
+              <Button onClick={() => fetchStripeDashboardLink()} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
             </>
         }
         {errorDisplay &&
