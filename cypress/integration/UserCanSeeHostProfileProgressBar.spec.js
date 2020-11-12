@@ -167,7 +167,6 @@ describe('User can see host profile progress bar from her User Page', () => {
     })
     cy.get('#user-icon').click({ force: true })
     cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.')
-    cy.get('#progress-bar-cta').contains('My payment dashboard')
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(1).should('not.have.class', 'step-done-color')
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color')
