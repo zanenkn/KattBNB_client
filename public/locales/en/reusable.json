@@ -68,5 +68,12 @@
     "how-it-works": "How it works"
   },
   "explain-supplement": "Let’s say that your rate is 120 kr/day for one cat and supplement for a second cat is 35 kr/day. That means if you host one cat for three days your payment is 120 x 3 =360 kr. Although if you agree to host two cats of the same owner for three days your payment is (120+35) x 3 = 465 kr",
-  "deleted-user": "Deleted user"
+  "deleted-user": "Deleted user",
+  "stripe": {
+    "step-1-text": "You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <1>Read more on how we handle payments and your information</1>",
+    "step-2-text": "You have entered your payment information but are not yet verified with our payment provider (Stripe).",
+    "step-2-pending": "Your verification is pending, please check back later.",
+    "step-2-go-to-dashboard": "Please visit your payment dashboard to complete your verification.",
+    "stripe-dashboard-cta": "My payment dashboard"
+  }
 }
