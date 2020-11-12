@@ -74,7 +74,7 @@ describe('User can answer her booking request', () => {
 })
 
 describe('User encounters error when accepting a booking request', () => {
-  it('cause of Stripe error', () => {
+  it('cause of Stripe error during payment', () => {
     cy.server()
     cy.route({
       method: 'GET',
@@ -109,71 +109,5 @@ describe('User encounters error when accepting a booking request', () => {
       expect(str).to.equal('There was a problem connecting to our payments infrastructure provider. Please try again later.')
     })
     cy.location('pathname').should('eq', '/all-bookings')
-  })
-})
-
-describe('User cannot accept booking requests', () => {
-  beforeEach(() => {
-    cy.server()
-    cy.route({
-      method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json'
-    })
-    cy.route({
-      method: 'GET',
-      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_host_bookings.json'
-    })
-    cy.route({
-      method: 'PATCH',
-      url: `${bookings}/2`,
-      status: 200,
-      response: 'fixture:successful_booking_update.json'
-    })
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
-    cy.wait(1000)
-    cy.get('#bookings-icon').click({ force: true })
-    cy.get('#view-incoming-bookings').click()
-  })
-
-  it('if no stripe information is provided', () => {
-    cy.route({
-      method: 'GET',
-      url: `${url.stripe}`,
-      status: 200,
-      response: { "message": "No account" }
-    })
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains('Please visit your profile page to do that.')
-    cy.get('#accept-1').should('have.class', 'disabled')
-    cy.get('#accept-2').should('have.class', 'disabled')
-  })
-
-  it('if stripe verification is pending', () => {
-    cy.route({
-      method: 'GET',
-      url: `${url.stripe}`,
-      status: 200,
-      response: 'fixture:stripe_pending_verification.json'
-    })
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains('Your verification is pending, please check back later.')
-    cy.get('#progress-bar-cta').contains('My payment dashboard')
-    cy.get('#accept-1').should('have.class', 'disabled')
-    cy.get('#accept-2').should('have.class', 'disabled')
-  })
-
-  it('if stripe verification is complete and errors exist', () => {
-    cy.route({
-      method: 'GET',
-      url: `${url.stripe}`,
-      status: 200,
-      response: 'fixture:stripe_verification_errors.json'
-    })
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains('Please visit your payment dashboard to complete your verification.')
-    cy.get('#progress-bar-cta').contains('My payment dashboard')
-    cy.get('#accept-1').should('have.class', 'disabled')
-    cy.get('#accept-2').should('have.class', 'disabled')
   })
 })
