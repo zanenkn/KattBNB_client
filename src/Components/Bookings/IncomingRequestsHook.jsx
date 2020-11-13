@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react'
 import Popup from 'reactjs-popup'
@@ -10,17 +9,29 @@ import DeclineRequestPopup from './DeclineRequestPopup'
 import axios from 'axios'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
+import { fetchStripeAccountDetails } from '../../Modules/stripeRelatedFunctions'
 import { withRouter } from 'react-router-dom'
-import { Popup as SemanticPopup } from 'semantic-ui-react'
 
+const IncomingRequestsHooks = (props) => {
+  const [errors, setErrors] = useState([])
+  const [errorDisplay, setErrorDisplay] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false)
+  const [stripeAccountErrors, setStripeAccountErrors] = useState([])
+  const [stripePendingVerification, setStripePendingVerification] = useState(false)
+  const [payoutSuccess, setPayoutSuccess] = useState(false)
+  const [activeStep, setActiveStep] = useState(1)
+
+  const { t, ready } = useTranslation('HostProfileProgressBar')
+
+}
 class IncomingRequests extends Component {
   state = {
-    loading: true,
     errorDisplay: false,
     errors: '',
     iconsDisabled: false,
     closeOnDocumentClick: true,
-    payoutSuccess: false,
+    payoutsEnabled: false,
     stripeAccountErrors: [],
     stripeAccountId: '',
     stripePendingVerification: false,
@@ -31,7 +42,6 @@ class IncomingRequests extends Component {
     const { t } = this.props
     if (window.navigator.onLine === false) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator']
       })
@@ -46,24 +56,20 @@ class IncomingRequests extends Component {
         }
         const response = await axios.get(path, { headers: headers })
         if (!response.data.message) {
-          this.setState({
-            payoutSuccess: response.data.payouts_enabled,
+          this.setState({ 
+            payoutsEnabled: response.data.payouts_enabled, 
             stripeAccountErrors: response.data.requirements.errors,
-            stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false,
-            loading: false
-          })
-        } else {
+            stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false
+        })} else {
           this.setState({
-            stripeAccountId: null,
-            loading: false
+            stripeAccountId: null
           })
-        }
+        } 
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 555) {
           this.setState({
-            loading: false,
             errorDisplay: true,
             errors: [error.response.data.error]
           })
@@ -74,7 +80,6 @@ class IncomingRequests extends Component {
           wipeCredentials('/')
         } else {
           this.setState({
-            loading: false,
             errorDisplay: true,
             errors: [error.response.data.error]
           })
@@ -167,6 +172,7 @@ class IncomingRequests extends Component {
 
   fetchStripeDashboardLink = async () => {
     const { t } = this.props
+
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
@@ -174,7 +180,9 @@ class IncomingRequests extends Component {
       })
     } else {
       try {
-        this.setState({ stripeDashboardButtonLoading: true })
+        this.setState({
+          stripeDashboardButtonLoading: true
+        })
         const lang = detectLanguage()
         const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`
         const headers = {
@@ -184,14 +192,16 @@ class IncomingRequests extends Component {
         }
         const response = await axios.get(path, { headers: headers })
         window.open(response.data.url)
-        this.setState({ stripeDashboardButtonLoading: false })
+        this.setState({
+          stripeDashboardButtonLoading: false
+        })
       } catch (error) {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (error.response.status === 555) {
           this.setState({
             errorDisplay: true,
-            errors: [error.response.data.error],
+            errors:[error.response.data.error],
             stripeDashboardButtonLoading: false
           })
         } else if (error.response.status === 503) {
@@ -202,7 +212,7 @@ class IncomingRequests extends Component {
         } else {
           this.setState({
             errorDisplay: true,
-            errors: [error.response.data.error],
+            errors:[error.response.data.error],
             stripeDashboardButtonLoading: false
           })
         }
@@ -212,9 +222,21 @@ class IncomingRequests extends Component {
 
   render() {
     const { t } = this.props
-    const { payoutSuccess, stripeAccountId, stripeAccountErrors, stripeDashboardButtonLoading, stripePendingVerification, loading } = this.state
+    const { payoutSuccess, stripeAccountId, stripeAccountErrors, stripeDashboardButtonLoading, stripePendingVerification } = this.state
+    
+    let redirectStripe
 
-    if (this.props.tReady && loading === false) {
+    if (process.env.REACT_APP_OFFICIAL === 'yes') {
+      redirectStripe = 'https://kattbnb.se/user-page'
+    } else {
+      if (process.env.NODE_ENV === 'production') {
+        redirectStripe = 'https://kattbnb.netlify.app/user-page'
+      } else {
+        redirectStripe = 'http://localhost:3000/user-page'
+      }
+    }
+
+    if (this.props.tReady) {
       let sortedRequests = this.props.requests
       sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
       let priceWithDecimalsString, total, requestsToDisplay, errorDisplay
@@ -243,33 +265,32 @@ class IncomingRequests extends Component {
             <p style={{ 'textAlign': 'center' }}>
               {t('IncomingRequests:requests-desc')}
             </p>
+            
             {stripeAccountId === null ?
               <>
-                <p style={{ 'textAlign': 'center', 'margin': '2rem 0' }}>
-                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
-                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
+                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
+                  <Trans i18nKey={'HostProfileProgressBar:step-1-text'}>
+                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
                   </Trans>
                 </p>
+                {/* <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${stripeState}&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${email}&stripe_user[country]=SE`}>
+                  <Button id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-onboarding-cta')}</Button>
+                </a> */}
               </>
-              : stripeAccountErrors.length > 0 &&
+            : payoutSuccess ?
+              <>
+                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
+              </>
+              : stripeAccountErrors &&
               <>
                 <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                  {t('reusable:stripe:step-2-text')}&ensp;
-                    {stripePendingVerification ? t('reusable:stripe:step-2-pending') : t('reusable:stripe:step-2-go-to-dashboard')}
+                  {t('HostProfileProgressBar:step-2-text')}&ensp;
+                  {stripePendingVerification ? t('HostProfileProgressBar:step-2-pending') : t('HostProfileProgressBar:step-2-go-to-dashboard')}
                 </p>
-                {!stripePendingVerification &&
-                  <Button
-                    onClick={() => this.fetchStripeDashboardLink()}
-                    loading={stripeDashboardButtonLoading}
-                    disabled={stripeDashboardButtonLoading}
-                    id='progress-bar-cta'
-                    style={{ marginBottom: '2rem' }}
-                  >
-                    {t('reusable:stripe:stripe-dashboard-cta')}
-                  </Button>
-                }
+                <Button onClick={() => this.fetchStripeDashboardLink} loading={stripeDashboardButtonLoading} disabled={stripeDashboardButtonLoading} id='progress-bar-cta'>{t('HostProfileProgressBar:stripe-dashboard-cta')}</Button>
               </>
             }
+
             {sortedRequests.map(request => {
               priceWithDecimalsString = request.price_total.toFixed(2)
               if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
@@ -299,43 +320,13 @@ class IncomingRequests extends Component {
                             declModalCloseState={this.declModalCloseState.bind(this)}
                           />
                         </Popup>
-                        <SemanticPopup
-                          basic
-                          id={`popover-${request.id}`}
-                          hoverable
-                          hideOnScroll
-                          disabled={payoutSuccess}
-                          content={
-                            stripeAccountId === null ?
-                              <>
-                                <p style={{ 'textAlign': 'center' }}>
-                                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
-                                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
-                                  </Trans>
-                                </p>
-                              </>
-                              : stripeAccountErrors.length > 0 &&
-                              <>
-                                <p style={{ 'textAlign': 'center', 'fontSize': 'unset' }}>
-                                  {t('reusable:stripe:step-2-text')}&ensp;
-                                    {stripePendingVerification ? t('reusable:stripe:step-2-pending') :
-                                    <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                                      In order for you to accept a request, you should <span onClick={() => this.fetchStripeDashboardLink()} className='fake-link-underlined'>complete your verification</span> with our payment provider (Stripe).
-                                    </Trans>
-                                  }
-                                </p>
-                              </>
-                          }
-                          trigger={
-                            <Icon
-                              disabled={(this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined) ? true : false}
-                              id={`accept-${request.id}`}
-                              onClick={(e) => this.acceptRequest(e, request)}
-                              name='check circle'
-                              style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
-                              size='big'
-                            />
-                          }
+                        <Icon
+                          disabled={(this.state.iconsDisabled || this.state.payoutsEnabled === false || this.state.payoutsEnabled === undefined) ? true : false}
+                          id={`accept-${request.id}`}
+                          onClick={(e) => this.acceptRequest(e, request)}
+                          name='check circle'
+                          style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
+                          size='big'
                         />
                       </Grid.Column>
                     </Grid.Row>
