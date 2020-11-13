@@ -8,5 +8,7 @@
   "book-a-stay": "<0>{{nickname}}</0> wants to book a stay for their <2>{{count}} cat</2> during the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
   "book-a-stay_plural": "<0>{{nickname}}</0> wants to book a stay for their <2>{{count}} cats</2> during the dates of <4>{{startDate}}</4> until <6>{{endDate}}</6>.",
   "view-message": "View message",
-  "no-requests": "You don't have any booking requests."
+  "no-requests": "You don't have any booking requests.",
+  "stripe-step1": "You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <1>profile page</1> to fix that.",
+  "stripe-step2-complete-verification": "In order for you to accept a request, you should <1>complete your verification</1> with our payment provider (Stripe)."
 }
