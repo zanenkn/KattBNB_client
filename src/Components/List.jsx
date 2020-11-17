@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Image } from 'semantic-ui-react'
 import ReviewScore from './ReusableComponents/ReviewScore'
-import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { pricePerDay, finalTotal } from '../Modules/PriceCalculations'
 import { useTranslation, Trans } from 'react-i18next'
 import Spinner from './ReusableComponents/Spinner'
 import { Link } from 'react-router-dom'
@@ -34,8 +34,8 @@ const List = (props) => {
 
         {props.finalAvailableHosts.length > 0 &&
           props.finalAvailableHosts.map(host => {
-            let perDay = pricePerDay(host.price_per_day_1_cat, props.numberOfCats, host.supplement_price_per_cat_per_day)
-            let orderTotal = total(host.price_per_day_1_cat, props.numberOfCats, host.supplement_price_per_cat_per_day, props.checkInDate, props.checkOutDate)
+            let perDay = pricePerDay(host.price_per_day_1_cat, props.numberOfCats, host.supplement_price_per_cat_per_day, props.checkInDate, props.checkOutDate)
+            let orderTotal = finalTotal(host.price_per_day_1_cat, props.numberOfCats, host.supplement_price_per_cat_per_day, props.checkInDate, props.checkOutDate)
 
             return (
               <div className='list-card' id={host.id} key={host.id}>

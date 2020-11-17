@@ -9,15 +9,6 @@ class Marker extends React.PureComponent {
   }
 
   render() {
-    let total = this.props.total
-    let totalWithDecimalsString = total.toFixed(2)
-    let finalTotal
-
-    if (totalWithDecimalsString[totalWithDecimalsString.length - 1] === '0' && totalWithDecimalsString[totalWithDecimalsString.length - 2] === '0') {
-      finalTotal = parseFloat(totalWithDecimalsString)
-    } else {
-      finalTotal = totalWithDecimalsString
-    }
 
     return (
       <div style={{ 'transform': 'translate(-50%, -50%)' }}>
@@ -27,7 +18,7 @@ class Marker extends React.PureComponent {
           id={this.props.id}
           onClick={this.props.handleDatapointClick}
         >
-          {finalTotal}&nbsp;kr
+          {this.props.total}&nbsp;kr
         </Label>
       </div>
     )
