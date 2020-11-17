@@ -5,27 +5,21 @@ import AllReviews from '../Reviews/AllReviews'
 import HostLocationMap from '../ReusableComponents/HostLocationMap'
 import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA'
 import MessageHostCTA from '../ReusableComponents/MessageHostCTA'
-import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import { pricePerDay, priceFor1DayFor1Cat, finalTotal } from '../../Modules/PriceCalculations'
 import { useTranslation } from 'react-i18next'
 import Spinner from '../ReusableComponents/Spinner'
 
 const HostProfileView = (props) => {
 
-  let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
-  let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+  let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+  let orderTotal = finalTotal(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
   let locationAndPrice, sendMessage, requestToBook
 
   const { t, ready } = useTranslation('HostProfileView')
 
   if (ready) {
     if (props.location && props.numberOfCats === 0) {
-      let priceWithDecimalsString, totalRate
-      priceWithDecimalsString = props.rate.toFixed(2)
-      if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
-        totalRate = parseFloat(priceWithDecimalsString)
-      } else {
-        totalRate = priceWithDecimalsString
-      }
+      let totalRate = priceFor1DayFor1Cat(props.rate)
       locationAndPrice = (
         <Header id='per-day' as='h4' style={{ 'marginTop': '0' }}>
           <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' /></svg>

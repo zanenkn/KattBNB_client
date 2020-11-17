@@ -1,3 +1,6 @@
+let kattbnbTakeRate = 0.17
+let swedishVAT = 0.25
+
 const total = (rate, cats, supplement, checkIn, checkOut) => {
   let price = (parseFloat(rate) + (parseFloat(cats) - 1) * parseFloat(supplement))
   let total = parseFloat(price) * parseFloat((checkOut - checkIn) / 86400000 + 1)
@@ -12,8 +15,6 @@ const total = (rate, cats, supplement, checkIn, checkOut) => {
 const finalTotal = (rate, cats, supplement, checkIn, checkOut) => {
   let price = (parseFloat(rate) + (parseFloat(cats) - 1) * parseFloat(supplement))
   let total = parseFloat(price) * parseFloat((checkOut - checkIn) / 86400000 + 1)
-  let kattbnbTakeRate = 0.17
-  let swedishVAT = 0.25
   let kattbnbTakeAmount = parseFloat(total) * kattbnbTakeRate
   let VATonKattbnbTakeAmount = parseFloat(kattbnbTakeAmount) * swedishVAT
   let finalCharge = parseFloat(total) + parseFloat(kattbnbTakeAmount) + parseFloat(VATonKattbnbTakeAmount)
@@ -35,4 +36,17 @@ const pricePerDay = (rate, cats, supplement, checkIn, checkOut) => {
   }
 }
 
-export { pricePerDay, total, finalTotal }
+const priceFor1DayFor1Cat = (rate) => {
+  let price = parseFloat(rate)
+  let kattbnbTakeAmount = parseFloat(price) * kattbnbTakeRate
+  let VATonKattbnbTakeAmount = parseFloat(kattbnbTakeAmount) * swedishVAT
+  let finalCharge = parseFloat(price) + parseFloat(kattbnbTakeAmount) + parseFloat(VATonKattbnbTakeAmount)
+  let finalChargeWithDecimalsString = finalCharge.toFixed(2)
+  if (finalChargeWithDecimalsString[finalChargeWithDecimalsString.length - 1] === '0' && finalChargeWithDecimalsString[finalChargeWithDecimalsString.length - 2] === '0') {
+    return parseFloat(finalChargeWithDecimalsString)
+  } else {
+    return finalChargeWithDecimalsString
+  }
+}
+
+export { pricePerDay, priceFor1DayFor1Cat, total, finalTotal }
