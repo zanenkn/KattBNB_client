@@ -49,4 +49,16 @@ const priceFor1DayFor1Cat = (rate) => {
   }
 }
 
-export { pricePerDay, priceFor1DayFor1Cat, total, finalTotal }
+const bookingDetailsPrice = (amount) => {
+  let kattbnbTakeAmount = parseFloat(amount) * kattbnbTakeRate
+  let VATonKattbnbTakeAmount = parseFloat(kattbnbTakeAmount) * swedishVAT
+  let finalCharge = parseFloat(amount) + parseFloat(kattbnbTakeAmount) + parseFloat(VATonKattbnbTakeAmount)
+  let priceWithDecimalsString = finalCharge.toFixed(2)
+  if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
+    return parseFloat(priceWithDecimalsString)
+  } else {
+    return priceWithDecimalsString
+  }
+}
+
+export { pricePerDay, priceFor1DayFor1Cat, total, finalTotal, bookingDetailsPrice }
