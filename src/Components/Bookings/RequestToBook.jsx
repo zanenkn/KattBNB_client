@@ -46,7 +46,7 @@ class RequestToBook extends Component {
       try {
         const lang = detectLanguage()
         const amount = finalTotal(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
-        const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek`
+        const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${this.props.location.state.checkInDate}&outDate=${this.props.location.state.checkOutDate}&cats=${this.props.location.state.numberOfCats}&host=${this.props.location.state.nickname}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
