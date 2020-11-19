@@ -8,7 +8,7 @@ import StripeCardDetails from './StripeCardDetails'
 import { ElementsConsumer, CardNumberElement } from '@stripe/react-stripe-js'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
-import { pricePerDay, total } from '../../Modules/PriceCalculations'
+import { pricePerDay, toPayHost, finalTotal } from '../../Modules/PriceCalculations'
 import { Trans, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Visa from '../Icons/Visa'
@@ -45,7 +45,7 @@ class RequestToBook extends Component {
     } else {
       try {
         const lang = detectLanguage()
-        const amount = total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
+        const amount = finalTotal(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
         const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek`
         const headers = {
           uid: window.localStorage.getItem('uid'),
@@ -90,8 +90,8 @@ class RequestToBook extends Component {
       this.setState({
         checkIn: moment(this.props.location.state.checkInDate).format('l'),
         checkOut: moment(this.props.location.state.checkOutDate).format('l'),
-        perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement),
-        orderTotal: total(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
+        perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
+        orderTotal: finalTotal(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
         numberOfCats: this.props.location.state.numberOfCats,
         nickname: this.props.location.state.nickname
       })
@@ -109,6 +109,7 @@ class RequestToBook extends Component {
     const { t } = this.props
     const lang = detectLanguage()
     let booking = []
+    let totalToPayHost = toPayHost(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
     let startDate = this.props.location.state.checkInDate
     let stopDate = this.props.location.state.checkOutDate
     let currentDate = startDate
@@ -123,7 +124,7 @@ class RequestToBook extends Component {
       dates: booking,
       host_nickname: this.props.location.state.nickname,
       price_per_day: this.state.perDay,
-      price_total: this.state.orderTotal,
+      price_total: totalToPayHost,
       user_id: this.props.id,
       payment_intent_id: paymentIntentId,
       locale: lang
@@ -216,6 +217,7 @@ class RequestToBook extends Component {
         this.setState({ stripePaymentProcessingDisplay: true })
         const lang = detectLanguage()
         let booking = []
+        let totalToPayHost = toPayHost(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
         let startDate = this.props.location.state.checkInDate
         let stopDate = this.props.location.state.checkOutDate
         let currentDate = startDate
@@ -223,7 +225,7 @@ class RequestToBook extends Component {
           booking.push(currentDate)
           currentDate = currentDate + 86400000
         }
-        const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${this.props.location.state.numberOfCats}&message=${this.state.message}&dates=${booking}&host_nickname=${this.props.location.state.nickname}&price_per_day=${this.state.perDay}&price_total=${this.state.orderTotal}&user_id=${this.props.id}&payment_intent_id=${this.state.paymentIntent}`
+        const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${this.props.location.state.numberOfCats}&message=${this.state.message}&dates=${booking}&host_nickname=${this.props.location.state.nickname}&price_per_day=${this.state.perDay}&price_total=${totalToPayHost}&user_id=${this.props.id}&payment_intent_id=${this.state.paymentIntent}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),

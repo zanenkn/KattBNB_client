@@ -10,7 +10,7 @@ const formatPrice = (amount) => {
   }
 }
 
-const total = (rate, cats, supplement, checkIn, checkOut) => {
+const toPayHost = (rate, cats, supplement, checkIn, checkOut) => {
   let price = (parseFloat(rate) + (parseFloat(cats) - 1) * parseFloat(supplement))
   let total = parseFloat(price) * parseFloat((checkOut - checkIn) / 86400000 + 1)
   return formatPrice(total)
@@ -45,4 +45,4 @@ const bookingDetailsPrice = (amount) => {
   return formatPrice(finalCharge)
 }
 
-export { pricePerDay, priceFor1DayFor1Cat, total, finalTotal, bookingDetailsPrice }
+export { pricePerDay, priceFor1DayFor1Cat, toPayHost, finalTotal, bookingDetailsPrice }
