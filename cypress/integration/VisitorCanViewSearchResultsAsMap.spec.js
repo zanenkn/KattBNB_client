@@ -63,7 +63,7 @@ describe('Visitor can view search results as a map', () => {
     cy.get('#2').click({ force: true })
 
     let hostData = [
-      'carla', 'Stockholm', '140 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '560 kr'
+      'carla', 'Stockholm', '169.75 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '679 kr'
     ]
 
     hostData.forEach(data => {
@@ -89,9 +89,9 @@ describe('Visitor can view search results as a map', () => {
     let hostData = [
       [
         '#nickname', '#description', '#per-day',
-        '#per-day'
+        ':nth-child(10) > #total'
       ],
-      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
+      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr']
     ]
 
     cy.get('#2').click({ force: true })

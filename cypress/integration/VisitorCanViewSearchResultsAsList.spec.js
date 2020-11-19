@@ -13,6 +13,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: ''
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      status: 200,
+      response: ''
+    })
     cy.visit('http://localhost:3000')
     cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
@@ -39,11 +45,11 @@ describe('Visitor can view search results as a list', () => {
 
   it('and see correct prices', () => {
     cy.get('#22').within(() => {
-      cy.contains('560 kr')
+      cy.contains('679 kr')
     })
 
     cy.get('#33').within(() => {
-      cy.contains('460 kr')
+      cy.contains('557.75 kr')
     })
   })
 
@@ -67,9 +73,9 @@ describe('Visitor can view search results as a list', () => {
     let hostData = [
       [
         '#nickname', '#description', '#per-day',
-        '#per-day'
+        ':nth-child(10) > #total'
       ],
-      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '140 kr/day', '560 kr']
+      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr']
     ]
     cy.get('img#2.ui.image').click({ force: true })
     cy.get('#more').click()

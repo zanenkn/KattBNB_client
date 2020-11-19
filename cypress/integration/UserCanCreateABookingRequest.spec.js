@@ -58,13 +58,13 @@ describe('User can create a booking request', () => {
     })
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=560&currency=sek`,
+      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=679&currency=sek&inDate=1570492800000&outDate=1570752000000&cats=2&host=carla`,
       status: 200,
       response: { "intent_id": "pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK" }
     })
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=140&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
       status: 200,
       response: {}
     })
@@ -151,7 +151,7 @@ describe('User can create a booking request', () => {
   it('unsuccessfully and get an error alert cause of Stripe error while creating the payment intent and get redirected to search with all criteria prefilled', () => {
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=560&currency=sek`,
+      url: `${api_url}/stripe?locale=en-US&occasion=create_payment_intent&amount=679&currency=sek&inDate=1570492800000&outDate=1570752000000&cats=2&host=carla`,
       status: 555,
       response: {}
     })
@@ -171,7 +171,7 @@ describe('User can create a booking request', () => {
   it('unsuccessfully and get an error message cause of Stripe error while updating the payment intent', () => {
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=140&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
       status: 555,
       response: { "error": "There was a problem connecting to our payments infrastructure provider. Please try again later." }
     })

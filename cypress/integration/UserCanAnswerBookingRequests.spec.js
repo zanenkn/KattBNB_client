@@ -134,6 +134,12 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: 'fixture:successful_booking_update.json'
     })
+    cy.route({
+      method: 'GET',
+      url: `${url.stripe}`,
+      status: 200,
+      response: { "message": "No account" }
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(1000)
     cy.get('#bookings-icon').click({ force: true })
@@ -141,12 +147,6 @@ describe('User cannot accept booking requests', () => {
   })
 
   it('if no stripe information is provided', () => {
-    cy.route({
-      method: 'GET',
-      url: `${url.stripe}`,
-      status: 200,
-      response: { "message": "No account" }
-    })
     cy.get('[style="text-align: center; margin: 2rem 0px;"]').contains('Please visit your profile page to fix that.')
     cy.get('#accept-1').should('have.class', 'disabled')
     cy.get('#accept-1').trigger('mouseover')
@@ -155,14 +155,42 @@ describe('User cannot accept booking requests', () => {
     cy.get('#accept-2').trigger('mouseover')
     cy.get('#popover-2').should('be.visible')
   })
+})
 
-  it('if stripe verification is pending', () => {
+describe('User cannot accept booking requests', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:booking_stats.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.route({
+      method: 'PATCH',
+      url: `${bookings}/2`,
+      status: 200,
+      response: 'fixture:successful_booking_update.json'
+    })
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
       status: 200,
       response: 'fixture:stripe_pending_verification.json'
     })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(1000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-incoming-bookings').click()
+  })
+
+  it('if stripe verification is pending', () => {
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains('Your verification is pending, please check back later.')
     cy.get('#progress-bar-cta').should('not.contain', 'My payment dashboard')
     cy.get('#accept-1').should('have.class', 'disabled')
@@ -172,14 +200,42 @@ describe('User cannot accept booking requests', () => {
     cy.get('#accept-2').trigger('mouseover')
     cy.get('#popover-2').should('be.visible')
   })
-  
-  it('if stripe verification is complete and errors exist', () => {
+})
+
+describe('User cannot accept booking requests', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:booking_stats.json'
+    })
+    cy.route({
+      method: 'GET',
+      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_host_bookings.json'
+    })
+    cy.route({
+      method: 'PATCH',
+      url: `${bookings}/2`,
+      status: 200,
+      response: 'fixture:successful_booking_update.json'
+    })
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
       status: 200,
       response: 'fixture:stripe_verification_errors.json'
     })
+    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
+    cy.wait(1000)
+    cy.get('#bookings-icon').click({ force: true })
+    cy.get('#view-incoming-bookings').click()
+  })
+
+  it('if stripe verification is complete and errors exist', () => {
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains('Please visit your payment dashboard to complete your verification.')
     cy.get('#progress-bar-cta').contains('My payment dashboard')
     cy.get('#accept-1').should('have.class', 'disabled')
