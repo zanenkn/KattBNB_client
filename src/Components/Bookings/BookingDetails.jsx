@@ -6,7 +6,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
-import { bookingDetailsPrice } from '../../Modules/PriceCalculations'
+import { priceOfOneAmount } from '../../Modules/PriceCalculations'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -96,7 +96,7 @@ class BookingDetails extends Component {
 
     if (this.props.tReady) {
       let errorDisplay
-      let total = bookingDetailsPrice(this.props.location.state.priceTotal)
+      let total = priceOfOneAmount(this.props.location.state.priceTotal)
 
       if (this.state.errorDisplay) {
         errorDisplay = (

@@ -10,7 +10,7 @@ const formatPrice = (amount) => {
   }
 }
 
-const toPayHost = (rate, cats, supplement, checkIn, checkOut) => {
+const hostTotal = (rate, cats, supplement, checkIn, checkOut) => {
   let price = (parseFloat(rate) + (parseFloat(cats) - 1) * parseFloat(supplement))
   let total = parseFloat(price) * parseFloat((checkOut - checkIn) / 86400000 + 1)
   return formatPrice(total)
@@ -30,19 +30,11 @@ const pricePerDay = (rate, cats, supplement, checkIn, checkOut) => {
   return formatPrice(price)
 }
 
-const priceFor1DayFor1Cat = (rate) => {
-  let price = parseFloat(rate)
-  let kattbnbTakeAmount = parseFloat(price) * kattbnbTakeRate
-  let VATonKattbnbTakeAmount = parseFloat(kattbnbTakeAmount) * swedishVAT
-  let finalCharge = parseFloat(price) + parseFloat(kattbnbTakeAmount) + parseFloat(VATonKattbnbTakeAmount)
-  return formatPrice(finalCharge)
-}
-
-const bookingDetailsPrice = (amount) => {
+const priceOfOneAmount = (amount) => {
   let kattbnbTakeAmount = parseFloat(amount) * kattbnbTakeRate
   let VATonKattbnbTakeAmount = parseFloat(kattbnbTakeAmount) * swedishVAT
   let finalCharge = parseFloat(amount) + parseFloat(kattbnbTakeAmount) + parseFloat(VATonKattbnbTakeAmount)
   return formatPrice(finalCharge)
 }
 
-export { pricePerDay, priceFor1DayFor1Cat, toPayHost, finalTotal, bookingDetailsPrice }
+export { pricePerDay, priceOfOneAmount, hostTotal, finalTotal }

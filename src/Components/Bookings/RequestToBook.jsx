@@ -8,7 +8,7 @@ import StripeCardDetails from './StripeCardDetails'
 import { ElementsConsumer, CardNumberElement } from '@stripe/react-stripe-js'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
-import { pricePerDay, toPayHost, finalTotal } from '../../Modules/PriceCalculations'
+import { pricePerDay, hostTotal, finalTotal } from '../../Modules/PriceCalculations'
 import { Trans, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Visa from '../Icons/Visa'
@@ -36,7 +36,7 @@ class RequestToBook extends Component {
   }
 
   createPaymentIntent = async () => {
-    const { t } = this.props
+    const { t, location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
@@ -45,8 +45,8 @@ class RequestToBook extends Component {
     } else {
       try {
         const lang = detectLanguage()
-        const amount = finalTotal(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
-        const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${this.props.location.state.checkInDate}&outDate=${this.props.location.state.checkOutDate}&cats=${this.props.location.state.numberOfCats}&host=${this.props.location.state.nickname}`
+        const amount = finalTotal(hostRate, numberOfCats, hostSupplement, checkInDate, checkOutDate)
+        const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${checkInDate}&outDate=${checkOutDate}&cats=${numberOfCats}&host=${nickname}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -62,10 +62,10 @@ class RequestToBook extends Component {
           this.props.history.push({
             pathname: '/search',
             state: {
-              checkInDate: new Date(this.props.location.state.checkInDate),
-              checkOutDate: new Date(this.props.location.state.checkOutDate),
+              checkInDate: new Date(checkInDate),
+              checkOutDate: new Date(checkOutDate),
               location: this.props.locationRedux,
-              numberOfCats: this.props.location.state.numberOfCats
+              numberOfCats: numberOfCats
             }
           })
         } else if (error.response.status === 503) {
@@ -84,16 +84,17 @@ class RequestToBook extends Component {
   }
 
   componentDidMount() {
+    const { location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
     if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/' })
     } else {
       this.setState({
-        checkIn: moment(this.props.location.state.checkInDate).format('l'),
-        checkOut: moment(this.props.location.state.checkOutDate).format('l'),
-        perDay: pricePerDay(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
-        orderTotal: finalTotal(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate),
-        numberOfCats: this.props.location.state.numberOfCats,
-        nickname: this.props.location.state.nickname
+        checkIn: moment(checkInDate).format('l'),
+        checkOut: moment(checkOutDate).format('l'),
+        perDay: pricePerDay(hostRate, numberOfCats, hostSupplement, checkInDate, checkOutDate),
+        orderTotal: finalTotal(hostRate, numberOfCats, hostSupplement, checkInDate, checkOutDate),
+        numberOfCats: numberOfCats,
+        nickname: nickname
       })
       this.createPaymentIntent()
     }
@@ -106,12 +107,12 @@ class RequestToBook extends Component {
   postalCodeNameHandler = (e) => { this.setState({ postalCode: e.target.value }) }
 
   createBooking = (paymentIntentId) => {
-    const { t } = this.props
+    const { t, location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
     const lang = detectLanguage()
     let booking = []
-    let totalToPayHost = toPayHost(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
-    let startDate = this.props.location.state.checkInDate
-    let stopDate = this.props.location.state.checkOutDate
+    let totalToPayHost = hostTotal(hostRate, numberOfCats, hostSupplement, checkInDate, checkOutDate)
+    let startDate = checkInDate
+    let stopDate = checkOutDate
     let currentDate = startDate
     while (currentDate <= stopDate) {
       booking.push(currentDate)
@@ -119,10 +120,10 @@ class RequestToBook extends Component {
     }
     const path = '/api/v1/bookings'
     const payload = {
-      number_of_cats: this.props.location.state.numberOfCats,
+      number_of_cats: numberOfCats,
       message: this.state.message,
       dates: booking,
-      host_nickname: this.props.location.state.nickname,
+      host_nickname: nickname,
       price_per_day: this.state.perDay,
       price_total: totalToPayHost,
       user_id: this.props.id,
@@ -139,10 +140,10 @@ class RequestToBook extends Component {
         this.props.history.push({
           pathname: '/successful-request',
           state: {
-            numberOfCats: this.props.location.state.numberOfCats,
-            checkInDate: this.props.location.state.checkInDate,
-            checkOutDate: this.props.location.state.checkOutDate,
-            nickname: this.props.location.state.nickname
+            numberOfCats: numberOfCats,
+            checkInDate: checkInDate,
+            checkOutDate: checkOutDate,
+            nickname: nickname
           }
         })
       })
@@ -173,7 +174,8 @@ class RequestToBook extends Component {
   }
 
   createBookingAndPay = async (event, stripe, elements) => {
-    const { t } = this.props
+    const { t, id, location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
+    const { cardholderName, postalCode, message, perDay, paymentIntent } = this.state
     event.preventDefault()
     this.setState({
       loading: true,
@@ -195,19 +197,19 @@ class RequestToBook extends Component {
         })
         return
       }
-      if (this.state.message === '') {
+      if (message === '') {
         this.setState({
           loading: false,
           errors: ['RequestToBook:error-1'],
           errorDisplay: true
         })
-      } else if (this.state.message.length > 400) {
+      } else if (message.length > 400) {
         this.setState({
           loading: false,
           errors: ['RequestToBook:error-2'],
           errorDisplay: true
         })
-      } else if (this.state.cardholderName === '' || this.state.postalCode === '' || this.state.postalCode < 0 || this.state.postalCode.length !== 5) {
+      } else if (cardholderName === '' || postalCode === '' || postalCode < 0 || postalCode.length !== 5) {
         this.setState({
           loading: false,
           errors: ['RequestToBook:card-details-error'],
@@ -217,15 +219,15 @@ class RequestToBook extends Component {
         this.setState({ stripePaymentProcessingDisplay: true })
         const lang = detectLanguage()
         let booking = []
-        let totalToPayHost = toPayHost(this.props.location.state.hostRate, this.props.location.state.numberOfCats, this.props.location.state.hostSupplement, this.props.location.state.checkInDate, this.props.location.state.checkOutDate)
-        let startDate = this.props.location.state.checkInDate
-        let stopDate = this.props.location.state.checkOutDate
+        let totalToPayHost = hostTotal(hostRate, numberOfCats, hostSupplement, checkInDate, checkOutDate)
+        let startDate = checkInDate
+        let stopDate = checkOutDate
         let currentDate = startDate
         while (currentDate <= stopDate) {
           booking.push(currentDate)
           currentDate = currentDate + 86400000
         }
-        const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${this.props.location.state.numberOfCats}&message=${this.state.message}&dates=${booking}&host_nickname=${this.props.location.state.nickname}&price_per_day=${this.state.perDay}&price_total=${totalToPayHost}&user_id=${this.props.id}&payment_intent_id=${this.state.paymentIntent}`
+        const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${numberOfCats}&message=${message}&dates=${booking}&host_nickname=${nickname}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${id}&payment_intent_id=${paymentIntent}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -233,13 +235,13 @@ class RequestToBook extends Component {
         }
         try {
           const responseUpdateIntent = await axios.get(path, { headers: headers })
-          const result = await stripe.confirmCardPayment(this.state.paymentIntent, {
+          const result = await stripe.confirmCardPayment(paymentIntent, {
             payment_method: {
               card: elements.getElement(CardNumberElement),
               billing_details: {
-                name: this.state.cardholderName,
+                name: cardholderName,
                 address: {
-                  postal_code: this.state.postalCode
+                  postal_code: postalCode
                 }
               }
             }
@@ -286,24 +288,10 @@ class RequestToBook extends Component {
 
   render() {
     const { t } = this.props
+    const { errorDisplay, numberOfCats, errors, nickname, checkIn, checkOut, message, cardholderName, postalCode, orderTotal, perDay, loading, stripePaymentProcessingDisplay } = this.state
 
     if (this.props.tReady) {
-      let errorDisplay, messageLength
-
-      messageLength = 400 - this.state.message.length
-
-      if (this.state.errorDisplay) {
-        errorDisplay = (
-          <Message negative >
-            <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
-            <ul>
-              {this.state.errors.map(error => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        )
-      }
+      let messageLength = 400 - message.length
 
       return (
         <div className='content-wrapper' >
@@ -312,8 +300,8 @@ class RequestToBook extends Component {
           </Header>
           <Segment className='whitebox'>
             <p className='small-centered-paragraph' style={{ 'marginBottom': '0.5rem' }}>
-              <Trans i18nKey='RequestToBook:request-info' count={parseInt(this.state.numberOfCats)}>
-                You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{ count: this.state.numberOfCats }} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{ host: this.state.nickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ checkin: this.state.checkIn }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ checkout: this.state.checkOut }}</strong>.
+              <Trans i18nKey='RequestToBook:request-info' count={parseInt(numberOfCats)}>
+                You are requesting a booking for <strong style={{ 'color': '#c90c61' }}>{{ count: numberOfCats }} cat</strong> with <strong style={{ 'color': '#c90c61' }}>{{ host: nickname }}</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ checkin: checkIn }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ checkout: checkOut }}</strong>.
               </Trans>
             </p>
             <Form>
@@ -322,7 +310,7 @@ class RequestToBook extends Component {
                 placeholder={t('RequestToBook:message-plch')}
                 required
                 id='message'
-                value={this.state.message}
+                value={message}
                 onChange={this.onChangeHandler}
               />
             </Form>
@@ -343,8 +331,8 @@ class RequestToBook extends Component {
                     <StripeCardDetails
                       onChangeCardHolder={this.cardholderNameHandler}
                       onChangePostalCode={this.postalCodeNameHandler}
-                      cardholderName={this.state.cardholderName}
-                      postalCode={this.state.postalCode}
+                      cardholderName={cardholderName}
+                      postalCode={postalCode}
                       stripe={stripe}
                       elements={elements}
                     />
@@ -353,16 +341,24 @@ class RequestToBook extends Component {
                         {t('RequestToBook:agree-to-pay')}
                       </p>
                       <Header id='total' as='h3' style={{ 'marginTop': '0', 'marginBottom': '0' }}>
-                        {this.state.orderTotal} kr
+                        {orderTotal} kr
                       </Header>
                       <Header id='total' as='h5' style={{ 'marginTop': '0' }}>
-                        ({this.state.perDay} {t('reusable:price.per-day')})
+                        ({perDay} {t('reusable:price.per-day')})
                       </Header>
                     </div>
                   </div>
-                  {errorDisplay}
-                  <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' disabled={this.state.loading} loading={this.state.loading}>
-                    <Icon fitted name='lock' /> &nbsp; {t('reusable:request-cta.pay-btn')} {this.state.orderTotal} kr
+                  {errorDisplay &&
+                    <Message negative >
+                      <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
+                      <ul>
+                        {errors.map(error => (
+                          <li key={error}>{t(error)}</li>
+                        ))}
+                      </ul>
+                    </Message>}
+                  <Button onClick={(e) => this.createBookingAndPay(e, stripe, elements)} id='request-to-book-button' disabled={loading} loading={loading}>
+                    <Icon fitted name='lock' /> &nbsp; {t('reusable:request-cta.pay-btn')} {orderTotal} kr
                   </Button>
                   <p className='smallprint' style={{ 'marginTop': '2rem' }}>
                     <Trans i18nKey='RequestToBook:smallprint'>
@@ -376,7 +372,7 @@ class RequestToBook extends Component {
               )}
             </ElementsConsumer>
           </Segment>
-          {this.state.stripePaymentProcessingDisplay &&
+          {stripePaymentProcessingDisplay &&
             <div style={{ 'width': '100vw', 'height': '100vh', 'position': 'fixed', 'top': '0', 'left': '0', 'backdropFilter': 'blur(2rem)' }}>
               <div style={{ 'margin': '13rem auto 0' }}>
                 <Spinner />
