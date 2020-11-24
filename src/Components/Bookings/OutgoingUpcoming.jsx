@@ -59,6 +59,24 @@ const OutgoingUpcoming = (props) => {
                 >
                   {t('OutgoingUpcoming:details')}
                 </p>
+                <p
+                  className='fake-link-underlined'
+                  onClick={() => {
+                    const { history } = props
+                    history.push({
+                      pathname: '/user-receipt',
+                      state: {
+                        nickname: upcoming.host_nickname,
+                        startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
+                        endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
+                        priceTotal: upcoming.price_total,
+                        numberOfCats: upcoming.number_of_cats,
+                        bookingId: upcoming.id
+                      }
+                    })
+                  }}>
+                  View receipt
+                </p>
               </Container>
             )
           })}
