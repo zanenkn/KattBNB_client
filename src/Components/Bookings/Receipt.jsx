@@ -18,15 +18,17 @@ const Receipt = (props) => {
   }, [])
 
   if (ready) {
-    const { numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
+    const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
     return (
       <div className='content-wrapper' >
         <KattBNBLogo width={'100px'} />
         <p>KattBNB AB</p>
         <p>Reg. Number 559252-4481</p>
-        <p>Solståndsgatan 22, Gothenburg 41536, Västra Götaland, Sweden</p>
         <Header as='h1'>
           Receipt #{bookingId}
+        </Header>
+        <Header as='h3'>
+          {createdAt}
         </Header>
         <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
           <p>For the stay of your {numberOfCats} cats with {nickname} between {startDate} and {endDate} you paid the amounts listed below:</p>

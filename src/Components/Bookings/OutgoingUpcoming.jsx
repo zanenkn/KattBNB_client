@@ -71,7 +71,8 @@ const OutgoingUpcoming = (props) => {
                         endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
                         priceTotal: upcoming.price_total,
                         numberOfCats: upcoming.number_of_cats,
-                        bookingId: upcoming.id
+                        bookingId: upcoming.id,
+                        createdAt: moment(upcoming.created_at).format('YYYY-MM-DD')
                       }
                     })
                   }}>

@@ -138,7 +138,8 @@ const OutgoingHistory = (props) => {
                           endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
                           priceTotal: booking.price_total,
                           numberOfCats: booking.number_of_cats,
-                          bookingId: booking.id
+                          bookingId: booking.id,
+                          createdAt: moment(booking.created_at).format('YYYY-MM-DD')
                         }
                       })
                     }}>
