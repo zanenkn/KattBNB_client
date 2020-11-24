@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
+import withAuth from '../../HOC/withAuth'
 import Spinner from '../ReusableComponents/Spinner'
-import { wipeCredentials } from '../../Modules/wipeCredentials'
 import { useTranslation } from 'react-i18next'
 import { Header, Segment } from 'semantic-ui-react'
 
@@ -9,11 +9,11 @@ const Receipt = (props) => {
 
   const { t, ready } = useTranslation('Error503')
 
-  // useEffect(() => {
-  //   if (props.location.search !== '?atm') {
-  //     wipeCredentials('/')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (props.location.state === undefined || props.history.action === 'POP') {
+      props.history.push({ pathname: '/all-bookings' })
+    }
+  }, [])
 
   if (ready) {
     return (
@@ -29,4 +29,4 @@ const Receipt = (props) => {
   } else { return <Spinner /> }
 }
 
-export default Receipt
+export default withAuth(Receipt)

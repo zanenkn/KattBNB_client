@@ -75,7 +75,7 @@ const OutgoingUpcoming = (props) => {
                       }
                     })
                   }}>
-                  View receipt
+                  {t('reusable:cta:view-receipt')}
                 </p>
               </Container>
             )
