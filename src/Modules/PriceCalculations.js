@@ -37,4 +37,4 @@ const priceOfOneAmount = (amount) => {
   return formatPrice(finalCharge)
 }
 
-export { pricePerDay, priceOfOneAmount, hostTotal, finalTotal }
+export { pricePerDay, priceOfOneAmount, hostTotal, finalTotal, formatPrice }
