@@ -127,6 +127,23 @@ const OutgoingHistory = (props) => {
                         />
                       </Popup>
                   }
+                  <p
+                    className='fake-link-underlined'
+                    onClick={() => {
+                      props.history.push({
+                        pathname: '/user-receipt',
+                        state: {
+                          nickname: booking.host_nickname,
+                          startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                          endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
+                          priceTotal: booking.price_total,
+                          numberOfCats: booking.number_of_cats,
+                          bookingId: booking.id
+                        }
+                      })
+                    }}>
+                    {t('reusable:cta:view-receipt')}
+                  </p>
                 </Container>
               )
             }
