@@ -6,6 +6,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import { withTranslation } from 'react-i18next'
 import axios from 'axios'
 import Popup from 'reactjs-popup'
+import { priceOfOneAmount } from '../../Modules/PriceCalculations'
 import { detectLanguage } from '../../Modules/detectLanguage'
 import { wipeCredentials } from '../../Modules/wipeCredentials'
 
@@ -94,14 +95,8 @@ class BookingDetails extends Component {
     const { t } = this.props
 
     if (this.props.tReady) {
-      let priceWithDecimalsString, total, errorDisplay
-
-      priceWithDecimalsString = this.props.location.state.priceTotal.toFixed(2)
-      if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
-        total = parseFloat(priceWithDecimalsString)
-      } else {
-        total = priceWithDecimalsString
-      }
+      let errorDisplay
+      let total = priceOfOneAmount(this.props.location.state.priceTotal)
 
       if (this.state.errorDisplay) {
         errorDisplay = (

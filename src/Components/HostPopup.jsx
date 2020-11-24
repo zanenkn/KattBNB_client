@@ -1,7 +1,7 @@
 import React from 'react'
 import ReviewScore from './ReusableComponents/ReviewScore'
 import { Image, Header } from 'semantic-ui-react'
-import { pricePerDay, total } from '../Modules/PriceCalculations'
+import { pricePerDay, finalTotal } from '../Modules/PriceCalculations'
 import RequestToBookCTA from './ReusableComponents/RequestToBookCTA'
 import { useTranslation } from 'react-i18next'
 import User from './Icons/User'
@@ -15,8 +15,8 @@ const HostPopup = (props) => {
   const { t, ready } = useTranslation('HostPopup')
 
   if (ready) {
-    let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement)
-    let orderTotal = total(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+    let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
+    let orderTotal = finalTotal(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate)
 
     return (
       <>

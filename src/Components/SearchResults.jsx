@@ -8,6 +8,7 @@ import HostProfileView from './HostProfileView/HostProfileView'
 import moment from 'moment'
 import 'moment/locale/sv'
 import axios from 'axios'
+import { finalTotal } from '../Modules/PriceCalculations'
 import { detectLanguage } from '../Modules/detectLanguage'
 import { wipeCredentials } from '../Modules/wipeCredentials'
 import Popup from 'reactjs-popup'
@@ -76,12 +77,10 @@ class SearchResults extends Component {
           if (response.data !== '' && response.data.length > 0) {
             availableAllLocations = response.data.filter(host => host.user.id !== this.props.id)
             availableAllLocations.map(host => {
-              let bookingLength = (this.props.history.location.state.to - this.props.history.location.state.from) / 86400000 + 1
-              let total = parseFloat(parseFloat(host.price_per_day_1_cat) + (parseFloat(this.props.history.location.state.cats) - 1) * parseFloat(host.supplement_price_per_cat_per_day)) * bookingLength
               host.id = host.user.id
               host.lat = parseFloat(host.lat)
               host.lng = parseFloat(host.long)
-              host.total = total
+              host.total = finalTotal(host.price_per_day_1_cat, this.props.history.location.state.cats, host.supplement_price_per_cat_per_day, this.props.history.location.state.from, this.props.history.location.state.to)
             })
             this.setState({
               availableAllLocations: availableAllLocations
