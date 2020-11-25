@@ -131,7 +131,7 @@ const OutgoingHistory = (props) => {
                     className='fake-link-underlined'
                     onClick={() => {
                       props.history.push({
-                        pathname: '/user-receipt',
+                        pathname: '/booking-receipt',
                         state: {
                           nickname: booking.host_nickname,
                           startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),

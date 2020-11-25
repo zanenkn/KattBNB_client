@@ -64,7 +64,7 @@ const OutgoingUpcoming = (props) => {
                   onClick={() => {
                     const { history } = props
                     history.push({
-                      pathname: '/user-receipt',
+                      pathname: '/booking-receipt',
                       state: {
                         nickname: upcoming.host_nickname,
                         startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),

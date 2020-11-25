@@ -84,7 +84,7 @@ class App extends Component {
               <Route exact path='/messenger' component={AllConversations}></Route>
               <Route exact path='/conversation' component={Conversation}></Route>
               <Route exact path='/leave-a-review' component={LeaveReview}></Route>
-              <Route exact path='/user-receipt' component={Receipt}></Route>
+              <Route exact path='/booking-receipt' component={Receipt}></Route>
             </Switch>
           </ScrollToTop>
           <Menu />
