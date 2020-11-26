@@ -11,7 +11,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 
 const Receipt = (props) => {
 
-  const { t, ready } = useTranslation('')
+  const { t, ready } = useTranslation('Receipt')
 
   useEffect(() => {
     if (props.history.location.state === undefined || props.history.action === 'POP') {
@@ -26,9 +26,9 @@ const Receipt = (props) => {
         <div>
           <PDFDownloadLink
             document={<ReceiptPDF />}
-            fileName='KattBNB Booking Receipt.pdf'
+            fileName={t('Receipt:filename-pdf')}
           >
-            {({ loading }) => (loading ? 'Loading document...' : 'Download receipt')}
+            {({ loading }) => (loading ? t('Receipt:loading') : t('Receipt:download'))}
           </PDFDownloadLink>
         </div>
         <div className='content-wrapper' >
