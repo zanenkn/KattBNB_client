@@ -25,7 +25,16 @@ const Receipt = (props) => {
       <>
         <div>
           <PDFDownloadLink
-            document={<ReceiptPDF />}
+            document={
+              <ReceiptPDF
+                createdAt={createdAt}
+                numberOfCats={numberOfCats}
+                bookingId={bookingId}
+                nickname={nickname}
+                startDate={startDate}
+                endDate={endDate}
+                priceTotal={priceTotal}
+              />}
             fileName={t('Receipt:filename-pdf')}
           >
             {({ loading }) => (loading ? t('Receipt:loading') : t('Receipt:download'))}
