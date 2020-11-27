@@ -34,6 +34,7 @@ const OutgoingUpcoming = (props) => {
                 </p>
                 <p
                   className='fake-link-underlined'
+                  id={`booking-details-${upcoming.id}`}
                   onClick={() => {
                     const { history } = props
                     history.push({

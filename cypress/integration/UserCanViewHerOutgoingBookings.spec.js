@@ -21,6 +21,12 @@ describe('User can view her outgoing bookings', () => {
       status: 200,
       response: ''
     })
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=10&locale=en-US',
+      status: 200,
+      response: []
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
@@ -117,7 +123,7 @@ describe('User can view her outgoing bookings', () => {
   it('and see upcoming booking details', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#8').within(() => {
-      cy.get('.fake-link-underlined').click({ force: true })
+      cy.get('#booking-details-8').click({ force: true })
     })
     cy.get('p')
     cy.should('contain', '2051-08-04 until 2051-08-08')
@@ -170,8 +176,7 @@ describe('User can view her outgoing bookings', () => {
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-history]').first().contains('View your review')
-    cy.get('.fake-link-underlined').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('View your review').click()
     cy.contains('You reviewed your booking with AcceptedOfThePast for the dates of 2019-11-26 until 2019-11-19.')
     cy.contains('Almost good!')
     cy.contains('4/5')

@@ -14,9 +14,9 @@ describe('Visitor can view search results as a map', () => {
       status: 200,
       response: 'fixture:search_results_list_2.json'
     })
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()
