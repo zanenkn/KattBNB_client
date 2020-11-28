@@ -91,60 +91,63 @@ const OutgoingHistory = (props) => {
                       Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
-                  {booking.review_id === null && booking.host_profile_id !== null ?
-                    <p className='fake-link-underlined' id='leave-review' onClick={() => {
-                      props.history.push({
-                        pathname: '/leave-a-review',
-                        state: {
-                          userId: booking.user_id,
-                          hostProfileId: booking.host_profile_id,
-                          bookingId: booking.id,
-                          hostNickname: booking.host_nickname,
-                          startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
-                          endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')
+                  <div style={{display: 'flex'}}>
+                    {booking.review_id === null && booking.host_profile_id !== null ?
+                      <span><p className='fake-link-underlined' id='leave-review' onClick={() => {
+                        props.history.push({
+                          pathname: '/leave-a-review',
+                          state: {
+                            userId: booking.user_id,
+                            hostProfileId: booking.host_profile_id,
+                            bookingId: booking.id,
+                            hostNickname: booking.host_nickname,
+                            startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                            endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')
+                          }
+                        })
+                      }}>
+                        {t('OutgoingHistory:leave-review')}
+                      </p></span>
+                      : booking.review_id === null && booking.host_profile_id === null ?
+                        <span><p className='small-centered-paragraph'>
+                          {t('OutgoingHistory:no-host-no-review')}
+                        </p></span>
+                        :
+                        <Popup modal trigger={
+                          <span><p className='fake-link-underlined'>
+                            {t('OutgoingHistory:view-review')}
+                          </p></span>
                         }
-                      })
-                    }}>
-                      {t('OutgoingHistory:leave-review')}
+                          position='top center'
+                          closeOnDocumentClick={true}
+                        >
+                          <ViewYourReviewPopup
+                            id={booking.review_id}
+                            startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                            endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+                          />
+                        </Popup>
+                    }
+                    <p
+                      className='fake-link-underlined'
+                      style={{marginLeft: '0.5rem'}}
+                      onClick={() => {
+                        props.history.push({
+                          pathname: '/booking-receipt',
+                          state: {
+                            nickname: booking.host_nickname,
+                            startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                            endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
+                            priceTotal: booking.price_total,
+                            numberOfCats: booking.number_of_cats,
+                            bookingId: booking.id,
+                            createdAt: moment(booking.created_at).format('YYYY-MM-DD')
+                          }
+                        })
+                      }}>
+                      {t('reusable:cta:view-receipt')}
                     </p>
-                    : booking.review_id === null && booking.host_profile_id === null ?
-                      <p className='small-centered-paragraph'>
-                        {t('OutgoingHistory:no-host-no-review')}
-                      </p>
-                      :
-                      <Popup modal trigger={
-                        <p className='fake-link-underlined'>
-                          {t('OutgoingHistory:view-review')}
-                        </p>
-                      }
-                        position='top center'
-                        closeOnDocumentClick={true}
-                      >
-                        <ViewYourReviewPopup
-                          id={booking.review_id}
-                          startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                          endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-                        />
-                      </Popup>
-                  }
-                  <p
-                    className='fake-link-underlined'
-                    onClick={() => {
-                      props.history.push({
-                        pathname: '/booking-receipt',
-                        state: {
-                          nickname: booking.host_nickname,
-                          startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
-                          endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
-                          priceTotal: booking.price_total,
-                          numberOfCats: booking.number_of_cats,
-                          bookingId: booking.id,
-                          createdAt: moment(booking.created_at).format('YYYY-MM-DD')
-                        }
-                      })
-                    }}>
-                    {t('reusable:cta:view-receipt')}
-                  </p>
+                  </div>
                 </Container>
               )
             }

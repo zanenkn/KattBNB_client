@@ -5,8 +5,8 @@ import Spinner from '../ReusableComponents/Spinner'
 import KattBNBLogo from '../Icons/KattBNBLogo'
 import ReceiptPDF from './ReceiptPDF'
 import { formatPrice, priceOfOneAmount } from '../../Modules/PriceCalculations'
-import { useTranslation } from 'react-i18next'
-import { Header, Segment } from 'semantic-ui-react'
+import { useTranslation, Trans } from 'react-i18next'
+import { Button, Header, Segment, Divider } from 'semantic-ui-react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
 const Receipt = (props) => {
@@ -22,8 +22,46 @@ const Receipt = (props) => {
   if (ready) {
     const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
     return (
-      <>
-        <div>
+      <div className='content-wrapper' style={{ display: 'flex', flexDirection: 'column' }}>
+        <Segment className='whitebox' style={{ marginTop: '0' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+            <KattBNBLogo width={'75px'} />
+          </div>
+          <p>KattBNB AB
+          <br />Reg.nr. 559252-4481
+          <br />{t('Receipt:issued', {date: createdAt})}</p>
+          <Header as='h2' style={{ margin: '3rem auto 2rem' }}>
+            {t('Receipt:header', {nr: bookingId})}
+          </Header>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={{ width: '75%' }}>
+              <Trans i18nKey='RequestToBook:request-info' count={parseInt(numberOfCats)}>
+                A stay for <strong>{{ count: numberOfCats }} cat</strong> with <strong>{{ host: nickname }}</strong> between <strong style={{ whiteSpace: 'nowrap' }}>{{ checkin: startDate }}</strong> until <strong style={{ whiteSpace: 'nowrap' }}>{{ checkout: endDate }}</strong>:
+              </Trans>
+            </p>
+            <p>{formatPrice(priceTotal)} kr</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={{ width: '75%' }}>
+              {t('Receipt:service-fee')}
+            </p>
+            <p>{formatPrice(priceTotal * 0.17)} kr</p>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={{ width: '75%' }}>
+              {t('Receipt:vat')}
+            </p>
+            <p>{formatPrice((priceTotal * 0.17) * 0.25)} kr</p>
+          </div>
+          <Divider />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <p style={{ width: '75%' }}><strong style={{ color: '#c90c61' }}>
+              {t('Receipt:total')}
+            </strong></p>
+            <p><strong style={{ color: '#c90c61' }}>{priceOfOneAmount(priceTotal)} kr</strong></p>
+          </div>
+        </Segment>
+        <div style={{ display: 'inline-block', margin: 'auto' }}>
           <PDFDownloadLink
             document={
               <ReceiptPDF
@@ -37,36 +75,10 @@ const Receipt = (props) => {
               />}
             fileName={t('Receipt:filename-pdf')}
           >
-            {({ loading }) => (loading ? t('Receipt:loading') : t('Receipt:download'))}
+            {({ loading }) => (loading ? <Button loading disabled /> : <Button>{t('Receipt:download')}</Button>)}
           </PDFDownloadLink>
         </div>
-        <div className='content-wrapper' >
-          <KattBNBLogo width={'100px'} />
-          <p>KattBNB AB</p>
-          <p>Reg. Number 559252-4481</p>
-          <Header as='h1'>
-            Receipt #{bookingId}
-          </Header>
-          <Header as='h3'>
-            {createdAt}
-          </Header>
-          <Segment className='whitebox' style={{ 'textAlign': 'center' }}>
-            <p>For the stay of your {numberOfCats} cats with {nickname} between {startDate} and {endDate} you paid the amounts listed below:</p>
-          </Segment>
-          <Segment className='whitebox' style={{ 'textAlign': 'right' }}>
-            <p>For {nickname} you paid: {formatPrice(priceTotal)} kr</p>
-          </Segment>
-          <Segment className='whitebox' style={{ 'textAlign': 'right' }}>
-            <p>For KattBNB (17%) you paid: {formatPrice(priceTotal * 0.17)} kr</p>
-          </Segment>
-          <Segment className='whitebox' style={{ 'textAlign': 'right' }}>
-            <p>For VAT (25%) you paid: {formatPrice((priceTotal * 0.17) * 0.25)} kr</p>
-          </Segment>
-          <Segment className='whitebox' style={{ 'textAlign': 'right' }}>
-            <p>TOTAL: {priceOfOneAmount(priceTotal)} kr</p>
-          </Segment>
-        </div>
-      </>
+      </div>
     )
   } else { return <Spinner /> }
 }

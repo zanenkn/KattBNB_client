@@ -1,5 +1,11 @@
 {
-  "filename-pdf": "KattBNB Booking Receipt.pdf",
-  "loading": "Loading receipt..",
-  "download": "Download receipt"
+  "filename-pdf": "KattBNB_receipt.pdf",
+  "download": "Download receipt",
+  "receipt-info": "A stay for <1>{{count}} cat</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7>.",
+  "receipt-info_plural": "A stay for <1>{{count}} cats</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7>.",
+  "issued": "Issued: {{date}}",
+  "header": "Receipt #{{nr}}",
+  "service-fee": "KattBNB service fee (17%):",
+  "vat": "VAT (25%):",
+  "total": "Total"
 }
