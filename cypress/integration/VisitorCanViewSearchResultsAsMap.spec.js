@@ -33,9 +33,7 @@ describe('Visitor can view search results as a map', () => {
   })
 
   it('and see correct datapoints', () => {
-    let labels = [
-      '#2', '#5'
-    ]
+    let labels = ['#2', '#5']
 
     labels.forEach(label => {
       cy.get(label).should('be.visible')
@@ -62,9 +60,7 @@ describe('Visitor can view search results as a map', () => {
 
     cy.get('#2').click({ force: true })
 
-    let hostData = [
-      'carla', 'Stockholm', '169.75 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '679 kr'
-    ]
+    let hostData = ['carla', 'Stockholm', '169.75 kr/day', 'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost', '679 kr']
 
     hostData.forEach(data => {
       cy.contains(data)
@@ -87,10 +83,7 @@ describe('Visitor can view search results as a map', () => {
     })
 
     let hostData = [
-      [
-        '#nickname', '#description', '#per-day',
-        ':nth-child(10) > #total'
-      ],
+      ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr']
     ]
 
