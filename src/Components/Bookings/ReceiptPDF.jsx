@@ -4,15 +4,17 @@ import { useTranslation, Trans } from 'react-i18next'
 import { Page, Text, View, Document, Image } from '@react-pdf/renderer'
 
 const ReceiptPDF = (props) => {
+
   const { t, ready } = useTranslation('Receipt')
+
   if (ready) {
     return (
       <Document>
         <Page size='A4'>
           <View style={{ padding: '60px' }}>
-            <Image src='/KattBNB_logo.png' style={{'width': '200px', marginBottom: '20px'}}></Image>
+            <Image src='/KattBNB_logo.png' style={{ 'width': '200px', marginBottom: '20px' }}></Image>
             <Text>KattBNB AB</Text>
-            <Text>Reg.nr. 559252-4481</Text>
+            <Text>Reg. nr. 559252-4481</Text>
             <Text>{t('Receipt:issued', { date: props.createdAt })}</Text>
             <Text style={{ paddingTop: '60px', paddingBottom: '30px', textAlign: 'center', fontSize: '25pt' }}>
               {t('Receipt:header', { nr: props.bookingId })}
@@ -68,7 +70,7 @@ const ReceiptPDF = (props) => {
           </View>
         </Page>
       </Document>
-    );
+    )
   } else {
     return (
       <Document>
@@ -78,8 +80,8 @@ const ReceiptPDF = (props) => {
           </View>
         </Page>
       </Document>
-    );
+    )
   }
-};
+}
 
 export default ReceiptPDF

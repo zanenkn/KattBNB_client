@@ -94,8 +94,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  menuVisible: state.animation.menuVisible,
-})
+const mapStateToProps = state => ({ menuVisible: state.animation.menuVisible })
 
 export default connect(mapStateToProps)(App)

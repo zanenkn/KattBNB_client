@@ -28,10 +28,10 @@ const Receipt = (props) => {
             <KattBNBLogo width={'75px'} />
           </div>
           <p>KattBNB AB
-          <br />Reg.nr. 559252-4481
-          <br />{t('Receipt:issued', {date: createdAt})}</p>
+          <br />Reg. nr. 559252-4481
+          <br />{t('Receipt:issued', { date: createdAt })}</p>
           <Header as='h2' style={{ margin: '3rem auto 2rem' }}>
-            {t('Receipt:header', {nr: bookingId})}
+            {t('Receipt:header', { nr: bookingId })}
           </Header>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p style={{ width: '75%' }}>
