@@ -77,7 +77,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color')
   })
 
-  it('and see step-2 when payment information have been provided, verification is complete and erros exist', () => {
+  it('and see step-2 when payment information have been provided, verification is complete and errors exist', () => {
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
