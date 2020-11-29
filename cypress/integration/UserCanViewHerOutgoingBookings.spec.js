@@ -45,6 +45,15 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
   })
 
+  it('and see receipt of selected upcoming booking and a download option', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#booking-receipt-7').click()
+    cy.location('pathname').should('eq', '/booking-receipt')
+    cy.contains('Receipt #7')
+    cy.contains('Accepted2')
+    cy.contains('Download receipt')
+  })
+
   it('and see her requested bookings displayed in correct chronological order', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-requests]').first().contains('You have requested to book a stay with Pending1 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.')
@@ -55,6 +64,15 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.')
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
+  })
+
+  it('and see receipt of selected history booking and a download option', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#booking-receipt-9').click()
+    cy.location('pathname').should('eq', '/booking-receipt')
+    cy.contains('Receipt #9')
+    cy.contains('AcceptedOfThePast')
+    cy.contains('Download receipt')
   })
 
   it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {

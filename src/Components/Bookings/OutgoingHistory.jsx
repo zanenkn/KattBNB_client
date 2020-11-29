@@ -130,6 +130,7 @@ const OutgoingHistory = (props) => {
                     }
                     <p
                       className='fake-link-underlined'
+                      id={`booking-receipt-${booking.id}`}
                       style={{ marginLeft: '0.5rem' }}
                       onClick={() => {
                         props.history.push({

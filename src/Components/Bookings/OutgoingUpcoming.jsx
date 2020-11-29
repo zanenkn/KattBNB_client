@@ -62,6 +62,7 @@ const OutgoingUpcoming = (props) => {
                 </p>
                 <p
                   className='fake-link-underlined'
+                  id={`booking-receipt-${upcoming.id}`}
                   onClick={() => {
                     const { history } = props
                     history.push({
