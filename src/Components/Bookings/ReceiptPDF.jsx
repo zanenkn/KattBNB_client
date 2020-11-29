@@ -76,7 +76,7 @@ const ReceiptPDF = (props) => {
       <Document>
         <Page size='A4'>
           <View>
-            <Text>Error: Try again</Text>
+            <Text>{t('Receipt:pdf-error')}</Text>
           </View>
         </Page>
       </Document>

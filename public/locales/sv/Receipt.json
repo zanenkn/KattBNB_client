@@ -7,5 +7,6 @@
   "header": "Kvitto #{{nr}}",
   "service-fee": "KattBNB avgift (17%):",
   "vat": "Moms (25%):",
-  "total": "Total"
+  "total": "Total",
+  "pdf-error": "Något gick fel: försök igen!"
 }
