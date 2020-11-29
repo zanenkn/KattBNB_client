@@ -35,7 +35,7 @@ const Receipt = (props) => {
           </Header>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p style={{ width: '75%' }}>
-              <Trans i18nKey='RequestToBook:request-info' count={parseInt(numberOfCats)}>
+              <Trans i18nKey='Receipt:info' count={parseInt(numberOfCats)}>
                 A stay for <strong>{{ count: numberOfCats }} cat</strong> with <strong>{{ host: nickname }}</strong> between <strong style={{ whiteSpace: 'nowrap' }}>{{ checkin: startDate }}</strong> until <strong style={{ whiteSpace: 'nowrap' }}>{{ checkout: endDate }}</strong>:
               </Trans>
             </p>
