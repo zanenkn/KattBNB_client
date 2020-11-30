@@ -91,7 +91,7 @@ const OutgoingHistory = (props) => {
                       Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                     </Trans>
                   </p>
-                  <div style={{ display: 'flex' }}>
+                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     {booking.review_id === null && booking.host_profile_id !== null ?
                       <span><p className='fake-link-underlined' id='leave-review' onClick={() => {
                         props.history.push({

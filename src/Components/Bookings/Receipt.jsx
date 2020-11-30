@@ -33,13 +33,13 @@ const Receipt = (props) => {
           <Header as='h2' style={{ margin: '3rem auto 2rem' }}>
             {t('Receipt:header', { nr: bookingId })}
           </Header>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <p style={{ width: '75%' }}>
               <Trans i18nKey='Receipt:info' count={parseInt(numberOfCats)}>
                 A stay for <strong>{{ count: numberOfCats }} cat</strong> with <strong>{{ host: nickname }}</strong> between <strong style={{ whiteSpace: 'nowrap' }}>{{ checkin: startDate }}</strong> until <strong style={{ whiteSpace: 'nowrap' }}>{{ checkout: endDate }}</strong>:
               </Trans>
             </p>
-            <p>{formatPrice(priceTotal)} kr</p>
+            <p style={{ marginBottom: '1em' }}>{formatPrice(priceTotal)} kr</p>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p style={{ width: '75%' }}>

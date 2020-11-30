@@ -32,54 +32,58 @@ const OutgoingUpcoming = (props) => {
                     You have successfully booked a stay with <strong>{{ nickname: upcoming.host_nickname }}</strong> for your <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
                   </Trans>
                 </p>
-                <p
-                  className='fake-link-underlined'
-                  id={`booking-details-${upcoming.id}`}
-                  onClick={() => {
-                    const { history } = props
-                    history.push({
-                      pathname: '/booking-details',
-                      state: {
-                        hostId: upcoming.host_id,
-                        avatar: upcoming.host_avatar,
-                        description: upcoming.host_description,
-                        nickname: upcoming.host_nickname,
-                        startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
-                        endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
-                        priceTotal: upcoming.price_total,
-                        address: upcoming.host_full_address,
-                        lat: upcoming.host_real_lat,
-                        long: upcoming.host_real_long,
-                        location: upcoming.host_location,
-                        numberOfCats: upcoming.number_of_cats,
-                        hostProfileId: upcoming.host_profile_id,
-                        score: upcoming.host_profile_score
-                      }
-                    })
-                  }}
-                >
-                  {t('OutgoingUpcoming:details')}
-                </p>
-                <p
-                  className='fake-link-underlined'
-                  id={`booking-receipt-${upcoming.id}`}
-                  onClick={() => {
-                    const { history } = props
-                    history.push({
-                      pathname: '/booking-receipt',
-                      state: {
-                        nickname: upcoming.host_nickname,
-                        startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
-                        endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
-                        priceTotal: upcoming.price_total,
-                        numberOfCats: upcoming.number_of_cats,
-                        bookingId: upcoming.id,
-                        createdAt: moment(upcoming.created_at).format('YYYY-MM-DD')
-                      }
-                    })
-                  }}>
-                  {t('reusable:cta:view-receipt')}
-                </p>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <span>
+                    <p
+                      className='fake-link-underlined'
+                      id={`booking-details-${upcoming.id}`}
+                      onClick={() => {
+                        const { history } = props
+                        history.push({
+                          pathname: '/booking-details',
+                          state: {
+                            hostId: upcoming.host_id,
+                            avatar: upcoming.host_avatar,
+                            description: upcoming.host_description,
+                            nickname: upcoming.host_nickname,
+                            startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
+                            endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
+                            priceTotal: upcoming.price_total,
+                            address: upcoming.host_full_address,
+                            lat: upcoming.host_real_lat,
+                            long: upcoming.host_real_long,
+                            location: upcoming.host_location,
+                            numberOfCats: upcoming.number_of_cats,
+                            hostProfileId: upcoming.host_profile_id,
+                            score: upcoming.host_profile_score
+                          }
+                        })
+                      }}
+                    >
+                      {t('OutgoingUpcoming:details')}
+                    </p>
+                  </span>
+                  <p
+                    className='fake-link-underlined'
+                    id={`booking-receipt-${upcoming.id}`}
+                    onClick={() => {
+                      const { history } = props
+                      history.push({
+                        pathname: '/booking-receipt',
+                        state: {
+                          nickname: upcoming.host_nickname,
+                          startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
+                          endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
+                          priceTotal: upcoming.price_total,
+                          numberOfCats: upcoming.number_of_cats,
+                          bookingId: upcoming.id,
+                          createdAt: moment(upcoming.created_at).format('YYYY-MM-DD')
+                        }
+                      })
+                    }}>
+                    {t('reusable:cta:view-receipt')}
+                  </p>
+                </div>
               </Container>
             )
           })}

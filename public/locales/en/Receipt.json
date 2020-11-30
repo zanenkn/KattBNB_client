@@ -7,6 +7,5 @@
   "header": "Receipt #{{nr}}",
   "service-fee": "KattBNB service fee (17%):",
   "vat": "VAT (25%):",
-  "total": "Total",
-  "pdf-error": "Error: Try again!"
+  "total": "Total"
 }
