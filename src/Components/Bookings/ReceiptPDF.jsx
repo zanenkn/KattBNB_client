@@ -8,7 +8,10 @@ const ReceiptPDF = (props) => {
   const { t, ready } = useTranslation('Receipt')
 
   if (ready) {
+
     const { createdAt, bookingId, numberOfCats, nickname, startDate, endDate, priceTotal } = props
+    const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17)
+
     return (
       <Document>
         <Page size='A4'>
@@ -55,7 +58,7 @@ const ReceiptPDF = (props) => {
                 </Text>
               </View>
               <View style={{ width: '75px', textAlign: 'right' }}>
-                <Text>{formatPrice((priceTotal * 0.17) * 0.25)} kr</Text>
+                <Text>{formatPrice(swedishVAT)} kr</Text>
               </View>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'justify-between', width: '475px', paddingTop: '20px', marginTop: '20px', borderTopColor: '#000', borderTopWidth: 1 }}>

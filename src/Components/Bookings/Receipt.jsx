@@ -20,8 +20,11 @@ const Receipt = (props) => {
   }, [])
 
   if (ready) {
+
     const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
+    const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17)
     return (
+
       <div className='content-wrapper' style={{ display: 'flex', flexDirection: 'column' }}>
         <Segment className='whitebox' style={{ marginTop: '0' }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
@@ -51,7 +54,7 @@ const Receipt = (props) => {
             <p style={{ width: '75%' }}>
               {t('Receipt:vat')}
             </p>
-            <p>{formatPrice((priceTotal * 0.17) * 0.25)} kr</p>
+            <p>{formatPrice(swedishVAT)} kr</p>
           </div>
           <Divider />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
