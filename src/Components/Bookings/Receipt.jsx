@@ -23,8 +23,8 @@ const Receipt = (props) => {
 
     const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
     const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17)
-    return (
 
+    return (
       <div className='content-wrapper' style={{ display: 'flex', flexDirection: 'column' }}>
         <Segment className='whitebox' style={{ marginTop: '0' }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
