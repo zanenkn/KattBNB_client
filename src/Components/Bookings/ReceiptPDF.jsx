@@ -3,13 +3,12 @@ import { formatPrice, priceOfOneAmount } from '../../Modules/PriceCalculations'
 import { useTranslation, Trans } from 'react-i18next'
 import { Page, Text, View, Document, Image } from '@react-pdf/renderer'
 
-const ReceiptPDF = (props) => {
+const ReceiptPDF = ({ createdAt, bookingId, numberOfCats, nickname, startDate, endDate, priceTotal }) => {
 
   const { t, ready } = useTranslation('Receipt')
 
   if (ready) {
 
-    const { createdAt, bookingId, numberOfCats, nickname, startDate, endDate, priceTotal } = props
     const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17)
 
     return (

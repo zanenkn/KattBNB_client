@@ -9,19 +9,19 @@ import { useTranslation, Trans } from 'react-i18next'
 import { Button, Header, Segment, Divider } from 'semantic-ui-react'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
-const Receipt = (props) => {
+const Receipt = ({ history }) => {
 
   const { t, ready } = useTranslation('Receipt')
 
   useEffect(() => {
-    if (props.history.location.state === undefined || props.history.action === 'POP') {
-      props.history.push({ pathname: '/all-bookings' })
+    if (history.location.state === undefined || history.action === 'POP') {
+      history.push({ pathname: '/all-bookings' })
     }
   }, [])
 
   if (ready) {
 
-    const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = props.history.location.state
+    const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = history.location.state
     const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17)
 
     return (
