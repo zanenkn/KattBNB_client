@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fvilers/disable-react-devtools": "^1.1.1",
+    "@react-pdf/renderer": "^1.6.12",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.9.0",
     "actioncable": "^5.2.4-1",

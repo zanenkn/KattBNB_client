@@ -33,6 +33,7 @@ import HostEn from './Components/HostEn'
 import HostSe from './Components/HostSe'
 import LeaveReview from './Components/Reviews/LeaveReview'
 import SuccessfulReview from './Components/Reviews/SuccessfulReview'
+import Receipt from './Components/Bookings/Receipt'
 import ScrollToTop from './Modules/ScrollToTop'
 import { Container, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -83,6 +84,7 @@ class App extends Component {
               <Route exact path='/messenger' component={AllConversations}></Route>
               <Route exact path='/conversation' component={Conversation}></Route>
               <Route exact path='/leave-a-review' component={LeaveReview}></Route>
+              <Route exact path='/booking-receipt' component={Receipt}></Route>
             </Switch>
           </ScrollToTop>
           <Menu />
@@ -92,8 +94,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  menuVisible: state.animation.menuVisible,
-})
+const mapStateToProps = state => ({ menuVisible: state.animation.menuVisible })
 
 export default connect(mapStateToProps)(App)

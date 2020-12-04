@@ -21,6 +21,12 @@ describe('User can view her outgoing bookings', () => {
       status: 200,
       response: ''
     })
+    cy.route({
+      method: 'GET',
+      url: `${api}/reviews?host_profile_id=10&locale=en-US`,
+      status: 200,
+      response: []
+    })
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200)
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
@@ -39,6 +45,15 @@ describe('User can view her outgoing bookings', () => {
     cy.get('[data-cy=outgoing-upcoming]').last().contains('You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.')
   })
 
+  it('and see receipt of selected upcoming booking and a download option', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#booking-receipt-7').click()
+    cy.location('pathname').should('eq', '/booking-receipt')
+    cy.contains('Receipt #7')
+    cy.contains('Accepted2')
+    cy.contains('Download receipt')
+  })
+
   it('and see her requested bookings displayed in correct chronological order', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-requests]').first().contains('You have requested to book a stay with Pending1 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.')
@@ -49,6 +64,15 @@ describe('User can view her outgoing bookings', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('[data-cy=outgoing-history]').first().contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.')
     cy.get('[data-cy=outgoing-history]').last().contains('Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.')
+  })
+
+  it('and see receipt of selected history booking and a download option', () => {
+    cy.get('#view-outgoing-bookings').click()
+    cy.get('#booking-receipt-9').click()
+    cy.location('pathname').should('eq', '/booking-receipt')
+    cy.contains('Receipt #9')
+    cy.contains('AcceptedOfThePast')
+    cy.contains('Download receipt')
   })
 
   it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {
@@ -117,7 +141,7 @@ describe('User can view her outgoing bookings', () => {
   it('and see upcoming booking details', () => {
     cy.get('#view-outgoing-bookings').click()
     cy.get('#8').within(() => {
-      cy.get('.fake-link-underlined').click({ force: true })
+      cy.get('#booking-details-8').click({ force: true })
     })
     cy.get('p')
     cy.should('contain', '2051-08-04 until 2051-08-08')
@@ -170,8 +194,7 @@ describe('User can view her outgoing bookings', () => {
     cy.wait(2000)
     cy.get('#bookings-icon').click({ force: true })
     cy.get('#view-outgoing-bookings').click()
-    cy.get('[data-cy=outgoing-history]').first().contains('View your review')
-    cy.get('.fake-link-underlined').click()
+    cy.get('[data-cy=outgoing-history]').first().contains('View your review').click()
     cy.contains('You reviewed your booking with AcceptedOfThePast for the dates of 2019-11-26 until 2019-11-19.')
     cy.contains('Almost good!')
     cy.contains('4/5')
@@ -216,7 +239,6 @@ describe('User can view her outgoing bookings', () => {
 })
 
 describe('User can view her outgoing bookings', () => {
-
   it('and sees relevant message if host has deleted her account before review of booking', () => {
     cy.server()
     cy.fixture('one_user_booking_review.json').then((booking_review) => {

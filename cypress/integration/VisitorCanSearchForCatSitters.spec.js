@@ -40,9 +40,9 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: ''
     })
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     cy.get('#cats').type('1')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
@@ -68,9 +68,9 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: ''
     })
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     cy.get('#cats').type('1')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()
@@ -99,9 +99,9 @@ describe('Visitor can search for cat sitters on landing page', () => {
       status: 200,
       response: []
     })
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     cy.get('#cats').type('15')
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click()

@@ -58,7 +58,8 @@
     "close": "Close",
     "confirm": "Confirm",
     "make-host-profile": "Make a host profile",
-    "reply": "Reply"
+    "reply": "Reply",
+    "view-receipt": "Receipt"
   },
   "alerts": {
     "no-match-address": "It seems that the address you selected does not match your profile location. Are you sure you want to continue?"

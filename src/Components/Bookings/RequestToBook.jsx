@@ -84,10 +84,10 @@ class RequestToBook extends Component {
   }
 
   componentDidMount() {
-    const { location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
     if (this.props.history.location.state === undefined || this.props.history.action === 'POP') {
       this.props.history.push({ pathname: '/' })
     } else {
+      const { location: { state: { numberOfCats, hostRate, hostSupplement, checkInDate, checkOutDate, nickname } } } = this.props
       this.setState({
         checkIn: moment(checkInDate).format('l'),
         checkOut: moment(checkOutDate).format('l'),
