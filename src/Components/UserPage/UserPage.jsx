@@ -433,7 +433,6 @@ const UserPage = (props) => {
                   location={element.location}
                   fullAddress={element.fullAddress}
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>
@@ -467,7 +466,6 @@ const UserPage = (props) => {
                 <NotificationsUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                   messageNotifications={element.messageNotifications}
-                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>
@@ -485,7 +483,6 @@ const UserPage = (props) => {
                 <LangPrefUpdateForm
                   closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
                   langPref={element.langPref}
-                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>

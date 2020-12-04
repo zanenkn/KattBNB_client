@@ -59,14 +59,8 @@ class LocationUpdateForm extends Component {
           }
           axios.put(path, payload, { headers: headers })
             .then(() => {
-              this.setState({
-                loading: false,
-                errorDisplay: false,
-                errors: ''
-              })
               window.alert(t('LocationUpdateForm:success-alert'))
-              this.props.setElement('location', this.state.newLocation)
-              this.props.closeLocationAndPasswordForms()
+              window.location.reload()
             })
             .catch(error => {
               if (error.response === undefined) {
@@ -106,14 +100,8 @@ class LocationUpdateForm extends Component {
         }
         axios.put(path, payload, { headers: headers })
           .then(() => {
-            this.setState({
-              loading: false,
-              errorDisplay: false,
-              errors: ''
-            })
             window.alert(t('LocationUpdateForm:success-alert'))
-            this.props.setElement('location', this.state.newLocation)
-            this.props.closeLocationAndPasswordForms()
+            window.location.reload()
           })
           .catch(error => {
             if (error.response === undefined) {
