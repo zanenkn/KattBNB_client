@@ -1,5 +1,5 @@
 {
-  "update-error": "You have typed the same address or the field is empty!",
+  "update-error": "Did you confirm your choice before saving? Did you type the same address or forgot to add one?",
   "update-success": "Your address was succesfully updated!",
   "main-title": "You can update your address below by entering and searching your new address.",
   "address-search-plch": "Search..",
