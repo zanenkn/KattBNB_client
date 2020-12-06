@@ -155,6 +155,12 @@ class HostProfileForm extends Component {
           errors: ['HostProfileForm:create-error-1'],
           onCreateErrorDisplay: true
         })
+      } else if (this.state.address === '') {
+        this.setState({
+          loading: false,
+          errors: ['HostProfileForm:create-error-address'],
+          onCreateErrorDisplay: true
+        })
       } else {
         const path = '/api/v1/host_profiles'
         const payload = {
