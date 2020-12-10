@@ -23,7 +23,7 @@ const MaxCatsUpdateForm = (props) => {
       setErrorDisplay(true)
       setErrors(['reusable:errors:window-navigator'])
     } else {
-      if (newMaxCats !== '' && parseFloat(newMaxCats) !== props.maxCats && parseFloat(newMaxCats) >= 1) {
+      if (newMaxCats !== '' && newMaxCats !== props.maxCats && newMaxCats >= 1) {
         const path = `/api/v1/host_profiles/${props.id}`
         const headers = {
           uid: window.localStorage.getItem('uid'),
