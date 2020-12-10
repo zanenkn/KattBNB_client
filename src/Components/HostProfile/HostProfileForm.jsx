@@ -132,12 +132,6 @@ class HostProfileForm extends Component {
     }
   }
 
-  listenEnterKeyAddress = (event) => {
-    if (event.key === 'Enter') {
-      this.geolocationDataAddress(event)
-    }
-  }
-
   createHostProfile = (e) => {
     const { t } = this.props
     const lang = detectLanguage()
@@ -228,11 +222,10 @@ class HostProfileForm extends Component {
               id='userInputAddress'
               value={this.state.userInputAddress}
               onChange={this.onChangeHandler}
-              onBlur={this.state.userInputAddress !== '' && this.geolocationDataAddress.bind(this)}
-              onKeyPress={this.listenEnterKeyAddress}
+              onBlur={this.state.userInputAddress !== '' ? this.geolocationDataAddress : undefined}
             />
             <div>
-              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress.bind(this)}>{t('reusable:cta:confirm')}</Button>
+              <Button style={{ 'margin': '0 0 1em' }} id='search' onClick={this.geolocationDataAddress}>{t('reusable:cta:confirm')}</Button>
             </div>
           </div>
         )
@@ -282,14 +275,17 @@ class HostProfileForm extends Component {
             {t('HostProfileForm:create-profile-main-title')}
           </p>
           <Form id='host-profile-form'>
-            <Form.TextArea
-              label={t('HostProfileForm:about-you-label')}
-              placeholder={t('HostProfileForm:about-you-plch')}
-              required
-              id='description'
-              value={this.state.description}
-              onChange={this.onChangeHandler}
-            />
+            <div className='required field' >
+              <label for='description' >
+                {t('HostProfileForm:about-you-label')}
+              </label>
+              <Form.TextArea
+                placeholder={t('HostProfileForm:about-you-plch')}
+                id='description'
+                value={this.state.description}
+                onChange={this.onChangeHandler}
+              />
+            </div>
             {addressErrorMessage}
             {addressSearch}
             <p className='small-left-paragraph'>
@@ -298,36 +294,45 @@ class HostProfileForm extends Component {
             <Form.Group
               widths='equal'
             >
-              <Form.Input
-                label={t('HostProfileForm:rate-label')}
-                type='number'
-                placeholder={t('HostProfileForm:rate-plch')}
-                required
-                id='rate'
-                value={this.state.rate}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
-              />
-              <Form.Input
-                label={t('HostProfileForm:max-cats-label')}
-                type='number'
-                placeholder={t('HostProfileForm:max-cats-plch')}
-                required
-                id='maxCats'
-                value={this.state.maxCats}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
-              />
-              <Form.Input
-                label={t('HostProfileForm:supplement-label')}
-                type='number'
-                placeholder={t('reusable:price.total-for-1')}
-                required
-                id='supplement'
-                value={this.state.supplement}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKey}
-              />
+              <div className='required field' >
+                <label for='rate' >
+                  {t('HostProfileForm:rate-label')}
+                </label>
+                <Form.Input
+                  type='number'
+                  placeholder={t('HostProfileForm:rate-plch')}
+                  id='rate'
+                  value={this.state.rate}
+                  onChange={this.onChangeHandler}
+                  onKeyPress={this.listenEnterKey}
+                />
+              </div>
+              <div className='required field' >
+                <label for='maxCats' >
+                  {t('HostProfileForm:max-cats-label')}
+                </label>
+                <Form.Input
+                  type='number'
+                  placeholder={t('HostProfileForm:max-cats-plch')}
+                  id='maxCats'
+                  value={this.state.maxCats}
+                  onChange={this.onChangeHandler}
+                  onKeyPress={this.listenEnterKey}
+                />
+              </div>
+              <div className='required field' >
+                <label for='supplement' >
+                  {t('HostProfileForm:supplement-label')}
+                </label>
+                <Form.Input
+                  type='number'
+                  placeholder={t('reusable:price.total-for-1')}
+                  id='supplement'
+                  value={this.state.supplement}
+                  onChange={this.onChangeHandler}
+                  onKeyPress={this.listenEnterKey}
+                />
+              </div>
             </Form.Group>
             <p className='small-left-paragraph'>
               <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('reusable:explain-supplement')}
