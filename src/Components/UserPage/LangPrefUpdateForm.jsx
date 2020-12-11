@@ -45,10 +45,7 @@ const LangPrefUpdateForm = (props) => {
         axios.put(path, payload, { headers: headers })
           .then(() => {
             window.alert(t('LangPrefUpdateForm:update-success'))
-            setErrorDisplay(false)
-            setErrors([])
-            props.setElement('langPref', langPref)
-            props.closeLocationAndPasswordForms()
+            window.location.reload()
           })
           .catch(error => {
             if (error.response === undefined) {

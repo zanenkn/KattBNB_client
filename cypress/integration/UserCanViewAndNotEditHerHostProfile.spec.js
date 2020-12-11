@@ -77,7 +77,7 @@ describe('User can view her host profile', () => {
   it('and get an error message on address update if update criteria are not met', () => {
     cy.get('#editAddress').click()
     cy.get('#address-submit-button').click()
-    cy.contains('You have typed the same address or the field is empty!')
+    cy.contains('Did you hit the search icon to confirm your address before saving? Did you type the same address or forgot to add one?')
   })
 
   it('and get an error message on avatar update if update criteria are not met', () => {

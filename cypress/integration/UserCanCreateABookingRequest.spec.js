@@ -188,9 +188,9 @@ describe('User can create a booking request', () => {
   it('only if she is logged in or she will be redirected to the log in page', () => {
     cy.get('.hamburger-box').click()
     cy.get('#logout').click()
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     const now = new Date(2019, 9, 1).getTime()
     cy.clock(now)
+    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click()
     cy.get('.ui > #search-form > .required > #location > .default').click()
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock')
     cy.get('#search-form > .required > #location > .visible > .selected').click()

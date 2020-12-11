@@ -41,10 +41,7 @@ const NotificationsUpdateForm = (props) => {
         axios.put(path, payload, { headers: headers })
           .then(() => {
             window.alert(t('NotificationsUpdateForm:update-success'))
-            setErrorDisplay(false)
-            setErrors([])
-            props.setElement('messageNotifications', messageNotifications)
-            props.closeLocationAndPasswordForms()
+            window.location.reload()
           })
           .catch(error => {
             if (error.response === undefined) {

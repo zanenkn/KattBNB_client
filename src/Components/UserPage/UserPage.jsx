@@ -378,7 +378,7 @@ const UserPage = (props) => {
               incomingBookings={incomingBookings}
               stripeState={hostStripeState}
               stripeAccountId={element.stripeAccountId}
-              closeLocPasForms={closeLocationAndPasswordForms.bind(this)}
+              closeLocPasForms={closeLocationAndPasswordForms}
               ref={hostProfileElement}
               setElement={elementUpdateHandler.bind(this)}
             />
@@ -393,7 +393,7 @@ const UserPage = (props) => {
           form.createHostProfileForm && hostProfile.length === 0 &&
           <HostProfileForm
             user_id={props.id}
-            closeForm={closeLocationAndPasswordForms.bind(this)}
+            closeForm={closeLocationAndPasswordForms}
             location={props.location} />
         }
         {
@@ -432,8 +432,7 @@ const UserPage = (props) => {
                 <LocationUpdateForm
                   location={element.location}
                   fullAddress={element.fullAddress}
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
-                  setElement={elementUpdateHandler.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms}
                 />
               }
             </div>
@@ -449,7 +448,7 @@ const UserPage = (props) => {
             <div style={{ 'maxHeight': form.editPasswordForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editPasswordForm &&
                 <PasswordUpdateForm
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms}
                 />
               }
             </div>
@@ -465,9 +464,8 @@ const UserPage = (props) => {
             <div style={{ 'maxHeight': form.editNotificationsForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editNotificationsForm &&
                 <NotificationsUpdateForm
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms}
                   messageNotifications={element.messageNotifications}
-                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>
@@ -483,9 +481,8 @@ const UserPage = (props) => {
             <div style={{ 'maxHeight': form.editLangPrefForm ? '1000px' : '0px', 'height': 'auto', 'overflow': 'hidden', 'transition': 'max-height 1s ease-in-out' }}>
               {form.editLangPrefForm &&
                 <LangPrefUpdateForm
-                  closeLocationAndPasswordForms={closeLocationAndPasswordForms.bind(this)}
+                  closeLocationAndPasswordForms={closeLocationAndPasswordForms}
                   langPref={element.langPref}
-                  setElement={elementUpdateHandler.bind(this)}
                 />
               }
             </div>

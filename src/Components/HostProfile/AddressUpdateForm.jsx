@@ -85,6 +85,7 @@ const AddressUpdateForm = (props) => {
 
   const geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE)
+    Geocode.setLanguage('sv')
     Geocode.fromAddress(userInputAddress).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location
