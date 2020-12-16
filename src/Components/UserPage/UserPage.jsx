@@ -241,61 +241,73 @@ const UserPage = (props) => {
       }
       try {
         const response = await axios.get(bookings, { headers: headers })
+        let outgoingRequests = parseInt(response.data.stats.out_requests)
         let outgoingUpcoming = parseInt(response.data.stats.out_upcoming)
         let incomingRequests = parseInt(response.data.stats.in_requests)
         let incomingUpcoming = parseInt(response.data.stats.in_upcoming)
-
-        if (incomingRequests !== 0 || incomingUpcoming !== 0) {
+        if (incomingRequests !== 0 || incomingUpcoming !== 0 || outgoingRequests !== 0 || outgoingUpcoming !== 0) {
           window.alert(t('UserPage:delete-alert'))
           setDeleteDisplayNone(false)
-        }
-        else if (outgoingUpcoming !== 0 && window.confirm(t('UserPage:delete-consent'))) {
-          const path = '/api/v1/auth'
-          const headers = {
-            uid: window.localStorage.getItem('uid'),
-            client: window.localStorage.getItem('client'),
-            'access-token': window.localStorage.getItem('access-token')
-          }
-          axios.delete(path, { headers: headers })
-            .then(() => {
-              window.alert(t('UserPage:deletion-alert'))
-              wipeCredentials('/')
-            })
-            .catch(error => {
-              if (error.response === undefined) {
-                wipeCredentials('/is-not-available?atm')
-              } else if (error.response.status === 503) {
-                wipeCredentials('/is-not-available?atm')
-              } else {
-                window.alert(t('UserPage:deletion-error'))
-                wipeCredentials('/')
-              }
-            })
-        }
-        else if (incomingRequests === 0 && incomingUpcoming === 0 && outgoingUpcoming === 0 && window.confirm(t('UserPage:delete-confirm'))) {
-          const path = '/api/v1/auth'
-          const headers = {
-            uid: window.localStorage.getItem('uid'),
-            client: window.localStorage.getItem('client'),
-            'access-token': window.localStorage.getItem('access-token')
-          }
-          axios.delete(path, { headers: headers })
-            .then(() => {
-              window.alert(t('UserPage:deletion-alert'))
-              wipeCredentials('/')
-            })
-            .catch(error => {
-              if (error.response === undefined) {
-                wipeCredentials('/is-not-available?atm')
-              } else if (error.response.status === 503) {
-                wipeCredentials('/is-not-available?atm')
-              } else {
-                window.alert(t('UserPage:deletion-error'))
-                wipeCredentials('/')
-              }
-            })
         } else {
-          setDeleteDisplayNone(false)
+          if (hostProfile.length === 0 && window.confirm(t('UserPage:delete-confirm'))) {
+            const path = '/api/v1/auth'
+            axios.delete(path, { headers: headers })
+              .then(() => {
+                window.alert(t('UserPage:deletion-alert'))
+                wipeCredentials('/')
+              })
+              .catch(error => {
+                if (error.response === undefined) {
+                  wipeCredentials('/is-not-available?atm')
+                } else if (error.response.status === 503) {
+                  wipeCredentials('/is-not-available?atm')
+                } else {
+                  window.alert(t('UserPage:deletion-error'))
+                  wipeCredentials('/')
+                }
+              })
+          } else if (hostProfile.length === 1 && window.confirm(t('UserPage:delete-confirm'))) {
+            const pathStripe = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfile[0].id}&occasion=delete_account`
+            axios.get(pathStripe, { headers: headers })
+              .then(() => {
+                const path = '/api/v1/auth'
+                axios.delete(path, { headers: headers })
+                  .then(() => {
+                    window.alert(t('UserPage:deletion-alert'))
+                    wipeCredentials('/')
+                  })
+                  .catch(error => {
+                    if (error.response === undefined) {
+                      wipeCredentials('/is-not-available?atm')
+                    } else if (error.response.status === 503) {
+                      wipeCredentials('/is-not-available?atm')
+                    } else {
+                      window.alert(t('UserPage:deletion-error'))
+                      wipeCredentials('/')
+                    }
+                  })
+              })
+              .catch(error => {
+                if (error.response === undefined) {
+                  wipeCredentials('/is-not-available?atm')
+                } else if (error.response.status === 555) {
+                  setDeleteDisplayNone(false)
+                  setErrorDisplay(true)
+                  setErrors([t('UserPage:delete-stripe-account-error')])
+                } else if (error.response.status === 503) {
+                  wipeCredentials('/is-not-available?atm')
+                } else if (error.response.status === 401) {
+                  window.alert(t('reusable:errors:401'))
+                  wipeCredentials('/')
+                } else {
+                  setDeleteDisplayNone(false)
+                  setErrorDisplay(true)
+                  setErrors([error.response.data.error])
+                }
+              })
+          } else {
+            setDeleteDisplayNone(false)
+          }
         }
       } catch (error) {
         if (error.response === undefined) {
@@ -338,7 +350,6 @@ const UserPage = (props) => {
             </Message>
           </div>
         </Popup>
-
         <AvatarUpdateForm
           avatar={props.avatar}
           username={props.username}
