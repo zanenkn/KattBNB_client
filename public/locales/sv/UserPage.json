@@ -1,9 +1,9 @@
 {
-  "delete-alert": "",
+  "delete-alert": "Om du vill kunna radera ditt konto kan du inte ha några kommande utgående eller inkommande bokningar!",
   "delete-confirm": "Är du säker på att du vill radera ditt konto?",
   "deletion-alert": "Ditt konto är nu raderat!",
   "deletion-error": "Ett fel uppstod när ditt konto skulle raderas! Vänligen logga in och försök igen.",
-  "delete-stripe-account-error": "",
+  "delete-stripe-account-error": "Se till att ditt Stripe-kontosaldo är 0 och försök igen. Om problemet kvarstår, vänligen kontakta vår supportpersonal.",
   "no-host-profile": "Du är inte registrerad som kattvakt och visas inte i sökningen. Om du vill vara kattvakt, vänligen skapa en kattvaktsprofil",
   "host-profile-cta": "Skapa kattvaktsprofil",
   "greeting": "Hej, {{username}}!",
