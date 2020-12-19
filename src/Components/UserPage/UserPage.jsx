@@ -69,7 +69,7 @@ const UserPage = (props) => {
           'access-token': window.localStorage.getItem('access-token')
         }
         axios.get(path, { headers: headers })
-          .then(({data: {availability, description, forbidden_dates, full_address, max_cats_accepted, price_per_day_1_cat, score, stripe_account_id, stripe_state, supplement_price_per_cat_per_day}}) => {
+          .then(({ data: { availability, description, forbidden_dates, full_address, max_cats_accepted, price_per_day_1_cat, score, stripe_account_id, stripe_state, supplement_price_per_cat_per_day } }) => {
             let rateToNumber = parseFloat(price_per_day_1_cat)
             let rateToString = rateToNumber.toFixed(2)
             let finalRate
@@ -139,17 +139,17 @@ const UserPage = (props) => {
           setLoading(false)
           setErrorDisplay(false)
           setErrors([])
-        } catch (error) {
-          if (error.response === undefined) {
+        } catch ({ response }) {
+          if (response === undefined) {
             wipeCredentials('/is-not-available?atm')
-          } else if (error.response.status === 500) {
+          } else if (response.status === 500) {
             setErrorDisplay(true)
             setErrors(['reusable:errors:500'])
-          } else if (error.response.status === 503) {
+          } else if (response.status === 503) {
             wipeCredentials('/is-not-available?atm')
           } else {
             setErrorDisplay(true)
-            setErrors(error.response.data.error)
+            setErrors(response.data.error)
           }
         }
       }
@@ -173,7 +173,7 @@ const UserPage = (props) => {
         setIncomingBookings(responseIncoming.data)
         setErrorDisplay(false)
         setErrors([])
-      } catch ({response}) {
+      } catch ({ response }) {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (response.status === 500) {
@@ -240,8 +240,7 @@ const UserPage = (props) => {
         'access-token': window.localStorage.getItem('access-token')
       }
       try {
-        const {data: {stats: { out_requests, out_upcoming, in_requests, in_upcoming }}} = await axios.get(bookings, { headers: headers })
-
+        const { data: { stats: { out_requests, out_upcoming, in_requests, in_upcoming } } } = await axios.get(bookings, { headers: headers })
         if (parseInt(in_requests) !== 0 || parseInt(in_upcoming) !== 0 || parseInt(out_requests) !== 0 || parseInt(out_upcoming) !== 0) {
           window.alert(t('UserPage:delete-alert'))
           setDeleteDisplayNone(false)
@@ -253,10 +252,10 @@ const UserPage = (props) => {
                 window.alert(t('UserPage:deletion-alert'))
                 wipeCredentials('/')
               })
-              .catch(error => {
-                if (error.response === undefined) {
+              .catch(({ response }) => {
+                if (response === undefined) {
                   wipeCredentials('/is-not-available?atm')
-                } else if (error.response.status === 503) {
+                } else if (response.status === 503) {
                   wipeCredentials('/is-not-available?atm')
                 } else {
                   window.alert(t('UserPage:deletion-error'))
@@ -273,7 +272,7 @@ const UserPage = (props) => {
                     window.alert(t('UserPage:deletion-alert'))
                     wipeCredentials('/')
                   })
-                  .catch(({response}) => {
+                  .catch(({ response }) => {
                     if (response === undefined) {
                       wipeCredentials('/is-not-available?atm')
                     } else if (response.status === 503) {
@@ -284,7 +283,7 @@ const UserPage = (props) => {
                     }
                   })
               })
-              .catch(({response}) => {
+              .catch(({ response }) => {
                 if (response === undefined) {
                   wipeCredentials('/is-not-available?atm')
                 } else if (response.status === 555) {
@@ -306,7 +305,7 @@ const UserPage = (props) => {
             setDeleteDisplayNone(false)
           }
         }
-      } catch ({response}) {
+      } catch ({ response }) {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm')
         } else if (response.status === 500) {
