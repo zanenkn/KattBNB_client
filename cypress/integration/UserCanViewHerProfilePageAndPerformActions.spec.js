@@ -328,6 +328,6 @@ describe('User can view her profile page', () => {
     cy.on('window:confirm', (str) => {
       expect(str).to.equal('Do you really want to delete your account?')
     })
-    cy.contains('Make sure all your Stripe account balances are 0 and try again. If this error persists, please contact our support staff.')
+    cy.contains('Make sure your Stripe account balance is 0 and try again. If this error persists, please contact our support staff.')
   })
 })
