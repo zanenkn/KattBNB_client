@@ -20,8 +20,7 @@ class AvailabilityUpdateForm extends Component {
       loading: false,
       newAvailability: this.props.availability,
       selectedDays: this.props.selectedDays,
-      incomingBookings: this.props.incomingBookings,
-      forbiddenDates: this.props.forbiddenDates
+      incomingBookings: this.props.incomingBookings
     }
   }
 
@@ -154,12 +153,6 @@ class AvailabilityUpdateForm extends Component {
       if (this.state.incomingBookings.length > 0) {
         this.state.incomingBookings.map(day => {
           disabledDaysDates.push(new Date(day))
-        })
-      }
-
-      if (this.state.forbiddenDates.length > 0) {
-        this.state.forbiddenDates.map(date => {
-          disabledDaysDates.push(new Date(date))
         })
       }
 

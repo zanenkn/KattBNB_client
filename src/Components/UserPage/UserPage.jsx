@@ -45,7 +45,6 @@ const UserPage = (props) => {
     langPref: props.langPref,
     stripeAccountId: null
   })
-  const [forbiddenDates, setForbiddenDates] = useState([])
   const [hostProfileScore, setHostProfileScore] = useState(null)
   const [incomingBookings, setIncomingBookings] = useState([])
   const [loading, setLoading] = useState(true)
@@ -69,7 +68,7 @@ const UserPage = (props) => {
           'access-token': window.localStorage.getItem('access-token')
         }
         axios.get(path, { headers: headers })
-          .then(({ data: { availability, description, forbidden_dates, full_address, max_cats_accepted, price_per_day_1_cat, score, stripe_account_id, stripe_state, supplement_price_per_cat_per_day } }) => {
+          .then(({ data: { availability, description, full_address, max_cats_accepted, price_per_day_1_cat, score, stripe_account_id, stripe_state, supplement_price_per_cat_per_day } }) => {
             let rateToNumber = parseFloat(price_per_day_1_cat)
             let rateToString = rateToNumber.toFixed(2)
             let finalRate
@@ -99,7 +98,6 @@ const UserPage = (props) => {
               stripeAccountId: stripe_account_id
             })
             setHostStripeState(stripe_state)
-            setForbiddenDates(forbidden_dates)
             setHostProfileScore(score)
             setLoadingHostProfile(false)
             setErrorDisplay(false)
@@ -379,7 +377,6 @@ const UserPage = (props) => {
               maxCats={element.maxCats}
               supplement={element.supplement}
               availability={element.availability}
-              forbiddenDates={forbiddenDates}
               score={hostProfileScore}
               location={props.location}
               incomingBookings={incomingBookings}
