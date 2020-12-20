@@ -21,7 +21,9 @@ const Faq = (props) => {
       if (node !== null && queryString.parse(window.location.search).section === key) {
         let nav = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--nav'))
         if (!queryString.parse(window.location.search).active) {
-          window.scrollTo({ top: node.getBoundingClientRect().top - nav, behavior: 'smooth' })
+          if (node.children[1].childElementCount > 0) {
+            window.scrollTo({ top: node.getBoundingClientRect().top - nav, behavior: 'smooth' })
+          }
         } else {
           if (node.children[1].childElementCount > 0) {
             let titles = node.children[1].getElementsByClassName('title')
