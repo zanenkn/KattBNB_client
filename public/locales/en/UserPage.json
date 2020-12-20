@@ -1,5 +1,5 @@
 {
-  "delete-alert": "To delete your account, you must not have any pending bookings and all hosts must be paid for their services!",
+  "delete-alert": "To delete your account, you must not have any pending or unpaid bookings!",
   "delete-confirm": "Do you really want to delete your account?",
   "deletion-alert": "Your account was succesfully deleted!",
   "deletion-error": "There was a problem deleting your account! Please login and try again.",

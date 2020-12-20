@@ -185,7 +185,7 @@ describe('User can view her profile page', () => {
     })
     cy.get('#delete-account-link').click()
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('To delete your account, you must not have any pending bookings and all hosts must be paid for their services!')
+      expect(str).to.equal('To delete your account, you must not have any pending or unpaid bookings!')
     })
     cy.location('pathname').should('eq', '/user-page')
   })
