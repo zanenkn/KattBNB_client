@@ -362,7 +362,7 @@ class RequestToBook extends Component {
                   </Button>
                   <p className='smallprint' style={{ 'marginTop': '2rem' }}>
                     <Trans i18nKey='RequestToBook:smallprint'>
-                      Our payment provider is <a href='https://stripe.com/about'>Stripe</a>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days of the initial request date. You can read more on how we handle payments <Link to='/faq'>in our FAQ</Link>.
+                      Our payment provider is <a href='https://stripe.com/about'>Stripe</a>. When you request the booking we reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your booking request. In an event of cancelled or declined booking request, the reserved amount will be released within 7 days of the initial request date. You can read more on how we handle payments <Link to='/faq?section=payments&active=503'>in our FAQ</Link>.
                     </Trans>
                   </p>
                   <div style={{ 'display': 'flex', 'flexDirection': 'column', 'marginTop': '1rem' }}>
