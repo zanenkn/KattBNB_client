@@ -1,5 +1,5 @@
 {
-  "delete-alert": "Om du vill kunna radera ditt konto kan du inte ha några kommande utgående eller inkommande bokningar!",
+  "delete-alert": "",
   "delete-confirm": "Är du säker på att du vill radera ditt konto?",
   "deletion-alert": "Ditt konto är nu raderat!",
   "deletion-error": "Ett fel uppstod när ditt konto skulle raderas! Vänligen logga in och försök igen.",

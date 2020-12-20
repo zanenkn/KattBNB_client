@@ -147,9 +147,11 @@ describe('User can view her profile page', () => {
           "in_requests": "0",
           "in_upcoming": "0",
           "in_history": "2",
+          "in_unpaid": "0",
           "out_requests": "0",
           "out_upcoming": "0",
-          "out_history": "3"
+          "out_history": "3",
+          "out_unpaid": "0"
         }
       }
     })
@@ -173,15 +175,17 @@ describe('User can view her profile page', () => {
           "in_requests": "0",
           "in_upcoming": "1",
           "in_history": "2",
+          "in_unpaid": "0",
           "out_requests": "1",
           "out_upcoming": "0",
-          "out_history": "3"
+          "out_history": "3",
+          "out_unpaid": "0"
         }
       }
     })
     cy.get('#delete-account-link').click()
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('To delete your account, you must not have any pending Outgoing or Incoming bookings!')
+      expect(str).to.equal('To delete your account, you must not have any pending bookings and all hosts must be paid for their services!')
     })
     cy.location('pathname').should('eq', '/user-page')
   })
@@ -241,9 +245,11 @@ describe('User can view her profile page', () => {
           "in_requests": "0",
           "in_upcoming": "0",
           "in_history": "1",
+          "in_unpaid": "0",
           "out_requests": "0",
           "out_upcoming": "0",
-          "out_history": "3"
+          "out_history": "3",
+          "out_unpaid": "0",
         }
       }
     })
@@ -315,9 +321,11 @@ describe('User can view her profile page', () => {
           "in_requests": "0",
           "in_upcoming": "0",
           "in_history": "1",
+          "in_unpaid": "0",
           "out_requests": "0",
           "out_upcoming": "0",
-          "out_history": "3"
+          "out_history": "3",
+          "out_unpaid": "0"
         }
       }
     })

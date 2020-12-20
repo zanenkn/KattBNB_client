@@ -238,8 +238,8 @@ const UserPage = (props) => {
         'access-token': window.localStorage.getItem('access-token')
       }
       try {
-        const { data: { stats: { out_requests, out_upcoming, in_requests, in_upcoming } } } = await axios.get(bookings, { headers: headers })
-        if (parseInt(in_requests) !== 0 || parseInt(in_upcoming) !== 0 || parseInt(out_requests) !== 0 || parseInt(out_upcoming) !== 0) {
+        const { data: { stats: { out_requests, out_upcoming, out_unpaid, in_requests, in_upcoming, in_unpaid } } } = await axios.get(bookings, { headers: headers })
+        if (parseInt(in_requests) !== 0 || parseInt(in_upcoming) !== 0 || parseInt(out_requests) !== 0 || parseInt(out_upcoming) !== 0 || parseInt(out_unpaid) !== 0 || parseInt(in_unpaid) !== 0) {
           window.alert(t('UserPage:delete-alert'))
           setDeleteDisplayNone(false)
         } else {
