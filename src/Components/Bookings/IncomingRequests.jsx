@@ -89,6 +89,8 @@ class IncomingRequests extends Component {
     }
     if (this.props.requests.length > 0) {
       this.fetchStripeAccountDetails()
+    } else {
+      this.setState({ loading: false })
     }
   }
 

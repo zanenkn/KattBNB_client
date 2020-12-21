@@ -234,7 +234,6 @@ const HostProfile = forwardRef((props, ref) => {
               })
               }
               availability={props.availability}
-              forbiddenDates={props.forbiddenDates}
               id={props.id}
               incomingBookings={props.incomingBookings}
               closeAllForms={closeAllForms.bind(this)}
