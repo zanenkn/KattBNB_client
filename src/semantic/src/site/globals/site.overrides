@@ -1276,3 +1276,19 @@ REACT ADD TO CALENDAR OVERRIDES
   transition: box-shadow .1s ease,border-color .1s ease;
   box-shadow: none;
 }
+
+/*******************************
+              TERMS
+*******************************/
+
+#terms > h2, #terms > h3 {
+  color: #c90c61;
+}
+
+#terms > h2 {
+  margin: 3rem 0 1rem;
+}
+
+#terms > h3 {
+  margin: 2rem 0 1rem;
+}
