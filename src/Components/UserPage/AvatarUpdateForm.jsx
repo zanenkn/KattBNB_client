@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { detectLanguage } from '../../Modules/detectLanguage'
-import { wipeCredentials } from '../../Modules/wipeCredentials'
-import ReactAvatarEditor from 'react-avatar-editor'
-import Popup from 'reactjs-popup'
-import Spinner from '../ReusableComponents/Spinner'
-import { Button, Message, Image, Icon } from 'semantic-ui-react'
-import { withTranslation } from 'react-i18next'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+import ReactAvatarEditor from 'react-avatar-editor';
+import Popup from 'reactjs-popup';
+import Spinner from '../ReusableComponents/Spinner';
+import { Button, Message, Image, Icon } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 class AvatarUpdateForm extends Component {
-
   state = {
     loading: false,
     errorDisplay: false,
@@ -17,178 +16,210 @@ class AvatarUpdateForm extends Component {
     image: '',
     position: { x: 0.5, y: 0.5 },
     scale: 1,
-    rotate: 0
-  }
+    rotate: 0,
+  };
 
-  setEditorRef = editor => {
-    if (editor) this.editor = editor
-  }
+  setEditorRef = (editor) => {
+    if (editor) this.editor = editor;
+  };
 
-  handleNewImage = e => {
+  handleNewImage = (e) => {
     this.setState({
       image: e.target.files[0],
       position: { x: 0.5, y: 0.5 },
       errorDisplay: false,
-      errors: []
-    })
-  }
+      errors: [],
+    });
+  };
 
-  rotateLeft = e => {
-    e.preventDefault()
-    this.setState({ rotate: this.state.rotate - 90 })
-  }
+  rotateLeft = (e) => {
+    e.preventDefault();
+    this.setState({ rotate: this.state.rotate - 90 });
+  };
 
-  rotateRight = e => {
-    e.preventDefault()
-    this.setState({ rotate: this.state.rotate + 90 })
-  }
+  rotateRight = (e) => {
+    e.preventDefault();
+    this.setState({ rotate: this.state.rotate + 90 });
+  };
 
-  handleXPosition = e => {
-    const x = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, x } })
-  }
+  handleXPosition = (e) => {
+    const x = parseFloat(e.target.value);
+    this.setState({ position: { ...this.state.position, x } });
+  };
 
-  handleYPosition = e => {
-    const y = parseFloat(e.target.value)
-    this.setState({ position: { ...this.state.position, y } })
-  }
+  handleYPosition = (e) => {
+    const y = parseFloat(e.target.value);
+    this.setState({ position: { ...this.state.position, y } });
+  };
 
-  handlePositionChange = position => {
-    this.setState({ position })
-  }
+  handlePositionChange = (position) => {
+    this.setState({ position });
+  };
 
   updateAvatar = (e) => {
-    const { t } = this.props
+    const { t } = this.props;
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['reusable:errors:window-navigator']
-      })
+        errors: ['reusable:errors:window-navigator'],
+      });
     } else {
       if (this.state.image === '') {
         this.setState({
           loading: false,
           errorDisplay: true,
-          errors: ['AvatarUpdateForm:no-avatar-error']
-        })
-      } else if (this.state.image.type !== 'image/jpeg' && this.state.image.type !== 'image/jpg' && this.state.image.type !== 'image/png' && this.state.image.type !== 'image/gif') {
+          errors: ['AvatarUpdateForm:no-avatar-error'],
+        });
+      } else if (
+        this.state.image.type !== 'image/jpeg' &&
+        this.state.image.type !== 'image/jpg' &&
+        this.state.image.type !== 'image/png' &&
+        this.state.image.type !== 'image/gif'
+      ) {
         this.setState({
           loading: false,
           errorDisplay: true,
-          errors: ['AvatarUpdateForm:file-type-error']
-        })
-      }
-      else {
-        e.preventDefault()
-        const lang = detectLanguage()
-        this.setState({ loading: true })
-        const img = this.editor.getImageScaledToCanvas().toDataURL()
-        const path = `/api/v1/users/${this.props.userId}`
+          errors: ['AvatarUpdateForm:file-type-error'],
+        });
+      } else {
+        e.preventDefault();
+        const lang = detectLanguage();
+        this.setState({ loading: true });
+        const img = this.editor.getImageScaledToCanvas().toDataURL();
+        const path = `/api/v1/users/${this.props.userId}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
+          'access-token': window.localStorage.getItem('access-token'),
+        };
         const payload = {
           profile_avatar: Array.from(new Set([img])),
           locale: lang,
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        axios.put(path, payload, { headers: headers })
+          'access-token': window.localStorage.getItem('access-token'),
+        };
+        axios
+          .put(path, payload, { headers: headers })
           .then(() => {
             this.setState({
               errorDisplay: false,
-              errors: []
-            })
-            window.location.reload()
+              errors: [],
+            });
+            window.location.reload();
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
                 errorDisplay: true,
-                errors: ['reusable:errors:500']
-              })
+                errors: ['reusable:errors:500'],
+              });
             } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'))
-              wipeCredentials('/')
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/');
             } else {
               this.setState({
                 loading: false,
                 errorDisplay: true,
-                errors: error.response.data.error
-              })
+                errors: error.response.data.error,
+              });
             }
-          })
+          });
       }
     }
-  }
+  };
 
   closeModal = () => {
     this.setState({
       errorDisplay: false,
       errors: '',
-      image: ''
-    })
-  }
-
+      image: '',
+    });
+  };
 
   render() {
-    const { t } = this.props
+    const { t } = this.props;
 
     if (this.props.tReady) {
-      let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar
+      let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar;
 
-      noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+      noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
 
       if (this.state.errorDisplay) {
         errorDisplay = (
-          <Message negative style={{ 'width': 'inherit' }} >
-            <Message.Header style={{ 'textAlign': 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
+          <Message negative style={{ width: 'inherit' }}>
+            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
             <ul id='message-error-list'>
-              {this.state.errors.map(error => (
+              {this.state.errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
-        )
+        );
       }
 
       if (this.state.loading) {
         avatarRotateRight = (
-          <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-        )
+          <Icon
+            disabled
+            name='redo alternate'
+            style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8' }}
+          />
+        );
         avatarRotateLeft = (
-          <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-        )
+          <Icon
+            disabled
+            name='undo alternate'
+            style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8' }}
+          />
+        );
       } else {
         if (this.state.image === '') {
           avatarRotateRight = (
-            <Icon disabled name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-          )
+            <Icon
+              disabled
+              name='redo alternate'
+              style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8' }}
+            />
+          );
           avatarRotateLeft = (
-            <Icon disabled name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8' }} />
-          )
+            <Icon
+              disabled
+              name='undo alternate'
+              style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8' }}
+            />
+          );
         } else {
           avatarRotateRight = (
-            <Icon name='redo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8', 'cursor': 'pointer' }} onClick={this.rotateRight} />
-          )
+            <Icon
+              name='redo alternate'
+              style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8', cursor: 'pointer' }}
+              onClick={this.rotateRight}
+            />
+          );
           avatarRotateLeft = (
-            <Icon name='undo alternate' style={{ 'position': 'inherit', 'fontSize': '2em', 'marginTop': '0.1em', 'color': '#d8d8d8', 'cursor': 'pointer' }} onClick={this.rotateLeft} />
-          )
+            <Icon
+              name='undo alternate'
+              style={{ position: 'inherit', fontSize: '2em', marginTop: '0.1em', color: '#d8d8d8', cursor: 'pointer' }}
+              onClick={this.rotateLeft}
+            />
+          );
         }
       }
 
       return (
-        <div style={{ 'margin': 'auto', 'display': 'table', 'marginBottom': '1rem' }} >
+        <div style={{ margin: 'auto', display: 'table', marginBottom: '1rem' }}>
           <Icon.Group size='big' onClick={this.props.closeAllForms}>
-            <Image src={this.props.avatar === null ? noAvatar : this.props.avatar} size='small' style={{ 'borderRadius': '50%' }}></Image>
+            <Image
+              src={this.props.avatar === null ? noAvatar : this.props.avatar}
+              size='small'
+              style={{ borderRadius: '50%' }}
+            ></Image>
             <Popup
               modal
               className='avatar-popup'
@@ -198,14 +229,20 @@ class AvatarUpdateForm extends Component {
                   corner='bottom right'
                   name='pencil alternate'
                   circular
-                  style={{ 'marginBottom': '1rem', 'backgroundColor': '#c90c61', 'textShadow': 'none', 'color': '#ffffff', 'cursor': 'pointer' }}
+                  style={{
+                    marginBottom: '1rem',
+                    backgroundColor: '#c90c61',
+                    textShadow: 'none',
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                  }}
                 />
               }
               position='top center'
               closeOnDocumentClick={true}
               onClose={this.closeModal}
             >
-              <div style={{ 'marginBottom': '1rem' }}>
+              <div style={{ marginBottom: '1rem' }}>
                 <div>
                   <ReactAvatarEditor
                     ref={this.setEditorRef}
@@ -219,38 +256,44 @@ class AvatarUpdateForm extends Component {
                     className='editor-canvas'
                   />
                 </div>
-                <div className='button-wrapper' style={{ 'marginBottom': '1rem' }}>
+                <div className='button-wrapper' style={{ marginBottom: '1rem' }}>
                   <div>
                     <label for='files'>
                       <Icon.Group>
-                        <Icon name='photo' size='big' style={{ 'color': '#d8d8d8', 'fontSize': '2.5em', 'cursor': 'pointer' }} />
                         <Icon
-                          corner='bottom right'
-                          name='add'
-                          style={{ 'textShadow': 'none', 'color': '#c90c61' }}
+                          name='photo'
+                          size='big'
+                          style={{ color: '#d8d8d8', fontSize: '2.5em', cursor: 'pointer' }}
                         />
+                        <Icon corner='bottom right' name='add' style={{ textShadow: 'none', color: '#c90c61' }} />
                       </Icon.Group>
                     </label>
-                    <input id='files' style={{ 'display': 'none' }} onChange={this.handleNewImage} type='file' />
+                    <input id='files' style={{ display: 'none' }} onChange={this.handleNewImage} type='file' />
                   </div>
-                  <div>
-                    {avatarRotateLeft}
-                  </div>
-                  <div>
-                    {avatarRotateRight}
-                  </div>
+                  <div>{avatarRotateLeft}</div>
+                  <div>{avatarRotateRight}</div>
                 </div>
                 {errorDisplay}
                 <div className='button-wrapper'>
-                  <Button id='avatar-submit-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.updateAvatar}>{t('reusable:cta:save')}</Button>
+                  <Button
+                    id='avatar-submit-button'
+                    className='submit-button'
+                    disabled={this.state.loading}
+                    loading={this.state.loading}
+                    onClick={this.updateAvatar}
+                  >
+                    {t('reusable:cta:save')}
+                  </Button>
                 </div>
               </div>
             </Popup>
           </Icon.Group>
         </div>
-      )
-    } else { return <Spinner /> }
+      );
+    } else {
+      return <Spinner />;
+    }
   }
 }
 
-export default withTranslation('AvatarUpdateForm')(AvatarUpdateForm)
+export default withTranslation('AvatarUpdateForm')(AvatarUpdateForm);
