@@ -1,108 +1,120 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { detectLanguage } from '../../Modules/detectLanguage'
-import { wipeCredentials } from '../../Modules/wipeCredentials'
-import { useTranslation } from 'react-i18next'
-import Spinner from '../ReusableComponents/Spinner'
-import { Divider, Form, Button, Message } from 'semantic-ui-react'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { useTranslation } from 'react-i18next';
+import Spinner from '../ReusableComponents/Spinner';
+import { Divider, Form, Button, Message } from 'semantic-ui-react';
 
 const MaxCatsUpdateForm = (props) => {
+  const { t, ready } = useTranslation('MaxCatsUpdateForm');
 
-  const { t, ready } = useTranslation('MaxCatsUpdateForm')
-
-  const [errorDisplay, setErrorDisplay] = useState(false)
-  const [errors, setErrors] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [newMaxCats, setNewMaxCats] = useState(props.maxCats)
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [newMaxCats, setNewMaxCats] = useState(props.maxCats);
 
   const updateMaxCats = () => {
-    const lang = detectLanguage()
-    setLoading(true)
+    const lang = detectLanguage();
+    setLoading(true);
     if (window.navigator.onLine === false) {
-      setLoading(false)
-      setErrorDisplay(true)
-      setErrors(['reusable:errors:window-navigator'])
+      setLoading(false);
+      setErrorDisplay(true);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       if (newMaxCats !== '' && newMaxCats !== props.maxCats && newMaxCats >= 1) {
-        const path = `/api/v1/host_profiles/${props.id}`
+        const path = `/api/v1/host_profiles/${props.id}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
+          'access-token': window.localStorage.getItem('access-token'),
+        };
         const payload = {
           max_cats_accepted: newMaxCats,
-          locale: lang
-        }
-        axios.patch(path, payload, { headers: headers })
+          locale: lang,
+        };
+        axios
+          .patch(path, payload, { headers: headers })
           .then(() => {
-            window.alert(t('MaxCatsUpdateForm:update-success'))
-            props.setElement('maxCats', newMaxCats)
-            props.closeAllForms()
-            setErrorDisplay(false)
-            setErrors([])
+            window.alert(t('MaxCatsUpdateForm:update-success'));
+            props.setElement('maxCats', newMaxCats);
+            props.closeAllForms();
+            setErrorDisplay(false);
+            setErrors([]);
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
-              setLoading(false)
-              setErrorDisplay(true)
-              setErrors(['reusable:errors:500'])
+              setLoading(false);
+              setErrorDisplay(true);
+              setErrors(['reusable:errors:500']);
             } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'))
-              wipeCredentials('/')
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/');
             } else {
-              setLoading(false)
-              setErrorDisplay(true)
-              setErrors([error.response.data.error])
+              setLoading(false);
+              setErrorDisplay(true);
+              setErrors([error.response.data.error]);
             }
-          })
+          });
       } else {
-        setLoading(false)
-        setErrorDisplay(true)
-        setErrors(['reusable:errors:update-number-fields'])
+        setLoading(false);
+        setErrorDisplay(true);
+        setErrors(['reusable:errors:update-number-fields']);
       }
     }
-  }
+  };
 
   if (ready) {
     return (
       <>
         <Divider />
-        <p className='small-centered-paragraph'>
-          {t('MaxCatsUpdateForm:main-title')}
-        </p>
-        <Form id='update-maxCats' style={{ 'margin': 'auto', 'maxWidth': '194px' }}>
+        <p className='small-centered-paragraph'>{t('MaxCatsUpdateForm:main-title')}</p>
+        <Form id='update-maxCats' style={{ margin: 'auto', maxWidth: '194px' }}>
           <Form.Input
             required
             type='number'
             id='newMaxCats'
             value={newMaxCats}
             onChange={(e) => setNewMaxCats(e.target.value)}
-            onKeyPress={e => { e.key === 'Enter' && updateMaxCats() }}
+            onKeyPress={(e) => {
+              e.key === 'Enter' && updateMaxCats();
+            }}
           />
         </Form>
-        {errorDisplay &&
-          <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }} >{t('reusable:errors:action-error-header')}</Message.Header>
+        {errorDisplay && (
+          <Message negative>
+            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
             <ul id='message-error-list'>
-              {errors.map(error => (
+              {errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
-        }
+        )}
         <div className='button-wrapper'>
-          <Button secondary id='maxCats-close-button' className='cancel-button' onClick={props.closeAllForms}>{t('reusable:cta:close')}</Button>
-          <Button id='maxCats-submit-button' className='submit-button' disabled={loading} loading={loading} onClick={() => updateMaxCats()}>{t('reusable:cta:save')}</Button>
+          <Button secondary id='maxCats-close-button' className='cancel-button' onClick={props.closeAllForms}>
+            {t('reusable:cta:close')}
+          </Button>
+          <Button
+            id='maxCats-submit-button'
+            className='submit-button'
+            disabled={loading}
+            loading={loading}
+            onClick={() => updateMaxCats()}
+          >
+            {t('reusable:cta:save')}
+          </Button>
         </div>
-        <Divider style={{ 'marginBottom': '2rem' }} />
+        <Divider style={{ marginBottom: '2rem' }} />
       </>
-    )
-  } else { return <Spinner /> }
-}
+    );
+  } else {
+    return <Spinner />;
+  }
+};
 
-export default MaxCatsUpdateForm
+export default MaxCatsUpdateForm;
