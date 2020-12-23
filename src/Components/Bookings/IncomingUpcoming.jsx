@@ -131,7 +131,7 @@ class IncomingUpcoming extends Component {
                 >
                   <p className='small-centered-paragraph'>
                     <Trans count={parseInt(upcoming.number_of_cats)} i18nKey='IncomingUpcoming:booking-info'>
-                      You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong>
+                      You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong>&nbsp;
                       <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of
                       <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until
                       <strong>

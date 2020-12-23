@@ -256,11 +256,11 @@ class IncomingRequests extends Component {
                 <p style={{ textAlign: 'center', margin: '2rem 0' }}>
                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
                     You made a host profile but have not provided us with your payment information. Without that we
-                    cannot transfer the money for your gigs! Please visit your
+                    cannot transfer the money for your gigs! Please visit your&nbsp;
                     <Link to={'/user-page'}>
                       <span className='fake-link-underlined-reg'>profile page</span>
                     </Link>
-                    to fix that.
+                    &nbsp;to fix that.
                   </Trans>
                 </p>
               </>
@@ -347,11 +347,11 @@ class IncomingRequests extends Component {
                                 <p style={{ textAlign: 'center' }}>
                                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
                                     You made a host profile but have not provided us with your payment information.
-                                    Without that we cannot transfer the money for your gigs! Please visit your
+                                    Without that we cannot transfer the money for your gigs! Please visit your&nbsp;
                                     <Link to={'/user-page'}>
                                       <span className='fake-link-underlined-reg'>profile page</span>
                                     </Link>
-                                    to fix that.
+                                    &nbsp;to fix that.
                                   </Trans>
                                 </p>
                               </>
@@ -364,14 +364,14 @@ class IncomingRequests extends Component {
                                       t('reusable:stripe:step-2-pending')
                                     ) : (
                                       <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                                        In order for you to accept a request, you should
+                                        In order for you to accept a request, you should&nbsp;
                                         <span
                                           onClick={() => this.fetchStripeDashboardLink()}
                                           className='fake-link-underlined'
                                         >
                                           complete your verification
                                         </span>
-                                        with our payment provider (Stripe).
+                                        &nbsp;with our payment provider (Stripe).
                                       </Trans>
                                     )}
                                   </p>

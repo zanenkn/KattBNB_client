@@ -153,7 +153,7 @@ describe('User cannot accept booking requests', () => {
   });
 
   it('if no stripe information is provided', () => {
-    cy.get('[style="text-align: center; margin: 2rem 0px;"]').contains('Please visit your profile page to fix that.');
+    cy.get('[style="text-align: center; margin: 2rem 0px;"]').contains('Please visit your profile page to fix that.');
     cy.get('#accept-1').should('have.class', 'disabled');
     cy.get('#accept-1').trigger('mouseover');
     cy.get('#popover-1').should('be.visible');
@@ -250,9 +250,9 @@ describe('User cannot accept booking requests', () => {
     cy.get('#progress-bar-cta').contains('My payment dashboard');
     cy.get('#accept-1').should('have.class', 'disabled');
     cy.get('#accept-1').trigger('mouseover');
-    cy.get('#popover-1').contains('you should complete your verification with our payment provider (Stripe).');
+    cy.get('#popover-1').contains('you should complete your verification with our payment provider');
     cy.get('#accept-2').should('have.class', 'disabled');
     cy.get('#accept-2').trigger('mouseover');
-    cy.get('#popover-2').contains('you should complete your verification with our payment provider (Stripe).');
+    cy.get('#popover-2').contains('you should complete your verification with our payment provider');
   });
 });
