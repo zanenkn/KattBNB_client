@@ -1,5 +1,5 @@
 .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-  background-color: #EAECEC !important;
+  background-color: #eaecec !important;
   color: #c90c61;
 }
 
@@ -22,4 +22,3 @@
   margin-left: -39px;
   margin-top: 0.5em;
 }
-

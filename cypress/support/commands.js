@@ -5,15 +5,15 @@ Cypress.Commands.add('login', (fixture = {}, email, password, status) => {
     status: status,
     response: fixture,
     headers: {
-      'uid': email,
-    }
-  })
-  cy.visit('http://localhost:3000')
-  cy.get('.hamburger-box').click()
-  cy.get('#login').click()
+      uid: email,
+    },
+  });
+  cy.visit('http://localhost:3000');
+  cy.get('.hamburger-box').click();
+  cy.get('#login').click();
   cy.get('#login-form').within(() => {
-    cy.get('#email').type(email)
-    cy.get('#password').type(password)
-  })
-  cy.get('.submit-button').click()
-})
+    cy.get('#email').type(email);
+    cy.get('#password').type(password);
+  });
+  cy.get('.submit-button').click();
+});

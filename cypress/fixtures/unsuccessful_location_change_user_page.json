@@ -1,11 +1,7 @@
 {
   "status": "error",
   "errors": {
-    "current_password": [
-      "is invalid"
-    ],
-    "full_messages": [
-      "Current password is invalid"
-    ]
+    "current_password": ["is invalid"],
+    "full_messages": ["Current password is invalid"]
   }
 }

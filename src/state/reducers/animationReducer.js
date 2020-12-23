@@ -1,16 +1,16 @@
 const initialState = {
-  menuVisible: false
-}
+  menuVisible: false,
+};
 
 const animationReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_VISIBILITY':
       return {
-        menuVisible: !state.menuVisible
-      }
+        menuVisible: !state.menuVisible,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default animationReducer
+export default animationReducer;

@@ -13,18 +13,10 @@
     "updated_at": null
   },
   "errors": {
-    "password_confirmation": [
-      "doesn't match Password"
-    ],
-    "password": [
-      "is too short (minimum is 6 characters)"
-    ],
-    "email": [
-      "is not an email"
-    ],
-    "location": [
-      "can't be blank"
-    ],
+    "password_confirmation": ["doesn't match Password"],
+    "password": ["is too short (minimum is 6 characters)"],
+    "email": ["is not an email"],
+    "location": ["can't be blank"],
     "full_messages": [
       "Password confirmation doesn't match Password",
       "Password is too short (minimum is 6 characters)",

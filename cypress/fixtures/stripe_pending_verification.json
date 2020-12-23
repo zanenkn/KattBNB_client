@@ -2,10 +2,7 @@
   "payouts_enabled": false,
   "requirements": {
     "current_deadline": null,
-    "currently_due": [
-      "individual.verification.additional_document",
-      "individual.verification.document"
-    ],
+    "currently_due": ["individual.verification.additional_document", "individual.verification.document"],
     "disabled_reason": "requirements.past_due",
     "errors": [
       {
@@ -19,17 +16,8 @@
         "requirement": "individual.verification.document"
       }
     ],
-    "eventually_due": [
-      "individual.verification.additional_document",
-      "individual.verification.document"
-    ],
-    "past_due": [
-      "individual.verification.additional_document",
-      "individual.verification.document"
-    ],
-    "pending_verification": [
-      "individual.verification.additional_document",
-      "individual.verification.document"
-    ]
+    "eventually_due": ["individual.verification.additional_document", "individual.verification.document"],
+    "past_due": ["individual.verification.additional_document", "individual.verification.document"],
+    "pending_verification": ["individual.verification.additional_document", "individual.verification.document"]
   }
 }
