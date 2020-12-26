@@ -2,10 +2,7 @@
   {
     "id": 3,
     "number_of_cats": 2,
-    "dates": [
-      1585008000000,
-      1585094400000
-    ],
+    "dates": [1585008000000, 1585094400000],
     "status": "accepted",
     "host_id": 3,
     "host_location": "Vaxholm",
@@ -30,10 +27,7 @@
   {
     "id": 4,
     "number_of_cats": 5,
-    "dates": [
-      1590796800000,
-      1590883200000
-    ],
+    "dates": [1590796800000, 1590883200000],
     "status": "accepted",
     "host_id": 3,
     "host_location": "Vaxholm",
@@ -58,10 +52,7 @@
   {
     "id": 5,
     "number_of_cats": 2,
-    "dates": [
-      1585526400000,
-      1585612800000
-    ],
+    "dates": [1585526400000, 1585612800000],
     "status": "pending",
     "host_id": 3,
     "host_location": "Vaxholm",
@@ -86,10 +77,7 @@
   {
     "id": 6,
     "number_of_cats": 2,
-    "dates": [
-      1585353600000,
-      1585440000000
-    ],
+    "dates": [1585353600000, 1585440000000],
     "status": "declined",
     "host_id": 3,
     "host_location": "Vaxholm",
@@ -114,10 +102,7 @@
   {
     "id": 7,
     "number_of_cats": 2,
-    "dates": [
-      1590624000000,
-      1590710400000
-    ],
+    "dates": [1590624000000, 1590710400000],
     "status": "canceled",
     "host_id": 3,
     "host_location": "Vaxholm",
@@ -142,10 +127,7 @@
   {
     "id": 8,
     "number_of_cats": 2,
-    "dates": [
-      1586908800000,
-      1586995200000
-    ],
+    "dates": [1586908800000, 1586995200000],
     "status": "declined",
     "host_id": 3,
     "host_location": "Vaxholm",

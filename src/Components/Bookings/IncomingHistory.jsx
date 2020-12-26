@@ -1,43 +1,43 @@
-import React, { useState } from 'react'
-import moment from 'moment'
-import { Container, Message } from 'semantic-ui-react'
-import { useTranslation, Trans } from 'react-i18next'
-import Spinner from '../ReusableComponents/Spinner'
-import Popup from 'reactjs-popup'
-import IncRequestDeclinedPopup from './IncRequestDeclinedPopup'
-import axios from 'axios'
-import { detectLanguage } from '../../Modules/detectLanguage'
-import { wipeCredentials } from '../../Modules/wipeCredentials'
-import { withRouter } from 'react-router-dom'
-import ViewReviewPopup from '../Reviews/ViewReviewPopup'
+import React, { useState } from 'react';
+import moment from 'moment';
+import { Container, Message } from 'semantic-ui-react';
+import { useTranslation, Trans } from 'react-i18next';
+import Spinner from '../ReusableComponents/Spinner';
+import Popup from 'reactjs-popup';
+import IncRequestDeclinedPopup from './IncRequestDeclinedPopup';
+import axios from 'axios';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { withRouter } from 'react-router-dom';
+import ViewReviewPopup from '../Reviews/ViewReviewPopup';
 
 const IncomingHistory = (props) => {
+  const { t, ready } = useTranslation('IncomingHistory');
 
-  const { t, ready } = useTranslation('IncomingHistory')
-
-  const [errorDisplay, setErrorDisplay] = useState(false)
-  const [errors, setErrors] = useState([])
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const messageUser = (e, hostId, userId, userAvatar, userLocation, userNickname) => {
-    e.preventDefault()
+    e.preventDefault();
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true)
-      setErrors(['reusable:errors:window-navigator'])
+      setErrorDisplay(true);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
-      const lang = detectLanguage()
-      const path = '/api/v1/conversations'
+      const lang = detectLanguage();
+      const path = '/api/v1/conversations';
       const payload = {
         user1_id: hostId,
         user2_id: userId,
-        locale: lang
-      }
+        locale: lang,
+      };
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token')
-      }
-      axios.post(path, payload, { headers: headers })
-        .then(response => {
+        'access-token': window.localStorage.getItem('access-token'),
+      };
+      axios
+        .post(path, payload, { headers: headers })
+        .then((response) => {
           props.history.push({
             pathname: '/conversation',
             state: {
@@ -46,36 +46,36 @@ const IncomingHistory = (props) => {
                 profile_avatar: userAvatar,
                 id: userId,
                 location: userLocation,
-                nickname: userNickname
-              }
-            }
-          })
+                nickname: userNickname,
+              },
+            },
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response === undefined) {
-            wipeCredentials('/is-not-available?atm')
+            wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
-            setErrorDisplay(true)
-            setErrors(['reusable:errors:500'])
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:500']);
           } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm')
+            wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 401) {
-            window.alert(t('reusable:errors:401'))
-            wipeCredentials('/')
+            window.alert(t('reusable:errors:401'));
+            wipeCredentials('/');
           } else if (error.response.status === 422) {
-            setErrorDisplay(true)
-            setErrors(['reusable:errors:422-conversation'])
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:422-conversation']);
           } else {
-            setErrorDisplay(true)
-            setErrors(error.response.data.error)
+            setErrorDisplay(true);
+            setErrors(error.response.data.error);
           }
-        })
+        });
     }
-  }
+  };
 
   if (ready) {
-    let sortedHistory = props.inHistoryBookings
-    sortedHistory.sort((a, b) => ((new Date(b.updated_at)).getTime()) - ((new Date(a.updated_at)).getTime()))
+    let sortedHistory = props.inHistoryBookings;
+    sortedHistory.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 
     if (props.inHistoryBookings.length > 0) {
       return (
@@ -85,23 +85,32 @@ const IncomingHistory = (props) => {
               <strong>You have {{ count: props.inHistoryBookings.length }} past booking.</strong>
             </Trans>
           </p>
-          {sortedHistory.map(booking => {
+          {sortedHistory.map((booking) => {
             if (booking.status === 'declined') {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                <Container
+                  style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
+                  id={booking.id}
+                  data-cy='incoming-history'
+                  key={booking.id}
+                >
                   <p className='small-centered-paragraph'>
                     <strong>{t('IncomingHistory:declined-request')}</strong>
                   </p>
                   <p className='small-centered-paragraph'>
                     <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:declined-desc'>
-                      You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                      You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for
+                      their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
+                      <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                      <strong>
+                        {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
+                      </strong>
+                      .
                     </Trans>
                   </p>
-                  <Popup modal trigger={
-                    <p className='fake-link-underlined'>
-                      {t('IncomingHistory:view-message')}
-                    </p>
-                  }
+                  <Popup
+                    modal
+                    trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-message')}</p>}
                     position='top center'
                     closeOnDocumentClick={true}
                   >
@@ -114,39 +123,75 @@ const IncomingHistory = (props) => {
                     />
                   </Popup>
                 </Container>
-              )
+              );
             } else if (booking.status === 'canceled') {
               return (
-                <Container style={{ 'backgroundColor': '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                <Container
+                  style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
+                  id={booking.id}
+                  data-cy='incoming-history'
+                  key={booking.id}
+                >
                   <p className='small-centered-paragraph'>
                     <strong>{t('IncomingHistory:canceled-request')}</strong>
                   </p>
                   <p className='small-centered-paragraph'>
                     <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:canceled-desc'>
-                      A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong> got canceled due to no answer from you within 3 days time.
+                      A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their
+                      <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
+                      <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                      <strong>
+                        {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
+                      </strong>
+                      got canceled due to no answer from you within 3 days time.
                     </Trans>
                   </p>
                 </Container>
-              )
+              );
             } else {
               return (
                 <>
-                  <Container style={{ 'backgroundColor': booking.review_id === null ? '#f3dde6' : '#e8e8e8', 'marginTop': '2rem', 'padding': '2rem' }} id={booking.id} data-cy='incoming-history' key={booking.id}>
+                  <Container
+                    style={{
+                      backgroundColor: booking.review_id === null ? '#f3dde6' : '#e8e8e8',
+                      marginTop: '2rem',
+                      padding: '2rem',
+                    }}
+                    id={booking.id}
+                    data-cy='incoming-history'
+                    key={booking.id}
+                  >
                     <p className='small-centered-paragraph'>
                       <Trans i18nKey='IncomingHistory:other-history'>
-                        You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
-                    </Trans>
+                        You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of
+                        <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                        <strong>
+                          {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
+                        </strong>
+                        .
+                      </Trans>
                     </p>
-                    {booking.review_id === null ?
-                      <p className='fake-link-underlined' id='ask-review' onClick={(e) => messageUser(e, booking.host_id, booking.user_id, booking.user.profile_avatar, booking.user.location, booking.user.nickname)}>
+                    {booking.review_id === null ? (
+                      <p
+                        className='fake-link-underlined'
+                        id='ask-review'
+                        onClick={(e) =>
+                          messageUser(
+                            e,
+                            booking.host_id,
+                            booking.user_id,
+                            booking.user.profile_avatar,
+                            booking.user.location,
+                            booking.user.nickname
+                          )
+                        }
+                      >
                         {t('IncomingHistory:ask-review')}
                       </p>
-                      :
-                      <Popup modal trigger={
-                        <p className='fake-link-underlined'>
-                          {t('IncomingHistory:view-review')}
-                        </p>
-                      }
+                    ) : (
+                      <Popup
+                        modal
+                        trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-review')}</p>}
                         position='top center'
                         closeOnDocumentClick={true}
                       >
@@ -156,23 +201,23 @@ const IncomingHistory = (props) => {
                           endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
                         />
                       </Popup>
-                    }
+                    )}
                   </Container>
-                  {errorDisplay &&
-                    <Message negative >
+                  {errorDisplay && (
+                    <Message negative>
                       <ul id='message-error-list'>
-                        {errors.map(error => (
+                        {errors.map((error) => (
                           <li key={error}>{t(error)}</li>
                         ))}
                       </ul>
                     </Message>
-                  }
+                  )}
                 </>
-              )
+              );
             }
           })}
         </>
-      )
+      );
     } else {
       return (
         <>
@@ -180,9 +225,11 @@ const IncomingHistory = (props) => {
             <strong>{t('IncomingHistory:no-past-bookings')}</strong>
           </p>
         </>
-      )
+      );
     }
-  } else { return <Spinner /> }
-}
+  } else {
+    return <Spinner />;
+  }
+};
 
-export default withRouter(IncomingHistory)
+export default withRouter(IncomingHistory);

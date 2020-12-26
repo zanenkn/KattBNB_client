@@ -1,25 +1,24 @@
-import React, { Component } from 'react'
-import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react'
-import { LOCATION_OPTIONS } from '../Modules/locationData'
-import axios from 'axios'
-import moment from 'moment'
-import { connect } from 'react-redux'
-import DayPickerInput from 'react-day-picker/DayPickerInput'
-import '../NpmPackageCSS/react-day-picker-range.css'
-import { detectLanguage } from '../Modules/detectLanguage'
-import { wipeCredentials } from '../Modules/wipeCredentials'
-import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
-import { withTranslation } from 'react-i18next'
-import Spinner from './ReusableComponents/Spinner'
-import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react';
+import { LOCATION_OPTIONS } from '../Modules/locationData';
+import axios from 'axios';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import '../NpmPackageCSS/react-day-picker-range.css';
+import { detectLanguage } from '../Modules/detectLanguage';
+import { wipeCredentials } from '../Modules/wipeCredentials';
+import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
+import { withTranslation } from 'react-i18next';
+import Spinner from './ReusableComponents/Spinner';
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 class Search extends Component {
-
   constructor(props) {
-    super(props)
-    this.handleFromChange = this.handleFromChange.bind(this)
-    this.handleToChange = this.handleToChange.bind(this)
+    super(props);
+    this.handleFromChange = this.handleFromChange.bind(this);
+    this.handleToChange = this.handleToChange.bind(this);
     this.state = {
       errorDisplay: false,
       errors: '',
@@ -28,8 +27,8 @@ class Search extends Component {
       location: this.props.location,
       cats: '',
       from: undefined,
-      to: undefined
-    }
+      to: undefined,
+    };
   }
 
   componentDidMount() {
@@ -38,36 +37,36 @@ class Search extends Component {
         from: this.props.history.location.state.checkInDate,
         to: this.props.history.location.state.checkOutDate,
         location: this.props.history.location.state.location,
-        cats: this.props.history.location.state.numberOfCats
-      })
+        cats: this.props.history.location.state.numberOfCats,
+      });
     }
   }
 
   onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value })
-  }
+    this.setState({ [e.target.id]: e.target.value });
+  };
 
   handleLocationChange = (e, { value }) => {
-    this.setState({ location: value })
-  }
+    this.setState({ location: value });
+  };
 
   showFromMonth() {
-    const { from, to } = this.state
+    const { from, to } = this.state;
     if (!from) {
-      return
+      return;
     }
     if (moment(to).diff(moment(from), 'months') < 2) {
-      this.to.getDayPicker().showMonth(from)
+      this.to.getDayPicker().showMonth(from);
     }
   }
 
   async handleFromChange(from) {
-    await this.setState({ from })
-    this.to.getInput().focus()
+    await this.setState({ from });
+    this.to.getInput().focus();
   }
 
   handleToChange(to) {
-    this.setState({ to }, this.showFromMonth)
+    this.setState({ to }, this.showFromMonth);
   }
 
   async searchAxiosCall() {
@@ -75,40 +74,49 @@ class Search extends Component {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['reusable:errors:window-navigator']
-      })
+        errors: ['reusable:errors:window-navigator'],
+      });
     } else {
-      const lang = detectLanguage()
-      let utcFrom = Date.UTC(this.state.from.getUTCFullYear(), this.state.from.getUTCMonth(), this.state.from.getUTCDate())
-      let msFrom = new Date(utcFrom).getTime()
-      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate())
-      let msTo = new Date(utcTo).getTime()
-      await axios.get(`/api/v1/host_profiles?location=${this.state.location}&startDate=${msFrom}&endDate=${msTo}&cats=${this.state.cats}&locale=${lang}`).then(response => {
-        this.setState({
-          searchData: response.data,
-          loading: false,
-          errors: '',
-          errorDisplay: false
+      const lang = detectLanguage();
+      let utcFrom = Date.UTC(
+        this.state.from.getUTCFullYear(),
+        this.state.from.getUTCMonth(),
+        this.state.from.getUTCDate()
+      );
+      let msFrom = new Date(utcFrom).getTime();
+      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate());
+      let msTo = new Date(utcTo).getTime();
+      await axios
+        .get(
+          `/api/v1/host_profiles?location=${this.state.location}&startDate=${msFrom}&endDate=${msTo}&cats=${this.state.cats}&locale=${lang}`
+        )
+        .then((response) => {
+          this.setState({
+            searchData: response.data,
+            loading: false,
+            errors: '',
+            errorDisplay: false,
+          });
         })
-      }).catch(error => {
-        if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm')
-        } else if (error.response.status === 500) {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: ['reusable:errors:500']
-          })
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm')
-        } else {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: error.response.data.error
-          })
-        }
-      })
+        .catch((error) => {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm');
+          } else if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: ['reusable:errors:500'],
+            });
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm');
+          } else {
+            this.setState({
+              loading: false,
+              errorDisplay: true,
+              errors: error.response.data.error,
+            });
+          }
+        });
       this.props.history.push({
         pathname: '/search-results',
         state: {
@@ -116,9 +124,9 @@ class Search extends Component {
           to: msTo,
           cats: this.state.cats,
           location: this.state.location,
-          searchData: this.state.searchData
-        }
-      })
+          searchData: this.state.searchData,
+        },
+      });
     }
   }
 
@@ -127,86 +135,88 @@ class Search extends Component {
       from: undefined,
       to: undefined,
       errorDisplay: false,
-      errors: ''
-    })
-  }
+      errors: '',
+    });
+  };
 
   listenEnterKeySearch = (event) => {
     if (event.key === 'Enter') {
-      this.search(event)
+      this.search(event);
     }
-  }
+  };
 
   search = (e) => {
-    e.preventDefault()
-    this.setState({ loading: true })
+    e.preventDefault();
+    this.setState({ loading: true });
     if (this.state.cats <= 0 || this.state.cats % 1 !== 0) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['Search:error-1']
-      })
+        errors: ['Search:error-1'],
+      });
     } else if (this.state.location === '' || this.state.location === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['Search:error-2']
-      })
+        errors: ['Search:error-2'],
+      });
     } else if (this.state.to === undefined || this.state.from === undefined) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['Search:error-3']
-      })
+        errors: ['Search:error-3'],
+      });
     } else {
-      this.searchAxiosCall()
+      this.searchAxiosCall();
     }
-  }
+  };
 
   render() {
-    const { t } = this.props
+    const { t } = this.props;
 
     if (this.props.tReady) {
-      let errorDisplay
-      const lang = detectLanguage()
-      const { from, to } = this.state
-      const modifiers = { start: from, end: to }
-      const today = new Date()
+      let errorDisplay;
+      const lang = detectLanguage();
+      const { from, to } = this.state;
+      const modifiers = { start: from, end: to };
+      const today = new Date();
 
       if (this.state.errorDisplay) {
         errorDisplay = (
-          <Message negative >
+          <Message negative>
             <Message.Header>{t('Search:error-header')}</Message.Header>
             <ul>
-              {this.state.errors.map(error => (
+              {this.state.errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
-        )
+        );
       }
 
       return (
-        <div className='content-wrapper' >
+        <div className='content-wrapper'>
           <Helmet>
             <title>KattBNB - boka kattvakt online!</title>
-            <meta name='description' content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!' />
+            <meta
+              name='description'
+              content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!'
+            />
             <link rel='canonical' href='https://kattbnb.se/search' />
             <meta property='og:title' content='KattBNB - boka kattvakt online!' />
             <meta property='og:url' content='https://kattbnb.se/search' />
             <meta property='og:type' content='website' />
-            <meta property='og:description' content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!' />
+            <meta
+              property='og:description'
+              content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+            />
             <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
           </Helmet>
-          <Header as='h1'>
-            {t('Search:title')}
-          </Header>
+          <Header as='h1'>{t('Search:title')}</Header>
           <Segment className='whitebox'>
-            <Form id='search-form' style={{ 'margin': 'auto', 'maxWidth': '177px' }}>
-              <div className='required field' style={{ 'marginBottom': '0.5em' }}>
-                <label>
-                  {t('Search:when')}
-                </label>
+            <Form id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
+              <div className='required field' style={{ marginBottom: '0.5em' }}>
+                <label>{t('Search:when')}</label>
                 <div className='InputFromTo'>
                   <DayPickerInput
                     value={from || t('Search:checkin')}
@@ -224,19 +234,21 @@ class Search extends Component {
                       firstDayOfWeek: 1,
                       localeUtils: MomentLocaleUtils,
                       locale: lang,
-                      showWeekNumbers: true
+                      showWeekNumbers: true,
                     }}
                     onDayChange={this.handleFromChange}
                   />
                 </div>
-                <div className='InputFromTo' style={{ 'marginTop': '0.5em' }}>
+                <div className='InputFromTo' style={{ marginTop: '0.5em' }}>
                   <DayPickerInput
-                    ref={el => (this.to = el)}
+                    ref={(el) => (this.to = el)}
                     value={to || t('Search:checkout')}
                     format='LL'
                     formatDate={formatDate}
                     parseDate={parseDate}
-                    inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
+                    inputProps={
+                      this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }
+                    }
                     dayPickerProps={{
                       selectedDays: [from, { from, to }],
                       disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
@@ -247,19 +259,19 @@ class Search extends Component {
                       fromMonth: from,
                       localeUtils: MomentLocaleUtils,
                       locale: lang,
-                      numberOfMonths: 1
+                      numberOfMonths: 1,
                     }}
                     onDayChange={this.handleToChange}
                   />
                 </div>
               </div>
-              <div style={(this.state.from === undefined && this.state.to === undefined) ? { 'visibility': 'hidden' } : {}}>
-                <Header className='fake-link-underlined' style={{ 'textAlign': 'right' }} onClick={this.clearDates}> {t('Search:reset')} </Header>
+              <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
+                <Header className='fake-link-underlined' style={{ textAlign: 'right' }} onClick={this.clearDates}>
+                  {t('Search:reset')}
+                </Header>
               </div>
-              <div className='required field' style={{ 'marginBottom': '1.5em' }}>
-                <label>
-                  {t('Search:where')}
-                </label>
+              <div className='required field' style={{ marginBottom: '1.5em' }}>
+                <label>{t('Search:where')}</label>
                 <Dropdown
                   clearable
                   search
@@ -280,27 +292,39 @@ class Search extends Component {
                 value={this.state.cats}
                 onChange={this.onChangeHandler}
                 onKeyPress={this.listenEnterKeySearch}
-                style={{ 'maxWidth': '180px', 'height': '38px' }}
+                style={{ maxWidth: '180px', height: '38px' }}
               />
             </Form>
             {errorDisplay}
             <div className='button-wrapper'>
               <div>
-                <Button id='search-button' className='submit-button' disabled={this.state.loading} loading={this.state.loading} onClick={this.search}>{t('Search:cta')}</Button>
+                <Button
+                  id='search-button'
+                  className='submit-button'
+                  disabled={this.state.loading}
+                  loading={this.state.loading}
+                  onClick={this.search}
+                >
+                  {t('Search:cta')}
+                </Button>
               </div>
             </div>
-            <div className="slowly-pulsing">
-              <div style={{ 'textAlign': 'center', 'marginTop': '3rem' }}>
-                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}><p style={{ 'fontWeight': 'bold', 'color': '#c90c61' }}>{t('Search:become-host')}</p></Link>
+            <div className='slowly-pulsing'>
+              <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
+                  <p style={{ fontWeight: 'bold', color: '#c90c61' }}>{t('Search:become-host')}</p>
+                </Link>
               </div>
             </div>
           </Segment>
         </div>
-      )
-    } else { return <Spinner /> }
+      );
+    } else {
+      return <Spinner />;
+    }
   }
 }
 
-const mapStateToProps = state => ({ location: state.reduxTokenAuth.currentUser.attributes.location })
+const mapStateToProps = (state) => ({ location: state.reduxTokenAuth.currentUser.attributes.location });
 
-export default withTranslation('Search')(connect(mapStateToProps)(Search))
+export default withTranslation('Search')(connect(mapStateToProps)(Search));

@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import moment from 'moment'
-import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react'
-import Popup from 'reactjs-popup'
-import Spinner from '../ReusableComponents/Spinner'
-import { withTranslation, Trans } from 'react-i18next'
-import IncRequestPopup from './IncRequestPopup'
-import DeclineRequestPopup from './DeclineRequestPopup'
-import axios from 'axios'
-import { detectLanguage } from '../../Modules/detectLanguage'
-import { wipeCredentials } from '../../Modules/wipeCredentials'
-import { withRouter } from 'react-router-dom'
-import { Popup as SemanticPopup } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react';
+import Popup from 'reactjs-popup';
+import Spinner from '../ReusableComponents/Spinner';
+import { withTranslation, Trans } from 'react-i18next';
+import IncRequestPopup from './IncRequestPopup';
+import DeclineRequestPopup from './DeclineRequestPopup';
+import axios from 'axios';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { withRouter } from 'react-router-dom';
+import { Popup as SemanticPopup } from 'semantic-ui-react';
 
 class IncomingRequests extends Component {
   state = {
@@ -24,107 +24,108 @@ class IncomingRequests extends Component {
     stripeAccountErrors: [],
     stripeAccountId: '',
     stripePendingVerification: false,
-    stripeDashboardButtonLoading: false
-  }
+    stripeDashboardButtonLoading: false,
+  };
 
   fetchStripeAccountDetails = async () => {
-    const { t } = this.props
+    const { t } = this.props;
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
         errorDisplay: true,
-        errors: ['reusable:errors:window-navigator']
-      })
+        errors: ['reusable:errors:window-navigator'],
+      });
     } else {
       try {
-        const lang = detectLanguage()
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=retrieve`
+        const lang = detectLanguage();
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=retrieve`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        const response = await axios.get(path, { headers: headers })
+          'access-token': window.localStorage.getItem('access-token'),
+        };
+        const response = await axios.get(path, { headers: headers });
         if (!response.data.message) {
           this.setState({
             payoutSuccess: response.data.payouts_enabled,
             stripeAccountErrors: response.data.requirements.errors,
             stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false,
-            loading: false
-          })
+            loading: false,
+          });
         } else {
           this.setState({
             stripeAccountId: null,
-            loading: false
-          })
+            loading: false,
+          });
         }
       } catch (error) {
         if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm')
+          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 555) {
           this.setState({
             loading: false,
             errorDisplay: true,
-            errors: [error.response.data.error]
-          })
+            errors: [error.response.data.error],
+          });
         } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm')
+          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'))
-          wipeCredentials('/')
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
         } else {
           this.setState({
             loading: false,
             errorDisplay: true,
-            errors: [error.response.data.error]
-          })
+            errors: [error.response.data.error],
+          });
         }
       }
     }
-  }
+  };
 
   componentDidMount() {
     if (this.props.history.action === 'POP') {
-      this.props.history.push({ pathname: '/all-bookings' })
+      this.props.history.push({ pathname: '/all-bookings' });
     }
     if (this.props.requests.length > 0) {
-      this.fetchStripeAccountDetails()
+      this.fetchStripeAccountDetails();
     } else {
-      this.setState({ loading: false })
+      this.setState({ loading: false });
     }
   }
 
   declModalCloseState = (state) => {
-    this.setState({ closeOnDocumentClick: state })
-  }
+    this.setState({ closeOnDocumentClick: state });
+  };
 
   acceptRequest = (e, requestData) => {
-    e.preventDefault()
-    const { t } = this.props
-    const lang = detectLanguage()
-    this.setState({ iconsDisabled: true })
+    e.preventDefault();
+    const { t } = this.props;
+    const lang = detectLanguage();
+    this.setState({ iconsDisabled: true });
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator'],
-        iconsDisabled: false
-      })
+        iconsDisabled: false,
+      });
     } else {
       if (window.confirm(t('IncomingRequests:accept-request'))) {
-        const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`
+        const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
+          'access-token': window.localStorage.getItem('access-token'),
+        };
         const payload = {
           status: 'accepted',
           host_message: 'accepted by host',
-          locale: lang
-        }
-        axios.patch(path, payload, { headers: headers })
+          locale: lang,
+        };
+        axios
+          .patch(path, payload, { headers: headers })
           .then(() => {
-            const { history } = this.props
+            const { history } = this.props;
             history.push({
               pathname: '/request-accepted-success',
               state: {
@@ -132,106 +133,113 @@ class IncomingRequests extends Component {
                 inDate: new Date(requestData.dates[0]),
                 outDate: new Date(requestData.dates[requestData.dates.length - 1]),
                 price: requestData.price_total,
-                user: requestData.user.nickname
-              }
-            })
+                user: requestData.user.nickname,
+              },
+            });
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               this.setState({
                 errorDisplay: true,
                 errors: ['reusable:errors:500'],
-                iconsDisabled: false
-              })
+                iconsDisabled: false,
+              });
             } else if (error.response.status === 555) {
-              window.alert(error.response.data.error)
-              this.props.history.push('/all-bookings')
+              window.alert(error.response.data.error);
+              this.props.history.push('/all-bookings');
             } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm')
+              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'))
-              wipeCredentials('/')
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/');
             } else {
               this.setState({
                 errorDisplay: true,
                 errors: error.response.data.error,
-                iconsDisabled: false
-              })
+                iconsDisabled: false,
+              });
             }
-          })
+          });
       } else {
-        this.setState({ iconsDisabled: false })
+        this.setState({ iconsDisabled: false });
       }
     }
-  }
+  };
 
   fetchStripeDashboardLink = async () => {
-    const { t } = this.props
+    const { t } = this.props;
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
-        errors: ['reusable:errors:window-navigator']
-      })
+        errors: ['reusable:errors:window-navigator'],
+      });
     } else {
       try {
-        this.setState({ stripeDashboardButtonLoading: true })
-        const lang = detectLanguage()
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`
+        this.setState({ stripeDashboardButtonLoading: true });
+        const lang = detectLanguage();
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token')
-        }
-        const response = await axios.get(path, { headers: headers })
-        window.open(response.data.url)
-        this.setState({ stripeDashboardButtonLoading: false })
+          'access-token': window.localStorage.getItem('access-token'),
+        };
+        const response = await axios.get(path, { headers: headers });
+        window.open(response.data.url);
+        this.setState({ stripeDashboardButtonLoading: false });
       } catch (error) {
         if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm')
+          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 555) {
           this.setState({
             errorDisplay: true,
             errors: [error.response.data.error],
-            stripeDashboardButtonLoading: false
-          })
+            stripeDashboardButtonLoading: false,
+          });
         } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm')
+          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'))
-          wipeCredentials('/')
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
         } else {
           this.setState({
             errorDisplay: true,
             errors: [error.response.data.error],
-            stripeDashboardButtonLoading: false
-          })
+            stripeDashboardButtonLoading: false,
+          });
         }
       }
     }
-  }
+  };
 
   render() {
-    const { t } = this.props
-    const { payoutSuccess, stripeAccountId, stripeAccountErrors, stripeDashboardButtonLoading, stripePendingVerification, loading } = this.state
+    const { t } = this.props;
+    const {
+      payoutSuccess,
+      stripeAccountId,
+      stripeAccountErrors,
+      stripeDashboardButtonLoading,
+      stripePendingVerification,
+      loading,
+    } = this.state;
 
     if (this.props.tReady && loading === false) {
-      let sortedRequests = this.props.requests
-      sortedRequests.sort((a, b) => ((new Date(b.created_at)).getTime()) - ((new Date(a.created_at)).getTime()))
-      let priceWithDecimalsString, total, requestsToDisplay, errorDisplay
+      let sortedRequests = this.props.requests;
+      sortedRequests.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      let priceWithDecimalsString, total, requestsToDisplay, errorDisplay;
 
       if (this.state.errorDisplay) {
         errorDisplay = (
-          <Message negative >
-            <Message.Header style={{ 'textAlign': 'center' }} >{t('IncomingRequests:main-header-error')}</Message.Header>
+          <Message negative>
+            <Message.Header style={{ textAlign: 'center' }}>{t('IncomingRequests:main-header-error')}</Message.Header>
             <ul id='message-error-list'>
-              {this.state.errors.map(error => (
+              {this.state.errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
-        )
+        );
       }
 
       if (this.props.requests.length > 0) {
@@ -242,54 +250,80 @@ class IncomingRequests extends Component {
                 <strong>You have received {{ count: this.props.requests.length }} booking request.</strong>
               </Trans>
             </p>
-            <p style={{ 'textAlign': 'center' }}>
-              {t('IncomingRequests:requests-desc')}
-            </p>
-            {stripeAccountId === null ?
+            <p style={{ textAlign: 'center' }}>{t('IncomingRequests:requests-desc')}</p>
+            {stripeAccountId === null ? (
               <>
-                <p style={{ 'textAlign': 'center', 'margin': '2rem 0' }}>
+                <p style={{ textAlign: 'center', margin: '2rem 0' }}>
                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
-                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
+                    You made a host profile but have not provided us with your payment information. Without that we
+                    cannot transfer the money for your gigs! Please visit your&nbsp;
+                    <Link to={'/user-page'}>
+                      <span className='fake-link-underlined-reg'>profile page</span>
+                    </Link>
+                    &nbsp;to fix that.
                   </Trans>
                 </p>
               </>
-              : stripeAccountErrors.length > 0 &&
-              <>
-                <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
-                  {t('reusable:stripe:step-2-text')}&ensp;
-                    {stripePendingVerification ? t('reusable:stripe:step-2-pending') : t('reusable:stripe:step-2-go-to-dashboard')}
-                </p>
-                {!stripePendingVerification &&
-                  <Button
-                    onClick={() => this.fetchStripeDashboardLink()}
-                    loading={stripeDashboardButtonLoading}
-                    disabled={stripeDashboardButtonLoading}
-                    id='progress-bar-cta'
-                    style={{ marginBottom: '2rem' }}
-                  >
-                    {t('reusable:stripe:stripe-dashboard-cta')}
-                  </Button>
-                }
-              </>
-            }
-            {sortedRequests.map(request => {
-              priceWithDecimalsString = request.price_total.toFixed(2)
-              if (priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' && priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0') {
-                total = parseFloat(priceWithDecimalsString)
+            ) : (
+              stripeAccountErrors.length > 0 && (
+                <>
+                  <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
+                    {t('reusable:stripe:step-2-text')}&ensp;
+                    {stripePendingVerification
+                      ? t('reusable:stripe:step-2-pending')
+                      : t('reusable:stripe:step-2-go-to-dashboard')}
+                  </p>
+                  {!stripePendingVerification && (
+                    <Button
+                      onClick={() => this.fetchStripeDashboardLink()}
+                      loading={stripeDashboardButtonLoading}
+                      disabled={stripeDashboardButtonLoading}
+                      id='progress-bar-cta'
+                      style={{ marginBottom: '2rem' }}
+                    >
+                      {t('reusable:stripe:stripe-dashboard-cta')}
+                    </Button>
+                  )}
+                </>
+              )
+            )}
+            {sortedRequests.map((request) => {
+              priceWithDecimalsString = request.price_total.toFixed(2);
+              if (
+                priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' &&
+                priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0'
+              ) {
+                total = parseFloat(priceWithDecimalsString);
               } else {
-                total = priceWithDecimalsString
+                total = priceWithDecimalsString;
               }
               return (
                 <div className='booking-request' data-cy='incoming-requests' key={request.id}>
-                  <Grid style={{ 'background': '#c90c61', 'margin': '0' }}>
-                    <Grid.Row style={{ 'alignItems': 'center' }} >
+                  <Grid style={{ background: '#c90c61', margin: '0' }}>
+                    <Grid.Row style={{ alignItems: 'center' }}>
                       <Grid.Column width={8}>
-                        <Header as='h2' style={{ 'color': 'white', 'marginBottom': '0', 'textAlign': 'left' }}>{total} kr</Header>
+                        <Header as='h2' style={{ color: 'white', marginBottom: '0', textAlign: 'left' }}>
+                          {total} kr
+                        </Header>
                       </Grid.Column>
                       <Grid.Column width={8}>
-                        <Popup modal trigger={
-                          <Icon disabled={this.state.iconsDisabled} id='decline' name='plus circle' style={{ 'color': '#ffffff', 'opacity': '0.6', 'transform': 'rotate(45deg)', 'float': 'right', 'cursor': 'pointer' }} size='big' />
-                        }
+                        <Popup
+                          modal
+                          trigger={
+                            <Icon
+                              disabled={this.state.iconsDisabled}
+                              id='decline'
+                              name='plus circle'
+                              style={{
+                                color: '#ffffff',
+                                opacity: '0.6',
+                                transform: 'rotate(45deg)',
+                                float: 'right',
+                                cursor: 'pointer',
+                              }}
+                              size='big'
+                            />
+                          }
                           position='top center'
                           closeOnDocumentClick={this.state.closeOnDocumentClick}
                         >
@@ -308,33 +342,54 @@ class IncomingRequests extends Component {
                           hideOnScroll
                           disabled={payoutSuccess}
                           content={
-                            stripeAccountId === null ?
+                            stripeAccountId === null ? (
                               <>
-                                <p style={{ 'textAlign': 'center' }}>
+                                <p style={{ textAlign: 'center' }}>
                                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
-                                    You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! Please visit your <Link to={'/user-page'}><span className='fake-link-underlined-reg'>profile page</span></Link> to fix that.
+                                    You made a host profile but have not provided us with your payment information.
+                                    Without that we cannot transfer the money for your gigs! Please visit your&nbsp;
+                                    <Link to={'/user-page'}>
+                                      <span className='fake-link-underlined-reg'>profile page</span>
+                                    </Link>
+                                    &nbsp;to fix that.
                                   </Trans>
                                 </p>
                               </>
-                              : stripeAccountErrors.length > 0 &&
-                              <>
-                                <p style={{ 'textAlign': 'center', 'fontSize': 'unset' }}>
-                                  {t('reusable:stripe:step-2-text')}&ensp;
-                                    {stripePendingVerification ? t('reusable:stripe:step-2-pending') :
-                                    <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                                      In order for you to accept a request, you should <span onClick={() => this.fetchStripeDashboardLink()} className='fake-link-underlined'>complete your verification</span> with our payment provider (Stripe).
-                                    </Trans>
-                                  }
-                                </p>
-                              </>
+                            ) : (
+                              stripeAccountErrors.length > 0 && (
+                                <>
+                                  <p style={{ textAlign: 'center', fontSize: 'unset' }}>
+                                    {t('reusable:stripe:step-2-text')}&ensp;
+                                    {stripePendingVerification ? (
+                                      t('reusable:stripe:step-2-pending')
+                                    ) : (
+                                      <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
+                                        In order for you to accept a request, you should&nbsp;
+                                        <span
+                                          onClick={() => this.fetchStripeDashboardLink()}
+                                          className='fake-link-underlined'
+                                        >
+                                          complete your verification
+                                        </span>
+                                        &nbsp;with our payment provider (Stripe).
+                                      </Trans>
+                                    )}
+                                  </p>
+                                </>
+                              )
+                            )
                           }
                           trigger={
                             <Icon
-                              disabled={(this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined) ? true : false}
+                              disabled={
+                                this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined
+                                  ? true
+                                  : false
+                              }
                               id={`accept-${request.id}`}
                               onClick={(e) => this.acceptRequest(e, request)}
                               name='check circle'
-                              style={{ 'color': '#ffffff', 'float': 'right', 'cursor': 'pointer' }}
+                              style={{ color: '#ffffff', float: 'right', cursor: 'pointer' }}
                               size='big'
                             />
                           }
@@ -342,24 +397,34 @@ class IncomingRequests extends Component {
                       </Grid.Column>
                     </Grid.Row>
                     <div>
-                      <p style={{ 'color': '#ffffff', 'fontSize': 'small', 'marginBottom': '1rem', 'marginTop': '-0.5rem' }}>
+                      <p style={{ color: '#ffffff', fontSize: 'small', marginBottom: '1rem', marginTop: '-0.5rem' }}>
                         <Trans i18nKey='IncomingRequests:must-reply'>
-                          You must reply before <strong>{{ date: moment(request.created_at).add(3, 'days').format('YYYY-MM-DD') }}</strong>
+                          You must reply before
+                          <strong>{{ date: moment(request.created_at).add(3, 'days').format('YYYY-MM-DD') }}</strong>
                         </Trans>
                       </p>
                     </div>
                   </Grid>
-                  <div style={{ 'padding': '2rem' }}>
+                  <div style={{ padding: '2rem' }}>
                     <p className='small-centered-paragraph'>
                       <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
-                        <strong style={{ 'color': '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay for their <strong style={{ 'color': '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of <strong style={{ 'color': '#c90c61' }}>{{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}</strong> until <strong style={{ 'color': '#c90c61' }}>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
-                     </Trans>
+                        <strong style={{ color: '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to
+                        book a stay for their
+                        <strong style={{ color: '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the
+                        dates of
+                        <strong style={{ color: '#c90c61' }}>
+                          {{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}
+                        </strong>
+                        until
+                        <strong style={{ color: '#c90c61' }}>
+                          {{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}
+                        </strong>
+                        .
+                      </Trans>
                     </p>
-                    <Popup modal trigger={
-                      <p className='fake-link-underlined'>
-                        {t('IncomingRequests:view-message')}
-                      </p>
-                    }
+                    <Popup
+                      modal
+                      trigger={<p className='fake-link-underlined'>{t('IncomingRequests:view-message')}</p>}
                       position='top center'
                       closeOnDocumentClick={true}
                     >
@@ -374,10 +439,10 @@ class IncomingRequests extends Component {
                     </Popup>
                   </div>
                 </div>
-              )
+              );
             })}
           </>
-        )
+        );
       } else {
         requestsToDisplay = (
           <>
@@ -385,7 +450,7 @@ class IncomingRequests extends Component {
               <strong>{t('IncomingRequests:no-requests')}</strong>
             </p>
           </>
-        )
+        );
       }
 
       return (
@@ -393,9 +458,11 @@ class IncomingRequests extends Component {
           {errorDisplay}
           {requestsToDisplay}
         </>
-      )
-    } else { return <Spinner /> }
+      );
+    } else {
+      return <Spinner />;
+    }
   }
 }
 
-export default withTranslation('IncomingRequests')(withRouter(IncomingRequests))
+export default withTranslation('IncomingRequests')(withRouter(IncomingRequests));

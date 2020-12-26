@@ -1,10 +1,10 @@
-import animationReducer from './animationReducer'
-import { combineReducers } from 'redux'
-import { reduxTokenAuthReducer } from 'redux-token-auth'
+import animationReducer from './animationReducer';
+import { combineReducers } from 'redux';
+import { reduxTokenAuthReducer } from 'redux-token-auth';
 
 const rootReducer = combineReducers({
   animation: animationReducer,
-  reduxTokenAuth: reduxTokenAuthReducer
-})
+  reduxTokenAuth: reduxTokenAuthReducer,
+});
 
-export default rootReducer
+export default rootReducer;

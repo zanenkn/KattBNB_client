@@ -1,52 +1,57 @@
-import React, { Component } from 'react'
-import './semantic/dist/semantic.min.css'
-import Landing from './Components/Landing'
-import Navbar from './Components/Navbar'
-import Menu from './Components/Menu/Menu'
-import Search from './Components/Search'
-import SearchResults from './Components/SearchResults'
-import AboutUs from './Components/Menu/AboutUs'
-import ContactUs from './Components/Menu/ContactUs'
-import Faq from './Components/Menu/Faq'
-import Legal from './Components/Menu/Legal'
-import Guidelines from './Components/Menu/Guidelines'
-import Login from './Components/Authentication/Login'
-import SignUp from './Components/Authentication/SignUp'
-import SignupSuccess from './Components/Authentication/SignupSuccess'
-import PasswordReset from './Components/Authentication/PasswordReset'
-import ChangePassword from './Components/Authentication/ChangePassword'
-import PasswordResetSuccess from './Components/Authentication/PasswordResetSuccess'
-import UserPage from './Components/UserPage/UserPage'
-import RequestToBook from './Components/Bookings/RequestToBook'
-import SuccessfulRequest from './Components/Bookings/SuccessfulRequest'
-import AllBookings from './Components/Bookings/AllBookings'
-import OutgoingBookings from './Components/Bookings/OutgoingBookings'
-import IncomingBookings from './Components/Bookings/IncomingBookings'
-import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully'
-import BookingDetails from './Components/Bookings/BookingDetails'
-import AllConversations from './Components/Messenger/AllConversations'
-import Conversation from './Components/Messenger/SingleConversation'
-import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper'
-import Error503 from './Components/ReusableComponents/Error503'
-import Partners from './Components/Menu/Partners'
-import HostEn from './Components/HostEn'
-import HostSe from './Components/HostSe'
-import LeaveReview from './Components/Reviews/LeaveReview'
-import SuccessfulReview from './Components/Reviews/SuccessfulReview'
-import Receipt from './Components/Bookings/Receipt'
-import ScrollToTop from './Modules/ScrollToTop'
-import { Container, Sidebar } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-dom'
+import React, { Component } from 'react';
+import './semantic/dist/semantic.min.css';
+import Landing from './Components/Landing';
+import Navbar from './Components/Navbar';
+import Menu from './Components/Menu/Menu';
+import Search from './Components/Search';
+import SearchResults from './Components/SearchResults';
+import AboutUs from './Components/Menu/AboutUs';
+import ContactUs from './Components/Menu/ContactUs';
+import Faq from './Components/Menu/Faq';
+import Legal from './Components/Menu/Legal';
+import Guidelines from './Components/Menu/Guidelines';
+import Login from './Components/Authentication/Login';
+import SignUp from './Components/Authentication/SignUp';
+import SignupSuccess from './Components/Authentication/SignupSuccess';
+import PasswordReset from './Components/Authentication/PasswordReset';
+import ChangePassword from './Components/Authentication/ChangePassword';
+import PasswordResetSuccess from './Components/Authentication/PasswordResetSuccess';
+import UserPage from './Components/UserPage/UserPage';
+import RequestToBook from './Components/Bookings/RequestToBook';
+import SuccessfulRequest from './Components/Bookings/SuccessfulRequest';
+import AllBookings from './Components/Bookings/AllBookings';
+import OutgoingBookings from './Components/Bookings/OutgoingBookings';
+import IncomingBookings from './Components/Bookings/IncomingBookings';
+import RequestAcceptedSuccessfully from './Components/Bookings/RequestAcceptedSuccessfully';
+import BookingDetails from './Components/Bookings/BookingDetails';
+import AllConversations from './Components/Messenger/AllConversations';
+import Conversation from './Components/Messenger/SingleConversation';
+import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper';
+import Error503 from './Components/ReusableComponents/Error503';
+import Partners from './Components/Menu/Partners';
+import HostEn from './Components/HostEn';
+import HostSe from './Components/HostSe';
+import LeaveReview from './Components/Reviews/LeaveReview';
+import SuccessfulReview from './Components/Reviews/SuccessfulReview';
+import Receipt from './Components/Bookings/Receipt';
+import ScrollToTop from './Modules/ScrollToTop';
+import { Container, Sidebar } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
-
   render() {
     return (
       <>
         <Navbar />
         <Sidebar.Pushable
-          onClick={this.props.menuVisible ? () => { this.props.dispatch({ type: 'CHANGE_VISIBILITY' }) } : () => { }}
+          onClick={
+            this.props.menuVisible
+              ? () => {
+                  this.props.dispatch({ type: 'CHANGE_VISIBILITY' });
+                }
+              : () => {}
+          }
           as={Container}
           id='app-content'
           className='disable-scrollbars'
@@ -90,10 +95,10 @@ class App extends Component {
           <Menu />
         </Sidebar.Pushable>
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({ menuVisible: state.animation.menuVisible })
+const mapStateToProps = (state) => ({ menuVisible: state.animation.menuVisible });
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);

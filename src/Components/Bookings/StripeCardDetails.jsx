@@ -1,7 +1,7 @@
-import React from 'react'
-import { CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js'
-import { Form } from 'semantic-ui-react'
-import { useTranslation } from 'react-i18next'
+import React from 'react';
+import { CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
+import { Form } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 const StripeCardDetails = (props) => {
   let style = {
@@ -11,27 +11,28 @@ const StripeCardDetails = (props) => {
         fontStyle: 'italic',
         color: 'silver',
       },
-    }
-  }
+    },
+  };
 
-  const { ready, t } = useTranslation('StripeCardDetails')
+  const { ready, t } = useTranslation('StripeCardDetails');
 
   if (ready) {
     return (
       <Form className='stripe-wrapper'>
-        <div className='required field' style={{ 'display': 'flex', 'flexDirection': 'column' }}>
-          <label>
-            {t('StripeCardDetails:label')}
-          </label>
-          <input className='stripe-card-element-full'
+        <div className='required field' style={{ display: 'flex', flexDirection: 'column' }}>
+          <label>{t('StripeCardDetails:label')}</label>
+          <input
+            className='stripe-card-element-full'
             type='text'
             placeholder={t('StripeCardDetails:cardholder')}
             id='cardholderName'
             value={props.cardholderName}
-            onChange={props.onChangeCardHolder}>
-          </input>
+            onChange={props.onChangeCardHolder}
+          ></input>
           <div className='stripe-card-element-full'>
-            <CardNumberElement options={{ style: style, placeholder: t('StripeCardDetails:card-number'), showIcon: true }} />
+            <CardNumberElement
+              options={{ style: style, placeholder: t('StripeCardDetails:card-number'), showIcon: true }}
+            />
           </div>
           <div className='stripe-secondary-wrapper'>
             <div className='stripe-card-element-small'>
@@ -41,19 +42,21 @@ const StripeCardDetails = (props) => {
               <CardCvcElement options={{ style: style, placeholder: t('StripeCardDetails:cvc') }} />
             </div>
             <input
-              style={{ 'marginTop': '4px' }}
+              style={{ marginTop: '4px' }}
               className='stripe-card-element-small'
               type='number'
               placeholder={t('StripeCardDetails:postal-code')}
               id='postalCode'
               value={props.postalCode}
-              onChange={props.onChangePostalCode}>
-            </input>
+              onChange={props.onChangePostalCode}
+            ></input>
           </div>
         </div>
       </Form>
-    )
-  } else { return null }
-}
+    );
+  } else {
+    return null;
+  }
+};
 
-export default StripeCardDetails
+export default StripeCardDetails;
