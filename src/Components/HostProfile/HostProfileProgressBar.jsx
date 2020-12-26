@@ -9,6 +9,7 @@ import Spinner from '../ReusableComponents/Spinner'
 import HostProfile from '../Icons/HostProfile'
 import CreditCard from '../Icons/CreditCard'
 import Verified from '../Icons/Verified'
+import { Link } from 'react-router-dom'
 
 const HostProfileProgressBar = (props) => {
 
@@ -167,7 +168,7 @@ const HostProfileProgressBar = (props) => {
           <>
             <p style={{ 'textAlign': 'center', 'marginTop': '2rem', 'fontSize': 'unset' }}>
               <Trans i18nKey={'reusable:stripe:step-1-text'}>
-                You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+                You made a host profile but have not provided us with your payment information. Without that we cannot transfer the money for your gigs! <Link to='/faq?section=payments&active=503' className='fake-link-underlined'>Read more</Link> on how we handle payments and your information
               </Trans>
             </p>
             <a href={`https://connect.stripe.com/express/oauth/authorize?client_id=${process.env.REACT_APP_OFFICIAL === 'yes' ? process.env.REACT_APP_STRIPE_CLIENT_ID : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST}&response_type=code&state=${props.stripeState}&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${props.email}&stripe_user[country]=SE`}>

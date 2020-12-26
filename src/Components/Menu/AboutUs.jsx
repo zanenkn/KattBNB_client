@@ -77,6 +77,20 @@ const AboutUs = () => {
           <Divider hidden />
           <Divider hidden />
           <div>
+            <Image style={{ 'margin': 'auto' }} src='laura.png' size='small'></Image>
+          </div>
+          <Header style={{ 'marginBottom': 0 }}>
+            <a href='https://www.linkedin.com/in/realelaura/' target='_blank' rel='noopener noreferrer'>Laura Reale</a>
+          </Header>
+          <Header as='h4' style={{ 'marginTop': 0 }}>
+            {t('AboutUs:laura-title')}
+          </Header>
+          <p style={{ 'textAlign': 'center' }}>
+            {t('AboutUs:laura-txt')}
+          </p>
+          <Divider hidden />
+          <Divider hidden />
+          <div>
             <Image style={{ 'margin': 'auto' }} src='joel.png' size='small'></Image>
           </div>
           <Header style={{ 'marginBottom': 0 }}>

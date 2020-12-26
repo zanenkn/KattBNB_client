@@ -202,7 +202,7 @@ class AllBookings extends Component {
           <Header
             className='fake-link'
             style={{ 'cursor': 'pointer', 'textAlign': 'center', 'marginTop': '1rem', 'textDecoration': 'underline' }} id='view-incoming-bookings'
-            onClick={() => { this.props.history.push('/faq') }}
+            onClick={() => { this.props.history.push('/faq?section=sitter&active=201') }}
           >
             {t('AllBookings:incoming-cta')}
           </Header>
