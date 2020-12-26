@@ -9,7 +9,7 @@ import { RichText } from 'prismic-reactjs'
 
 const Legal = () => {
 
-  const { t, ready } = useTranslation('Legal')
+  const { t, ready } = useTranslation()
   const [content, setContent] = useState({})
   const locale = detectLanguage().toLowerCase()
 

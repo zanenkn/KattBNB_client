@@ -75,6 +75,7 @@ const Faq = (props) => {
       fetchData('payments')
     } catch (error) {
       console.error(error)
+      window.alertwindow.alert(t('reusable:errors:500'))
     }
 
     let query = queryString.parse(props.location.search)
