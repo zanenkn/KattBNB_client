@@ -208,7 +208,7 @@ class AllBookings extends Component {
             style={{ cursor: 'pointer', textAlign: 'center', marginTop: '1rem', textDecoration: 'underline' }}
             id='view-incoming-bookings'
             onClick={() => {
-              this.props.history.push('/faq');
+              this.props.history.push('/faq?section=sitter&active=201');
             }}
           >
             {t('AllBookings:incoming-cta')}

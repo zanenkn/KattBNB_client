@@ -9,6 +9,7 @@ import Spinner from '../ReusableComponents/Spinner';
 import HostProfile from '../Icons/HostProfile';
 import CreditCard from '../Icons/CreditCard';
 import Verified from '../Icons/Verified';
+import { Link } from 'react-router-dom';
 
 const HostProfileProgressBar = (props) => {
   const [errors, setErrors] = useState([]);
@@ -189,7 +190,10 @@ const HostProfileProgressBar = (props) => {
               <Trans i18nKey={'reusable:stripe:step-1-text'}>
                 You made a host profile but have not provided us with your payment information. Without that we cannot
                 transfer the money for your gigs!
-                <span className='fake-link-underlined'>Read more on how we handle payments and your information</span>
+                <Link to='/faq?section=payments&active=503' className='fake-link-underlined'>
+                  Read more
+                </Link>
+                on how we handle payments and your information
               </Trans>
             </p>
             <a
