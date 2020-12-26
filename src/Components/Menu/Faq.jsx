@@ -74,7 +74,6 @@ const Faq = (props) => {
       fetchData('privacy')
       fetchData('payments')
     } catch (error) {
-      console.error(error)
       window.alertwindow.alert(t('reusable:errors:500'))
     }
 

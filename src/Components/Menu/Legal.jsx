@@ -19,7 +19,11 @@ const Legal = () => {
       const response = await Client.query(Prismic.Predicates.at('document.type', 'terms'), { lang: locale })
       setContent(response.results[0].data.body)
     }
-    fetchData()
+    try {
+      fetchData()
+    } catch (error) {
+      window.alertwindow.alert(t('reusable:errors:500'))
+    }
   }, [locale])
 
   if (ready) {
