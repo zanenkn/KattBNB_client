@@ -7,6 +7,7 @@ import Spinner from './ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import User from './Icons/User';
 import Review from './Icons/Review';
+import AvailableHost from './Icons/AvailableHost';
 
 const List = (props) => {
   const { t, ready } = useTranslation('List');
@@ -57,6 +58,13 @@ const List = (props) => {
 
             return (
               <div className='list-card' id={host.id} key={host.id}>
+                { host.available &&
+                  <div className='available-host'>
+                    <div style={{ margin: '10px' }}>
+                      <AvailableHost height='30px' />
+                    </div>
+                  </div>
+                }
                 {host.score && <ReviewScore score={host.score} height={'1rem'} displayNumerical={true} />}
                 <div style={{ margin: '0', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
