@@ -31,12 +31,12 @@ export class GoogleMap extends React.PureComponent {
     this.setState({
       clusters: this.state.mapOptions.bounds
         ? this.getClusters(props).map(({ wx, wy, numPoints, points }) => ({
-            lat: wy,
-            lng: wx,
-            numPoints,
-            id: `${numPoints}_${points[0].id}`,
-            points,
-          }))
+          lat: wy,
+          lng: wx,
+          numPoints,
+          id: `${numPoints}_${points[0].id}`,
+          points,
+        }))
         : [],
     });
   };
@@ -87,6 +87,7 @@ export class GoogleMap extends React.PureComponent {
                   lat={item.points[0].lat}
                   lng={item.points[0].lng}
                   total={item.points[0].total}
+                  available={item.points[0].available}
                   handleDatapointClick={this.props.handleDatapointClick}
                 />
               );
