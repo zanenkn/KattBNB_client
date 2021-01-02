@@ -70,6 +70,7 @@ class SearchResults extends Component {
           availableByLocation.sort((a, b) => b.score - a.score);
           availableByLocation.map((host) => {
             host.available = true;
+            return null;
           });
         }
         if (this.props.history.location.state.searchData.without.length > 0) {
@@ -79,6 +80,7 @@ class SearchResults extends Component {
           notAvailableByLocation.sort((a, b) => b.score - a.score);
           notAvailableByLocation.map((host) => {
             host.available = false;
+            return null;
           });
         }
         this.setState({
@@ -103,6 +105,7 @@ class SearchResults extends Component {
                   this.props.history.location.state.from,
                   this.props.history.location.state.to
                 );
+                return null;
               });
             }
             if (response.data !== '' && response.data.without.length > 0) {
@@ -119,6 +122,7 @@ class SearchResults extends Component {
                   this.props.history.location.state.from,
                   this.props.history.location.state.to
                 );
+                return null;
               });
             }
             this.setState({

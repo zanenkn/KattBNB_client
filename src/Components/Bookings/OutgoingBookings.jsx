@@ -109,6 +109,7 @@ class OutgoingBookings extends Component {
         } else {
           outgoingHistory.push(booking);
         }
+        return null;
       });
 
       if (this.state.errorDisplay) {

@@ -44,6 +44,7 @@ class AllConversations extends Component {
             if (conversation.hidden !== this.props.id) {
               shownConversations.push(conversation);
             }
+            return null;
           });
           const sortedResponse = shownConversations.sort(function (a, b) {
             let dateA = new Date(a.msg_created),

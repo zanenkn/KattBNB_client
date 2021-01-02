@@ -109,6 +109,7 @@ class IncomingBookings extends Component {
         } else {
           incomingHistory.push(booking);
         }
+        return null;
       });
 
       if (this.state.errorDisplay) {
