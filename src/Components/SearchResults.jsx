@@ -34,7 +34,9 @@ class SearchResults extends Component {
     errorDisplay: false,
     errors: [],
     availableByLocation: [],
+    notAvailableByLocation: [],
     availableAllLocations: [],
+    notAvailableAllLocations: [],
   };
 
   geolocationDataAddress = () => {
@@ -59,11 +61,9 @@ class SearchResults extends Component {
         });
       } else {
         const lang = detectLanguage();
-        let availableAllLocations;
-        let availableByLocation;
-
-        if (this.props.history.location.state.searchData.length > 0) {
-          availableByLocation = this.props.history.location.state.searchData.filter(
+        let availableAllLocations, notAvailableAllLocations, availableByLocation, notAvailableByLocation;
+        if (this.props.history.location.state.searchData.with.length > 0) {
+          availableByLocation = this.props.history.location.state.searchData.with.filter(
             (host) => host.user.id !== this.props.id
           );
           availableByLocation.sort((a, b) => b.score - a.score);
@@ -71,14 +71,22 @@ class SearchResults extends Component {
             availableByLocation: availableByLocation,
           });
         }
-
+        if (this.props.history.location.state.searchData.without.length > 0) {
+          notAvailableByLocation = this.props.history.location.state.searchData.without.filter(
+            (host) => host.user.id !== this.props.id
+          );
+          notAvailableByLocation.sort((a, b) => b.score - a.score);
+          this.setState({
+            notAvailableByLocation: notAvailableByLocation,
+          });
+        }
         axios
           .get(
             `/api/v1/host_profiles?startDate=${this.props.history.location.state.from}&endDate=${this.props.history.location.state.to}&cats=${this.props.history.location.state.cats}&locale=${lang}`
           )
           .then((response) => {
-            if (response.data !== '' && response.data.length > 0) {
-              availableAllLocations = response.data.filter((host) => host.user.id !== this.props.id);
+            if (response.data !== '' && response.data.with.length > 0) {
+              availableAllLocations = response.data.with.filter((host) => host.user.id !== this.props.id);
               availableAllLocations.map((host) => {
                 host.id = host.user.id;
                 host.lat = parseFloat(host.lat);
@@ -93,6 +101,24 @@ class SearchResults extends Component {
               });
               this.setState({
                 availableAllLocations: availableAllLocations,
+              });
+            }
+            if (response.data !== '' && response.data.without.length > 0) {
+              notAvailableAllLocations = response.data.without.filter((host) => host.user.id !== this.props.id);
+              notAvailableAllLocations.map((host) => {
+                host.id = host.user.id;
+                host.lat = parseFloat(host.lat);
+                host.lng = parseFloat(host.long);
+                host.total = finalTotal(
+                  host.price_per_day_1_cat,
+                  this.props.history.location.state.cats,
+                  host.supplement_price_per_cat_per_day,
+                  this.props.history.location.state.from,
+                  this.props.history.location.state.to
+                );
+              });
+              this.setState({
+                notAvailableAllLocations: notAvailableAllLocations,
               });
             }
           })
