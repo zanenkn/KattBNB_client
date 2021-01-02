@@ -175,7 +175,7 @@ class SearchResults extends Component {
     } else {
       const lang = detectLanguage();
       axios
-        .get(`/api/v1/host_profiles?user_id=${e.target.id}&locale=${lang}`)
+        .get(`/api/v1/host_profiles?user_id=${e.currentTarget.id}&locale=${lang}`)
         .then((response) => {
           if (response.data.length === 1) {
             this.setState({
@@ -471,21 +471,21 @@ class SearchResults extends Component {
               {this.state.loading ? (
                 <Spinner />
               ) : (
-                <HostPopup
-                  numberOfCats={this.state.numberOfCats}
-                  checkInDate={this.state.checkInDate}
-                  checkOutDate={this.state.checkOutDate}
-                  avatar={this.state.hostAvatar}
-                  nickname={this.state.hostNickname}
-                  location={this.state.hostLocation}
-                  rate={this.state.hostRate}
-                  supplement={this.state.hostSupplement}
-                  score={this.state.score}
-                  reviewsCount={this.state.reviewsCount}
-                  handleHostProfileClick={this.handleHostProfileClick.bind(this)}
-                  requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
-                />
-              )}
+                  <HostPopup
+                    numberOfCats={this.state.numberOfCats}
+                    checkInDate={this.state.checkInDate}
+                    checkOutDate={this.state.checkOutDate}
+                    avatar={this.state.hostAvatar}
+                    nickname={this.state.hostNickname}
+                    location={this.state.hostLocation}
+                    rate={this.state.hostRate}
+                    supplement={this.state.hostSupplement}
+                    score={this.state.score}
+                    reviewsCount={this.state.reviewsCount}
+                    handleHostProfileClick={this.handleHostProfileClick.bind(this)}
+                    requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+                  />
+                )}
             </div>
           </Popup>
           <Popup

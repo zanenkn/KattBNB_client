@@ -820,6 +820,7 @@ h4 {
   background: white;
   margin-bottom: 2rem!important;
   position: relative;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 456px) {
