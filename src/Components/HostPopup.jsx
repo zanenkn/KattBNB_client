@@ -78,7 +78,12 @@ const HostPopup = (props) => {
           orderTotal={orderTotal}
           requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
         />
-        {props.hostAvailable === false && <p>Bla bla bla</p>}
+        {props.hostAvailable === false && (
+          <p>
+            This host is not booked for your requested dates, but they also did not mark the requested dates as
+            available. We reccomend contacting them first.
+          </p>
+        )}
       </>
     );
   } else {
