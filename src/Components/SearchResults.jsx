@@ -489,6 +489,7 @@ class SearchResults extends Component {
                   handleHostProfileClick={this.handleHostProfileClick.bind(this)}
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
                   hostAvailable={this.state.hostAvailable}
+                  messageHost={this.messageHost.bind(this)}
                 />
               )}
             </div>

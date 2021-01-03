@@ -13,7 +13,14 @@ class ClusterMarker extends React.PureComponent {
     return (
       <div style={{ display: 'flex', transform: 'translate(-50%, -50%)' }}>
         {this.state.clusterFaceMarkers.map((marker) => (
-          <Marker key={marker.id} lat={marker.lat} lng={marker.lng} id={marker.id} total={marker.total} available={true}/>
+          <Marker
+            key={marker.id}
+            lat={marker.lat}
+            lng={marker.lng}
+            id={marker.id}
+            total={marker.total}
+            available={true}
+          />
         ))}
         {this.props.points.length > 1 && (
           <Label
