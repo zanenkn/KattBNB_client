@@ -555,7 +555,6 @@ button:focus {
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
-  align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
   width: 100%;
@@ -573,6 +572,10 @@ ul.scroll {
   list-style: none;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.scroll-item {
+  margin-bottom: 0;
 }
 
 @supports (scroll-snap-align: start) {

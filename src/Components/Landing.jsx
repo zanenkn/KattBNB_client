@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, createRef } from 'react';
+import React, { useCallback, useState, useRef, createRef, useEffect } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import KattBNBLogo from './Icons/KattBNBLogo';
 import Spinner from './ReusableComponents/Spinner';
@@ -14,6 +14,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
   const textRef = useRef(null);
+  const carousel = useRef(undefined);
   const imageRef = useRef([])
 
   imageRef.current = Array(10)
@@ -22,38 +23,51 @@ const Landing = () => {
 
   const [carouselWidth, setCarouselWidth] = useState(null)
   const [carouselHeight, setCarouselHeight] = useState(null)
-  const [activeMedia, setActiveMedia] = useState(0)
+  const [activeImage, setActiveImage] = useState(0)
 
   const { t, ready } = useTranslation('Landing');
 
-  const scrollDown = () => {
-    window.scrollTo({ top: textRef.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
-  }
+  useEffect(() => {
+    if (carousel.current) {
+      carousel.current.scrollLeft = 0
+    }
+  }, [carousel.current])
 
-  const carouselWrapper = useCallback(
-    (node) => {
-      const resizeCarousel = () => {
-        let height = node.clientHeight
-        let width = node.clientWidth
-        if (height > width) {
-          setCarouselWidth(`${width - 60}px`)
-          setCarouselHeight(`${width - 60}px`)
-        } else {
-          setCarouselWidth(`${height - 60}px`)
-          setCarouselHeight(`${height - 60}px`)
-        }
+  const carouselWrapper = useCallback((node) => {
+    const resizeCarousel = () => {
+      let height = node.clientHeight
+      let width = node.clientWidth
+      if (height > width) {
+        setCarouselWidth(`${width - 60}px`)
+        setCarouselHeight(`${width - 60}px`)
+      } else {
+        setCarouselWidth(`${height - 60}px`)
+        setCarouselHeight(`${height - 60}px`)
       }
-      resizeCarousel()
+    }
+    resizeCarousel()
 
-      window.addEventListener('resize', () => {
-        resizeCarousel()
-      });
-    },
-    []
-  );
+    window.addEventListener('resize', () => {
+      resizeCarousel()
+    });
+  }, []);
 
   const onDotClick = (e) => {
-    setActiveMedia(parseInt(e.target.id))
+    setActiveImage(parseInt(e.target.id))
+
+    carousel.current.scroll({
+      left: imageRef.current[parseInt(e.target.id)].current.offsetLeft,
+      behavior: 'smooth',
+    })
+  }
+
+  const handleCarouselScroll = (e) => {
+    let current = e.target.scrollLeft / (e.target.scrollWidth / 10)
+    setActiveImage(Math.round(current))
+  }
+
+  const scrollDown = () => {
+    window.scrollTo({ top: textRef.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
   }
 
   if (ready) {
@@ -83,7 +97,7 @@ const Landing = () => {
               </div>
               <div ref={carouselWrapper} className='carousel-outer-wrapper'>
                 <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight }}>
-                  <ul className='scroll'>
+                  <ul className='scroll' ref={carousel} onScroll={(e) => handleCarouselScroll(e)}>
                     {imageRef.current.map((_, index) => {
                       return (
                         <li
@@ -103,15 +117,15 @@ const Landing = () => {
 
                 </div>
                 <div className='image-dots'>
-                    {imageRef.current.map((_, i) => (
-                      <div
-                        id={i}
-                        key={i}
-                        className={'dot ' + `${activeMedia === i ? 'selected' : ''}`}
-                        onClick={(e) => onDotClick(e)}
-                      />
-                    ))}
-                  </div>
+                  {imageRef.current.map((_, i) => (
+                    <div
+                      id={i}
+                      key={i}
+                      className={'dot ' + `${activeImage === i ? 'selected' : ''}`}
+                      onClick={(e) => onDotClick(e)}
+                    />
+                  ))}
+                </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
                 <div style={{ marginBottom: '1rem' }}>
@@ -123,7 +137,7 @@ const Landing = () => {
                   </Link>
                 </div>
                 <div className='scroll-down-cta' onClick={() => scrollDown()}>
-                  <Icon link='#' name='angle down' size='huge' color='grey' />
+                  <Icon link={true} name='angle down' size='huge' color='grey' />
                 </div>
               </div>
             </div>
