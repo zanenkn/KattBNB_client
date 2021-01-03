@@ -77,27 +77,15 @@ const List = (props) => {
                     <p style={{ fontSize: 'small', marginTop: '0.3rem' }}>
                       <User fill={'grey'} height={'0.8em'} />
                       &ensp;
-                      <strong id={host.user.id} onClick={props.handleListItemClick}>
-                        {host.user.nickname}
-                      </strong>
+                      <strong>{host.user.nickname}</strong>
                     </p>
                   </div>
                   <div style={{ padding: '0 0 0 2rem' }}>
                     <div>
-                      <Header
-                        as='h3'
-                        style={{ textAlign: 'left', marginBottom: '0' }}
-                        id={host.user.id}
-                        onClick={props.handleListItemClick}
-                      >
+                      <Header as='h3' style={{ textAlign: 'left', marginBottom: '0' }}>
                         {perDay} {t('reusable:price.per-day')}
                       </Header>
-                      <Header
-                        as='h5'
-                        style={{ textAlign: 'left', margin: '0' }}
-                        id={host.user.id}
-                        onClick={props.handleListItemClick}
-                      >
+                      <Header as='h5' style={{ textAlign: 'left', margin: '0' }}>
                         {orderTotal} {t('reusable:price.total')}
                       </Header>
                       {host.score && (
