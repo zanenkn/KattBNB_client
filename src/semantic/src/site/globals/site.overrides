@@ -423,7 +423,6 @@ button:focus {
 }
 
 .carousel-inner-wrapper {
-  background-color: grey;
   margin: auto;
 }
 
@@ -538,6 +537,68 @@ button:focus {
     -webkit-transform: translateY(-5px);
     -ms-transform: translateY(-5px);
     transform: translateY(-5px);
+  }
+}
+
+/*******************************
+            CAROUSEL
+*******************************/
+
+.scroll {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+ul.scroll {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@supports (scroll-snap-align: start) {
+  /* modern scroll snap points */
+
+  .scroll {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+  }
+
+  .scroll-item {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+}
+
+@supports not (scroll-snap-align: start) {
+  /* old scroll snap points spec */
+
+  .scroll {
+    -ms-scroll-snap-type: mandatory;
+    scroll-snap-type: mandatory;
+    -ms-scroll-snap-destination: 0 50%;
+    scroll-snap-destination: 0 50%;
+    -ms-scroll-snap-points-x: repeat(100%);
+    scroll-snap-points-x: repeat(100%);
+  }
+
+  .scroll-item {
+    -ms-scroll-snap-coordinate: 0 0;
+    scroll-snap-coordinate: 0 0;
   }
 }
 

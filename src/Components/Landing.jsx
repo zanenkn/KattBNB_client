@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, createRef } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import KattBNBLogo from './Icons/KattBNBLogo';
 import Spinner from './ReusableComponents/Spinner';
@@ -14,6 +14,12 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
   const textRef = useRef(null);
+  const imageRef = useRef([])
+
+  imageRef.current = Array(10)
+    .fill()
+    .map((_, i) => imageRef.current[i] || createRef())
+
   const [carouselWidth, setCarouselWidth] = useState(null)
   const [carouselHeight, setCarouselHeight] = useState(null)
 
@@ -28,8 +34,6 @@ const Landing = () => {
       const resizeCarousel = () => {
         let height = node.clientHeight
         let width = node.clientWidth
-        console.log(width)
-        let threshold = window.innerWidth < 1024 ? window.innerWidth : (window.innerWidth / 2)
         if (height > width) {
           setCarouselWidth(`${width}px`)
           setCarouselHeight(`${width}px`)
@@ -75,7 +79,23 @@ const Landing = () => {
               </div>
               <div ref={carouselWrapper} className='carousel-outer-wrapper'>
                 <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight }}>
-
+                  <ul className='scroll'>
+                    {imageRef.current.map((_, index) => {
+                      return (
+                        <li
+                          className='scroll-item'
+                          key={index + 1}
+                          ref={imageRef.current[index]}
+                        >
+                          {index === 0 ?
+                            <LazyLoadImage effect='blur' src={`weekly/weekly_${index + 1}.jpg`} width={carouselWidth} height='100%' />
+                            :
+                            <img src={`weekly/weekly_${index + 1}.jpg`} width={carouselWidth} height='100%'></img>
+                          }
+                        </li>
+                      )
+                    })}
+                  </ul>
                 </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
@@ -137,7 +157,7 @@ const Landing = () => {
               <p style={{ fontSize: 'small', color: '#a5a5a5' }}>{t('Landing:photo-credit')}</p>
             </div>
 
-            {/* <LazyLoadImage wrapperClassName='lazy-img' effect='blur' src={`Kisse_${dimentions}.jpg`} /> */}
+
           </div>
         </div>
       </>
