@@ -22,6 +22,7 @@ const Landing = () => {
 
   const [carouselWidth, setCarouselWidth] = useState(null)
   const [carouselHeight, setCarouselHeight] = useState(null)
+  const [activeMedia, setActiveMedia] = useState(0)
 
   const { t, ready } = useTranslation('Landing');
 
@@ -35,11 +36,11 @@ const Landing = () => {
         let height = node.clientHeight
         let width = node.clientWidth
         if (height > width) {
-          setCarouselWidth(`${width}px`)
-          setCarouselHeight(`${width}px`)
+          setCarouselWidth(`${width - 60}px`)
+          setCarouselHeight(`${width - 60}px`)
         } else {
-          setCarouselWidth(`${height}px`)
-          setCarouselHeight(`${height}px`)
+          setCarouselWidth(`${height - 60}px`)
+          setCarouselHeight(`${height - 60}px`)
         }
       }
       resizeCarousel()
@@ -51,6 +52,9 @@ const Landing = () => {
     []
   );
 
+  const onDotClick = (e) => {
+    setActiveMedia(parseInt(e.target.id))
+  }
 
   if (ready) {
     return (
@@ -96,7 +100,18 @@ const Landing = () => {
                       )
                     })}
                   </ul>
+
                 </div>
+                <div className='image-dots'>
+                    {imageRef.current.map((_, i) => (
+                      <div
+                        id={i}
+                        key={i}
+                        className={'dot ' + `${activeMedia === i ? 'selected' : ''}`}
+                        onClick={(e) => onDotClick(e)}
+                      />
+                    ))}
+                  </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
                 <div style={{ marginBottom: '1rem' }}>

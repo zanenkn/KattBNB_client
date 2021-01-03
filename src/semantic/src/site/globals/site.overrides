@@ -420,15 +420,14 @@ button:focus {
   flex-grow: 1;
   align-items: center;
   width: 100%;
-}
-
-.carousel-inner-wrapper {
-  margin: auto;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .landing-text {
   justify-content: center;
 }
+
 .landing-carousel {
   justify-content: space-between;
 }
@@ -443,12 +442,20 @@ button:focus {
     justify-content: space-between;
   }
 
-  .landing-text, .landing-carousel {
-    width: 50%;
-  }
 
   .mobile-only {
     display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+
+  .landing-text {
+    width: 40%;
+  }
+
+  .landing-carousel {
+    width: 60%;
   }
 }
 
@@ -602,6 +609,45 @@ ul.scroll {
   }
 }
 
+.image-dots {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+@media screen and (min-width: 768px) {
+  .image-dots {
+    display: flex;
+  }
+}
+
+.dot {
+  margin: 8px;
+  height: 12px;
+  width: 12px;
+  background-color: silver;
+  border-radius: 9999px;
+  cursor: pointer;   
+  opacity: 0.3;
+}
+
+@media screen and (min-width: 1024px) {
+  .dot {
+    margin: 12px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dot:hover {
+    opacity: 0.75;
+  }
+}
+
+.selected {
+  opacity: 1;
+}
 /*******************************
             CONTENT
 *******************************/
