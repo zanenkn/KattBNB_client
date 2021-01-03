@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import KattBNBLogo from './Icons/KattBNBLogo';
 import Spinner from './ReusableComponents/Spinner';
@@ -13,25 +13,41 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
-  const [dimentions, setDimentions] = useState('mobile');
-  const [ctaVisibility, setCtaVisibility] = useState('visible');
-  const mobileText = useRef(null);
+  const textRef = useRef(null);
+  const [carouselWidth, setCarouselWidth] = useState(null)
+  const [carouselHeight, setCarouselHeight] = useState(null)
 
   const { t, ready } = useTranslation('Landing');
 
   const scrollDown = () => {
-    window.scrollTo({ top: mobileText.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
-  };
+    window.scrollTo({ top: textRef.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
+  }
 
-  useEffect(() => {
-    window.innerHeight > window.innerWidth ? setDimentions('mobile') : setDimentions('desktop');
-    window.addEventListener('resize', () => {
-      window.innerHeight > window.innerWidth ? setDimentions('mobile') : setDimentions('desktop');
-    });
-    window.addEventListener('scroll', () => {
-      window.scrollY > 0 ? setCtaVisibility('hidden') : setCtaVisibility('visible');
-    });
-  }, []);
+  const carouselWrapper = useCallback(
+    (node) => {
+      const resizeCarousel = () => {
+        let height = node.clientHeight
+        let width = node.clientWidth
+        console.log(width)
+        let threshold = window.innerWidth < 1024 ? window.innerWidth : (window.innerWidth / 2)
+        if (height > width) {
+          setCarouselWidth(`${width}px`)
+          setCarouselHeight(`${width}px`)
+        } else {
+          setCarouselWidth(`${height}px`)
+          setCarouselHeight(`${height}px`)
+        }
+      }
+      resizeCarousel()
+
+      window.addEventListener('resize', () => {
+        resizeCarousel()
+      });
+    },
+    []
+  );
+
+
   if (ready) {
     return (
       <>
@@ -51,55 +67,40 @@ const Landing = () => {
           />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
-        <div className={`device-height landing-hero-wrapper ${dimentions}`}>
-          <LazyLoadImage wrapperClassName='lazy-img' effect='blur' src={`Kisse_${dimentions}.jpg`} />
-          <div className='landing-desktop-content'>
-            <KattBNBLogomark width={'100px'} />
-            <Header as='h1'>{t('Landing:title')}</Header>
-            <p
-              style={{ textAlign: 'center', maxWidth: '300px' }}
-              dangerouslySetInnerHTML={{ __html: t('Landing:text') }}
-            ></p>
-            <div style={{ width: '165px' }}>
-              <Link to={'/search'}>
-                <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
-              </Link>
-              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
-              </Link>
+        <div style={{ backgroundColor: '#fafafa' }}>
+          <div className='landing-wrapper'>
+            <div className='landing-carousel device-height'>
+              <div className='mobile-only'>
+                <KattBNBLogo class={'landing-mobile-logo'} />
+              </div>
+              <div ref={carouselWrapper} className='carousel-outer-wrapper'>
+                <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight }}>
+
+                </div>
+              </div>
+              <div className='mobile-only' style={{ width: '165px' }}>
+                <div style={{ marginBottom: '1rem' }}>
+                  <Link to={'/search'}>
+                    <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
+                  </Link>
+                  <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
+                    <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
+                  </Link>
+                </div>
+                <div className='scroll-down-cta' onClick={() => scrollDown()}>
+                  <Icon link='#' name='angle down' size='huge' color='grey' />
+                </div>
+              </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '4rem auto' }}>
-              <a
-                href='https://www.facebook.com/kattbnb/'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <FacebookIcon height={'3rem'} fill={'grey'} class={'some-icon'} />
-              </a>
-              <a
-                href='https://www.instagram.com/kattbnb'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <InstagramIcon height={'3rem'} fill={'grey'} class={'some-icon'} />
-              </a>
-              <a
-                href='https://www.linkedin.com/company/28767809'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <LinkedinIcon height={'3rem'} fill={'grey'} class={'some-icon'} />
-              </a>
-            </div>
-            <p style={{ fontSize: 'small', color: '#a5a5a5' }}>{t('Landing:photo-credit')}</p>
-          </div>
-          <div className='landing-mobile-content'>
-            <KattBNBLogo class={'landing-mobile-logo'} />
-            <div style={{ width: '165px' }}>
-              <div style={{ marginBottom: '1rem' }}>
+
+            <div ref={textRef} className='landing-text min-device-height'>
+              <KattBNBLogomark width={'100px'} />
+              <Header as='h1'>{t('Landing:title')}</Header>
+              <p
+                style={{ textAlign: 'center', maxWidth: '300px' }}
+                dangerouslySetInnerHTML={{ __html: t('Landing:text') }}
+              ></p>
+              <div style={{ width: '165px' }}>
                 <Link to={'/search'}>
                   <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
                 </Link>
@@ -107,58 +108,36 @@ const Landing = () => {
                   <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
                 </Link>
               </div>
-              <div className='scroll-down-cta' onClick={() => scrollDown()} style={{ visibility: ctaVisibility }}>
-                <Icon link='#' name='angle down' size='huge' color='grey' />
+              <div style={{ display: 'flex', justifyContent: 'center', margin: '4rem auto' }}>
+                <a
+                  href='https://www.facebook.com/kattbnb/'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
+                >
+                  <FacebookIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
+                </a>
+                <a
+                  href='https://www.instagram.com/kattbnb'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
+                >
+                  <InstagramIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
+                </a>
+                <a
+                  href='https://www.linkedin.com/company/28767809'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
+                >
+                  <LinkedinIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
+                </a>
               </div>
+              <p style={{ fontSize: 'small', color: '#a5a5a5' }}>{t('Landing:photo-credit')}</p>
             </div>
-          </div>
-        </div>
-        <div
-          ref={mobileText}
-          className={`min-device-height ${dimentions}`}
-          style={{ alignItems: 'center', justifyContent: 'center', display: dimentions === 'mobile' ? 'flex' : 'none' }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '3rem 2rem' }}>
-            <Header as='h1'>{t('Landing:title')}</Header>
-            <p
-              style={{ textAlign: 'center', maxWidth: '300px' }}
-              dangerouslySetInnerHTML={{ __html: t('Landing:text') }}
-            ></p>
-            <div style={{ width: '165px' }}>
-              <Link to={'/search'}>
-                <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
-              </Link>
-              <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
-              </Link>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '4rem auto' }}>
-              <a
-                href='https://www.facebook.com/kattbnb/'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <FacebookIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-              </a>
-              <a
-                href='https://www.instagram.com/kattbnb'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <InstagramIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-              </a>
-              <a
-                href='https://www.linkedin.com/company/28767809'
-                target='_blank'
-                rel='noopener noreferrer'
-                style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-              >
-                <LinkedinIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-              </a>
-            </div>
-            <p style={{ fontSize: 'small', color: '#a5a5a5' }}>{t('Landing:photo-credit')}</p>
+
+            {/* <LazyLoadImage wrapperClassName='lazy-img' effect='blur' src={`Kisse_${dimentions}.jpg`} /> */}
           </div>
         </div>
       </>

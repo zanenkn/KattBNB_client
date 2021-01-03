@@ -389,19 +389,68 @@ button:focus {
          LANDING PAGE
 *******************************/
 
-.landing-hero-wrapper.mobile {
-}
 
-.landing-hero-wrapper.desktop {
+.landing-wrapper {
+  max-width: 1290px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-end;
+  margin: auto;
 }
 
-.landing-hero-wrapper {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+@media screen and (max-width: 480px) {
+  .landing-carousel {
+    padding: 1.5rem 2rem 1rem!important;
+  }
+  .landing-mobile-logo {
+    width: 65px!important;
+  }
+}
+
+.landing-text, .landing-carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  padding: 3rem 2rem;
+}
+
+.carousel-outer-wrapper {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  width: 100%;
+}
+
+.carousel-inner-wrapper {
+  background-color: grey;
+  margin: auto;
+}
+
+.landing-text {
+  justify-content: center;
+}
+.landing-carousel {
+  justify-content: space-between;
+}
+
+.mobile-only {
+  display: block;
+}
+
+@media screen and (min-width: 1024px) {
+  .landing-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .landing-text, .landing-carousel {
+    width: 50%;
+  }
+
+  .mobile-only {
+    display: none;
+  }
 }
 
 .lazy-img {
@@ -420,37 +469,13 @@ button:focus {
   height: calc(var(--vh, 1vh) * 100 - 60px);
 }
 
-.mobile > .landing-desktop-content {
-  display: none;
-}
-
-.landing-desktop-content {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.desktop > .landing-mobile-content {
-  display: none;
-}
-
-.landing-mobile-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  justify-content: space-between;
-  padding: 3rem 0 0;
-}
-
 .min-device-height {
   min-height: calc(var(--vh, 1vh) * 100 - 60px);
 }
 
 .landing-mobile-logo {
   width: 100px;
+  margin-bottom: 2rem;
 }
 
 @media screen and (min-height: 736px) {
@@ -513,18 +538,6 @@ button:focus {
     -webkit-transform: translateY(-5px);
     -ms-transform: translateY(-5px);
     transform: translateY(-5px);
-  }
-}
-
-@media screen and (min-height: 1366px) {
-  .landing-mobile-content {
-    padding: 8rem 0 2rem;
-  }
-  .landing-mobile-logo {
-    margin-bottom: 2rem;
-  }
-  .landing-hero-wrapper > .landing-mobile-content {
-    justify-content: flex-end;
   }
 }
 
