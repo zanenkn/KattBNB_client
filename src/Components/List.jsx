@@ -55,7 +55,12 @@ const List = (props) => {
               props.checkOutDate
             );
             return (
-              <div className='list-card' key={host.id} onClick={props.handleListItemClick} id={host.user.id}>
+              <div
+                className='list-card'
+                key={host.id}
+                onClick={(e) => props.handleListItemClick(host.user.id, host.available)}
+                id={host.user.id}
+              >
                 {host.available && (
                   <div className='available-host'>
                     <div style={{ margin: '10px' }}>

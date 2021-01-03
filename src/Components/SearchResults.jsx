@@ -166,7 +166,7 @@ class SearchResults extends Component {
     window.scrollTo(0, 0);
   }
 
-  getHostById(e) {
+  getHostById(id, status) {
     if (window.navigator.onLine === false) {
       this.setState({
         errorDisplay: true,
@@ -175,7 +175,7 @@ class SearchResults extends Component {
     } else {
       const lang = detectLanguage();
       axios
-        .get(`/api/v1/host_profiles?user_id=${e.currentTarget.id}&locale=${lang}`)
+        .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
         .then((response) => {
           if (response.data.length === 1) {
             this.setState({
@@ -191,6 +191,7 @@ class SearchResults extends Component {
               hostProfileId: response.data[0].id,
               score: response.data[0].score,
               reviewsCount: response.data[0].reviews_count,
+              hostAvailable: status,
               loading: false,
               openHostPopup: true,
             });
@@ -221,8 +222,8 @@ class SearchResults extends Component {
     }
   }
 
-  handleDatapointClick(e) {
-    this.getHostById(e);
+  handleDatapointClick(id, status) {
+    this.getHostById(id, status);
   }
 
   resetHost() {
@@ -235,6 +236,9 @@ class SearchResults extends Component {
       hostDescription: '',
       hostLat: '',
       hostLong: '',
+      hostAvailable: '',
+      hostId: '',
+      hostProfileId: '',
     });
   }
 
@@ -484,6 +488,7 @@ class SearchResults extends Component {
                   reviewsCount={this.state.reviewsCount}
                   handleHostProfileClick={this.handleHostProfileClick.bind(this)}
                   requestToBookButtonClick={this.requestToBookButtonClick.bind(this)}
+                  hostAvailable={this.state.hostAvailable}
                 />
               )}
             </div>

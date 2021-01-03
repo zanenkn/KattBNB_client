@@ -18,7 +18,7 @@ class Marker extends React.PureComponent {
             transform: 'translate(-50%, -50%)',
           }}
           id={this.props.id}
-          onClick={this.props.handleDatapointClick}
+          onClick={(e) => this.props.handleDatapointClick(this.props.id, this.props.available)}
         >
           {this.props.total}&nbsp;kr
         </Label>

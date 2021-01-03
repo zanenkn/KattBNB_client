@@ -83,7 +83,7 @@ export class GoogleMap extends React.PureComponent {
               return (
                 <Marker
                   key={item.id}
-                  id={item.points[0].id}
+                  id={item.points[0].user.id}
                   lat={item.points[0].lat}
                   lng={item.points[0].lng}
                   total={item.points[0].total}
