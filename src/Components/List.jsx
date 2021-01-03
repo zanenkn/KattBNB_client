@@ -38,7 +38,6 @@ const List = (props) => {
             </Trans>
           </Header>
         )}
-
         {props.finalAvailableHosts.length > 0 &&
           props.finalAvailableHosts.map((host) => {
             let perDay = pricePerDay(
@@ -55,16 +54,15 @@ const List = (props) => {
               props.checkInDate,
               props.checkOutDate
             );
-
             return (
               <div className='list-card' key={host.id} onClick={props.handleListItemClick} id={host.user.id}>
-                { host.available &&
+                {host.available && (
                   <div className='available-host'>
                     <div style={{ margin: '10px' }}>
                       <AvailableHost height='30px' />
                     </div>
                   </div>
-                }
+                )}
                 {host.score && <ReviewScore score={host.score} height={'1rem'} displayNumerical={true} />}
                 <div style={{ margin: '0', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -75,7 +73,6 @@ const List = (props) => {
                           : host.user.profile_avatar
                       }
                       style={{ borderRadius: '50%', margin: 'auto', height: '100px' }}
-
                     />
                     <p style={{ fontSize: 'small', marginTop: '0.3rem' }}>
                       <User fill={'grey'} height={'0.8em'} />

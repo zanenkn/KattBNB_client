@@ -12,7 +12,11 @@ class Marker extends React.PureComponent {
       <div style={{ transform: 'translate(-50%, -50%)' }}>
         <Label
           pointing='below'
-          style={{ backgroundColor: this.props.available ? '#c90c61' : '#808080', color: '#ffffff', transform: 'translate(-50%, -50%)' }}
+          style={{
+            backgroundColor: this.props.available ? '#c90c61' : '#808080',
+            color: '#ffffff',
+            transform: 'translate(-50%, -50%)',
+          }}
           id={this.props.id}
           onClick={this.props.handleDatapointClick}
         >
