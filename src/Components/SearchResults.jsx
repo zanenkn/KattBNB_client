@@ -54,6 +54,7 @@ class SearchResults extends Component {
     } else {
       if (window.navigator.onLine === false) {
         this.setState({
+          loading: false,
           errorDisplay: true,
           errors: ['reusable:errors:window-navigator'],
         });
@@ -152,6 +153,7 @@ class SearchResults extends Component {
           checkOutDate: this.props.history.location.state.to,
           numberOfCats: this.props.history.location.state.cats,
           location: this.props.history.location.state.location,
+          loading: false,
         });
         this.geolocationDataAddress();
       }
@@ -193,7 +195,6 @@ class SearchResults extends Component {
               score: response.data[0].score,
               reviewsCount: response.data[0].reviews_count,
               hostAvailable: status,
-              loading: false,
               openHostPopup: true,
             });
           } else {
@@ -240,13 +241,14 @@ class SearchResults extends Component {
       hostAvailable: '',
       hostId: '',
       hostProfileId: '',
+      score: '',
+      reviewsCount: '',
     });
   }
 
   closeModal = () => {
     this.setState({
       openHostPopup: false,
-      loading: true,
     });
     if (this.state.results !== 'profile') {
       this.resetHost();
@@ -352,7 +354,7 @@ class SearchResults extends Component {
     let outDate = moment(this.state.checkOutDate).format('l');
     let listButton, mapButton, mapButtonStyle, listButtonStyle, resultCounter, results, errorDisplay;
 
-    if (this.props.tReady) {
+    if (this.props.tReady && this.state.loading === false) {
       switch (this.state.results) {
         case 'list':
           results = (
