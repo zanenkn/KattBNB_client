@@ -31,6 +31,7 @@ class SearchResults extends Component {
     openHostPopup: false,
     scrollOffset: 0,
     loading: true,
+    hostPopupLoading: true,
     errorDisplay: false,
     errors: [],
     availableByLocation: [],
@@ -196,6 +197,7 @@ class SearchResults extends Component {
               reviewsCount: response.data[0].reviews_count,
               hostAvailable: status,
               openHostPopup: true,
+              hostPopupLoading: false,
             });
           } else {
             this.setState({
@@ -249,6 +251,7 @@ class SearchResults extends Component {
   closeModal = () => {
     this.setState({
       openHostPopup: false,
+      hostPopupLoading: true,
     });
     if (this.state.results !== 'profile') {
       this.resetHost();
@@ -475,7 +478,7 @@ class SearchResults extends Component {
             position='top center'
           >
             <div>
-              {this.state.loading ? (
+              {this.state.hostPopupLoading ? (
                 <Spinner />
               ) : (
                 <HostPopup
