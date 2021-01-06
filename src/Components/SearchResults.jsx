@@ -38,6 +38,16 @@ const SearchResults = (props) => {
   const [errors, setErrors] = useState([]);
   const [availableByLocation, setAvailableByLocation] = useState([]);
   const [availableAllLocations, setAvailableAllLocations] = useState([]);
+  const [hostId, setHostId] = useState('');
+  const [hostAvatar, setHostAvatar] = useState('');
+  const [hostNickname, setHostNickname] = useState('');
+  const [hostLocation, setHostLocation] = useState('');
+  const [hostRate, setHostRate] = useState('');
+  const [hostSupplement, setHostSupplement] = useState('');
+  const [hostDescription, setHostDescription] = useState('');
+  const [hostLat, setHostLat] = useState('');
+  const [hostLong, setHostLong] = useState('');
+  const [hostAvailable, setHostAvailable] = useState('');
 
   const geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
@@ -150,6 +160,99 @@ const SearchResults = (props) => {
     }
     asyncDidMount();
   }, []);
+
+  const handleHostProfileClick = () => {
+    setResults('profile');
+    setOpenHostPopup(false);
+    setScrollOffset(window.pageYOffset);
+    window.scrollTo(0, 0);
+  };
+
+  const getHostById = (id, status) => {
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true);
+      setErrors(['reusable:errors:window-navigator']);
+    } else {
+      const lang = detectLanguage();
+      axios
+        .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
+        .then((response) => {
+          if (response.data.length === 1) {
+            setHostId(response.data[0].user.id);
+            setHostAvatar(response.data[0].user.profile_avatar);
+            setHostNickname(response.data[0].user.nickname);
+            setHostLocation(response.data[0].user.location);
+            setHostRate(response.data[0].price_per_day_1_cat);
+            setHostSupplement(response.data[0].supplement_price_per_cat_per_day);
+            setHostDescription(response.data[0].description);
+            setHostLat(response.data[0].lat);
+            setHostLong(response.data[0].long);
+            setHostProfileId(response.data[0].id);
+            setScore(response.data[0].score);
+            setReviewsCount(response.data[0].reviews_count);
+            setHostAvailable(status);
+            setOpenHostPopup(true);
+            setHostPopupLoading(false);
+          } else {
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:index-no-host-1']);
+          }
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            wipeCredentials('/is-not-available?atm');
+          } else if (error.response.status === 500) {
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:500']);
+          } else if (error.response.status === 503) {
+            wipeCredentials('/is-not-available?atm');
+          } else {
+            setErrorDisplay(true);
+            setErrors(error.response.data.error);
+          }
+        });
+    }
+  };
+
+  const handleDatapointClick = (id, status) => {
+    getHostById(id, status);
+  };
+
+  const resetHost = () => {
+    setHostAvatar('');
+    setHostNickname('');
+    setHostLocation('');
+    setHostRate('');
+    setHostSupplement('');
+    setHostDescription('');
+    setHostLat('');
+    setHostLong('');
+    setHostAvailable('');
+    setHostId('');
+    setHostProfileId('');
+    setScore('');
+    setReviewsCount('');
+  };
+
+  const closeModal = () => {
+    setOpenHostPopup(false);
+    setHostPopupLoading(true);
+    if (results !== 'profile') {
+      resetHost();
+    }
+  };
+
+  const switchResultView = (e) => {
+    window.scrollTo(0, scrollOffset);
+    setResults(e.target.id.split('-')[0]);
+    resetHost();
+  };
+
+
+
+
+
+
 };
 
 const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });
