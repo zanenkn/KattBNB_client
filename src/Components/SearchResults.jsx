@@ -326,6 +326,63 @@ const SearchResults = (props) => {
     }
   };
 
+  if (ready && loading === false) {
+    return (
+      <>
+        <Popup modal open={openHostPopup} closeOnDocumentClick={true} onClose={closeModal} position='top center'>
+          <div>
+            {hostPopupLoading ? (
+              <Spinner />
+            ) : (
+              <HostPopup
+                numberOfCats={numberOfCats}
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+                avatar={hostAvatar}
+                nickname={hostNickname}
+                location={hostLocation}
+                rate={hostRate}
+                supplement={hostSupplement}
+                score={score}
+                reviewsCount={reviewsCount}
+                handleHostProfileClick={handleHostProfileClick.bind(this)}
+                requestToBookButtonClick={requestToBookButtonClick.bind(this)}
+                hostAvailable={hostAvailable}
+                messageHost={messageHost.bind(this)}
+              />
+            )}
+          </div>
+        </Popup>
+        <Popup
+          modal
+          open={errorDisplay}
+          closeOnDocumentClick={true}
+          onClose={() => {
+            setErrorDisplay(false);
+            setErrors([]);
+          }}
+          position='top center'
+        >
+          {errorDisplay && (
+            <div>
+              <Message negative>
+                <ul id='message-error-list'>
+                  {errors.map((error) => (
+                    <li key={error}>{t(error)}</li>
+                  ))}
+                </ul>
+              </Message>
+            </div>
+          )}
+        </Popup>
+      </>
+    );
+  } else {
+    return <Spinner />;
+  }
+
+
+
 
 
 
