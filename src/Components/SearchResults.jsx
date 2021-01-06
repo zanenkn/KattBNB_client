@@ -248,6 +248,83 @@ const SearchResults = (props) => {
     resetHost();
   };
 
+  const requestToBookButtonClick = () => {
+    if (props.id === undefined) {
+      props.history.push('/login');
+    } else {
+      props.history.push({
+        pathname: '/request-to-book',
+        state: {
+          numberOfCats: numberOfCats,
+          checkInDate: checkInDate,
+          checkOutDate: checkOutDate,
+          nickname: hostNickname,
+          hostRate: hostRate,
+          hostSupplement: hostSupplement,
+        },
+      });
+    }
+  };
+
+  const messageHost = (e) => {
+    e.preventDefault();
+    if (window.navigator.onLine === false) {
+      setErrorDisplay(true);
+      setErrors(['reusable:errors:window-navigator']);
+    } else {
+      if (props.id === undefined) {
+        props.history.push('/login');
+      } else {
+        const lang = detectLanguage();
+        const path = '/api/v1/conversations';
+        const payload = {
+          user1_id: props.id,
+          user2_id: hostId,
+          locale: lang,
+        };
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token'),
+        };
+        axios
+          .post(path, payload, { headers: headers })
+          .then((response) => {
+            props.history.push({
+              pathname: '/conversation',
+              state: {
+                id: response.data.id,
+                user: {
+                  profile_avatar: hostAvatar,
+                  id: hostId,
+                  location: hostLocation,
+                  nickname: hostNickname,
+                },
+              },
+            });
+          })
+          .catch((error) => {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm');
+            } else if (error.response.status === 500) {
+              setErrorDisplay(true);
+              setErrors(['reusable:errors:500']);
+            } else if (error.response.status === 503) {
+              wipeCredentials('/is-not-available?atm');
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/');
+            } else if (error.response.status === 422) {
+              setErrorDisplay(true);
+              setErrors(['reusable:errors:422-conversation']);
+            } else {
+              setErrorDisplay(true);
+              setErrors(error.response.data.error);
+            }
+          });
+      }
+    }
+  };
 
 
 
