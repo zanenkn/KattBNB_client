@@ -58,6 +58,25 @@ const SearchResults = ({id, history}) => {
     });
   };
 
+  const someMethod = (array, status) => {
+    array.map((host) => {
+      host.available = status;
+      host.id = host.user.id;
+      host.lat = parseFloat(host.lat);
+      host.lng = parseFloat(host.long);
+      host.total = finalTotal(
+        host.price_per_day_1_cat,
+        history.location.state.cats,
+        host.supplement_price_per_cat_per_day,
+        history.location.state.from,
+        history.location.state.to
+      );
+      return null;
+    });
+  } 
+  
+ 
+
   useEffect(() => {
     async function asyncDidMount() {
       if (history.location.state === undefined) {
@@ -99,54 +118,42 @@ const SearchResults = ({id, history}) => {
             );
             if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
               APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-              APIavailableAllLocations.map((host) => {
-                host.available = true;
-                host.id = host.user.id;
-                host.lat = parseFloat(host.lat);
-                host.lng = parseFloat(host.long);
-                host.total = finalTotal(
-                  host.price_per_day_1_cat,
-                  history.location.state.cats,
-                  host.supplement_price_per_cat_per_day,
-                  history.location.state.from,
-                  history.location.state.to
-                );
-                return null;
-              });
+              someMethod(APIavailableAllLocations, true)
             }
             if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
               APInotAvailableAllLocations = responseAllLocations.data.without.filter(
                 (host) => host.user.id !== id
               );
-              APInotAvailableAllLocations.map((host) => {
-                host.available = false;
-                host.id = host.user.id;
-                host.lat = parseFloat(host.lat);
-                host.lng = parseFloat(host.long);
-                host.total = finalTotal(
-                  host.price_per_day_1_cat,
-                  history.location.state.cats,
-                  host.supplement_price_per_cat_per_day,
-                  history.location.state.from,
-                  history.location.state.to
-                );
-                return null;
-              });
+              someMethod(APIavailableAllLocations, false)
+              // APInotAvailableAllLocations.map((host) => {
+              //   host.available = false;
+              //   host.id = host.user.id;
+              //   host.lat = parseFloat(host.lat);
+              //   host.lng = parseFloat(host.long);
+              //   host.total = finalTotal(
+              //     host.price_per_day_1_cat,
+              //     history.location.state.cats,
+              //     host.supplement_price_per_cat_per_day,
+              //     history.location.state.from,
+              //     history.location.state.to
+              //   );
+              //   return null;
+              // });
             }
             setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
-          } catch (error) {
-            if (error.response === undefined) {
+          } catch ({response}) {
+            if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
+            } else if (response.status === 500) {
               setLoading(false);
               setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
-            } else if (error.response.status === 503) {
+            } else if (response.status === 503) {
               wipeCredentials('/is-not-available?atm');
             } else {
               setLoading(false);
               setErrorDisplay(true);
-              setErrors(error.response.data.error);
+              setErrors(response.data.error);
             }
           }
           setCheckInDate(history.location.state.from);
@@ -342,7 +349,7 @@ const SearchResults = ({id, history}) => {
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
               location={location}
-              handleListItemClick={handleDatapointClick.bind(this)}
+              handleListItemClick={handleDatapointClick}
             />
           </div>
         );
@@ -360,7 +367,7 @@ const SearchResults = ({id, history}) => {
               mapCenterLat={locationLat}
               mapCenterLong={locationLong}
               allAvailableHosts={availableAllLocations}
-              handleDatapointClick={handleDatapointClick.bind(this)}
+              handleDatapointClick={handleDatapointClick}
             />
           </div>
         );
@@ -394,8 +401,8 @@ const SearchResults = ({id, history}) => {
               long={hostLong}
               hostProfileId={hostProfileId}
               score={score}
-              requestToBookButtonClick={() => requestToBookButtonClick}
-              messageHost={() => messageHost}
+              requestToBookButtonClick={requestToBookButtonClick}
+              messageHost={messageHost}
             />
           </div>
         );
@@ -422,10 +429,10 @@ const SearchResults = ({id, history}) => {
                 supplement={hostSupplement}
                 score={score}
                 reviewsCount={reviewsCount}
-                handleHostProfileClick={handleHostProfileClick.bind(this)}
-                requestToBookButtonClick={requestToBookButtonClick.bind(this)}
+                handleHostProfileClick={handleHostProfileClick}
+                requestToBookButtonClick={requestToBookButtonClick}
                 hostAvailable={hostAvailable}
-                messageHost={messageHost.bind(this)}
+                messageHost={messageHost}
               />
             )}
           </div>
