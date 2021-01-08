@@ -17,7 +17,7 @@ import HostPopup from './HostPopup';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 
-const SearchResults = (props) => {
+const SearchResults = ({id, history}) => {
   const { t, ready } = useTranslation('SearchResults');
 
   const [checkInDate, setCheckInDate] = useState('');
@@ -51,7 +51,7 @@ const SearchResults = (props) => {
 
   const geolocationDataAddress = () => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
-    Geocode.fromAddress(props.history.location.state.location).then((response) => {
+    Geocode.fromAddress(history.location.state.location).then((response) => {
       const { lat, lng } = response.results[0].geometry.location;
       setLocationLat(lat);
       setLocationLong(lng);
@@ -60,8 +60,8 @@ const SearchResults = (props) => {
 
   useEffect(() => {
     async function asyncDidMount() {
-      if (props.history.location.state === undefined) {
-        props.history.push({ pathname: '/search' });
+      if (history.location.state === undefined) {
+        history.push({ pathname: '/search' });
       } else {
         if (window.navigator.onLine === false) {
           setLoading(false);
@@ -75,10 +75,10 @@ const SearchResults = (props) => {
             let APIavailableAllLocations = [];
             let APInotAvailableAllLocations = [];
             const responseByLocation = await axios.get(
-              `/api/v1/host_profiles?location=${props.history.location.state.location}&startDate=${props.history.location.state.from}&endDate=${props.history.location.state.to}&cats=${props.history.location.state.cats}&locale=${lang}`
+              `/api/v1/host_profiles?location=${history.location.state.location}&startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
             );
             if (responseByLocation.data.with.length > 0) {
-              APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== props.id);
+              APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
               APIavailableByLocation.sort((a, b) => b.score - a.score);
               APIavailableByLocation.map((host) => {
                 host.available = true;
@@ -86,7 +86,7 @@ const SearchResults = (props) => {
               });
             }
             if (responseByLocation.data.without.length > 0) {
-              APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== props.id);
+              APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
               APInotAvailableByLocation.sort((a, b) => b.score - a.score);
               APInotAvailableByLocation.map((host) => {
                 host.available = false;
@@ -95,10 +95,10 @@ const SearchResults = (props) => {
             }
             setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
             const responseAllLocations = await axios.get(
-              `/api/v1/host_profiles?startDate=${props.history.location.state.from}&endDate=${props.history.location.state.to}&cats=${props.history.location.state.cats}&locale=${lang}`
+              `/api/v1/host_profiles?startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
             );
             if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
-              APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== props.id);
+              APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
               APIavailableAllLocations.map((host) => {
                 host.available = true;
                 host.id = host.user.id;
@@ -106,17 +106,17 @@ const SearchResults = (props) => {
                 host.lng = parseFloat(host.long);
                 host.total = finalTotal(
                   host.price_per_day_1_cat,
-                  props.history.location.state.cats,
+                  history.location.state.cats,
                   host.supplement_price_per_cat_per_day,
-                  props.history.location.state.from,
-                  props.history.location.state.to
+                  history.location.state.from,
+                  history.location.state.to
                 );
                 return null;
               });
             }
             if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
               APInotAvailableAllLocations = responseAllLocations.data.without.filter(
-                (host) => host.user.id !== props.id
+                (host) => host.user.id !== id
               );
               APInotAvailableAllLocations.map((host) => {
                 host.available = false;
@@ -125,10 +125,10 @@ const SearchResults = (props) => {
                 host.lng = parseFloat(host.long);
                 host.total = finalTotal(
                   host.price_per_day_1_cat,
-                  props.history.location.state.cats,
+                  history.location.state.cats,
                   host.supplement_price_per_cat_per_day,
-                  props.history.location.state.from,
-                  props.history.location.state.to
+                  history.location.state.from,
+                  history.location.state.to
                 );
                 return null;
               });
@@ -149,10 +149,10 @@ const SearchResults = (props) => {
               setErrors(error.response.data.error);
             }
           }
-          setCheckInDate(props.history.location.state.from);
-          setCheckOutDate(props.history.location.state.to);
-          setNumberOfCats(props.history.location.state.cats);
-          setLocation(props.history.location.state.location);
+          setCheckInDate(history.location.state.from);
+          setCheckOutDate(history.location.state.to);
+          setNumberOfCats(history.location.state.cats);
+          setLocation(history.location.state.location);
           setLoading(false);
           geolocationDataAddress();
         }
@@ -249,10 +249,10 @@ const SearchResults = (props) => {
   };
 
   const requestToBookButtonClick = () => {
-    if (props.id === undefined) {
-      props.history.push('/login');
+    if (id === undefined) {
+      history.push('/login');
     } else {
-      props.history.push({
+      history.push({
         pathname: '/request-to-book',
         state: {
           numberOfCats: numberOfCats,
@@ -272,13 +272,13 @@ const SearchResults = (props) => {
       setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
-      if (props.id === undefined) {
-        props.history.push('/login');
+      if (id === undefined) {
+        history.push('/login');
       } else {
         const lang = detectLanguage();
         const path = '/api/v1/conversations';
         const payload = {
-          user1_id: props.id,
+          user1_id: id,
           user2_id: hostId,
           locale: lang,
         };
@@ -290,7 +290,7 @@ const SearchResults = (props) => {
         axios
           .post(path, payload, { headers: headers })
           .then((response) => {
-            props.history.push({
+            history.push({
               pathname: '/conversation',
               state: {
                 id: response.data.id,
@@ -303,23 +303,23 @@ const SearchResults = (props) => {
               },
             });
           })
-          .catch((error) => {
-            if (error.response === undefined) {
+          .catch(({response}) => {
+            if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
+            } else if (response.status === 500) {
               setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
-            } else if (error.response.status === 503) {
+            } else if (response.status === 503) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 401) {
+            } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
-            } else if (error.response.status === 422) {
+            } else if (response.status === 422) {
               setErrorDisplay(true);
               setErrors(['reusable:errors:422-conversation']);
             } else {
               setErrorDisplay(true);
-              setErrors(error.response.data.error);
+              setErrors(response.data.error);
             }
           });
       }
@@ -383,7 +383,7 @@ const SearchResults = (props) => {
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
               hostId={hostId}
-              currentUserId={props.id}
+              currentUserId={id}
               avatar={hostAvatar}
               nickname={hostNickname}
               location={hostLocation}
@@ -394,8 +394,8 @@ const SearchResults = (props) => {
               long={hostLong}
               hostProfileId={hostProfileId}
               score={score}
-              requestToBookButtonClick={requestToBookButtonClick.bind(this)}
-              messageHost={messageHost.bind(this)}
+              requestToBookButtonClick={() => requestToBookButtonClick}
+              messageHost={() => messageHost}
             />
           </div>
         );
