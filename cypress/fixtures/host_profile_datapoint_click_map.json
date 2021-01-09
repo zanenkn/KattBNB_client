@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 4,
     "price_per_day_1_cat": "90.0",
     "supplement_price_per_cat_per_day": "50.0",
     "max_cats_accepted": 2,
@@ -17,7 +17,7 @@
     "lat": "59.316957",
     "long": "18.059649",
     "user": {
-      "id": 2,
+      "id": 44,
       "location": "Stockholm",
       "nickname": "carla",
       "profile_avatar": null

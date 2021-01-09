@@ -3,7 +3,7 @@ describe('User can see a list of all her conversations', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/conversations?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/conversations?user_id=66&locale=en-US',
       status: 200,
       response: 'fixture:all_user_conversations.json',
     });

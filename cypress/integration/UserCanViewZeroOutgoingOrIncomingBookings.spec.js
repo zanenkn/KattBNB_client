@@ -3,7 +3,7 @@ describe('User can view her outgoing or incoming bookings', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: 'fixture:booking_stats_0.json',
     });
