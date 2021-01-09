@@ -136,7 +136,7 @@ describe('User can see messages of individual conversation', () => {
     cy.get('#1').click();
     cy.fixture('all_user_conversations.json').then((all_conversations) => {
       //deletes first conversation
-      all_conversations[0].hidden = 1;
+      all_conversations[0].hidden = 66;
       cy.route({
         method: 'GET',
         url: 'http://localhost:3007/api/v1/conversations?user_id=66&locale=en-US',
