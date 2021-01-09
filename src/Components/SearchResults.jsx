@@ -17,7 +17,7 @@ import HostPopup from './HostPopup';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 
-const SearchResults = ({id, history}) => {
+const SearchResults = ({ id, history }) => {
   const { t, ready } = useTranslation('SearchResults');
 
   const [checkInDate, setCheckInDate] = useState('');
@@ -58,7 +58,7 @@ const SearchResults = ({id, history}) => {
     });
   };
 
-  const someMethod = (array, status) => {
+  const editHostsDataAllLocations = (array, status) => {
     array.map((host) => {
       host.available = status;
       host.id = host.user.id;
@@ -73,9 +73,7 @@ const SearchResults = ({id, history}) => {
       );
       return null;
     });
-  } 
-  
- 
+  };
 
   useEffect(() => {
     async function asyncDidMount() {
@@ -118,30 +116,14 @@ const SearchResults = ({id, history}) => {
             );
             if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
               APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-              someMethod(APIavailableAllLocations, true)
+              editHostsDataAllLocations(APIavailableAllLocations, true);
             }
             if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
-              APInotAvailableAllLocations = responseAllLocations.data.without.filter(
-                (host) => host.user.id !== id
-              );
-              someMethod(APIavailableAllLocations, false)
-              // APInotAvailableAllLocations.map((host) => {
-              //   host.available = false;
-              //   host.id = host.user.id;
-              //   host.lat = parseFloat(host.lat);
-              //   host.lng = parseFloat(host.long);
-              //   host.total = finalTotal(
-              //     host.price_per_day_1_cat,
-              //     history.location.state.cats,
-              //     host.supplement_price_per_cat_per_day,
-              //     history.location.state.from,
-              //     history.location.state.to
-              //   );
-              //   return null;
-              // });
+              APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
+              editHostsDataAllLocations(APInotAvailableAllLocations, false);
             }
             setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
-          } catch ({response}) {
+          } catch ({ response }) {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
@@ -183,20 +165,20 @@ const SearchResults = ({id, history}) => {
       const lang = detectLanguage();
       axios
         .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
-        .then((response) => {
-          if (response.data.length === 1) {
-            setHostId(response.data[0].user.id);
-            setHostAvatar(response.data[0].user.profile_avatar);
-            setHostNickname(response.data[0].user.nickname);
-            setHostLocation(response.data[0].user.location);
-            setHostRate(response.data[0].price_per_day_1_cat);
-            setHostSupplement(response.data[0].supplement_price_per_cat_per_day);
-            setHostDescription(response.data[0].description);
-            setHostLat(response.data[0].lat);
-            setHostLong(response.data[0].long);
-            setHostProfileId(response.data[0].id);
-            setScore(response.data[0].score);
-            setReviewsCount(response.data[0].reviews_count);
+        .then(({ data }) => {
+          if (data.length === 1) {
+            setHostId(data[0].user.id);
+            setHostAvatar(data[0].user.profile_avatar);
+            setHostNickname(data[0].user.nickname);
+            setHostLocation(data[0].user.location);
+            setHostRate(data[0].price_per_day_1_cat);
+            setHostSupplement(data[0].supplement_price_per_cat_per_day);
+            setHostDescription(data[0].description);
+            setHostLat(data[0].lat);
+            setHostLong(data[0].long);
+            setHostProfileId(data[0].id);
+            setScore(data[0].score);
+            setReviewsCount(data[0].reviews_count);
             setHostAvailable(status);
             setOpenHostPopup(true);
             setHostPopupLoading(false);
@@ -205,17 +187,17 @@ const SearchResults = ({id, history}) => {
             setErrors(['reusable:errors:index-no-host-1']);
           }
         })
-        .catch((error) => {
-          if (error.response === undefined) {
+        .catch(({ response }) => {
+          if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
+          } else if (response.status === 500) {
             setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
-          } else if (error.response.status === 503) {
+          } else if (response.status === 503) {
             wipeCredentials('/is-not-available?atm');
           } else {
             setErrorDisplay(true);
-            setErrors(error.response.data.error);
+            setErrors(response.data.error);
           }
         });
     }
@@ -296,11 +278,11 @@ const SearchResults = ({id, history}) => {
         };
         axios
           .post(path, payload, { headers: headers })
-          .then((response) => {
+          .then(({ data }) => {
             history.push({
               pathname: '/conversation',
               state: {
-                id: response.data.id,
+                id: data.id,
                 user: {
                   profile_avatar: hostAvatar,
                   id: hostId,
@@ -310,7 +292,7 @@ const SearchResults = ({id, history}) => {
               },
             });
           })
-          .catch(({response}) => {
+          .catch(({ response }) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
@@ -447,17 +429,15 @@ const SearchResults = ({id, history}) => {
           }}
           position='top center'
         >
-          {errorDisplay && (
-            <div>
-              <Message negative>
-                <ul id='message-error-list'>
-                  {errors.map((error) => (
-                    <li key={error}>{t(error)}</li>
-                  ))}
-                </ul>
-              </Message>
-            </div>
-          )}
+          <div>
+            <Message negative>
+              <ul id='message-error-list'>
+                {errors.map((error) => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          </div>
         </Popup>
         <div id='secondary-sticky'>
           <div style={{ width: 'min-content', margin: 'auto' }}>
