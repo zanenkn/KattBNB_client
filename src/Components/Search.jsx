@@ -119,9 +119,9 @@ class Search extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, tReady } = this.props;
 
-    if (this.props.tReady) {
+    if (tReady) {
       let errorDisplay;
       const lang = detectLanguage();
       const { from, to } = this.state;
