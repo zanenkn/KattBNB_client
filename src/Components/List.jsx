@@ -9,13 +9,13 @@ import User from './Icons/User';
 import Review from './Icons/Review';
 import AvailableHost from './Icons/AvailableHost';
 
-const List = (props) => {
+const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {
   const { t, ready } = useTranslation('List');
 
   if (ready) {
     return (
       <div style={{ padding: '2rem' }}>
-        {props.finalAvailableHosts.length === 0 && (
+        {finalAvailableHosts.length === 0 && (
           <Header>
             <Trans i18nKey='List:no-results'>
               Your search did not yield any results! Try
@@ -25,10 +25,10 @@ const List = (props) => {
                 to={{
                   pathname: '/search',
                   state: {
-                    checkInDate: new Date(props.checkInDate),
-                    checkOutDate: new Date(props.checkOutDate),
-                    location: props.location,
-                    numberOfCats: props.numberOfCats,
+                    checkInDate: new Date(checkInDate),
+                    checkOutDate: new Date(checkOutDate),
+                    location: location,
+                    numberOfCats: numberOfCats,
                   },
                 }}
               >
@@ -38,27 +38,27 @@ const List = (props) => {
             </Trans>
           </Header>
         )}
-        {props.finalAvailableHosts.length > 0 &&
-          props.finalAvailableHosts.map((host) => {
+        {finalAvailableHosts.length > 0 &&
+          finalAvailableHosts.map((host) => {
             let perDay = pricePerDay(
               host.price_per_day_1_cat,
-              props.numberOfCats,
+              numberOfCats,
               host.supplement_price_per_cat_per_day,
-              props.checkInDate,
-              props.checkOutDate
+              checkInDate,
+              checkOutDate
             );
             let orderTotal = finalTotal(
               host.price_per_day_1_cat,
-              props.numberOfCats,
+              numberOfCats,
               host.supplement_price_per_cat_per_day,
-              props.checkInDate,
-              props.checkOutDate
+              checkInDate,
+              checkOutDate
             );
             return (
               <div
                 className='list-card'
                 key={host.id}
-                onClick={(e) => props.handleListItemClick(host.user.id, host.available)}
+                onClick={(e) => handleListItemClick(host.user.id, host.available)}
                 id={host.user.id}
               >
                 {host.available && (
