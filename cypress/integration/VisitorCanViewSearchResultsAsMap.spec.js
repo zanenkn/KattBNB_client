@@ -38,35 +38,27 @@ describe('Visitor can view search results as a map', () => {
       clock.restore();
     });
     cy.get('#map-button').click();
+    cy.wait(1000);
   });
 
   it('and see correct datapoints', () => {
-    let labels = ['#2', '#5'];
+    let labels = ['#44', '#33'];
 
     labels.forEach((label) => {
       cy.get(label).should('be.visible');
     });
   });
 
-  it('and not see hosts that are not available', () => {
-    cy.get('#6').should('not.exist');
-    cy.get('#7').should('not.exist');
-  });
-
-  it('and not see hosts that does not accept required amount of cats', () => {
-    cy.get('#10').should('not.exist');
-  });
-
   it('and see a popup with host information by clicking on a specific datapoint', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
 
-    cy.get('#2').click({ force: true });
+    cy.get('#44').click({ force: true });
 
     let hostData = [
       'carla',
@@ -85,13 +77,13 @@ describe('Visitor can view search results as a map', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
       status: 200,
       response: [],
     });
@@ -101,7 +93,7 @@ describe('Visitor can view search results as a map', () => {
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr'],
     ];
 
-    cy.get('#2').click({ force: true });
+    cy.get('#44').click({ force: true });
     cy.get('#more').click();
 
     hostData[0].forEach((data) => {

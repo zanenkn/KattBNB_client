@@ -52,29 +52,20 @@ describe('Visitor can view search results as a list', () => {
   });
 
   it('and see correct prices', () => {
-    cy.get('#22').within(() => {
+    cy.get('#44').within(() => {
       cy.contains('679 kr');
     });
 
-    cy.get('#33').within(() => {
+    cy.get('#66').within(() => {
       cy.contains('557.75 kr');
     });
-  });
-
-  it('and not see hosts that are not available', () => {
-    cy.get('#44').should('not.exist');
-    cy.get('#55').should('not.exist');
-  });
-
-  it('and not see hosts that does not accept required amount of cats', () => {
-    cy.get('#11').should('not.exist');
   });
 
   it('and see the full host profile when clicking on a list card', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
@@ -82,7 +73,7 @@ describe('Visitor can view search results as a list', () => {
       ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr'],
     ];
-    cy.get('img#2.ui.image').click({ force: true });
+    cy.get('#44').click();
     cy.get('#more').click();
 
     hostData[0].forEach((data) => {
@@ -107,11 +98,11 @@ describe('Visitor can view search results as a list', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: '',
+      response: 'fixture:search_results_list_2.json',
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
       status: 200,
       response: [],
     });
@@ -135,11 +126,11 @@ describe('Visitor can view search results as a list', () => {
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
-    cy.get('img#2.ui.image').click({ force: true });
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
     cy.contains('Log in');
@@ -160,7 +151,7 @@ describe('Visitor can view search results as a list', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: '',
+      response: 'fixture:search_results_list_2.json',
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
@@ -183,13 +174,13 @@ describe('Visitor can view search results as a list', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=2&locale=en-US',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
       status: 200,
       response: [],
     });
@@ -208,13 +199,13 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:create_conversation.json',
     });
-    cy.get('img#2.ui.image').click({ force: true });
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
     cy.get('#email').type('george@mail.com');
     cy.get('#password').type('password');
     cy.get('.submit-button').click();
-    cy.get('img#2.ui.image').click({ force: true });
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
     cy.location('pathname').should('eq', '/conversation');
