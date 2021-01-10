@@ -82,7 +82,12 @@ const HostPopup = (props) => {
           <h5>
             This host is not booked for your requested dates, but they also did not mark the requested dates as
             available. We reccomend&nbsp;
-            <p className='fake-link-underlined' style={{ display: 'contents' }} onClick={props.messageHost}>
+            <p
+              id='send-message'
+              className='fake-link-underlined'
+              style={{ display: 'contents' }}
+              onClick={props.messageHost}
+            >
               contacting them
             </p>
             &nbsp;first.
