@@ -55,7 +55,7 @@ describe('User cannot see her profile', () => {
   });
 
   it('in the results if logged in', () => {
-    cy.contains('5 result(s)');
+    cy.contains('8 result(s)');
     cy.get('#66').should('not.exist');
   });
 });

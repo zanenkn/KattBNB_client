@@ -6,14 +6,14 @@ describe('Visitor can view search results as a list', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
@@ -43,12 +43,14 @@ describe('Visitor can view search results as a list', () => {
   });
 
   it('and see correct amount of results', () => {
-    cy.contains('3 result(s)');
+    cy.contains('10 result(s)');
   });
 
   it('and see results sorted after host profile score', () => {
     cy.get('div[class="list-card"]').first().should('have.id', '66');
-    cy.get('div[class="list-card"]').last().should('have.id', '33');
+    cy.get('[style="padding: 2rem;"] > :nth-child(2)').should('have.id', '22');
+    cy.get('[style="padding: 2rem;"] > :nth-child(3)').should('have.id', '44');
+    cy.get('[style="padding: 2rem;"] > :nth-child(4)').should('have.id', '55');
   });
 
   it('and see correct prices', () => {
@@ -91,14 +93,14 @@ describe('Visitor can view search results as a list', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
@@ -144,14 +146,14 @@ describe('Visitor can view search results as a list', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);

@@ -7,14 +7,14 @@ describe('Visitor can view search results as a map', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
       status: 200,
-      response: 'fixture:search_results_list_2.json',
+      response: 'fixture:search_results_list.json',
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
@@ -38,7 +38,7 @@ describe('Visitor can view search results as a map', () => {
       clock.restore();
     });
     cy.get('#map-button').click();
-    cy.wait(1000);
+    cy.wait(2000);
   });
 
   it('and see correct datapoints', () => {
