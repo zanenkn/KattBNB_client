@@ -78,21 +78,23 @@ const HostPopup = (props) => {
           orderTotal={orderTotal}
           requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
         />
-        {props.hostAvailable === false &&
+        {props.hostAvailable === false && (
           <p className='small-centered-paragraph'>
             <Trans i18nKey='HostPopup:host-availability-disclaimer'>
-              This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or
+              This cat sitter have not added information about their availability for the dates you chose. You can still
+              send them a booking request or
               <span
                 id='send-message'
                 className='fake-link-underlined'
                 style={{ display: 'contents' }}
-                onClick={props.messageHost}>
+                onClick={props.messageHost}
+              >
                 contact them
               </span>
               first to see if they are available.
-          </Trans>
+            </Trans>
           </p>
-        }
+        )}
       </>
     );
   } else {

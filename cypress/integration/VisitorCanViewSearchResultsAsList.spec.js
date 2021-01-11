@@ -288,7 +288,7 @@ describe('Visitor can view search results as a list', () => {
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.get('#99').click();
     cy.contains(
-      'This host is not booked for your requested dates, but they also did not mark the requested dates as available. We reccomend contacting them first.'
+      'This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or contact them first to see if they are available.'
     );
     cy.get('#send-message').click({ force: true });
     cy.get('#email').type('george@mail.com');
