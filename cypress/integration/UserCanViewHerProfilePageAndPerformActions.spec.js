@@ -3,7 +3,7 @@ describe('User can view her profile page', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=66&locale=en-US',
       status: 200,
       response: [],
     });
@@ -15,7 +15,7 @@ describe('User can view her profile page', () => {
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=no&user_id=66&locale=en-US',
       status: 200,
       response: [],
     });
@@ -142,7 +142,7 @@ describe('User can view her profile page', () => {
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: {
         stats: {
@@ -170,7 +170,7 @@ describe('User can view her profile page', () => {
   it('and cannot delete her account cause of upcoming and request bookings', () => {
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: {
         stats: {
@@ -198,7 +198,7 @@ describe('User can view her profile page', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=66&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_index.json',
     });
@@ -240,7 +240,7 @@ describe('User can view her profile page', () => {
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: {
         stats: {
@@ -274,7 +274,7 @@ describe('User can view her profile page', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/host_profiles?user_id=1&locale=en-US',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=66&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_index.json',
     });
@@ -316,7 +316,7 @@ describe('User can view her profile page', () => {
     });
     cy.route({
       method: 'GET',
-      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US',
+      url: 'http://localhost:3007/api/v1/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US',
       status: 200,
       response: {
         stats: {

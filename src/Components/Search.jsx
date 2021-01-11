@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react';
 import { LOCATION_OPTIONS } from '../Modules/locationData';
-import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import '../NpmPackageCSS/react-day-picker-range.css';
 import { detectLanguage } from '../Modules/detectLanguage';
-import { wipeCredentials } from '../Modules/wipeCredentials';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 import { withTranslation } from 'react-i18next';
 import Spinner from './ReusableComponents/Spinner';
@@ -22,8 +20,6 @@ class Search extends Component {
     this.state = {
       errorDisplay: false,
       errors: '',
-      searchData: '',
-      loading: false,
       location: this.props.location,
       cats: '',
       from: undefined,
@@ -69,67 +65,6 @@ class Search extends Component {
     this.setState({ to }, this.showFromMonth);
   }
 
-  async searchAxiosCall() {
-    if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
-    } else {
-      const lang = detectLanguage();
-      let utcFrom = Date.UTC(
-        this.state.from.getUTCFullYear(),
-        this.state.from.getUTCMonth(),
-        this.state.from.getUTCDate()
-      );
-      let msFrom = new Date(utcFrom).getTime();
-      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate());
-      let msTo = new Date(utcTo).getTime();
-      await axios
-        .get(
-          `/api/v1/host_profiles?location=${this.state.location}&startDate=${msFrom}&endDate=${msTo}&cats=${this.state.cats}&locale=${lang}`
-        )
-        .then((response) => {
-          this.setState({
-            searchData: response.data,
-            loading: false,
-            errors: '',
-            errorDisplay: false,
-          });
-        })
-        .catch((error) => {
-          if (error.response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: ['reusable:errors:500'],
-            });
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
-          } else {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: error.response.data.error,
-            });
-          }
-        });
-      this.props.history.push({
-        pathname: '/search-results',
-        state: {
-          from: msFrom,
-          to: msTo,
-          cats: this.state.cats,
-          location: this.state.location,
-          searchData: this.state.searchData,
-        },
-      });
-    }
-  }
-
   clearDates = () => {
     this.setState({
       from: undefined,
@@ -147,34 +82,46 @@ class Search extends Component {
 
   search = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
     if (this.state.cats <= 0 || this.state.cats % 1 !== 0) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['Search:error-1'],
       });
     } else if (this.state.location === '' || this.state.location === undefined) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['Search:error-2'],
       });
     } else if (this.state.to === undefined || this.state.from === undefined) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['Search:error-3'],
       });
     } else {
-      this.searchAxiosCall();
+      let utcFrom = Date.UTC(
+        this.state.from.getUTCFullYear(),
+        this.state.from.getUTCMonth(),
+        this.state.from.getUTCDate()
+      );
+      let msFrom = new Date(utcFrom).getTime();
+      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate());
+      let msTo = new Date(utcTo).getTime();
+      this.props.history.push({
+        pathname: '/search-results',
+        state: {
+          from: msFrom,
+          to: msTo,
+          cats: this.state.cats,
+          location: this.state.location,
+        },
+      });
     }
   };
 
   render() {
-    const { t } = this.props;
+    const { t, tReady } = this.props;
 
-    if (this.props.tReady) {
+    if (tReady) {
       let errorDisplay;
       const lang = detectLanguage();
       const { from, to } = this.state;
@@ -298,13 +245,7 @@ class Search extends Component {
             {errorDisplay}
             <div className='button-wrapper'>
               <div>
-                <Button
-                  id='search-button'
-                  className='submit-button'
-                  disabled={this.state.loading}
-                  loading={this.state.loading}
-                  onClick={this.search}
-                >
+                <Button id='search-button' className='submit-button' onClick={this.search}>
                   {t('Search:cta')}
                 </Button>
               </div>

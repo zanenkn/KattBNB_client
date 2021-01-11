@@ -819,6 +819,8 @@ h4 {
 .list-card {
   background: white;
   margin-bottom: 2rem!important;
+  position: relative;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 456px) {
@@ -834,6 +836,19 @@ h4 {
     width: 400px!important;
     padding: 2rem!important;
   }
+}
+
+.available-host {
+  background-color: #c90c61;
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .list-header {

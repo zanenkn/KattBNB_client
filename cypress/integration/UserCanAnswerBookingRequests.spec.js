@@ -10,7 +10,7 @@ describe('User can answer her booking request', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -81,7 +81,7 @@ describe('User encounters error when accepting a booking request', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -124,7 +124,7 @@ describe('User cannot accept booking requests', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -168,7 +168,7 @@ describe('User cannot accept booking requests', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -215,7 +215,7 @@ describe('User cannot accept booking requests', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });

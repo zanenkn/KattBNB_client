@@ -153,6 +153,7 @@ class AvailabilityUpdateForm extends Component {
       if (this.state.incomingBookings.length > 0) {
         this.state.incomingBookings.map((day) => {
           disabledDaysDates.push(new Date(day));
+          return null;
         });
       }
 

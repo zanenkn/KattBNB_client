@@ -7,14 +7,15 @@ import Spinner from './ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import User from './Icons/User';
 import Review from './Icons/Review';
+import AvailableHost from './Icons/AvailableHost';
 
-const List = (props) => {
+const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {
   const { t, ready } = useTranslation('List');
 
   if (ready) {
     return (
       <div style={{ padding: '2rem' }}>
-        {props.finalAvailableHosts.length === 0 && (
+        {finalAvailableHosts.length === 0 && (
           <Header>
             <Trans i18nKey='List:no-results'>
               Your search did not yield any results! Try
@@ -24,10 +25,10 @@ const List = (props) => {
                 to={{
                   pathname: '/search',
                   state: {
-                    checkInDate: new Date(props.checkInDate),
-                    checkOutDate: new Date(props.checkOutDate),
-                    location: props.location,
-                    numberOfCats: props.numberOfCats,
+                    checkInDate: new Date(checkInDate),
+                    checkOutDate: new Date(checkOutDate),
+                    location: location,
+                    numberOfCats: numberOfCats,
                   },
                 }}
               >
@@ -37,26 +38,36 @@ const List = (props) => {
             </Trans>
           </Header>
         )}
-
-        {props.finalAvailableHosts.length > 0 &&
-          props.finalAvailableHosts.map((host) => {
+        {finalAvailableHosts.length > 0 &&
+          finalAvailableHosts.map((host) => {
             let perDay = pricePerDay(
               host.price_per_day_1_cat,
-              props.numberOfCats,
+              numberOfCats,
               host.supplement_price_per_cat_per_day,
-              props.checkInDate,
-              props.checkOutDate
+              checkInDate,
+              checkOutDate
             );
             let orderTotal = finalTotal(
               host.price_per_day_1_cat,
-              props.numberOfCats,
+              numberOfCats,
               host.supplement_price_per_cat_per_day,
-              props.checkInDate,
-              props.checkOutDate
+              checkInDate,
+              checkOutDate
             );
-
             return (
-              <div className='list-card' id={host.id} key={host.id}>
+              <div
+                className='list-card'
+                key={host.id}
+                onClick={(e) => handleListItemClick(host.user.id, host.available)}
+                id={host.user.id}
+              >
+                {host.available && (
+                  <div className='available-host'>
+                    <div style={{ margin: '10px' }}>
+                      <AvailableHost height='30px' />
+                    </div>
+                  </div>
+                )}
                 {host.score && <ReviewScore score={host.score} height={'1rem'} displayNumerical={true} />}
                 <div style={{ margin: '0', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -66,34 +77,20 @@ const List = (props) => {
                           ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
                           : host.user.profile_avatar
                       }
-                      style={{ borderRadius: '50%', margin: 'auto', cursor: 'pointer', height: '100px' }}
-                      id={host.user.id}
-                      onClick={props.handleListItemClick}
+                      style={{ borderRadius: '50%', margin: 'auto', height: '100px' }}
                     />
                     <p style={{ fontSize: 'small', marginTop: '0.3rem' }}>
                       <User fill={'grey'} height={'0.8em'} />
                       &ensp;
-                      <strong id={host.user.id} onClick={props.handleListItemClick}>
-                        {host.user.nickname}
-                      </strong>
+                      <strong>{host.user.nickname}</strong>
                     </p>
                   </div>
                   <div style={{ padding: '0 0 0 2rem' }}>
                     <div>
-                      <Header
-                        as='h3'
-                        style={{ textAlign: 'left', marginBottom: '0' }}
-                        id={host.user.id}
-                        onClick={props.handleListItemClick}
-                      >
+                      <Header as='h3' style={{ textAlign: 'left', marginBottom: '0' }}>
                         {perDay} {t('reusable:price.per-day')}
                       </Header>
-                      <Header
-                        as='h5'
-                        style={{ textAlign: 'left', margin: '0' }}
-                        id={host.user.id}
-                        onClick={props.handleListItemClick}
-                      >
+                      <Header as='h5' style={{ textAlign: 'left', margin: '0' }}>
                         {orderTotal} {t('reusable:price.total')}
                       </Header>
                       {host.score && (
