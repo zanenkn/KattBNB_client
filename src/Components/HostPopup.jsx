@@ -3,7 +3,7 @@ import ReviewScore from './ReusableComponents/ReviewScore';
 import { Image, Header } from 'semantic-ui-react';
 import { pricePerDay, finalTotal } from '../Modules/PriceCalculations';
 import RequestToBookCTA from './ReusableComponents/RequestToBookCTA';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import User from './Icons/User';
 import Location from './Icons/Location';
 import Price from './Icons/Price';
@@ -78,21 +78,21 @@ const HostPopup = (props) => {
           orderTotal={orderTotal}
           requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
         />
-        {props.hostAvailable === false && (
-          <h5>
-            This host is not booked for your requested dates, but they also did not mark the requested dates as
-            available. We reccomend&nbsp;
-            <p
-              id='send-message'
-              className='fake-link-underlined'
-              style={{ display: 'contents' }}
-              onClick={props.messageHost}
-            >
-              contacting them
-            </p>
-            &nbsp;first.
-          </h5>
-        )}
+        {props.hostAvailable === false &&
+          <p className='small-centered-paragraph'>
+            <Trans i18nKey='HostPopup:host-availability-disclaimer'>
+              This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or
+              <span
+                id='send-message'
+                className='fake-link-underlined'
+                style={{ display: 'contents' }}
+                onClick={props.messageHost}>
+                contact them
+              </span>
+              first to see if they are available.
+          </Trans>
+          </p>
+        }
       </>
     );
   } else {
