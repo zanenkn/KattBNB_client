@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef, createRef, useEffect } from 'reac
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import KattBNBLogo from './Icons/KattBNBLogo';
 import Spinner from './ReusableComponents/Spinner';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -11,6 +11,7 @@ import InstagramIcon from './Icons/InstagramIcon';
 import LinkedinIcon from './Icons/LinkedinIcon';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { config } from '../weekly-cat-config'
 
 const Landing = () => {
   const textRef = useRef(null);
@@ -183,7 +184,14 @@ const Landing = () => {
                   <LinkedinIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
                 </a>
               </div>
-              <p style={{ fontSize: 'small', color: '#a5a5a5' }}>{t('Landing:photo-credit')}</p>
+              <p style={{ fontSize: 'small', color: '#a5a5a5' }}>
+                <Trans i18nKey='Landing:photo-credit'>
+                  Photo credit: <a
+                    href={config.link}
+                    target='_blank'
+                    rel='noopener noreferrer'>{{ author: config.credit }}</a>
+                </Trans>
+              </p>
             </div>
 
 
