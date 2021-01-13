@@ -12,6 +12,7 @@ import LinkedinIcon from './Icons/LinkedinIcon';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { config } from '../weekly-cat-config'
+import WeeklyCatBadge from './Icons/WeeklyCatBadge';
 
 const Landing = () => {
   const textRef = useRef(null);
@@ -39,11 +40,11 @@ const Landing = () => {
       let height = node.clientHeight
       let width = node.clientWidth
       if (height > width) {
-        setCarouselWidth(`${width - 60}px`)
-        setCarouselHeight(`${width - 60}px`)
+        setCarouselWidth(`${width}px`)
+        setCarouselHeight(`${width}px`)
       } else {
-        setCarouselWidth(`${height - 60}px`)
-        setCarouselHeight(`${height - 60}px`)
+        setCarouselWidth(`${height}px`)
+        setCarouselHeight(`${height}px`)
       }
     }
     resizeCarousel()
@@ -93,11 +94,15 @@ const Landing = () => {
         <div style={{ backgroundColor: '#fafafa' }}>
           <div className='landing-wrapper'>
             <div className='landing-carousel device-height'>
-              <div className='mobile-only'>
-                <KattBNBLogo class={'landing-mobile-logo'} />
-              </div>
+
               <div ref={carouselWrapper} className='carousel-outer-wrapper'>
-                <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight }}>
+                <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight, position: 'relative' }}>
+                  
+                    <WeeklyCatBadge class='badge' />
+                    <div className='name-wrapper'>
+                      <h2 className='title'>{t('Landing:weekly-cat', { count: config.count })}</h2>
+                      <h2 className='name'>{config.name}</h2>
+                    </div>
                   <ul className='scroll' ref={carousel} onScroll={(e) => handleCarouselScroll(e)}>
                     {imageRef.current.map((_, index) => {
                       return (

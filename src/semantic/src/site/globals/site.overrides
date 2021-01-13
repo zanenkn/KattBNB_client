@@ -613,17 +613,11 @@ ul.scroll {
 }
 
 .image-dots {
-  display: none;
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin: 1rem auto;
-}
-
-@media screen and (min-width: 768px) {
-  .image-dots {
-    display: flex;
-  }
 }
 
 .dot {
@@ -651,6 +645,63 @@ ul.scroll {
 .selected {
   opacity: 1;
 }
+
+.name-wrapper {
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 1rem;
+  align-items: center;
+}
+
+.name-wrapper .title {
+  font-size: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #c90c61;
+}
+
+.name-wrapper .name {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #c90c61;
+  line-height: 1;
+}
+
+.badge {
+  position: absolute;
+  z-index: 1;
+  left: 1rem;
+  top: -.75rem;
+  height: 65px;
+}
+
+@media screen and (min-width: 414px) {
+  .badge {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .name-wrapper {
+    bottom: 1.5rem;
+    left: 2rem;
+  }
+
+  .name-wrapper .title {
+    font-size: 20px;
+  }
+
+  .name-wrapper .name {
+    font-size: 40px;
+  }
+
+  .badge {
+    height: 120px;
+  }
+}
+
 /*******************************
             CONTENT
 *******************************/
