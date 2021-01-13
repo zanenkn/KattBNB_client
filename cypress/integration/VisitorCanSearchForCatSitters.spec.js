@@ -1,25 +1,25 @@
-describe('Visitor can search for cat sitters on landing page', () => {
+describe('Visitor can search for cat sitters', () => {
   beforeEach(function () {
     cy.server();
     cy.visit('http://localhost:3000');
   });
 
   it('and gets an error message if number of cats is outside criteria', () => {
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('-5');
     cy.get('#search-button').click();
     cy.contains('Number of cats must be a whole positive number!');
   });
 
   it('and gets an error message if location is not selected', () => {
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('1');
     cy.get('#search-button').click();
     cy.contains('You must choose a location to continue!');
   });
 
   it('and gets an error message if check-in and check-out dates are not filled in', () => {
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('1');
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click();
@@ -44,7 +44,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('1');
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click();
@@ -84,7 +84,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('1');
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click();
@@ -126,7 +126,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('#cats').type('15');
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('#search-form > .required > #location > .visible > .item:nth-child(30)').click();

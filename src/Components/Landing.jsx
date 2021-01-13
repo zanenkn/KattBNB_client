@@ -37,17 +37,21 @@ const Landing = () => {
 
   const carouselWrapper = useCallback((node) => {
     const resizeCarousel = () => {
-      let height = node.clientHeight
-      let width = node.clientWidth
-      if (height > width) {
-        setCarouselWidth(`${width}px`)
-        setCarouselHeight(`${width}px`)
-      } else {
-        setCarouselWidth(`${height}px`)
-        setCarouselHeight(`${height}px`)
+      if (node !== null) {
+        let height = node.clientHeight
+        let width = node.clientWidth
+        if (height > width) {
+          setCarouselWidth(`${width}px`)
+          setCarouselHeight(`${width}px`)
+        } else {
+          setCarouselWidth(`${height}px`)
+          setCarouselHeight(`${height}px`)
+        }
       }
     }
+
     resizeCarousel()
+
 
     window.addEventListener('resize', () => {
       resizeCarousel()
@@ -97,12 +101,12 @@ const Landing = () => {
 
               <div ref={carouselWrapper} className='carousel-outer-wrapper'>
                 <div className='carousel-inner-wrapper' style={{ width: carouselWidth, height: carouselHeight, position: 'relative' }}>
-                  
-                    <WeeklyCatBadge class='badge' />
-                    <div className='name-wrapper'>
-                      <h2 className='title'>{t('Landing:weekly-cat', { count: config.count })}</h2>
-                      <h2 className='name'>{config.name}</h2>
-                    </div>
+
+                  <WeeklyCatBadge class='badge' />
+                  <div className='name-wrapper'>
+                    <h2 className='title'>{t('Landing:weekly-cat', { count: config.count })}</h2>
+                    <h2 className='name'>{config.name}</h2>
+                  </div>
                   <ul className='scroll' ref={carousel} onScroll={(e) => handleCarouselScroll(e)}>
                     {imageRef.current.map((_, index) => {
                       return (
