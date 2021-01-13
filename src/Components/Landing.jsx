@@ -192,7 +192,7 @@ const Landing = () => {
               </div>
               <p style={{ fontSize: 'small', color: '#a5a5a5' }}>
                 <Trans i18nKey='Landing:photo-credit'>
-                  Photo credit:{' '}
+                  Photo credit:
                   <a href={config.link} target='_blank' rel='noopener noreferrer'>
                     {{ author: config.credit }}
                   </a>
