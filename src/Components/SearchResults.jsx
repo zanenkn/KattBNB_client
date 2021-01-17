@@ -31,7 +31,7 @@ const SearchResults = (props) => {
   const [hostProfileId, setHostProfileId] = useState('');
   const [score, setScore] = useState('');
   const [reviewsCount, setReviewsCount] = useState('');
-  const [results, setResults] = useState('list');
+  const [results, setResults] = useState('');
   const [openHostPopup, setOpenHostPopup] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -81,6 +81,10 @@ const SearchResults = (props) => {
   useEffect(() => {
     let from, to, location, cats
     let today = new Date()
+
+    if (queryString.parse(props.location.search).view === undefined) {
+      window.history.replaceState(null, null, window.location.search.concat('&view=map'))
+    }
 
     if (queryString.parse(props.location.search).from !== undefined) {
       ({ from, to, location, cats } = queryString.parse(props.location.search))
@@ -164,6 +168,7 @@ const SearchResults = (props) => {
       setNumberOfCats(cats);
       setLocation(location);
       setLoading(false);
+      setResults(queryString.parse(props.location.search).view ? queryString.parse(props.location.search).view : 'map')
       geolocationDataAddress(location);
     }
   }, []);
@@ -251,6 +256,7 @@ const SearchResults = (props) => {
 
   const switchResultView = (e) => {
     window.scrollTo(0, scrollOffset);
+    window.history.replaceState(null, null, window.location.search.replace(`view=${results}`, `view=${e.target.id.split('-')[0]}`))
     setResults(e.target.id.split('-')[0]);
     resetHost();
   };
