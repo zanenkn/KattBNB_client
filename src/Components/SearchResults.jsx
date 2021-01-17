@@ -94,85 +94,90 @@ const SearchResults = (props) => {
   };
 
   useEffect(() => {
-    if (queryString.parse(props.location.search).view === undefined) {
-      window.history.replaceState(null, null, window.location.search.concat('&view=map'))
-    }
-    
-    if (window.navigator.onLine === false) {
-      setLoading(false);
-      setErrorDisplay(true);
-      setErrors(['reusable:errors:window-navigator']);
+    if (queryString.parse(props.location.search).location === undefined) {
+      history.push({ pathname: '/search' });
     } else {
-      const lang = detectLanguage();
-      const callByLocation = axios.get(
-        `/api/v1/host_profiles?location=${location}&startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
-      );
-      const callAllLocations = axios.get(
-        `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
-      );
 
-      axios.all([callByLocation, callAllLocations]).then(axios.spread((...responses) => {
-        const responseByLocation = responses[0]
-        const responseAllLocations = responses[1]
-        let APIavailableByLocation = [];
-        let APInotAvailableByLocation = [];
-        let APIavailableAllLocations = [];
-        let APInotAvailableAllLocations = [];
+      if (queryString.parse(props.location.search).view === undefined) {
+        window.history.replaceState(null, null, window.location.search.concat('&view=map'))
+      }
 
-        if (responseByLocation.data.with.length > 0) {
-          APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
-          APIavailableByLocation.sort((a, b) => b.score - a.score);
-          APIavailableByLocation.map((host) => {
-            host.available = true;
-            return null;
-          });
-        }
+      if (window.navigator.onLine === false) {
+        setLoading(false);
+        setErrorDisplay(true);
+        setErrors(['reusable:errors:window-navigator']);
+      } else {
+        const lang = detectLanguage();
+        const callByLocation = axios.get(
+          `/api/v1/host_profiles?location=${location}&startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+        );
+        const callAllLocations = axios.get(
+          `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+        );
 
-        if (responseByLocation.data.without.length > 0) {
-          APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
-          APInotAvailableByLocation.sort((a, b) => b.score - a.score);
-          APInotAvailableByLocation.map((host) => {
-            host.available = false;
-            return null;
-          });
-        }
+        axios.all([callByLocation, callAllLocations]).then(axios.spread((...responses) => {
+          const responseByLocation = responses[0]
+          const responseAllLocations = responses[1]
+          let APIavailableByLocation = [];
+          let APInotAvailableByLocation = [];
+          let APIavailableAllLocations = [];
+          let APInotAvailableAllLocations = [];
 
-        setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
+          if (responseByLocation.data.with.length > 0) {
+            APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
+            APIavailableByLocation.sort((a, b) => b.score - a.score);
+            APIavailableByLocation.map((host) => {
+              host.available = true;
+              return null;
+            });
+          }
 
-        if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
-          APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-          editHostsDataAllLocations(APIavailableAllLocations, true);
-        }
+          if (responseByLocation.data.without.length > 0) {
+            APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
+            APInotAvailableByLocation.sort((a, b) => b.score - a.score);
+            APInotAvailableByLocation.map((host) => {
+              host.available = false;
+              return null;
+            });
+          }
 
-        if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
-          APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
-          editHostsDataAllLocations(APInotAvailableAllLocations, false);
-        }
+          setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
 
-        setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
+          if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
+            APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
+            editHostsDataAllLocations(APIavailableAllLocations, true);
+          }
 
-      })).catch(({ response }) => {
-        if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else if (response.status === 500) {
-          setLoading(false);
-          setErrorDisplay(true);
-          setErrors(['reusable:errors:500']);
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
-        } else {
-          setLoading(false);
-          setErrorDisplay(true);
-          setErrors(response.data.error);
-        }
-      })
-      setCheckInDate(parseInt(from));
-      setCheckOutDate(parseInt(to));
-      setNumberOfCats(cats);
-      setLocationName(location);
-      setLoading(false);
-      setResults(queryString.parse(props.location.search).view ? queryString.parse(props.location.search).view : 'map')
-      geolocationDataAddress(location);
+          if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
+            APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
+            editHostsDataAllLocations(APInotAvailableAllLocations, false);
+          }
+
+          setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
+
+        })).catch(({ response }) => {
+          if (response === undefined) {
+            wipeCredentials('/is-not-available?atm');
+          } else if (response.status === 500) {
+            setLoading(false);
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:500']);
+          } else if (response.status === 503) {
+            wipeCredentials('/is-not-available?atm');
+          } else {
+            setLoading(false);
+            setErrorDisplay(true);
+            setErrors(response.data.error);
+          }
+        })
+        setCheckInDate(parseInt(from));
+        setCheckOutDate(parseInt(to));
+        setNumberOfCats(cats);
+        setLocationName(location);
+        setLoading(false);
+        setResults(queryString.parse(props.location.search).view ? queryString.parse(props.location.search).view : 'map')
+        geolocationDataAddress(location);
+      }
     }
   }, []);
 

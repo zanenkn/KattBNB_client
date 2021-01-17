@@ -1,5 +1,5 @@
 describe('Visitor can view search results as a list', () => {
-  before(function () {
+  beforeEach(() => {
     cy.server();
     cy.route({
       method: 'GET',
@@ -40,6 +40,7 @@ describe('Visitor can view search results as a list', () => {
       .last()
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
+    cy.get('#list-button').click();
   });
 
   it('and see correct amount of results', () => {
@@ -98,51 +99,13 @@ describe('Visitor can view search results as a list', () => {
 
   it('and send a message to the host only if she is logged in', () => {
     cy.server();
-    cy.visit('http://localhost:3000');
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
-      status: 200,
-      response: [],
-    });
-    const now = new Date(2019, 9, 1).getTime();
-    cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
-    cy.get('.ui > #search-form > .required > #location > .default').click();
-    cy.get('.ui > #search-form > .required > #location > .search').type('Stock');
-    cy.get('#search-form > .required > #location > .visible > .selected').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').type('2');
-    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true });
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)'
-    ).click();
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)'
-    )
-      .last()
-      .click();
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.route({
       method: 'GET',
       url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
+
     cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
@@ -150,40 +113,6 @@ describe('Visitor can view search results as a list', () => {
   });
 
   it('and gets redirected to relevant route to send a message if she is logged in', () => {
-    cy.server();
-    cy.visit('http://localhost:3000');
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
-    const now = new Date(2019, 9, 1).getTime();
-    cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
-    cy.get('.ui > #search-form > .required > #location > .default').click();
-    cy.get('.ui > #search-form > .required > #location > .search').type('Stock');
-    cy.get('#search-form > .required > #location > .visible > .selected').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').type('2');
-    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true });
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)'
-    ).click();
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)'
-    )
-      .last()
-      .click();
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.server();
     cy.route({
       method: 'GET',
@@ -212,6 +141,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:create_conversation.json',
     });
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
+    });
     cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
@@ -226,21 +161,6 @@ describe('Visitor can view search results as a list', () => {
 
   it('and see specific text in HostPopup for not available hosts and get redirected to messenger after clicking the link and logging in', () => {
     cy.server();
-    cy.visit('http://localhost:3000');
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
-    cy.route({
-      method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
-      status: 200,
-      response: 'fixture:search_results_list.json',
-    });
     cy.route({
       method: 'POST',
       url: 'http://localhost:3007/api/v1/auth/sign_in',
@@ -268,24 +188,7 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
-    const now = new Date(2019, 9, 1).getTime();
-    cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
-    cy.get('.ui > #search-form > .required > #location > .default').click();
-    cy.get('.ui > #search-form > .required > #location > .search').type('Stock');
-    cy.get('#search-form > .required > #location > .visible > .selected').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').click();
-    cy.get('.ui > #search-form > .required > .ui > #cats').type('2');
-    cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true });
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(3)'
-    ).click();
-    cy.get(
-      '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(2) > .DayPicker-Day:nth-child(6)'
-    )
-      .last()
-      .click();
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
+
     cy.get('#99').click();
     cy.contains(
       'This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or contact them first to see if they are available.'

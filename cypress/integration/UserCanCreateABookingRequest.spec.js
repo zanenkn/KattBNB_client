@@ -100,6 +100,7 @@ describe('User can create a booking request', () => {
       clock.restore();
     });
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
+    cy.get('#list-button').click()
   });
 
   it('successfully and get redirected', () => {
@@ -216,6 +217,7 @@ describe('User can create a booking request', () => {
       .last()
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
+    cy.get('#list-button').click()
     cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();

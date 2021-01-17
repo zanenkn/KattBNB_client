@@ -64,6 +64,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
       .last()
       .click();
     cy.get('#search-button').click({ force: true });
+    cy.get('#list-button').click()
     cy.contains('Your search did not yield any results!');
   });
 
@@ -104,6 +105,7 @@ describe('Visitor can search for cat sitters on landing page', () => {
       .last()
       .click();
     cy.get('#search-button').click({ force: true });
+    cy.get('#list-button').click()
     cy.get('.fake-link').click();
     cy.get(':nth-child(2) > .DayPickerInput > input').should('have.value', 'December 23, 2019');
     cy.get('[style="margin-top: 0.5em;"] > .DayPickerInput > input').should('have.value', 'December 31, 2019');
