@@ -16,9 +16,11 @@ import Popup from 'reactjs-popup';
 import HostPopup from './HostPopup';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
+import queryString from 'query-string';
 
-const SearchResults = ({ id, history }) => {
+const SearchResults = (props) => {
   const { t, ready } = useTranslation('SearchResults');
+  const { id, history } = props
 
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
@@ -49,9 +51,9 @@ const SearchResults = ({ id, history }) => {
   const [hostLong, setHostLong] = useState('');
   const [hostAvailable, setHostAvailable] = useState('');
 
-  const geolocationDataAddress = () => {
+  const geolocationDataAddress = (place) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
-    Geocode.fromAddress(history.location.state.location).then((response) => {
+    Geocode.fromAddress(place).then((response) => {
       const { lat, lng } = response.results[0].geometry.location;
       setLocationLat(lat);
       setLocationLong(lng);
@@ -59,6 +61,7 @@ const SearchResults = ({ id, history }) => {
   };
 
   const editHostsDataAllLocations = (array, status) => {
+    let { from, to, cats } = queryString.parse(props.location.search)
     array.map((host) => {
       host.available = status;
       host.id = host.user.id;
@@ -66,88 +69,93 @@ const SearchResults = ({ id, history }) => {
       host.lng = parseFloat(host.long);
       host.total = finalTotal(
         host.price_per_day_1_cat,
-        history.location.state.cats,
+        cats,
         host.supplement_price_per_cat_per_day,
-        history.location.state.from,
-        history.location.state.to
+        from,
+        to
       );
       return null;
     });
   };
 
   useEffect(() => {
-    async function asyncDidMount() {
-      if (history.location.state === undefined) {
-        history.push({ pathname: '/search' });
-      } else {
-        if (window.navigator.onLine === false) {
+    let { from, to, location, cats } = queryString.parse(props.location.search)
+
+    if (window.navigator.onLine === false) {
+      setLoading(false);
+      setErrorDisplay(true);
+      setErrors(['reusable:errors:window-navigator']);
+    } else {
+      const lang = detectLanguage();
+      const callByLocation = axios.get(
+        `/api/v1/host_profiles?location=${location}&startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+      );
+      const callAllLocations = axios.get(
+        `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+      );
+
+      axios.all([callByLocation, callAllLocations]).then(axios.spread((...responses) => {
+        const responseByLocation = responses[0]
+        const responseAllLocations = responses[1]
+        let APIavailableByLocation = [];
+        let APInotAvailableByLocation = [];
+        let APIavailableAllLocations = [];
+        let APInotAvailableAllLocations = [];
+
+        if (responseByLocation.data.with.length > 0) {
+          APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
+          APIavailableByLocation.sort((a, b) => b.score - a.score);
+          APIavailableByLocation.map((host) => {
+            host.available = true;
+            return null;
+          });
+        }
+
+        if (responseByLocation.data.without.length > 0) {
+          APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
+          APInotAvailableByLocation.sort((a, b) => b.score - a.score);
+          APInotAvailableByLocation.map((host) => {
+            host.available = false;
+            return null;
+          });
+        }
+
+        setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
+
+        if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
+          APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
+          editHostsDataAllLocations(APIavailableAllLocations, true);
+        }
+
+        if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
+          APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
+          editHostsDataAllLocations(APInotAvailableAllLocations, false);
+        }
+
+        setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
+
+      })).catch(({ response }) => {
+        if (response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (response.status === 500) {
           setLoading(false);
           setErrorDisplay(true);
-          setErrors(['reusable:errors:window-navigator']);
+          setErrors(['reusable:errors:500']);
+        } else if (response.status === 503) {
+          wipeCredentials('/is-not-available?atm');
         } else {
-          try {
-            const lang = detectLanguage();
-            let APIavailableByLocation = [];
-            let APInotAvailableByLocation = [];
-            let APIavailableAllLocations = [];
-            let APInotAvailableAllLocations = [];
-            const responseByLocation = await axios.get(
-              `/api/v1/host_profiles?location=${history.location.state.location}&startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
-            );
-            if (responseByLocation.data.with.length > 0) {
-              APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
-              APIavailableByLocation.sort((a, b) => b.score - a.score);
-              APIavailableByLocation.map((host) => {
-                host.available = true;
-                return null;
-              });
-            }
-            if (responseByLocation.data.without.length > 0) {
-              APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
-              APInotAvailableByLocation.sort((a, b) => b.score - a.score);
-              APInotAvailableByLocation.map((host) => {
-                host.available = false;
-                return null;
-              });
-            }
-            setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
-            const responseAllLocations = await axios.get(
-              `/api/v1/host_profiles?startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
-            );
-            if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
-              APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-              editHostsDataAllLocations(APIavailableAllLocations, true);
-            }
-            if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
-              APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
-              editHostsDataAllLocations(APInotAvailableAllLocations, false);
-            }
-            setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
-          } catch ({ response }) {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(['reusable:errors:500']);
-            } else if (response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
-            } else {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(response.data.error);
-            }
-          }
-          setCheckInDate(history.location.state.from);
-          setCheckOutDate(history.location.state.to);
-          setNumberOfCats(history.location.state.cats);
-          setLocation(history.location.state.location);
           setLoading(false);
-          geolocationDataAddress();
+          setErrorDisplay(true);
+          setErrors(response.data.error);
         }
-      }
+      })
+      setCheckInDate(parseInt(from));
+      setCheckOutDate(parseInt(to));
+      setNumberOfCats(cats);
+      setLocation(location);
+      setLoading(false);
+      geolocationDataAddress(location);
     }
-    asyncDidMount();
   }, []);
 
   const handleHostProfileClick = () => {
@@ -400,23 +408,23 @@ const SearchResults = ({ id, history }) => {
             {hostPopupLoading ? (
               <Spinner />
             ) : (
-              <HostPopup
-                numberOfCats={numberOfCats}
-                checkInDate={checkInDate}
-                checkOutDate={checkOutDate}
-                avatar={hostAvatar}
-                nickname={hostNickname}
-                location={hostLocation}
-                rate={hostRate}
-                supplement={hostSupplement}
-                score={score}
-                reviewsCount={reviewsCount}
-                handleHostProfileClick={handleHostProfileClick}
-                requestToBookButtonClick={requestToBookButtonClick}
-                hostAvailable={hostAvailable}
-                messageHost={messageHost}
-              />
-            )}
+                <HostPopup
+                  numberOfCats={numberOfCats}
+                  checkInDate={checkInDate}
+                  checkOutDate={checkOutDate}
+                  avatar={hostAvatar}
+                  nickname={hostNickname}
+                  location={hostLocation}
+                  rate={hostRate}
+                  supplement={hostSupplement}
+                  score={score}
+                  reviewsCount={reviewsCount}
+                  handleHostProfileClick={handleHostProfileClick}
+                  requestToBookButtonClick={requestToBookButtonClick}
+                  hostAvailable={hostAvailable}
+                  messageHost={messageHost}
+                />
+              )}
           </div>
         </Popup>
         <Popup
@@ -490,25 +498,25 @@ const SearchResults = ({ id, history }) => {
                     <Icon id='map-button' name='map' disabled circular inverted style={{ backgroundColor: 'grey' }} />
                   </>
                 ) : (
-                  <>
-                    <Icon
-                      id='list-button'
-                      name='list'
-                      circular
-                      inverted
-                      style={listButtonStyle}
-                      onClick={switchResultView}
-                    />
-                    <Icon
-                      id='map-button'
-                      name='map'
-                      circular
-                      inverted
-                      style={mapButtonStyle}
-                      onClick={switchResultView}
-                    />
-                  </>
-                )}
+                    <>
+                      <Icon
+                        id='list-button'
+                        name='list'
+                        circular
+                        inverted
+                        style={listButtonStyle}
+                        onClick={switchResultView}
+                      />
+                      <Icon
+                        id='map-button'
+                        name='map'
+                        circular
+                        inverted
+                        style={mapButtonStyle}
+                        onClick={switchResultView}
+                      />
+                    </>
+                  )}
               </Grid.Column>
               <Grid.Column
                 width={8}

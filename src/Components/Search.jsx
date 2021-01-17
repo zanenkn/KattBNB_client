@@ -108,12 +108,7 @@ class Search extends Component {
       let msTo = new Date(utcTo).getTime();
       this.props.history.push({
         pathname: '/search-results',
-        state: {
-          from: msFrom,
-          to: msTo,
-          cats: this.state.cats,
-          location: this.state.location,
-        },
+        search: `?from=${msFrom}&to=${msTo}&cats=${this.state.cats}&location=${this.state.location}`
       });
     }
   };
