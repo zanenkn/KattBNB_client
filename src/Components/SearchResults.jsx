@@ -226,10 +226,6 @@ const SearchResults = (props) => {
     }
   };
 
-  const handleDatapointClick = (id, status) => {
-    getHostById(id, status);
-  };
-
   const resetHost = () => {
     setHostAvatar('');
     setHostNickname('');
@@ -355,7 +351,7 @@ const SearchResults = (props) => {
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
               location={location}
-              handleListItemClick={handleDatapointClick}
+              handleListItemClick={(id, hostStatus) => getHostById(id, hostStatus)}
             />
           </div>
         );
@@ -373,7 +369,7 @@ const SearchResults = (props) => {
               mapCenterLat={locationLat}
               mapCenterLong={locationLong}
               allAvailableHosts={availableAllLocations}
-              handleDatapointClick={handleDatapointClick}
+              handleDatapointClick={(id, hostStatus) => getHostById(id, hostStatus)}
             />
           </div>
         );
