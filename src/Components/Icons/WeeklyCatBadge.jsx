@@ -1,7 +1,7 @@
 import React from 'react'
 
-const WeeklyCatBadge = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 334" class={props.class}>
+const WeeklyCatBadge = ({className}) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 334" class={className}>
     <path fill='#C80A61' d="M166.67,196.17v137.5L100,267l-66.67,66.67v-137.5C73.35,224.21,126.65,224.21,166.67,196.17z" />
     <path fill='#C80A61' d="M100,200.33L100,200.33c-55.23,0-100-44.77-100-100v0c0-55.23,44.77-100,100-100h0c55.23,0,100,44.77,100,100
 			v0C200,155.56,155.23,200.33,100,200.33z"/>

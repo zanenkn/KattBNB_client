@@ -99,7 +99,7 @@ const Landing = () => {
                   className='carousel-inner-wrapper'
                   style={{ width: carouselWidth, height: carouselHeight, position: 'relative' }}
                 >
-                  <WeeklyCatBadge class='badge' />
+                  <WeeklyCatBadge className='badge' />
                   <div className='name-wrapper'>
                     <h2 className='title'>{t('Landing:weekly-cat', { count: config.count })}</h2>
                     <h2 className='name'>{config.name}</h2>
