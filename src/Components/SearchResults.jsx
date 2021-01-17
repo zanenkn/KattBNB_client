@@ -79,8 +79,18 @@ const SearchResults = (props) => {
   };
 
   useEffect(() => {
-    let { from, to, location, cats } = queryString.parse(props.location.search)
+    let from, to, location, cats
+    let today = new Date()
 
+    if (queryString.parse(props.location.search).from !== undefined) {
+      ({ from, to, location, cats } = queryString.parse(props.location.search))
+    } else {
+      location = queryString.parse(props.location.search).location
+      cats = 1
+      from = today.getTime() + 86400000
+      to = today.getTime() + 86400000
+    }
+    
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrorDisplay(true);
