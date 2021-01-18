@@ -15,7 +15,7 @@ export const LOCATION_OPTIONS = [
   { text: 'Bjuv', key: 'Bjuv', value: 'Bjuv' },
   { text: 'Boden', key: 'Boden', value: 'Boden' },
   { text: 'Bollebygd', key: 'Bollebygd', value: 'Bollebygd' },
-  { text: 'Bollnä', key: 'Bollnä', value: 'Bollnä' },
+  { text: 'Bollnäs', key: 'Bollnäs', value: 'Bollnäs' },
   { text: 'Borgholm', key: 'Borgholm', value: 'Borgholm' },
   { text: 'Borlänge', key: 'Borlänge', value: 'Borlänge' },
   { text: 'Borås', key: 'Borås', value: 'Borås' },

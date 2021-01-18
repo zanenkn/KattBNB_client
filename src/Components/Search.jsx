@@ -10,7 +10,6 @@ import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/momen
 import { withTranslation } from 'react-i18next';
 import Spinner from './ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 
 class Search extends Component {
   constructor(props) {
@@ -245,12 +244,9 @@ class Search extends Component {
                 </Button>
               </div>
             </div>
-            <div className='slowly-pulsing'>
-              <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                  <p style={{ fontWeight: 'bold', color: '#c90c61' }}>{t('Search:become-host')}</p>
-                </Link>
-              </div>
+            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* TODO: fix translation for this */}
+              <a href='/glossary' className='discreet-link'>Cat sitter glossary</a>
             </div>
           </Segment>
         </div>
