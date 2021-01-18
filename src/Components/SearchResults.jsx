@@ -17,6 +17,7 @@ import HostPopup from './HostPopup';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 
 const SearchResults = (props) => {
   const { t, ready } = useTranslation('SearchResults');
@@ -419,6 +420,22 @@ const SearchResults = (props) => {
 
     return (
       <>
+        <Helmet>
+          <title>{`Kattvakt i ${location} | KattBNB`}</title>
+          <meta
+            name='description'
+            content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+          />
+          <link rel='canonical' href={`https://kattbnb.se/search-results/${window.location.search}`}/>
+          <meta property='og:title' content={`Kattvakt i ${location} | KattBNB`} />
+          <meta property='og:url' content={`https://kattbnb.se/search-results/${window.location.search}`} />
+          <meta property='og:type' content='website' />
+          <meta
+            property='og:description'
+            content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+          />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
         <Popup modal open={openHostPopup} closeOnDocumentClick={true} onClose={closeModal} position='top center'>
           <div>
             {hostPopupLoading ? (

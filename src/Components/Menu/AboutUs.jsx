@@ -17,7 +17,7 @@ const AboutUs = () => {
           <title>KattBNB - hitta kattvakt nära dig!</title>
           <meta
             name='description'
-            content='Letar du efter kattvakt? Då har du kommit rätt. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.'
+            content='Letar du efter kattvakt? Då har du kommit rätt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
           />
           <link rel='canonical' href='https://kattbnb.se/about-us' />
           <meta property='og:title' content='KattBNB - hitta kattvakt nära dig!' />
@@ -25,7 +25,7 @@ const AboutUs = () => {
           <meta property='og:type' content='website' />
           <meta
             property='og:description'
-            content='Vi bryr oss om katterna. Snart lanserar vi en hemsida där du kommer att kunna boka kattpassning online.'
+            content='Vi bryr oss om katterna. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
           />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
