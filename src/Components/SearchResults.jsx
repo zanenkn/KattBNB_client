@@ -53,7 +53,7 @@ const SearchResults = (props) => {
 
   let from, to, location, cats
   let today = new Date()
-  
+
   if (queryString.parse(props.location.search).from !== undefined) {
     ({ from, to, location, cats } = queryString.parse(props.location.search))
   } else {

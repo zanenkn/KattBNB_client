@@ -245,8 +245,7 @@ class Search extends Component {
               </div>
             </div>
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              {/* TODO: fix translation for this */}
-              <a href='/glossary' className='discreet-link'>Cat sitter glossary</a>
+              <a href='/area-list' className='discreet-link'>{t('Search:sitters-near-you')}</a>
             </div>
           </Segment>
         </div>
