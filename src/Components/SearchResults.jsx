@@ -27,8 +27,8 @@ const SearchResults = (props) => {
   const [checkOutDate, setCheckOutDate] = useState('');
   const [numberOfCats, setNumberOfCats] = useState('');
   const [locationName, setLocationName] = useState('');
-  const [locationLat, setLocationLat] = useState('');
-  const [locationLong, setLocationLong] = useState('');
+  const [locationLat, setLocationLat] = useState(null);
+  const [locationLong, setLocationLong] = useState(null);
   const [hostProfileId, setHostProfileId] = useState('');
   const [score, setScore] = useState('');
   const [reviewsCount, setReviewsCount] = useState('');

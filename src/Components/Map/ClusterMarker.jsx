@@ -9,28 +9,24 @@ class ClusterMarker extends React.PureComponent {
     clusterFaceMarkers: this.props.points.slice(0, 1),
   };
 
+
   render() {
     return (
-      <div style={{ display: 'flex', transform: 'translate(-50%, -50%)' }}>
-        {this.state.clusterFaceMarkers.map(({ id, lat, lng, total }) => (
-          <Marker key={id} lat={lat} lng={lng} id={id} total={total} available={true} />
-        ))}
-        {this.props.points.length > 1 && (
-          <Label
-            circular
-            style={{
-              height: '2em',
-              width: '2em',
-              fontSize: 'x-small',
-              backgroundColor: '#c90c61',
-              color: '#ffffff',
-              transform: 'translate(-350%, -200%)',
-            }}
-          >
-            +{this.props.points.length - 1}
-          </Label>
-        )}
-      </div>
+
+   
+          <Marker
+            key={this.props.points[0].properties.id}
+            lat={this.props.points[0].geometry.coordinates[1]}
+            lng={this.props.points[0].geometry.coordinates[0]}
+            id={this.props.points[0].properties.id}
+            total={this.props.points[0].properties.total}
+            available={true}
+            handleDatapointClick={this.props.onLabelClick}
+            cluster={true}
+            pointCount={this.props.pointCount}
+          />
+
+
     );
   }
 }
