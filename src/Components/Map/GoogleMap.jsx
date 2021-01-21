@@ -5,16 +5,16 @@ import Marker from './Marker';
 import mapStyles from '../../Modules/MapStyle.js';
 import ClusterMarker from './ClusterMarker';
 
-const GoogleMap = (props) => {
+const GoogleMap = ({ allAvailableHosts, mapCenterLat, mapCenterLong, handleDatapointClick }) => {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
-  const points = props.allAvailableHosts.map((host) => ({
+  const points = allAvailableHosts.map((host) => ({
     type: 'Feature',
     properties: {
       cluster: false,
-      id: host.user.id,
+      hostId: host.user.id,
       total: host.total,
       available: host.available,
     },
@@ -31,13 +31,18 @@ const GoogleMap = (props) => {
     options: { radius: 75, maxZoom: 20 },
   });
 
+  const zoomAndPan = (zoom, lat, lng) => {
+    mapRef.current.setZoom(zoom);
+    mapRef.current.panTo({ lat: lat, lng: lng });
+  };
+
   return (
     <div id='map-wrapper'>
       <GoogleMapReact
         defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
         center={{
-          lat: props.mapCenterLat,
-          lng: props.mapCenterLong,
+          lat: mapCenterLat,
+          lng: mapCenterLong,
         }}
         defaultZoom={12}
         options={{
@@ -62,21 +67,17 @@ const GoogleMap = (props) => {
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_KEY }}
       >
         {clusters.map((cluster) => {
-          const [longitude, latitude] = cluster.geometry.coordinates;
+          const [clusterLng, clusterLat] = cluster.geometry.coordinates;
           const { cluster: isCluster, point_count: pointCount } = cluster.properties;
 
           if (isCluster) {
-            if (zoom < 9) {
+            if (zoom < 10) {
               return (
                 <ClusterMarker
-                  lat={latitude}
-                  lng={longitude}
+                  lat={clusterLat}
+                  lng={clusterLng}
                   key={`cluster-${cluster.id}`}
-                  onClick={() => {
-                    const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20);
-                    mapRef.current.setZoom(expansionZoom);
-                    mapRef.current.panTo({ lat: latitude, lng: longitude });
-                  }}
+                  onClick={() => zoomAndPan(12, clusterLat, clusterLng)}
                   pointCount={pointCount}
                   pointLength={points.length}
                 />
@@ -93,11 +94,9 @@ const GoogleMap = (props) => {
                   id={id}
                   total={total}
                   available
-                  handleDatapointClick={() => {
-                    const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20);
-                    mapRef.current.setZoom(expansionZoom);
-                    mapRef.current.panTo({ lat: latitude, lng: longitude });
-                  }}
+                  onClick={() =>
+                    zoomAndPan(Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20), clusterLat, clusterLng)
+                  }
                   cluster
                   pointCount={pointCount}
                 />
@@ -107,14 +106,14 @@ const GoogleMap = (props) => {
 
           return (
             <Marker
-              key={`host-${cluster.properties.id}`}
-              id={cluster.properties.id}
-              lat={latitude}
-              lng={longitude}
+              key={`host-${cluster.properties.hostId}`}
+              id={cluster.properties.hostId}
+              lat={clusterLat}
+              lng={clusterLng}
               total={cluster.properties.total}
               available={cluster.properties.available}
-              handleDatapointClick={props.handleDatapointClick}
-            ></Marker>
+              onClick={handleDatapointClick}
+            />
           );
         })}
       </GoogleMapReact>

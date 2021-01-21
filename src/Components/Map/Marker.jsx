@@ -17,7 +17,7 @@ class Marker extends React.PureComponent {
             color: '#ffffff',
           }}
           id={this.props.id}
-          onClick={(e) => this.props.handleDatapointClick(this.props.id, this.props.available)}
+          onClick={(e) => this.props.onClick(this.props.id, this.props.available)}
         >
           {this.props.total}&nbsp;kr
         </Label>
