@@ -1,40 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { List } from 'immutable';
-import Marker from './Marker';
-import { Label } from 'semantic-ui-react';
 
-class ClusterMarker extends React.PureComponent {
-  state = {
-    clusterFaceMarkers: this.props.points.slice(0, 1),
-  };
-
-
-  render() {
-    return (
-
-   
-          <Marker
-            key={this.props.points[0].properties.id}
-            lat={this.props.points[0].geometry.coordinates[1]}
-            lng={this.props.points[0].geometry.coordinates[0]}
-            id={this.props.points[0].properties.id}
-            total={this.props.points[0].properties.total}
-            available={true}
-            handleDatapointClick={this.props.onLabelClick}
-            cluster={true}
-            pointCount={this.props.pointCount}
-          />
-
-
-    );
-  }
+const ClusterMarker = (props) => {
+  return (
+    <div
+      style={{
+        width: `${10 + (props.pointCount / props.pointLength) * 20}px`,
+        height: `${10 + (props.pointCount / props.pointLength) * 20}px`,
+        color: '#fff',
+        backgroundColor: '#c90c61',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '10px',
+        fontWeight: 'bold',
+        borderRadius: '9999px',
+        transform: 'translate(-50%, -50%)', position: 'absolute'
+      }}
+      onClick={props.onClick}
+    >
+      {props.pointCount}
+    </div>
+  )
 }
-
-ClusterMarker.propTypes = {
-  points: PropTypes.array,
-  users: PropTypes.instanceOf(List),
-  selected: PropTypes.bool,
-};
 
 export default ClusterMarker;
