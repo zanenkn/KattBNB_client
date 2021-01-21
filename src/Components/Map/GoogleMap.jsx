@@ -88,7 +88,7 @@ const GoogleMap = ({ allAvailableHosts, mapCenterLat, mapCenterLong, handleDatap
 
               return (
                 <Marker
-                  key={`cluster-${id}`}
+                  key={`cluster-${cluster.id}`}
                   lat={clusterMarker.geometry.coordinates[1]}
                   lng={clusterMarker.geometry.coordinates[0]}
                   id={id}
