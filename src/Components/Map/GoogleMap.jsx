@@ -28,7 +28,7 @@ const GoogleMap = ({ allAvailableHosts, mapCenterLat, mapCenterLong, handleDatap
     points,
     bounds,
     zoom,
-    options: { radius: 75, maxZoom: 20 },
+    options: { radius: 125, maxZoom: 20 },
   });
 
   const zoomAndPan = (zoom, lat, lng) => {
