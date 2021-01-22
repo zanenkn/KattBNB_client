@@ -16,20 +16,23 @@ import Popup from 'reactjs-popup';
 import HostPopup from './HostPopup';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
+import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 
-const SearchResults = ({ id, history }) => {
+const SearchResults = (props) => {
   const { t, ready } = useTranslation('SearchResults');
+  const { id, history } = props
 
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [numberOfCats, setNumberOfCats] = useState('');
-  const [location, setLocation] = useState('');
-  const [locationLat, setLocationLat] = useState('');
-  const [locationLong, setLocationLong] = useState('');
+  const [locationName, setLocationName] = useState('');
+  const [locationLat, setLocationLat] = useState(null);
+  const [locationLong, setLocationLong] = useState(null);
   const [hostProfileId, setHostProfileId] = useState('');
   const [score, setScore] = useState('');
   const [reviewsCount, setReviewsCount] = useState('');
-  const [results, setResults] = useState('list');
+  const [results, setResults] = useState('');
   const [openHostPopup, setOpenHostPopup] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -49,9 +52,21 @@ const SearchResults = ({ id, history }) => {
   const [hostLong, setHostLong] = useState('');
   const [hostAvailable, setHostAvailable] = useState('');
 
-  const geolocationDataAddress = () => {
+  let from, to, location, cats
+  let today = new Date()
+
+  if (queryString.parse(props.location.search).from !== undefined) {
+    ({ from, to, location, cats } = queryString.parse(props.location.search))
+  } else {
+    location = queryString.parse(props.location.search).location
+    cats = 1
+    from = today.getTime() + 86400000
+    to = today.getTime() + 86400000
+  }
+
+  const geolocationDataAddress = (place) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
-    Geocode.fromAddress(history.location.state.location).then((response) => {
+    Geocode.fromAddress(place).then((response) => {
       const { lat, lng } = response.results[0].geometry.location;
       setLocationLat(lat);
       setLocationLong(lng);
@@ -66,88 +81,101 @@ const SearchResults = ({ id, history }) => {
       host.lng = parseFloat(host.long);
       host.total = finalTotal(
         host.price_per_day_1_cat,
-        history.location.state.cats,
+        cats,
         host.supplement_price_per_cat_per_day,
-        history.location.state.from,
-        history.location.state.to
+        from,
+        to
       );
       return null;
     });
   };
 
   useEffect(() => {
-    async function asyncDidMount() {
-      if (history.location.state === undefined) {
-        history.push({ pathname: '/search' });
+    if (queryString.parse(props.location.search).location === undefined) {
+      history.push({ pathname: '/search' });
+    } else {
+
+      if (queryString.parse(props.location.search).view === undefined) {
+        window.history.replaceState(null, null, window.location.search.concat('&view=map'))
+      }
+
+      if (window.navigator.onLine === false) {
+        setLoading(false);
+        setErrorDisplay(true);
+        setErrors(['reusable:errors:window-navigator']);
       } else {
-        if (window.navigator.onLine === false) {
-          setLoading(false);
-          setErrorDisplay(true);
-          setErrors(['reusable:errors:window-navigator']);
-        } else {
-          try {
-            const lang = detectLanguage();
-            let APIavailableByLocation = [];
-            let APInotAvailableByLocation = [];
-            let APIavailableAllLocations = [];
-            let APInotAvailableAllLocations = [];
-            const responseByLocation = await axios.get(
-              `/api/v1/host_profiles?location=${history.location.state.location}&startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
-            );
-            if (responseByLocation.data.with.length > 0) {
-              APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
-              APIavailableByLocation.sort((a, b) => b.score - a.score);
-              APIavailableByLocation.map((host) => {
-                host.available = true;
-                return null;
-              });
-            }
-            if (responseByLocation.data.without.length > 0) {
-              APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
-              APInotAvailableByLocation.sort((a, b) => b.score - a.score);
-              APInotAvailableByLocation.map((host) => {
-                host.available = false;
-                return null;
-              });
-            }
-            setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
-            const responseAllLocations = await axios.get(
-              `/api/v1/host_profiles?startDate=${history.location.state.from}&endDate=${history.location.state.to}&cats=${history.location.state.cats}&locale=${lang}`
-            );
-            if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
-              APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-              editHostsDataAllLocations(APIavailableAllLocations, true);
-            }
-            if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
-              APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
-              editHostsDataAllLocations(APInotAvailableAllLocations, false);
-            }
-            setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
-          } catch ({ response }) {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(['reusable:errors:500']);
-            } else if (response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
-            } else {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(response.data.error);
-            }
+        const lang = detectLanguage();
+        const callByLocation = axios.get(
+          `/api/v1/host_profiles?location=${location}&startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+        );
+        const callAllLocations = axios.get(
+          `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+        );
+
+        axios.all([callByLocation, callAllLocations]).then(axios.spread((...responses) => {
+          const responseByLocation = responses[0]
+          const responseAllLocations = responses[1]
+          let APIavailableByLocation = [];
+          let APInotAvailableByLocation = [];
+          let APIavailableAllLocations = [];
+          let APInotAvailableAllLocations = [];
+
+          if (responseByLocation.data.with.length > 0) {
+            APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
+            APIavailableByLocation.sort((a, b) => b.score - a.score);
+            APIavailableByLocation.map((host) => {
+              host.available = true;
+              return null;
+            });
           }
-          setCheckInDate(history.location.state.from);
-          setCheckOutDate(history.location.state.to);
-          setNumberOfCats(history.location.state.cats);
-          setLocation(history.location.state.location);
-          setLoading(false);
-          geolocationDataAddress();
-        }
+
+          if (responseByLocation.data.without.length > 0) {
+            APInotAvailableByLocation = responseByLocation.data.without.filter((host) => host.user.id !== id);
+            APInotAvailableByLocation.sort((a, b) => b.score - a.score);
+            APInotAvailableByLocation.map((host) => {
+              host.available = false;
+              return null;
+            });
+          }
+
+          setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
+
+          if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
+            APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
+            editHostsDataAllLocations(APIavailableAllLocations, true);
+          }
+
+          if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
+            APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
+            editHostsDataAllLocations(APInotAvailableAllLocations, false);
+          }
+
+          setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
+
+        })).catch(({ response }) => {
+          if (response === undefined) {
+            wipeCredentials('/is-not-available?atm');
+          } else if (response.status === 500) {
+            setLoading(false);
+            setErrorDisplay(true);
+            setErrors(['reusable:errors:500']);
+          } else if (response.status === 503) {
+            wipeCredentials('/is-not-available?atm');
+          } else {
+            setLoading(false);
+            setErrorDisplay(true);
+            setErrors(response.data.error);
+          }
+        })
+        setCheckInDate(parseInt(from));
+        setCheckOutDate(parseInt(to));
+        setNumberOfCats(cats);
+        setLocationName(location);
+        setLoading(false);
+        setResults(queryString.parse(props.location.search).view ? queryString.parse(props.location.search).view : 'map')
+        geolocationDataAddress(location);
       }
     }
-    asyncDidMount();
   }, []);
 
   const handleHostProfileClick = () => {
@@ -203,10 +231,6 @@ const SearchResults = ({ id, history }) => {
     }
   };
 
-  const handleDatapointClick = (id, status) => {
-    getHostById(id, status);
-  };
-
   const resetHost = () => {
     setHostAvatar('');
     setHostNickname('');
@@ -233,6 +257,7 @@ const SearchResults = ({ id, history }) => {
 
   const switchResultView = (e) => {
     window.scrollTo(0, scrollOffset);
+    window.history.replaceState(null, null, window.location.search.replace(`view=${results}`, `view=${e.target.id.split('-')[0]}`))
     setResults(e.target.id.split('-')[0]);
     resetHost();
   };
@@ -330,8 +355,8 @@ const SearchResults = ({ id, history }) => {
               numberOfCats={numberOfCats}
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
-              location={location}
-              handleListItemClick={handleDatapointClick}
+              location={locationName}
+              handleListItemClick={(id, hostStatus) => getHostById(id, hostStatus)}
             />
           </div>
         );
@@ -349,7 +374,7 @@ const SearchResults = ({ id, history }) => {
               mapCenterLat={locationLat}
               mapCenterLong={locationLong}
               allAvailableHosts={availableAllLocations}
-              handleDatapointClick={handleDatapointClick}
+              handleDatapointClick={(id, hostStatus) => getHostById(id, hostStatus)}
             />
           </div>
         );
@@ -395,28 +420,44 @@ const SearchResults = ({ id, history }) => {
 
     return (
       <>
+        <Helmet>
+          <title>{`Kattvakt i ${location} | KattBNB`}</title>
+          <meta
+            name='description'
+            content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+          />
+          <link rel='canonical' href={`https://kattbnb.se/search-results/${window.location.search}`}/>
+          <meta property='og:title' content={`Kattvakt i ${location} | KattBNB`} />
+          <meta property='og:url' content={`https://kattbnb.se/search-results/${window.location.search}`} />
+          <meta property='og:type' content='website' />
+          <meta
+            property='og:description'
+            content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+          />
+          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+        </Helmet>
         <Popup modal open={openHostPopup} closeOnDocumentClick={true} onClose={closeModal} position='top center'>
           <div>
             {hostPopupLoading ? (
               <Spinner />
             ) : (
-              <HostPopup
-                numberOfCats={numberOfCats}
-                checkInDate={checkInDate}
-                checkOutDate={checkOutDate}
-                avatar={hostAvatar}
-                nickname={hostNickname}
-                location={hostLocation}
-                rate={hostRate}
-                supplement={hostSupplement}
-                score={score}
-                reviewsCount={reviewsCount}
-                handleHostProfileClick={handleHostProfileClick}
-                requestToBookButtonClick={requestToBookButtonClick}
-                hostAvailable={hostAvailable}
-                messageHost={messageHost}
-              />
-            )}
+                <HostPopup
+                  numberOfCats={numberOfCats}
+                  checkInDate={checkInDate}
+                  checkOutDate={checkOutDate}
+                  avatar={hostAvatar}
+                  nickname={hostNickname}
+                  location={hostLocation}
+                  rate={hostRate}
+                  supplement={hostSupplement}
+                  score={score}
+                  reviewsCount={reviewsCount}
+                  handleHostProfileClick={handleHostProfileClick}
+                  requestToBookButtonClick={requestToBookButtonClick}
+                  hostAvailable={hostAvailable}
+                  messageHost={messageHost}
+                />
+              )}
           </div>
         </Popup>
         <Popup
@@ -445,7 +486,7 @@ const SearchResults = ({ id, history }) => {
               <svg fill='#c90c61' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
                 <path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' />
               </svg>
-              &nbsp;{location}&emsp;
+              &nbsp;{locationName}&emsp;
               <svg fill='#c90c61' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 236.62 236.62'>
                 <path d='M197.023,225.545c-1.145-9.533-11.68-10.614-17.805-9.958c-6.521-24.554,16.225-61.151,17.563-69.82c1.438-9.312-6.658-63.5-7.513-90.938C188.389,26.662,147.48-4.433,140.65,0.524c-6.768,7.484,9.748,17.585,1.054,26.245c-8.398,8.367-10.588,13.99-16.824,23.46c-15.976,24.255,27.318,24.558,27.318,24.558s-33.882,25.112-41.421,37.768c-6.943,11.656-9.854,24.696-18.232,35.688c-19.094,25.051-14.791,68.729-14.791,68.729s-36.17-11.839-16.264-53.133C76.643,132.406,84.107,86.02,50.016,97.95c-13.189,4.616,2.949,14.325,5.734,17.435c9.318,10.4,1.441,27.896-4.174,38.012c-15.037,27.091-20.496,55.475,11.154,72.978c14.063,7.776,33.055,9.7,52.17,9.982l48.64,0.14C179.564,237.294,197.689,234.298,197.023,225.545z' />
               </svg>
@@ -490,25 +531,25 @@ const SearchResults = ({ id, history }) => {
                     <Icon id='map-button' name='map' disabled circular inverted style={{ backgroundColor: 'grey' }} />
                   </>
                 ) : (
-                  <>
-                    <Icon
-                      id='list-button'
-                      name='list'
-                      circular
-                      inverted
-                      style={listButtonStyle}
-                      onClick={switchResultView}
-                    />
-                    <Icon
-                      id='map-button'
-                      name='map'
-                      circular
-                      inverted
-                      style={mapButtonStyle}
-                      onClick={switchResultView}
-                    />
-                  </>
-                )}
+                    <>
+                      <Icon
+                        id='list-button'
+                        name='list'
+                        circular
+                        inverted
+                        style={listButtonStyle}
+                        onClick={switchResultView}
+                      />
+                      <Icon
+                        id='map-button'
+                        name='map'
+                        circular
+                        inverted
+                        style={mapButtonStyle}
+                        onClick={switchResultView}
+                      />
+                    </>
+                  )}
               </Grid.Column>
               <Grid.Column
                 width={8}

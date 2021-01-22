@@ -146,7 +146,7 @@ class IncomingRequests extends Component {
                 errors: ['reusable:errors:500'],
                 iconsDisabled: false,
               });
-            } else if (error.response.status === 555) {
+            } else if (error.response.status === 555 || error.response.status === 427) {
               window.alert(error.response.data.error);
               this.props.history.push('/all-bookings');
             } else if (error.response.status === 503) {
@@ -265,28 +265,28 @@ class IncomingRequests extends Component {
                 </p>
               </>
             ) : (
-              stripeAccountErrors.length > 0 && (
-                <>
-                  <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
-                    {t('reusable:stripe:step-2-text')}&ensp;
+                stripeAccountErrors.length > 0 && (
+                  <>
+                    <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
+                      {t('reusable:stripe:step-2-text')}&ensp;
                     {stripePendingVerification
-                      ? t('reusable:stripe:step-2-pending')
-                      : t('reusable:stripe:step-2-go-to-dashboard')}
-                  </p>
-                  {!stripePendingVerification && (
-                    <Button
-                      onClick={() => this.fetchStripeDashboardLink()}
-                      loading={stripeDashboardButtonLoading}
-                      disabled={stripeDashboardButtonLoading}
-                      id='progress-bar-cta'
-                      style={{ marginBottom: '2rem' }}
-                    >
-                      {t('reusable:stripe:stripe-dashboard-cta')}
-                    </Button>
-                  )}
-                </>
-              )
-            )}
+                        ? t('reusable:stripe:step-2-pending')
+                        : t('reusable:stripe:step-2-go-to-dashboard')}
+                    </p>
+                    {!stripePendingVerification && (
+                      <Button
+                        onClick={() => this.fetchStripeDashboardLink()}
+                        loading={stripeDashboardButtonLoading}
+                        disabled={stripeDashboardButtonLoading}
+                        id='progress-bar-cta'
+                        style={{ marginBottom: '2rem' }}
+                      >
+                        {t('reusable:stripe:stripe-dashboard-cta')}
+                      </Button>
+                    )}
+                  </>
+                )
+              )}
             {sortedRequests.map((request) => {
               priceWithDecimalsString = request.price_total.toFixed(2);
               if (
@@ -356,28 +356,28 @@ class IncomingRequests extends Component {
                                 </p>
                               </>
                             ) : (
-                              stripeAccountErrors.length > 0 && (
-                                <>
-                                  <p style={{ textAlign: 'center', fontSize: 'unset' }}>
-                                    {t('reusable:stripe:step-2-text')}&ensp;
+                                stripeAccountErrors.length > 0 && (
+                                  <>
+                                    <p style={{ textAlign: 'center', fontSize: 'unset' }}>
+                                      {t('reusable:stripe:step-2-text')}&ensp;
                                     {stripePendingVerification ? (
-                                      t('reusable:stripe:step-2-pending')
-                                    ) : (
-                                      <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                                        In order for you to accept a request, you should&nbsp;
-                                        <span
-                                          onClick={() => this.fetchStripeDashboardLink()}
-                                          className='fake-link-underlined'
-                                        >
-                                          complete your verification
+                                        t('reusable:stripe:step-2-pending')
+                                      ) : (
+                                          <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
+                                            In order for you to accept a request, you should&nbsp;
+                                            <span
+                                              onClick={() => this.fetchStripeDashboardLink()}
+                                              className='fake-link-underlined'
+                                            >
+                                              complete your verification
                                         </span>
                                         &nbsp;with our payment provider (Stripe).
-                                      </Trans>
-                                    )}
-                                  </p>
-                                </>
+                                          </Trans>
+                                        )}
+                                    </p>
+                                  </>
+                                )
                               )
-                            )
                           }
                           trigger={
                             <Icon

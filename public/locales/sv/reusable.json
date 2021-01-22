@@ -33,7 +33,8 @@
     "contact": "Kontakta oss",
     "blog": "Blogg",
     "partners": "Partners",
-    "legal": "Användarvillkor"
+    "legal": "Användarvillkor",
+    "area": "Välj ditt område:"
   },
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",

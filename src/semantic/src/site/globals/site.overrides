@@ -30,6 +30,14 @@ button:focus {
   color: #bd0a5b!important;
 }
 
+a.discreet-link {
+  color: silver!important;
+}
+
+a.discreet-link:hover {
+  color: grey;
+}
+
 .fake-link-underlined {
   color: #c90c61;
   cursor: pointer!important;
@@ -122,6 +130,32 @@ button:focus {
 @media screen and (max-width: 700px) {
   .booking-request {
     margin: 0 -2rem 2rem;
+  }
+}
+
+.flex-grid {
+  padding: 0 3rem;
+  column-gap: 4rem;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  display: grid;
+}
+
+@media screen and (min-width: 480px) {
+  .flex-grid {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .flex-grid {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .flex-grid {
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    column-gap: 9rem;
   }
 }
 

@@ -36,27 +36,21 @@ describe('Visitor can toggle between list and map results', () => {
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
   });
 
-  it('and see list as a default view', () => {
-    cy.get('.list-card').should('be.visible');
-    cy.get(
-      '[style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"]'
-    ).should('not.exist');
+  it('and see map as a default view', () => {
+    cy.get('.list-card').should('not.exist');
+    cy.get('#map-wrapper').should('be.visible');
   });
 
-  it('and see map view when she hits the relevant button', () => {
-    cy.get('#map-button').click();
+  it('and see list view when she hits the relevant button', () => {
+    cy.get('#list-button').click();
     cy.wait(1000);
-    cy.get('.list-card').should('not.exist');
-    cy.get(
-      '[style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"]'
-    ).should('be.visible');
+    cy.get('.list-card').should('be.visible');
+    cy.get('#map-wrapper').should('not.exist');
   });
 
   it('and see the list view again when she hits the relevant button', () => {
-    cy.get('#list-button').click();
-    cy.get('.list-card').should('be.visible');
-    cy.get(
-      '[style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"]'
-    ).should('not.exist');
+    cy.get('#map-button').click();
+    cy.get('.list-card').should('not.exist');
+    cy.get('#map-wrapper').should('be.visible');
   });
 });

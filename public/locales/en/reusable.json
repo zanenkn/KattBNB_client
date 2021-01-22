@@ -33,7 +33,8 @@
     "contact": "Contact us",
     "blog": "Blog",
     "partners": "Partners",
-    "legal": "Terms & conditions"
+    "legal": "Terms & conditions",
+    "area": "Choose your area:"
   },
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",

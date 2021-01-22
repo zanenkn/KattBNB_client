@@ -10,7 +10,6 @@ import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/momen
 import { withTranslation } from 'react-i18next';
 import Spinner from './ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 
 class Search extends Component {
   constructor(props) {
@@ -108,12 +107,7 @@ class Search extends Component {
       let msTo = new Date(utcTo).getTime();
       this.props.history.push({
         pathname: '/search-results',
-        state: {
-          from: msFrom,
-          to: msTo,
-          cats: this.state.cats,
-          location: this.state.location,
-        },
+        search: `?from=${msFrom}&to=${msTo}&cats=${this.state.cats}&location=${this.state.location}&view=map`
       });
     }
   };
@@ -250,12 +244,8 @@ class Search extends Component {
                 </Button>
               </div>
             </div>
-            <div className='slowly-pulsing'>
-              <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                  <p style={{ fontWeight: 'bold', color: '#c90c61' }}>{t('Search:become-host')}</p>
-                </Link>
-              </div>
+            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <a href='/area-list' className='discreet-link'>{t('Search:sitters-near-you')}</a>
             </div>
           </Segment>
         </div>

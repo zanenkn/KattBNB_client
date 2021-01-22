@@ -34,6 +34,7 @@ import HostSe from './Components/HostSe';
 import LeaveReview from './Components/Reviews/LeaveReview';
 import SuccessfulReview from './Components/Reviews/SuccessfulReview';
 import Receipt from './Components/Bookings/Receipt';
+import AreaList from './Components/AreaList'
 import ScrollToTop from './Modules/ScrollToTop';
 import { Container, Sidebar } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -90,6 +91,7 @@ class App extends Component {
               <Route exact path='/conversation' component={Conversation}></Route>
               <Route exact path='/leave-a-review' component={LeaveReview}></Route>
               <Route exact path='/booking-receipt' component={Receipt}></Route>
+              <Route exact path='/area-list' component={AreaList}></Route>
             </Switch>
           </ScrollToTop>
           <Menu />

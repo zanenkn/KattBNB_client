@@ -1,5 +1,5 @@
 describe('Visitor can view search results as a map', () => {
-  before(function () {
+  beforeEach(() => {
     cy.server();
     cy.visit('http://localhost:3000');
     cy.route({
@@ -33,16 +33,14 @@ describe('Visitor can view search results as a map', () => {
     )
       .last()
       .click();
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.clock().then((clock) => {
       clock.restore();
     });
-    cy.get('#map-button').click();
-    cy.wait(2000);
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
   });
 
-  it('and see correct datapoints', () => {
-    let labels = ['#44', '#33'];
+  it('and see datapoints', () => {
+    let labels = ['#44', '#55'];
 
     labels.forEach((label) => {
       cy.get(label).should('be.visible');
