@@ -1,32 +1,47 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Label } from 'semantic-ui-react';
 
-class Marker extends React.PureComponent {
-  static defaultProps = {
-    inGroup: false,
-  };
-
-  render() {
-    return (
-      <div style={{ transform: 'translate(-50%, -50%)' }}>
-        <Label
-          pointing='below'
+const Marker = ({ cluster, available, id, onClick, total, pointCount }) => {
+  return (
+    <div
+      style={{
+        transform: cluster ? 'translate(calc(-50% + 30px), -50%)' : 'translate(-50%, -50%)',
+        position: 'absolute',
+        display: cluster ? 'flex' : 'block',
+      }}
+      onClick={(e) => onClick(id, available)}
+    >
+      <Label
+        pointing='below'
+        style={{
+          backgroundColor: available ? '#c90c61' : '#808080',
+          color: '#ffffff',
+        }}
+        id={id}
+      >
+        {total}&nbsp;kr
+      </Label>
+      {cluster && (
+        <div
           style={{
-            backgroundColor: this.props.available ? '#c90c61' : '#808080',
+            height: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '25px',
+            fontSize: '10px',
+            fontWeight: 'bold',
+            backgroundColor: '#c90c61',
             color: '#ffffff',
-            transform: 'translate(-50%, -50%)',
+            borderRadius: '9999px',
+            marginLeft: '5px',
           }}
-          id={this.props.id}
-          onClick={(e) => this.props.handleDatapointClick(this.props.id, this.props.available)}
         >
-          {this.props.total}&nbsp;kr
-        </Label>
-      </div>
-    );
-  }
-}
-
-Marker.propTypes = { inGroup: PropTypes.bool };
+          +{pointCount - 1}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Marker;

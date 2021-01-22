@@ -33,73 +33,71 @@ describe('Visitor can view search results as a map', () => {
     )
       .last()
       .click();
-    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.clock().then((clock) => {
       clock.restore();
     });
+    cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
   });
 
-  //fix this in next US
+  it('and see datapoints', () => {
+    let labels = ['#44', '#55'];
 
-  it('and see correct datapoints', () => {
-    // let labels = ['#44', '#33'];
-
-    // labels.forEach((label) => {
-    //   cy.get(label).should('be.visible');
-    // });
+    labels.forEach((label) => {
+      cy.get(label).should('be.visible');
+    });
   });
 
-  // it('and see a popup with host information by clicking on a specific datapoint', () => {
-  //   cy.server();
-  //   cy.route({
-  //     method: 'GET',
-  //     url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
-  //     status: 200,
-  //     response: 'fixture:host_profile_datapoint_click_map.json',
-  //   });
+  it('and see a popup with host information by clicking on a specific datapoint', () => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_datapoint_click_map.json',
+    });
 
-  //   cy.get('#44').click({ force: true });
+    cy.get('#44').click({ force: true });
 
-  //   let hostData = [
-  //     'carla',
-  //     'Stockholm',
-  //     '169.75 kr/day',
-  //     'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost',
-  //     '679 kr',
-  //   ];
+    let hostData = [
+      'carla',
+      'Stockholm',
+      '169.75 kr/day',
+      'The stay for 2 cats with carla during the dates of 2019-10-08 until 2019-10-11 would in total cost',
+      '679 kr',
+    ];
 
-  //   hostData.forEach((data) => {
-  //     cy.contains(data);
-  //   });
-  // });
+    hostData.forEach((data) => {
+      cy.contains(data);
+    });
+  });
 
-  // it("and see the full host profile after clicking 'more' in host popup", () => {
-  //   cy.server();
-  //   cy.route({
-  //     method: 'GET',
-  //     url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
-  //     status: 200,
-  //     response: 'fixture:host_profile_datapoint_click_map.json',
-  //   });
-  //   cy.route({
-  //     method: 'GET',
-  //     url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
-  //     status: 200,
-  //     response: [],
-  //   });
+  it("and see the full host profile after clicking 'more' in host popup", () => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
+      status: 200,
+      response: 'fixture:host_profile_datapoint_click_map.json',
+    });
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
+    });
 
-  //   let hostData = [
-  //     ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
-  //     ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr'],
-  //   ];
+    let hostData = [
+      ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
+      ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr'],
+    ];
 
-  //   cy.get('#44').click({ force: true });
-  //   cy.get('#more').click();
+    cy.get('#44').click({ force: true });
+    cy.get('#more').click();
 
-  //   hostData[0].forEach((data) => {
-  //     cy.get(data).contains(hostData[1][hostData[0].indexOf(data)]);
-  //   });
+    hostData[0].forEach((data) => {
+      cy.get(data).contains(hostData[1][hostData[0].indexOf(data)]);
+    });
 
-  //   cy.get('#avatar').should('be.visible');
-  // });
+    cy.get('#avatar').should('be.visible');
+  });
 });

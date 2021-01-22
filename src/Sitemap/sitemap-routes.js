@@ -3,7 +3,6 @@ import { Route } from 'react-router'
 
 export default (
   <Route>
-    <Route path='/' />
     <Route path='/about-us' />
     <Route path='/contact-us' />
     <Route path='/faq' />
