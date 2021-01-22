@@ -10,17 +10,17 @@ const GoogleMap = ({ allAvailableHosts, mapCenterLat, mapCenterLong, handleDatap
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
-  const points = allAvailableHosts.map((host) => ({
+  const points = allAvailableHosts.map(({available, lat, lng, total, user}) => ({
     type: 'Feature',
     properties: {
       cluster: false,
-      hostId: host.user.id,
-      total: host.total,
-      available: host.available,
+      hostId: user.id,
+      total: total,
+      available: available,
     },
     geometry: {
       type: 'Point',
-      coordinates: [parseFloat(host.lng), parseFloat(host.lat)],
+      coordinates: [parseFloat(lng), parseFloat(lat)],
     },
   }));
 
