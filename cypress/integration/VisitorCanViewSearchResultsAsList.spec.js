@@ -64,7 +64,7 @@ describe('Visitor can view search results as a list', () => {
         cy.get('div[class="available-host"]').should('be.visible');
       });
     cy.get('[style="padding: 2rem;"] > :nth-child(7)').within(() => {
-      cy.get('div[class="available-host"]').should('not.be.visible');
+      cy.get('div[class="available-host"]').should('not.exist');
     });
   });
 
