@@ -11,7 +11,7 @@ describe('User can view her incoming bookings', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -98,7 +98,7 @@ describe('User can view her incoming bookings', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -110,7 +110,7 @@ describe('User can view her incoming bookings', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
+      url: `${api}/host_profiles?user_id=66&locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_index.json',
     });
@@ -164,7 +164,7 @@ describe('User can view her incoming bookings', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });

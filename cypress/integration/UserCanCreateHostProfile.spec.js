@@ -6,7 +6,7 @@ describe('User can create a host profile', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${host_profiles}?user_id=1&locale=en-US`,
+      url: `${host_profiles}?user_id=66&locale=en-US`,
       status: 200,
       response: [],
     });

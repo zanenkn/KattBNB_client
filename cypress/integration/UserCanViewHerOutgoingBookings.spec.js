@@ -5,13 +5,13 @@ describe('User can view her outgoing bookings', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
       status: 200,
       response: 'fixture:all_user_bookings.json',
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -189,13 +189,13 @@ describe('User can view her outgoing bookings', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
       status: 200,
       response: 'fixture:one_user_booking_review.json',
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -232,13 +232,13 @@ describe('User can view her outgoing bookings', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
       status: 200,
       response: 'fixture:all_user_bookings.json',
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });
@@ -274,14 +274,14 @@ describe('User can view her outgoing bookings', () => {
       booking_review[0].review_id = null;
       cy.route({
         method: 'GET',
-        url: `${api}/bookings?stats=no&user_id=1&locale=en-US`,
+        url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
         status: 200,
         response: booking_review,
       });
     });
     cy.route({
       method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=1&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: 'fixture:booking_stats.json',
     });

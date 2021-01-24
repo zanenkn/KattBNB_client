@@ -33,14 +33,14 @@ describe('Visitor can search for cat sitters', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: [],
+      response: { with: [], without: [] },
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: '',
+      response: { with: [], without: [] },
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
@@ -64,6 +64,7 @@ describe('Visitor can search for cat sitters', () => {
       .last()
       .click();
     cy.get('#search-button').click({ force: true });
+    cy.get('#list-button').click()
     cy.contains('Your search did not yield any results!');
   });
 
@@ -73,14 +74,14 @@ describe('Visitor can search for cat sitters', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: [],
+      response: { with: [], without: [] },
     });
     cy.route({
       method: 'GET',
       url:
         'http://localhost:3007/api/v1/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US',
       status: 200,
-      response: '',
+      response: { with: [], without: [] },
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
@@ -104,6 +105,7 @@ describe('Visitor can search for cat sitters', () => {
       .last()
       .click();
     cy.get('#search-button').click({ force: true });
+    cy.get('#list-button').click()
     cy.get('.fake-link').click();
     cy.get(':nth-child(2) > .DayPickerInput > input').should('have.value', 'December 23, 2019');
     cy.get('[style="margin-top: 0.5em;"] > .DayPickerInput > input').should('have.value', 'December 31, 2019');
@@ -122,7 +124,14 @@ describe('Visitor can search for cat sitters', () => {
       url:
         'http://localhost:3007/api/v1/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=15&locale=en-US',
       status: 200,
-      response: [],
+      response: { with: [], without: [] },
+    });
+    cy.route({
+      method: 'GET',
+      url:
+        'http://localhost:3007/api/v1/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=15&locale=en-US',
+      status: 200,
+      response: { with: [], without: [] },
     });
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);

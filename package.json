@@ -8,7 +8,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.9.0",
     "actioncable": "^5.2.4-1",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "google-map-react": "^1.1.5",
     "i18next": "^19.0.1",
     "i18next-xhr-backend": "^3.2.2",
@@ -16,7 +16,6 @@
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "node": "^10.16.0",
-    "points-cluster": "^0.1.4",
     "prismic-javascript": "^3.0.2",
     "prismic-reactjs": "^1.3.3",
     "query-string": "^6.8.2",
@@ -36,6 +35,7 @@
     "react-password-strength-bar": "^0.3.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "3.0.1",
     "react-textarea-autosize": "^7.1.2",
     "reactjs-popup": "^1.5.0",
@@ -45,17 +45,20 @@
     "redux-token-auth": "raptorf1/redux-token-auth-i18n#master",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
-    "smoothscroll-polyfill": "^0.4.4"
+    "smoothscroll-polyfill": "^0.4.4",
+    "supercluster": "^7.1.2",
+    "use-supercluster": "^0.2.9"
   },
   "scripts": {
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
     "watch-semantic": "cd src/semantic && npm run build-semantic && gulp watch",
     "start": "npm run build-semantic && react-scripts start",
-    "build": "npm run build-semantic && react-scripts build",
+    "build": "npm run build-semantic && react-scripts build && npm run sitemap",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "npm start --silent & cypress open",
-    "cy:run": "BROWSER=none npm start & cypress run"
+    "cy:run": "BROWSER=none npm start & cypress run",
+    "sitemap": "babel-node src/Sitemap/sitemap-generator.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -73,6 +76,10 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "cypress": "^3.7.0",
     "prettier": "2.2.1",
     "semantic-ui": "^2.4.2"

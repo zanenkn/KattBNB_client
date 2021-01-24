@@ -23,7 +23,7 @@ describe('User can see host profile progress bar from her User Page', () => {
     cy.wait(2000);
     cy.route({
       method: 'GET',
-      url: `${api}/host_profiles?user_id=1&locale=en-US`,
+      url: `${api}/host_profiles?user_id=66&locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_index.json',
     });

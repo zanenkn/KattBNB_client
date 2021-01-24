@@ -26,7 +26,7 @@ describe('User can create a booking request', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api_url}/host_profiles?user_id=2&locale=en-US`,
+      url: `${api_url}/host_profiles?user_id=44&locale=en-US`,
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
@@ -38,7 +38,7 @@ describe('User can create a booking request', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api_url}/reviews?host_profile_id=2&locale=en-US`,
+      url: `${api_url}/reviews?host_profile_id=4&locale=en-US`,
       status: 200,
       response: [],
     });
@@ -101,10 +101,11 @@ describe('User can create a booking request', () => {
       clock.restore();
     });
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
+    cy.get('#list-button').click()
   });
 
   it('successfully and get redirected', () => {
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#message').type('Please take my cats for 4 days!');
@@ -116,7 +117,7 @@ describe('User can create a booking request', () => {
   });
 
   it('unsuccessfully and get an error message cause message field is empty', () => {
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#request-to-book-button').click();
@@ -124,7 +125,7 @@ describe('User can create a booking request', () => {
   });
 
   it('unsuccessfully and get an error message cause message field contains more than 400 characters', () => {
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#message').type(
@@ -135,7 +136,7 @@ describe('User can create a booking request', () => {
   });
 
   it('unsuccessfully and get an error message cause postal code does not consist of 5 numbers', () => {
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#message').type('Please take my cats for 4 days!');
@@ -146,7 +147,7 @@ describe('User can create a booking request', () => {
   });
 
   it('unsuccessfully and get an error message cause cardholder name is not filled in', () => {
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#message').type('Please take my cats for 4 days!');
@@ -162,7 +163,7 @@ describe('User can create a booking request', () => {
       status: 555,
       response: {},
     });
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.on('window:alert', (str) => {
@@ -180,13 +181,13 @@ describe('User can create a booking request', () => {
   it('unsuccessfully and get an error message cause of Stripe error while updating the payment intent', () => {
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=66&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
       status: 555,
       response: {
         error: 'There was a problem connecting to our payments infrastructure provider. Please try again later.',
       },
     });
-    cy.get('#22').click();
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.get('#message').type('Please take my cats for 4 days!');
@@ -217,7 +218,8 @@ describe('User can create a booking request', () => {
       .last()
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
-    cy.get('#22').click();
+    cy.get('#list-button').click()
+    cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#request-to-book').click();
     cy.contains('Log in');
