@@ -85,6 +85,7 @@ describe('User can create a booking request', () => {
       cy.get('#password').type('password');
     });
     cy.get('.submit-button').click();
+    cy.wait(2000)
     cy.get('.ui > #search-form > .required > .ui > #cats').click();
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2');
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true });
@@ -201,7 +202,7 @@ describe('User can create a booking request', () => {
     cy.get('#logout').click();
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
-    cy.get('.landing-desktop-content > [style="width: 165px;"] > [href="/search"] > .ui').click();
+    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock');
     cy.get('#search-form > .required > #location > .visible > .selected').click();
