@@ -36,7 +36,7 @@ const Landing = () => {
 
   useEffect(() => {
     const scrollit = () => {
-      window.scrollBy(0, 10);
+      window.scrollBy(0, 5);
     };
     window.addEventListener('load', scrollit);
     return () => window.removeEventListener('load', scrollit);
