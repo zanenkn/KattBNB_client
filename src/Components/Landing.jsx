@@ -34,14 +34,6 @@ const Landing = () => {
     }
   }, [carousel.current]);
 
-  useEffect(() => {
-    const scrollit = () => {
-      window.scrollBy(0, 5);
-    };
-    window.addEventListener('load', scrollit);
-    return () => window.removeEventListener('load', scrollit);
-  }, []);
-
   const carouselWrapper = useCallback((node) => {
     const resizeCarousel = () => {
       if (node !== null) {
@@ -140,12 +132,12 @@ const Landing = () => {
                 </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
-                <div style={{ marginBottom: '1rem' }}>
+                <div>
                   <Link to={'/search'}>
                     <Button style={{ width: '100%', marginTop: '0' }}>{t('Landing:cta-find')}</Button>
                   </Link>
                   <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                    <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
+                    <Button style={{ width: '100%', marginTop: '1rem' }}>{t('Landing:cta-become')}</Button>
                   </Link>
                 </div>
                 <div className='scroll-down-cta' onClick={() => scrollDown()}>
