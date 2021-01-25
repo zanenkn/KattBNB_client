@@ -432,7 +432,7 @@ a.discreet-link:hover {
   margin: auto;
 }
 
-@media screen and (max-width: 480px) and (max-height: 600px) {
+@media screen and (max-width: 480px) and (max-height: 550px) {
   .landing-carousel {
     padding: 1.5rem 2rem 0!important;
   }
