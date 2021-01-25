@@ -34,6 +34,14 @@ const Landing = () => {
     }
   }, [carousel.current]);
 
+  useEffect(() => {
+    const scrollit = () => {
+      window.scrollBy(0, 1);
+    };
+    window.addEventListener('load', scrollit);
+    return () => window.removeEventListener('load', scrollit);
+  }, []);
+
   const carouselWrapper = useCallback((node) => {
     const resizeCarousel = () => {
       if (node !== null) {
