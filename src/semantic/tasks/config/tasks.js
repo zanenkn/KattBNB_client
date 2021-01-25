@@ -116,15 +116,15 @@ module.exports = {
     },
 
     /* What Browsers to Prefix */
-    prefix: {
-      browsers: [
-        'last 2 versions',
-        '> 1%',
-        'opera 12.1',
-        'bb 10',
-        'android 4'
-      ]
-    },
+    // prefix: {
+    //   browsers: [
+    //     'last 2 versions',
+    //     '> 1%',
+    //     'opera 12.1',
+    //     'bb 10',
+    //     'android 4'
+    //   ]
+    // },
 
     /* File Renames */
     rename: {
