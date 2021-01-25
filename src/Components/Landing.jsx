@@ -49,9 +49,6 @@ const Landing = () => {
       }
     };
     resizeCarousel();
-    window.addEventListener('resize', () => {
-      resizeCarousel();
-    });
   }, []);
 
   const onDotClick = (e) => {
@@ -137,7 +134,7 @@ const Landing = () => {
               <div className='mobile-only' style={{ width: '165px' }}>
                 <div style={{ marginBottom: '1rem' }}>
                   <Link to={'/search'}>
-                    <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
+                    <Button style={{ width: '100%', marginTop: '0' }}>{t('Landing:cta-find')}</Button>
                   </Link>
                   <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
                     <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
