@@ -113,7 +113,12 @@ const Landing = () => {
                               height='100%'
                             />
                           ) : (
-                            <img src={`weekly/weekly_${index + 1}.jpg`} width={carouselWidth} height='100%'></img>
+                            <img
+                              src={`weekly/weekly_${index + 1}.jpg`}
+                              alt=''
+                              width={carouselWidth}
+                              height='100%'
+                            ></img>
                           )}
                         </li>
                       );
@@ -125,7 +130,7 @@ const Landing = () => {
                     <div
                       id={i}
                       key={i}
-                      className={'dot ' + `${activeImage === i ? 'selected' : ''}`}
+                      className={`dot ${activeImage === i ? 'selected' : ''}`}
                       onClick={(e) => onDotClick(e)}
                     />
                   ))}
