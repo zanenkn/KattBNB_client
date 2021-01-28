@@ -73,7 +73,7 @@ class RequestAcceptedSuccessfully extends Component {
               </Trans>
             </p>
             <span style={{ display: 'grid' }}>
-              <a href={googleLink} target='_blank' rel='noreferrer'>
+              <a style={{ marginTop: '10px', marginBottom: '15px' }} href={googleLink} target='_blank' rel='noreferrer'>
                 {t('RequestAcceptedSuccessfully:add-google-calendar')}
               </a>
               <ICalendarLink event={calendarEvent}>
