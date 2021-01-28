@@ -32,6 +32,7 @@ const Landing = () => {
     if (carousel.current) {
       carousel.current.scrollLeft = 0;
     }
+    // eslint-disable-next-line
   }, [carousel.current]);
 
   const carouselWrapper = useCallback((node) => {

@@ -260,6 +260,7 @@ class RequestToBook extends Component {
           'access-token': window.localStorage.getItem('access-token'),
         };
         try {
+          // eslint-disable-next-line
           const responseUpdateIntent = await axios.get(path, { headers: headers });
           const result = await stripe.confirmCardPayment(paymentIntent, {
             payment_method: {
