@@ -3,6 +3,7 @@ import { Header, Segment } from 'semantic-ui-react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import ICalendarLink from 'react-icalendar-link';
 
 class RequestAcceptedSuccessfully extends Component {
   componentDidMount() {
@@ -13,6 +14,7 @@ class RequestAcceptedSuccessfully extends Component {
 
   render() {
     const { t } = this.props;
+
     let total;
 
     let priceWithDecimalsString = this.props.location.state.price.toFixed(2);
@@ -43,17 +45,16 @@ class RequestAcceptedSuccessfully extends Component {
       count: this.props.location.state.cats,
     })}`;
 
-    // let event = {
-    //   title: t('RequestAcceptedSuccessfully:event-title', { total: total }),
-    //   description: t('RequestAcceptedSuccessfully:event-info', {
-    //     nickname: this.props.location.state.user,
-    //     count: this.props.location.state.cats,
-    //   }),
-    //   location: t('RequestAcceptedSuccessfully:event-location'),
-    //   startTime: this.props.location.state.inDate,
-    //   endTime: this.props.location.state.outDate,
-    // };
-    // let items = [{ google: 'Google' }, { apple: 'iCal' }, { outlook: 'Outlook Desktop' }];
+    let calendarEvent = {
+      title: t('RequestAcceptedSuccessfully:event-title', { total: total }),
+      description: t('RequestAcceptedSuccessfully:event-info', {
+        nickname: this.props.location.state.user,
+        count: this.props.location.state.cats,
+      }),
+      location: t('RequestAcceptedSuccessfully:event-location'),
+      startTime: this.props.location.state.inDate,
+      endTime: this.props.location.state.outDate,
+    };
 
     if (this.props.tReady) {
       return (
@@ -71,13 +72,14 @@ class RequestAcceptedSuccessfully extends Component {
                 .
               </Trans>
             </p>
-            <a href={googleLink}>Add to Google Calendar</a>
-            {/* <AddToCalendar
-              event={event}
-              displayItemIcons={false}
-              listItems={items}
-              buttonLabel={t('RequestAcceptedSuccessfully:calendar-label')}
-            /> */}
+            <span style={{ display: 'grid' }}>
+              <a href={googleLink} target='_blank' rel='noreferrer'>
+                {t('RequestAcceptedSuccessfully:add-google-calendar')}
+              </a>
+              <ICalendarLink event={calendarEvent}>
+                {t('RequestAcceptedSuccessfully:download-calendar-event')}
+              </ICalendarLink>
+            </span>
           </Segment>
         </div>
       );

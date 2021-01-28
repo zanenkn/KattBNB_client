@@ -28,6 +28,7 @@
     "react-geocode": "^0.2.2",
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.8.5",
+    "react-icalendar-link": "^1.0.3",
     "react-images-upload": "^1.2.8",
     "react-lazy-load-image-component": "^1.5.1",
     "react-netlify-form": "^2.1.5",
