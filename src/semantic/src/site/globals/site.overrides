@@ -1283,30 +1283,6 @@ h4 {
 }
 
 /*******************************
-REACT ADD TO CALENDAR OVERRIDES
-*******************************/
-
-.react-add-to-calendar__button {
-  cursor: pointer !important;
-}
-
-.react-add-to-calendar__dropdown {
-  ul {
-    list-style-type: none !important;
-    padding-top: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-  li {
-    margin-bottom: 0.7rem !important;
-  }
-}
-
-.react-add-to-calendar {
-  text-align: left !important;
-  font-size: medium !important;
-}
-
-/*******************************
       HOST PROFILE PROGRESS
 *******************************/
 
