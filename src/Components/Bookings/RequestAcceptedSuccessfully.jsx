@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
+import moment from 'moment';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -13,11 +14,17 @@ class RequestAcceptedSuccessfully extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const {
+      t,
+      tReady,
+      location: {
+        state: { cats, inDate, price, outDate, user },
+      },
+    } = this.props;
 
     let total;
 
-    let priceWithDecimalsString = this.props.location.state.price.toFixed(2);
+    let priceWithDecimalsString = price.toFixed(2);
     if (
       priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' &&
       priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0'
@@ -27,36 +34,29 @@ class RequestAcceptedSuccessfully extends Component {
       total = priceWithDecimalsString;
     }
 
-    let startDate =
-      this.props.location.state.inDate.getFullYear().toString() +
-      (this.props.location.state.inDate.getMonth() + 1).toString().padStart(2, '0') +
-      this.props.location.state.inDate.getDate().toString().padStart(2, '0');
-    let endDate =
-      this.props.location.state.outDate.getFullYear().toString() +
-      (this.props.location.state.outDate.getMonth() + 1).toString().padStart(2, '0') +
-      this.props.location.state.outDate.getDate().toString().padStart(2, '0');
-
-    let googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${startDate}T000000Z/${endDate}T200000Z&location=${t(
+    let googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${moment(inDate).format(
+      'YYYYMMDD'
+    )}T000000Z/${moment(outDate).format('YYYYMMDD')}T200000Z&location=${t(
       'RequestAcceptedSuccessfully:event-location'
     )}&text=${t('RequestAcceptedSuccessfully:event-title', {
       total: total,
     })}&details=${t('RequestAcceptedSuccessfully:event-info', {
-      nickname: this.props.location.state.user,
-      count: this.props.location.state.cats,
+      nickname: user,
+      count: cats,
     })}`;
 
     let calendarEvent = {
       title: t('RequestAcceptedSuccessfully:event-title', { total: total }),
       description: t('RequestAcceptedSuccessfully:event-info', {
-        nickname: this.props.location.state.user,
-        count: this.props.location.state.cats,
+        nickname: user,
+        count: cats,
       }),
       location: t('RequestAcceptedSuccessfully:event-location'),
-      startTime: this.props.location.state.inDate,
-      endTime: this.props.location.state.outDate,
+      startTime: inDate,
+      endTime: outDate,
     };
 
-    if (this.props.tReady) {
+    if (tReady) {
       return (
         <div className='content-wrapper'>
           <Header as='h1'>{t('RequestAcceptedSuccessfully:title')}</Header>
