@@ -34,7 +34,7 @@ import HostSe from './Components/HostSe';
 import LeaveReview from './Components/Reviews/LeaveReview';
 import SuccessfulReview from './Components/Reviews/SuccessfulReview';
 import Receipt from './Components/Bookings/Receipt';
-import AreaList from './Components/AreaList'
+import AreaList from './Components/AreaList';
 import ScrollToTop from './Modules/ScrollToTop';
 import { Container, Sidebar } from 'semantic-ui-react';
 import { connect } from 'react-redux';

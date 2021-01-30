@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route } from 'react-router'
+import React from 'react';
+import { Route } from 'react-router';
 
 export default (
   <Route>
@@ -13,4 +13,4 @@ export default (
     <Route path='/become-host' />
     <Route path='/search-results?location=:query' />
   </Route>
-) 
+);
