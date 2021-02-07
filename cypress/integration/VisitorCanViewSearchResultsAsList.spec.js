@@ -85,6 +85,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
+    });
     let hostData = [
       ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
       ['carla', 'I have the nicest hair in the world! And I love cats btw :P', '169.75 kr/day', '679 kr'],
@@ -105,7 +111,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
-
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
+    });
     cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();
