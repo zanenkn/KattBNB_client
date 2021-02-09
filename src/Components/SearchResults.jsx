@@ -53,7 +53,7 @@ const SearchResults = (props) => {
   const [hostAvailable, setHostAvailable] = useState('');
 
   let from, to, location, cats;
-  let today = Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate());
+  let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
 
   if (queryString.parse(props.location.search).from !== undefined) {
     ({ from, to, location, cats } = queryString.parse(props.location.search));
