@@ -1,6 +1,6 @@
 export const config = {
-  name: 'Hjalmar',
+  name: 'Bimo',
   count: 1,
-  link: 'https://www.instagram.com/tinyhjalmar/',
-  credit: '@tinyhjalmar',
+  link: 'https://www.instagram.com/instabemo/',
+  credit: '@instabemo',
 };
