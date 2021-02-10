@@ -24,7 +24,7 @@ describe('Visitor can view search results as a list', () => {
     cy.visit('http://localhost:3000');
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
-    cy.get('[style="margin-bottom: 1rem;"] > [href="/search"] > .ui').click();
+    cy.get('.twelve > [href="/search"]').click();
     cy.get('.ui > #search-form > .required > #location > .default').click();
     cy.get('.ui > #search-form > .required > #location > .search').type('Stock');
     cy.get('#search-form > .required > #location > .visible > .selected').click();
@@ -64,7 +64,7 @@ describe('Visitor can view search results as a list', () => {
         cy.get('div[class="available-host"]').should('be.visible');
       });
     cy.get('[style="padding: 2rem;"] > :nth-child(7)').within(() => {
-      cy.get('div[class="available-host"]').should('not.be.visible');
+      cy.get('div[class="available-host"]').should('not.exist');
     });
   });
 
@@ -84,6 +84,12 @@ describe('Visitor can view search results as a list', () => {
       url: 'http://localhost:3007/api/v1/host_profiles?user_id=44&locale=en-US',
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
+    });
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
     });
     let hostData = [
       ['#nickname', '#description', '#per-day', ':nth-child(10) > #total'],
@@ -105,7 +111,12 @@ describe('Visitor can view search results as a list', () => {
       status: 200,
       response: 'fixture:host_profile_datapoint_click_map.json',
     });
-
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/reviews?host_profile_id=4&locale=en-US',
+      status: 200,
+      response: [],
+    });
     cy.get('#44').click();
     cy.get('#more').click();
     cy.get('#send-message').click();

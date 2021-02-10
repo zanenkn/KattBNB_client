@@ -32,6 +32,7 @@ const Landing = () => {
     if (carousel.current) {
       carousel.current.scrollLeft = 0;
     }
+    // eslint-disable-next-line
   }, [carousel.current]);
 
   const carouselWrapper = useCallback((node) => {
@@ -49,9 +50,6 @@ const Landing = () => {
       }
     };
     resizeCarousel();
-    window.addEventListener('resize', () => {
-      resizeCarousel();
-    });
   }, []);
 
   const onDotClick = (e) => {
@@ -116,7 +114,12 @@ const Landing = () => {
                               height='100%'
                             />
                           ) : (
-                            <img src={`weekly/weekly_${index + 1}.jpg`} width={carouselWidth} height='100%'></img>
+                            <img
+                              src={`weekly/weekly_${index + 1}.jpg`}
+                              alt=''
+                              width={carouselWidth}
+                              height='100%'
+                            ></img>
                           )}
                         </li>
                       );
@@ -128,19 +131,19 @@ const Landing = () => {
                     <div
                       id={i}
                       key={i}
-                      className={'dot ' + `${activeImage === i ? 'selected' : ''}`}
+                      className={`dot ${activeImage === i ? 'selected' : ''}`}
                       onClick={(e) => onDotClick(e)}
                     />
                   ))}
                 </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
-                <div style={{ marginBottom: '1rem' }}>
+                <div>
                   <Link to={'/search'}>
-                    <Button style={{ width: '100%' }}>{t('Landing:cta-find')}</Button>
+                    <Button style={{ width: '100%', marginTop: '0' }}>{t('Landing:cta-find')}</Button>
                   </Link>
                   <Link to={window.localStorage.getItem('I18N_LANGUAGE') === 'en' ? '/become-host' : '/bli-kattvakt'}>
-                    <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
+                    <Button style={{ width: '100%', marginTop: '1rem' }}>{t('Landing:cta-become')}</Button>
                   </Link>
                 </div>
                 <div className='scroll-down-cta' onClick={() => scrollDown()}>

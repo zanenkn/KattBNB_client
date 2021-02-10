@@ -143,6 +143,12 @@ describe('User can view her incoming bookings', () => {
   });
 
   it('and get redirected to her user page to reply to a review she received', () => {
+    cy.route({
+      method: 'GET',
+      url: 'http://localhost:3007/api/v1/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US',
+      status: 200,
+      response: [],
+    });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });

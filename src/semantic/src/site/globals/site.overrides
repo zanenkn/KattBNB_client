@@ -432,14 +432,21 @@ a.discreet-link:hover {
   margin: auto;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) and (max-height: 550px) {
   .landing-carousel {
     padding: 1.5rem 2rem 0!important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .landing-carousel {
+    padding: 1.5rem 2rem 1rem!important;
   }
   .landing-mobile-logo {
     width: 65px!important;
   }
 }
+
 
 .landing-text, .landing-carousel {
   width: 100%;
@@ -1273,30 +1280,6 @@ h4 {
 
 .landscape-img {
   max-height: 30vh;
-}
-
-/*******************************
-REACT ADD TO CALENDAR OVERRIDES
-*******************************/
-
-.react-add-to-calendar__button {
-  cursor: pointer !important;
-}
-
-.react-add-to-calendar__dropdown {
-  ul {
-    list-style-type: none !important;
-    padding-top: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-  li {
-    margin-bottom: 0.7rem !important;
-  }
-}
-
-.react-add-to-calendar {
-  text-align: left !important;
-  font-size: medium !important;
 }
 
 /*******************************

@@ -107,7 +107,7 @@ class Search extends Component {
       let msTo = new Date(utcTo).getTime();
       this.props.history.push({
         pathname: '/search-results',
-        search: `?from=${msFrom}&to=${msTo}&cats=${this.state.cats}&location=${this.state.location}&view=map`
+        search: `?from=${msFrom}&to=${msTo}&cats=${this.state.cats}&location=${this.state.location}&view=map`,
       });
     }
   };
@@ -245,7 +245,9 @@ class Search extends Component {
               </div>
             </div>
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <a href='/area-list' className='discreet-link'>{t('Search:sitters-near-you')}</a>
+              <a href='/area-list' className='discreet-link'>
+                {t('Search:sitters-near-you')}
+              </a>
             </div>
           </Segment>
         </div>
