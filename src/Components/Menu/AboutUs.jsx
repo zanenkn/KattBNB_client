@@ -120,7 +120,7 @@ const AboutUs = () => {
             </Trans>
           </p>
         </div>
-        <div style={{ display: 'flex', 'justify-content': 'center', margin: '1.5rem 0 1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0 1.5rem' }}>
           <a
             href='https://www.facebook.com/kattbnb/'
             target='_blank'

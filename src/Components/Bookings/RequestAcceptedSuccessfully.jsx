@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
+import moment from 'moment';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import AddToCalendar from 'react-add-to-calendar';
+import ICalendarLink from 'react-icalendar-link';
 
 class RequestAcceptedSuccessfully extends Component {
   componentDidMount() {
@@ -13,10 +14,17 @@ class RequestAcceptedSuccessfully extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const {
+      t,
+      tReady,
+      location: {
+        state: { cats, inDate, price, outDate, user },
+      },
+    } = this.props;
+
     let total;
 
-    let priceWithDecimalsString = this.props.location.state.price.toFixed(2);
+    let priceWithDecimalsString = price.toFixed(2);
     if (
       priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' &&
       priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0'
@@ -26,19 +34,29 @@ class RequestAcceptedSuccessfully extends Component {
       total = priceWithDecimalsString;
     }
 
-    let event = {
+    let googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${moment(inDate).format(
+      'YYYYMMDD'
+    )}T000000Z/${moment(outDate).format('YYYYMMDD')}T200000Z&location=${t(
+      'RequestAcceptedSuccessfully:event-location'
+    )}&text=${t('RequestAcceptedSuccessfully:event-title', {
+      total: total,
+    })}&details=${t('RequestAcceptedSuccessfully:event-info', {
+      nickname: user,
+      count: cats,
+    })}`;
+
+    let calendarEvent = {
       title: t('RequestAcceptedSuccessfully:event-title', { total: total }),
       description: t('RequestAcceptedSuccessfully:event-info', {
-        nickname: this.props.location.state.user,
-        count: this.props.location.state.cats,
+        nickname: user,
+        count: cats,
       }),
       location: t('RequestAcceptedSuccessfully:event-location'),
-      startTime: this.props.location.state.inDate,
-      endTime: this.props.location.state.outDate,
+      startTime: inDate,
+      endTime: outDate,
     };
-    let items = [{ google: 'Google' }, { apple: 'iCal' }, { outlook: 'Outlook Desktop' }];
 
-    if (this.props.tReady) {
+    if (tReady) {
       return (
         <div className='content-wrapper'>
           <Header as='h1'>{t('RequestAcceptedSuccessfully:title')}</Header>
@@ -54,12 +72,14 @@ class RequestAcceptedSuccessfully extends Component {
                 .
               </Trans>
             </p>
-            <AddToCalendar
-              event={event}
-              displayItemIcons={false}
-              listItems={items}
-              buttonLabel={t('RequestAcceptedSuccessfully:calendar-label')}
-            />
+            <span style={{ display: 'grid' }}>
+              <a style={{ marginTop: '10px', marginBottom: '15px' }} href={googleLink} target='_blank' rel='noreferrer'>
+                {t('RequestAcceptedSuccessfully:add-google-calendar')}
+              </a>
+              <ICalendarLink event={calendarEvent}>
+                {t('RequestAcceptedSuccessfully:download-calendar-event')}
+              </ICalendarLink>
+            </span>
           </Segment>
         </div>
       );
