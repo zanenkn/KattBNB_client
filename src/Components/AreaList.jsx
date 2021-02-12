@@ -2,6 +2,7 @@ import React from 'react';
 import { LOCATION_OPTIONS } from '../Modules/locationData';
 import { Header } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const AreaList = () => {
   const { t } = useTranslation();
@@ -13,13 +14,13 @@ const AreaList = () => {
       <div className='flex-grid'>
         {LOCATION_OPTIONS.map((place) => (
           <p key={place.text}>
-            <a
+            <Link
               className='discreet-link'
-              href={`/search-results?location=${place.text}`}
+              to={`/search-results?location=${place.text}`}
               style={{ whiteSpace: 'nowrap' }}
             >
               {place.text}
-            </a>
+            </Link>
           </p>
         ))}
       </div>

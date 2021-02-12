@@ -52,18 +52,6 @@ const SearchResults = (props) => {
   const [hostLong, setHostLong] = useState('');
   const [hostAvailable, setHostAvailable] = useState('');
 
-  let from, to, location, cats;
-  let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
-
-  if (queryString.parse(props.location.search).from !== undefined) {
-    ({ from, to, location, cats } = queryString.parse(props.location.search));
-  } else {
-    location = queryString.parse(props.location.search).location;
-    cats = 1;
-    from = today + 86400000;
-    to = today + 86400000;
-  }
-
   const geolocationDataAddress = (place) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
     Geocode.fromAddress(place).then((response) => {
@@ -84,10 +72,21 @@ const SearchResults = (props) => {
     });
   };
 
+  let from, to, location, cats;
+  let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
+
   useEffect(() => {
     if (queryString.parse(props.location.search).location === undefined) {
       history.push({ pathname: '/search' });
     } else {
+      if (queryString.parse(props.location.search).from !== undefined) {
+        ({ from, to, location, cats } = queryString.parse(props.location.search));
+      } else {
+        location = queryString.parse(props.location.search).location;
+        cats = 1;
+        from = today + 86400000;
+        to = today + 86400000;
+      }
       if (queryString.parse(props.location.search).view === undefined) {
         window.history.replaceState(null, null, window.location.search.concat('&view=map'));
       }
