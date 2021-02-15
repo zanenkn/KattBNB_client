@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react';
 import { LOCATION_OPTIONS } from '../Modules/locationData';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
@@ -245,9 +246,9 @@ class Search extends Component {
               </div>
             </div>
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <a href='/area-list' className='discreet-link'>
+              <Link to='/area-list' className='discreet-link'>
                 {t('Search:sitters-near-you')}
-              </a>
+              </Link>
             </div>
           </Segment>
         </div>
