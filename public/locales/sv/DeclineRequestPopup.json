@@ -6,6 +6,5 @@
   "page-desc": "Du är på väg att avslå en bokningsförfrågan från <1>{{nickname}}</1> för datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>",
   "text-area-label": "Meddelande",
   "text-area-plch": "Låt dem veta varför..",
-  "remaining": "Återstående tecken:",
   "decline-cta": "Avslå"
 }

@@ -3,6 +3,5 @@
   "del-conversation": "Vill du verkligen radera denna konversation?",
   "no-messages-yet": "Du har inga meddelanden i den här konversationen (än).",
   "error-message-header": "Det gick inte att skicka meddelandet på grund av följande fel:",
-  "textarea-plch": "Säg någonting..",
-  "remaining-char": "Återstående tecken:"
+  "textarea-plch": "Säg någonting.."
 }

@@ -5,8 +5,6 @@
   "nickname-plch": "Username / Nickname",
   "location-plch": "Select location",
   "captcha-label": "Type the code you see above",
-  "captcha-plch": "I am not a robot",
-  "You didn't input the captcha phrase correctly, please try again!": "You didn't input the captcha phrase correctly, please try again!",
   "terms-error": "You must accept the Terms and Conditions to continue!",
   "terms-label": "I accept the <1>Terms & Conditions</1>"
 }

@@ -43,7 +43,7 @@ const ContactUs = (props) => {
           setLoading(false);
         } else if (userCaptcha !== captcha) {
           setErrorDisplay(true);
-          setErrors(['ContactUs:captcha-error']);
+          setErrors(['reusable:errors:captcha']);
           setLoading(false);
         } else {
           const lang = detectLanguage();
@@ -114,7 +114,7 @@ const ContactUs = (props) => {
                   placeholder={t('ContactUs:message-placeholder')}
                 />
                 <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-                  {t('ContactUs:remaining')} {1000 - message.length}
+                  {t('reusable:remaining-chars')} {1000 - message.length}
                 </p>
                 <div style={{ margin: '1em 0' }}>
                   <ClientCaptcha
@@ -130,7 +130,7 @@ const ContactUs = (props) => {
                   id='userCaptcha'
                   value={userCaptcha}
                   onChange={(e) => setUserCaptcha(e.target.value)}
-                  placeholder={t('ContactUs:captcha-plch')}
+                  placeholder={t('reusable:plch:captcha')}
                 />
                 {errorDisplay && (
                   <Message negative>

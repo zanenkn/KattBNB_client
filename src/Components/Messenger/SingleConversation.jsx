@@ -555,7 +555,7 @@ class Conversation extends Component {
                   visibility: messageLength < 100 ? 'visible' : 'hidden',
                 }}
               >
-                {t('SingleConversation:remaining-char')} {messageLength}
+                {t('reusable:remaining-chars')} {messageLength}
               </p>
             </div>
           </div>

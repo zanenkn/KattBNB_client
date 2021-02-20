@@ -6,6 +6,5 @@
   "page-desc": "You are about to decline a booking request from <1>{{nickname}}</1> for the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>",
   "text-area-label": "Message",
   "text-area-plch": "Let them know why..",
-  "remaining": "Remaining characters:",
   "decline-cta": "Decline"
 }

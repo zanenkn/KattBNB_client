@@ -104,7 +104,7 @@ const DeclineRequestPopup = (props) => {
           />
         </Form>
         <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-          {t('DeclineRequestPopup:remaining')} {200 - message.length}
+          {t('reusable:remaining-chars')} {200 - message.length}
         </p>
         {errorDisplay && (
           <Message negative>
