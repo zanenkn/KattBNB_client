@@ -22,18 +22,30 @@ const ContactUs = (props) => {
 
   const sendMessage = async () => {
     setLoading(true);
+    setErrors([]);
+    setErrorDisplay(false);
     if (window.navigator.onLine === false) {
       setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
       setLoading(false);
     } else {
       try {
-        const lang = detectLanguage();
-        const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
-        const response = await axios.get(path);
-        if (response.data.message === 'Success!!!') {
-          window.alert('Your message was submitted successfully! We will meow back a response :)');
-          props.history.push('/search-results');
+        if (name === '' || email === '' || message === '') {
+          setErrorDisplay(true);
+          setErrors(['You must fill out all fields!']);
+          setLoading(false);
+        } else if (message.length > 1000) {
+          setErrorDisplay(true);
+          setErrors(['Your message cannot exceed 1000 characters!']);
+          setLoading(false);
+        } else {
+          const lang = detectLanguage();
+          const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
+          const response = await axios.get(path);
+          if (response.data.message === 'Success!!!') {
+            window.alert('Your message was submitted successfully! We will meow back a response :)');
+            props.history.push('/search-results');
+          }
         }
       } catch ({ response }) {
         if (response === undefined) {
@@ -75,25 +87,25 @@ const ContactUs = (props) => {
               <>
                 <p style={{ textAlign: 'center' }}>{t('ContactUs:contact-p')}</p>
                 <Form.Input
-                  required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t('ContactUs:name-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <Form.Input
-                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('ContactUs:email-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <TextArea
-                  required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t('ContactUs:message-placeholder')}
                 />
+                <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
+                  {t('ContactUs:remaining')} {1000 - message.length}
+                </p>
                 {errorDisplay && (
                   <Message negative>
                     <ul id='message-error-list'>
