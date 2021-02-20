@@ -35,11 +35,11 @@ const ContactUs = (props) => {
       try {
         if (name === '' || email === '' || message === '') {
           setErrorDisplay(true);
-          setErrors(['You must fill out all fields!']);
+          setErrors(['ContactUs:error-msg-fields']);
           setLoading(false);
         } else if (message.length > 1000) {
           setErrorDisplay(true);
-          setErrors(['Your message cannot exceed 1000 characters!']);
+          setErrors(['ContactUs:error-msg-length']);
           setLoading(false);
         } else if (userCaptcha !== captcha) {
           setErrorDisplay(true);
@@ -50,7 +50,7 @@ const ContactUs = (props) => {
           const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
           const response = await axios.get(path);
           if (response.data.message === 'Success!!!') {
-            window.alert('Your message was submitted successfully! We will meow back a response :)');
+            window.alert('ContactUs:thankyou-msg');
             props.history.push('/search-results');
           }
         }
