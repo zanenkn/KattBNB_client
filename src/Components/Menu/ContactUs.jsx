@@ -5,6 +5,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
+import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../ReusableComponents/Spinner';
 import FacebookIcon from '../Icons/FacebookIcon';
 import InstagramIcon from '../Icons/InstagramIcon';
@@ -19,6 +20,8 @@ const ContactUs = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [captcha, setCaptcha] = useState('');
+  const [userCaptcha, setUserCaptcha] = useState('');
 
   const sendMessage = async () => {
     setLoading(true);
@@ -37,6 +40,10 @@ const ContactUs = (props) => {
         } else if (message.length > 1000) {
           setErrorDisplay(true);
           setErrors(['Your message cannot exceed 1000 characters!']);
+          setLoading(false);
+        } else if (userCaptcha !== captcha) {
+          setErrorDisplay(true);
+          setErrors(['ContactUs:captcha-error']);
           setLoading(false);
         } else {
           const lang = detectLanguage();
@@ -87,18 +94,21 @@ const ContactUs = (props) => {
               <>
                 <p style={{ textAlign: 'center' }}>{t('ContactUs:contact-p')}</p>
                 <Form.Input
+                  id='name'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t('ContactUs:name-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <Form.Input
+                  id='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('ContactUs:email-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <TextArea
+                  id='message'
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t('ContactUs:message-placeholder')}
@@ -106,6 +116,22 @@ const ContactUs = (props) => {
                 <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
                   {t('ContactUs:remaining')} {1000 - message.length}
                 </p>
+                <div style={{ margin: '1em 0' }}>
+                  <ClientCaptcha
+                    captchaCode={(code) => setCaptcha(code)}
+                    fontFamily='bodoni'
+                    fontColor='#c90c61'
+                    charsCount={6}
+                    backgroundColor='#e8e8e8'
+                    width={130}
+                  />
+                </div>
+                <Form.Input
+                  id='userCaptcha'
+                  value={userCaptcha}
+                  onChange={(e) => setUserCaptcha(e.target.value)}
+                  placeholder={t('ContactUs:captcha-plch')}
+                />
                 {errorDisplay && (
                   <Message negative>
                     <ul id='message-error-list'>

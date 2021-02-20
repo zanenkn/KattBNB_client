@@ -4,6 +4,8 @@
   "email-placeholder": "Din e-postadress",
   "message-placeholder": "Ditt meddelande",
   "remaining": "Återstående tecken:",
+  "captcha-plch": "Jag är inte en robot",
+  "captcha-error": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
   "send-btn": "Skicka",
   "thankyou-msg": "",
   "error-msg-1": "",
