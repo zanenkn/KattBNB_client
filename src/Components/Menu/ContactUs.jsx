@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Header, Message, Form, TextArea, Button, Segment } from 'semantic-ui-react';
-import { withTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
-import { Helmet } from 'react-helmet';
-import FacebookIcon from '../Icons/FacebookIcon';
-import InstagramIcon from '../Icons/InstagramIcon';
-import LinkedinIcon from '../Icons/LinkedinIcon';
 import { useTranslation } from 'react-i18next';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { Helmet } from 'react-helmet';
+import axios from 'axios';
+import Spinner from '../ReusableComponents/Spinner';
+import FacebookIcon from '../Icons/FacebookIcon';
+import InstagramIcon from '../Icons/InstagramIcon';
+import LinkedinIcon from '../Icons/LinkedinIcon';
 
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
 
   const [errors, setErrors] = useState([]);
   const [errorDisplay, setErrorDisplay] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
   const sendMessage = async () => {
+    setLoading(true);
     if (window.navigator.onLine === false) {
       setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
@@ -32,18 +32,17 @@ const ContactUs = (props) => {
         const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
         const response = await axios.get(path);
         if (response.data.message === 'Success!!!') {
-          window.alert('Your message was submitted successfully! We are miaowing a response :)');
+          window.alert('Your message was submitted successfully! We will meow back a response :)');
           props.history.push('/search-results');
         }
-        setLoading(false);
-      } catch (error) {
-        if (error.response === undefined) {
+      } catch ({ response }) {
+        if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 503) {
+        } else if (response.status === 503) {
           wipeCredentials('/is-not-available?atm');
         } else {
           setErrorDisplay(true);
-          setErrors([error.response.data.error]);
+          setErrors([response.data.error]);
           setLoading(false);
         }
       }
@@ -74,47 +73,43 @@ const ContactUs = (props) => {
           <Segment className='whitebox'>
             <Form name='contact-us'>
               <>
-                {errorDisplay && (
-                  <Message negative style={{ textAlign: 'center' }}>
-                    {t('ContactUs:error-msg')}
-                  </Message>
-                )}
                 <p style={{ textAlign: 'center' }}>{t('ContactUs:contact-p')}</p>
                 <Form.Input
-                  as='input'
-                  type='text'
                   required
-                  name='name'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t('ContactUs:name-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <Form.Input
-                  as='input'
-                  type='email'
                   required
-                  name='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('ContactUs:email-placeholder')}
                   style={{ marginBottom: '1rem' }}
                 />
                 <TextArea
-                  as='textarea'
                   required
-                  name='message'
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={t('ContactUs:message-placeholder')}
                 />
-                <Button className='submit-button' onClick={sendMessage}>
-                  {t('ContactUs:send-btn')}{' '}
+                {errorDisplay && (
+                  <Message negative>
+                    <ul id='message-error-list'>
+                      {errors.map((error) => (
+                        <li key={error}>{t(error)}</li>
+                      ))}
+                    </ul>
+                  </Message>
+                )}
+                <Button className='submit-button' onClick={sendMessage} loading={loading}>
+                  {t('ContactUs:send-btn')}
                 </Button>
               </>
             </Form>
           </Segment>
-          <div style={{ display: 'flex', 'justify-content': 'center', marginTop: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
             <a
               href='https://www.facebook.com/kattbnb/'
               target='_blank'
@@ -148,4 +143,4 @@ const ContactUs = (props) => {
   }
 };
 
-export default withTranslation('ContactUs')(ContactUs);
+export default ContactUs;
