@@ -49,9 +49,9 @@ const ContactUs = (props) => {
           const lang = detectLanguage();
           const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
           const response = await axios.get(path);
-          if (response.data.message === 'Success!!!') {
-            window.alert('ContactUs:thankyou-msg');
-            props.history.push('/search-results');
+          if (response.status === 200) {
+            window.alert(t('ContactUs:thankyou-msg'));
+            props.history.push('/search');
           }
         }
       } catch ({ response }) {
@@ -87,6 +87,8 @@ const ContactUs = (props) => {
           />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
+        {/* line below is used solely for relevant Cypress test */}
+        {process.env.NODE_ENV !== 'production' && <p id='cypress-captcha'>{captcha}</p>}
         <div className='content-wrapper' style={{ marginBottom: '0', paddingBottom: '0' }}>
           <Header as='h1'>{t('reusable:title.contact')}</Header>
           <Segment className='whitebox'>
