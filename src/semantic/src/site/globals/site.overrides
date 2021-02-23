@@ -474,6 +474,7 @@ a.discreet-link:hover {
 }
 
 .mobile-only {
+  padding-top: 50px;
   display: block;
 }
 
