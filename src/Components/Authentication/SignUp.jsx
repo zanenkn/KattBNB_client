@@ -39,7 +39,7 @@ const SignUp = (props) => {
         setErrorDisplay(true);
         setLoading(false);
       } else if (userCaptcha !== captcha) {
-        setErrors(["SignUp:You didn't input the captcha phrase correctly, please try again!"]);
+        setErrors(['reusable:errors:captcha']);
         setErrorDisplay(true);
         setLoading(false);
       } else {
@@ -199,7 +199,7 @@ const SignUp = (props) => {
                 id='userCaptcha'
                 value={userCaptcha}
                 onChange={(e) => setUserCaptcha(e.target.value)}
-                placeholder={t('SignUp:captcha-plch')}
+                placeholder={t('reusable:plch:captcha')}
                 onKeyPress={(e) => {
                   e.key === 'Enter' && createUser();
                 }}

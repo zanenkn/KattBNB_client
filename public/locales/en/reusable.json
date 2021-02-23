@@ -21,7 +21,8 @@
     "weak": "weak",
     "okay": "okay",
     "good": "good",
-    "strong": "strong"
+    "strong": "strong",
+    "captcha": "I am not a robot"
   },
   "title": {
     "login": "Log in",
@@ -48,7 +49,8 @@
     "google-error-1": "Address not found! Please try again.",
     "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists contact KattBNB support.",
     "index-no-host-1": "This host does not exist! Please refresh the page.",
-    "index-no-host-2": "This host does not exist! Please search again to get updated results."
+    "index-no-host-2": "This host does not exist! Please search again to get updated results.",
+    "captcha": "You didn't input the captcha phrase correctly, please try again!"
   },
   "remaining-chars": "Remaining characters:",
   "reviews": "{{count}} review",

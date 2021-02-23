@@ -4,6 +4,7 @@
   "email-placeholder": "Your email address",
   "message-placeholder": "Your message",
   "send-btn": "Send",
-  "thankyou-msg": "Thank you for your message!",
-  "error-msg": "Your message was not sent. Please try again later."
+  "thankyou-msg": "Your message was submitted successfully! We will meow back a response :)",
+  "error-msg-fields": "You must fill out all fields!",
+  "error-msg-length": "Your message cannot exceed 1000 characters!"
 }

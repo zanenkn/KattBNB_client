@@ -21,7 +21,8 @@
     "weak": "svag",
     "okay": "medium",
     "good": "bra",
-    "strong": "stark"
+    "strong": "stark",
+    "captcha": "Jag är inte en robot"
   },
   "title": {
     "login": "Logga in",
@@ -48,7 +49,8 @@
     "google-error-1": "Adress hittades inte! Vänligen försök igen.",
     "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
     "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
-    "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat."
+    "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
+    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",
