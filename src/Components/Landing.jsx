@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, createRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
@@ -8,32 +8,19 @@ import { Helmet } from 'react-helmet';
 import FacebookIcon from './Icons/FacebookIcon';
 import InstagramIcon from './Icons/InstagramIcon';
 import LinkedinIcon from './Icons/LinkedinIcon';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { config } from '../weekly-cat-config';
 import WeeklyCatBadge from './Icons/WeeklyCatBadge';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const Landing = () => {
   const textRef = useRef(null);
-  const carousel = useRef(undefined);
-  const imageRef = useRef([]);
-
-  imageRef.current = Array(10)
-    .fill()
-    .map((_, i) => imageRef.current[i] || createRef());
 
   const [carouselWidth, setCarouselWidth] = useState(null);
   const [carouselHeight, setCarouselHeight] = useState(null);
-  const [activeImage, setActiveImage] = useState(0);
 
   const { t, ready } = useTranslation('Landing');
-
-  useEffect(() => {
-    if (carousel.current) {
-      carousel.current.scrollLeft = 0;
-    }
-    // eslint-disable-next-line
-  }, [carousel.current]);
 
   const carouselWrapper = useCallback((node) => {
     const resizeCarousel = () => {
@@ -52,22 +39,18 @@ const Landing = () => {
     resizeCarousel();
   }, []);
 
-  const onDotClick = (e) => {
-    setActiveImage(parseInt(e.target.id));
-
-    carousel.current.scroll({
-      left: imageRef.current[parseInt(e.target.id)].current.offsetLeft,
-      behavior: 'smooth',
-    });
-  };
-
-  const handleCarouselScroll = (e) => {
-    let current = e.target.scrollLeft / (e.target.scrollWidth / 10);
-    setActiveImage(Math.round(current));
-  };
-
   const scrollDown = () => {
     window.scrollTo({ top: textRef.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    cssEase: 'ease-in',
+    speed: 400,
+    lazyLoad: 'progressive',
   };
 
   if (ready) {
@@ -102,39 +85,11 @@ const Landing = () => {
                     <h2 className='title'>{t('Landing:weekly-cat', { count: config.count })}</h2>
                     <h2 className='name'>{config.name}</h2>
                   </div>
-                  <ul className='scroll' ref={carousel} onScroll={(e) => handleCarouselScroll(e)}>
-                    {imageRef.current.map((_, index) => {
-                      return (
-                        <li className='scroll-item' key={index + 1} ref={imageRef.current[index]}>
-                          {index === 0 ? (
-                            <LazyLoadImage
-                              effect='blur'
-                              src={`weekly/weekly_${index + 1}.jpg`}
-                              width={carouselWidth}
-                              height='100%'
-                            />
-                          ) : (
-                            <img
-                              src={`weekly/weekly_${index + 1}.jpg`}
-                              alt=''
-                              width={carouselWidth}
-                              height='100%'
-                            ></img>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-                <div className='image-dots'>
-                  {imageRef.current.map((_, i) => (
-                    <div
-                      id={i}
-                      key={i}
-                      className={`dot ${activeImage === i ? 'selected' : ''}`}
-                      onClick={(e) => onDotClick(e)}
-                    />
-                  ))}
+                  <Slider {...settings}>
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map((number) => (
+                      <img src={`weekly/weekly_${number}.jpg`} key={`weekly_cat_${number}`} alt={`weekly cat ${number}`} />
+                    ))}
+                  </Slider>
                 </div>
               </div>
               <div className='mobile-only' style={{ width: '165px' }}>
