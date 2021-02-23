@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, createRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
@@ -8,7 +8,6 @@ import { Helmet } from 'react-helmet';
 import FacebookIcon from './Icons/FacebookIcon';
 import InstagramIcon from './Icons/InstagramIcon';
 import LinkedinIcon from './Icons/LinkedinIcon';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { config } from '../weekly-cat-config';
 import WeeklyCatBadge from './Icons/WeeklyCatBadge';
 import Slider from 'react-slick';
@@ -88,7 +87,7 @@ const Landing = () => {
                   </div>
                   <Slider {...settings}>
                     {Array.from({ length: 10 }, (_, i) => i + 1).map((number) => (
-                      <img src={`weekly/weekly_${number}.jpg`} key={`weekly_cat_${number}`} />
+                      <img src={`weekly/weekly_${number}.jpg`} key={`weekly_cat_${number}`} alt={`weekly cat ${number}`} />
                     ))}
                   </Slider>
                 </div>
