@@ -1,5 +1,5 @@
 describe('User cannot see a list of conversations', () => {
-  beforeEach(() => {
+  it('cause she has no messages', () => {
     cy.server();
     cy.route({
       method: 'GET',
@@ -8,11 +8,7 @@ describe('User cannot see a list of conversations', () => {
       response: [],
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#messenger-icon').click({ force: true });
-  });
-
-  it('cause has no messages', () => {
     cy.contains("You don't have any messages (yet).");
   });
 });

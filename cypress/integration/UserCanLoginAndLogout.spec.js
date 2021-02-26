@@ -51,7 +51,6 @@ describe('User can log in and logout', () => {
         response: 'fixture:successful_signout.json',
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.wait(1000);
       cy.get('.hamburger-box').click();
       cy.get('#logout').click();
       cy.contains('Welcome to KattBNB!');
