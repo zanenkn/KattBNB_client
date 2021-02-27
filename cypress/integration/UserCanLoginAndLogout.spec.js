@@ -28,7 +28,7 @@ describe('User can log in and logout', () => {
       cy.contains('Invalid login credentials. Please try again.');
     });
 
-    it('unsuccessfuly without first being confirmed through email', () => {
+    it('unsuccessfuly cause of unconfirmed email address', () => {
       cy.login(
         {
           success: false,

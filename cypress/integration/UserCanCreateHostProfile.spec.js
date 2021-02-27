@@ -1,7 +1,7 @@
 const api = 'http://localhost:3007/api/v1';
 const host_profiles = `${api}/host_profiles`;
 
-function updateProfile(status, response){
+function updateProfile(status, response) {
   cy.route({
     method: 'POST',
     url: `${host_profiles}`,
@@ -10,7 +10,7 @@ function updateProfile(status, response){
   });
 }
 
-function pickCalendarDates(){
+function pickCalendarDates() {
   cy.get('.required > .DayPicker > .DayPicker-wrapper > .DayPicker-NavBar > .DayPicker-NavButton--next').click();
   cy.get(
     '.DayPicker-Months > .DayPicker-Month > .DayPicker-Body > .DayPicker-Week:nth-child(3) > .DayPicker-Day:nth-child(2)'
@@ -56,12 +56,10 @@ describe('User can create a host profile', () => {
         ['#maxCats', '3'],
         ['#supplement', '35'],
       ];
-
       text.forEach((element) => {
         cy.get(element[0]).type(element[1]);
       });
     });
-
     cy.get('#userInputAddress').type('Solståndsgatan 23');
     cy.get('#search').click();
     pickCalendarDates();
@@ -82,12 +80,10 @@ describe('User can create a host profile', () => {
         ['#maxCats', '3'],
         ['#supplement', '250'],
       ];
-
       text.forEach((element) => {
         cy.get(element[0]).type(element[1]);
       });
     });
-
     cy.get('#userInputAddress').type('Solståndsgatan 23');
     cy.get('#search').click();
     pickCalendarDates();

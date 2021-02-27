@@ -1,7 +1,7 @@
 const api = 'http://localhost:3007/api/v1';
 const email = 'george@mail.com';
 
-describe('User cannot see her profile in the results', () => {
+describe('User cannot see their profile in the results', () => {
   it('if logged in', () => {
     cy.server();
     cy.visit('http://localhost:3000/');
@@ -29,7 +29,7 @@ describe('User cannot see her profile in the results', () => {
         uid: email,
       },
     });
-    cy.get('.twelve > [href="/search"]').click()
+    cy.get('.twelve > [href="/search"]').click();
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
     cy.get('.hamburger-box').click();

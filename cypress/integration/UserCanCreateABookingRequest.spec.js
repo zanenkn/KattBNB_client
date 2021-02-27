@@ -15,7 +15,7 @@ function fillInStripeForm() {
   });
 }
 
-function requestToBook(){
+function requestToBook() {
   cy.get('#44').click();
   cy.get('#more').click();
   cy.get('#request-to-book').click();
@@ -180,7 +180,7 @@ describe('User can create a booking request', () => {
     cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.');
   });
 
-  it('only if she is logged in or she will be redirected to the log in page', () => {
+  it('only if they are logged in or they will be redirected to the log in page', () => {
     cy.get('.hamburger-box').click();
     cy.get('#logout').click();
     const now = new Date(2019, 9, 1).getTime();

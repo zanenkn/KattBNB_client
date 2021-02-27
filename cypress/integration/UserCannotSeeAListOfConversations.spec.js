@@ -1,5 +1,5 @@
 describe('User cannot see a list of conversations', () => {
-  it('cause she has no messages', () => {
+  it('cause of 0 messages', () => {
     cy.server();
     cy.route({
       method: 'GET',
