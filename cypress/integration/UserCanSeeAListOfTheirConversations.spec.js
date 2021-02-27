@@ -1,5 +1,11 @@
-describe('User can see a list of all her conversations', () => {
-  beforeEach(() => {
+function getElement(id, text) {
+  cy.get(id).within(() => {
+    cy.contains(text);
+  });
+}
+
+describe('User can see a list of all their conversations', () => {
+  before(() => {
     cy.server();
     cy.route({
       method: 'GET',
@@ -8,46 +14,29 @@ describe('User can see a list of all her conversations', () => {
       response: 'fixture:all_user_conversations.json',
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#messenger-icon').click({ force: true });
   });
 
   it('succesfully', () => {
     cy.contains('Messages');
-    cy.get('#1').within(() => {
-      cy.contains('carla');
-    });
-    cy.get('#2').within(() => {
-      cy.contains('elGreco');
-    });
-    cy.get('#3').within(() => {
-      cy.contains('steffe');
-    });
-    cy.get('#4').within(() => {
-      cy.contains('Christmas');
-    });
-    cy.get('#5').within(() => {
-      cy.contains('Last Christmas');
-    });
+    getElement('#1', 'carla');
+    getElement('#2', 'elGreco');
+    getElement('#3', 'steffe');
+    getElement('#4', 'Christmas');
+    getElement('#5', 'Last Christmas');
   });
 
   it('displayed in correct chronological order (empty conversations are displayed last with relevant message)', () => {
     cy.get('[data-cy=all-messages]').first().contains('elGreco');
     cy.get('[data-cy=all-messages]').last().contains('Christmas');
-    cy.get('#4').within(() => {
-      cy.contains('No messages');
-    });
+    getElement('#4', 'No messages');
   });
 
   it('and see relevant nickname when a user is deleted from the database', () => {
-    cy.get('#6').within(() => {
-      cy.contains('Deleted user');
-    });
+    getElement('#6', 'Deleted user');
   });
 
   it('and see relevant message if last message was an image attachment', () => {
-    cy.get('#7').within(() => {
-      cy.contains('Image attachment');
-    });
+    getElement('#7', 'Image attachment');
   });
 });
