@@ -1,32 +1,42 @@
 const api = 'http://localhost:3007/api/v1';
 
+function bookingDisplayOrder(element, text1, text2) {
+  cy.get(element).first().contains(text1);
+  cy.get(element).last().contains(text2);
+}
+
+function fetchUserBookings(fixture) {
+  cy.route({
+    method: 'GET',
+    url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
+    status: 200,
+    response: fixture,
+  });
+}
+
+function fetchUserBookingStats() {
+  cy.route({
+    method: 'GET',
+    url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
+    status: 200,
+    response: 'fixture:booking_stats.json',
+  });
+}
+
+function createReview(status) {
+  cy.route({
+    method: 'POST',
+    url: `${api}/reviews`,
+    status: status,
+    response: '',
+  });
+}
+
 describe('User can view their outgoing bookings', () => {
   before(() => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_user_bookings.json',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
-    });
-    cy.route({
-      method: 'POST',
-      url: `${api}/reviews`,
-      status: 200,
-      response: '',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/reviews?host_profile_id=10&locale=en-US`,
-      status: 200,
-      response: [],
-    });
+    fetchUserBookings('fixture:all_user_bookings.json');
+    fetchUserBookingStats();
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.get('#bookings-icon').click({ force: true });
   });
@@ -39,40 +49,27 @@ describe('User can view their outgoing bookings', () => {
   });
 
   it('and see upcoming bookings displayed in correct chronological order', () => {
-    cy.get('[data-cy=outgoing-upcoming]')
-      .first()
-      .contains(
-        'You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.'
-      );
-    cy.get('[data-cy=outgoing-upcoming]')
-      .last()
-      .contains(
-        'You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.'
-      );
+    bookingDisplayOrder(
+      '[data-cy=outgoing-upcoming]',
+      'You have successfully booked a stay with Accepted2 for your 1 cat for the dates of 2051-08-03 until 2051-08-07.',
+      'You have successfully booked a stay with Accepted1 for your 1 cat for the dates of 2051-08-04 until 2051-08-08.'
+    );
   });
 
   it('and see requested bookings displayed in correct chronological order', () => {
-    cy.get('[data-cy=outgoing-requests]')
-      .first()
-      .contains(
-        'You have requested to book a stay with Pending1 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.'
-      );
-    cy.get('[data-cy=outgoing-requests]')
-      .last()
-      .contains(
-        'You have requested to book a stay with Pending2 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.'
-      );
+    bookingDisplayOrder(
+      '[data-cy=outgoing-requests]',
+      'You have requested to book a stay with Pending1 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.',
+      'You have requested to book a stay with Pending2 for your 1 cat during the dates of 2051-08-04 until 2051-08-05.'
+    );
   });
 
   it('and see bookings history displayed in correct chronological order', () => {
-    cy.get('[data-cy=outgoing-history]')
-      .first()
-      .contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.');
-    cy.get('[data-cy=outgoing-history]')
-      .last()
-      .contains(
-        'Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.'
-      );
+    bookingDisplayOrder(
+      '[data-cy=outgoing-history]',
+      'Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.',
+      'Your request to book a stay with Canceled1 for your 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled.'
+    );
   });
 
   it('and see receipt of selected upcoming booking and a download option', () => {
@@ -85,12 +82,7 @@ describe('User can view their outgoing bookings', () => {
 
   it('and see receipt of selected history booking and a download option', () => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_user_bookings.json',
-    });
+    fetchUserBookings('fixture:all_user_bookings.json');
     cy.go('back');
     cy.get('#booking-receipt-9').click();
     cy.location('pathname').should('eq', '/booking-receipt');
@@ -101,12 +93,7 @@ describe('User can view their outgoing bookings', () => {
 
   it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_user_bookings.json',
-    });
+    fetchUserBookings('fixture:all_user_bookings.json');
     cy.go('back');
     cy.get('[data-cy=outgoing-history]').first().contains('Leave a review');
   });
@@ -154,12 +141,7 @@ describe('User can view their outgoing bookings', () => {
 
   it('and cannot leave a review if no score is selected', () => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_user_bookings.json',
-    });
+    fetchUserBookings('fixture:all_user_bookings.json');
     cy.go('back');
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
     cy.location('pathname').should('eq', '/leave-a-review');
@@ -183,18 +165,8 @@ describe('User can view their outgoing bookings', () => {
 
   it('and can succesfully review a booking', () => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
-    });
-    cy.route({
-      method: 'POST',
-      url: `${api}/reviews`,
-      status: 200,
-      response: '',
-    });
+    fetchUserBookingStats();
+    createReview(200);
     cy.get('#review-body').clear().type('This is a successful review submission!');
     cy.get('.submit-button').click();
     cy.location('pathname').should('eq', '/successful-review');
@@ -203,71 +175,34 @@ describe('User can view their outgoing bookings', () => {
     cy.location('pathname').should('eq', '/all-bookings');
     cy.contains('Here you can manage your bookings.');
   });
-});
-
-describe('User can view their outgoing bookings', () => {
-  beforeEach(() => {
-    cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:one_user_booking_review.json',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/reviews/2`,
-      status: 200,
-      response: 'fixture:one_review_outgoing.json',
-    });
-  });
 
   it("and see 'View your review' link if the booking has already been reviewed", () => {
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
+    cy.server();
+    fetchUserBookings('fixture:one_user_booking_review.json');
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().contains('View your review');
   });
 
   it("and click 'View your review' and view a review they wrote", () => {
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
-    cy.get('#view-outgoing-bookings').click();
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/reviews/2`,
+      status: 200,
+      response: 'fixture:one_review_outgoing.json',
+    });
     cy.get('[data-cy=outgoing-history]').first().contains('View your review').click();
     cy.contains('You reviewed your booking with AcceptedOfThePast for the dates of 2019-11-26 until 2019-11-19.');
     cy.contains('Almost good!');
     cy.contains('4/5');
   });
-});
 
-describe('User can view their outgoing bookings', () => {
   it('and cannot leave a review cause the host requested an account deletion in the process', () => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_user_bookings.json',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
-    });
-    cy.route({
-      method: 'POST',
-      url: `${api}/reviews`,
-      status: 422,
-      response: '',
-    });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
+    fetchUserBookings('fixture:all_user_bookings.json');
+    fetchUserBookingStats();
+    createReview(422);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
@@ -282,9 +217,7 @@ describe('User can view their outgoing bookings', () => {
     });
     cy.location('pathname').should('eq', '/all-bookings');
   });
-});
 
-describe('User can view their outgoing bookings', () => {
   it('and sees relevant message if host has deleted their account before review of booking', () => {
     cy.server();
     cy.fixture('one_user_booking_review.json').then((booking_review) => {
@@ -297,14 +230,6 @@ describe('User can view their outgoing bookings', () => {
         response: booking_review,
       });
     });
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
-    });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().contains('Booking cannot be reviewed because host does not exist!');
   });
