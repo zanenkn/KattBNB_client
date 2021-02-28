@@ -149,17 +149,20 @@ describe('User can view their host profile', () => {
 
   it('and successfully reply to a review', () => {
     cy.server();
+    cy.fixture('one_user_reviews.json').then((reviews) => {
+      reviews[2].host_reply = 'Very satisfied';
+      cy.route({
+        method: 'GET',
+        url: `${api}/reviews?host_profile_id=1&locale=en-US`,
+        status: 200,
+        response: reviews,
+      });
+    });
     cy.route({
       method: 'PATCH',
       url: `${api}/reviews/33`,
       status: 200,
       response: '',
-    });
-    cy.route({
-      method: 'GET',
-      url: `${api}/reviews?host_profile_id=1&locale=en-US`,
-      status: 200,
-      response: 'fixture:one_user_reviews.json',
     });
     cy.get('#host-reply').clear();
     cy.get('#host-reply').type('Very satisfied.');
