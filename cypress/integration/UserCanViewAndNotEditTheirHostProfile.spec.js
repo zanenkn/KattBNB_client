@@ -1,7 +1,8 @@
 const api = 'http://localhost:3007/api/v1';
+const number_field_error = 'The field is blank, unchanged or the number is invalid!';
 
-describe('User can view her host profile', () => {
-  beforeEach(() => {
+describe('User can view their host profile', () => {
+  before(() => {
     cy.server();
     cy.route({
       method: 'GET',
@@ -28,19 +29,12 @@ describe('User can view her host profile', () => {
       response: [],
     });
     cy.route({
-      method: 'DELETE',
-      url: `${api}/auth/sign_out`,
-      status: 200,
-      response: 'fixture:successful_signout.json',
-    });
-    cy.route({
       method: 'GET',
       url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
       response: [],
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#user-icon').click({ force: true });
   });
 
@@ -53,19 +47,19 @@ describe('User can view her host profile', () => {
   it('and get an error message on max cats accepted update if update criteria are not met', () => {
     cy.get('#editMaxCatsForm').click();
     cy.get('#maxCats-submit-button').click();
-    cy.contains('The field is blank, unchanged or the number is invalid!');
+    cy.contains(number_field_error);
   });
 
   it('and get an error message on daily rate update if update criteria are not met', () => {
     cy.get('#editRateForm').click();
     cy.get('#rate-submit-button').click();
-    cy.contains('The field is blank, unchanged or the number is invalid!');
+    cy.contains(number_field_error);
   });
 
   it('and get an error message on supplement update if update criteria are not met', () => {
     cy.get('#editSupplementForm').click();
     cy.get('#supplement-submit-button').click();
-    cy.contains('The field is blank, unchanged or the number is invalid!');
+    cy.contains(number_field_error);
   });
 
   it('and get an error message on availability update if update criteria are not met', () => {
@@ -88,9 +82,16 @@ describe('User can view her host profile', () => {
     cy.contains('You have selected no avatar');
   });
 
-  it('and if she logs out and visits the user-page path manually, she gets redirected to the login page', () => {
+  it('and if they log out and visit the user-page path manually, they get redirected to the login page', () => {
+    cy.server();
+    cy.route({
+      method: 'DELETE',
+      url: `${api}/auth/sign_out`,
+      status: 200,
+      response: 'fixture:successful_signout.json',
+    });
     cy.get('.hamburger-box').click();
-    cy.get('#logout');
+    cy.get('#logout').click({ force: true });
     cy.visit('http://localhost:3000/user-page');
     cy.contains('Log in');
   });
