@@ -1,7 +1,7 @@
 const api = 'http://localhost:3007/api/v1';
 
-describe('User can view her outgoing bookings', () => {
-  beforeEach(() => {
+describe('User can view their outgoing bookings', () => {
+  before(() => {
     cy.server();
     cy.route({
       method: 'GET',
@@ -28,19 +28,17 @@ describe('User can view her outgoing bookings', () => {
       response: [],
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });
   });
 
-  it('and see correct stats of her bookings', () => {
+  it('and see correct stats', () => {
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-upcoming]').should('have.length', 2);
     cy.get('[data-cy=outgoing-requests]').should('have.length', 2);
     cy.get('[data-cy=outgoing-history]').should('have.length', 5);
   });
 
-  it('and see her upcoming bookings displayed in correct chronological order', () => {
-    cy.get('#view-outgoing-bookings').click();
+  it('and see upcoming bookings displayed in correct chronological order', () => {
     cy.get('[data-cy=outgoing-upcoming]')
       .first()
       .contains(
@@ -53,17 +51,7 @@ describe('User can view her outgoing bookings', () => {
       );
   });
 
-  it('and see receipt of selected upcoming booking and a download option', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('#booking-receipt-7').click();
-    cy.location('pathname').should('eq', '/booking-receipt');
-    cy.contains('Receipt #7');
-    cy.contains('Accepted2');
-    cy.contains('Download receipt');
-  });
-
-  it('and see her requested bookings displayed in correct chronological order', () => {
-    cy.get('#view-outgoing-bookings').click();
+  it('and see requested bookings displayed in correct chronological order', () => {
     cy.get('[data-cy=outgoing-requests]')
       .first()
       .contains(
@@ -76,8 +64,7 @@ describe('User can view her outgoing bookings', () => {
       );
   });
 
-  it('and see her bookings history displayed in correct chronological order', () => {
-    cy.get('#view-outgoing-bookings').click();
+  it('and see bookings history displayed in correct chronological order', () => {
     cy.get('[data-cy=outgoing-history]')
       .first()
       .contains('Your cat(s) stayed with AcceptedOfThePast during the dates of 2019-11-26 until 2019-11-19.');
@@ -88,8 +75,23 @@ describe('User can view her outgoing bookings', () => {
       );
   });
 
+  it('and see receipt of selected upcoming booking and a download option', () => {
+    cy.get('#booking-receipt-7').click();
+    cy.location('pathname').should('eq', '/booking-receipt');
+    cy.contains('Receipt #7');
+    cy.contains('Accepted2');
+    cy.contains('Download receipt');
+  });
+
   it('and see receipt of selected history booking and a download option', () => {
-    cy.get('#view-outgoing-bookings').click();
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_user_bookings.json',
+    });
+    cy.go('back');
     cy.get('#booking-receipt-9').click();
     cy.location('pathname').should('eq', '/booking-receipt');
     cy.contains('Receipt #9');
@@ -98,56 +100,18 @@ describe('User can view her outgoing bookings', () => {
   });
 
   it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {
-    cy.get('#view-outgoing-bookings').click();
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_user_bookings.json',
+    });
+    cy.go('back');
     cy.get('[data-cy=outgoing-history]').first().contains('Leave a review');
   });
 
-  it('and can succesfully review a booking', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
-    cy.location('pathname').should('eq', '/leave-a-review');
-    cy.get('#1').click();
-    cy.get('#review-body').type('This is a successful review submission!');
-    cy.get('.submit-button').click();
-    cy.location('pathname').should('eq', '/successful-review');
-    cy.contains('Thank you for your review!');
-    cy.get('#back-to-bookings').click();
-    cy.location('pathname').should('eq', '/all-bookings');
-    cy.contains('Here you can manage your bookings.');
-  });
-
-  it('and cannot leave a review if the text area is blank', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
-    cy.location('pathname').should('eq', '/leave-a-review');
-    cy.get('#1').click();
-    cy.get('.submit-button').click();
-    cy.contains('Please leave a short description of your stay!');
-  });
-
-  it('and cannot leave a review if the text is longer than 1000 characters', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
-    cy.location('pathname').should('eq', '/leave-a-review');
-    cy.get('#1').click();
-    cy.get('#review-body').type(
-      'No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters!'
-    );
-    cy.get('.submit-button').click();
-    cy.contains('Review message cannot exceed 1000 characters!');
-  });
-
-  it('and cannot leave a review if no score is selected', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
-    cy.location('pathname').should('eq', '/leave-a-review');
-    cy.get('#review-body').type('Nope!');
-    cy.get('.submit-button').click();
-    cy.contains('Please choose a score from 1 (poor) to 5 (excellent) for your review!');
-  });
-
-  it('and see her own message in request bookings', () => {
-    cy.get('#view-outgoing-bookings').click();
+  it('and see their own message in request bookings', () => {
     cy.get('#2').within(() => {
       cy.get('.fake-link-underlined').click({ force: true });
     });
@@ -155,15 +119,29 @@ describe('User can view her outgoing bookings', () => {
   });
 
   it('and see relevant host message in declined history bookings', () => {
-    cy.get('#view-outgoing-bookings').click();
     cy.get('#3').within(() => {
-      cy.get('.fake-link-underlined').click();
+      cy.get('.fake-link-underlined').click({ force: true });
     });
     cy.contains('Sorry, dude! I decline!');
   });
 
+  it('and see information about cancelled booking', () => {
+    cy.get('#6').within(() => {
+      cy.get('.fake-link-underlined').click({ force: true });
+    });
+    cy.get('.popup-content').contains(
+      'Your booking got automatically cancelled due to Canceled1 not responding within 3 days.'
+    );
+  });
+
   it('and see upcoming booking details', () => {
-    cy.get('#view-outgoing-bookings').click();
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/reviews?host_profile_id=10&locale=en-US`,
+      status: 200,
+      response: [],
+    });
     cy.get('#8').within(() => {
       cy.get('#booking-details-8').click({ force: true });
     });
@@ -171,20 +149,63 @@ describe('User can view her outgoing bookings', () => {
     cy.should('contain', '2051-08-04 until 2051-08-08');
     cy.should('contain', '822.08 kr');
     cy.should('contain', 'Some address in Sthlm');
+    cy.wait(1000);
   });
 
-  it('and see information about cancelled booking', () => {
-    cy.get('#view-outgoing-bookings').click();
-    cy.get('#6').within(() => {
-      cy.get('.fake-link-underlined').click();
+  it('and cannot leave a review if no score is selected', () => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
+      status: 200,
+      response: 'fixture:all_user_bookings.json',
     });
-    cy.get('.popup-content').contains(
-      'Your booking got automatically cancelled due to Canceled1 not responding within 3 days.'
+    cy.go('back');
+    cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
+    cy.location('pathname').should('eq', '/leave-a-review');
+    cy.get('.submit-button').click();
+    cy.contains('Please choose a score from 1 (poor) to 5 (excellent) for your review!');
+  });
+
+  it('and cannot leave a review if the text area is blank', () => {
+    cy.get('#1').click();
+    cy.get('.submit-button').click();
+    cy.contains('Please leave a short description of your stay!');
+  });
+
+  it('and cannot leave a review if the text is longer than 1000 characters', () => {
+    cy.get('#review-body').type(
+      'No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer than 1000 characters! No longer'
     );
+    cy.get('.submit-button').click();
+    cy.contains('Review message cannot exceed 1000 characters!');
+  });
+
+  it('and can succesfully review a booking', () => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
+      status: 200,
+      response: 'fixture:booking_stats.json',
+    });
+    cy.route({
+      method: 'POST',
+      url: `${api}/reviews`,
+      status: 200,
+      response: '',
+    });
+    cy.get('#review-body').clear().type('This is a successful review submission!');
+    cy.get('.submit-button').click();
+    cy.location('pathname').should('eq', '/successful-review');
+    cy.contains('Thank you for your review!');
+    cy.get('#back-to-bookings').click();
+    cy.location('pathname').should('eq', '/all-bookings');
+    cy.contains('Here you can manage your bookings.');
   });
 });
 
-describe('User can view her outgoing bookings', () => {
+describe('User can view their outgoing bookings', () => {
   beforeEach(() => {
     cy.server();
     cy.route({
@@ -209,15 +230,13 @@ describe('User can view her outgoing bookings', () => {
 
   it("and see 'View your review' link if the booking has already been reviewed", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().contains('View your review');
   });
 
-  it("and click 'View your review' and view a review she wrote", () => {
+  it("and click 'View your review' and view a review they wrote", () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().contains('View your review').click();
@@ -227,7 +246,7 @@ describe('User can view her outgoing bookings', () => {
   });
 });
 
-describe('User can view her outgoing bookings', () => {
+describe('User can view their outgoing bookings', () => {
   it('and cannot leave a review cause the host requested an account deletion in the process', () => {
     cy.server();
     cy.route({
@@ -249,7 +268,6 @@ describe('User can view her outgoing bookings', () => {
       response: '',
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().get('#leave-review').click();
@@ -266,8 +284,8 @@ describe('User can view her outgoing bookings', () => {
   });
 });
 
-describe('User can view her outgoing bookings', () => {
-  it('and sees relevant message if host has deleted her account before review of booking', () => {
+describe('User can view their outgoing bookings', () => {
+  it('and sees relevant message if host has deleted their account before review of booking', () => {
     cy.server();
     cy.fixture('one_user_booking_review.json').then((booking_review) => {
       booking_review[0].host_profile_id = null;
@@ -286,7 +304,6 @@ describe('User can view her outgoing bookings', () => {
       response: 'fixture:booking_stats.json',
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.wait(2000);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-outgoing-bookings').click();
     cy.get('[data-cy=outgoing-history]').first().contains('Booking cannot be reviewed because host does not exist!');
