@@ -1,9 +1,6 @@
 describe('User is redirected after 503 server error', () => {
-  beforeEach(function () {
-    cy.server();
-  });
-
   it('succesfully', () => {
+    cy.server();
     cy.login('', 'george@mail.com', 'password', 503);
     cy.contains('Hello cat lovers!');
   });
