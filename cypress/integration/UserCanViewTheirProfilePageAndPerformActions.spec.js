@@ -109,15 +109,9 @@ function loadUserPageAPICalls() {
     status: 200,
     response: [],
   });
-  cy.route({
-    method: 'GET',
-    url: `${api}/bookings?stats=no&user_id=66&locale=en-US`,
-    status: 200,
-    response: [],
-  });
 }
 
-describe('User can view their profile page', () => {
+describe('User can view their profile page - happy path', () => {
   beforeEach(function () {
     loadUserPageAPICalls();
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
@@ -180,7 +174,7 @@ describe('User can view their profile page', () => {
   });
 });
 
-describe('User can view their profile page SAD PATH', () => {
+describe('User can view their profile page - sad path', () => {
   before(function () {
     loadUserPageAPICalls();
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
@@ -188,7 +182,6 @@ describe('User can view their profile page SAD PATH', () => {
   });
 
   it('and does not change location successfully', () => {
-    deviseAuthRoute('PUT', 422, 'fixture:unsuccessful_location_change_user_page.json');
     cy.get('#editLocationForm').click();
     cy.get('#location').click();
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click();
@@ -198,8 +191,6 @@ describe('User can view their profile page SAD PATH', () => {
   });
 
   it('and unsuccessfully tries to change password', () => {
-    cy.server();
-    deviseAuthPassword(422, 'fixture:unsuccessful_password_change_user_page.json');
     cy.get('#editPasswordForm').click();
     cy.get('#currentPassword').type('passwordD');
     cy.get('#newPassword').type('SeCuReP@SsWoR');
