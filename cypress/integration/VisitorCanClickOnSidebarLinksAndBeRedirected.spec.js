@@ -1,81 +1,60 @@
-describe('Visitor can click on sidebar links and be redirected depending on chosen language', () => {
-  beforeEach(function () {
-    cy.server();
-    cy.visit('http://localhost:3000/');
-    cy.get('.hamburger-box').click();
-  });
+function getElementAndText(element1, element2, text) {
+  cy.get(element1).click();
+  cy.get(element2).click();
+  cy.contains(text);
+}
 
+describe('Visitor can click on sidebar links and be redirected depending on chosen language', () => {
   it('to ENG Login page', () => {
-    cy.get('#login').click();
-    cy.contains('Log in');
+    cy.visit('http://localhost:3000/');
+    getElementAndText('.hamburger-box', '#login', 'Log in');
   });
 
   it('to ENG Sign Up page', () => {
-    cy.get('#login').click();
-    cy.get('#create-account').click();
-    cy.contains('Sign up');
+    cy.get('.hamburger-box').click();
+    getElementAndText('#login', '#create-account', 'Sign up');
   });
 
   it('to ENG About Us page', () => {
-    cy.get('#about').click();
-    cy.contains('About us');
+    getElementAndText('.hamburger-box', '#about', 'About us');
   });
 
   it('to ENG Legal page', () => {
-    cy.get('#legal').click();
-    cy.contains('Terms & conditions');
+    getElementAndText('.hamburger-box', '#legal', 'Terms & conditions');
   });
 
   it('to ENG FAQ page', () => {
-    cy.get('#faq').click();
-    cy.contains('FAQ');
+    getElementAndText('.hamburger-box', '#faq', 'FAQ');
   });
 
   it('to ENG Contact Us page', () => {
-    cy.get('#contact').click();
-    cy.contains('Contact us');
+    getElementAndText('.hamburger-box', '#contact', 'Contact us');
   });
 
   it('to SE Login page', () => {
-    cy.get('#se').click();
     cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.contains('Logga in');
+    cy.get('#se').click();
+    getElementAndText('.hamburger-box', '#login', 'Logga in');
   });
 
   it('to SE Sign Up page', () => {
-    cy.get('#se').click();
     cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.get('#create-account').click();
-    cy.contains('Registrera dig');
+    getElementAndText('#login', '#create-account', 'Registrera dig');
   });
 
   it('to SE About Us page', () => {
-    cy.get('#se').click();
-    cy.get('.hamburger-box').click();
-    cy.get('#about').click();
-    cy.contains('Om oss');
+    getElementAndText('.hamburger-box', '#about', 'Om oss');
   });
 
   it('to SE Legal page', () => {
-    cy.get('#se').click();
-    cy.get('.hamburger-box').click();
-    cy.get('#legal').click();
-    cy.contains('Användarvillkor');
+    getElementAndText('.hamburger-box', '#legal', 'Användarvillkor');
   });
 
   it('to SE FAQ page', () => {
-    cy.get('#se').click();
-    cy.get('.hamburger-box').click();
-    cy.get('#faq').click();
-    cy.contains('Frågor och svar');
+    getElementAndText('.hamburger-box', '#faq', 'Frågor och svar');
   });
 
   it('to SE Contact Us page', () => {
-    cy.get('#se').click();
-    cy.get('.hamburger-box').click();
-    cy.get('#contact').click();
-    cy.contains('Kontakta oss');
+    getElementAndText('.hamburger-box', '#contact', 'Kontakta oss');
   });
 });
