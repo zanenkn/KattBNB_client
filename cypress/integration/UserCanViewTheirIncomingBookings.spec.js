@@ -71,6 +71,7 @@ describe('User can view their incoming bookings', () => {
   });
 
   it('and see a message they wrote when they declined a booking', () => {
+    cy.get('.popup-overlay').click({ force: true });
     cy.get('#3').within(() => {
       cy.get('.fake-link-underlined').click({ force: true });
     });

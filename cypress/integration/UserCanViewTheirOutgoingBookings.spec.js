@@ -106,6 +106,7 @@ describe('User can view their outgoing bookings', () => {
   });
 
   it('and see relevant host message in declined history bookings', () => {
+    cy.get('.popup-overlay').click({ force: true });
     cy.get('#3').within(() => {
       cy.get('.fake-link-underlined').click({ force: true });
     });
@@ -113,6 +114,7 @@ describe('User can view their outgoing bookings', () => {
   });
 
   it('and see information about cancelled booking', () => {
+    cy.get('.popup-overlay').click({ force: true });
     cy.get('#6').within(() => {
       cy.get('.fake-link-underlined').click({ force: true });
     });
