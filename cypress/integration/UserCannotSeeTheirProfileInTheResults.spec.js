@@ -1,8 +1,8 @@
 const api = 'http://localhost:3007/api/v1';
 const email = 'george@mail.com';
 
-describe('User cannot see her profile', () => {
-  before(() => {
+describe('User cannot see their profile in the results', () => {
+  it('if logged in', () => {
     cy.server();
     cy.visit('http://localhost:3000/');
     cy.route({
@@ -29,8 +29,7 @@ describe('User cannot see her profile', () => {
         uid: email,
       },
     });
-
-    cy.visit('http://localhost:3000/search');
+    cy.get('.twelve > [href="/search"]').click();
     const now = new Date(2019, 9, 1).getTime();
     cy.clock(now);
     cy.get('.hamburger-box').click();
@@ -52,10 +51,7 @@ describe('User cannot see her profile', () => {
       .last()
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
-  });
-
-  it('in the results if logged in', () => {
-    cy.contains('8 result(s)');
+    cy.contains('8 result(s)').should('exist');
     cy.get('#66').should('not.exist');
   });
 });

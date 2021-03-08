@@ -95,6 +95,8 @@ const SignUp = (props) => {
           />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
+        {/* line below is used solely for relevant Cypress test */}
+        {process.env.NODE_ENV !== 'production' && <p id='cypress-captcha'>{captcha}</p>}
         <div className='content-wrapper'>
           <Header as='h1'>{t('SignUp:title')}</Header>
           <Segment className='whitebox'>

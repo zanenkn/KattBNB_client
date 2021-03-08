@@ -12,7 +12,7 @@ describe('User can log in and logout', () => {
   context('login', () => {
     it('succesfully', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.contains('Welcome to KattBNB!');
+      cy.contains('Welcome to KattBNB!').should('exist');
     });
 
     it('unsuccessfuly with invalid credentials', () => {
@@ -25,10 +25,10 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
-      cy.contains('Invalid login credentials. Please try again.');
+      cy.contains('Invalid login credentials. Please try again.').should('exist');
     });
 
-    it('unsuccessfuly without first being confirmed through email', () => {
+    it('unsuccessfuly cause of unconfirmed email address', () => {
       cy.login(
         {
           success: false,
@@ -38,7 +38,7 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
-      cy.contains(`A confirmation email was sent to your account at ${email}.`);
+      cy.contains(`A confirmation email was sent to your account at ${email}.`).should('exist');
     });
   });
 
@@ -51,10 +51,9 @@ describe('User can log in and logout', () => {
         response: 'fixture:successful_signout.json',
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.wait(1000);
       cy.get('.hamburger-box').click();
       cy.get('#logout').click();
-      cy.contains('Welcome to KattBNB!');
+      cy.contains('Welcome to KattBNB!').should('exist');
     });
   });
 });

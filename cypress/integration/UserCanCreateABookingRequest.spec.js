@@ -15,6 +15,12 @@ function fillInStripeForm() {
   });
 }
 
+function requestToBook() {
+  cy.get('#44').click();
+  cy.get('#more').click();
+  cy.get('#request-to-book').click();
+}
+
 describe('User can create a booking request', () => {
   beforeEach(() => {
     cy.server();
@@ -85,7 +91,6 @@ describe('User can create a booking request', () => {
       cy.get('#password').type('password');
     });
     cy.get('.submit-button').click();
-    cy.wait(2000);
     cy.get('.ui > #search-form > .required > .ui > #cats').click();
     cy.get('.ui > #search-form > .required > .ui > #cats').type('2');
     cy.get('#search-form > .required > .InputFromTo:nth-child(2) > .DayPickerInput > input').click({ force: true });
@@ -105,55 +110,37 @@ describe('User can create a booking request', () => {
   });
 
   it('successfully and get redirected', () => {
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+    requestToBook();
     cy.get('#message').type('Please take my cats for 4 days!');
     cy.get('#cardholderName').type('George');
     fillInStripeForm();
     cy.get('#postalCode').type('15987');
     cy.get('#request-to-book-button').click();
-    cy.contains('Your payment is being processed');
+    cy.contains('Your payment is being processed').should('exist');
   });
 
-  it('unsuccessfully and get an error message cause message field is empty', () => {
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+  it('unsuccessfully and get an error message cause message field is empty or contains > 400 characters', () => {
+    requestToBook();
     cy.get('#request-to-book-button').click();
-    cy.contains('Please write a message to the host!');
-  });
-
-  it('unsuccessfully and get an error message cause message field contains more than 400 characters', () => {
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+    cy.contains('Please write a message to the host!').should('exist');
     cy.get('#message').type(
       'Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!Please take my cats for 4 days!'
     );
     cy.get('#request-to-book-button').click();
-    cy.contains('The message cannot exceed 400 characters!');
+    cy.contains('The message cannot exceed 400 characters!').should('exist');
   });
 
-  it('unsuccessfully and get an error message cause postal code does not consist of 5 numbers', () => {
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+  it('unsuccessfully and get an error message cause postal code does not consist of 5 numbers or cardholder name is not filled in', () => {
+    requestToBook();
     cy.get('#message').type('Please take my cats for 4 days!');
     cy.get('#cardholderName').type('George');
     cy.get('#postalCode').type('123654');
     cy.get('#request-to-book-button').click();
-    cy.contains('You have to provide both the cardholder name and a valid postal code!');
-  });
-
-  it('unsuccessfully and get an error message cause cardholder name is not filled in', () => {
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
-    cy.get('#message').type('Please take my cats for 4 days!');
-    cy.get('#postalCode').type('13654');
+    cy.contains('You have to provide both the cardholder name and a valid postal code!').should('exist');
+    cy.get('#cardholderName').clear();
+    cy.get('#postalCode').clear().type('13654');
     cy.get('#request-to-book-button').click();
-    cy.contains('You have to provide both the cardholder name and a valid postal code!');
+    cy.contains('You have to provide both the cardholder name and a valid postal code!').should('exist');
   });
 
   it('unsuccessfully and get an error alert cause of Stripe error while creating the payment intent and get redirected to search with all criteria prefilled', () => {
@@ -163,17 +150,15 @@ describe('User can create a booking request', () => {
       status: 555,
       response: {},
     });
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+    requestToBook();
     cy.on('window:alert', (str) => {
       expect(str).to.equal(
         'There was a problem connecting to our payments infrastructure provider. Please make your booking request again.'
       );
     });
     cy.location('pathname').should('eq', '/search');
-    cy.contains('Stockholm');
-    cy.contains('2');
+    cy.contains('Stockholm').should('exist');
+    cy.contains('2').should('exist');
     cy.get(':nth-child(2) > .DayPickerInput > input').should('have.value', 'October 8, 2019');
     cy.get('[style="margin-top: 0.5em;"] > .DayPickerInput > input').should('have.value', 'October 11, 2019');
   });
@@ -187,17 +172,17 @@ describe('User can create a booking request', () => {
         error: 'There was a problem connecting to our payments infrastructure provider. Please try again later.',
       },
     });
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
+    requestToBook();
     cy.get('#message').type('Please take my cats for 4 days!');
     cy.get('#cardholderName').type('George');
     cy.get('#postalCode').type('15987');
     cy.get('#request-to-book-button').click();
-    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.');
+    cy.contains(
+      'There was a problem connecting to our payments infrastructure provider. Please try again later.'
+    ).should('exist');
   });
 
-  it('only if she is logged in or she will be redirected to the log in page', () => {
+  it('only if they are logged in or they will be redirected to the log in page', () => {
     cy.get('.hamburger-box').click();
     cy.get('#logout').click();
     const now = new Date(2019, 9, 1).getTime();
@@ -219,9 +204,7 @@ describe('User can create a booking request', () => {
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
     cy.get('#list-button').click();
-    cy.get('#44').click();
-    cy.get('#more').click();
-    cy.get('#request-to-book').click();
-    cy.contains('Log in');
+    requestToBook();
+    cy.contains('Log in').should('exist');
   });
 });

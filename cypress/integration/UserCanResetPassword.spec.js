@@ -3,10 +3,34 @@ const successful_password_reset = {
   success: true,
   message: `An email has been sent to ${email} containing instructions for resetting your password.`,
 };
+const failed_password_reset = {
+  success: false,
+  errors: [`Unable to find user with email ${email}.`],
+};
 const url = {
   api_pass: 'http://localhost:3007/api/v1/auth/password',
   client: 'http://localhost:3000',
 };
+
+function passwordReset(status, response) {
+  cy.route({
+    method: 'POST',
+    url: `${url.api_pass}`,
+    status: status,
+    response: response,
+  });
+}
+
+function typePasswords(password, pass_confirmation) {
+  cy.get('#password').type(password);
+  cy.get('#passwordConfirmation').type(pass_confirmation);
+  cy.get('#change-pass-button').click();
+}
+
+function typeEmail(email_address) {
+  cy.get('#email').type(email_address);
+  cy.get('#reset-pass-button').click();
+}
 
 describe('User can reset password', () => {
   beforeEach(() => {
@@ -20,53 +44,25 @@ describe('User can reset password', () => {
   });
 
   it('successfully', () => {
-    cy.route({
-      method: 'POST',
-      url: `${url.api_pass}`,
-      status: 200,
-      response: successful_password_reset,
-    });
-    cy.get('#email').type(email);
-    cy.get('#reset-pass-button').click();
-    cy.contains('Successful password reset request!');
+    passwordReset(200, successful_password_reset);
+    typeEmail(email);
+    cy.contains('Successful password reset request!').should('exist');
     cy.visit(`${url.client}/change-password`);
-    cy.get('#password').type('new_password');
-    cy.get('#passwordConfirmation').type('new_password');
-    cy.get('#change-pass-button').click();
-    cy.contains('Log in');
+    typePasswords('new_password', 'new_password');
+    cy.contains('Log in').should('exist');
   });
 
   it('unsuccessfully - no email present in the database', () => {
-    cy.route({
-      method: 'POST',
-      url: `${url.api_pass}`,
-      status: 404,
-      response: {
-        success: false,
-        errors: [`Unable to find user with email ${email}.`],
-      },
-    });
-    cy.get('#email').type('georgethegreek@mail.com');
-    cy.get('#reset-pass-button').click();
-    cy.contains(`Unable to find user with email ${email}.`);
+    passwordReset(404, failed_password_reset);
+    typeEmail('georgethegreek@mail.com');
+    cy.contains(`Unable to find user with email ${email}.`).should('exist');
   });
 
   it('unsuccessfully - errors while typing new password', () => {
-    cy.route({
-      method: 'POST',
-      url: `${url.api_pass}`,
-      status: 200,
-      response: successful_password_reset,
-    });
-    cy.get('#email').type(email);
-    cy.get('#reset-pass-button').click();
-    cy.contains('Successful password reset request!');
     cy.visit(`${url.client}/change-password`);
-    cy.get('#password').type('new');
-    cy.get('#passwordConfirmation').type('new_password');
-    cy.get('#change-pass-button').click();
+    typePasswords('new', 'new_password');
     cy.contains(
       'Check that both fields are an exact match with each other and that they consist of at least 6 characters'
-    );
+    ).should('exist');
   });
 });

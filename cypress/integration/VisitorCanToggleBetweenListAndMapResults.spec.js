@@ -1,18 +1,18 @@
+const api = 'http://localhost:3007/api/v1';
+
 describe('Visitor can toggle between list and map results', () => {
   before(function () {
     cy.server();
     cy.visit('http://localhost:3000');
     cy.route({
       method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api}/host_profiles?location=Stockholm&startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: 'fixture:search_results_list.json',
     });
     cy.route({
       method: 'GET',
-      url:
-        'http://localhost:3007/api/v1/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US',
+      url: `${api}/host_profiles?startDate=1570492800000&endDate=1570752000000&cats=2&locale=en-US`,
       status: 200,
       response: 'fixture:search_results_list.json',
     });
@@ -41,14 +41,14 @@ describe('Visitor can toggle between list and map results', () => {
     cy.get('#map-wrapper').should('be.visible');
   });
 
-  it('and see list view when she hits the relevant button', () => {
+  it('and see list view when hitting the relevant button', () => {
     cy.get('#list-button').click();
     cy.wait(1000);
     cy.get('.list-card').should('be.visible');
     cy.get('#map-wrapper').should('not.exist');
   });
 
-  it('and see the list view again when she hits the relevant button', () => {
+  it('and see the map view again when hitting the relevant button', () => {
     cy.get('#map-button').click();
     cy.get('.list-card').should('not.exist');
     cy.get('#map-wrapper').should('be.visible');

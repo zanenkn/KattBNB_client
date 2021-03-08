@@ -1,74 +1,72 @@
-describe('Visitor can sign up', () => {
-  beforeEach(function () {
-    cy.server();
-    cy.visit('http://localhost:3000');
-  });
+const api = 'http://localhost:3007/api/v1';
 
-  it('successfully', () => {
+function signupPostRequest(status, response) {
+  cy.server();
+  cy.route({
+    method: 'POST',
+    url: `${api}/auth`,
+    status: status,
+    response: response,
+  });
+}
+
+describe('Visitor can sign up', () => {
+  it('and gets an error message if Terms & Conditions are not accepted', () => {
+    cy.visit('http://localhost:3000');
     cy.get('.hamburger-box').click();
     cy.get('#login').click();
     cy.get('#create-account').click();
     cy.get('#signup-form').within(() => {
       let text = [
-        ['#email', 'zane@mail.com'],
-        ['#password', 'password'],
-        ['#passwordConfirmation', 'password'],
+        ['#email', 'george@'],
+        ['#password', 'pass'],
+        ['#passwordConfirmation', 'passd'],
         ['#nickname', 'KittenPrincess'],
       ];
-
       text.forEach((element) => {
         cy.get(element[0]).type(element[1]);
       });
     });
-
-    cy.get('#location').click();
-    cy.get('.visible > .selected > .text').click();
-    cy.get('.fitted > label').click();
     cy.get('#sign-up-button').click();
-    cy.visit('http://localhost:3000/signup-success');
-    cy.contains('Almost done!');
+    cy.contains('You must accept the Terms and Conditions to continue!').should('exist');
   });
 
   it('and gets error message if captcha is invalid', () => {
-    cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.get('#create-account').click();
-    cy.get('#signup-form').within(() => {
-      let text = [
-        ['#email', 'zane@mail'],
-        ['#password', 'pass'],
-        ['#passwordConfirmation', 'pass'],
-        ['#nickname', 'KittenPrincess'],
-      ];
-
-      text.forEach((element) => {
-        cy.get(element[0]).type(element[1]);
-      });
-    });
-
     cy.get('.fitted > label').click();
     cy.get('#sign-up-button').click();
-    cy.contains("You didn't input the captcha phrase correctly, please try again!");
+    cy.contains("You didn't input the captcha phrase correctly, please try again!").should('exist');
   });
 
-  it('and gets an error message if she does not accept Terms & Conditions', () => {
-    cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.get('#create-account').click();
+  it('and gets various error messages from API', () => {
+    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
+    cy.get('#cypress-captcha').then((span) => {
+      const cap = span.text();
+      cy.get('#userCaptcha').type(cap);
+    });
+    cy.get('#sign-up-button').click();
+    cy.contains("Password confirmation doesn't match Password").should('exist');
+    cy.contains('Password is too short (minimum is 6 characters)').should('exist');
+    cy.contains('Email is not an email').should('exist');
+    cy.contains("Location can't be blank").should('exist');
+  });
+
+  it('successfully', () => {
+    signupPostRequest(200, 'fixture:successful_signup.json');
     cy.get('#signup-form').within(() => {
       let text = [
-        ['#email', 'zane@mail'],
-        ['#password', 'pass'],
-        ['#passwordConfirmation', 'pass'],
+        ['#email', 'zane@mail.com'],
+        ['#password', 'Am@zing-pass'],
+        ['#passwordConfirmation', 'Am@zing-pass'],
         ['#nickname', 'KittenPrincess'],
       ];
-
       text.forEach((element) => {
-        cy.get(element[0]).type(element[1]);
+        cy.get(element[0]).clear().type(element[1]);
       });
     });
-
+    cy.get('.dropdown:nth-child(3)').click();
+    cy.get('.item:nth-child(2)').click();
     cy.get('#sign-up-button').click();
-    cy.contains('You must accept the Terms and Conditions to continue!');
+    cy.location('pathname').should('eq', '/signup-success');
+    cy.contains('Almost done!').should('exist');
   });
 });
