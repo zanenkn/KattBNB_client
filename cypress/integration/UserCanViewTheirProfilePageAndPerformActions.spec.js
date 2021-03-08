@@ -119,7 +119,7 @@ describe('User can view their profile page - happy path', () => {
   });
 
   it('successfully', () => {
-    cy.contains('GeorgeTheGreek');
+    cy.contains('GeorgeTheGreek').should('exist');
   });
 
   it('and change location successfully', () => {
@@ -138,7 +138,7 @@ describe('User can view their profile page - happy path', () => {
     cy.get('#newPassword').type('SeCuReP@SsWoRd');
     cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true });
     cy.get('#password-submit-button').click();
-    cy.contains('Log in');
+    cy.contains('Log in').should('exist');
   });
 
   it('and change notification settings successfully', () => {
@@ -163,7 +163,7 @@ describe('User can view their profile page - happy path', () => {
     cy.get('#delete-account-link').click();
     checkWindowConfirm();
     checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!');
+    cy.contains('Welcome to KattBNB!').should('exist');
   });
 
   it('and cannot delete their account cause of upcoming and request bookings', () => {
@@ -187,7 +187,7 @@ describe('User can view their profile page - sad path', () => {
     cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click();
     cy.get('#location > .dropdown').click();
     cy.get('#location-submit-button').click();
-    cy.contains('No location selected or location is unchanged!');
+    cy.contains('No location selected or location is unchanged!').should('exist');
   });
 
   it('and unsuccessfully tries to change password', () => {
@@ -198,19 +198,19 @@ describe('User can view their profile page - sad path', () => {
     cy.get('#password-submit-button').click();
     cy.contains(
       "Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters"
-    );
+    ).should('exist');
   });
 
   it('and unsuccessfully tries to change notification settings', () => {
     cy.get('#editNotificationsForm').click();
     cy.get('#notifications-submit-button').click();
-    cy.contains('No changes made to your settings!');
+    cy.contains('No changes made to your settings!').should('exist');
   });
 
   it('and unsuccessfully tries to change email language preference settings', () => {
     cy.get('#editLangPrefForm').click();
     cy.get('#email-language-submit-button').click();
-    cy.contains('No changes made to your settings!');
+    cy.contains('No changes made to your settings!').should('exist');
   });
 });
 
@@ -223,7 +223,7 @@ describe('User can view their profile page', () => {
     cy.get('#delete-account-link').click();
     checkWindowConfirm();
     checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!');
+    cy.contains('Welcome to KattBNB!').should('exist');
   });
 });
 
@@ -237,6 +237,6 @@ describe('User can view their profile page', () => {
     checkWindowConfirm();
     cy.contains(
       'Make sure your Stripe account balance is 0 and try again. If this error persists, please contact our support staff.'
-    );
+    ).should('exist');
   });
 });

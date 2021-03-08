@@ -19,7 +19,7 @@ describe('Visitor can send a message via the Contact Us form', () => {
 
   it('unsuccessfully cause not all fields are filled in', () => {
     cy.get('.submit-button').click();
-    cy.contains('You must fill out all fields!');
+    cy.contains('You must fill out all fields!').should('exist');
   });
 
   it('unsuccessfully cause message exceeds the 1000 character limit', () => {
@@ -29,13 +29,13 @@ describe('Visitor can send a message via the Contact Us form', () => {
       'Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king! Rails is king!'
     );
     cy.get('.submit-button').click();
-    cy.contains('Your message cannot exceed 1000 characters!');
+    cy.contains('Your message cannot exceed 1000 characters!').should('exist');
   });
 
   it('unsuccessfully cause captca is incorrect', () => {
     cy.get('#message').clear().type('Rails is king!');
     cy.get('.submit-button').click();
-    cy.contains("You didn't input the captcha phrase correctly, please try again!");
+    cy.contains("You didn't input the captcha phrase correctly, please try again!").should('exist');
   });
 
   it('unsuccessfully cause email in invalid', () => {
@@ -52,7 +52,7 @@ describe('Visitor can send a message via the Contact Us form', () => {
     cy.get('.submit-button').click();
     cy.contains(
       "There was a problem validating your email! Are you sure it's the right one? You can always find us by following our social media links below."
-    );
+    ).should('exist');
   });
 
   it('successfully', () => {

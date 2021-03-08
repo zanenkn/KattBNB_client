@@ -28,13 +28,13 @@ describe('Visitor can sign up', () => {
       });
     });
     cy.get('#sign-up-button').click();
-    cy.contains('You must accept the Terms and Conditions to continue!');
+    cy.contains('You must accept the Terms and Conditions to continue!').should('exist');
   });
 
   it('and gets error message if captcha is invalid', () => {
     cy.get('.fitted > label').click();
     cy.get('#sign-up-button').click();
-    cy.contains("You didn't input the captcha phrase correctly, please try again!");
+    cy.contains("You didn't input the captcha phrase correctly, please try again!").should('exist');
   });
 
   it('and gets various error messages from API', () => {
@@ -44,10 +44,10 @@ describe('Visitor can sign up', () => {
       cy.get('#userCaptcha').type(cap);
     });
     cy.get('#sign-up-button').click();
-    cy.contains("Password confirmation doesn't match Password");
-    cy.contains('Password is too short (minimum is 6 characters)');
-    cy.contains('Email is not an email');
-    cy.contains("Location can't be blank");
+    cy.contains("Password confirmation doesn't match Password").should('exist');
+    cy.contains('Password is too short (minimum is 6 characters)').should('exist');
+    cy.contains('Email is not an email').should('exist');
+    cy.contains("Location can't be blank").should('exist');
   });
 
   it('successfully', () => {
@@ -67,6 +67,6 @@ describe('Visitor can sign up', () => {
     cy.get('.item:nth-child(2)').click();
     cy.get('#sign-up-button').click();
     cy.location('pathname').should('eq', '/signup-success');
-    cy.contains('Almost done!');
+    cy.contains('Almost done!').should('exist');
   });
 });

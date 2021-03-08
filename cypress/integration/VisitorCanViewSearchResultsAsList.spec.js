@@ -72,7 +72,7 @@ describe('Visitor can view search results as a list', () => {
   });
 
   it('and see correct amount of results', () => {
-    cy.contains('10 result(s)');
+    cy.contains('10 result(s)').should('exist');
   });
 
   it('and see results sorted after host availability and then host profile score', () => {
@@ -97,12 +97,8 @@ describe('Visitor can view search results as a list', () => {
   });
 
   it('and see correct prices', () => {
-    cy.get('#44').within(() => {
-      cy.contains('679 kr');
-    });
-    cy.get('#66').within(() => {
-      cy.contains('557.75 kr');
-    });
+    cy.get('#44').should('include.text', '679 kr');
+    cy.get('#66').should('include.text', '557.75 kr');
   });
 
   it('and see the full host profile when clicking on a list card', () => {
@@ -121,14 +117,14 @@ describe('Visitor can view search results as a list', () => {
     cy.get('#44').click();
     cy.get('#more').click();
     hostData[0].forEach((data) => {
-      cy.get(data).contains(hostData[1][hostData[0].indexOf(data)]);
+      cy.get(data).should('include.text', hostData[1][hostData[0].indexOf(data)]);
     });
     cy.get('#avatar').should('be.visible');
   });
 
   it('and send a message to the host only if logged in', () => {
     cy.get('#send-message').click();
-    cy.contains('Log in');
+    cy.contains('Log in').should('exist');
   });
 
   it('and gets redirected to relevant route to send a message if they log in', () => {
@@ -160,7 +156,7 @@ describe('Visitor can view search results as a list', () => {
     cy.get('#99').click();
     cy.contains(
       'This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or contact them first to see if they are available.'
-    );
+    ).should('exist');
     cy.get('#send-message').click({ force: true });
     cy.location('pathname').should('eq', '/conversation');
   });

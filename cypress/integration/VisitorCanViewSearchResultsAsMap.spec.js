@@ -68,7 +68,7 @@ describe('Visitor can view search results as a map', () => {
       '679 kr',
     ];
     hostData.forEach((data) => {
-      cy.contains(data);
+      cy.contains(data).should('exist');
     });
   });
 
@@ -86,7 +86,7 @@ describe('Visitor can view search results as a map', () => {
     ];
     cy.get('#more').click();
     hostData[0].forEach((data) => {
-      cy.get(data).contains(hostData[1][hostData[0].indexOf(data)]);
+      cy.get(data).should('include.text', hostData[1][hostData[0].indexOf(data)]);
     });
     cy.get('#avatar').should('be.visible');
   });

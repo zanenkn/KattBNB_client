@@ -1,7 +1,7 @@
 function getElementAndText(element1, element2, text) {
   cy.get(element1).click();
   cy.get(element2).click();
-  cy.contains(text);
+  cy.contains(text).should('exist');
 }
 
 describe('Visitor can click on sidebar links and be redirected depending on chosen language', () => {

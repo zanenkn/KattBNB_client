@@ -11,7 +11,7 @@ describe('Visitor can view menu', () => {
     let links = ['Log in', 'Sign up', 'About us', 'Terms & conditions', 'FAQ', 'Contact us'];
     cy.get('.hamburger-box').click();
     links.forEach((link) => {
-      cy.contains(link);
+      cy.contains(link).should('exist');
     });
   });
 
@@ -20,7 +20,7 @@ describe('Visitor can view menu', () => {
     cy.get('#se').click();
     cy.get('.hamburger-box').click();
     links.forEach((link) => {
-      cy.contains(link);
+      cy.contains(link).should('exist');
     });
   });
 
