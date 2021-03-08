@@ -142,9 +142,11 @@ describe('User cannot accept booking requests', () => {
       response: { message: 'No account' },
     });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[style="text-align: center; margin: 2rem 0px;"]').invoke('text').then((text)=> {
-      expect(text).to.include('You made a host profile but have not provided us with your payment information.')
-    })
+    cy.get('[style="text-align: center; margin: 2rem 0px;"]')
+      .invoke('text')
+      .then((text) => {
+        expect(text).to.include('You made a host profile but have not provided us with your payment information.');
+      });
     checkPopover();
   });
 
@@ -156,8 +158,10 @@ describe('User cannot accept booking requests', () => {
       response: 'fixture:stripe_pending_verification.json',
     });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]')
-      .should('include.text', 'Your verification is pending, please check back later.');
+    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
+      'include.text',
+      'Your verification is pending, please check back later.'
+    );
     cy.get('#progress-bar-cta').should('not.exist');
     checkPopover();
   });
@@ -171,7 +175,8 @@ describe('User cannot accept booking requests', () => {
     });
     cy.get('#view-incoming-bookings').click();
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
-      'include.text', 'You have entered your payment information but are not yet verified with'
+      'include.text',
+      'You have entered your payment information but are not yet verified with'
     );
     cy.get('#progress-bar-cta').should('have.text', 'My payment dashboard');
     cy.get('#accept-1').should('have.class', 'disabled');

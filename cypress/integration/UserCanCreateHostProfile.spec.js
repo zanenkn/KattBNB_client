@@ -47,7 +47,7 @@ describe('User can create a host profile', () => {
     updateProfile(200, 'fixture:successful_host_profile_creation.json');
     cy.contains(
       'You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.'
-    );
+    ).should('exist');
     cy.get('#createHostProfileForm').click();
     cy.get('#host-profile-form').within(() => {
       let text = [
@@ -72,7 +72,7 @@ describe('User can create a host profile', () => {
     updateProfile(422, 'fixture:unsuccessful_host_profile_creation.json');
     cy.contains(
       'You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.'
-    );
+    ).should('exist');
     cy.get('#createHostProfileForm').click();
     cy.get('#host-profile-form').within(() => {
       let text = [
@@ -87,7 +87,7 @@ describe('User can create a host profile', () => {
     cy.get('#userInputAddress').type('Solståndsgatan 23');
     cy.get('#search').click();
     pickCalendarDates();
-    cy.contains("Description can't be blank");
-    cy.contains("Supplement price per cat per day can't be blank");
+    cy.contains("Description can't be blank").should('exist');
+    cy.contains("Supplement price per cat per day can't be blank").should('exist');
   });
 });

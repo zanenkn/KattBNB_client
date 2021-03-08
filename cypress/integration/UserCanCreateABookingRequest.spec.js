@@ -177,7 +177,9 @@ describe('User can create a booking request', () => {
     cy.get('#cardholderName').type('George');
     cy.get('#postalCode').type('15987');
     cy.get('#request-to-book-button').click();
-    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.').should('exist');
+    cy.contains(
+      'There was a problem connecting to our payments infrastructure provider. Please try again later.'
+    ).should('exist');
   });
 
   it('only if they are logged in or they will be redirected to the log in page', () => {
