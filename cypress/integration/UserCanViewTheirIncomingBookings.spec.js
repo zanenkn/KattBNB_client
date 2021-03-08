@@ -10,8 +10,8 @@ function stripeCall(id) {
 }
 
 function bookingDisplayOrder(element, text1, text2) {
-  cy.get(element).first().contains(text1);
-  cy.get(element).last().contains(text2);
+  cy.get(element).first().should('include.text', text1);
+  cy.get(element).last().should('include.text', text2);
 }
 
 describe('User can view their incoming bookings', () => {
@@ -67,7 +67,7 @@ describe('User can view their incoming bookings', () => {
 
   it('and see the message left by the user when they click the relevant link of a requested booking', () => {
     cy.get(':nth-child(4) > [style="padding: 2rem;"] > .fake-link-underlined').click();
-    cy.contains('Please keep my cats, Pending1');
+    cy.contains('Please keep my cats, Pending1').should('exist');
   });
 
   it('and see a message they wrote when they declined a booking', () => {
@@ -75,7 +75,7 @@ describe('User can view their incoming bookings', () => {
     cy.get('#3').within(() => {
       cy.get('.fake-link-underlined').click({ force: true });
     });
-    cy.contains('Sorry, dude! I decline!');
+    cy.contains('Sorry, dude! I decline!').should('exist');
   });
 
   it("and see 'Ask for review' link if there is no review and get error message if other user does not exist", () => {
@@ -87,7 +87,7 @@ describe('User can view their incoming bookings', () => {
       response: '',
     });
     cy.get('#ask-review').click({ force: true });
-    cy.contains('The user you are trying to reach has requested an account deletion!');
+    cy.contains('The user you are trying to reach has requested an account deletion!').should('exist');
   });
 
   it("and see 'Ask for review' link if there is no review and get redirected to messenger when they click the link", () => {
@@ -98,7 +98,7 @@ describe('User can view their incoming bookings', () => {
       status: 200,
       response: 'fixture:create_conversation.json',
     });
-    cy.get('[data-cy=incoming-history]').first().contains('Ask for a review');
+    cy.get('[data-cy=incoming-history]').first().should('include.text', 'Ask for a review');
     cy.get('#ask-review').click({ force: true });
     cy.location('pathname').should('eq', '/conversation');
   });
@@ -125,7 +125,7 @@ describe('User can view their incoming bookings', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.get('#bookings-icon').click({ force: true });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[data-cy=incoming-history]').first().contains('View review');
+    cy.get('[data-cy=incoming-history]').first().should('include.text', 'View review');
   });
 
   it("and see 'View review' link and click it and view the review", () => {
@@ -137,9 +137,11 @@ describe('User can view their incoming bookings', () => {
       response: 'fixture:one_review_incoming.json',
     });
     cy.get('.fake-link-underlined').click();
-    cy.contains('AcceptedOfThePast left you a review for a booking between the dates of 2019-11-26 and 2019-11-19.');
-    cy.contains('Excellent job George!');
-    cy.contains('5/5');
+    cy.contains(
+      'AcceptedOfThePast left you a review for a booking between the dates of 2019-11-26 and 2019-11-19.'
+    ).should('exist');
+    cy.contains('Excellent job George!').should('exist');
+    cy.contains('5/5').should('exist');
   });
 
   it('and get redirected to their user page to reply to a review they received', () => {

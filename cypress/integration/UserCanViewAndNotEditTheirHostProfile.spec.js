@@ -41,31 +41,31 @@ describe('User can view their host profile', () => {
   it('and get an error message on description update if update criteria are not met', () => {
     cy.get('#editDescriptionForm').click();
     cy.get('#description-submit-button').click();
-    cy.contains('The field is blank or unchanged!');
+    cy.contains('The field is blank or unchanged!').should('exist');
   });
 
   it('and get an error message on max cats accepted update if update criteria are not met', () => {
     cy.get('#editMaxCatsForm').click();
     cy.get('#maxCats-submit-button').click();
-    cy.contains(number_field_error);
+    cy.contains(number_field_error).should('exist');
   });
 
   it('and get an error message on daily rate update if update criteria are not met', () => {
     cy.get('#editRateForm').click();
     cy.get('#rate-submit-button').click();
-    cy.contains(number_field_error);
+    cy.contains(number_field_error).should('exist');
   });
 
   it('and get an error message on supplement update if update criteria are not met', () => {
     cy.get('#editSupplementForm').click();
     cy.get('#supplement-submit-button').click();
-    cy.contains(number_field_error);
+    cy.contains(number_field_error).should('exist');
   });
 
   it('and get an error message on availability update if update criteria are not met', () => {
     cy.get('#editableCalendar').click();
     cy.get('#availability-submit-button').click();
-    cy.contains('There were no changes made in your availability!');
+    cy.contains('There were no changes made in your availability!').should('exist');
   });
 
   it('and get an error message on address update if update criteria are not met', () => {
@@ -73,13 +73,13 @@ describe('User can view their host profile', () => {
     cy.get('#address-submit-button').click();
     cy.contains(
       'Did you hit the search icon to confirm your address before saving? Did you type the same address or forgot to add one?'
-    );
+    ).should('exist');
   });
 
   it('and get an error message on avatar update if update criteria are not met', () => {
     cy.get('#add-avatar').click();
     cy.get('#avatar-submit-button').click();
-    cy.contains('You have selected no avatar');
+    cy.contains('You have selected no avatar').should('exist');
   });
 
   it('and if they log out and visit the user-page path manually, they get redirected to the login page', () => {
@@ -93,6 +93,6 @@ describe('User can view their host profile', () => {
     cy.get('.hamburger-box').click();
     cy.get('#logout').click({ force: true });
     cy.visit('http://localhost:3000/user-page');
-    cy.contains('Log in');
+    cy.contains('Log in').should('exist');
   });
 });

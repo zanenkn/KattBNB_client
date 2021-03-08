@@ -62,9 +62,9 @@ describe('User can view their host profile', () => {
       ['#supplement', 'Extra 35 kr/day per cat'],
     ];
     text.forEach((element) => {
-      cy.get(element[0]).contains(element[1]);
+      cy.get(element[0]).should('include.text', element[1]);
     });
-    cy.contains('September 2019');
+    cy.contains('September 2019').should('exist');
   });
 
   it('and change description successfully', () => {
@@ -139,12 +139,12 @@ describe('User can view their host profile', () => {
 
   it('and unsuccessfully reply to a review cause of no text or text > 1000 characters', () => {
     cy.get('#host-reply-submit-button').click();
-    cy.contains('Reply cannot be empty!');
+    cy.contains('Reply cannot be empty!').should('exist');
     cy.get('#host-reply').type(
       'enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters and that is very bad apparently'
     );
     cy.get('#host-reply-submit-button').click();
-    cy.contains('Reply cannot exceed 1000 characters!');
+    cy.contains('Reply cannot exceed 1000 characters!').should('exist');
   });
 
   it('and successfully reply to a review', () => {

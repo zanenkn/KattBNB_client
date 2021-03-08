@@ -56,8 +56,8 @@ describe('User can see host profile progress bar from User Page', () => {
     });
     stripeCall(200, { message: 'No account' }, `${url.stripe}`);
     cy.get('#user-icon').click({ force: true });
-    cy.contains('You made a host profile but have not provided us with your payment information.');
-    cy.get('#progress-bar-cta').contains('Enter payment information');
+    cy.contains('You made a host profile but have not provided us with your payment information.').should('exist');
+    cy.get('#progress-bar-cta').should('have.text', 'Enter payment information');
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(1).should('not.have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color');
@@ -78,8 +78,8 @@ describe('User can see host profile progress bar from User Page', () => {
   it('and see step-2 when payment information have been provided and verification is pending', () => {
     stripeCall(200, 'fixture:stripe_pending_verification.json', `${url.stripe}`);
     cy.get('#user-icon').click({ force: true });
-    cy.contains('Your verification is pending, please check back later.');
-    cy.get('#progress-bar-cta').contains('My payment dashboard');
+    cy.contains('Your verification is pending, please check back later.').should('exist');
+    cy.get('#progress-bar-cta').should('have.text', 'My payment dashboard');
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color');
@@ -88,8 +88,8 @@ describe('User can see host profile progress bar from User Page', () => {
   it('and see step-2 when payment information have been provided, verification is complete and errors exist', () => {
     stripeCall(200, 'fixture:stripe_verification_errors.json', `${url.stripe}`);
     cy.get('#user-icon').click({ force: true });
-    cy.contains('Please visit your payment dashboard to complete your verification.');
-    cy.get('#progress-bar-cta').contains('My payment dashboard');
+    cy.contains('Please visit your payment dashboard to complete your verification.').should('exist');
+    cy.get('#progress-bar-cta').should('have.text', 'My payment dashboard');
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color');
@@ -98,7 +98,7 @@ describe('User can see host profile progress bar from User Page', () => {
   it('and see step-3 when payment verification is complete without errors', () => {
     stripeCall(200, 'fixture:stripe_verification_no_errors.json', `${url.stripe}`);
     cy.get('#user-icon').click({ force: true });
-    cy.get('#progress-bar-cta').contains('My payment dashboard');
+    cy.get('#progress-bar-cta').should('have.text', 'My payment dashboard');
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(1).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(2).should('have.class', 'step-done-color');
@@ -129,7 +129,9 @@ describe('User can see host profile progress bar from User Page', () => {
     validateToken();
     cy.visit('http://localhost:3000/user-page');
     cy.get('#progress-bar-cta').click();
-    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.');
+    cy.contains(
+      'There was a problem connecting to our payments infrastructure provider. Please try again later.'
+    ).should('exist');
   });
 
   it('and see an error if connection with Stripe is unavailable', () => {
@@ -141,7 +143,9 @@ describe('User can see host profile progress bar from User Page', () => {
       `${url.stripe}`
     );
     cy.get('#user-icon').click({ force: true });
-    cy.contains('There was a problem connecting to our payments infrastructure provider. Please try again later.');
+    cy.contains(
+      'There was a problem connecting to our payments infrastructure provider. Please try again later.'
+    ).should('exist');
     cy.get('.progress-bar-steps>div').eq(0).should('have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(1).should('not.have.class', 'step-done-color');
     cy.get('.progress-bar-steps>div').eq(2).should('not.have.class', 'step-done-color');

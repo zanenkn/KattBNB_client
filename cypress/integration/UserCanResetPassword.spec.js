@@ -46,16 +46,16 @@ describe('User can reset password', () => {
   it('successfully', () => {
     passwordReset(200, successful_password_reset);
     typeEmail(email);
-    cy.contains('Successful password reset request!');
+    cy.contains('Successful password reset request!').should('exist');
     cy.visit(`${url.client}/change-password`);
     typePasswords('new_password', 'new_password');
-    cy.contains('Log in');
+    cy.contains('Log in').should('exist');
   });
 
   it('unsuccessfully - no email present in the database', () => {
     passwordReset(404, failed_password_reset);
     typeEmail('georgethegreek@mail.com');
-    cy.contains(`Unable to find user with email ${email}.`);
+    cy.contains(`Unable to find user with email ${email}.`).should('exist');
   });
 
   it('unsuccessfully - errors while typing new password', () => {
@@ -63,6 +63,6 @@ describe('User can reset password', () => {
     typePasswords('new', 'new_password');
     cy.contains(
       'Check that both fields are an exact match with each other and that they consist of at least 6 characters'
-    );
+    ).should('exist');
   });
 });

@@ -1,7 +1,5 @@
 function getElement(id, text) {
-  cy.get(id).within(() => {
-    cy.contains(text);
-  });
+  cy.get(id).should('include.text', text);
 }
 
 describe('User can see a list of all their conversations', () => {
@@ -18,7 +16,7 @@ describe('User can see a list of all their conversations', () => {
   });
 
   it('succesfully', () => {
-    cy.contains('Messages');
+    cy.contains('Messages').should('exist');
     getElement('#1', 'carla');
     getElement('#2', 'elGreco');
     getElement('#3', 'steffe');
@@ -27,8 +25,8 @@ describe('User can see a list of all their conversations', () => {
   });
 
   it('displayed in correct chronological order (empty conversations are displayed last with relevant message)', () => {
-    cy.get('[data-cy=all-messages]').first().contains('elGreco');
-    cy.get('[data-cy=all-messages]').last().contains('Christmas');
+    cy.get('[data-cy=all-messages]').first().should('include.text', 'elGreco');
+    cy.get('[data-cy=all-messages]').last().should('include.text', 'Christmas');
     getElement('#4', 'No messages');
   });
 

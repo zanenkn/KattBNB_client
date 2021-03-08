@@ -51,7 +51,7 @@ describe('User cannot see their profile in the results', () => {
       .last()
       .click();
     cy.get('.content-wrapper > .ui > .button-wrapper > div > #search-button').click({ force: true });
-    cy.contains('8 result(s)');
+    cy.contains('8 result(s)').should('exist');
     cy.get('#66').should('not.exist');
   });
 });

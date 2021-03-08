@@ -41,8 +41,8 @@ describe('User can see messages of individual conversation', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.get('#messenger-icon').click({ force: true });
     cy.get('#1').click();
-    cy.get('[data-cy=all-messages-individual-conversation]').first().contains('Hello world!!!');
-    cy.get('[data-cy=all-messages-individual-conversation]').last().contains('test');
+    cy.get('[data-cy=all-messages-individual-conversation]').first().should('include.text', 'Hello world!!!');
+    cy.get('[data-cy=all-messages-individual-conversation]').last().should('include.text', 'test');
   });
 
   it('and not create a new message cause she enters more than 1000 characters', () => {
@@ -50,9 +50,9 @@ describe('User can see messages of individual conversation', () => {
     cy.get('#newMessage').type(
       'another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!another test!anothe'
     );
-    cy.contains('Remaining characters:');
+    cy.contains('Remaining characters:').should('exist');
     cy.get('#send').click();
-    cy.contains('The message cannot be empty or exceed 1000 characters!');
+    cy.contains('The message cannot be empty or exceed 1000 characters!').should('exist');
   });
 
   it('and not create a new message cause she enters no message', () => {
@@ -60,7 +60,7 @@ describe('User can see messages of individual conversation', () => {
     cy.get('#newMessage').clear();
     cy.get('#send').should('not.be.visible');
     cy.get('#newMessage').type('{enter}');
-    cy.contains('The message cannot be empty or exceed 1000 characters!');
+    cy.contains('The message cannot be empty or exceed 1000 characters!').should('exist');
   });
 
   it('and can only send a written message or an image, not both at the same time', () => {
@@ -108,6 +108,6 @@ describe('User can see messages of individual conversation', () => {
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.get('#messenger-icon').click({ force: true });
     cy.get('#1').click();
-    cy.contains("You don't have any messages in this conversation (yet).");
+    cy.contains("You don't have any messages in this conversation (yet).").should('exist');
   });
 });

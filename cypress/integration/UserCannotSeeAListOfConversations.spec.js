@@ -9,6 +9,6 @@ describe('User cannot see a list of conversations', () => {
     });
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
     cy.get('#messenger-icon').click({ force: true });
-    cy.contains("You don't have any messages (yet).");
+    cy.contains("You don't have any messages (yet).").should('exist');
   });
 });
