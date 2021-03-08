@@ -61,26 +61,26 @@ describe('User can answer booking request', () => {
     cy.get('#accept-2').trigger('mouseover');
     cy.get('#popover-2').should('not.exist');
     cy.get('#accept-2').click();
-    cy.contains('You have successfully accepted a booking request.');
+    cy.contains('You have successfully accepted a booking request.').should('exist');
   });
 
   it('and successfully decline', () => {
     cy.get('#decline').click();
     cy.get('#message').type('I decline!');
     cy.get('#decline-button').click();
-    cy.contains('Hi, GeorgeTheGreek!');
-    cy.contains('Here you can manage your bookings.');
+    cy.contains('Hi, GeorgeTheGreek!').should('exist');
+    cy.contains('Here you can manage your bookings.').should('exist');
   });
 
   it('and unsuccessfully decline cause they enter no message or message > 200 characters', () => {
     cy.get('#decline').click();
     cy.get('#decline-button').click();
-    cy.get('.popup-content').contains("Message can't be blank or contain more than 200 characters!");
+    cy.get('.popup-content').should('include.text', "Message can't be blank or contain more than 200 characters!");
     cy.get('#message').type(
       'I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!I decline!!'
     );
     cy.get('#decline-button').click();
-    cy.get('.popup-content').contains("Message can't be blank or contain more than 200 characters!");
+    cy.get('.popup-content').should('include.text', "Message can't be blank or contain more than 200 characters!");
   });
 });
 
@@ -142,7 +142,9 @@ describe('User cannot accept booking requests', () => {
       response: { message: 'No account' },
     });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[style="text-align: center; margin: 2rem 0px;"]').contains('profile page to fix that.');
+    cy.get('[style="text-align: center; margin: 2rem 0px;"]').invoke('text').then((text)=> {
+      expect(text).to.include('You made a host profile but have not provided us with your payment information.')
+    })
     checkPopover();
   });
 
@@ -154,9 +156,8 @@ describe('User cannot accept booking requests', () => {
       response: 'fixture:stripe_pending_verification.json',
     });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains(
-      'Your verification is pending, please check back later.'
-    );
+    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]')
+      .should('include.text', 'Your verification is pending, please check back later.');
     cy.get('#progress-bar-cta').should('not.exist');
     checkPopover();
   });
@@ -169,15 +170,15 @@ describe('User cannot accept booking requests', () => {
       response: 'fixture:stripe_verification_errors.json',
     });
     cy.get('#view-incoming-bookings').click();
-    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').contains(
-      'Please visit your payment dashboard to complete your verification.'
+    cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
+      'include.text', 'You have entered your payment information but are not yet verified with'
     );
-    cy.get('#progress-bar-cta').contains('My payment dashboard');
+    cy.get('#progress-bar-cta').should('have.text', 'My payment dashboard');
     cy.get('#accept-1').should('have.class', 'disabled');
     cy.get('#accept-1').trigger('mouseover');
-    cy.get('#popover-1').contains('complete your verification with our payment provider (Stripe).');
+    cy.get('#popover-1').should('include.text', 'You have entered your payment information but are not yet verified');
     cy.get('#accept-2').should('have.class', 'disabled');
     cy.get('#accept-2').trigger('mouseover');
-    cy.get('#popover-2').contains('complete your verification with our payment provider (Stripe).');
+    cy.get('#popover-2').should('include.text', 'You have entered your payment information but are not yet verified');
   });
 });
