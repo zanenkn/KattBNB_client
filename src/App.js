@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './semantic/dist/semantic.min.css';
 import Landing from './Components/Landing';
 import Navbar from './Components/Navbar';
@@ -35,21 +35,43 @@ import LeaveReview from './Components/Reviews/LeaveReview';
 import SuccessfulReview from './Components/Reviews/SuccessfulReview';
 import Receipt from './Components/Bookings/Receipt';
 import AreaList from './Components/AreaList';
+import BlogListing from './Components/Blog/BlogListing'
+import BlogPost from './Components/Blog/BlogPost'
 import ScrollToTop from './Modules/ScrollToTop';
 import { Container, Sidebar } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+import Prismic from 'prismic-javascript';
 
-class App extends Component {
-  render() {
+const App = (props) => {
+  useEffect(() => {
+    try {
+      fetchData();
+    } catch (error) {
+      console.log(error)
+      //window.alertwindow.alert(t('reusable:errors:500'));
+    }
+  }, []);
+
+  const [uids, setUids] = useState([])
+  const fetchData = async () => {
+    const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
+    
+    const response = await Client.query(
+      Prismic.Predicates.at('document.type', 'post'),
+      { fetch: 'post.uid' }
+    );
+    //debugger
+    setUids(response.results.map((result) => result.uid));
+  }
     return (
       <>
         <Navbar />
         <Sidebar.Pushable
           onClick={
-            this.props.menuVisible
+            props.menuVisible
               ? () => {
-                  this.props.dispatch({ type: 'CHANGE_VISIBILITY' });
+                  props.dispatch({ type: 'CHANGE_VISIBILITY' });
                 }
               : () => {}
           }
@@ -92,13 +114,17 @@ class App extends Component {
               <Route exact path='/leave-a-review' component={LeaveReview}></Route>
               <Route exact path='/booking-receipt' component={Receipt}></Route>
               <Route exact path='/area-list' component={AreaList}></Route>
+              <Route exact path='/blog' component={BlogListing}></Route>
+              {uids.map((uid) =>
+                <Route exact path={`/blog/${uid}`} component={BlogPost}></Route>
+              )}
             </Switch>
           </ScrollToTop>
           <Menu />
         </Sidebar.Pushable>
       </>
     );
-  }
+
 }
 
 const mapStateToProps = (state) => ({ menuVisible: state.animation.menuVisible });
