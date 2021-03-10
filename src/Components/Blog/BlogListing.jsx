@@ -3,6 +3,8 @@ import Prismic from 'prismic-javascript';
 import { RichText } from 'prismic-reactjs';
 import Spinner from '../ReusableComponents/Spinner'
 import { Link } from 'react-router-dom';
+import { PostWrapper, PostImage } from './styles'
+import { ContentWrapper } from '../../styles/common'
 
 const BlogListing = () => {
   const fetchData = async () => {
@@ -10,7 +12,7 @@ const BlogListing = () => {
 
     const response = await Client.query(
       Prismic.Predicates.at('document.type', 'post'),
-      { orderings: '[my.post.date desc]', pageSize : 10 }
+      { orderings: '[my.post.date desc]', pageSize: 10 }
     );
     setPosts(response.results);
   };
@@ -30,22 +32,25 @@ const BlogListing = () => {
     return <Spinner />
   }
   return (
-    <div>
+    <ContentWrapper>
       {posts.map((post) => {
         return (
           <Link to={{
             pathname: `/blog/${post.uid}`,
             state: { post: post }
           }}>
-            <div>
-              <img src={post.data.featured_image.url} width={100} />
-              {post.data.title[0].text}
-            </div>
+            <PostWrapper>
+              <PostImage src={post.data.featured_image.url} />
+              <div>
+                <h2>{post.data.title[0].text}</h2>
+                <p>{post.data.date}</p>
+              </div>
+            </PostWrapper>
           </Link>
         )
       })}
 
-    </div>
+    </ContentWrapper>
 
   )
 }
