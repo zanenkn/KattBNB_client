@@ -21,7 +21,6 @@
     "react": "^17.0.1",
     "react-avatar-editor": "^11.1.0",
     "react-client-captcha": "^1.0.3",
-    "react-countdown": "^2.3.1",
     "react-day-picker": "^7.4.8",
     "react-dom": "^17.0.1",
     "react-geocode": "^0.2.3",

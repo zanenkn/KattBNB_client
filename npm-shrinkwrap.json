@@ -20069,14 +20069,6 @@
       "resolved": "https://registry.npmjs.org/react-client-captcha/-/react-client-captcha-1.0.3.tgz",
       "integrity": "sha512-uPnU6W/lYg3oEAwK+wo0MYUWWr24gv6QiILGprrDlk6Y/NjJiMOGItBtrDloysGLl0Mz+d1mbc99IWCsVQYWkg=="
     },
-    "react-countdown": {
-      "version": "2.3.1",
-      "resolved": "https://registry.npmjs.org/react-countdown/-/react-countdown-2.3.1.tgz",
-      "integrity": "sha512-h66prF+Wwj3Ru4tDeqvXsW8iqaCyC54pjwTAlUUmUQ11EUqIO34xV4pO4q8MGT6917ep47ntKmBW99ZVN1ozdQ==",
-      "requires": {
-        "prop-types": "^15.7.2"
-      }
-    },
     "react-day-picker": {
       "version": "7.4.8",
       "resolved": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-7.4.8.tgz",
