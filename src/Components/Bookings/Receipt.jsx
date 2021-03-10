@@ -3,11 +3,9 @@ import React, { useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import Spinner from '../ReusableComponents/Spinner';
 import KattBNBLogo from '../Icons/KattBNBLogo';
-import ReceiptPDF from './ReceiptPDF';
 import { formatPrice, priceOfOneAmount } from '../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
-import { Button, Header, Segment, Divider } from 'semantic-ui-react';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { Header, Segment, Divider } from 'semantic-ui-react';
 
 const Receipt = ({ history }) => {
   const { t, ready } = useTranslation('Receipt');
@@ -66,24 +64,6 @@ const Receipt = ({ history }) => {
             </p>
           </div>
         </Segment>
-        <div style={{ display: 'inline-block', margin: 'auto' }}>
-          <PDFDownloadLink
-            document={
-              <ReceiptPDF
-                createdAt={createdAt}
-                numberOfCats={numberOfCats}
-                bookingId={bookingId}
-                nickname={nickname}
-                startDate={startDate}
-                endDate={endDate}
-                priceTotal={priceTotal}
-              />
-            }
-            fileName={t('Receipt:filename-pdf')}
-          >
-            {({ loading }) => (loading ? <Button loading disabled /> : <Button>{t('Receipt:download')}</Button>)}
-          </PDFDownloadLink>
-        </div>
       </div>
     );
   } else {

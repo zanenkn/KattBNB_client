@@ -1,6 +1,4 @@
 {
-  "filename-pdf": "KattBNB_bokningskvitto.pdf",
-  "download": "Ladda ner kvitto",
   "info": "En vistelse för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7>:",
   "info_plural": "En vistelse för <1>{{count}} katter</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7>:",
   "issued": "Utfärdsdatum: {{date}}",

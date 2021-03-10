@@ -77,7 +77,6 @@ describe('User can view their outgoing bookings', () => {
     cy.location('pathname').should('eq', '/booking-receipt');
     cy.contains('Receipt #7').should('exist');
     cy.contains('Accepted2').should('exist');
-    cy.contains('Download receipt').should('exist');
   });
 
   it('and see receipt of selected history booking and a download option', () => {
@@ -88,7 +87,6 @@ describe('User can view their outgoing bookings', () => {
     cy.location('pathname').should('eq', '/booking-receipt');
     cy.contains('Receipt #9').should('exist');
     cy.contains('AcceptedOfThePast').should('exist');
-    cy.contains('Download receipt').should('exist');
   });
 
   it("and see 'Leave a review' link if the booking has not been reviewed yet", () => {
