@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Button, Message, Divider, Popup } from 'semantic-ui-react';
+import { Form, Button, Message, Divider } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { withTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
-import PasswordStrengthBar from 'react-password-strength-bar';
 
 class PasswordUpdateForm extends Component {
   state = {
@@ -125,34 +124,14 @@ class PasswordUpdateForm extends Component {
               placeholder={t('PasswordUpdateForm:plch.current-pass')}
               onKeyPress={this.listenEnterKeyPassword}
             />
-            <Popup
-              trigger={
-                <Form.Input
-                  required
-                  id='newPassword'
-                  value={this.state.newPassword}
-                  type='password'
-                  onChange={this.onChangeHandler}
-                  placeholder={t('PasswordUpdateForm:plch.new-pass')}
-                  onKeyPress={this.listenEnterKeyPassword}
-                />
-              }
-              header={t('reusable:plch.pass-strength-bar-popup-header')}
-              content={
-                <PasswordStrengthBar
-                  password={this.state.newPassword}
-                  minLength={6}
-                  scoreWords={[
-                    t('reusable:plch.weak'),
-                    t('reusable:plch.weak'),
-                    t('reusable:plch.okay'),
-                    t('reusable:plch.good'),
-                    t('reusable:plch.strong'),
-                  ]}
-                  shortScoreWord={t('reusable:plch.pass-strength-bar')}
-                />
-              }
-              on='focus'
+            <Form.Input
+              required
+              id='newPassword'
+              value={this.state.newPassword}
+              type='password'
+              onChange={this.onChangeHandler}
+              placeholder={t('PasswordUpdateForm:plch.new-pass')}
+              onKeyPress={this.listenEnterKeyPassword}
             />
             <Form.Input
               required

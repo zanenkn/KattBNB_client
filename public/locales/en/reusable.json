@@ -16,12 +16,6 @@
     "password": "Password",
     "password-confirmation": "Repeat password",
     "message": "Message",
-    "pass-strength-bar": "too short",
-    "pass-strength-bar-popup-header": "Password strength",
-    "weak": "weak",
-    "okay": "okay",
-    "good": "good",
-    "strong": "strong",
     "captcha": "I am not a robot"
   },
   "title": {

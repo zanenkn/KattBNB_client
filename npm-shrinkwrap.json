@@ -8413,9 +8413,9 @@
       }
     },
     "eslint-plugin-jest": {
-      "version": "24.2.0",
-      "resolved": "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-24.2.0.tgz",
-      "integrity": "sha512-PZ6+/cOldZxpGF3rVYX6Y+83AUAI4jofdtyVrjimVHgXHfPBC5UKVTn92f6aFFV9HuD8xa1WNqY5s3kgfSzROQ==",
+      "version": "24.2.1",
+      "resolved": "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-24.2.1.tgz",
+      "integrity": "sha512-s24ve8WUu3DLVidvlSzaqlOpTZre9lTkZTAO+a7X0WMtj8HraWTiTEkW3pbDT1xVxqEHMWSv+Kx7MyqR50nhBw==",
       "requires": {
         "@typescript-eslint/experimental-utils": "^4.0.1"
       }
@@ -20280,14 +20280,6 @@
       "resolved": "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz",
       "integrity": "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
     },
-    "react-password-strength-bar": {
-      "version": "0.3.2",
-      "resolved": "https://registry.npmjs.org/react-password-strength-bar/-/react-password-strength-bar-0.3.2.tgz",
-      "integrity": "sha512-ADJZVKhdDZVELGyrc0DHSyTIJL4A/9z++rUi6Un426bQJVFPv5esp3mZdZhraet/PwCOGJRMKyjGf5QgpKvX7w==",
-      "requires": {
-        "zxcvbn": "4.4.2"
-      }
-    },
     "react-popper": {
       "version": "2.2.4",
       "resolved": "https://registry.npmjs.org/react-popper/-/react-popper-2.2.4.tgz",
@@ -22600,9 +22592,9 @@
           }
         },
         "yargs-parser": {
-          "version": "20.2.6",
-          "resolved": "https://registry.npmjs.org/yargs-parser/-/yargs-parser-20.2.6.tgz",
-          "integrity": "sha512-AP1+fQIWSM/sMiET8fyayjx/J+JmTPt2Mr0FkrgqB4todtfa53sOsrSAcIrJRD5XS20bKUwaDIuMkWKCEiQLKA=="
+          "version": "20.2.7",
+          "resolved": "https://registry.npmjs.org/yargs-parser/-/yargs-parser-20.2.7.tgz",
+          "integrity": "sha512-FiNkvbeHzB/syOjIUxFDCnhSfzAL8R5vs40MgLFBorXACCOAEaWu0gRZl14vG8MR9AOJIZbmkjhusqBYZ3HTHw=="
         }
       }
     },
@@ -26151,11 +26143,6 @@
       "version": "0.1.0",
       "resolved": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
       "integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
-    },
-    "zxcvbn": {
-      "version": "4.4.2",
-      "resolved": "https://registry.npmjs.org/zxcvbn/-/zxcvbn-4.4.2.tgz",
-      "integrity": "sha1-KOwXzwl0PtyrBW3dixsGJizHPDA="
     }
   }
 }

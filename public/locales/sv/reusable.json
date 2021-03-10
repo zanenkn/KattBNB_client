@@ -16,12 +16,6 @@
     "password": "Lösenord",
     "password-confirmation": "Upprepa lösenord",
     "message": "Meddelande",
-    "pass-strength-bar": "för kort",
-    "pass-strength-bar-popup-header": "Lösenordsstyrka",
-    "weak": "svag",
-    "okay": "medium",
-    "good": "bra",
-    "strong": "stark",
     "captcha": "Jag är inte en robot"
   },
   "title": {
