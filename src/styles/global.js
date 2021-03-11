@@ -14,13 +14,20 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+    color: #c90c61;
+    font-weight: 700;
+    margin: 0;
+  }
+
   h2 {
     font-family: 'Lato', sans-serif;
     font-size: 1.7rem;
     color: #59565e;
     font-weight: 700;
     margin: 0;
-
   }
 `;
 

@@ -43,25 +43,28 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
 import GlobalStyles from './styles/global';
+import { useTranslation } from 'react-i18next';
 
 const App = (props) => {
+
+  const [uids, setUids] = useState([]);
+  const { t } = useTranslation();
+
+  const fetchData = async () => {
+    const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
+    const response = await Client.query(Prismic.Predicates.at('document.type', 'post'), { fetch: 'post.uid' });
+    setUids(response.results.map((result) => result.uid));
+  };
+
   useEffect(() => {
     try {
       fetchData();
     } catch (error) {
       console.log(error);
-      //window.alertwindow.alert(t('reusable:errors:500'));
+      window.alertwindow.alert(t('reusable:errors:500'));
     }
   }, []);
 
-  const [uids, setUids] = useState([]);
-  const fetchData = async () => {
-    const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
-
-    const response = await Client.query(Prismic.Predicates.at('document.type', 'post'), { fetch: 'post.uid' });
-    //debugger
-    setUids(response.results.map((result) => result.uid));
-  };
   return (
     <>
       <GlobalStyles />
