@@ -1,0 +1,7 @@
+{
+  "message-body-error": "Meddelandet får inte vara tomt eller överstiga 1000 tecken",
+  "del-conversation": "Vill du verkligen radera denna konversation?",
+  "no-messages-yet": "Du har inga meddelanden i den här konversationen (än).",
+  "error-message-header": "Det gick inte att skicka meddelandet på grund av följande fel:",
+  "textarea-plch": "Säg någonting.."
+}

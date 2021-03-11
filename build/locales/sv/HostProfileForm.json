@@ -1,0 +1,21 @@
+{
+  "create-error-1": "Kontrollera att alla numeriska fält är positiva!",
+  "create-success": "Du har nu skapat din kattvaktsprofil!",
+  "address-label": "Din fullständiga adress",
+  "create-error-2": "Kattvaktsprofilen kunde inte skapas på grund av följande fel:",
+  "create-profile": "Skapa kattvaktsprofil",
+  "create-profile-main-title": "Fyll i den här informationen om dig själv och bli kattvakt idag!",
+  "about-you-label": "Om dig",
+  "about-you-plch": "Skriv kort om dig själv och din erfarenhet med katter..",
+  "address-message": "Oroa dig inte, detta kommer bara att avslöjas för kattägare som har en bekräftad bokning med dig!",
+  "rate-label": "Ditt pris",
+  "rate-plch": "Ditt pris per dag i kronor",
+  "max-cats-label": "Max antal katter",
+  "max-cats-plch": "Max antal",
+  "supplement-label": "Tillägg",
+  "explain-supplement-1": "Vad betyder det här?",
+  "availability-title": "Tillgänglighet",
+  "availability-details": "Vänligen markera datumen då du är tillgänglig till att vara kattvakt!",
+  "address-search-plch": "Sök..",
+  "not-right": "Inte rätt?"
+}
