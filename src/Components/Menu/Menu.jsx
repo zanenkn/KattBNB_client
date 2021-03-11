@@ -74,8 +74,8 @@ class Menu extends Component {
           <Header id='contact' className='menu-link' as={Link} to='/contact-us'>
             {t('reusable:title.contact')}
           </Header>
-          <Header id='partners' className='menu-link' as={Link} to='/partners'>
-            {t('reusable:title.partners')}
+          <Header id='blog' className='menu-link' as={Link} to='/blog'>
+            {t('reusable:title.stories')}
           </Header>
           <Header id='legal' className='menu-link' as={Link} to='/legal'>
             {t('reusable:title.legal')}
