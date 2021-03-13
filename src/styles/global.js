@@ -29,6 +29,10 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     margin: 0;
   }
+
+  .block-img > img {
+    width: 100%;
+  }
 `;
 
 export default GlobalStyles;
