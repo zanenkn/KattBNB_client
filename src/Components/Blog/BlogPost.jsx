@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ContentWrapper } from '../../styles/common';
-import { FeaturedImage, AuthorAvatar, Flex } from './styles';
 import { RichText } from 'prismic-reactjs';
 import Prismic from 'prismic-javascript';
 import Spinner from '../ReusableComponents/Spinner';
@@ -27,17 +25,17 @@ const BlogPost = (props) => {
   }
 
   return (
-    <ContentWrapper>
-      <FeaturedImage src={post.featured_image.url} />
+    <div className='styled-content-wrapper'>
+      <img className='featured-image' src={post.featured_image.url} alt=''/>
       <h1>{post.title[0].text}</h1>
-      <Flex>
-        <AuthorAvatar src={post.author_image.url} />
+      <div className='flex'>
+        <img className='author-avatar' src={post.author_image.url} alt=''/>
         <p>
           {post.author_name[0].text} | <i>{post.date}</i>
         </p>
-      </Flex>
+      </div>
       {RichText.render(post.text)}
-    </ContentWrapper>
+    </div>
   );
 };
 

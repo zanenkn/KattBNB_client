@@ -3,8 +3,6 @@ import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
-import { PostWrapper, PostImage } from './styles';
-import { ContentWrapper } from '../../styles/common';
 
 const BlogListing = () => {
   const fetchData = async () => {
@@ -32,7 +30,7 @@ const BlogListing = () => {
     return <Spinner />;
   }
   return (
-    <ContentWrapper>
+    <div className='styled-content-wrapper'>
       {posts.map((post) => {
         return (
           <Link
@@ -41,17 +39,17 @@ const BlogListing = () => {
               state: { post: post },
             }}
           >
-            <PostWrapper>
-              <PostImage src={post.data.featured_image.url} />
+            <div className='post-wrapper'>
+              <img className='post-image' src={post.data.featured_image.url} alt='' />
               <div>
                 <h2>{post.data.title[0].text}</h2>
                 <p>{post.data.date}</p>
               </div>
-            </PostWrapper>
+            </div>
           </Link>
         );
       })}
-    </ContentWrapper>
+    </div>
   );
 };
 

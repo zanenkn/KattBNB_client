@@ -42,7 +42,6 @@ import { Container, Sidebar } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
-import GlobalStyles from './styles/global';
 import { useTranslation } from 'react-i18next';
 
 const App = (props) => {
@@ -66,7 +65,6 @@ const App = (props) => {
 
   return (
     <>
-      <GlobalStyles />
       <Navbar />
       <Sidebar.Pushable
         onClick={
