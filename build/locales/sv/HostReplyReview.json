@@ -1,0 +1,6 @@
+{
+  "update-success": "Ditt svar är skickat.",
+  "update-error-1": "Svaret kan inte vara tomt!",
+  "update-error-2": "Svaret kan inte överstiga 1000 tecken!",
+  "plch": "Här kan du svara på en recension som en annan användare har lämnat åt dig.."
+}

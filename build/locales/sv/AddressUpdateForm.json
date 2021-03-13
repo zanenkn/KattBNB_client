@@ -1,0 +1,7 @@
+{
+  "update-error": "Har du tryckt på sökikonen för att bekräfta din adress innan du sparar? Har du skrivit samma adress eller glömt att lägga till en?",
+  "update-success": "Din adress har uppdaterats!",
+  "main-title": "Du kan uppdatera din adress nedan genom att ange och söka efter din nya adress.",
+  "address-search-plch": "Sök..",
+  "not-right": "Inte rätt?"
+}
