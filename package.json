@@ -46,6 +46,7 @@
     "semantic-ui-react": "^2.0.3",
     "slick-carousel": "^1.8.1",
     "smoothscroll-polyfill": "^0.4.4",
+    "styled-components": "^5.2.1",
     "supercluster": "^7.1.2",
     "use-supercluster": "^0.2.9"
   },
