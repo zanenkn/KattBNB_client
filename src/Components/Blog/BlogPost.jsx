@@ -26,10 +26,10 @@ const BlogPost = (props) => {
 
   return (
     <div className='styled-content-wrapper'>
-      <img className='featured-image' src={post.featured_image.url} alt=''/>
+      <img className='featured-image' src={post.featured_image.url} alt='' />
       <h1>{post.title[0].text}</h1>
       <div className='flex'>
-        <img className='author-avatar' src={post.author_image.url} alt=''/>
+        <img className='author-avatar' src={post.author_image.url} alt='' />
         <p>
           {post.author_name[0].text} | <i>{post.date}</i>
         </p>

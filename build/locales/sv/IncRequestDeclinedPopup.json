@@ -1,4 +1,0 @@
-{
-  "main-header": "AVSLAGEN",
-  "desc": "Du avslog en bokningsförfrågan från <1>{{nickname}}</1> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>."
-}

@@ -1,5 +1,0 @@
-{
-  "main-header": "Skicka en bokningsförfrågan",
-  "desc": "En vistelse för <1>{{count}} katt</1> för datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>.",
-  "desc_plural": "En vistelse för <1>{{count}} katter</1> för datumen <3>{{startDate}}</3> till <5>{{endDate}}</5>."
-}

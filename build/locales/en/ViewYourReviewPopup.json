@@ -1,5 +1,0 @@
-{
-  "main-header": "Your review",
-  "desc": "You reviewed your booking with <1>{{nickname}}</1> for the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>.",
-  "you-said": "You said"
-}
