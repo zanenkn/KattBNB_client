@@ -46,7 +46,6 @@ import GlobalStyles from './styles/global';
 import { useTranslation } from 'react-i18next';
 
 const App = (props) => {
-
   const [uids, setUids] = useState([]);
   const { t } = useTranslation();
 
@@ -60,9 +59,9 @@ const App = (props) => {
     try {
       fetchData();
     } catch (error) {
-      console.log(error);
       window.alertwindow.alert(t('reusable:errors:500'));
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header, Segment, Form, Button, Dropdown, Message, Popup, Checkbox } from 'semantic-ui-react';
+import { Header, Segment, Form, Button, Dropdown, Message, Checkbox } from 'semantic-ui-react';
 import { LOCATION_OPTIONS } from '../../Modules/locationData';
 import { registerUser } from '../../reduxTokenAuthConfig';
 import { detectLanguage } from '../../Modules/detectLanguage';
@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import ClientCaptcha from 'react-client-captcha';
-import PasswordStrengthBar from 'react-password-strength-bar';
 import Spinner from '../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
 
@@ -113,38 +112,17 @@ const SignUp = (props) => {
                   e.key === 'Enter' && createUser();
                 }}
               />
-              <Popup
-                trigger={
-                  <Form.Input
-                    required
-                    id='password'
-                    type='password'
-                    label={t('reusable:plch.password')}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder={t('reusable:plch.password')}
-                    onKeyPress={(e) => {
-                      e.key === 'Enter' && createUser();
-                    }}
-                  />
-                }
-                header={t('reusable:plch.pass-strength-bar-popup-header')}
-                content={
-                  <PasswordStrengthBar
-                    style={{ marginBottom: '0.5rem' }}
-                    password={password}
-                    minLength={6}
-                    scoreWords={[
-                      t('reusable:plch.weak'),
-                      t('reusable:plch.weak'),
-                      t('reusable:plch.okay'),
-                      t('reusable:plch.good'),
-                      t('reusable:plch.strong'),
-                    ]}
-                    shortScoreWord={t('reusable:plch.pass-strength-bar')}
-                  />
-                }
-                on='focus'
+              <Form.Input
+                required
+                id='password'
+                type='password'
+                label={t('reusable:plch.password')}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t('reusable:plch.password')}
+                onKeyPress={(e) => {
+                  e.key === 'Enter' && createUser();
+                }}
               />
               <Form.Input
                 required

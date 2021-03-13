@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Header, Segment, Form, Message, Button, Popup } from 'semantic-ui-react';
+import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import queryString from 'query-string';
 import { withTranslation } from 'react-i18next';
-import PasswordStrengthBar from 'react-password-strength-bar';
 import Spinner from '../ReusableComponents/Spinner';
 
 class ChangePassword extends Component {
@@ -136,35 +135,15 @@ class ChangePassword extends Component {
           <Segment className='whitebox'>
             <p style={{ textAlign: 'center' }}>{t('ChangePassword:instructions')}</p>
             <Form>
-              <Popup
-                trigger={
-                  <Form.Input
-                    required
-                    id='password'
-                    label={t('reusable:plch.password')}
-                    value={this.state.password}
-                    onChange={this.onChangeHandler}
-                    placeholder={t('reusable:plch.password')}
-                    type='password'
-                    onKeyPress={this.listenEnterKey}
-                  />
-                }
-                header={t('reusable:plch.pass-strength-bar-popup-header')}
-                content={
-                  <PasswordStrengthBar
-                    password={this.state.password}
-                    minLength={6}
-                    scoreWords={[
-                      t('reusable:plch.weak'),
-                      t('reusable:plch.weak'),
-                      t('reusable:plch.okay'),
-                      t('reusable:plch.good'),
-                      t('reusable:plch.strong'),
-                    ]}
-                    shortScoreWord={t('reusable:plch.pass-strength-bar')}
-                  />
-                }
-                on='focus'
+              <Form.Input
+                required
+                id='password'
+                label={t('reusable:plch.password')}
+                value={this.state.password}
+                onChange={this.onChangeHandler}
+                placeholder={t('reusable:plch.password')}
+                type='password'
+                onKeyPress={this.listenEnterKey}
               />
               <Form.Input
                 required

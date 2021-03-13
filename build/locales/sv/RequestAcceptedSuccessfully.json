@@ -1,0 +1,10 @@
+{
+  "title": "Förfrågan accepterad!",
+  "desc": "Du har accepterat en bokningsförfrågan. Den person som skickade denna bokningsförfrågan har meddelats om ditt svar och har fått tillgång till din fulla adress. Du kan meddela dem med hjälp av instrumentpanelen för Inkommande bokningar. Frågor? Kolla in våra <1>Frågor och svar</1>.",
+  "add-google-calendar": "Lägg till i Google-kalender",
+  "download-calendar-event": "Ladda ner bokningshändelse",
+  "event-location": "Hemma hos mig",
+  "event-info": "Du har godkänt en vistelse för {{count}} katt tillhörande {{nickname}}.",
+  "event-info_plural": "Du har godkänt en vistelse för {{count}} katter tillhörande {{nickname}}.",
+  "event-title": "KattBNB bokning - {{total}} kr"
+}
