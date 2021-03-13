@@ -1,6 +1,0 @@
-{
-  "title": "Förfrågan skickad!",
-  "p1": "Din bokningförfrågan för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> är nu skickad.",
-  "p1_plural": "Din bokningsförfrågan för <1>{{count}} katter</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> är nu skickad.",
-  "p2": "<0>{{host}}</0> har nu tre dagar på sig att acceptera eller avslå din förfrågan. Vi kommer att meddela dig via e-post. Frågor? Kolla in våra <2>Frågor och svar</2>."
-}

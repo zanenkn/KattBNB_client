@@ -1,5 +1,0 @@
-{
-  "main-header": "Request to book",
-  "desc": "A stay for <1>{{count}} cat</1> for the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>",
-  "desc_plural": "A stay for <1>{{count}} cats</1> for the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>"
-}
