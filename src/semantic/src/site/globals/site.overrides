@@ -1504,11 +1504,9 @@ h4 {
   margin: 0 0 1.25rem;
 }
 
-
 /*******************************
               blog
 *******************************/
-
 
 .styled-content-wrapper {
   @media screen and  (max-width: 768px) {
@@ -1520,7 +1518,6 @@ h4 {
   padding-bottom: 10vw !important;
   max-width: 768px !important;
 }
-
 
 .post-wrapper {
   display: flex !important;
@@ -1574,6 +1571,6 @@ h4 {
   margin: 0 !important;
 }
 
-  .block-img > img {
-    width: 100%;
-  }
+.block-img > img {
+  width: 100%;
+}
