@@ -1,0 +1,8 @@
+{
+  "label": "Dina kortuppgifter",
+  "cardholder": "Namn på kortet",
+  "card-number": "Kortnummer",
+  "expiry": "MM/ÅÅ",
+  "cvc": "CVC",
+  "postal-code": "Postnummer"
+}

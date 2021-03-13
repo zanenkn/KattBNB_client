@@ -1,0 +1,5 @@
+{
+  "update-success": "Your description was succesfully updated!",
+  "update-error": "The field is blank or unchanged!",
+  "main-title": "Please tell us a little about yourself, your house or apartment and your experience with cats. This will be displayed at the search."
+}
