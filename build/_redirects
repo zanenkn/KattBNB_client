@@ -1,0 +1,6 @@
+/*    /index.html   200
+
+http://kattbnb.se/*       https://kattbnb.se/:splat   301!
+http://www.kattbnb.se/*   https://kattbnb.se/:splat   301!
+https://www.kattbnb.se/*  https://kattbnb.se/:splat   301!
+www.kattbnb.se/*          https://kattbnb.se/:splat   301!

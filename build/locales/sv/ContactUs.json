@@ -1,0 +1,10 @@
+{
+  "contact-p": "Fyll i detta formulär för att skicka ett meddelande. Vi återkommer till dig så snart vi läser det!",
+  "name-placeholder": "Ditt namn",
+  "email-placeholder": "Din e-postadress",
+  "message-placeholder": "Ditt meddelande",
+  "send-btn": "Skicka",
+  "thankyou-msg": "Ditt meddelande har skickats Vi kommer jama tillbaka ett svar :)",
+  "error-msg-fields": "Du måste fylla i alla fält!",
+  "error-msg-length": "Ditt meddelande får inte överstiga 1000 tecken!"
+}

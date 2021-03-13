@@ -1,0 +1,7 @@
+{
+  "update-error": "Did you hit the search icon to confirm your address before saving? Did you type the same address or forgot to add one?",
+  "update-success": "Your address was succesfully updated!",
+  "main-title": "You can update your address below by entering and searching your new address.",
+  "address-search-plch": "Search..",
+  "not-right": "Not right?"
+}

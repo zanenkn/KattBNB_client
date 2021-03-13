@@ -1,0 +1,42 @@
+{
+  "before-stay": {
+    "title": "Before the stay",
+    "p1": "It is both cat owners and cat sitters responsibility to examine the cat(s) before the stay and agree on all the relevant matters, including but not limited to:",
+    "list-item1": "nutritional requirements,",
+    "list-item2": "previous health conditions,",
+    "list-item3": "if the cat(s) are house trained,",
+    "list-item4": "information about insurance."
+  },
+  "owner": {
+    "title": "Some good advice for cat owner:",
+    "list-item1": "Prepare a small instruction for when and what food is expected to be served.",
+    "list-item2": "Inform about medical history.",
+    "list-item3": "Be sure to leave information on how to contact you in an event of emergency.",
+    "list-item4": "Agree on pick-up/drop-off time that is suitable both for you and the sitter.",
+    "checklist": {
+      "title": "Packing checklist:",
+      "list-item1": "enough food for the stay",
+      "list-item2": "litter box and enough sand for the stay",
+      "list-item3": "insurance letter",
+      "list-item4": "toys and scratch furniture",
+      "list-item5": "any medicine needed"
+    },
+    "optional": {
+      "title": "optional:",
+      "list-item1": "Feliway pheromone spray",
+      "list-item2": "brush and claw clipper"
+    }
+  },
+  "host": {
+    "title": "Some good advice for cat sitter:",
+    "list-item1": "Do you have any poisonous plants? Discuss with the cat owner if those should be stored out of reach.",
+    "list-item2": "Make sure you never leave windows or doors open wide enough for the cat to be able to escape.",
+    "list-item3": "Do not let the cat outside or on the balcony.",
+    "list-item4": "Harnessed catwalks are an option but discuss this with the owner first.",
+    "list-item5": "Make sure that the cat owner is aware of any resident pets or young children in your home - some cats are sensitive like that.",
+    "list-item6": "Clean the litterbox daily.",
+    "list-item7": "Feed the cat(s) according to owners instructions.",
+    "list-item8": "Consult the veterinary professional immediatly if cat is sick, injured or showing any unusual behaviour.",
+    "list-item9": "Update the owner regularly and be reachable, they worry :)"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "price": {
+    "per-day": "kr/dag",
+    "total": "kr totalt",
+    "total-for-1": "kr/dag för 1 katt",
+    "total-day": "kr/dag per katt"
+  },
+  "request-cta": {
+    "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
+    "txt_plural": "Vistelsen för <1>{{count}} katter</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
+    "btn": "Skicka förfrågan",
+    "pay-btn": "Betala"
+  },
+  "plch": {
+    "email": "E-post",
+    "password": "Lösenord",
+    "password-confirmation": "Upprepa lösenord",
+    "message": "Meddelande",
+    "captcha": "Jag är inte en robot"
+  },
+  "title": {
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "signup": "Registrera konto",
+    "login-signup": "Logga in / Registrera",
+    "about": "Om oss",
+    "faq": "Frågor och svar",
+    "contact": "Kontakta oss",
+    "blog": "Blogg",
+    "stories": "Berättelser",
+    "partners": "Partners",
+    "legal": "Användarvillkor",
+    "area": "Välj ditt område:"
+  },
+  "errors": {
+    "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
+    "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!",
+    "sign-out-error": "Det gick inte att logga ut. Vänligen försök igen om en stund.",
+    "window-navigator": "Det verkar som om det finns ett problem med din internetanslutning. Vänligen kontrollera den och försök igen.",
+    "500": "Det gick inte att kontakta servern. Försök att ladda om sidan om en stund. Om problemet kvarstår, kontakta KattBNB-supporten.",
+    "401-password": "Den här länken har upphört! Du kommer att omdirigeras för att begära en ny.",
+    "401": "Den här sessionen har upphört! Du måste logga in igen.",
+    "422-conversation": "Användaren du försöker att kontakta har raderat sitt konto!",
+    "google-error-1": "Adress hittades inte! Vänligen försök igen.",
+    "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
+    "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
+    "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
+    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
+  },
+  "remaining-chars": "Återstående tecken:",
+  "reviews": "{{count}} recension",
+  "reviews_plural": "{{count}} recensioner",
+  "cta": {
+    "change": "Ändra",
+    "save": "Spara",
+    "close": "Stäng",
+    "confirm": "Bekräfta",
+    "make-host-profile": "Skapa en kattvaktsprofil",
+    "reply": "Svara",
+    "view-receipt": "Kvitto"
+  },
+  "alerts": {
+    "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
+  },
+  "labels": {
+    "coming-soon": "Kommer snart",
+    "how-it-works": "Så fungerar det"
+  },
+  "explain-supplement": "Låt oss säga att ditt pris är 120 kr/dag för en katt och ditt tillägg för ytterligare katter är 35 kr/dag. Det betyder att om du är kattvakt åt en katt under tre dagar är betalningen 120 x 3 = 360 kr. Om du däremot går med på att vara kattvakt för två katter från samma ägare i tre dagar är din betalning (120 + 35) x 3 = 465 kr",
+  "deleted-user": "Raderad användare",
+  "stripe": {
+    "step-1-text": "Du skapade en kattvaktsprofil men har inte gett oss din betalningsinformation. Utan den kan vi inte överföra pengarna för dina kattpassningar! <1>Läs mer</1> om hur vi hanterar betalningar och din information.",
+    "step-2-text": "Du har angett din betalningsinformation men har ännu inte bekräftats hos vår betalväxel (Stripe).",
+    "step-2-pending": "Vår betalväxel verifierar fortfarande dina uppgifter, vänligen återkom senare.",
+    "step-2-go-to-dashboard": "Besök din betalningspanel för att slutföra din verifiering.",
+    "stripe-dashboard-cta": "Min betalningspanel"
+  }
+}
