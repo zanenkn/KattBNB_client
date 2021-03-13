@@ -1,6 +1,0 @@
-{
-  "no-location-error": "No location selected or location is unchanged!",
-  "no-match-alert": "It seems that the location you selected does not match your host profile address. Are you sure you want to continue?",
-  "success-alert": "Location succesfully changed!",
-  "new-location-plch": "Select new location"
-}

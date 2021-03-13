@@ -1,4 +1,0 @@
-{
-  "main-header": "DECLINED",
-  "desc": "Your booking request for the dates of <1>{{startDate}}</1> until <3>{{endDate}}</3> got declined."
-}

@@ -1,6 +1,0 @@
-{
-  "title": "Success!",
-  "p1": "You have successfully requested a booking for <1>{{count}} cat</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7>.",
-  "p1_plural": "You have successfully requested a booking for <1>{{count}} cats</1> with <3>{{host}}</3> during the dates of <5>{{checkin}}</5> until <7>{{checkout}}</7>.",
-  "p2": "<0>{{host}}</0> now has 3 days to accept or decline your request. We will let you know by email. Questions? Check out our <2>FAQ</2>."
-}
