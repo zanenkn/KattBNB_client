@@ -46,7 +46,7 @@
     "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
     "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
     "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
-    "password-reg-ex": ""
+    "password-reg-ex": "Lösenordet måste innehålla 6 - 20 tecken, minst en numerisk siffra, en stor och en liten bokstav!"
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",

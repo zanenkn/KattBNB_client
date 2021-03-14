@@ -19,8 +19,8 @@ describe('Visitor can sign up', () => {
     cy.get('#signup-form').within(() => {
       let text = [
         ['#email', 'george@'],
-        ['#password', 'pass'],
-        ['#passwordConfirmation', 'passd'],
+        ['#password', 'passWORD'],
+        ['#passwordConfirmation', 'passWORD'],
         ['#nickname', 'KittenPrincess'],
       ];
       text.forEach((element) => {
@@ -37,15 +37,28 @@ describe('Visitor can sign up', () => {
     cy.contains("You didn't input the captcha phrase correctly, please try again!").should('exist');
   });
 
-  it('and gets various error messages from API', () => {
-    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
+  it('and gets error message cause password is invalid', () => {
     cy.get('#cypress-captcha').then((span) => {
       const cap = span.text();
       cy.get('#userCaptcha').type(cap);
     });
     cy.get('#sign-up-button').click();
+    cy.contains(
+      'Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!'
+    ).should('exist');
+  });
+
+  it('and gets various error messages from API', () => {
+    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
+    let text = [
+      ['#password', 'Am@zing-paSS1'],
+      ['#passwordConfirmation', 'Am@zing-paSs1'],
+    ];
+    text.forEach((element) => {
+      cy.get(element[0]).clear().type(element[1]);
+    });
+    cy.get('#sign-up-button').click();
     cy.contains("Password confirmation doesn't match Password").should('exist');
-    cy.contains('Password is too short (minimum is 6 characters)').should('exist');
     cy.contains('Email is not an email').should('exist');
     cy.contains("Location can't be blank").should('exist');
   });
@@ -55,8 +68,8 @@ describe('Visitor can sign up', () => {
     cy.get('#signup-form').within(() => {
       let text = [
         ['#email', 'zane@mail.com'],
-        ['#password', 'Am@zing-pass'],
-        ['#passwordConfirmation', 'Am@zing-pass'],
+        ['#password', 'Am@zing-pass12'],
+        ['#passwordConfirmation', 'Am@zing-pass12'],
         ['#nickname', 'KittenPrincess'],
       ];
       text.forEach((element) => {
