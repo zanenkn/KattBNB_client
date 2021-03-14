@@ -45,7 +45,8 @@
     "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
     "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
     "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
-    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
+    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
+    "password-reg-ex": ""
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",
