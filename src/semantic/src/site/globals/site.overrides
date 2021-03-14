@@ -1585,8 +1585,14 @@ h4 {
   margin: 0 !important;
 }
 
+.block-img {
+  display: flex;
+}
+
 .block-img > img {
   width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
 }
 
 .share-wrapper {

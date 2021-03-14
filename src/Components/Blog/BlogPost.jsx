@@ -86,7 +86,7 @@ const BlogPost = (props) => {
         <meta property='og:image' content={post.seo_image.url} />
       </Helmet>
       <div className='styled-content-wrapper'>
-        <img className='featured-image' src={post.featured_image.url} alt='' />
+        <img className='featured-image' src={post.seo_image.url} alt='' />
         <h1>{post.title[0].text}</h1>
         <div className='flex'>
           <img className='author-avatar' src={post.author_image.url} alt='' />
