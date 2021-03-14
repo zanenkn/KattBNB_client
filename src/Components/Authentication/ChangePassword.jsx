@@ -3,6 +3,7 @@ import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { passwordCheck } from '../../Modules/passwordCheck';
 import queryString from 'query-string';
 import { withTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
@@ -32,7 +33,7 @@ class ChangePassword extends Component {
     } else {
       if (
         this.state.password === this.state.passwordConfirmation &&
-        this.state.password.length >= 6 &&
+        passwordCheck(this.state.password) &&
         this.props.location.search.length > 150
       ) {
         this.setState({ loading: true });
@@ -81,7 +82,7 @@ class ChangePassword extends Component {
           });
       } else if (
         this.state.password === this.state.passwordConfirmation &&
-        this.state.password.length >= 6 &&
+        passwordCheck(this.state.password) &&
         this.props.location.search.length < 150
       ) {
         this.setState({
