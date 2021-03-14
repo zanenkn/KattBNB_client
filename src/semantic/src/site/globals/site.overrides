@@ -1519,6 +1519,20 @@ h4 {
   max-width: 768px !important;
 }
 
+
+.styled-content-wrapper > h1 {
+  color: #c90c61;
+}
+
+.styled-content-wrapper h2 {
+  color: #59565e;
+}
+
+.share-wrapper > h5 {
+  color: #c90c61;
+  margin-bottom: 0.5rem;
+}
+
 .post-wrapper {
   display: flex !important;
   flex-direction: column !important;
@@ -1564,7 +1578,6 @@ h4 {
   flex-direction: row !important;
   align-items: center !important;
   margin: 0.5rem auto 4rem !important;
-
 }
 
 .flex > p {
@@ -1573,4 +1586,14 @@ h4 {
 
 .block-img > img {
   width: 100%;
+}
+
+.share-wrapper {
+  margin: 4rem auto 0;
+}
+
+.share-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
