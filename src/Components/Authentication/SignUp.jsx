@@ -43,7 +43,7 @@ const SignUp = (props) => {
         setErrorDisplay(true);
         setLoading(false);
       } else if (passwordCheck(password) === false) {
-        setErrors(['reusable:errors:password-reg-ex']);
+        setErrors(['SignUp:password-reg-ex']);
         setErrorDisplay(true);
         setLoading(false);
       } else {
