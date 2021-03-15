@@ -8,62 +8,44 @@ import TwitterSimple from '../Icons/TwitterSimple';
 import LinkedinSimple from '../Icons/LinkedinSimple';
 import { useTranslation } from 'react-i18next';
 
-const BlogPost = (props) => {
+const BlogPost = ({ location: { state } }) => {
   const [post, setPost] = useState(null);
   const uid = window.location.pathname.split('/blog/')[1];
   const { t } = useTranslation();
 
+  const postSetter = (source) => {
+    let {
+      title,
+      featured_image,
+      text,
+      date,
+      author_image,
+      author_name,
+      seo_title,
+      seo_image,
+      seo_description,
+    } = source;
+    setPost((old) => ({
+      ...old,
+      title,
+      featured_image,
+      text,
+      date,
+      author_image,
+      author_name,
+      seo_title,
+      seo_image,
+      seo_description,
+    }));
+  };
+
   useEffect(() => {
-    if (props.location.state) {
-      let {
-        title,
-        featured_image,
-        text,
-        date,
-        author_image,
-        author_name,
-        seo_title,
-        seo_image,
-        seo_description,
-      } = props.location.state.post.data;
-      setPost((old) => ({
-        ...old,
-        title,
-        featured_image,
-        text,
-        date,
-        author_image,
-        author_name,
-        seo_title,
-        seo_image,
-        seo_description,
-      }));
+    if (state) {
+      postSetter(state.post.data);
     } else {
       const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
       Client.getByUID('post', uid).then((response) => {
-        let {
-          title,
-          featured_image,
-          text,
-          date,
-          author_image,
-          author_name,
-          seo_title,
-          seo_image,
-          seo_description,
-        } = response.data;
-        setPost((old) => ({
-          ...old,
-          title,
-          featured_image,
-          text,
-          date,
-          author_image,
-          author_name,
-          seo_title,
-          seo_image,
-          seo_description,
-        }));
+        postSetter(response.data);
       });
     }
     // eslint-disable-next-line
