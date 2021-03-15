@@ -3,6 +3,7 @@ import { Form, Button, Message, Divider } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { passwordCheck } from '../../Modules/passwordCheck';
 import { withTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 
@@ -30,12 +31,11 @@ class PasswordUpdateForm extends Component {
     const { t } = this.props;
     if (window.navigator.onLine === false) {
       this.setState({
-        loading: false,
         errorDisplay: true,
         errors: ['reusable:errors:window-navigator'],
       });
     } else {
-      if (this.state.newPassword === this.state.newPasswordConfirmation && this.state.newPassword.length >= 6) {
+      if (this.state.newPassword === this.state.newPasswordConfirmation && passwordCheck(this.state.newPassword)) {
         this.setState({ loading: true });
         e.preventDefault();
         const lang = detectLanguage();

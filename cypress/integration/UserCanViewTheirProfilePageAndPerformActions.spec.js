@@ -135,8 +135,8 @@ describe('User can view their profile page - happy path', () => {
     deviseAuthPassword(200, 'fixture:successful_password_change_user_page.json');
     cy.get('#editPasswordForm').click();
     cy.get('#currentPassword').type('password');
-    cy.get('#newPassword').type('SeCuReP@SsWoRd');
-    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true });
+    cy.get('#newPassword').type('SeCuReP@SsWoRd1');
+    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd1', { force: true });
     cy.get('#password-submit-button').click();
     cy.contains('Log in').should('exist');
   });
@@ -190,15 +190,28 @@ describe('User can view their profile page - sad path', () => {
     cy.contains('No location selected or location is unchanged!').should('exist');
   });
 
-  it('and unsuccessfully tries to change password', () => {
+  it('and unsuccessfully tries to change password - invalid new password', () => {
     cy.get('#editPasswordForm').click();
     cy.get('#currentPassword').type('passwordD');
     cy.get('#newPassword').type('SeCuReP@SsWoR');
     cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true });
     cy.get('#password-submit-button').click();
     cy.contains(
-      "Check that 'new password' fields are an exact match with each other and that they consist of at least 6 characters"
+      "Check that 'new password' fields are an exact match with each other, they are between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!"
     ).should('exist');
+  });
+
+  it('and unsuccessfully tries to change password - invalid existing password', () => {
+    cy.server();
+    deviseAuthPassword(422, {
+      success: false,
+      errors: { current_password: ['is invalid'], full_messages: ['Current password is invalid'] },
+    });
+    cy.get('#currentPassword').clear().type('passwordD');
+    cy.get('#newPassword').clear().type('SeCuReP@SsWoRd1');
+    cy.get('#newPasswordConfirmation').clear().type('SeCuReP@SsWoRd1', { force: true });
+    cy.get('#password-submit-button').click();
+    cy.contains('Current password is invalid').should('exist');
   });
 
   it('and unsuccessfully tries to change notification settings', () => {
