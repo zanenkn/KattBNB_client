@@ -1448,7 +1448,6 @@ h4 {
     margin-bottom: 0px;
   }
 }
-    
 
 .stripe-card-element-small {
   width: 110px !important;
@@ -1519,7 +1518,6 @@ h4 {
   max-width: 768px !important;
 }
 
-
 .styled-content-wrapper > h1 {
   color: #c90c61;
 }
@@ -1537,7 +1535,6 @@ h4 {
   display: flex !important;
   flex-direction: column !important;
   margin-bottom: 4rem !important;
-
   @media screen and (min-width: 640px) {
     flex-direction: row !important;
     margin-bottom: 3rem !important;
@@ -1549,7 +1546,6 @@ h4 {
   width: 100% !important;
   margin-bottom: 1rem !important;
   object-fit: cover;
-
   @media screen and (min-width: 640px) {
     width: 200px !important;
     height: 200px !important;

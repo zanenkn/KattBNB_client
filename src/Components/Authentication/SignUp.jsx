@@ -4,6 +4,7 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData';
 import { registerUser } from '../../reduxTokenAuthConfig';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { passwordCheck } from '../../Modules/passwordCheck';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
@@ -39,6 +40,10 @@ const SignUp = (props) => {
         setLoading(false);
       } else if (userCaptcha !== captcha) {
         setErrors(['reusable:errors:captcha']);
+        setErrorDisplay(true);
+        setLoading(false);
+      } else if (passwordCheck(password) === false) {
+        setErrors(['SignUp:password-reg-ex']);
         setErrorDisplay(true);
         setLoading(false);
       } else {
