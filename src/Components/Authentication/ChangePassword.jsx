@@ -11,7 +11,7 @@ import Spinner from '../ReusableComponents/Spinner';
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
 
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState([]);
   const [errorDisplay, setErrorDisplay] = useState(false);
   const [successDisplay, setSuccessDisplay] = useState(false);
   const [loading, setLoading] = useState(false);
