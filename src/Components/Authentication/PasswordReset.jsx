@@ -17,12 +17,22 @@ const PasswordReset = ({ history }) => {
   const url =
     process.env.NODE_ENV === 'production' ? process.env.REACT_APP_PASS_RESET : 'http://localhost:3000/change-password';
 
+  const listenEnterKey = (event) => {
+    if (event.key === 'Enter') {
+      resetPassword();
+    }
+  };
+
+  const axiosCallErrors = (errorMessage) => {
+    setLoading(false);
+    setErrorDisplay(true);
+    setErrors(errorMessage);
+  };
+
   const resetPassword = () => {
     setLoading(true);
     if (window.navigator.onLine === false) {
-      setLoading(false);
-      setErrorDisplay(true);
-      setErrors(['reusable:errors:window-navigator']);
+      axiosCallErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
       const path = '/api/v1/auth/password';
@@ -41,23 +51,13 @@ const PasswordReset = ({ history }) => {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            setLoading(false);
-            setErrorDisplay(true);
-            setErrors(['reusable:errors:500']);
+            axiosCallErrors(['reusable:errors:500']);
           } else if (response.status === 503) {
             wipeCredentials('/is-not-available?atm');
           } else {
-            setLoading(false);
-            setErrorDisplay(true);
-            setErrors(response.data.errors);
+            axiosCallErrors(response.data.errors);
           }
         });
-    }
-  };
-
-  const listenEnterKey = (event) => {
-    if (event.key === 'Enter') {
-      resetPassword();
     }
   };
 

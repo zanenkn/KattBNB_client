@@ -7,7 +7,7 @@ import { passwordCheck } from '../../Modules/passwordCheck';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 
-const PasswordUpdateForm = (props) => {
+const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
   const { t, ready } = useTranslation('PasswordUpdateForm');
 
   const [currentPassword, setCurrentPassword] = useState('');
@@ -23,10 +23,20 @@ const PasswordUpdateForm = (props) => {
     }
   };
 
+  const axiosCallErrorHandling = (errorMessage) => {
+    setErrors([errorMessage]);
+    setErrorDisplay(true);
+  };
+
+  const axiosCallErrorCatching = (errorMessage) => {
+    setLoading(false);
+    setErrorDisplay(true);
+    setErrors(errorMessage);
+  };
+
   const updatePassword = () => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
-      setErrors(['reusable:errors:window-navigator']);
+      axiosCallErrorHandling('reusable:errors:window-navigator');
     } else {
       if (newPassword === newPasswordConfirmation && passwordCheck(newPassword)) {
         setLoading(true);
@@ -55,23 +65,18 @@ const PasswordUpdateForm = (props) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(['reusable:errors:500']);
+              axiosCallErrorCatching(['reusable:errors:500']);
             } else if (response.status === 503) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 401 || response.status === 404) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(response.data.errors.full_messages);
+              axiosCallErrorCatching(response.data.errors.full_messages);
             }
           });
       } else {
-        setErrorDisplay(true);
-        setErrors(['PasswordUpdateForm:error']);
+        axiosCallErrorHandling('PasswordUpdateForm:error');
       }
     }
   };
@@ -125,7 +130,7 @@ const PasswordUpdateForm = (props) => {
           )}
         </Form>
         <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={props.closeLocationAndPasswordForms}>
+          <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
             {t('reusable:cta.close')}
           </Button>
           <Button

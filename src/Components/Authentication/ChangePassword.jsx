@@ -18,10 +18,26 @@ const ChangePassword = ({ location: { search } }) => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+  const listenEnterKey = (event) => {
+    if (event.key === 'Enter') {
+      changePassword();
+    }
+  };
+
+  const axiosCallErrorHandling = (errorMessage) => {
+    setErrors([errorMessage]);
+    setErrorDisplay(true);
+  };
+
+  const axiosCallErrorCatching = (errorMessage) => {
+    setLoading(false);
+    setErrorDisplay(true);
+    setErrors(errorMessage);
+  };
+
   const changePassword = () => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
-      setErrors(['reusable:errors:window-navigator']);
+      axiosCallErrorHandling('reusable:errors:window-navigator');
     } else {
       if (password === passwordConfirmation && passwordCheck(password) && search.length > 150) {
         setLoading(true);
@@ -48,33 +64,21 @@ const ChangePassword = ({ location: { search } }) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(['reusable:errors:500']);
+              axiosCallErrorCatching(['reusable:errors:500']);
             } else if (response.status === 503) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401-password'));
               wipeCredentials('/password-reset');
             } else {
-              setLoading(false);
-              setErrorDisplay(true);
-              setErrors(response.data.errors.full_messages);
+              axiosCallErrorCatching(response.data.errors.full_messages);
             }
           });
       } else if (password === passwordConfirmation && passwordCheck(password) && search.length < 150) {
-        setErrors(['ChangePassword:error-1']);
-        setErrorDisplay(true);
+        axiosCallErrorHandling('ChangePassword:error-1');
       } else {
-        setErrors(['ChangePassword:error-2']);
-        setErrorDisplay(true);
+        axiosCallErrorHandling('ChangePassword:error-2');
       }
-    }
-  };
-
-  const listenEnterKey = (event) => {
-    if (event.key === 'Enter') {
-      changePassword();
     }
   };
 
