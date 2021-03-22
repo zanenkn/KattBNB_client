@@ -17,7 +17,7 @@ const RequestAcceptedSuccessfully = (props) => {
   }, []);
 
   if (ready) {
-    const { cats, inDate, price, outDate, user } = props.location.state;
+    const { cats, inDate, outDate, price, user } = props.location.state;
 
     let total;
     let priceWithDecimalsString = price.toFixed(2);

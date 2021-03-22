@@ -72,14 +72,14 @@ describe('User can view their outgoing bookings', () => {
     );
   });
 
-  it('and see receipt of selected upcoming booking and a download option', () => {
+  it('and see receipt of selected upcoming booking', () => {
     cy.get('#booking-receipt-7').click();
     cy.location('pathname').should('eq', '/booking-receipt');
     cy.contains('Receipt #7').should('exist');
     cy.contains('Accepted2').should('exist');
   });
 
-  it('and see receipt of selected history booking and a download option', () => {
+  it('and see receipt of selected history booking', () => {
     cy.server();
     fetchUserBookings('fixture:all_user_bookings.json');
     cy.go('back');

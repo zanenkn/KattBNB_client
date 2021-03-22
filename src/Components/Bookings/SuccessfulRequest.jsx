@@ -17,7 +17,7 @@ const SuccessfulRequest = ({ history }) => {
     if (history.location.state === undefined || history.action === 'POP') {
       history.push({ pathname: '/' });
     } else {
-      const { checkInDate, checkOutDate, numberOfCats, nickname } = history.location.state;
+      const { checkInDate, checkOutDate, nickname, numberOfCats } = history.location.state;
       setCheckIn(moment(checkInDate).format('l'));
       setCheckOut(moment(checkOutDate).format('l'));
       setNumberOfCats(numberOfCats);

@@ -7,7 +7,7 @@ import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 
-const LocationUpdateForm = ({ fullAddress, location, closeLocationAndPasswordForms }) => {
+const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, location }) => {
   const { t, ready } = useTranslation('LocationUpdateForm');
 
   const [newLocation, setNewLocation] = useState('');
