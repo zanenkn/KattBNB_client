@@ -4,6 +4,7 @@ import { Header, Button, Icon, Container, Message } from 'semantic-ui-react';
 import Spinner from '../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import moment from 'moment';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import IncomingRequests from './IncomingRequests';
@@ -80,9 +81,7 @@ const IncomingBookings = ({ location: { state } }) => {
   };
 
   if (ready && loading === false) {
-    let todaysDate = new Date();
-    let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate());
-    let today = new Date(utc).getTime();
+    let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
     let requestsSection, upcomingSection, historySection;
     let incomingRequests = [];
     let incomingUpcoming = [];
