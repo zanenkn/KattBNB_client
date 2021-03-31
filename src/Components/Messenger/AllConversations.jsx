@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import Spinner from '../ReusableComponents/Spinner';
 import { connect } from 'react-redux';
@@ -8,26 +8,29 @@ import moment from 'moment';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-class AllConversations extends Component {
-  state = {
-    conversations: '',
-    scrollYPosition: 0,
-    loading: true,
-    errorDisplay: false,
-    errors: [],
-    secondaryStickyStyle: { boxShadow: 'none', borderBottom: '1px solid rgba(34,36,38,.15)' },
+const AllConversations = ({ id, history }) => {
+  const { t, ready } = useTranslation('AllConversations');
+
+  const [conversations, setConversations] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [secondaryStickyStyle, setSecondaryStickyStyle] = useState({
+    boxShadow: 'none',
+    borderBottom: '1px solid rgba(34,36,38,.15)',
+  });
+
+  const handleAxiosStateChanges = (loadingState, errorDisplayState, errorMessage) => {
+    setLoading(loadingState);
+    setErrorDisplay(errorDisplayState);
+    setErrors(errorMessage);
   };
 
-  componentDidMount() {
-    const { t } = this.props;
+  useEffect(() => {
     if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      handleAxiosStateChanges(false, true, ['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
       const headers = {
@@ -35,13 +38,13 @@ class AllConversations extends Component {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const path = `/api/v1/conversations?user_id=${this.props.id}&locale=${lang}`;
+      const path = `/api/v1/conversations?user_id=${id}&locale=${lang}`;
       axios
         .get(path, { headers: headers })
-        .then((response) => {
+        .then(({ data }) => {
           const shownConversations = [];
-          response.data.map((conversation) => {
-            if (conversation.hidden !== this.props.id) {
+          data.map((conversation) => {
+            if (conversation.hidden !== id) {
               shownConversations.push(conversation);
             }
             return null;
@@ -51,51 +54,36 @@ class AllConversations extends Component {
               dateB = new Date(b.msg_created);
             return dateB - dateA;
           });
-          this.setState({
-            conversations: sortedResponse,
-            loading: false,
-            errorDisplay: false,
-            errors: [],
-          });
+          setConversations(sortedResponse);
+          handleAxiosStateChanges(false, false, []);
         })
-        .catch((error) => {
-          if (error.response === undefined) {
+        .catch(({ response }) => {
+          if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: ['reusable:errors:500'],
-            });
-          } else if (error.response.status === 503) {
+          } else if (response.status === 500) {
+            handleAxiosStateChanges(false, true, ['reusable:errors:500']);
+          } else if (response.status === 503) {
             wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 401) {
+          } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: error.response.data.error,
-            });
+            handleAxiosStateChanges(false, true, response.data.error);
           }
         });
     }
-  }
+    // eslint-disable-next-line
+  }, []);
 
-  handleScroll = (e) => {
-    let secondaryStickyStyle =
+  const handleScroll = (e) => {
+    let newSecondaryStickyStyle =
       e.target.scrollTop > 0
         ? { boxShadow: '0 0 20px -5px rgba(0,0,0,.2)', borderBottom: 'none' }
         : { boxShadow: 'none', borderBottom: '1px solid rgba(34,36,38,.15)' };
-    console.log(e.target.scrollTop);
-    this.setState({
-      secondaryStickyStyle: secondaryStickyStyle,
-    });
+    setSecondaryStickyStyle(newSecondaryStickyStyle);
   };
 
-  render() {
-    const { t } = this.props;
+  if (ready) {
     const lang = detectLanguage();
     let deleted_user = {
       nickname: t('AllConversations:deleted-user'),
@@ -105,14 +93,14 @@ class AllConversations extends Component {
     };
     moment.locale(lang);
 
-    if (this.state.loading) {
+    if (loading) {
       return <Spinner />;
-    } else if (this.state.errorDisplay) {
+    } else if (errorDisplay) {
       return (
         <div className='content-wrapper'>
           <Message negative>
             <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
+              {errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
@@ -129,26 +117,22 @@ class AllConversations extends Component {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              ...this.state.secondaryStickyStyle,
+              ...secondaryStickyStyle,
             }}
           >
             <Header as='h1'>{t('AllConversations:header')}</Header>
           </div>
-          <div
-            className='messenger-wrapper all-conversations'
-            style={{ paddingTop: '96px' }}
-            onScroll={this.handleScroll}
-          >
-            {this.state.conversations.length < 1 ? (
+          <div className='messenger-wrapper all-conversations' style={{ paddingTop: '96px' }} onScroll={handleScroll}>
+            {conversations.length < 1 ? (
               <p style={{ textAlign: 'center', fontStyle: 'italic' }}>{t('AllConversations:no-messages')}</p>
             ) : (
-              this.state.conversations.map((conversation) => {
+              conversations.map((conversation) => {
                 let other_user, time_format;
                 conversation.user1 === null
                   ? (other_user = deleted_user)
                   : conversation.user2 === null
                   ? (other_user = deleted_user)
-                  : conversation.user1.id === this.props.id
+                  : conversation.user1.id === id
                   ? (other_user = conversation.user2)
                   : (other_user = conversation.user1);
                 time_format = timeFormat(conversation.msg_created);
@@ -158,7 +142,7 @@ class AllConversations extends Component {
                     id={conversation.id}
                     data-cy='all-messages'
                     onClick={() => {
-                      this.props.history.push({
+                      history.push({
                         pathname: '/conversation',
                         state: {
                           id: conversation.id,
@@ -224,9 +208,11 @@ class AllConversations extends Component {
         </>
       );
     }
+  } else {
+    return <Spinner />;
   }
-}
+};
 
 const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });
 
-export default withTranslation('AllConversations')(connect(mapStateToProps)(withAuth(AllConversations)));
+export default connect(mapStateToProps)(withAuth(AllConversations));
