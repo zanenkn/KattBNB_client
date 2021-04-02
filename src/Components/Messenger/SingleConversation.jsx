@@ -43,6 +43,18 @@ const Conversation = (props) => {
     setSecondaryStickyStyle(newSecondaryStickyStyle);
   };
 
+  const handleOnChange = (e) => {
+    setNewMessage(e.target.value); 
+    setErrorDisplay(false); 
+    setErrors([]);
+  }
+
+  const onClosePopup = () => {
+    setImageUploadPopupOpen(false);
+    setUploadedImage('');
+    setImageUploadButton(true);
+  }
+
   const createSocket = () => {
     let perform;
     let uid = window.localStorage.getItem('uid');
@@ -266,11 +278,7 @@ const Conversation = (props) => {
           modal
           open={imageUploadPopupOpen}
           closeOnDocumentClick={!loadingUploadButton}
-          onClose={() => {
-            setImageUploadPopupOpen(false);
-            setUploadedImage('');
-            setImageUploadButton(true);
-          }}
+          onClose={onClosePopup}
           position='top center'
         >
           <div>
@@ -463,7 +471,7 @@ const Conversation = (props) => {
                   placeholder={t('SingleConversation:textarea-plch')}
                   id='newMessage'
                   value={newMessage}
-                  onChange={((e) => setNewMessage(e.target.value), setErrorDisplay(false), setErrors([]))}
+                  onChange={(e) => handleOnChange(e)}
                   onKeyPress={listenEnterKeyMessage}
                   onHeightChange={(height) => setFooterHeight(`${height}px`)}
                   disabled={props.location.state.user.id === null && true}
