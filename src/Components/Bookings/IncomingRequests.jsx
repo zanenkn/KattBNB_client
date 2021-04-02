@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Button, Header, Grid, Icon, Message } from 'semantic-ui-react';
 import Popup from 'reactjs-popup';
 import Spinner from '../ReusableComponents/Spinner';
-import { withTranslation, Trans } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import IncRequestPopup from './IncRequestPopup';
 import DeclineRequestPopup from './DeclineRequestPopup';
 import axios from 'axios';
@@ -13,32 +13,33 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import { Popup as SemanticPopup } from 'semantic-ui-react';
 
-class IncomingRequests extends Component {
-  state = {
-    loading: true,
-    errorDisplay: false,
-    errors: '',
-    iconsDisabled: false,
-    closeOnDocumentClick: true,
-    payoutSuccess: false,
-    stripeAccountErrors: [],
-    stripeAccountId: '',
-    stripePendingVerification: false,
-    stripeDashboardButtonLoading: false,
+const IncomingRequests = ({ history, requests }) => {
+  const { t, ready } = useTranslation('IncomingRequests');
+
+  const [loading, setLoading] = useState(true);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [iconsDisabled, setIconsDisabled] = useState(false);
+  const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
+  const [payoutSuccess, setPayoutSuccess] = useState(false);
+  const [stripeAccountErrors, setStripeAccountErrors] = useState([]);
+  const [stripeAccountID, setStripeAccountID] = useState('');
+  const [stripePendingVerification, setStripePendingVerification] = useState(false);
+  const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
+
+  const axiosCallsErrorHandling = (errorDisplayState, errorMessage) => {
+    setErrorDisplay(errorDisplayState);
+    setErrors(errorMessage);
   };
 
-  fetchStripeAccountDetails = async () => {
-    const { t } = this.props;
+  const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      setLoading(false);
+      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=retrieve`;
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=retrieve`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -46,69 +47,56 @@ class IncomingRequests extends Component {
         };
         const response = await axios.get(path, { headers: headers });
         if (!response.data.message) {
-          this.setState({
-            payoutSuccess: response.data.payouts_enabled,
-            stripeAccountErrors: response.data.requirements.errors,
-            stripePendingVerification: response.data.requirements.pending_verification.length > 0 ? true : false,
-            loading: false,
-          });
+          setPayoutSuccess(response.data.payouts_enabled);
+          setStripeAccountErrors(response.data.requirements.errors);
+          setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false);
+          setLoading(false);
         } else {
-          this.setState({
-            stripeAccountId: null,
-            loading: false,
-          });
+          setStripeAccountID(null);
+          setLoading(false);
         }
-      } catch (error) {
-        if (error.response === undefined) {
+      } catch ({ response }) {
+        if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 555) {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: [error.response.data.error],
-          });
-        } else if (error.response.status === 503) {
+        } else if (response.status === 555) {
+          setLoading(false);
+          axiosCallsErrorHandling(true, [response.data.error]);
+        } else if (response.status === 503) {
           wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 401) {
+        } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          this.setState({
-            loading: false,
-            errorDisplay: true,
-            errors: [error.response.data.error],
-          });
+          setLoading(false);
+          axiosCallsErrorHandling(true, [response.data.error]);
         }
       }
     }
   };
 
-  componentDidMount() {
-    if (this.props.history.action === 'POP') {
-      this.props.history.push({ pathname: '/all-bookings' });
+  useEffect(() => {
+    if (history.action === 'POP') {
+      history.push({ pathname: '/all-bookings' });
     }
-    if (this.props.requests.length > 0) {
-      this.fetchStripeAccountDetails();
+    if (requests.length > 0) {
+      fetchStripeAccountDetails();
     } else {
-      this.setState({ loading: false });
+      setLoading(false);
     }
-  }
+    // eslint-disable-next-line
+  }, []);
 
-  declModalCloseState = (state) => {
-    this.setState({ closeOnDocumentClick: state });
+  const declModalCloseState = (state) => {
+    setCloseOnDocumentClick(state);
   };
 
-  acceptRequest = (e, requestData) => {
+  const acceptRequest = (e, requestData) => {
     e.preventDefault();
-    const { t } = this.props;
     const lang = detectLanguage();
-    this.setState({ iconsDisabled: true });
+    setIconsDisabled(true);
     if (window.navigator.onLine === false) {
-      this.setState({
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-        iconsDisabled: false,
-      });
+      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
+      setIconsDisabled(false);
     } else {
       if (window.confirm(t('IncomingRequests:accept-request'))) {
         const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`;
@@ -125,7 +113,6 @@ class IncomingRequests extends Component {
         axios
           .patch(path, payload, { headers: headers })
           .then(() => {
-            const { history } = this.props;
             history.push({
               pathname: '/request-accepted-success',
               state: {
@@ -137,49 +124,39 @@ class IncomingRequests extends Component {
               },
             });
           })
-          .catch((error) => {
-            if (error.response === undefined) {
+          .catch(({ response }) => {
+            if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
-              this.setState({
-                errorDisplay: true,
-                errors: ['reusable:errors:500'],
-                iconsDisabled: false,
-              });
-            } else if (error.response.status === 555 || error.response.status === 427) {
-              window.alert(error.response.data.error);
-              this.props.history.push('/all-bookings');
-            } else if (error.response.status === 503) {
+            } else if (response.status === 500) {
+              axiosCallsErrorHandling(true, ['reusable:errors:500']);
+              setIconsDisabled(false);
+            } else if (response.status === 555 || response.status === 427) {
+              window.alert(response.data.error);
+              history.push('/all-bookings');
+            } else if (response.status === 503) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 401) {
+            } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
-              this.setState({
-                errorDisplay: true,
-                errors: error.response.data.error,
-                iconsDisabled: false,
-              });
+              axiosCallsErrorHandling(true, response.data.error);
+              setIconsDisabled(false);
             }
           });
       } else {
-        this.setState({ iconsDisabled: false });
+        setIconsDisabled(false);
       }
     }
   };
 
-  fetchStripeDashboardLink = async () => {
-    const { t } = this.props;
+  const fetchStripeDashboardLink = async () => {
     if (window.navigator.onLine === false) {
-      this.setState({
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
     } else {
       try {
-        this.setState({ stripeDashboardButtonLoading: true });
+        setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${this.props.requests[0].host_profile_id}&occasion=login_link`;
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=login_link`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -187,71 +164,52 @@ class IncomingRequests extends Component {
         };
         const response = await axios.get(path, { headers: headers });
         window.open(response.data.url);
-        this.setState({ stripeDashboardButtonLoading: false });
-      } catch (error) {
-        if (error.response === undefined) {
+        setStripeDashboardButtonLoading(false);
+      } catch ({ response }) {
+        if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 555) {
-          this.setState({
-            errorDisplay: true,
-            errors: [error.response.data.error],
-            stripeDashboardButtonLoading: false,
-          });
-        } else if (error.response.status === 503) {
+        } else if (response.status === 555) {
+          axiosCallsErrorHandling(true, [response.data.error]);
+          setStripeDashboardButtonLoading(false);
+        } else if (response.status === 503) {
           wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 401) {
+        } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          this.setState({
-            errorDisplay: true,
-            errors: [error.response.data.error],
-            stripeDashboardButtonLoading: false,
-          });
+          axiosCallsErrorHandling(true, [response.data.error]);
+          setStripeDashboardButtonLoading(false);
         }
       }
     }
   };
 
-  render() {
-    const { t } = this.props;
-    const {
-      payoutSuccess,
-      stripeAccountId,
-      stripeAccountErrors,
-      stripeDashboardButtonLoading,
-      stripePendingVerification,
-      loading,
-    } = this.state;
+  if (ready && loading === false) {
+    let sortedRequests = requests;
+    sortedRequests.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    let priceWithDecimalsString, total;
 
-    if (this.props.tReady && loading === false) {
-      let sortedRequests = this.props.requests;
-      sortedRequests.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-      let priceWithDecimalsString, total, requestsToDisplay, errorDisplay;
-
-      if (this.state.errorDisplay) {
-        errorDisplay = (
+    return (
+      <>
+        {errorDisplay && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('IncomingRequests:main-header-error')}</Message.Header>
             <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
+              {errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
           </Message>
-        );
-      }
-
-      if (this.props.requests.length > 0) {
-        requestsToDisplay = (
+        )}
+        {requests.length > 0 ? (
           <>
             <p className='small-centered-paragraph'>
-              <Trans count={parseInt(this.props.requests.length)} i18nKey='IncomingRequests:requests-to-display'>
-                <strong>You have received {{ count: this.props.requests.length }} booking request.</strong>
+              <Trans count={parseInt(requests.length)} i18nKey='IncomingRequests:requests-to-display'>
+                <strong>You have received {{ count: requests.length }} booking request.</strong>
               </Trans>
             </p>
             <p style={{ textAlign: 'center' }}>{t('IncomingRequests:requests-desc')}</p>
-            {stripeAccountId === null ? (
+            {stripeAccountID === null ? (
               <>
                 <p style={{ textAlign: 'center', margin: '2rem 0' }}>
                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
@@ -265,28 +223,28 @@ class IncomingRequests extends Component {
                 </p>
               </>
             ) : (
-                stripeAccountErrors.length > 0 && (
-                  <>
-                    <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
-                      {t('reusable:stripe:step-2-text')}&ensp;
+              stripeAccountErrors.length > 0 && (
+                <>
+                  <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
+                    {t('reusable:stripe:step-2-text')}&ensp;
                     {stripePendingVerification
-                        ? t('reusable:stripe:step-2-pending')
-                        : t('reusable:stripe:step-2-go-to-dashboard')}
-                    </p>
-                    {!stripePendingVerification && (
-                      <Button
-                        onClick={() => this.fetchStripeDashboardLink()}
-                        loading={stripeDashboardButtonLoading}
-                        disabled={stripeDashboardButtonLoading}
-                        id='progress-bar-cta'
-                        style={{ marginBottom: '2rem' }}
-                      >
-                        {t('reusable:stripe:stripe-dashboard-cta')}
-                      </Button>
-                    )}
-                  </>
-                )
-              )}
+                      ? t('reusable:stripe:step-2-pending')
+                      : t('reusable:stripe:step-2-go-to-dashboard')}
+                  </p>
+                  {!stripePendingVerification && (
+                    <Button
+                      onClick={() => fetchStripeDashboardLink()}
+                      loading={stripeDashboardButtonLoading}
+                      disabled={stripeDashboardButtonLoading}
+                      id='progress-bar-cta'
+                      style={{ marginBottom: '2rem' }}
+                    >
+                      {t('reusable:stripe:stripe-dashboard-cta')}
+                    </Button>
+                  )}
+                </>
+              )
+            )}
             {sortedRequests.map((request) => {
               priceWithDecimalsString = request.price_total.toFixed(2);
               if (
@@ -311,7 +269,7 @@ class IncomingRequests extends Component {
                           modal
                           trigger={
                             <Icon
-                              disabled={this.state.iconsDisabled}
+                              disabled={iconsDisabled}
                               id='decline'
                               name='plus circle'
                               style={{
@@ -325,14 +283,14 @@ class IncomingRequests extends Component {
                             />
                           }
                           position='top center'
-                          closeOnDocumentClick={this.state.closeOnDocumentClick}
+                          closeOnDocumentClick={closeOnDocumentClick}
                         >
                           <DeclineRequestPopup
                             id={request.id}
                             nickname={request.user.nickname}
                             startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
                             endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-                            declModalCloseState={this.declModalCloseState.bind(this)}
+                            declModalCloseState={declModalCloseState}
                           />
                         </Popup>
                         <SemanticPopup
@@ -342,7 +300,7 @@ class IncomingRequests extends Component {
                           hideOnScroll
                           disabled={payoutSuccess}
                           content={
-                            stripeAccountId === null ? (
+                            stripeAccountID === null ? (
                               <>
                                 <p style={{ textAlign: 'center' }}>
                                   <Trans i18nKey={'IncomingRequests:step-1-text'}>
@@ -356,38 +314,36 @@ class IncomingRequests extends Component {
                                 </p>
                               </>
                             ) : (
-                                stripeAccountErrors.length > 0 && (
-                                  <>
-                                    <p style={{ textAlign: 'center', fontSize: 'unset' }}>
-                                      {t('reusable:stripe:step-2-text')}&ensp;
+                              stripeAccountErrors.length > 0 && (
+                                <>
+                                  <p style={{ textAlign: 'center', fontSize: 'unset' }}>
+                                    {t('reusable:stripe:step-2-text')}&ensp;
                                     {stripePendingVerification ? (
-                                        t('reusable:stripe:step-2-pending')
-                                      ) : (
-                                          <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                                            In order for you to accept a request, you should&nbsp;
-                                            <span
-                                              onClick={() => this.fetchStripeDashboardLink()}
-                                              className='fake-link-underlined'
-                                            >
-                                              complete your verification
+                                      t('reusable:stripe:step-2-pending')
+                                    ) : (
+                                      <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
+                                        In order for you to accept a request, you should&nbsp;
+                                        <span
+                                          onClick={() => fetchStripeDashboardLink()}
+                                          className='fake-link-underlined'
+                                        >
+                                          complete your verification
                                         </span>
                                         &nbsp;with our payment provider (Stripe).
-                                          </Trans>
-                                        )}
-                                    </p>
-                                  </>
-                                )
+                                      </Trans>
+                                    )}
+                                  </p>
+                                </>
                               )
+                            )
                           }
                           trigger={
                             <Icon
                               disabled={
-                                this.state.iconsDisabled || payoutSuccess === false || payoutSuccess === undefined
-                                  ? true
-                                  : false
+                                iconsDisabled || payoutSuccess === false || payoutSuccess === undefined ? true : false
                               }
                               id={`accept-${request.id}`}
-                              onClick={(e) => this.acceptRequest(e, request)}
+                              onClick={(e) => acceptRequest(e, request)}
                               name='check circle'
                               style={{ color: '#ffffff', float: 'right', cursor: 'pointer' }}
                               size='big'
@@ -442,27 +398,18 @@ class IncomingRequests extends Component {
               );
             })}
           </>
-        );
-      } else {
-        requestsToDisplay = (
+        ) : (
           <>
             <p className='small-centered-paragraph'>
               <strong>{t('IncomingRequests:no-requests')}</strong>
             </p>
           </>
-        );
-      }
-
-      return (
-        <>
-          {errorDisplay}
-          {requestsToDisplay}
-        </>
-      );
-    } else {
-      return <Spinner />;
-    }
+        )}
+      </>
+    );
+  } else {
+    return <Spinner />;
   }
-}
+};
 
-export default withTranslation('IncomingRequests')(withRouter(IncomingRequests));
+export default withRouter(IncomingRequests);
