@@ -6,18 +6,18 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import ICalendarLink from 'react-icalendar-link';
 
-const RequestAcceptedSuccessfully = (props) => {
+const RequestAcceptedSuccessfully = ({ history, location: { state } }) => {
   const { t, ready } = useTranslation('RequestAcceptedSuccessfully');
 
   useEffect(() => {
-    if (props.history.action === 'POP') {
-      props.history.push({ pathname: '/all-bookings' });
+    if (history.action === 'POP') {
+      history.push({ pathname: '/all-bookings' });
     }
     // eslint-disable-next-line
   }, []);
 
   if (ready) {
-    const { cats, inDate, outDate, price, user } = props.location.state;
+    const { cats, inDate, outDate, price, user } = state;
 
     let total;
     let priceWithDecimalsString = price.toFixed(2);

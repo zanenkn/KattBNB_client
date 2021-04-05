@@ -147,8 +147,6 @@ const SearchResults = (props) => {
               setLoading(false);
               setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
-            } else if (response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else {
               setLoading(false);
               setErrorDisplay(true);
@@ -211,8 +209,6 @@ const SearchResults = (props) => {
           } else if (response.status === 500) {
             setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
-          } else if (response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else {
             setErrorDisplay(true);
             setErrors(response.data.error);
@@ -317,8 +313,6 @@ const SearchResults = (props) => {
             } else if (response.status === 500) {
               setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
-            } else if (response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');

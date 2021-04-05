@@ -61,8 +61,6 @@ const IncomingRequests = ({ history, requests }) => {
         } else if (response.status === 555) {
           setLoading(false);
           axiosCallsErrorHandling(true, [response.data.error]);
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
@@ -133,8 +131,6 @@ const IncomingRequests = ({ history, requests }) => {
             } else if (response.status === 555 || response.status === 427) {
               window.alert(response.data.error);
               history.push('/all-bookings');
-            } else if (response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
@@ -171,8 +167,6 @@ const IncomingRequests = ({ history, requests }) => {
         } else if (response.status === 555) {
           axiosCallsErrorHandling(true, [response.data.error]);
           setStripeDashboardButtonLoading(false);
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');

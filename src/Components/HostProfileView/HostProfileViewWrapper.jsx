@@ -56,8 +56,6 @@ const HostProfileViewWrapper = (props) => {
             setLoading(false);
             setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else {
             setLoading(false);
             setErrorDisplay(true);

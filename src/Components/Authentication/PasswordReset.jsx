@@ -52,8 +52,6 @@ const PasswordReset = ({ history }) => {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
             axiosCallErrors(['reusable:errors:500']);
-          } else if (response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else {
             axiosCallErrors(response.data.errors);
           }

@@ -64,8 +64,6 @@ const SignUp = (props) => {
               setErrors(['reusable:errors:500']);
               setErrorDisplay(true);
               setLoading(false);
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else {
               setErrors(error.response.data.errors.full_messages);
               setErrorDisplay(true);

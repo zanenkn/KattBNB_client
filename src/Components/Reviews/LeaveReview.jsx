@@ -101,8 +101,6 @@ const LeaveReview = (props) => {
             } else if (error.response.status === 422) {
               window.alert(t('LeaveReview:error-no-host'));
               props.history.push('/all-bookings');
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');

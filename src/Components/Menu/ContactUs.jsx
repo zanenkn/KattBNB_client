@@ -57,8 +57,6 @@ const ContactUs = (props) => {
       } catch ({ response }) {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else {
           setErrorDisplay(true);
           setErrors([response.data.error]);

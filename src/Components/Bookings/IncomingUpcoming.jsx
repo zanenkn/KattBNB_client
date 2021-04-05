@@ -59,8 +59,6 @@ const IncomingUpcoming = ({ id, history, upcoming }) => {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
             errorHandling(true, ['reusable:errors:500']);
-          } else if (response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');

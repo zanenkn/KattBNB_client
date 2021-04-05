@@ -60,8 +60,6 @@ const HostProfile = forwardRef((props, ref) => {
           setLoading(false);
           setErrorDisplay(true);
           setErrors([error.response.data.error]);
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');

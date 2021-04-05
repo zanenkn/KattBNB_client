@@ -1,7 +1,7 @@
-describe('User is redirected after 503 server error', () => {
+describe('User is redirected after 503 server error (Heroku maintenance mode)', () => {
   it('succesfully', () => {
     cy.server();
-    cy.login('', 'george@mail.com', 'password', 503);
+    cy.login('', 'george@mail.com', 'password', undefined);
     cy.contains('Hello cat lovers!').should('exist');
   });
 

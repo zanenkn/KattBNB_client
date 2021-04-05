@@ -74,8 +74,6 @@ class Conversation extends Component {
               errorDisplay: true,
               errors: ['reusable:errors:500'],
             });
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
@@ -179,8 +177,6 @@ class Conversation extends Component {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
             this.handleError(['reusable:errors:500']);
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
@@ -268,8 +264,6 @@ class Conversation extends Component {
                 errorDisplay: true,
                 errors: ['reusable:errors:500'],
               });
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');

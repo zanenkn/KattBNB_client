@@ -76,8 +76,6 @@ const RequestToBook = (props) => {
               numberOfCats: numberOfCats,
             },
           });
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
@@ -162,8 +160,6 @@ const RequestToBook = (props) => {
         } else if (response.status === 500) {
           axiosCallsErrorHandling(['reusable:errors:500']);
           setStripePaymentProcessingDisplay(false);
-        } else if (response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
@@ -244,8 +240,6 @@ const RequestToBook = (props) => {
           } else if (response.status === 555) {
             axiosCallsErrorHandling([response.data.error]);
             setStripePaymentProcessingDisplay(false);
-          } else if (response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
