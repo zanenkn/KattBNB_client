@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Sidebar, Segment, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,16 +6,12 @@ import { Link } from 'react-router-dom';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import axios from 'axios';
 import i18n from '../../i18n';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-class Menu extends Component {
-  handleMenuVisibilty = (e) => {
-    this.props.menuVisbilityHandler();
-  };
+const Menu = (props) => {
+  const { t, ready } = useTranslation();
 
-  signOut = (e) => {
-    e.preventDefault();
-    const { t } = this.props;
+  const signOut = () => {
     if (window.navigator.onLine === false) {
       window.alert(t('reusable:errors:window-navigator'));
     } else {
@@ -36,65 +32,52 @@ class Menu extends Component {
     }
   };
 
-  changeLng(lng) {
+  const changeLng = (lng) => {
     i18n.changeLanguage(lng);
     window.localStorage.setItem('I18N_LANGUAGE', lng);
-  }
+  };
 
-  render() {
-    const { t } = this.props;
-
-    if (this.props.tReady) {
-      let userLink;
-
-      if (this.props.currentUserIn) {
-        userLink = (
-          <Header id='logout' className='menu-link' as={Link} onClick={this.signOut}>
+  if (ready) {
+    return (
+      <Sidebar id='menu' as={Segment} animation='overlay' direction='left' visible={props.menuVisible}>
+        {props.currentUserIn ? (
+          <Header id='logout' className='menu-link' as={Link} onClick={signOut}>
             {t('reusable:title.logout')}
           </Header>
-        );
-      } else {
-        userLink = (
-          <>
-            <Header id='login' className='menu-link' as={Link} to='/login'>
-              {t('reusable:title.login-signup')}
-            </Header>
-          </>
-        );
-      }
-      return (
-        <Sidebar id='menu' as={Segment} animation='overlay' direction='left' visible={this.props.menuVisible}>
-          {userLink}
-          <Header id='about' className='menu-link' as={Link} to='/about-us'>
-            {t('reusable:title.about')}
+        ) : (
+          <Header id='login' className='menu-link' as={Link} to='/login'>
+            {t('reusable:title.login-signup')}
           </Header>
-          <Header id='faq' className='menu-link' as={Link} to='faq'>
-            {t('reusable:title.faq')}
-          </Header>
-          <Header id='contact' className='menu-link' as={Link} to='/contact-us'>
-            {t('reusable:title.contact')}
-          </Header>
-          <Header id='blog' className='menu-link' as={Link} to='/blog'>
-            {t('reusable:title.stories')}
-          </Header>
-          <Header id='legal' className='menu-link' as={Link} to='/legal'>
-            {t('reusable:title.legal')}
-          </Header>
-          <div style={{ display: 'flex', alignSelf: 'center' }}>
-            <Button id='se' className='lng-button' size='mini' onClick={() => this.changeLng('sv')}>
-              Svenska
-            </Button>
-            <Button id='en' className='lng-button' size='mini' onClick={() => this.changeLng('en')}>
-              English
-            </Button>
-          </div>
-        </Sidebar>
-      );
-    } else {
-      return null;
-    }
+        )}
+        <Header id='about' className='menu-link' as={Link} to='/about-us'>
+          {t('reusable:title.about')}
+        </Header>
+        <Header id='faq' className='menu-link' as={Link} to='faq'>
+          {t('reusable:title.faq')}
+        </Header>
+        <Header id='contact' className='menu-link' as={Link} to='/contact-us'>
+          {t('reusable:title.contact')}
+        </Header>
+        <Header id='blog' className='menu-link' as={Link} to='/blog'>
+          {t('reusable:title.stories')}
+        </Header>
+        <Header id='legal' className='menu-link' as={Link} to='/legal'>
+          {t('reusable:title.legal')}
+        </Header>
+        <div style={{ display: 'flex', alignSelf: 'center' }}>
+          <Button id='se' className='lng-button' size='mini' onClick={() => changeLng('sv')}>
+            Svenska
+          </Button>
+          <Button id='en' className='lng-button' size='mini' onClick={() => changeLng('en')}>
+            English
+          </Button>
+        </div>
+      </Sidebar>
+    );
+  } else {
+    return null;
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -110,4 +93,4 @@ const mapDispatchToProps = {
   }),
 };
 
-export default withTranslation()(withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu));

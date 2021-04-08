@@ -72,8 +72,6 @@ const HostReplyReviewForm = (props) => {
               setLoading(false);
               setErrors(['reusable:errors:500']);
               setErrorDisplay(true);
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
             } else {
               setLoading(false);
               setErrors([error.response.data.error]);

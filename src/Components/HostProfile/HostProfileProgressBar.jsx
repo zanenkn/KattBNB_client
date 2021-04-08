@@ -59,8 +59,6 @@ const HostProfileProgressBar = (props) => {
           setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setLoading(false);
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
@@ -97,8 +95,6 @@ const HostProfileProgressBar = (props) => {
           setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setStripeDashboardButtonLoading(false);
-        } else if (error.response.status === 503) {
-          wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');

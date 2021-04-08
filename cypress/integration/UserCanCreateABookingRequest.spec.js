@@ -68,7 +68,7 @@ describe('User can create a booking request', () => {
     });
     cy.route({
       method: 'GET',
-      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=1&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
+      url: `${api_url}/stripe?occasion=update_payment_intent&locale=en-US&number_of_cats=2&message=Please take my cats for 4 days!&dates=1570492800000,1570579200000,1570665600000,1570752000000&host_nickname=carla&price_per_day=169.75&price_total=560&user_id=66&payment_intent_id=pi_1He23jC7F7FPrB6NqKv8uZWy_secret_o2hSyF1hZItV0l1IlOFQM55OK`,
       status: 200,
       response: {},
     });
@@ -109,7 +109,7 @@ describe('User can create a booking request', () => {
     cy.get('#list-button').click();
   });
 
-  it('successfully and get redirected', () => {
+  it('successfully', () => {
     requestToBook();
     cy.get('#message').type('Please take my cats for 4 days!');
     cy.get('#cardholderName').type('George');
@@ -117,6 +117,7 @@ describe('User can create a booking request', () => {
     cy.get('#postalCode').type('15987');
     cy.get('#request-to-book-button').click();
     cy.contains('Your payment is being processed').should('exist');
+    cy.contains('A processing error occurred.').should('exist');
   });
 
   it('unsuccessfully and get an error message cause message field is empty or contains > 400 characters', () => {

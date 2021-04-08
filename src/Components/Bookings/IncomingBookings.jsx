@@ -1,38 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import { Header, Button, Icon, Container, Message } from 'semantic-ui-react';
 import Spinner from '../ReusableComponents/Spinner';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import moment from 'moment';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import IncomingRequests from './IncomingRequests';
 import IncomingUpcoming from './IncomingUpcoming';
 import IncomingHistory from './IncomingHistory';
 
-class IncomingBookings extends Component {
-  state = {
-    scrollYPosition: 0,
-    incomingBookings: [],
-    loading: true,
-    errorDisplay: false,
-    errors: [],
+const IncomingBookings = ({ location: { state } }) => {
+  const { t, ready } = useTranslation('IncomingBookings');
+
+  const [scrollYPosition, setScrollYPosition] = useState(0);
+  const [incomingBookings, setIncomingBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const handleScroll = () => {
+    setScrollYPosition(window.scrollY);
   };
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+  const axiosCallStateHandling = (loadingState, errorDisplayState, errorMessage) => {
+    setLoading(loadingState);
+    setErrorDisplay(errorDisplayState);
+    setErrors(errorMessage);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
     const lang = detectLanguage();
-    const { t } = this.props;
     if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      axiosCallStateHandling(false, true, ['reusable:errors:window-navigator']);
     } else if (window.history.state === null) {
       window.location.replace('/all-bookings');
     } else {
-      const inBookings = `/api/v1/bookings?stats=no&host_nickname=${this.props.location.state.hostNickname}&locale=${lang}`;
+      const inBookings = `/api/v1/bookings?stats=no&host_nickname=${state.hostNickname}&locale=${lang}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -40,48 +46,30 @@ class IncomingBookings extends Component {
       };
       axios
         .get(inBookings, { headers: headers })
-        .then((response) => {
-          this.setState({
-            incomingBookings: response.data,
-            loading: false,
-            errorDisplay: false,
-            errors: [],
-          });
+        .then(({ data }) => {
+          setIncomingBookings(data);
+          axiosCallStateHandling(false, false, []);
         })
-        .catch((error) => {
-          if (error.response === undefined) {
+        .catch(({ response }) => {
+          if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: ['reusable:errors:500'],
-            });
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 401) {
+          } else if (response.status === 500) {
+            axiosCallStateHandling(false, true, ['reusable:errors:500']);
+          } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            this.setState({
-              loading: false,
-              errorDisplay: true,
-              errors: [error.response.data.error],
-            });
+            axiosCallStateHandling(false, true, [response.data.error]);
           }
         });
     }
-  }
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+    // eslint-disable-next-line
+  }, []);
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll = () => {
-    this.setState({ scrollYPosition: window.scrollY });
-  };
-
-  scrollToTop = (e) => {
+  const scrollToTop = (e) => {
     e.preventDefault();
     window.scrollTo({
       top: 0,
@@ -90,130 +78,120 @@ class IncomingBookings extends Component {
     });
   };
 
-  render() {
-    const { t } = this.props;
-
-    if (this.props.tReady && this.state.loading === false) {
-      let todaysDate = new Date();
-      let utc = Date.UTC(todaysDate.getUTCFullYear(), todaysDate.getUTCMonth(), todaysDate.getUTCDate());
-      let today = new Date(utc).getTime();
-      let errorDisplay;
-      let incomingRequests = [];
-      let incomingUpcoming = [];
-      let incomingHistory = [];
-      this.state.incomingBookings.map((booking) => {
-        if (booking.status === 'pending') {
-          incomingRequests.push(booking);
-        } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-          incomingUpcoming.push(booking);
-        } else {
-          incomingHistory.push(booking);
-        }
-        return null;
-      });
-
-      if (this.state.errorDisplay) {
-        errorDisplay = (
-          <Message negative>
-            <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
+  if (ready && loading === false) {
+    let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
+    let requestsSection, upcomingSection, historySection;
+    let incomingRequests = [];
+    let incomingUpcoming = [];
+    let incomingHistory = [];
+    incomingBookings.map((booking) => {
+      if (booking.status === 'pending') {
+        incomingRequests.push(booking);
+      } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+        incomingUpcoming.push(booking);
+      } else {
+        incomingHistory.push(booking);
       }
+      return null;
+    });
 
-      return (
-        <>
-          <div id='secondary-sticky' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <Header as='h1' style={{ marginBottom: '0', margin: '0 auto', alignSelf: 'flex-start' }}>
-              {t('IncomingBookings:main-header')}
-            </Header>
-            <p style={{ textAlign: 'center', margin: '0 auto 1rem' }}>{t('IncomingBookings:main-desc')}</p>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button.Group size='mini'>
-                <Button
-                  style={{ marginTop: '0' }}
-                  onClick={() => {
-                    this.requests.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  {t('IncomingBookings:requests')}
-                </Button>
-                <Button
-                  style={{ marginTop: '0' }}
-                  onClick={() => {
-                    this.upcoming.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  {t('IncomingBookings:upcoming')}
-                </Button>
-                <Button
-                  style={{ marginTop: '0' }}
-                  onClick={() => {
-                    this.history.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  {t('IncomingBookings:history')}
-                </Button>
-              </Button.Group>
+    return (
+      <>
+        <div id='secondary-sticky' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Header as='h1' style={{ marginBottom: '0', margin: '0 auto', alignSelf: 'flex-start' }}>
+            {t('IncomingBookings:main-header')}
+          </Header>
+          <p style={{ textAlign: 'center', margin: '0 auto 1rem' }}>{t('IncomingBookings:main-desc')}</p>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button.Group size='mini'>
+              <Button
+                style={{ marginTop: '0' }}
+                onClick={() => {
+                  requestsSection.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('IncomingBookings:requests')}
+              </Button>
+              <Button
+                style={{ marginTop: '0' }}
+                onClick={() => {
+                  upcomingSection.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('IncomingBookings:upcoming')}
+              </Button>
+              <Button
+                style={{ marginTop: '0' }}
+                onClick={() => {
+                  historySection.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {t('IncomingBookings:history')}
+              </Button>
+            </Button.Group>
+          </div>
+        </div>
+        <Container style={{ paddingTop: '150px' }}>
+          <div className='expanding-wrapper'>
+            {errorDisplay && (
+              <Message negative>
+                <ul id='message-error-list'>
+                  {errors.map((error) => (
+                    <li key={error}>{t(error)}</li>
+                  ))}
+                </ul>
+              </Message>
+            )}
+            <div
+              ref={(el) => {
+                requestsSection = el;
+              }}
+              className='booking-type-wrapper'
+            >
+              <Header as='h2' style={{ marginBottom: '0', marginTop: '2rem' }}>
+                {t('IncomingBookings:requests')}
+              </Header>
+              <IncomingRequests requests={incomingRequests} />
+            </div>
+            <div
+              ref={(el) => {
+                upcomingSection = el;
+              }}
+              className='booking-type-wrapper'
+            >
+              <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
+                {t('IncomingBookings:upcoming')}
+              </Header>
+              <IncomingUpcoming upcoming={incomingUpcoming} />
+            </div>
+            <div
+              ref={(el) => {
+                historySection = el;
+              }}
+              className='booking-type-wrapper'
+            >
+              <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
+                {t('IncomingBookings:history')}
+              </Header>
+              <IncomingHistory inHistoryBookings={incomingHistory} />
+            </div>
+            <div className='scroll-to-top '>
+              <Icon
+                link='#'
+                name='angle up'
+                size='huge'
+                color='grey'
+                style={scrollYPosition < 200 ? { display: 'none' } : { display: 'block' }}
+                onClick={scrollToTop}
+              />
             </div>
           </div>
-          <Container style={{ paddingTop: '150px' }}>
-            <div className='expanding-wrapper'>
-              {errorDisplay}
-              <div
-                ref={(el) => {
-                  this.requests = el;
-                }}
-                className='booking-type-wrapper'
-              >
-                <Header as='h2' style={{ marginBottom: '0', marginTop: '2rem' }}>
-                  {t('IncomingBookings:requests')}
-                </Header>
-                <IncomingRequests requests={incomingRequests} />
-              </div>
-              <div
-                ref={(el) => {
-                  this.upcoming = el;
-                }}
-                className='booking-type-wrapper'
-              >
-                <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
-                  {t('IncomingBookings:upcoming')}
-                </Header>
-                <IncomingUpcoming upcoming={incomingUpcoming} />
-              </div>
-              <div
-                ref={(el) => {
-                  this.history = el;
-                }}
-                className='booking-type-wrapper'
-              >
-                <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
-                  {t('IncomingBookings:history')}
-                </Header>
-                <IncomingHistory inHistoryBookings={incomingHistory} />
-              </div>
-              <div className='scroll-to-top '>
-                <Icon
-                  link='#'
-                  name='angle up'
-                  size='huge'
-                  color='grey'
-                  style={this.state.scrollYPosition < 200 ? { display: 'none' } : { display: 'block' }}
-                  onClick={this.scrollToTop}
-                />
-              </div>
-            </div>
-          </Container>
-        </>
-      );
-    } else {
-      return <Spinner />;
-    }
+        </Container>
+      </>
+    );
+  } else {
+    return <Spinner />;
   }
-}
+};
 
-export default withTranslation('IncomingBookings')(withAuth(IncomingBookings));
+export default withAuth(IncomingBookings);

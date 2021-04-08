@@ -1,49 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Message, Divider } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { passwordCheck } from '../../Modules/passwordCheck';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 
-class PasswordUpdateForm extends Component {
-  state = {
-    currentPassword: '',
-    newPassword: '',
-    newPasswordConfirmation: '',
-    loading: false,
-    errorDisplay: false,
-    errors: '',
-  };
+const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
+  const { t, ready } = useTranslation('PasswordUpdateForm');
 
-  listenEnterKeyPassword = (event) => {
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const listenEnterKeyPassword = (event) => {
     if (event.key === 'Enter') {
-      this.updatePassword(event);
+      updatePassword();
     }
   };
 
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  const axiosCallErrorHandling = (errorMessage) => {
+    setErrors([errorMessage]);
+    setErrorDisplay(true);
   };
 
-  updatePassword = (e) => {
-    const { t } = this.props;
+  const axiosCallErrorCatching = (errorMessage) => {
+    setLoading(false);
+    setErrorDisplay(true);
+    setErrors(errorMessage);
+  };
+
+  const updatePassword = () => {
     if (window.navigator.onLine === false) {
-      this.setState({
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      axiosCallErrorHandling('reusable:errors:window-navigator');
     } else {
-      if (this.state.newPassword === this.state.newPasswordConfirmation && passwordCheck(this.state.newPassword)) {
-        this.setState({ loading: true });
-        e.preventDefault();
+      if (newPassword === newPasswordConfirmation && passwordCheck(newPassword)) {
+        setLoading(true);
         const lang = detectLanguage();
         const path = '/api/v1/auth/password';
         const payload = {
-          current_password: this.state.currentPassword,
-          password: this.state.newPassword,
-          password_confirmation: this.state.newPasswordConfirmation,
+          current_password: currentPassword,
+          password: newPassword,
+          password_confirmation: newPasswordConfirmation,
           locale: lang,
         };
         const headers = {
@@ -54,120 +56,97 @@ class PasswordUpdateForm extends Component {
         axios
           .put(path, payload, { headers: headers })
           .then(() => {
-            this.setState({
-              displayPasswordForm: false,
-              errorDisplay: false,
-              errors: '',
-            });
+            setErrorDisplay(false);
+            setErrors([]);
             window.alert(t('PasswordUpdateForm:success-alert'));
             wipeCredentials('/login');
           })
-          .catch((error) => {
-            if (error.response === undefined) {
+          .catch(({ response }) => {
+            if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: ['reusable:errors:500'],
-              });
-            } else if (error.response.status === 503) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 401 || error.response.status === 404) {
+            } else if (response.status === 500) {
+              axiosCallErrorCatching(['reusable:errors:500']);
+            } else if (response.status === 401 || response.status === 404) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
-              this.setState({
-                loading: false,
-                errorDisplay: true,
-                errors: error.response.data.errors.full_messages,
-              });
+              axiosCallErrorCatching(response.data.errors.full_messages);
             }
           });
       } else {
-        this.setState({
-          errorDisplay: true,
-          errors: ['PasswordUpdateForm:error'],
-        });
+        axiosCallErrorHandling('PasswordUpdateForm:error');
       }
     }
   };
 
-  render() {
-    const { t } = this.props;
-
-    if (this.props.tReady) {
-      let errorDisplay;
-      if (this.state.errorDisplay) {
-        errorDisplay = (
-          <Message negative style={{ width: 'inherit' }}>
-            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
-      }
-
-      return (
-        <>
-          <Divider />
-          <Form style={{ maxWidth: '194px', margin: 'auto' }}>
-            <Form.Input
-              required
-              id='currentPassword'
-              value={this.state.currentPassword}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder={t('PasswordUpdateForm:plch.current-pass')}
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <Form.Input
-              required
-              id='newPassword'
-              value={this.state.newPassword}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder={t('PasswordUpdateForm:plch.new-pass')}
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <Form.Input
-              required
-              id='newPasswordConfirmation'
-              value={this.state.newPasswordConfirmation}
-              type='password'
-              onChange={this.onChangeHandler}
-              placeholder={t('PasswordUpdateForm:plch.new-pass-confirm')}
-              onKeyPress={this.listenEnterKeyPassword}
-            />
-            <p className='small-centered-paragraph' style={{ marginBottom: '0' }}>
-              {t('PasswordUpdateForm:info')}
-            </p>
-            {errorDisplay}
-          </Form>
-          <div className='button-wrapper'>
-            <Button secondary className='cancel-button' onClick={this.props.closeLocationAndPasswordForms}>
-              {t('reusable:cta.close')}
-            </Button>
-            <Button
-              id='password-submit-button'
-              className='submit-button'
-              disabled={this.state.loading}
-              loading={this.state.loading}
-              onClick={this.updatePassword}
-            >
-              {t('reusable:cta.change')}
-            </Button>
-          </div>
-          <Divider style={{ marginBottom: '2rem' }} />
-        </>
-      );
-    } else {
-      return <Spinner />;
-    }
+  if (ready) {
+    return (
+      <>
+        <Divider />
+        <Form style={{ maxWidth: '194px', margin: 'auto' }}>
+          <Form.Input
+            required
+            id='currentPassword'
+            value={currentPassword}
+            type='password'
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            placeholder={t('PasswordUpdateForm:plch.current-pass')}
+            onKeyPress={listenEnterKeyPassword}
+          />
+          <Form.Input
+            required
+            id='newPassword'
+            value={newPassword}
+            type='password'
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder={t('PasswordUpdateForm:plch.new-pass')}
+            onKeyPress={listenEnterKeyPassword}
+          />
+          <Form.Input
+            required
+            id='newPasswordConfirmation'
+            value={newPasswordConfirmation}
+            type='password'
+            onChange={(e) => setNewPasswordConfirmation(e.target.value)}
+            placeholder={t('PasswordUpdateForm:plch.new-pass-confirm')}
+            onKeyPress={listenEnterKeyPassword}
+          />
+          <p className='small-centered-paragraph' style={{ marginBottom: '0' }}>
+            {t('PasswordUpdateForm:info')}
+          </p>
+          {errorDisplay && (
+            <Message negative style={{ width: 'inherit' }}>
+              <Message.Header style={{ textAlign: 'center' }}>
+                {t('reusable:errors.action-error-header')}
+              </Message.Header>
+              <ul id='message-error-list'>
+                {errors.map((error) => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Message>
+          )}
+        </Form>
+        <div className='button-wrapper'>
+          <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
+            {t('reusable:cta.close')}
+          </Button>
+          <Button
+            id='password-submit-button'
+            className='submit-button'
+            disabled={loading}
+            loading={loading}
+            onClick={updatePassword}
+          >
+            {t('reusable:cta.change')}
+          </Button>
+        </div>
+        <Divider style={{ marginBottom: '2rem' }} />
+      </>
+    );
+  } else {
+    return <Spinner />;
   }
-}
+};
 
-export default withTranslation('PasswordUpdateForm')(PasswordUpdateForm);
+export default PasswordUpdateForm;

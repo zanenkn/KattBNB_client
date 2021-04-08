@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { Container, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
-import { withTranslation, Trans } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
-class IncomingUpcoming extends Component {
-  state = {
-    errorDisplay: false,
-    errors: [],
+const IncomingUpcoming = ({ id, history, upcoming }) => {
+  const { t, ready } = useTranslation('IncomingUpcoming');
+
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const errorHandling = (errorDisplayState, errorMessage) => {
+    setErrorDisplay(errorDisplayState);
+    setErrors(errorMessage);
   };
 
-  messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
+  const messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
     e.preventDefault();
-    const { t } = this.props;
     if (window.navigator.onLine === false) {
-      this.setState({
-        errorDisplay: true,
-        errors: ['reusable:errors:window-navigator'],
-      });
+      errorHandling(true, ['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
       const path = '/api/v1/conversations';
       const payload = {
-        user1_id: this.props.id,
+        user1_id: id,
         user2_id: userId,
         locale: lang,
       };
@@ -39,11 +40,11 @@ class IncomingUpcoming extends Component {
       };
       axios
         .post(path, payload, { headers: headers })
-        .then((response) => {
-          this.props.history.push({
+        .then(({ data }) => {
+          history.push({
             pathname: '/conversation',
             state: {
-              id: response.data.id,
+              id: data.id,
               user: {
                 profile_avatar: userAvatar,
                 id: userId,
@@ -53,71 +54,53 @@ class IncomingUpcoming extends Component {
             },
           });
         })
-        .catch((error) => {
-          if (error.response === undefined) {
+        .catch(({ response }) => {
+          if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            this.setState({
-              errorDisplay: true,
-              errors: ['reusable:errors:500'],
-            });
-          } else if (error.response.status === 503) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 401) {
+          } else if (response.status === 500) {
+            errorHandling(true, ['reusable:errors:500']);
+          } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
-          } else if (error.response.status === 422) {
-            this.setState({
-              errorDisplay: true,
-              errors: ['reusable:errors:422-conversation'],
-            });
+          } else if (response.status === 422) {
+            errorHandling(true, ['reusable:errors:422-conversation']);
           } else {
-            this.setState({
-              errorDisplay: true,
-              errors: error.response.data.error,
-            });
+            errorHandling(true, response.data.error);
           }
         });
     }
   };
 
-  render() {
-    const { t } = this.props;
+  if (ready) {
+    let sortedUpcoming = upcoming;
+    sortedUpcoming.sort((a, b) => a.dates[0] - b.dates[0]);
 
-    if (this.props.tReady) {
-      let sortedUpcoming = this.props.upcoming;
-      sortedUpcoming.sort((a, b) => a.dates[0] - b.dates[0]);
-      let page, errorDisplay;
-
-      if (this.state.errorDisplay) {
-        errorDisplay = (
-          <Message negative>
-            <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
-      }
-
-      if (this.props.upcoming.length > 0) {
-        page = (
+    return (
+      <>
+        {upcoming.length > 0 ? (
           <>
             <Popup
               modal
-              open={this.state.errorDisplay}
+              open={errorDisplay}
               closeOnDocumentClick={true}
-              onClose={() => {
-                this.setState({ errorDisplay: false, errors: [] });
-              }}
+              onClose={() => errorHandling(false, [])}
               position='top center'
             >
-              <div>{errorDisplay}</div>
+              <div>
+                {errorDisplay && (
+                  <Message negative>
+                    <ul id='message-error-list'>
+                      {errors.map((error) => (
+                        <li key={error}>{t(error)}</li>
+                      ))}
+                    </ul>
+                  </Message>
+                )}
+              </div>
             </Popup>
             <p className='small-centered-paragraph'>
-              <Trans count={parseInt(this.props.upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
-                <strong>You have {{ count: this.props.upcoming.length }} upcoming booking.</strong>
+              <Trans count={parseInt(upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
+                <strong>You have {{ count: upcoming.length }} upcoming booking.</strong>
               </Trans>
             </p>
             <p style={{ textAlign: 'center' }}>{t('IncomingUpcoming:main-desc')}</p>
@@ -143,7 +126,7 @@ class IncomingUpcoming extends Component {
                   <p
                     className='fake-link-underlined'
                     onClick={(e) =>
-                      this.messageUser(
+                      messageUser(
                         e,
                         upcoming.user_id,
                         upcoming.user.profile_avatar,
@@ -158,24 +141,20 @@ class IncomingUpcoming extends Component {
               );
             })}
           </>
-        );
-      } else {
-        page = (
+        ) : (
           <>
             <p className='small-centered-paragraph'>
               <strong>{t('IncomingUpcoming:no-bookings')}</strong>
             </p>
           </>
-        );
-      }
-
-      return <>{page}</>;
-    } else {
-      return <Spinner />;
-    }
+        )}
+      </>
+    );
+  } else {
+    return <Spinner />;
   }
-}
+};
 
 const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });
 
-export default withTranslation('IncomingUpcoming')(withRouter(connect(mapStateToProps)(IncomingUpcoming)));
+export default withRouter(connect(mapStateToProps)(IncomingUpcoming));
