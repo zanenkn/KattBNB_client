@@ -1,6 +1,6 @@
 export const config = {
-  name: 'Leja',
+  name: 'Cookie',
   count: 1,
-  link: 'https://www.instagram.com/iwanleja/',
-  credit: '@iwanleja',
+  link: 'https://www.instagram.com/cookietheprettiestcat/',
+  credit: '@cookietheprettiestcat',
 };
