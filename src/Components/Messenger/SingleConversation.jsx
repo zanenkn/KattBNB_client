@@ -44,34 +44,8 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     setSecondaryStickyStyle(newSecondaryStickyStyle);
   };
 
-  const createSocket = () => {
-    let uid = window.localStorage.getItem('uid');
-    let client = window.localStorage.getItem('client');
-    let token = window.localStorage.getItem('access-token');
-    const lang = detectLanguage();
-    let path = process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
-    let cable = Cable.createConsumer(
-      `${path}/api/v1/cable/conversation/${state.id}?token=${token}&uid=${uid}&client=${client}&locale=${lang}`
-    );
-    const channel = cable.subscriptions.create(
-      {
-        channel: 'ConversationsChannel',
-        conversations_id: state.id,
-      },
-      {
-        connected: () => {},
-        received: (data) => {
-          let receivedChatLogs = chatLogs;
-          receivedChatLogs.push(data.message);
-          setChatLogs(receivedChatLogs);
-          typeof bottom !== 'undefined' && bottom.scrollIntoView({ behavior: 'smooth' });
-        },
-      }
-    );
-    setChannel(channel);
-  };
-
   useEffect(() => {
+    let channelToSave;
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrorDisplay(true);
@@ -79,13 +53,33 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     } else if (window.history.state === null) {
       window.location.replace('/messenger');
     } else {
-      createSocket();
-      const lang = detectLanguage();
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
+      const lang = detectLanguage();
+      let pathCable =
+        process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
+      let cable = Cable.createConsumer(
+        `${pathCable}/api/v1/cable/conversation/${state.id}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
+      );
+      channelToSave = cable.subscriptions.create(
+        {
+          channel: 'ConversationsChannel',
+          conversations_id: state.id,
+        },
+        {
+          connected: () => {},
+          received: (data) => {
+            let receivedChatLogs = chatLogs;
+            receivedChatLogs.push(data.message);
+            setChatLogs(receivedChatLogs);
+            typeof bottom !== 'undefined' && bottom.scrollIntoView({ behavior: 'smooth' });
+          },
+        }
+      );
+      setChannel(channelToSave);
       const path = `/api/v1/conversations/${state.id}?locale=${lang}`;
       axios
         .get(path, { headers: headers })
@@ -119,7 +113,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
         });
     }
     return () => {
-      //      channel.unsubscribe();
+      channelToSave.unsubscribe();
       window.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line
