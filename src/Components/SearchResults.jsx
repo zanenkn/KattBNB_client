@@ -435,6 +435,7 @@ const SearchResults = (props) => {
                 requestToBookButtonClick={requestToBookButtonClick}
                 hostAvailable={hostAvailable}
                 messageHost={messageHost}
+                allowToBook={hostId === id ? false : true}
               />
             )}
           </div>

@@ -55,30 +55,36 @@ const HostPopup = (props) => {
             </span>
           )}
         </Header>
-        <Header
-          onClick={props.handleHostProfileClick}
-          className='fake-link-underlined'
-          id='more'
-          style={{
-            marginTop: '0.5rem',
-            marginBottom: '1.5rem',
-            textAlign: 'center',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            display: 'table',
-          }}
-        >
-          {t('HostPopup:more')}
-        </Header>
-        <RequestToBookCTA
-          numberOfCats={props.numberOfCats}
-          nickname={props.nickname}
-          checkInDate={props.checkInDate}
-          checkOutDate={props.checkOutDate}
-          orderTotal={orderTotal}
-          requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
-        />
-        {props.hostAvailable === false && (
+        {props.allowToBook && (
+          <Header
+            onClick={props.handleHostProfileClick}
+            className='fake-link-underlined'
+            id='more'
+            style={{
+              marginTop: '0.5rem',
+              marginBottom: '1.5rem',
+              textAlign: 'center',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              display: 'table',
+            }}
+          >
+            {t('HostPopup:more')}
+          </Header>
+        )}
+        {props.allowToBook ? (
+          <RequestToBookCTA
+            numberOfCats={props.numberOfCats}
+            nickname={props.nickname}
+            checkInDate={props.checkInDate}
+            checkOutDate={props.checkOutDate}
+            orderTotal={orderTotal}
+            requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
+          />
+        ) : (
+          <p>NOT ALLOWED!!!!</p>
+        )}
+        {props.allowToBook && props.hostAvailable === false && (
           <p className='small-centered-paragraph'>
             <Trans i18nKey='HostPopup:host-availability-disclaimer'>
               This cat sitter have not added information about their availability for the dates you chose. You can still
