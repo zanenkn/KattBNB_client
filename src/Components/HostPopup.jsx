@@ -82,7 +82,9 @@ const HostPopup = (props) => {
             requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
           />
         ) : (
-          <p>NOT ALLOWED!!!!</p>
+          <p className='small-centered-paragraph' style={{ marginTop: '1rem' }}>
+            {t('HostPopup:own-profile-warning')}
+          </p>
         )}
         {props.allowToBook && props.hostAvailable === false && (
           <p className='small-centered-paragraph'>
