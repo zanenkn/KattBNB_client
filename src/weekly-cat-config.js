@@ -1,6 +1,6 @@
 export const config = {
-  name: 'Pelle',
+  name: 'Nizze',
   count: 1,
-  link: 'https://www.instagram.com/pelle_northern_sweden_cat/',
-  credit: '@pelle_northern_sweden_cat',
+  link: 'https://www.instagram.com/nitnizze/',
+  credit: '@nitnizze',
 };
