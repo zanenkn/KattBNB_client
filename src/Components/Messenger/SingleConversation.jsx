@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
@@ -18,6 +18,8 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   const { t, ready } = useTranslation('SingleConversation');
 
   const [newMessage, setNewMessage] = useState('');
+  // eslint-disable-next-line
+  const [chatLogsLength, setChatLogsLength] = useState(0);
   const [chatLogs, setChatLogs] = useState([]);
   const [messagesHistory, setMessagesHistory] = useState([]);
   const [channel, setChannel] = useState(null);
@@ -34,7 +36,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     borderBottom: '1px solid rgba(34,36,38,.15)',
   });
 
-  let bottom;
+  let bottomOfPage = useRef(null);
 
   const handleScroll = (e) => {
     let newSecondaryStickyStyle =
@@ -75,7 +77,8 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
             let receivedChatLogs = chatLogs;
             receivedChatLogs.push(data.message);
             setChatLogs(receivedChatLogs);
-            typeof bottom !== 'undefined' && bottom.scrollIntoView({ behavior: 'smooth' });
+            setChatLogsLength(chatLogs.length);
+            bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
           },
         }
       );
@@ -93,7 +96,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
           setLoading(false);
           setErrorDisplay(false);
           setErrors([]);
-          typeof bottom !== 'undefined' && bottom.scrollIntoView({ behavior: 'smooth' });
+          bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
         })
         .catch(({ response }) => {
           if (response === undefined) {
@@ -114,7 +117,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     }
     return () => {
       channelToSave.unsubscribe();
-      window.removeEventListener('scroll', handleScroll);
     };
     // eslint-disable-next-line
   }, []);
@@ -171,9 +173,9 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   };
 
   const scrollDown = () => {
-    typeof bottom !== 'undefined' && bottom.scrollIntoView({ behavior: 'smooth' });
     setImageUploadPopupOpen(false);
     setLoadingUploadButton(false);
+    bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const listenEnterKeyMessage = (event) => {
@@ -185,7 +187,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   const handleError = (errors) => {
     setErrorDisplay(true);
     setErrors(errors);
-    typeof bottom !== undefined && bottom.scrollIntoView({ behavior: 'smooth' });
+    bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const clearImage = () => {
@@ -402,12 +404,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
               </Message>
             )}
           </div>
-          <div
-            ref={(el) => {
-              bottom = el;
-            }}
-            style={{ height: '1px' }}
-          ></div>
+          <div ref={bottomOfPage} style={{ height: '1px' }}></div>
         </div>
         <div
           style={{
