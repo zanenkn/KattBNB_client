@@ -86,7 +86,7 @@ const HostPopup = (props) => {
             {t('HostPopup:own-profile-warning')}
           </p>
         )}
-        {props.allowToBook && props.hostAvailable === false && (
+        {props.allowToBook && !props.hostAvailable && (
           <p className='small-centered-paragraph'>
             <Trans i18nKey='HostPopup:host-availability-disclaimer'>
               This cat sitter have not added information about their availability for the dates you chose. You can still
