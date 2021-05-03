@@ -17,6 +17,7 @@ import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
+import Refresh from './Icons/Refresh';
 
 const SearchResults = (props) => {
   const { t, ready } = useTranslation('SearchResults');
@@ -126,21 +127,19 @@ const SearchResults = (props) => {
               queryString.parse(props.location.search).view ? queryString.parse(props.location.search).view : 'map'
             );
             geolocationDataAddress(location);
-            setTimeout(async () => {
-              const responseAllLocations = await axios.get(
-                `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
-              );
-              if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
-                APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
-                editHostsData(APIavailableAllLocations, true);
-              }
-              if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
-                APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
-                editHostsData(APInotAvailableAllLocations, false);
-              }
-              setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
-              setAllLocationsLoaded(true);
-            }, 5000);
+            const responseAllLocations = await axios.get(
+              `/api/v1/host_profiles?startDate=${from}&endDate=${to}&cats=${cats}&locale=${lang}`
+            );
+            if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
+              APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);
+              editHostsData(APIavailableAllLocations, true);
+            }
+            if (responseAllLocations.data !== '' && responseAllLocations.data.without.length > 0) {
+              APInotAvailableAllLocations = responseAllLocations.data.without.filter((host) => host.user.id !== id);
+              editHostsData(APInotAvailableAllLocations, false);
+            }
+            setAvailableAllLocations(APIavailableAllLocations.concat(APInotAvailableAllLocations));
+            setAllLocationsLoaded(true);
           } catch ({ response }) {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
@@ -346,7 +345,11 @@ const SearchResults = (props) => {
       case 'map':
         listButtonStyle = { backgroundColor: 'grey', cursor: 'pointer' };
         mapButtonStyle = { backgroundColor: '#c90c61', cursor: 'pointer' };
-        resultCounter = <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />;
+        resultCounter = allLocationsLoaded ? (
+          <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
+        ) : (
+          <Refresh height={'28px'} fill={'silver'} className={'spin-it'} />
+        );
         resultDisplay = (
           <div id='search-results-wrapper'>
             <GoogleMap
