@@ -5,12 +5,20 @@ import Marker from './Marker';
 import mapStyles from '../../Modules/MapStyle.js';
 import ClusterMarker from './ClusterMarker';
 
-const GoogleMap = ({ allAvailableHosts, mapCenterLat, mapCenterLong, handleDatapointClick }) => {
+const GoogleMap = ({
+  allAvailableHosts,
+  byLocationAvailableHosts,
+  mapCenterLat,
+  mapCenterLong,
+  handleDatapointClick,
+}) => {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
 
-  const points = allAvailableHosts.map(({available, lat, lng, total, user}) => ({
+  const hostsToDisplay = allAvailableHosts.length > 0 ? allAvailableHosts : byLocationAvailableHosts;
+
+  const points = hostsToDisplay.map(({ available, lat, lng, total, user }) => ({
     type: 'Feature',
     properties: {
       cluster: false,
