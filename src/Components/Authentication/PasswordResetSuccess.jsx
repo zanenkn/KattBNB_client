@@ -12,7 +12,7 @@ const PasswordResetSuccess = (props) => {
   if (props.currentUserIn) {
     wipeCredentials();
     setTimeout(function () {
-      window.location.reload(true);
+      window.location.reload();
     }, 500);
   }
 

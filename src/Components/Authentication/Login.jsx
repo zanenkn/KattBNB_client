@@ -13,7 +13,6 @@ const Login = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [successDisplay, setSuccessDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,6 @@ const Login = (props) => {
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(t('reusable:errors:window-navigator'));
     } else {
       const locale = detectLanguage();
@@ -30,7 +28,7 @@ const Login = (props) => {
       signInUser({ email, password, locale })
         .then(() => {
           setSuccessDisplay(true);
-          setErrorDisplay(false);
+          setErrors([]);
           if (history === undefined) {
             window.location.reload();
           } else if (history.length <= 2) {
@@ -44,11 +42,9 @@ const Login = (props) => {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(t('reusable:errors:500'));
           } else {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(error.response.data.errors[0]);
           }
         });
@@ -92,7 +88,7 @@ const Login = (props) => {
               </div>
             )}
           </Form>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative style={{ textAlign: 'center' }}>
               {errors}
             </Message>

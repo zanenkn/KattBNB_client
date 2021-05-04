@@ -12,7 +12,6 @@ const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
 
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [successDisplay, setSuccessDisplay] = useState(false);
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -26,12 +25,10 @@ const ChangePassword = ({ location: { search } }) => {
 
   const axiosCallErrorHandling = (errorMessage) => {
     setErrors([errorMessage]);
-    setErrorDisplay(true);
   };
 
   const axiosCallErrorCatching = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
@@ -55,7 +52,7 @@ const ChangePassword = ({ location: { search } }) => {
           .put(path, payload)
           .then(() => {
             setSuccessDisplay(true);
-            setErrorDisplay(false);
+            setErrors([]);
             setTimeout(function () {
               window.location.replace('/login');
             }, 2000);
@@ -108,7 +105,7 @@ const ChangePassword = ({ location: { search } }) => {
               onKeyPress={listenEnterKey}
             />
           </Form>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>{t('ChangePassword:error-header')}</Message.Header>
               <ul id='message-error-list'>

@@ -20,7 +20,6 @@ const SignUp = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [nickname, setNickname] = useState('');
   const [location, setLocation] = useState('');
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [captcha, setCaptcha] = useState('');
@@ -31,20 +30,16 @@ const SignUp = (props) => {
     setLoading(true);
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
-      setErrorDisplay(true);
       setLoading(false);
     } else {
       if (termsAccepted === false) {
         setErrors(['SignUp:terms-error']);
-        setErrorDisplay(true);
         setLoading(false);
       } else if (userCaptcha !== captcha) {
         setErrors(['reusable:errors:captcha']);
-        setErrorDisplay(true);
         setLoading(false);
       } else if (passwordCheck(password) === false) {
         setErrors(['SignUp:password-reg-ex']);
-        setErrorDisplay(true);
         setLoading(false);
       } else {
         const { history, registerUser } = props;
@@ -54,7 +49,7 @@ const SignUp = (props) => {
           process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
         registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
           .then(() => {
-            setErrorDisplay(false);
+            setErrors([]);
             history.push('/signup-success');
           })
           .catch((error) => {
@@ -62,11 +57,9 @@ const SignUp = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setErrors(['reusable:errors:500']);
-              setErrorDisplay(true);
               setLoading(false);
             } else {
               setErrors(error.response.data.errors.full_messages);
-              setErrorDisplay(true);
               setLoading(false);
             }
           });
@@ -202,7 +195,7 @@ const SignUp = (props) => {
               </label>
             </div>
 
-            {errorDisplay && (
+            {errors.length > 0 && (
               <Message negative>
                 <Message.Header style={{ textAlign: 'center' }}>{t('SignUp:error-header')}</Message.Header>
                 <ul id='message-error-list'>
