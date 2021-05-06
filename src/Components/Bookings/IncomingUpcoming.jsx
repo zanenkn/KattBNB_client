@@ -13,18 +13,12 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 const IncomingUpcoming = ({ id, history, upcoming }) => {
   const { t, ready } = useTranslation('IncomingUpcoming');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
-
-  const errorHandling = (errorDisplayState, errorMessage) => {
-    setErrorDisplay(errorDisplayState);
-    setErrors(errorMessage);
-  };
 
   const messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
     e.preventDefault();
     if (window.navigator.onLine === false) {
-      errorHandling(true, ['reusable:errors:window-navigator']);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
       const path = '/api/v1/conversations';
@@ -58,14 +52,14 @@ const IncomingUpcoming = ({ id, history, upcoming }) => {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            errorHandling(true, ['reusable:errors:500']);
+            setErrors(['reusable:errors:500']);
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else if (response.status === 422) {
-            errorHandling(true, ['reusable:errors:422-conversation']);
+            setErrors(['reusable:errors:422-conversation']);
           } else {
-            errorHandling(true, response.data.error);
+            setErrors(response.data.error);
           }
         });
     }
@@ -81,13 +75,13 @@ const IncomingUpcoming = ({ id, history, upcoming }) => {
           <>
             <Popup
               modal
-              open={errorDisplay}
+              open={errors.length > 0}
               closeOnDocumentClick={true}
-              onClose={() => errorHandling(false, [])}
+              onClose={() => setErrors([])}
               position='top center'
             >
               <div>
-                {errorDisplay && (
+                {errors.length > 0 && (
                   <Message negative>
                     <ul id='message-error-list'>
                       {errors.map((error) => (

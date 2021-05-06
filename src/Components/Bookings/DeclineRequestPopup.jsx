@@ -11,7 +11,6 @@ const DeclineRequestPopup = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState('');
 
   const declineBooking = (e) => {
@@ -20,7 +19,6 @@ const DeclineRequestPopup = (props) => {
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
       props.declModalCloseState(true);
     } else {
@@ -47,7 +45,6 @@ const DeclineRequestPopup = (props) => {
                 wipeCredentials('/is-not-available?atm');
               } else if (error.response.status === 500) {
                 setLoading(false);
-                setErrorDisplay(true);
                 setErrors(['reusable:errors:500']);
                 props.declModalCloseState(true);
               } else if (error.response.status === 401) {
@@ -55,14 +52,12 @@ const DeclineRequestPopup = (props) => {
                 wipeCredentials('/');
               } else {
                 setLoading(false);
-                setErrorDisplay(true);
                 setErrors(error.response.data.error);
                 props.declModalCloseState(true);
               }
             });
         } else {
           setLoading(false);
-          setErrorDisplay(true);
           setErrors(['DeclineRequestPopup:decline-error']);
           props.declModalCloseState(true);
         }
@@ -104,7 +99,7 @@ const DeclineRequestPopup = (props) => {
         <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
           {t('reusable:remaining-chars')} {200 - message.length}
         </p>
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>
               {t('DeclineRequestPopup:error-message-header')}

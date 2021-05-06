@@ -17,7 +17,6 @@ const IncomingRequests = ({ history, requests }) => {
   const { t, ready } = useTranslation('IncomingRequests');
 
   const [loading, setLoading] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [iconsDisabled, setIconsDisabled] = useState(false);
   const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
@@ -27,15 +26,10 @@ const IncomingRequests = ({ history, requests }) => {
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
 
-  const axiosCallsErrorHandling = (errorDisplayState, errorMessage) => {
-    setErrorDisplay(errorDisplayState);
-    setErrors(errorMessage);
-  };
-
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
       setLoading(false);
-      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
         const lang = detectLanguage();
@@ -60,13 +54,13 @@ const IncomingRequests = ({ history, requests }) => {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 555) {
           setLoading(false);
-          axiosCallsErrorHandling(true, [response.data.error]);
+          setErrors([response.data.error]);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
           setLoading(false);
-          axiosCallsErrorHandling(true, [response.data.error]);
+          setErrors([response.data.error]);
         }
       }
     }
@@ -93,7 +87,7 @@ const IncomingRequests = ({ history, requests }) => {
     const lang = detectLanguage();
     setIconsDisabled(true);
     if (window.navigator.onLine === false) {
-      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
+      setErrors(['reusable:errors:window-navigator']);
       setIconsDisabled(false);
     } else {
       if (window.confirm(t('IncomingRequests:accept-request'))) {
@@ -126,7 +120,7 @@ const IncomingRequests = ({ history, requests }) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              axiosCallsErrorHandling(true, ['reusable:errors:500']);
+              setErrors(['reusable:errors:500']);
               setIconsDisabled(false);
             } else if (response.status === 555 || response.status === 427) {
               window.alert(response.data.error);
@@ -135,7 +129,7 @@ const IncomingRequests = ({ history, requests }) => {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
-              axiosCallsErrorHandling(true, response.data.error);
+              setErrors(response.data.error);
               setIconsDisabled(false);
             }
           });
@@ -147,7 +141,7 @@ const IncomingRequests = ({ history, requests }) => {
 
   const fetchStripeDashboardLink = async () => {
     if (window.navigator.onLine === false) {
-      axiosCallsErrorHandling(true, ['reusable:errors:window-navigator']);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
         setStripeDashboardButtonLoading(true);
@@ -165,13 +159,13 @@ const IncomingRequests = ({ history, requests }) => {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 555) {
-          axiosCallsErrorHandling(true, [response.data.error]);
+          setErrors([response.data.error]);
           setStripeDashboardButtonLoading(false);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          axiosCallsErrorHandling(true, [response.data.error]);
+          setErrors([response.data.error]);
           setStripeDashboardButtonLoading(false);
         }
       }
@@ -185,7 +179,7 @@ const IncomingRequests = ({ history, requests }) => {
 
     return (
       <>
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('IncomingRequests:main-header-error')}</Message.Header>
             <ul id='message-error-list'>
