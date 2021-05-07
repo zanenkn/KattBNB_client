@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 
 const HostProfileProgressBar = (props) => {
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [loading, setLoading] = useState(true);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
   const [stripeAccountErrors, setStripeAccountErrors] = useState([]);
@@ -25,7 +24,6 @@ const HostProfileProgressBar = (props) => {
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
       setLoading(false);
     } else {
@@ -56,14 +54,12 @@ const HostProfileProgressBar = (props) => {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 555) {
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setLoading(false);
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setLoading(false);
         }
@@ -73,7 +69,6 @@ const HostProfileProgressBar = (props) => {
 
   const fetchStripeDashboardLink = async () => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
@@ -92,14 +87,12 @@ const HostProfileProgressBar = (props) => {
         if (error.response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 555) {
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setStripeDashboardButtonLoading(false);
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
           setStripeDashboardButtonLoading(false);
         }
@@ -237,7 +230,7 @@ const HostProfileProgressBar = (props) => {
             </>
           )
         )}
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
             <ul id='message-error-list'>

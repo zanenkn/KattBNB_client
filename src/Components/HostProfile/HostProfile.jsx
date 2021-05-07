@@ -19,7 +19,6 @@ const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
 
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     editDescriptionForm: false,
@@ -33,7 +32,6 @@ const HostProfile = forwardRef((props, ref) => {
   const createStripeAccount = async () => {
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
@@ -58,14 +56,12 @@ const HostProfile = forwardRef((props, ref) => {
           wipeCredentials('/is-not-available?atm');
         } else if (error.response.status === 555 || error.response.status === 455) {
           setLoading(false);
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
           setLoading(false);
-          setErrorDisplay(true);
           setErrors([error.response.data.error]);
         }
       }
@@ -93,7 +89,6 @@ const HostProfile = forwardRef((props, ref) => {
       editableCalendar: false,
       editAddress: false,
     }));
-    setErrorDisplay(false);
     setErrors([]);
   };
 
@@ -111,7 +106,6 @@ const HostProfile = forwardRef((props, ref) => {
         setForm((old) => ({ ...old, [stt]: !form[stt] }));
       }
     });
-    setErrorDisplay(false);
     setErrors([]);
     props.closeLocPasForms();
   };
@@ -121,7 +115,7 @@ const HostProfile = forwardRef((props, ref) => {
       <>
         <Segment className='whitebox'>
           <Header as='h2'>{t('HostProfile:main-header')}</Header>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>
                 {t('reusable:errors:action-error-header')}

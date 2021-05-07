@@ -15,7 +15,6 @@ const HostProfileViewWrapper = (props) => {
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const HostProfileViewWrapper = (props) => {
   const getHostProfile = () => {
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
@@ -41,11 +39,9 @@ const HostProfileViewWrapper = (props) => {
             setLat(response.data[0].lat);
             setLong(response.data[0].long);
             setLoading(false);
-            setErrorDisplay(false);
             setErrors([]);
           } else {
             setLoading(false);
-            setErrorDisplay(false);
             setErrors([]);
           }
         })
@@ -54,11 +50,9 @@ const HostProfileViewWrapper = (props) => {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors([error.response.data.error]);
           }
         });
@@ -67,7 +61,7 @@ const HostProfileViewWrapper = (props) => {
 
   if (loading) {
     return <Spinner />;
-  } else if (errorDisplay) {
+  } else if (errors.length > 0) {
     return (
       <div className='content-wrapper'>
         <Message negative>

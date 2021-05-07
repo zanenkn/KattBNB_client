@@ -30,7 +30,6 @@ class HostProfileForm extends Component {
       addressError: '',
       addressErrorDisplay: false,
       errors: '',
-      onCreateErrorDisplay: false,
       maxCats: '',
       supplement: '',
       availability: '',
@@ -139,7 +138,6 @@ class HostProfileForm extends Component {
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
-        onCreateErrorDisplay: true,
         errors: ['reusable:errors:window-navigator'],
       });
     } else {
@@ -147,7 +145,6 @@ class HostProfileForm extends Component {
         this.setState({
           loading: false,
           errors: ['HostProfileForm:create-error-1'],
-          onCreateErrorDisplay: true,
         });
       } else {
         const path = '/api/v1/host_profiles';
@@ -173,7 +170,7 @@ class HostProfileForm extends Component {
         axios
           .post(path, payload, { headers: headers })
           .then(() => {
-            this.setState({ onCreateErrorDisplay: false });
+            this.setState({ errors: '' });
             window.alert(t('HostProfileForm:create-success'));
             setTimeout(function () {
               window.location.replace('/user-page');
@@ -185,7 +182,6 @@ class HostProfileForm extends Component {
             } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
-                onCreateErrorDisplay: true,
                 errors: ['reusable:errors:500'],
               });
             } else if (error.response.status === 401) {
@@ -194,7 +190,6 @@ class HostProfileForm extends Component {
             } else {
               this.setState({
                 loading: false,
-                onCreateErrorDisplay: true,
                 errors: error.response.data.error,
               });
             }
@@ -256,7 +251,7 @@ class HostProfileForm extends Component {
         addressErrorMessage = <Message negative>{this.state.addressError}</Message>;
       }
 
-      if (this.state.onCreateErrorDisplay) {
+      if (this.state.errors !== '') {
         onCreateErrorMessage = (
           <Message negative>
             <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
