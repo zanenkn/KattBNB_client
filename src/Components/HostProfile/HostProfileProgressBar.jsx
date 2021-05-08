@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { Button, Message } from 'semantic-ui-react';
@@ -102,6 +101,7 @@ const HostProfileProgressBar = (props) => {
 
   useEffect(() => {
     fetchStripeAccountDetails();
+    // eslint-disable-next-line
   }, []);
 
   let redirectStripe;

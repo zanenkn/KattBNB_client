@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Header, Message, Segment } from 'semantic-ui-react';
@@ -77,6 +76,7 @@ const HostProfile = forwardRef((props, ref) => {
     } else {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   const closeAllForms = () => {

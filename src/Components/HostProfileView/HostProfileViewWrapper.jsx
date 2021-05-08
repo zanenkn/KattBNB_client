@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Message } from 'semantic-ui-react';
@@ -23,6 +22,7 @@ const HostProfileViewWrapper = (props) => {
     } else {
       getHostProfile();
     }
+    // eslint-disable-next-line
   }, []);
 
   const getHostProfile = () => {
