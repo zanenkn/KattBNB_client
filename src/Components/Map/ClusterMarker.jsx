@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClusterMarker = ({pointLength, pointCount, onClick}) => {
+const ClusterMarker = ({ pointLength, pointCount, onClick }) => {
   return (
     <div
       style={{
@@ -14,13 +14,14 @@ const ClusterMarker = ({pointLength, pointCount, onClick}) => {
         fontSize: '10px',
         fontWeight: 'bold',
         borderRadius: '9999px',
-        transform: 'translate(-50%, -50%)', position: 'absolute'
+        transform: 'translate(-50%, -50%)',
+        position: 'absolute',
       }}
       onClick={onClick}
     >
       {pointCount}
     </div>
-  )
-}
+  );
+};
 
 export default ClusterMarker;

@@ -29,7 +29,6 @@ const AboutUs = () => {
           />
           <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
         </Helmet>
-
         <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
           <Header as='h1'>{t('reusable:title.about')}</Header>
         </div>
