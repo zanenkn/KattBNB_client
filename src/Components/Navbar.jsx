@@ -41,7 +41,6 @@ const Navbar = (props) => {
               />
             </svg>
           </Container>
-
           <Container
             className='navlink'
             style={{ marginTop: '0.3rem' }}
@@ -62,7 +61,6 @@ const Navbar = (props) => {
               />
             </svg>
           </Container>
-
           <Container
             className='navlink'
             as={Link}
@@ -82,7 +80,6 @@ const Navbar = (props) => {
               />
             </svg>
           </Container>
-
           <Container
             className='navlink'
             as={Link}

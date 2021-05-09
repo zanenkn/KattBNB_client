@@ -14,7 +14,6 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const listenEnterKeyPassword = (event) => {
@@ -23,20 +22,14 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
     }
   };
 
-  const axiosCallErrorHandling = (errorMessage) => {
-    setErrors([errorMessage]);
-    setErrorDisplay(true);
-  };
-
   const axiosCallErrorCatching = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
   const updatePassword = () => {
     if (window.navigator.onLine === false) {
-      axiosCallErrorHandling('reusable:errors:window-navigator');
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       if (newPassword === newPasswordConfirmation && passwordCheck(newPassword)) {
         setLoading(true);
@@ -56,7 +49,6 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
         axios
           .put(path, payload, { headers: headers })
           .then(() => {
-            setErrorDisplay(false);
             setErrors([]);
             window.alert(t('PasswordUpdateForm:success-alert'));
             wipeCredentials('/login');
@@ -74,7 +66,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
             }
           });
       } else {
-        axiosCallErrorHandling('PasswordUpdateForm:error');
+        setErrors(['PasswordUpdateForm:error']);
       }
     }
   };
@@ -114,7 +106,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
           <p className='small-centered-paragraph' style={{ marginBottom: '0' }}>
             {t('PasswordUpdateForm:info')}
           </p>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative style={{ width: 'inherit' }}>
               <Message.Header style={{ textAlign: 'center' }}>
                 {t('reusable:errors.action-error-header')}

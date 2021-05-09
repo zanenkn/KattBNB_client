@@ -9,7 +9,6 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 const LangPrefUpdateForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [langPref, setLangPref] = useState(props.langPref);
 
   const { t, ready } = useTranslation('LangPrefUpdateForm');
@@ -21,12 +20,10 @@ const LangPrefUpdateForm = (props) => {
   const updateLangPref = () => {
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (langPref === props.langPref) {
         setLoading(false);
-        setErrorDisplay(true);
         setErrors(['LangPrefUpdateForm:update-error']);
       } else {
         setLoading(true);
@@ -52,14 +49,12 @@ const LangPrefUpdateForm = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 401 || error.response.status === 404) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
               setLoading(false);
-              errorDisplay(true);
               setErrors(error.response.data.errors.full_messages);
             }
           });
@@ -104,7 +99,7 @@ const LangPrefUpdateForm = (props) => {
               </Form.Field>
             </Form>
           </div>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>
                 {t('reusable:errors:action-error-header')}

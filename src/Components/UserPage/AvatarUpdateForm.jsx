@@ -11,7 +11,6 @@ import { withTranslation } from 'react-i18next';
 class AvatarUpdateForm extends Component {
   state = {
     loading: false,
-    errorDisplay: false,
     errors: '',
     image: '',
     position: { x: 0.5, y: 0.5 },
@@ -27,8 +26,7 @@ class AvatarUpdateForm extends Component {
     this.setState({
       image: e.target.files[0],
       position: { x: 0.5, y: 0.5 },
-      errorDisplay: false,
-      errors: [],
+      errors: '',
     });
   };
 
@@ -61,14 +59,12 @@ class AvatarUpdateForm extends Component {
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
-        errorDisplay: true,
         errors: ['reusable:errors:window-navigator'],
       });
     } else {
       if (this.state.image === '') {
         this.setState({
           loading: false,
-          errorDisplay: true,
           errors: ['AvatarUpdateForm:no-avatar-error'],
         });
       } else if (
@@ -79,7 +75,6 @@ class AvatarUpdateForm extends Component {
       ) {
         this.setState({
           loading: false,
-          errorDisplay: true,
           errors: ['AvatarUpdateForm:file-type-error'],
         });
       } else {
@@ -102,10 +97,7 @@ class AvatarUpdateForm extends Component {
         axios
           .put(path, payload, { headers: headers })
           .then(() => {
-            this.setState({
-              errorDisplay: false,
-              errors: [],
-            });
+            this.setState({ errors: '' });
             window.location.reload();
           })
           .catch((error) => {
@@ -114,7 +106,6 @@ class AvatarUpdateForm extends Component {
             } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
-                errorDisplay: true,
                 errors: ['reusable:errors:500'],
               });
             } else if (error.response.status === 401) {
@@ -123,7 +114,6 @@ class AvatarUpdateForm extends Component {
             } else {
               this.setState({
                 loading: false,
-                errorDisplay: true,
                 errors: error.response.data.error,
               });
             }
@@ -134,7 +124,6 @@ class AvatarUpdateForm extends Component {
 
   closeModal = () => {
     this.setState({
-      errorDisplay: false,
       errors: '',
       image: '',
     });
@@ -148,7 +137,7 @@ class AvatarUpdateForm extends Component {
 
       noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
 
-      if (this.state.errorDisplay) {
+      if (this.state.errors !== '') {
         errorDisplay = (
           <Message negative style={{ width: 'inherit' }}>
             <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors.action-error-header')}</Message.Header>

@@ -87,7 +87,11 @@ const Landing = () => {
                   </div>
                   <Slider {...settings}>
                     {Array.from({ length: 10 }, (_, i) => i + 1).map((number) => (
-                      <img src={`weekly/weekly_${number}.jpg`} key={`weekly_cat_${number}`} alt={`weekly cat ${number}`} />
+                      <img
+                        src={`weekly/weekly_${number}.jpg`}
+                        key={`weekly_cat_${number}`}
+                        alt={`weekly cat ${number}`}
+                      />
                     ))}
                   </Slider>
                 </div>
@@ -106,7 +110,6 @@ const Landing = () => {
                 </div>
               </div>
             </div>
-
             <div ref={textRef} className='landing-text min-device-height'>
               <KattBNBLogomark width={'100px'} />
               <Header as='h1'>{t('Landing:title')}</Header>

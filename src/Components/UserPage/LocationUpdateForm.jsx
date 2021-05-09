@@ -12,7 +12,6 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
 
   const [newLocation, setNewLocation] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const listenEnterKeyLocation = (event) => {
@@ -23,7 +22,6 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
 
   const APIerrorHandling = (errorResponse) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorResponse);
   };
 
@@ -93,7 +91,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
             onChange={(e, { value }) => setNewLocation(value)}
             onKeyPress={listenEnterKeyLocation}
           />
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative style={{ width: 'inherit' }}>
               <Message.Header style={{ textAlign: 'center' }}>
                 {t('reusable:errors.action-error-header')}

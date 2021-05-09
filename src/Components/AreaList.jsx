@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 const AreaList = () => {
   const { t } = useTranslation();
+
   return (
     <div className='content-wrapper' style={{ maxWidth: '1024px', margin: 'auto' }}>
       <Header as='h1' style={{ marginBottom: '2rem' }}>
