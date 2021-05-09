@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -13,7 +12,6 @@ const HostReplyReviewForm = (props) => {
   const [replyFormOpen, setReplyFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [reply, setReply] = useState('');
 
   useEffect(() => {
@@ -23,12 +21,12 @@ const HostReplyReviewForm = (props) => {
         setReplyFormOpen(true);
       }
     }
+    // eslint-disable-next-line
   }, []);
 
   const closeButton = () => {
     setReplyFormOpen(false);
     setReply('');
-    setErrorDisplay(false);
     setErrors([]);
   };
 
@@ -38,16 +36,13 @@ const HostReplyReviewForm = (props) => {
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
-      setErrorDisplay(true);
     } else {
       if (reply === '') {
         setLoading(false);
         setErrors(['HostReplyReview:update-error-1']);
-        setErrorDisplay(true);
       } else if (reply.length > 1000) {
         setLoading(false);
         setErrors(['HostReplyReview:update-error-2']);
-        setErrorDisplay(true);
       } else {
         const path = `/api/v1/reviews/${props.reviewId}`;
         const payload = {
@@ -71,11 +66,9 @@ const HostReplyReviewForm = (props) => {
             } else if (error.response.status === 500) {
               setLoading(false);
               setErrors(['reusable:errors:500']);
-              setErrorDisplay(true);
             } else {
               setLoading(false);
               setErrors([error.response.data.error]);
-              setErrorDisplay(true);
             }
           });
       }
@@ -111,7 +104,7 @@ const HostReplyReviewForm = (props) => {
                   {t('reusable:remaining-chars')} {1000 - reply.length}
                 </p>
 
-                {errorDisplay && (
+                {errors.length > 0 && (
                   <Message negative>
                     <Message.Header style={{ textAlign: 'center' }}>
                       {t('reusable:errors:action-error-header')}

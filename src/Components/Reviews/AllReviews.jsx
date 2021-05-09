@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from 'react';
 import HostReplyReview from './HostReplyReview';
 import { connect } from 'react-redux';
@@ -29,7 +28,6 @@ const AllReviews = (props) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [reload, setReload] = useState('');
 
   const lang = detectLanguage();
@@ -39,7 +37,6 @@ const AllReviews = (props) => {
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
-      setErrorDisplay(true);
     } else {
       axios
         .get(`/api/v1/reviews?host_profile_id=${props.hostProfileId}&locale=${lang}`)
@@ -54,25 +51,24 @@ const AllReviews = (props) => {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors([error.response.data.error]);
           }
         });
     }
+    // eslint-disable-next-line
   }, [reload]);
 
   if (ready && loading === false) {
     moment.locale(lang);
     return (
       <>
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <ul id='message-error-list'>
               {errors.map((error) => (

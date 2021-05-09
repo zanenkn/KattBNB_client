@@ -15,22 +15,20 @@ const AllConversations = ({ id, history }) => {
 
   const [conversations, setConversations] = useState('');
   const [loading, setLoading] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [secondaryStickyStyle, setSecondaryStickyStyle] = useState({
     boxShadow: 'none',
     borderBottom: '1px solid rgba(34,36,38,.15)',
   });
 
-  const handleAxiosStateChanges = (loadingState, errorDisplayState, errorMessage) => {
+  const handleAxiosStateChanges = (loadingState, errorMessage) => {
     setLoading(loadingState);
-    setErrorDisplay(errorDisplayState);
     setErrors(errorMessage);
   };
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
-      handleAxiosStateChanges(false, true, ['reusable:errors:window-navigator']);
+      handleAxiosStateChanges(false, ['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
       const headers = {
@@ -55,18 +53,18 @@ const AllConversations = ({ id, history }) => {
             return dateB - dateA;
           });
           setConversations(sortedResponse);
-          handleAxiosStateChanges(false, false, []);
+          handleAxiosStateChanges(false, []);
         })
         .catch(({ response }) => {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            handleAxiosStateChanges(false, true, ['reusable:errors:500']);
+            handleAxiosStateChanges(false, ['reusable:errors:500']);
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            handleAxiosStateChanges(false, true, response.data.error);
+            handleAxiosStateChanges(false, response.data.error);
           }
         });
     }
@@ -93,7 +91,7 @@ const AllConversations = ({ id, history }) => {
 
     if (loading) {
       return <Spinner />;
-    } else if (errorDisplay) {
+    } else if (errors.length > 0) {
       return (
         <div className='content-wrapper'>
           <Message negative>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import ReviewScore from '../ReusableComponents/ReviewScore';
@@ -16,7 +15,6 @@ const ViewYourReviewPopup = (props) => {
   const [nickname, setNickname] = useState(null);
   const [message, setMessage] = useState(null);
   const [errors, setErrors] = useState(null);
-  const [errorDisplay, setErrorDisplay] = useState(null);
   const [reviewDate, setReviewDate] = useState(null);
   const [score, setScore] = useState(null);
   const [hostReply, setHostReply] = useState(null);
@@ -25,8 +23,7 @@ const ViewYourReviewPopup = (props) => {
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
-      setErrors('reusable:errors:window-navigator');
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       const path = `/api/v1/reviews/${props.id}`;
       const headers = {
@@ -50,22 +47,21 @@ const ViewYourReviewPopup = (props) => {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
-            setErrorDisplay(true);
-            setErrors('reusable:errors:500');
+            setErrors(['reusable:errors:500']);
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            setErrorDisplay(true);
             setErrors([error.response.data.error]);
           }
         });
     }
+    // eslint-disable-next-line
   }, []);
 
   if (ready) {
     moment.locale(lang);
-    return errorDisplay ? (
+    return errors !== null ? (
       <Message negative style={{ textAlign: 'center' }}>
         {t(errors[0])}
       </Message>

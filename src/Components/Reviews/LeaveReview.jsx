@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
@@ -15,7 +14,6 @@ const LeaveReview = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [reviewBody, setReviewBody] = useState('');
   const [reviewScore, setReviewScore] = useState(0);
   const [hostNickname, setHostNickname] = useState(null);
@@ -44,6 +42,7 @@ const LeaveReview = (props) => {
       setBookingStart(queryString.parse(props.location.search).startDate);
       setBookingEnd(queryString.parse(props.location.search).endDate);
     }
+    // eslint-disable-next-line
   }, []);
 
   const onScoreClick = (e) => {
@@ -56,20 +55,16 @@ const LeaveReview = (props) => {
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
-      setErrorDisplay(true);
     } else {
       if (reviewScore < 1) {
         setLoading(false);
         setErrors(['LeaveReview:error-no-score']);
-        setErrorDisplay(true);
       } else if (reviewBody === '') {
         setLoading(false);
         setErrors(['LeaveReview:error-empty']);
-        setErrorDisplay(true);
       } else if (reviewBody.length > 1000) {
         setLoading(false);
         setErrors(['LeaveReview:error-length']);
-        setErrorDisplay(true);
       } else {
         const path = '/api/v1/reviews';
         const payload = {
@@ -96,7 +91,6 @@ const LeaveReview = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 422) {
               window.alert(t('LeaveReview:error-no-host'));
@@ -106,7 +100,6 @@ const LeaveReview = (props) => {
               wipeCredentials('/');
             } else {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors([error.response.data.error]);
             }
           });
@@ -148,7 +141,7 @@ const LeaveReview = (props) => {
           <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
             {t('reusable:remaining-chars')} {1000 - reviewBody.length}
           </p>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <ul id='message-error-list'>
                 {errors.map((error) => (
