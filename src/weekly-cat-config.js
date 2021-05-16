@@ -1,6 +1,6 @@
 export const config = {
-  name: 'Tails',
+  name: 'Findus',
   count: 1,
-  link: 'https://www.instagram.com/katten.tails/',
-  credit: '@katten.tails',
+  link: 'https://www.instagram.com/findus_the_housecat/',
+  credit: '@findus_the_housecat',
 };
