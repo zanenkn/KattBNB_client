@@ -23,10 +23,6 @@ const ChangePassword = ({ location: { search } }) => {
     }
   };
 
-  const axiosCallErrorHandling = (errorMessage) => {
-    setErrors([errorMessage]);
-  };
-
   const axiosCallErrorCatching = (errorMessage) => {
     setLoading(false);
     setErrors(errorMessage);
@@ -34,7 +30,7 @@ const ChangePassword = ({ location: { search } }) => {
 
   const changePassword = () => {
     if (window.navigator.onLine === false) {
-      axiosCallErrorHandling('reusable:errors:window-navigator');
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       if (password === passwordConfirmation && passwordCheck(password) && search.length > 150) {
         setLoading(true);
@@ -70,9 +66,9 @@ const ChangePassword = ({ location: { search } }) => {
             }
           });
       } else if (password === passwordConfirmation && passwordCheck(password) && search.length < 150) {
-        axiosCallErrorHandling('ChangePassword:error-1');
+        setErrors(['ChangePassword:error-1']);
       } else {
-        axiosCallErrorHandling('ChangePassword:error-2');
+        setErrors(['ChangePassword:error-2']);
       }
     }
   };
