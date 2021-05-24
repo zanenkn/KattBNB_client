@@ -1618,3 +1618,13 @@ h4 {
     transform: rotate(359deg);
   }
 }
+
+/*******************************
+          prismic
+*******************************/
+
+
+.block-img>img {
+  max-width: 100px;
+  margin: 0;
+}
