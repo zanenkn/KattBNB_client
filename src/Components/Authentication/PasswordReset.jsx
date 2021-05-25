@@ -11,7 +11,6 @@ const PasswordReset = ({ history }) => {
 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const url =
@@ -25,7 +24,6 @@ const PasswordReset = ({ history }) => {
 
   const axiosCallErrors = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
@@ -44,7 +42,7 @@ const PasswordReset = ({ history }) => {
       axios
         .post(path, payload)
         .then(() => {
-          setErrorDisplay(false);
+          setErrors([]);
           history.push('/password-reset-success');
         })
         .catch(({ response }) => {
@@ -76,7 +74,7 @@ const PasswordReset = ({ history }) => {
               onKeyPress={listenEnterKey}
             />
           </Form>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>{t('PasswordReset:error-header')}:</Message.Header>
               <ul id='message-error-list'>

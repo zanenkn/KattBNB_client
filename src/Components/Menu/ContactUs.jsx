@@ -15,7 +15,6 @@ const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
 
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,23 +25,18 @@ const ContactUs = (props) => {
   const sendMessage = async () => {
     setLoading(true);
     setErrors([]);
-    setErrorDisplay(false);
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
       setLoading(false);
     } else {
       try {
         if (name === '' || email === '' || message === '') {
-          setErrorDisplay(true);
           setErrors(['ContactUs:error-msg-fields']);
           setLoading(false);
         } else if (message.length > 1000) {
-          setErrorDisplay(true);
           setErrors(['ContactUs:error-msg-length']);
           setLoading(false);
         } else if (userCaptcha !== captcha) {
-          setErrorDisplay(true);
           setErrors(['reusable:errors:captcha']);
           setLoading(false);
         } else {
@@ -58,7 +52,6 @@ const ContactUs = (props) => {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else {
-          setErrorDisplay(true);
           setErrors([response.data.error]);
           setLoading(false);
         }
@@ -132,7 +125,7 @@ const ContactUs = (props) => {
                   onChange={(e) => setUserCaptcha(e.target.value)}
                   placeholder={t('reusable:plch:captcha')}
                 />
-                {errorDisplay && (
+                {errors.length > 0 && (
                   <Message negative>
                     <ul id='message-error-list'>
                       {errors.map((error) => (

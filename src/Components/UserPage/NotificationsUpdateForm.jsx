@@ -11,18 +11,15 @@ const NotificationsUpdateForm = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [messageNotifications, setMessageNotifications] = useState(props.messageNotifications);
 
   const updateMessageNotification = () => {
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (messageNotifications === props.messageNotifications) {
         setLoading(false);
-        setErrorDisplay(true);
         setErrors(['NotificationsUpdateForm:update-error']);
       } else {
         setLoading(true);
@@ -48,14 +45,12 @@ const NotificationsUpdateForm = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 401 || error.response.status === 404) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
               setLoading(false);
-              errorDisplay(true);
               setErrors(error.response.data.errors.full_messages);
             }
           });
@@ -76,7 +71,7 @@ const NotificationsUpdateForm = (props) => {
               {t('NotificationsUpdateForm:label')}
             </label>
           </div>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>
                 {t('reusable:errors:action-error-header')}

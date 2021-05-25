@@ -21,7 +21,6 @@ const RequestToBook = (props) => {
 
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [stripePaymentProcessingDisplay, setStripePaymentProcessingDisplay] = useState(false);
   const [checkIn, setCheckIn] = useState('');
@@ -36,7 +35,6 @@ const RequestToBook = (props) => {
 
   const axiosCallsErrorHandling = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
@@ -179,7 +177,6 @@ const RequestToBook = (props) => {
     } = props;
     event.preventDefault();
     setLoading(true);
-    setErrorDisplay(false);
     setErrors([]);
     if (window.navigator.onLine === false) {
       axiosCallsErrorHandling(['reusable:errors:window-navigator']);
@@ -312,7 +309,7 @@ const RequestToBook = (props) => {
                     </Header>
                   </div>
                 </div>
-                {errorDisplay && (
+                {errors.length > 0 && (
                   <Message negative>
                     <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
                     <ul>

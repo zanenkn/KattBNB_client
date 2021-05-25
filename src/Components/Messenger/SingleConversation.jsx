@@ -23,7 +23,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   const [chatLogs, setChatLogs] = useState([]);
   const [messagesHistory, setMessagesHistory] = useState([]);
   const [channel, setChannel] = useState(null);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [footerHeight, setFooterHeight] = useState('38px');
@@ -50,7 +49,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     let channelToSave;
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else if (window.history.state === null) {
       window.location.replace('/messenger');
@@ -94,7 +92,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
           });
           setMessagesHistory(sortedResponse);
           setLoading(false);
-          setErrorDisplay(false);
           setErrors([]);
           bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
         })
@@ -103,14 +100,12 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
             setLoading(false);
-            setErrorDisplay(true);
             setErrors(response.data.error);
           }
         });
@@ -185,7 +180,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   };
 
   const handleError = (errors) => {
-    setErrorDisplay(true);
     setErrors(errors);
     bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -200,7 +194,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (window.confirm(t('SingleConversation:del-conversation'))) {
@@ -224,14 +217,12 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(response.data.error);
             }
           });
@@ -252,7 +243,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
 
   const onChangeHandler = (e) => {
     setNewMessage(e.target.value);
-    setErrorDisplay(false);
     setErrors([]);
   };
 
@@ -360,7 +350,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
         >
           <div className='single-conversation-wrapper' style={{ paddingTop: '80px' }}>
             <div style={{ height: '1rem' }}></div>
-            {messagesHistory.length < 1 && chatLogs.length < 1 && errorDisplay === false && (
+            {messagesHistory.length < 1 && chatLogs.length < 1 && errors.length < 1 && (
               <p style={{ textAlign: 'center', fontStyle: 'italic' }}>{t('SingleConversation:no-messages-yet')}</p>
             )}
             {messagesHistory.length > 0 &&
@@ -391,7 +381,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
                   </div>
                 );
               })}
-            {errorDisplay && (
+            {errors.length > 0 && (
               <Message negative style={{ width: 'inherit' }}>
                 <Message.Header style={{ textAlign: 'center' }}>
                   {t('SingleConversation:error-message-header')}

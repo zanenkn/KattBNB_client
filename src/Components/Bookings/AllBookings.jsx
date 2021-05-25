@@ -12,14 +12,12 @@ import { Header, Segment, Button, Message } from 'semantic-ui-react';
 const AllBookings = ({ id, history, username }) => {
   const { t, ready } = useTranslation('AllBookings');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
 
   const axiosCallErrorHandling = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
@@ -39,7 +37,6 @@ const AllBookings = ({ id, history, username }) => {
         .then(({ data }) => {
           setStats(data.stats);
           setLoading(false);
-          setErrorDisplay(false);
           setErrors([]);
         })
         .catch(({ response }) => {
@@ -219,15 +216,13 @@ const AllBookings = ({ id, history, username }) => {
       <>
         <Popup
           modal
-          open={errorDisplay}
+          open={errors.length > 0}
           closeOnDocumentClick={true}
-          onClose={() => {
-            setErrors([]);
-          }}
+          onClose={() => setErrors([])}
           position='top center'
         >
           <div>
-            {errorDisplay && (
+            {errors.length > 0 && (
               <Message negative>
                 <ul id='message-error-list'>
                   {errors.map((error) => (

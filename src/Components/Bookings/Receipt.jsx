@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import Spinner from '../ReusableComponents/Spinner';
@@ -14,6 +13,7 @@ const Receipt = ({ history }) => {
     if (history.location.state === undefined || history.action === 'POP') {
       history.push({ pathname: '/all-bookings' });
     }
+    // eslint-disable-next-line
   }, []);
 
   if (ready) {

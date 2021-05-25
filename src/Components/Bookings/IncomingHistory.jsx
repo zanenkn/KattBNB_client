@@ -14,13 +14,11 @@ import ViewReviewPopup from '../Reviews/ViewReviewPopup';
 const IncomingHistory = (props) => {
   const { t, ready } = useTranslation('IncomingHistory');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const messageUser = (e, hostId, userId, userAvatar, userLocation, userNickname) => {
     e.preventDefault();
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
@@ -55,16 +53,13 @@ const IncomingHistory = (props) => {
           if (error.response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (error.response.status === 500) {
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else if (error.response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else if (error.response.status === 422) {
-            setErrorDisplay(true);
             setErrors(['reusable:errors:422-conversation']);
           } else {
-            setErrorDisplay(true);
             setErrors(error.response.data.error);
           }
         });
@@ -201,7 +196,7 @@ const IncomingHistory = (props) => {
                       </Popup>
                     )}
                   </Container>
-                  {errorDisplay && (
+                  {errors.length > 0 && (
                     <Message negative>
                       <ul id='message-error-list'>
                         {errors.map((error) => (

@@ -17,16 +17,14 @@ const OutgoingBookings = ({ location: { state } }) => {
   const [scrollYPosition, setScrollYPosition] = useState(0);
   const [outgoingBookings, setOutgoingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const handleScroll = () => {
     setScrollYPosition(window.scrollY);
   };
 
-  const axiosCallStateHandling = (loadingState, errorDisplayState, errorMessage) => {
+  const axiosCallStateHandling = (loadingState, errorMessage) => {
     setLoading(loadingState);
-    setErrorDisplay(errorDisplayState);
     setErrors(errorMessage);
   };
 
@@ -34,7 +32,7 @@ const OutgoingBookings = ({ location: { state } }) => {
     window.addEventListener('scroll', handleScroll);
     const lang = detectLanguage();
     if (window.navigator.onLine === false) {
-      axiosCallStateHandling(false, true, ['reusable:errors:window-navigator']);
+      axiosCallStateHandling(false, ['reusable:errors:window-navigator']);
     } else if (window.history.state === null) {
       window.location.replace('/all-bookings');
     } else {
@@ -48,18 +46,18 @@ const OutgoingBookings = ({ location: { state } }) => {
         .get(outBookings, { headers: headers })
         .then(({ data }) => {
           setOutgoingBookings(data);
-          axiosCallStateHandling(false, false, []);
+          axiosCallStateHandling(false, []);
         })
         .catch(({ response }) => {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            axiosCallStateHandling(false, true, ['reusable:errors:500']);
+            axiosCallStateHandling(false, ['reusable:errors:500']);
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            axiosCallStateHandling(false, true, [response.data.error]);
+            axiosCallStateHandling(false, [response.data.error]);
           }
         });
     }
@@ -133,7 +131,7 @@ const OutgoingBookings = ({ location: { state } }) => {
         </div>
         <Container style={{ paddingTop: '150px' }}>
           <div className='expanding-wrapper'>
-            {errorDisplay && (
+            {errors.length > 0 && (
               <Message negative>
                 <ul id='message-error-list'>
                   {errors.map((error) => (

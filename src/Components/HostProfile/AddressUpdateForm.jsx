@@ -12,7 +12,6 @@ import Spinner from '../ReusableComponents/Spinner';
 const AddressUpdateForm = (props) => {
   const { t, ready } = useTranslation('AddressUpdateForm');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addressSearch, setAddressSearch] = useState(true);
@@ -30,12 +29,10 @@ const AddressUpdateForm = (props) => {
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (props.fullAddress === newAddress || newAddress === '') {
         setLoading(false);
-        setErrorDisplay(true);
         setErrors(['AddressUpdateForm:update-error']);
       } else {
         const path = `/api/v1/host_profiles/${props.id}`;
@@ -58,7 +55,6 @@ const AddressUpdateForm = (props) => {
             window.alert(t('AddressUpdateForm:update-success'));
             props.setElement('fullAddress', newAddress);
             props.closeAllForms();
-            setErrorDisplay(false);
             setErrors([]);
           })
           .catch((error) => {
@@ -66,14 +62,12 @@ const AddressUpdateForm = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors([error.response.data.error]);
             }
           });
@@ -96,7 +90,6 @@ const AddressUpdateForm = (props) => {
             setNewAddress(response.results[0].formatted_address);
             setAddressSearch(false);
             setAddressErrorDisplay(false);
-            setErrorDisplay(false);
             setErrors([]);
           }
         } else {
@@ -107,7 +100,6 @@ const AddressUpdateForm = (props) => {
           setNewAddress(response.results[0].formatted_address);
           setAddressSearch(false);
           setAddressErrorDisplay(false);
-          setErrorDisplay(false);
           setErrors([]);
         }
       },
@@ -180,7 +172,7 @@ const AddressUpdateForm = (props) => {
             </p>
           </div>
         )}
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
             <ul id='message-error-list'>

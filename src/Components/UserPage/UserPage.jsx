@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
 import HostProfileForm from '../HostProfile/HostProfileForm';
@@ -48,14 +47,12 @@ const UserPage = (props) => {
   const [incomingBookings, setIncomingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingHostProfile, setLoadingHostProfile] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [deleteDisplayNone, setDeleteDisplayNone] = useState(false);
   const [hostStripeState, setHostStripeState] = useState(null);
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (hostProfile.length === 1) {
@@ -116,7 +113,6 @@ const UserPage = (props) => {
               setHostStripeState(stripe_state);
               setHostProfileScore(score);
               setLoadingHostProfile(false);
-              setErrorDisplay(false);
               setErrors([]);
             }
           )
@@ -124,13 +120,11 @@ const UserPage = (props) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
-              setErrorDisplay(true);
               setErrors(response.data.error);
             }
           });
@@ -142,7 +136,6 @@ const UserPage = (props) => {
     fetchIncomingBookings();
     async function asyncDidMount() {
       if (window.navigator.onLine === false) {
-        setErrorDisplay(true);
         setErrors(['reusable:errors:window-navigator']);
       } else {
         try {
@@ -150,27 +143,24 @@ const UserPage = (props) => {
           const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`);
           setHostProfile(response.data);
           setLoading(false);
-          setErrorDisplay(false);
           setErrors([]);
         } catch ({ response }) {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else {
-            setErrorDisplay(true);
             setErrors(response.data.error);
           }
         }
       }
     }
     asyncDidMount();
+    // eslint-disable-next-line
   }, []);
 
   const fetchIncomingBookings = async () => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
@@ -183,19 +173,16 @@ const UserPage = (props) => {
         const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${props.username}&locale=${lang}`;
         const responseIncoming = await axios.get(pathIncoming, { headers: headers });
         setIncomingBookings(responseIncoming.data);
-        setErrorDisplay(false);
         setErrors([]);
       } catch ({ response }) {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 500) {
-          setErrorDisplay(true);
           setErrors(['reusable:errors:500']);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setErrorDisplay(true);
           setErrors(response.data.error);
         }
       }
@@ -267,7 +254,6 @@ const UserPage = (props) => {
     setDeleteDisplayNone(true);
     if (window.navigator.onLine === false) {
       setDeleteDisplayNone(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
@@ -336,14 +322,12 @@ const UserPage = (props) => {
                   wipeCredentials('/is-not-available?atm');
                 } else if (response.status === 555) {
                   setDeleteDisplayNone(false);
-                  setErrorDisplay(true);
                   setErrors([t('UserPage:delete-stripe-account-error')]);
                 } else if (response.status === 401) {
                   window.alert(t('reusable:errors:401'));
                   wipeCredentials('/');
                 } else {
                   setDeleteDisplayNone(false);
-                  setErrorDisplay(true);
                   setErrors([response.data.error]);
                 }
               });
@@ -356,14 +340,12 @@ const UserPage = (props) => {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 500) {
           setDeleteDisplayNone(false);
-          setErrorDisplay(true);
           setErrors(['reusable:errors:500']);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
           setDeleteDisplayNone(false);
-          setErrorDisplay(true);
           setErrors(response.data.error);
         }
       }
@@ -375,12 +357,9 @@ const UserPage = (props) => {
       <div className='content-wrapper'>
         <Popup
           modal
-          open={errorDisplay}
+          open={errors.length > 0}
           closeOnDocumentClick={true}
-          onClose={() => {
-            setErrorDisplay(false);
-            setErrors([]);
-          }}
+          onClose={() => setErrors([])}
           position='top center'
         >
           <div>
@@ -629,12 +608,9 @@ const UserPage = (props) => {
       <div className='content-wrapper'>
         <Popup
           modal
-          open={errorDisplay}
+          open={errors.length > 0}
           closeOnDocumentClick={true}
-          onClose={() => {
-            setErrorDisplay(false);
-            setErrors([]);
-          }}
+          onClose={() => setErrors([])}
           position='top center'
         >
           <div>

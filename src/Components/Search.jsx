@@ -18,7 +18,6 @@ class Search extends Component {
     this.handleFromChange = this.handleFromChange.bind(this);
     this.handleToChange = this.handleToChange.bind(this);
     this.state = {
-      errorDisplay: false,
       errors: '',
       location: this.props.location,
       cats: '',
@@ -69,7 +68,6 @@ class Search extends Component {
     this.setState({
       from: undefined,
       to: undefined,
-      errorDisplay: false,
       errors: '',
     });
   };
@@ -84,17 +82,14 @@ class Search extends Component {
     e.preventDefault();
     if (this.state.cats <= 0 || this.state.cats % 1 !== 0) {
       this.setState({
-        errorDisplay: true,
         errors: ['Search:error-1'],
       });
     } else if (this.state.location === '' || this.state.location === undefined) {
       this.setState({
-        errorDisplay: true,
         errors: ['Search:error-2'],
       });
     } else if (this.state.to === undefined || this.state.from === undefined) {
       this.setState({
-        errorDisplay: true,
         errors: ['Search:error-3'],
       });
     } else {
@@ -123,7 +118,7 @@ class Search extends Component {
       const modifiers = { start: from, end: to };
       const today = new Date();
 
-      if (this.state.errorDisplay) {
+      if (this.state.errors !== '') {
         errorDisplay = (
           <Message negative>
             <Message.Header>{t('Search:error-header')}</Message.Header>

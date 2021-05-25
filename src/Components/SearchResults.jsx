@@ -37,7 +37,6 @@ const SearchResults = (props) => {
   const [scrollOffset, setScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hostPopupLoading, setHostPopupLoading] = useState(true);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [availableByLocation, setAvailableByLocation] = useState([]);
   const [availableAllLocations, setAvailableAllLocations] = useState([]);
@@ -95,7 +94,6 @@ const SearchResults = (props) => {
         }
         if (window.navigator.onLine === false) {
           setLoading(false);
-          setErrorDisplay(true);
           setErrors(['reusable:errors:window-navigator']);
         } else {
           try {
@@ -145,11 +143,9 @@ const SearchResults = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(response.data.error);
             }
           }
@@ -168,7 +164,6 @@ const SearchResults = (props) => {
 
   const getHostById = (id, status) => {
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
@@ -192,7 +187,6 @@ const SearchResults = (props) => {
             setOpenHostPopup(true);
             setHostPopupLoading(false);
           } else {
-            setErrorDisplay(true);
             setErrors(['reusable:errors:index-no-host-1']);
           }
         })
@@ -200,10 +194,8 @@ const SearchResults = (props) => {
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            setErrorDisplay(true);
             setErrors(['reusable:errors:500']);
           } else {
-            setErrorDisplay(true);
             setErrors(response.data.error);
           }
         });
@@ -266,7 +258,6 @@ const SearchResults = (props) => {
   const messageHost = (e) => {
     e.preventDefault();
     if (window.navigator.onLine === false) {
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (id === undefined) {
@@ -304,16 +295,13 @@ const SearchResults = (props) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else if (response.status === 422) {
-              setErrorDisplay(true);
               setErrors(['reusable:errors:422-conversation']);
             } else {
-              setErrorDisplay(true);
               setErrors(response.data.error);
             }
           });
@@ -449,12 +437,9 @@ const SearchResults = (props) => {
         </Popup>
         <Popup
           modal
-          open={errorDisplay}
+          open={errors.length > 0}
           closeOnDocumentClick={true}
-          onClose={() => {
-            setErrorDisplay(false);
-            setErrors([]);
-          }}
+          onClose={() => setErrors([])}
           position='top center'
         >
           <div>

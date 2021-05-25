@@ -14,7 +14,6 @@ class AvailabilityUpdateForm extends Component {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
     this.state = {
-      errorDisplay: false,
       errors: '',
       loading: false,
       newAvailability: this.props.availability,
@@ -31,7 +30,6 @@ class AvailabilityUpdateForm extends Component {
     if (window.navigator.onLine === false) {
       this.setState({
         loading: false,
-        errorDisplay: true,
         errors: ['reusable:errors:window-navigator'],
       });
     } else {
@@ -56,7 +54,6 @@ class AvailabilityUpdateForm extends Component {
           .then(() => {
             this.setState({
               loading: false,
-              errorDisplay: false,
               errors: '',
             });
             window.alert(t('AvailabilityUpdateForm:success-update'));
@@ -68,7 +65,6 @@ class AvailabilityUpdateForm extends Component {
             } else if (error.response.status === 500) {
               this.setState({
                 loading: false,
-                errorDisplay: true,
                 errors: ['reusable:errors:500'],
               });
             } else if (error.response.status === 401) {
@@ -77,7 +73,6 @@ class AvailabilityUpdateForm extends Component {
             } else {
               this.setState({
                 loading: false,
-                errorDisplay: true,
                 errors: error.response.data.error,
               });
             }
@@ -85,7 +80,6 @@ class AvailabilityUpdateForm extends Component {
       } else {
         this.setState({
           loading: false,
-          errorDisplay: true,
           errors: ['AvailabilityUpdateForm:update-error'],
         });
       }
@@ -135,7 +129,7 @@ class AvailabilityUpdateForm extends Component {
 
       let disabledDaysDates = [{ before: today }];
 
-      if (this.state.errorDisplay) {
+      if (this.state.errors !== '') {
         errorDisplay = (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>

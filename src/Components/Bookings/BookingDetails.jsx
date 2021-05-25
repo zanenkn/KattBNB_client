@@ -13,7 +13,6 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 const BookingDetails = ({ history, id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -23,15 +22,10 @@ const BookingDetails = ({ history, id, location: { state } }) => {
     // eslint-disable-next-line
   }, []);
 
-  const axiosCallErrorHandling = (errorMessage) => {
-    setErrorDisplay(true);
-    setErrors(errorMessage);
-  };
-
   const messageHost = () => {
     const { avatar, hostId, location, nickname } = state;
     if (window.navigator.onLine === false) {
-      axiosCallErrorHandling(['reusable:errors:window-navigator']);
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       if (id === undefined) {
         history.push('/');
@@ -68,14 +62,14 @@ const BookingDetails = ({ history, id, location: { state } }) => {
             if (response === undefined) {
               wipeCredentials('/is-not-available?atm');
             } else if (response.status === 500) {
-              axiosCallErrorHandling(['reusable:errors:500']);
+              setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else if (response.status === 422) {
-              axiosCallErrorHandling(['reusable:errors:422-conversation']);
+              setErrors(['reusable:errors:422-conversation']);
             } else {
-              axiosCallErrorHandling([response.data.error]);
+              setErrors([response.data.error]);
             }
           });
       }
@@ -104,13 +98,13 @@ const BookingDetails = ({ history, id, location: { state } }) => {
       <>
         <Popup
           modal
-          open={errorDisplay}
+          open={errors.length > 0}
           closeOnDocumentClick={true}
           onClose={() => window.location.replace('/all-bookings')}
           position='top center'
         >
           <div>
-            {errorDisplay && (
+            {errors.length > 0 && (
               <Message negative>
                 <ul id='message-error-list'>
                   {errors.map((error) => (

@@ -9,7 +9,6 @@ import { Divider, Form, Button, Message } from 'semantic-ui-react';
 const SupplementUpdateForm = (props) => {
   const { t, ready } = useTranslation('SupplementUpdateForm');
 
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newSupplement, setNewSupplement] = useState(props.supplement);
@@ -19,7 +18,6 @@ const SupplementUpdateForm = (props) => {
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrorDisplay(true);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (newSupplement !== '' && newSupplement !== props.supplement && newSupplement >= 0) {
@@ -39,7 +37,6 @@ const SupplementUpdateForm = (props) => {
             window.alert(t('SupplementUpdateForm:update-success'));
             props.setElement('supplement', newSupplement);
             props.closeAllForms();
-            setErrorDisplay(false);
             setErrors([]);
           })
           .catch((error) => {
@@ -47,20 +44,17 @@ const SupplementUpdateForm = (props) => {
               wipeCredentials('/is-not-available?atm');
             } else if (error.response.status === 500) {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
             } else {
               setLoading(false);
-              setErrorDisplay(true);
               setErrors([error.response.data.error]);
             }
           });
       } else {
         setLoading(false);
-        setErrorDisplay(true);
         setErrors(['reusable:errors:update-number-fields']);
       }
     }
@@ -83,7 +77,7 @@ const SupplementUpdateForm = (props) => {
             }}
           />
         </Form>
-        {errorDisplay && (
+        {errors.length > 0 && (
           <Message negative>
             <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
             <ul id='message-error-list'>

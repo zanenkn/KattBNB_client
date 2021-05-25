@@ -47,7 +47,6 @@ const Faq = (props) => {
       [Prismic.Predicates.at('document.type', 'faq_item'), Prismic.Predicates.at('document.tags', [tag])],
       { orderings: '[my.faq_item.index]', lang: locale }
     );
-
     setQuestions((old) => ({ ...old, [tag]: response.results }));
   };
 

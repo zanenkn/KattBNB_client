@@ -12,7 +12,6 @@ const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
 
   const [errors, setErrors] = useState([]);
-  const [errorDisplay, setErrorDisplay] = useState(false);
   const [successDisplay, setSuccessDisplay] = useState(false);
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -24,20 +23,14 @@ const ChangePassword = ({ location: { search } }) => {
     }
   };
 
-  const axiosCallErrorHandling = (errorMessage) => {
-    setErrors([errorMessage]);
-    setErrorDisplay(true);
-  };
-
   const axiosCallErrorCatching = (errorMessage) => {
     setLoading(false);
-    setErrorDisplay(true);
     setErrors(errorMessage);
   };
 
   const changePassword = () => {
     if (window.navigator.onLine === false) {
-      axiosCallErrorHandling('reusable:errors:window-navigator');
+      setErrors(['reusable:errors:window-navigator']);
     } else {
       if (password === passwordConfirmation && passwordCheck(password) && search.length > 150) {
         setLoading(true);
@@ -55,7 +48,7 @@ const ChangePassword = ({ location: { search } }) => {
           .put(path, payload)
           .then(() => {
             setSuccessDisplay(true);
-            setErrorDisplay(false);
+            setErrors([]);
             setTimeout(function () {
               window.location.replace('/login');
             }, 2000);
@@ -73,9 +66,9 @@ const ChangePassword = ({ location: { search } }) => {
             }
           });
       } else if (password === passwordConfirmation && passwordCheck(password) && search.length < 150) {
-        axiosCallErrorHandling('ChangePassword:error-1');
+        setErrors(['ChangePassword:error-1']);
       } else {
-        axiosCallErrorHandling('ChangePassword:error-2');
+        setErrors(['ChangePassword:error-2']);
       }
     }
   };
@@ -108,7 +101,7 @@ const ChangePassword = ({ location: { search } }) => {
               onKeyPress={listenEnterKey}
             />
           </Form>
-          {errorDisplay && (
+          {errors.length > 0 && (
             <Message negative>
               <Message.Header style={{ textAlign: 'center' }}>{t('ChangePassword:error-header')}</Message.Header>
               <ul id='message-error-list'>
