@@ -1623,7 +1623,6 @@ h4 {
           prismic
 *******************************/
 
-
 .block-img>img {
   max-width: 100px;
   margin: 0;
