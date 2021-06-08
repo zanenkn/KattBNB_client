@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './semantic/dist/semantic.min.css';
 import Landing from './Components/Landing';
 import Navbar from './Components/Navbar';
 import Menu from './Components/Menu/Menu';
@@ -38,7 +37,6 @@ import AreaList from './Components/AreaList';
 import BlogListing from './Components/Blog/BlogListing';
 import BlogPost from './Components/Blog/BlogPost';
 import ScrollToTop from './Modules/ScrollToTop';
-import { Container, Sidebar } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
@@ -66,18 +64,6 @@ const App = (props) => {
   return (
     <>
       <Navbar />
-      <Sidebar.Pushable
-        onClick={
-          props.menuVisible
-            ? () => {
-                props.dispatch({ type: 'CHANGE_VISIBILITY' });
-              }
-            : () => {}
-        }
-        as={Container}
-        id='app-content'
-        className='disable-scrollbars'
-      >
         <ScrollToTop>
           <Switch>
             <Route exact path='/' component={Landing}></Route>
@@ -120,7 +106,7 @@ const App = (props) => {
           </Switch>
         </ScrollToTop>
         <Menu />
-      </Sidebar.Pushable>
+
     </>
   );
 };

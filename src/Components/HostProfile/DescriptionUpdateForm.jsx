@@ -4,7 +4,6 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
-import { Divider, Form, Button, Message } from 'semantic-ui-react';
 
 const DescriptionUpdateForm = (props) => {
   const { t, ready } = useTranslation('DescriptionUpdateForm');
@@ -59,49 +58,50 @@ const DescriptionUpdateForm = (props) => {
     }
   };
 
-  if (ready) {
-    return (
-      <>
-        <Divider />
-        <p className='small-centered-paragraph'>{t('DescriptionUpdateForm:main-title')}</p>
-        <Form id='update-description'>
-          <Form.TextArea
-            required
-            id='newDescription'
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-          />
-        </Form>
-        {errors.length > 0 && (
-          <Message negative>
-            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        )}
-        <div className='button-wrapper'>
-          <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>
-            {t('reusable:cta:close')}
-          </Button>
-          <Button
-            id='description-submit-button'
-            className='submit-button'
-            disabled={loading}
-            loading={loading}
-            onClick={() => updateDescription()}
-          >
-            {t('reusable:cta:save')}
-          </Button>
-        </div>
-        <Divider style={{ marginBottom: '2rem' }} />
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <>
+  //       <Divider />
+  //       <p className='small-centered-paragraph'>{t('DescriptionUpdateForm:main-title')}</p>
+  //       <Form id='update-description'>
+  //         <Form.TextArea
+  //           required
+  //           id='newDescription'
+  //           value={newDescription}
+  //           onChange={(e) => setNewDescription(e.target.value)}
+  //         />
+  //       </Form>
+  //       {errors.length > 0 && (
+  //         <Message negative>
+  //           <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
+  //           <ul id='message-error-list'>
+  //             {errors.map((error) => (
+  //               <li key={error}>{t(error)}</li>
+  //             ))}
+  //           </ul>
+  //         </Message>
+  //       )}
+  //       <div className='button-wrapper'>
+  //         <Button secondary id='description-close-button' className='cancel-button' onClick={props.closeAllForms}>
+  //           {t('reusable:cta:close')}
+  //         </Button>
+  //         <Button
+  //           id='description-submit-button'
+  //           className='submit-button'
+  //           disabled={loading}
+  //           loading={loading}
+  //           onClick={() => updateDescription()}
+  //         >
+  //           {t('reusable:cta:save')}
+  //         </Button>
+  //       </div>
+  //       <Divider style={{ marginBottom: '2rem' }} />
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default DescriptionUpdateForm;

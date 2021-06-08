@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Container, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../ReusableComponents/Spinner';
@@ -64,89 +63,90 @@ const IncomingUpcoming = ({ id, history, upcoming }) => {
         });
     }
   };
+  return <div>a</div>
 
-  if (ready) {
-    let sortedUpcoming = upcoming;
-    sortedUpcoming.sort((a, b) => a.dates[0] - b.dates[0]);
+  // if (ready) {
+  //   let sortedUpcoming = upcoming;
+  //   sortedUpcoming.sort((a, b) => a.dates[0] - b.dates[0]);
 
-    return (
-      <>
-        {upcoming.length > 0 ? (
-          <>
-            <Popup
-              modal
-              open={errors.length > 0}
-              closeOnDocumentClick={true}
-              onClose={() => setErrors([])}
-              position='top center'
-            >
-              <div>
-                {errors.length > 0 && (
-                  <Message negative>
-                    <ul id='message-error-list'>
-                      {errors.map((error) => (
-                        <li key={error}>{t(error)}</li>
-                      ))}
-                    </ul>
-                  </Message>
-                )}
-              </div>
-            </Popup>
-            <p className='small-centered-paragraph'>
-              <Trans count={parseInt(upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
-                <strong>You have {{ count: upcoming.length }} upcoming booking.</strong>
-              </Trans>
-            </p>
-            <p style={{ textAlign: 'center' }}>{t('IncomingUpcoming:main-desc')}</p>
-            {sortedUpcoming.map((upcoming) => {
-              return (
-                <Container
-                  style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-                  id={upcoming.id}
-                  data-cy='incoming-upcoming'
-                  key={upcoming.id}
-                >
-                  <p className='small-centered-paragraph'>
-                    <Trans count={parseInt(upcoming.number_of_cats)} i18nKey='IncomingUpcoming:booking-info'>
-                      You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong>&nbsp;
-                      <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of
-                      <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until
-                      <strong>
-                        {{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}
-                      </strong>
-                      .
-                    </Trans>
-                  </p>
-                  <p
-                    className='fake-link-underlined'
-                    onClick={(e) =>
-                      messageUser(
-                        e,
-                        upcoming.user_id,
-                        upcoming.user.profile_avatar,
-                        upcoming.user.location,
-                        upcoming.user.nickname
-                      )
-                    }
-                  >
-                    {t('IncomingUpcoming:message')} {upcoming.user.nickname}
-                  </p>
-                </Container>
-              );
-            })}
-          </>
-        ) : (
-          <>
-            <p className='small-centered-paragraph'>
-              <strong>{t('IncomingUpcoming:no-bookings')}</strong>
-            </p>
-          </>
-        )}
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  //   return (
+  //     <>
+  //       {upcoming.length > 0 ? (
+  //         <>
+  //           <Popup
+  //             modal
+  //             open={errors.length > 0}
+  //             closeOnDocumentClick={true}
+  //             onClose={() => setErrors([])}
+  //             position='top center'
+  //           >
+  //             <div>
+  //               {errors.length > 0 && (
+  //                 <Message negative>
+  //                   <ul id='message-error-list'>
+  //                     {errors.map((error) => (
+  //                       <li key={error}>{t(error)}</li>
+  //                     ))}
+  //                   </ul>
+  //                 </Message>
+  //               )}
+  //             </div>
+  //           </Popup>
+  //           <p className='small-centered-paragraph'>
+  //             <Trans count={parseInt(upcoming.length)} i18nKey='IncomingUpcoming:main-title'>
+  //               <strong>You have {{ count: upcoming.length }} upcoming booking.</strong>
+  //             </Trans>
+  //           </p>
+  //           <p style={{ textAlign: 'center' }}>{t('IncomingUpcoming:main-desc')}</p>
+  //           {sortedUpcoming.map((upcoming) => {
+  //             return (
+  //               <Container
+  //                 style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
+  //                 id={upcoming.id}
+  //                 data-cy='incoming-upcoming'
+  //                 key={upcoming.id}
+  //               >
+  //                 <p className='small-centered-paragraph'>
+  //                   <Trans count={parseInt(upcoming.number_of_cats)} i18nKey='IncomingUpcoming:booking-info'>
+  //                     You have approved a stay for <strong>{{ nickname: upcoming.user.nickname }}'s</strong>&nbsp;
+  //                     <strong>{{ count: upcoming.number_of_cats }} cat</strong> for the dates of
+  //                     <strong>{{ startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD') }}</strong> until
+  //                     <strong>
+  //                       {{ endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD') }}
+  //                     </strong>
+  //                     .
+  //                   </Trans>
+  //                 </p>
+  //                 <p
+  //                   className='fake-link-underlined'
+  //                   onClick={(e) =>
+  //                     messageUser(
+  //                       e,
+  //                       upcoming.user_id,
+  //                       upcoming.user.profile_avatar,
+  //                       upcoming.user.location,
+  //                       upcoming.user.nickname
+  //                     )
+  //                   }
+  //                 >
+  //                   {t('IncomingUpcoming:message')} {upcoming.user.nickname}
+  //                 </p>
+  //               </Container>
+  //             );
+  //           })}
+  //         </>
+  //       ) : (
+  //         <>
+  //           <p className='small-centered-paragraph'>
+  //             <strong>{t('IncomingUpcoming:no-bookings')}</strong>
+  //           </p>
+  //         </>
+  //       )}
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });

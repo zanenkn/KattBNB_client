@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Header, Form, Button, Message } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 import Geocode from 'react-geocode';
 import axios from 'axios';
@@ -200,168 +199,168 @@ class HostProfileForm extends Component {
 
   render() {
     const { t } = this.props;
+    return <div>a</div>
+    // if (this.props.tReady) {
+    //   let addressSearch, addressErrorMessage, onCreateErrorMessage;
+    //   const today = new Date();
+    //   const lang = detectLanguage();
 
-    if (this.props.tReady) {
-      let addressSearch, addressErrorMessage, onCreateErrorMessage;
-      const today = new Date();
-      const lang = detectLanguage();
+    //   if (this.state.addressSearch === true) {
+    //     addressSearch = (
+    //       <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+    //         <Form.Input
+    //           style={{ paddingRight: '1rem' }}
+    //           label={t('HostProfileForm:address-label')}
+    //           placeholder={t('HostProfileForm:address-search-plch')}
+    //           required
+    //           id='userInputAddress'
+    //           value={this.state.userInputAddress}
+    //           onChange={this.onChangeHandler}
+    //           onBlur={this.state.userInputAddress !== '' ? this.geolocationDataAddress : undefined}
+    //         />
+    //         <div>
+    //           <Button style={{ margin: '0 0 1em' }} id='search' onClick={this.geolocationDataAddress}>
+    //             {t('reusable:cta:confirm')}
+    //           </Button>
+    //         </div>
+    //       </div>
+    //     );
+    //   } else {
+    //     addressSearch = (
+    //       <div className='required field'>
+    //         <label for='userInputAddress'>{t('HostProfileForm:address-label')}</label>
+    //         <p>
+    //           {this.state.address}&nbsp;
+    //           <Header
+    //             as='strong'
+    //             id='change-address-link'
+    //             onClick={() => {
+    //               this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' });
+    //             }}
+    //             className='fake-link-underlined'
+    //           >
+    //             {t('HostProfileForm:not-right')}
+    //           </Header>
+    //         </p>
+    //       </div>
+    //     );
+    //   }
 
-      if (this.state.addressSearch === true) {
-        addressSearch = (
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-            <Form.Input
-              style={{ paddingRight: '1rem' }}
-              label={t('HostProfileForm:address-label')}
-              placeholder={t('HostProfileForm:address-search-plch')}
-              required
-              id='userInputAddress'
-              value={this.state.userInputAddress}
-              onChange={this.onChangeHandler}
-              onBlur={this.state.userInputAddress !== '' ? this.geolocationDataAddress : undefined}
-            />
-            <div>
-              <Button style={{ margin: '0 0 1em' }} id='search' onClick={this.geolocationDataAddress}>
-                {t('reusable:cta:confirm')}
-              </Button>
-            </div>
-          </div>
-        );
-      } else {
-        addressSearch = (
-          <div className='required field'>
-            <label for='userInputAddress'>{t('HostProfileForm:address-label')}</label>
-            <p>
-              {this.state.address}&nbsp;
-              <Header
-                as='strong'
-                id='change-address-link'
-                onClick={() => {
-                  this.setState({ addressSearch: true, address: '', lat: '', long: '', latitude: '', longitude: '' });
-                }}
-                className='fake-link-underlined'
-              >
-                {t('HostProfileForm:not-right')}
-              </Header>
-            </p>
-          </div>
-        );
-      }
+    //   if (this.state.addressErrorDisplay) {
+    //     addressErrorMessage = <Message negative>{this.state.addressError}</Message>;
+    //   }
 
-      if (this.state.addressErrorDisplay) {
-        addressErrorMessage = <Message negative>{this.state.addressError}</Message>;
-      }
+    //   if (this.state.errors !== '') {
+    //     onCreateErrorMessage = (
+    //       <Message negative>
+    //         <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
+    //         <ul>
+    //           {this.state.errors.map((error) => (
+    //             <li key={error}>{t(error)}</li>
+    //           ))}
+    //         </ul>
+    //       </Message>
+    //     );
+    //   }
 
-      if (this.state.errors !== '') {
-        onCreateErrorMessage = (
-          <Message negative>
-            <Message.Header>{t('HostProfileForm:create-error-2')}</Message.Header>
-            <ul>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
-      }
-
-      return (
-        <div id='host-profile-form'>
-          <Header as='h2' style={{ marginTop: '3rem' }}>
-            {t('HostProfileForm:create-profile')}
-          </Header>
-          <p className='small-centered-paragraph' style={{ marginBottom: '1rem' }}>
-            {t('HostProfileForm:create-profile-main-title')}
-          </p>
-          <Form id='host-profile-form'>
-            <div className='required field'>
-              <label for='description'>{t('HostProfileForm:about-you-label')}</label>
-              <Form.TextArea
-                placeholder={t('HostProfileForm:about-you-plch')}
-                id='description'
-                value={this.state.description}
-                onChange={this.onChangeHandler}
-              />
-            </div>
-            {addressErrorMessage}
-            {addressSearch}
-            <p className='small-left-paragraph'>{t('HostProfileForm:address-message')}</p>
-            <Form.Group widths='equal'>
-              <div className='required field'>
-                <label for='rate'>{t('HostProfileForm:rate-label')}</label>
-                <Form.Input
-                  type='number'
-                  placeholder={t('HostProfileForm:rate-plch')}
-                  id='rate'
-                  value={this.state.rate}
-                  onChange={this.onChangeHandler}
-                  onKeyPress={this.listenEnterKey}
-                />
-              </div>
-              <div className='required field'>
-                <label for='maxCats'>{t('HostProfileForm:max-cats-label')}</label>
-                <Form.Input
-                  type='number'
-                  placeholder={t('HostProfileForm:max-cats-plch')}
-                  id='maxCats'
-                  value={this.state.maxCats}
-                  onChange={this.onChangeHandler}
-                  onKeyPress={this.listenEnterKey}
-                />
-              </div>
-              <div className='required field'>
-                <label for='supplement'>{t('HostProfileForm:supplement-label')}</label>
-                <Form.Input
-                  type='number'
-                  placeholder={t('reusable:price.total-for-1')}
-                  id='supplement'
-                  value={this.state.supplement}
-                  onChange={this.onChangeHandler}
-                  onKeyPress={this.listenEnterKey}
-                />
-              </div>
-            </Form.Group>
-            <p className='small-left-paragraph'>
-              <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('reusable:explain-supplement')}
-            </p>
-            <div className='required field'>
-              <label for='availability'>{t('HostProfileForm:availability-title')}</label>
-              <DayPicker
-                showWeekNumbers
-                fromMonth={today}
-                disabledDays={{ before: today }}
-                firstDayOfWeek={1}
-                selectedDays={this.state.selectedDays}
-                onDayClick={this.handleDayClick}
-                localeUtils={MomentLocaleUtils}
-                locale={lang}
-              />
-            </div>
-            <p className='small-centered-paragraph'>{t('HostProfileForm:availability-details')}</p>
-          </Form>
-          {onCreateErrorMessage}
-          <div className='button-wrapper'>
-            <div>
-              <Button secondary className='cancel-button' onClick={this.props.closeForm}>
-                {t('reusable:cta:close')}
-              </Button>
-            </div>
-            <div>
-              <Button
-                id='save-host-profile-button'
-                className='submit-button'
-                disabled={this.state.loading}
-                loading={this.state.loading}
-                onClick={this.createHostProfile}
-              >
-                {t('reusable:cta:save')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return <Spinner />;
-    }
+    //   return (
+    //     <div id='host-profile-form'>
+    //       <Header as='h2' style={{ marginTop: '3rem' }}>
+    //         {t('HostProfileForm:create-profile')}
+    //       </Header>
+    //       <p className='small-centered-paragraph' style={{ marginBottom: '1rem' }}>
+    //         {t('HostProfileForm:create-profile-main-title')}
+    //       </p>
+    //       <Form id='host-profile-form'>
+    //         <div className='required field'>
+    //           <label for='description'>{t('HostProfileForm:about-you-label')}</label>
+    //           <Form.TextArea
+    //             placeholder={t('HostProfileForm:about-you-plch')}
+    //             id='description'
+    //             value={this.state.description}
+    //             onChange={this.onChangeHandler}
+    //           />
+    //         </div>
+    //         {addressErrorMessage}
+    //         {addressSearch}
+    //         <p className='small-left-paragraph'>{t('HostProfileForm:address-message')}</p>
+    //         <Form.Group widths='equal'>
+    //           <div className='required field'>
+    //             <label for='rate'>{t('HostProfileForm:rate-label')}</label>
+    //             <Form.Input
+    //               type='number'
+    //               placeholder={t('HostProfileForm:rate-plch')}
+    //               id='rate'
+    //               value={this.state.rate}
+    //               onChange={this.onChangeHandler}
+    //               onKeyPress={this.listenEnterKey}
+    //             />
+    //           </div>
+    //           <div className='required field'>
+    //             <label for='maxCats'>{t('HostProfileForm:max-cats-label')}</label>
+    //             <Form.Input
+    //               type='number'
+    //               placeholder={t('HostProfileForm:max-cats-plch')}
+    //               id='maxCats'
+    //               value={this.state.maxCats}
+    //               onChange={this.onChangeHandler}
+    //               onKeyPress={this.listenEnterKey}
+    //             />
+    //           </div>
+    //           <div className='required field'>
+    //             <label for='supplement'>{t('HostProfileForm:supplement-label')}</label>
+    //             <Form.Input
+    //               type='number'
+    //               placeholder={t('reusable:price.total-for-1')}
+    //               id='supplement'
+    //               value={this.state.supplement}
+    //               onChange={this.onChangeHandler}
+    //               onKeyPress={this.listenEnterKey}
+    //             />
+    //           </div>
+    //         </Form.Group>
+    //         <p className='small-left-paragraph'>
+    //           <strong>{t('HostProfileForm:explain-supplement-1')}</strong> {t('reusable:explain-supplement')}
+    //         </p>
+    //         <div className='required field'>
+    //           <label for='availability'>{t('HostProfileForm:availability-title')}</label>
+    //           <DayPicker
+    //             showWeekNumbers
+    //             fromMonth={today}
+    //             disabledDays={{ before: today }}
+    //             firstDayOfWeek={1}
+    //             selectedDays={this.state.selectedDays}
+    //             onDayClick={this.handleDayClick}
+    //             localeUtils={MomentLocaleUtils}
+    //             locale={lang}
+    //           />
+    //         </div>
+    //         <p className='small-centered-paragraph'>{t('HostProfileForm:availability-details')}</p>
+    //       </Form>
+    //       {onCreateErrorMessage}
+    //       <div className='button-wrapper'>
+    //         <div>
+    //           <Button secondary className='cancel-button' onClick={this.props.closeForm}>
+    //             {t('reusable:cta:close')}
+    //           </Button>
+    //         </div>
+    //         <div>
+    //           <Button
+    //             id='save-host-profile-button'
+    //             className='submit-button'
+    //             disabled={this.state.loading}
+    //             loading={this.state.loading}
+    //             onClick={this.createHostProfile}
+    //           >
+    //             {t('reusable:cta:save')}
+    //           </Button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // } else {
+    //   return <Spinner />;
+    // }
   }
 }
 

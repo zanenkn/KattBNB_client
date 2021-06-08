@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Header, Form, Button, Dropdown, Message, Segment } from 'semantic-ui-react';
 import { LOCATION_OPTIONS } from '../Modules/locationData';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -110,147 +109,147 @@ class Search extends Component {
 
   render() {
     const { t, tReady } = this.props;
+    return <div>a</div>
+    // if (tReady) {
+    //   let errorDisplay;
+    //   const lang = detectLanguage();
+    //   const { from, to } = this.state;
+    //   const modifiers = { start: from, end: to };
+    //   const today = new Date();
 
-    if (tReady) {
-      let errorDisplay;
-      const lang = detectLanguage();
-      const { from, to } = this.state;
-      const modifiers = { start: from, end: to };
-      const today = new Date();
+    //   if (this.state.errors !== '') {
+    //     errorDisplay = (
+    //       <Message negative>
+    //         <Message.Header>{t('Search:error-header')}</Message.Header>
+    //         <ul>
+    //           {this.state.errors.map((error) => (
+    //             <li key={error}>{t(error)}</li>
+    //           ))}
+    //         </ul>
+    //       </Message>
+    //     );
+    //   }
 
-      if (this.state.errors !== '') {
-        errorDisplay = (
-          <Message negative>
-            <Message.Header>{t('Search:error-header')}</Message.Header>
-            <ul>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
-      }
-
-      return (
-        <div className='content-wrapper'>
-          <Helmet>
-            <title>KattBNB - boka kattvakt online!</title>
-            <meta
-              name='description'
-              content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!'
-            />
-            <link rel='canonical' href='https://kattbnb.se/search' />
-            <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-            <meta property='og:url' content='https://kattbnb.se/search' />
-            <meta property='og:type' content='website' />
-            <meta
-              property='og:description'
-              content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
-            />
-            <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-          </Helmet>
-          <Header as='h1'>{t('Search:title')}</Header>
-          <Segment className='whitebox'>
-            <Form id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-              <div className='required field' style={{ marginBottom: '0.5em' }}>
-                <label>{t('Search:when')}</label>
-                <div className='InputFromTo'>
-                  <DayPickerInput
-                    value={from || t('Search:checkin')}
-                    format='LL'
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    inputProps={{ readOnly: true }}
-                    dayPickerProps={{
-                      selectedDays: [from, { from, to }],
-                      disabledDays: { after: to, before: today },
-                      fromMonth: today,
-                      toMonth: to,
-                      modifiers,
-                      numberOfMonths: 1,
-                      firstDayOfWeek: 1,
-                      localeUtils: MomentLocaleUtils,
-                      locale: lang,
-                      showWeekNumbers: true,
-                    }}
-                    onDayChange={this.handleFromChange}
-                  />
-                </div>
-                <div className='InputFromTo' style={{ marginTop: '0.5em' }}>
-                  <DayPickerInput
-                    ref={(el) => (this.to = el)}
-                    value={to || t('Search:checkout')}
-                    format='LL'
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    inputProps={
-                      this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }
-                    }
-                    dayPickerProps={{
-                      selectedDays: [from, { from, to }],
-                      disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
-                      modifiers,
-                      firstDayOfWeek: 1,
-                      showWeekNumbers: true,
-                      month: from,
-                      fromMonth: from,
-                      localeUtils: MomentLocaleUtils,
-                      locale: lang,
-                      numberOfMonths: 1,
-                    }}
-                    onDayChange={this.handleToChange}
-                  />
-                </div>
-              </div>
-              <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
-                <Header className='fake-link-underlined' style={{ textAlign: 'right' }} onClick={this.clearDates}>
-                  {t('Search:reset')}
-                </Header>
-              </div>
-              <div className='required field' style={{ marginBottom: '1.5em' }}>
-                <label>{t('Search:where')}</label>
-                <Dropdown
-                  clearable
-                  search
-                  selection
-                  value={this.state.location}
-                  placeholder={t('Search:where-plch')}
-                  options={LOCATION_OPTIONS}
-                  id='location'
-                  onChange={this.handleLocationChange}
-                  onKeyPress={this.listenEnterKeySearch}
-                />
-              </div>
-              <Form.Input
-                label={t('Search:how-many')}
-                type='number'
-                required
-                id='cats'
-                value={this.state.cats}
-                onChange={this.onChangeHandler}
-                onKeyPress={this.listenEnterKeySearch}
-                style={{ maxWidth: '180px', height: '38px' }}
-              />
-            </Form>
-            {errorDisplay}
-            <div className='button-wrapper'>
-              <div>
-                <Button id='search-button' className='submit-button' onClick={this.search}>
-                  {t('Search:cta')}
-                </Button>
-              </div>
-            </div>
-            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Link to='/area-list' className='discreet-link'>
-                {t('Search:sitters-near-you')}
-              </Link>
-            </div>
-          </Segment>
-        </div>
-      );
-    } else {
-      return <Spinner />;
-    }
+    //   return (
+    //     <div className='content-wrapper'>
+    //       <Helmet>
+    //         <title>KattBNB - boka kattvakt online!</title>
+    //         <meta
+    //           name='description'
+    //           content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!'
+    //         />
+    //         <link rel='canonical' href='https://kattbnb.se/search' />
+    //         <meta property='og:title' content='KattBNB - boka kattvakt online!' />
+    //         <meta property='og:url' content='https://kattbnb.se/search' />
+    //         <meta property='og:type' content='website' />
+    //         <meta
+    //           property='og:description'
+    //           content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+    //         />
+    //         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+    //       </Helmet>
+    //       <Header as='h1'>{t('Search:title')}</Header>
+    //       <Segment className='whitebox'>
+    //         <Form id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
+    //           <div className='required field' style={{ marginBottom: '0.5em' }}>
+    //             <label>{t('Search:when')}</label>
+    //             <div className='InputFromTo'>
+    //               <DayPickerInput
+    //                 value={from || t('Search:checkin')}
+    //                 format='LL'
+    //                 formatDate={formatDate}
+    //                 parseDate={parseDate}
+    //                 inputProps={{ readOnly: true }}
+    //                 dayPickerProps={{
+    //                   selectedDays: [from, { from, to }],
+    //                   disabledDays: { after: to, before: today },
+    //                   fromMonth: today,
+    //                   toMonth: to,
+    //                   modifiers,
+    //                   numberOfMonths: 1,
+    //                   firstDayOfWeek: 1,
+    //                   localeUtils: MomentLocaleUtils,
+    //                   locale: lang,
+    //                   showWeekNumbers: true,
+    //                 }}
+    //                 onDayChange={this.handleFromChange}
+    //               />
+    //             </div>
+    //             <div className='InputFromTo' style={{ marginTop: '0.5em' }}>
+    //               <DayPickerInput
+    //                 ref={(el) => (this.to = el)}
+    //                 value={to || t('Search:checkout')}
+    //                 format='LL'
+    //                 formatDate={formatDate}
+    //                 parseDate={parseDate}
+    //                 inputProps={
+    //                   this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }
+    //                 }
+    //                 dayPickerProps={{
+    //                   selectedDays: [from, { from, to }],
+    //                   disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
+    //                   modifiers,
+    //                   firstDayOfWeek: 1,
+    //                   showWeekNumbers: true,
+    //                   month: from,
+    //                   fromMonth: from,
+    //                   localeUtils: MomentLocaleUtils,
+    //                   locale: lang,
+    //                   numberOfMonths: 1,
+    //                 }}
+    //                 onDayChange={this.handleToChange}
+    //               />
+    //             </div>
+    //           </div>
+    //           <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
+    //             <Header className='fake-link-underlined' style={{ textAlign: 'right' }} onClick={this.clearDates}>
+    //               {t('Search:reset')}
+    //             </Header>
+    //           </div>
+    //           <div className='required field' style={{ marginBottom: '1.5em' }}>
+    //             <label>{t('Search:where')}</label>
+    //             <Dropdown
+    //               clearable
+    //               search
+    //               selection
+    //               value={this.state.location}
+    //               placeholder={t('Search:where-plch')}
+    //               options={LOCATION_OPTIONS}
+    //               id='location'
+    //               onChange={this.handleLocationChange}
+    //               onKeyPress={this.listenEnterKeySearch}
+    //             />
+    //           </div>
+    //           <Form.Input
+    //             label={t('Search:how-many')}
+    //             type='number'
+    //             required
+    //             id='cats'
+    //             value={this.state.cats}
+    //             onChange={this.onChangeHandler}
+    //             onKeyPress={this.listenEnterKeySearch}
+    //             style={{ maxWidth: '180px', height: '38px' }}
+    //           />
+    //         </Form>
+    //         {errorDisplay}
+    //         <div className='button-wrapper'>
+    //           <div>
+    //             <Button id='search-button' className='submit-button' onClick={this.search}>
+    //               {t('Search:cta')}
+    //             </Button>
+    //           </div>
+    //         </div>
+    //         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    //           <Link to='/area-list' className='discreet-link'>
+    //             {t('Search:sitters-near-you')}
+    //           </Link>
+    //         </div>
+    //       </Segment>
+    //     </div>
+    //   );
+    // } else {
+    //   return <Spinner />;
+    // }
   }
 }
 

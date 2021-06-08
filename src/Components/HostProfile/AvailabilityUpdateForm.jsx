@@ -7,7 +7,6 @@ import Spinner from '../ReusableComponents/Spinner';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import '../../NpmPackageCSS/react-day-picker.css';
-import { Divider, Button, Message } from 'semantic-ui-react';
 
 class AvailabilityUpdateForm extends Component {
   constructor(props) {
@@ -120,77 +119,77 @@ class AvailabilityUpdateForm extends Component {
 
   render() {
     const { t } = this.props;
+    return <div>a</div>
+  //   if (this.props.tReady) {
+  //     let errorDisplay;
+  //     const lang = detectLanguage();
 
-    if (this.props.tReady) {
-      let errorDisplay;
-      const lang = detectLanguage();
+  //     const today = new Date();
 
-      const today = new Date();
+  //     let disabledDaysDates = [{ before: today }];
 
-      let disabledDaysDates = [{ before: today }];
+  //     if (this.state.errors !== '') {
+  //       errorDisplay = (
+  //         <Message negative>
+  //           <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
+  //           <ul id='message-error-list'>
+  //             {this.state.errors.map((error) => (
+  //               <li key={error}>{t(error)}</li>
+  //             ))}
+  //           </ul>
+  //         </Message>
+  //       );
+  //     }
 
-      if (this.state.errors !== '') {
-        errorDisplay = (
-          <Message negative>
-            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {this.state.errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        );
-      }
+  //     if (this.state.incomingBookings.length > 0) {
+  //       this.state.incomingBookings.map((day) => {
+  //         disabledDaysDates.push(new Date(day));
+  //         return null;
+  //       });
+  //     }
 
-      if (this.state.incomingBookings.length > 0) {
-        this.state.incomingBookings.map((day) => {
-          disabledDaysDates.push(new Date(day));
-          return null;
-        });
-      }
-
-      return (
-        <>
-          <Divider />
-          <p className='small-centered-paragraph'>{t('AvailabilityUpdateForm:main-title')}</p>
-          <div style={{ marginRight: '-2rem', marginLeft: '-2rem', marginBottom: '-1rem' }}>
-            <DayPicker
-              showWeekNumbers
-              firstDayOfWeek={1}
-              selectedDays={this.state.selectedDays}
-              fromMonth={today}
-              disabledDays={disabledDaysDates}
-              onDayClick={this.handleDayClick}
-              localeUtils={MomentLocaleUtils}
-              locale={lang}
-            />
-          </div>
-          {errorDisplay}
-          <div className='button-wrapper'>
-            <Button
-              secondary
-              id='availability-close-button'
-              className='cancel-button'
-              onClick={this.props.closeAllForms}
-            >
-              {t('reusable:cta:close')}
-            </Button>
-            <Button
-              id='availability-submit-button'
-              className='submit-button'
-              disabled={this.state.loading}
-              loading={this.state.loading}
-              onClick={this.updateAvailability}
-            >
-              {t('reusable:cta:save')}
-            </Button>
-          </div>
-          <Divider style={{ marginBottom: '2rem' }} />
-        </>
-      );
-    } else {
-      return <Spinner />;
-    }
+  //     return (
+  //       <>
+  //         <Divider />
+  //         <p className='small-centered-paragraph'>{t('AvailabilityUpdateForm:main-title')}</p>
+  //         <div style={{ marginRight: '-2rem', marginLeft: '-2rem', marginBottom: '-1rem' }}>
+  //           <DayPicker
+  //             showWeekNumbers
+  //             firstDayOfWeek={1}
+  //             selectedDays={this.state.selectedDays}
+  //             fromMonth={today}
+  //             disabledDays={disabledDaysDates}
+  //             onDayClick={this.handleDayClick}
+  //             localeUtils={MomentLocaleUtils}
+  //             locale={lang}
+  //           />
+  //         </div>
+  //         {errorDisplay}
+  //         <div className='button-wrapper'>
+  //           <Button
+  //             secondary
+  //             id='availability-close-button'
+  //             className='cancel-button'
+  //             onClick={this.props.closeAllForms}
+  //           >
+  //             {t('reusable:cta:close')}
+  //           </Button>
+  //           <Button
+  //             id='availability-submit-button'
+  //             className='submit-button'
+  //             disabled={this.state.loading}
+  //             loading={this.state.loading}
+  //             onClick={this.updateAvailability}
+  //           >
+  //             {t('reusable:cta:save')}
+  //           </Button>
+  //         </div>
+  //         <Divider style={{ marginBottom: '2rem' }} />
+  //       </>
+  //     );
+  //   } else {
+  //     return <Spinner />;
+  //   }
   }
 }
 

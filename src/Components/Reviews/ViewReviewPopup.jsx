@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import ReviewScore from '../ReusableComponents/ReviewScore';
 import { Trans, useTranslation } from 'react-i18next';
-import { Header, Message, Image, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -66,72 +65,72 @@ const ViewReviewPopup = (props) => {
     }
     // eslint-disable-next-line
   }, []);
-
-  if (ready) {
-    moment.locale(lang);
-    return errors !== null ? (
-      <Message negative style={{ textAlign: 'center' }}>
-        {t(errors[0])}
-      </Message>
-    ) : (
-      <>
-        <div style={{ margin: '-2rem -2rem 1rem', background: '#c90c61', padding: '2rem' }}>
-          <Header as='h2' style={{ color: '#ffffff', textAlign: 'left' }}>
-            {t('ViewReviewPopup:main-header')}
-          </Header>
-          <p style={{ color: '#ffffff', fontSize: 'small' }}>
-            <Trans i18nKey='ViewReviewPopup:desc'>
-              <strong>{{ nickname: nickname }}</strong> left you a review for a booking between the dates of
-              <strong>{{ startDate: props.startDate }}</strong> and <strong>{{ endDate: props.endDate }}</strong>.
-            </Trans>
-          </p>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <ReviewScore score={score} displayNumerical={true} />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Image
-            src={
-              avatar === null
-                ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-                : avatar
-            }
-            size='small'
-            style={{ borderRadius: '50%', width: '3rem', height: '3rem' }}
-          ></Image>
-          <div style={{ display: 'flex', alignItems: 'baseline' }}>
-            <Header style={{ margin: '0 0.5rem' }}>{nickname}</Header>
-            <p style={{ fontSize: 'small' }}>{moment(reviewDate).fromNow()}</p>
-          </div>
-        </div>
-        <div
-          style={{ maxHeight: '200px', overflow: 'auto', fontSize: 'small', fontStyle: 'italic', margin: '1rem auto' }}
-        >
-          <p>{message}</p>
-        </div>
-        {hostReply ? (
-          <>
-            <Divider />
-            <div style={{ display: 'flex', alignItems: 'baseline' }}>
-              <Header as='h4' style={{ margin: '0.5rem 0.5rem 0.5rem 0' }}>
-                {t('ViewReviewPopup:you-replied')}
-              </Header>
-              <p style={{ fontSize: 'small' }}>{moment(reviewUpdatedAt).fromNow()}</p>
-            </div>
-            <p style={{ fontStyle: 'italic' }}>{hostReply}</p>
-          </>
-        ) : (
-          <div>
-            <Link to={`/user-page/#review-${props.id}`} id='reply-link' className='fake-link-underlined'>
-              {t('reusable:cta:reply')}
-            </Link>
-          </div>
-        )}
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   moment.locale(lang);
+  //   return errors !== null ? (
+  //     <Message negative style={{ textAlign: 'center' }}>
+  //       {t(errors[0])}
+  //     </Message>
+  //   ) : (
+  //     <>
+  //       <div style={{ margin: '-2rem -2rem 1rem', background: '#c90c61', padding: '2rem' }}>
+  //         <Header as='h2' style={{ color: '#ffffff', textAlign: 'left' }}>
+  //           {t('ViewReviewPopup:main-header')}
+  //         </Header>
+  //         <p style={{ color: '#ffffff', fontSize: 'small' }}>
+  //           <Trans i18nKey='ViewReviewPopup:desc'>
+  //             <strong>{{ nickname: nickname }}</strong> left you a review for a booking between the dates of
+  //             <strong>{{ startDate: props.startDate }}</strong> and <strong>{{ endDate: props.endDate }}</strong>.
+  //           </Trans>
+  //         </p>
+  //       </div>
+  //       <div style={{ display: 'flex' }}>
+  //         <ReviewScore score={score} displayNumerical={true} />
+  //       </div>
+  //       <div style={{ display: 'flex', alignItems: 'center' }}>
+  //         <Image
+  //           src={
+  //             avatar === null
+  //               ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+  //               : avatar
+  //           }
+  //           size='small'
+  //           style={{ borderRadius: '50%', width: '3rem', height: '3rem' }}
+  //         ></Image>
+  //         <div style={{ display: 'flex', alignItems: 'baseline' }}>
+  //           <Header style={{ margin: '0 0.5rem' }}>{nickname}</Header>
+  //           <p style={{ fontSize: 'small' }}>{moment(reviewDate).fromNow()}</p>
+  //         </div>
+  //       </div>
+  //       <div
+  //         style={{ maxHeight: '200px', overflow: 'auto', fontSize: 'small', fontStyle: 'italic', margin: '1rem auto' }}
+  //       >
+  //         <p>{message}</p>
+  //       </div>
+  //       {hostReply ? (
+  //         <>
+  //           <Divider />
+  //           <div style={{ display: 'flex', alignItems: 'baseline' }}>
+  //             <Header as='h4' style={{ margin: '0.5rem 0.5rem 0.5rem 0' }}>
+  //               {t('ViewReviewPopup:you-replied')}
+  //             </Header>
+  //             <p style={{ fontSize: 'small' }}>{moment(reviewUpdatedAt).fromNow()}</p>
+  //           </div>
+  //           <p style={{ fontStyle: 'italic' }}>{hostReply}</p>
+  //         </>
+  //       ) : (
+  //         <div>
+  //           <Link to={`/user-page/#review-${props.id}`} id='reply-link' className='fake-link-underlined'>
+  //             {t('reusable:cta:reply')}
+  //           </Link>
+  //         </div>
+  //       )}
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default ViewReviewPopup;

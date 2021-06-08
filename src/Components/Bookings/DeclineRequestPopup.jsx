@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Header, Form, Button, Message } from 'semantic-ui-react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -73,52 +72,53 @@ const DeclineRequestPopup = (props) => {
     declineBooking(e);
   };
 
-  if (ready) {
-    return (
-      <>
-        <Header as='h2'>{t('DeclineRequestPopup:page-header')}</Header>
-        <p className='small-centered-paragraph'>
-          <Trans i18nKey='DeclineRequestPopup:page-desc'>
-            You are about to decline a booking request from
-            <strong style={{ color: '#c90c61' }}>{{ nickname: props.nickname }}</strong> for the dates of
-            <strong style={{ color: '#c90c61' }}>{{ startDate: props.startDate }}</strong> until
-            <strong style={{ color: '#c90c61' }}>{{ endDate: props.endDate }}</strong>
-          </Trans>
-        </p>
-        <Form>
-          <Form.TextArea
-            style={{ minHeight: '120px' }}
-            label={t('DeclineRequestPopup:text-area-label')}
-            placeholder={t('DeclineRequestPopup:text-area-plch')}
-            required
-            id='message'
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </Form>
-        <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-          {t('reusable:remaining-chars')} {200 - message.length}
-        </p>
-        {errors.length > 0 && (
-          <Message negative>
-            <Message.Header style={{ textAlign: 'center' }}>
-              {t('DeclineRequestPopup:error-message-header')}
-            </Message.Header>
-            <ul id='message-error-list'>
-              {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        )}
-        <Button id='decline-button' disabled={loading} loading={loading} onClick={declineCTA}>
-          {t('DeclineRequestPopup:decline-cta')}
-        </Button>
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <>
+  //       <Header as='h2'>{t('DeclineRequestPopup:page-header')}</Header>
+  //       <p className='small-centered-paragraph'>
+  //         <Trans i18nKey='DeclineRequestPopup:page-desc'>
+  //           You are about to decline a booking request from
+  //           <strong style={{ color: '#c90c61' }}>{{ nickname: props.nickname }}</strong> for the dates of
+  //           <strong style={{ color: '#c90c61' }}>{{ startDate: props.startDate }}</strong> until
+  //           <strong style={{ color: '#c90c61' }}>{{ endDate: props.endDate }}</strong>
+  //         </Trans>
+  //       </p>
+  //       <Form>
+  //         <Form.TextArea
+  //           style={{ minHeight: '120px' }}
+  //           label={t('DeclineRequestPopup:text-area-label')}
+  //           placeholder={t('DeclineRequestPopup:text-area-plch')}
+  //           required
+  //           id='message'
+  //           value={message}
+  //           onChange={(e) => setMessage(e.target.value)}
+  //         />
+  //       </Form>
+  //       <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
+  //         {t('reusable:remaining-chars')} {200 - message.length}
+  //       </p>
+  //       {errors.length > 0 && (
+  //         <Message negative>
+  //           <Message.Header style={{ textAlign: 'center' }}>
+  //             {t('DeclineRequestPopup:error-message-header')}
+  //           </Message.Header>
+  //           <ul id='message-error-list'>
+  //             {errors.map((error) => (
+  //               <li key={error}>{t(error)}</li>
+  //             ))}
+  //           </ul>
+  //         </Message>
+  //       )}
+  //       <Button id='decline-button' disabled={loading} loading={loading} onClick={declineCTA}>
+  //         {t('DeclineRequestPopup:decline-cta')}
+  //       </Button>
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default DeclineRequestPopup;

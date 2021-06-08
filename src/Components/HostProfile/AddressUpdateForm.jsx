@@ -4,7 +4,6 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Geocode from 'react-geocode';
-import { Divider, Header, Form, Button, Message, Icon } from 'semantic-ui-react';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
 import Spinner from '../ReusableComponents/Spinner';
@@ -127,81 +126,82 @@ const AddressUpdateForm = (props) => {
     setLongitude('');
   };
 
-  if (ready) {
-    return (
-      <>
-        <Divider />
-        <p className='small-centered-paragraph'>{t('AddressUpdateForm:main-title')}</p>
-        {addressErrorDisplay && <Message negative>{addressError}</Message>}
-        {addressSearch ? (
-          <div style={{ margin: 'auto', display: 'table', width: '100%' }}>
-            <Form.Input
-              style={{ width: '100%' }}
-              placeholder={t('AddressUpdateForm:address-search-plch')}
-              required
-              id='userInputAddress'
-              value={userInputAddress}
-              onChange={(e) => setUserInputAddress(e.target.value)}
-              onKeyPress={(e) => {
-                e.key === 'Enter' && geolocationDataAddress();
-              }}
-              iconPosition='right'
-              icon={
-                <Icon
-                  id='search'
-                  name='search'
-                  link
-                  onClick={() => geolocationDataAddress()}
-                  style={{ color: '#c90c61' }}
-                />
-              }
-            />
-          </div>
-        ) : (
-          <div className='required field'>
-            <p style={{ textAlign: 'center' }}>
-              {newAddress}&nbsp;
-              <Header
-                as='strong'
-                id='change-address-link'
-                onClick={() => backToSearch()}
-                className='fake-link-underlined'
-              >
-                {t('AddressUpdateForm:not-right')}
-              </Header>
-            </p>
-          </div>
-        )}
-        {errors.length > 0 && (
-          <Message negative>
-            <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
-            <ul id='message-error-list'>
-              {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Message>
-        )}
-        <div className='button-wrapper'>
-          <Button secondary id='address-close-button' className='cancel-button' onClick={() => props.closeAllForms()}>
-            {t('reusable:cta:close')}
-          </Button>
-          <Button
-            loading={loading}
-            disabled={loading}
-            id='address-submit-button'
-            className='submit-button'
-            onClick={() => updateAddress()}
-          >
-            {t('reusable:cta:save')}
-          </Button>
-        </div>
-        <Divider style={{ marginBottom: '2rem' }} />
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <>
+  //       <Divider />
+  //       <p className='small-centered-paragraph'>{t('AddressUpdateForm:main-title')}</p>
+  //       {addressErrorDisplay && <Message negative>{addressError}</Message>}
+  //       {addressSearch ? (
+  //         <div style={{ margin: 'auto', display: 'table', width: '100%' }}>
+  //           <Form.Input
+  //             style={{ width: '100%' }}
+  //             placeholder={t('AddressUpdateForm:address-search-plch')}
+  //             required
+  //             id='userInputAddress'
+  //             value={userInputAddress}
+  //             onChange={(e) => setUserInputAddress(e.target.value)}
+  //             onKeyPress={(e) => {
+  //               e.key === 'Enter' && geolocationDataAddress();
+  //             }}
+  //             iconPosition='right'
+  //             icon={
+  //               <Icon
+  //                 id='search'
+  //                 name='search'
+  //                 link
+  //                 onClick={() => geolocationDataAddress()}
+  //                 style={{ color: '#c90c61' }}
+  //               />
+  //             }
+  //           />
+  //         </div>
+  //       ) : (
+  //         <div className='required field'>
+  //           <p style={{ textAlign: 'center' }}>
+  //             {newAddress}&nbsp;
+  //             <Header
+  //               as='strong'
+  //               id='change-address-link'
+  //               onClick={() => backToSearch()}
+  //               className='fake-link-underlined'
+  //             >
+  //               {t('AddressUpdateForm:not-right')}
+  //             </Header>
+  //           </p>
+  //         </div>
+  //       )}
+  //       {errors.length > 0 && (
+  //         <Message negative>
+  //           <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
+  //           <ul id='message-error-list'>
+  //             {errors.map((error) => (
+  //               <li key={error}>{t(error)}</li>
+  //             ))}
+  //           </ul>
+  //         </Message>
+  //       )}
+  //       <div className='button-wrapper'>
+  //         <Button secondary id='address-close-button' className='cancel-button' onClick={() => props.closeAllForms()}>
+  //           {t('reusable:cta:close')}
+  //         </Button>
+  //         <Button
+  //           loading={loading}
+  //           disabled={loading}
+  //           id='address-submit-button'
+  //           className='submit-button'
+  //           onClick={() => updateAddress()}
+  //         >
+  //           {t('reusable:cta:save')}
+  //         </Button>
+  //       </div>
+  //       <Divider style={{ marginBottom: '2rem' }} />
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default AddressUpdateForm;

@@ -1,7 +1,0 @@
-/*******************************
-        User Overrides
-*******************************/
-
-.ui.selection.dropdown {
-  min-width: unset;
-}

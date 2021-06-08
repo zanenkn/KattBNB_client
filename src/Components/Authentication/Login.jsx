@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { signInUser } from '../../reduxTokenAuthConfig';
 import { detectLanguage } from '../../Modules/detectLanguage';
@@ -51,77 +50,78 @@ const Login = (props) => {
     }
   };
 
-  if (ready) {
-    return (
-      <div className='content-wrapper'>
-        <Header as='h1'>{t('Login:title')}</Header>
-        <Segment className='whitebox'>
-          <Form id='login-form'>
-            <Form.Input
-              required
-              id='email'
-              label={t('reusable:plch.email')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t('reusable:plch.email')}
-              onKeyPress={(e) => {
-                e.key === 'Enter' && logInUser();
-              }}
-            />
-            <Form.Input
-              required
-              id='password'
-              type='password'
-              label={t('reusable:plch.password')}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t('reusable:plch.password')}
-              onKeyPress={(e) => {
-                e.key === 'Enter' && logInUser();
-              }}
-            />
-            {successDisplay === false && (
-              <div style={{ textAlign: 'right' }}>
-                <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined'>
-                  {t('Login:forgot-link')}
-                </Header>
-              </div>
-            )}
-          </Form>
-          {errors.length > 0 && (
-            <Message negative style={{ textAlign: 'center' }}>
-              {errors}
-            </Message>
-          )}
-          {successDisplay && (
-            <Message success style={{ textAlign: 'center' }}>
-              {t('Login:success-msg')}
-            </Message>
-          )}
-          <Button
-            className='submit-button'
-            id='log-in-button'
-            disabled={loading}
-            loading={loading}
-            onClick={() => logInUser()}
-          >
-            {t('Login:title')}
-          </Button>
-          {successDisplay === false && (
-            <p style={{ textAlign: 'center', marginTop: '2rem' }}>
-              {t('Login:no-acc')}
-              <br></br>
-              <Header as={Link} to='sign-up' className='fake-link' id='create-account'>
-                {t('Login:signup-link')}
-              </Header>
-            </p>
-          )}
-        </Segment>
-      </div>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <div className='content-wrapper'>
+  //       <Header as='h1'>{t('Login:title')}</Header>
+  //       <Segment className='whitebox'>
+  //         <Form id='login-form'>
+  //           <Form.Input
+  //             required
+  //             id='email'
+  //             label={t('reusable:plch.email')}
+  //             value={email}
+  //             onChange={(e) => setEmail(e.target.value)}
+  //             placeholder={t('reusable:plch.email')}
+  //             onKeyPress={(e) => {
+  //               e.key === 'Enter' && logInUser();
+  //             }}
+  //           />
+  //           <Form.Input
+  //             required
+  //             id='password'
+  //             type='password'
+  //             label={t('reusable:plch.password')}
+  //             value={password}
+  //             onChange={(e) => setPassword(e.target.value)}
+  //             placeholder={t('reusable:plch.password')}
+  //             onKeyPress={(e) => {
+  //               e.key === 'Enter' && logInUser();
+  //             }}
+  //           />
+  //           {successDisplay === false && (
+  //             <div style={{ textAlign: 'right' }}>
+  //               <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined'>
+  //                 {t('Login:forgot-link')}
+  //               </Header>
+  //             </div>
+  //           )}
+  //         </Form>
+  //         {errors.length > 0 && (
+  //           <Message negative style={{ textAlign: 'center' }}>
+  //             {errors}
+  //           </Message>
+  //         )}
+  //         {successDisplay && (
+  //           <Message success style={{ textAlign: 'center' }}>
+  //             {t('Login:success-msg')}
+  //           </Message>
+  //         )}
+  //         <Button
+  //           className='submit-button'
+  //           id='log-in-button'
+  //           disabled={loading}
+  //           loading={loading}
+  //           onClick={() => logInUser()}
+  //         >
+  //           {t('Login:title')}
+  //         </Button>
+  //         {successDisplay === false && (
+  //           <p style={{ textAlign: 'center', marginTop: '2rem' }}>
+  //             {t('Login:no-acc')}
+  //             <br></br>
+  //             <Header as={Link} to='sign-up' className='fake-link' id='create-account'>
+  //               {t('Login:signup-link')}
+  //             </Header>
+  //           </p>
+  //         )}
+  //       </Segment>
+  //     </div>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default connect(null, { signInUser })(Login);

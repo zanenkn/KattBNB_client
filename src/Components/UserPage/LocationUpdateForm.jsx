@@ -3,7 +3,6 @@ import { LOCATION_OPTIONS } from '../../Modules/locationData';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Form, Dropdown, Button, Message, Divider } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 
@@ -74,56 +73,56 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
       }
     }
   };
-
-  if (ready) {
-    return (
-      <>
-        <Divider />
-        <Form style={{ maxWidth: '194px', margin: 'auto' }}>
-          <Dropdown
-            clearable
-            search
-            selection
-            placeholder={t('LocationUpdateForm:new-location-plch')}
-            options={LOCATION_OPTIONS}
-            id='location'
-            style={{ width: '100%' }}
-            onChange={(e, { value }) => setNewLocation(value)}
-            onKeyPress={listenEnterKeyLocation}
-          />
-          {errors.length > 0 && (
-            <Message negative style={{ width: 'inherit' }}>
-              <Message.Header style={{ textAlign: 'center' }}>
-                {t('reusable:errors.action-error-header')}
-              </Message.Header>
-              <ul id='message-error-list'>
-                {errors.map((error) => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Message>
-          )}
-        </Form>
-        <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
-            {t('reusable:cta.close')}
-          </Button>
-          <Button
-            id='location-submit-button'
-            className='submit-button'
-            disabled={loading}
-            loading={loading}
-            onClick={updateLocation}
-          >
-            {t('reusable:cta.change')}
-          </Button>
-        </div>
-        <Divider style={{ marginBottom: '2rem' }} />
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <>
+  //       <Divider />
+  //       <Form style={{ maxWidth: '194px', margin: 'auto' }}>
+  //         <Dropdown
+  //           clearable
+  //           search
+  //           selection
+  //           placeholder={t('LocationUpdateForm:new-location-plch')}
+  //           options={LOCATION_OPTIONS}
+  //           id='location'
+  //           style={{ width: '100%' }}
+  //           onChange={(e, { value }) => setNewLocation(value)}
+  //           onKeyPress={listenEnterKeyLocation}
+  //         />
+  //         {errors.length > 0 && (
+  //           <Message negative style={{ width: 'inherit' }}>
+  //             <Message.Header style={{ textAlign: 'center' }}>
+  //               {t('reusable:errors.action-error-header')}
+  //             </Message.Header>
+  //             <ul id='message-error-list'>
+  //               {errors.map((error) => (
+  //                 <li key={error}>{t(error)}</li>
+  //               ))}
+  //             </ul>
+  //           </Message>
+  //         )}
+  //       </Form>
+  //       <div className='button-wrapper'>
+  //         <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
+  //           {t('reusable:cta.close')}
+  //         </Button>
+  //         <Button
+  //           id='location-submit-button'
+  //           className='submit-button'
+  //           disabled={loading}
+  //           loading={loading}
+  //           onClick={updateLocation}
+  //         >
+  //           {t('reusable:cta.change')}
+  //         </Button>
+  //       </div>
+  //       <Divider style={{ marginBottom: '2rem' }} />
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default LocationUpdateForm;

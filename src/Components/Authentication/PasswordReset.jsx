@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -56,49 +55,49 @@ const PasswordReset = ({ history }) => {
         });
     }
   };
-
-  if (ready) {
-    return (
-      <div className='content-wrapper'>
-        <Header as='h1'>{t('PasswordReset:title')}</Header>
-        <Segment className='whitebox'>
-          <p style={{ textAlign: 'center' }}>{t('PasswordReset:instructions')}</p>
-          <Form>
-            <Form.Input
-              required
-              id='email'
-              label={t('reusable:plch.email')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t('reusable:plch.email')}
-              onKeyPress={listenEnterKey}
-            />
-          </Form>
-          {errors.length > 0 && (
-            <Message negative>
-              <Message.Header style={{ textAlign: 'center' }}>{t('PasswordReset:error-header')}:</Message.Header>
-              <ul id='message-error-list'>
-                {errors.map((error) => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Message>
-          )}
-          <Button
-            className='submit-button'
-            id='reset-pass-button'
-            onClick={resetPassword}
-            disabled={loading}
-            loading={loading}
-          >
-            {t('PasswordReset:btn')}
-          </Button>
-        </Segment>
-      </div>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <div className='content-wrapper'>
+  //       <Header as='h1'>{t('PasswordReset:title')}</Header>
+  //       <Segment className='whitebox'>
+  //         <p style={{ textAlign: 'center' }}>{t('PasswordReset:instructions')}</p>
+  //         <Form>
+  //           <Form.Input
+  //             required
+  //             id='email'
+  //             label={t('reusable:plch.email')}
+  //             value={email}
+  //             onChange={(e) => setEmail(e.target.value)}
+  //             placeholder={t('reusable:plch.email')}
+  //             onKeyPress={listenEnterKey}
+  //           />
+  //         </Form>
+  //         {errors.length > 0 && (
+  //           <Message negative>
+  //             <Message.Header style={{ textAlign: 'center' }}>{t('PasswordReset:error-header')}:</Message.Header>
+  //             <ul id='message-error-list'>
+  //               {errors.map((error) => (
+  //                 <li key={error}>{t(error)}</li>
+  //               ))}
+  //             </ul>
+  //           </Message>
+  //         )}
+  //         <Button
+  //           className='submit-button'
+  //           id='reset-pass-button'
+  //           onClick={resetPassword}
+  //           disabled={loading}
+  //           loading={loading}
+  //         >
+  //           {t('PasswordReset:btn')}
+  //         </Button>
+  //       </Segment>
+  //     </div>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default PasswordReset;

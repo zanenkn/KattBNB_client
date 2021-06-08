@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form, Button, Message, Divider } from 'semantic-ui-react';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -70,75 +69,75 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       }
     }
   };
-
-  if (ready) {
-    return (
-      <>
-        <Divider />
-        <Form style={{ maxWidth: '194px', margin: 'auto' }}>
-          <Form.Input
-            required
-            id='currentPassword'
-            value={currentPassword}
-            type='password'
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder={t('PasswordUpdateForm:plch.current-pass')}
-            onKeyPress={listenEnterKeyPassword}
-          />
-          <Form.Input
-            required
-            id='newPassword'
-            value={newPassword}
-            type='password'
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder={t('PasswordUpdateForm:plch.new-pass')}
-            onKeyPress={listenEnterKeyPassword}
-          />
-          <Form.Input
-            required
-            id='newPasswordConfirmation'
-            value={newPasswordConfirmation}
-            type='password'
-            onChange={(e) => setNewPasswordConfirmation(e.target.value)}
-            placeholder={t('PasswordUpdateForm:plch.new-pass-confirm')}
-            onKeyPress={listenEnterKeyPassword}
-          />
-          <p className='small-centered-paragraph' style={{ marginBottom: '0' }}>
-            {t('PasswordUpdateForm:info')}
-          </p>
-          {errors.length > 0 && (
-            <Message negative style={{ width: 'inherit' }}>
-              <Message.Header style={{ textAlign: 'center' }}>
-                {t('reusable:errors.action-error-header')}
-              </Message.Header>
-              <ul id='message-error-list'>
-                {errors.map((error) => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Message>
-          )}
-        </Form>
-        <div className='button-wrapper'>
-          <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
-            {t('reusable:cta.close')}
-          </Button>
-          <Button
-            id='password-submit-button'
-            className='submit-button'
-            disabled={loading}
-            loading={loading}
-            onClick={updatePassword}
-          >
-            {t('reusable:cta.change')}
-          </Button>
-        </div>
-        <Divider style={{ marginBottom: '2rem' }} />
-      </>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <>
+  //       <Divider />
+  //       <Form style={{ maxWidth: '194px', margin: 'auto' }}>
+  //         <Form.Input
+  //           required
+  //           id='currentPassword'
+  //           value={currentPassword}
+  //           type='password'
+  //           onChange={(e) => setCurrentPassword(e.target.value)}
+  //           placeholder={t('PasswordUpdateForm:plch.current-pass')}
+  //           onKeyPress={listenEnterKeyPassword}
+  //         />
+  //         <Form.Input
+  //           required
+  //           id='newPassword'
+  //           value={newPassword}
+  //           type='password'
+  //           onChange={(e) => setNewPassword(e.target.value)}
+  //           placeholder={t('PasswordUpdateForm:plch.new-pass')}
+  //           onKeyPress={listenEnterKeyPassword}
+  //         />
+  //         <Form.Input
+  //           required
+  //           id='newPasswordConfirmation'
+  //           value={newPasswordConfirmation}
+  //           type='password'
+  //           onChange={(e) => setNewPasswordConfirmation(e.target.value)}
+  //           placeholder={t('PasswordUpdateForm:plch.new-pass-confirm')}
+  //           onKeyPress={listenEnterKeyPassword}
+  //         />
+  //         <p className='small-centered-paragraph' style={{ marginBottom: '0' }}>
+  //           {t('PasswordUpdateForm:info')}
+  //         </p>
+  //         {errors.length > 0 && (
+  //           <Message negative style={{ width: 'inherit' }}>
+  //             <Message.Header style={{ textAlign: 'center' }}>
+  //               {t('reusable:errors.action-error-header')}
+  //             </Message.Header>
+  //             <ul id='message-error-list'>
+  //               {errors.map((error) => (
+  //                 <li key={error}>{t(error)}</li>
+  //               ))}
+  //             </ul>
+  //           </Message>
+  //         )}
+  //       </Form>
+  //       <div className='button-wrapper'>
+  //         <Button secondary className='cancel-button' onClick={closeLocationAndPasswordForms}>
+  //           {t('reusable:cta.close')}
+  //         </Button>
+  //         <Button
+  //           id='password-submit-button'
+  //           className='submit-button'
+  //           disabled={loading}
+  //           loading={loading}
+  //           onClick={updatePassword}
+  //         >
+  //           {t('reusable:cta.change')}
+  //         </Button>
+  //       </div>
+  //       <Divider style={{ marginBottom: '2rem' }} />
+  //     </>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default PasswordUpdateForm;

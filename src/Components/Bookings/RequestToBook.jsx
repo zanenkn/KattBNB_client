@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Header, Form, Button, Message, Segment, Icon, Divider } from 'semantic-ui-react';
 import Spinner from '../ReusableComponents/Spinner';
 import moment from 'moment';
 import axios from 'axios';
@@ -249,125 +248,126 @@ const RequestToBook = (props) => {
     }
   };
 
-  if (ready) {
-    let messageLength = 400 - message.length;
+  return <div>a</div>
+  // if (ready) {
+  //   let messageLength = 400 - message.length;
 
-    return (
-      <div className='content-wrapper'>
-        <Header as='h1'>{t('RequestToBook:title')}</Header>
-        <Segment className='whitebox'>
-          <p className='small-centered-paragraph' style={{ marginBottom: '0.5rem' }}>
-            <Trans i18nKey='RequestToBook:request-info' count={parseInt(numberOfCats)}>
-              You are requesting a booking for
-              <strong style={{ color: '#c90c61' }}>{{ count: numberOfCats }} cat</strong> with
-              <strong style={{ color: '#c90c61' }}>{{ host: nickname }}</strong> during the dates of
-              <strong style={{ color: '#c90c61' }}>{{ checkin: checkIn }}</strong> until
-              <strong style={{ color: '#c90c61' }}>{{ checkout: checkOut }}</strong>.
-            </Trans>
-          </p>
-          <Form>
-            <Form.TextArea
-              label={t('reusable:plch.message')}
-              placeholder={t('RequestToBook:message-plch')}
-              required
-              id='message'
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </Form>
-          <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-            {t('reusable:remaining-chars')} {messageLength}
-          </p>
-          <Divider horizontal>
-            <div style={{ width: '135px', display: 'flex', justifyContent: 'space-between', margin: '1rem auto' }}>
-              <Visa height={'2rem'} />
-              <Mastercard height={'2rem'} />
-              <Amex height={'2rem'} />
-            </div>
-          </Divider>
-          <ElementsConsumer>
-            {({ stripe, elements }) => (
-              <>
-                <div className='payment-wrapper'>
-                  <StripeCardDetails
-                    onChangeCardHolder={(e) => setCardholderName(e.target.value)}
-                    onChangePostalCode={(e) => setPostalCode(e.target.value)}
-                    cardholderName={cardholderName}
-                    postalCode={postalCode}
-                    stripe={stripe}
-                    elements={elements}
-                  />
-                  <div className='order-total'>
-                    <p className='small-centered-paragraph' style={{ marginBottom: '0.5rem' }}>
-                      {t('RequestToBook:agree-to-pay')}
-                    </p>
-                    <Header id='total' as='h3' style={{ marginTop: '0', marginBottom: '0' }}>
-                      {orderTotal} kr
-                    </Header>
-                    <Header id='total' as='h5' style={{ marginTop: '0' }}>
-                      ({perDay} {t('reusable:price.per-day')})
-                    </Header>
-                  </div>
-                </div>
-                {errors.length > 0 && (
-                  <Message negative>
-                    <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
-                    <ul>
-                      {errors.map((error) => (
-                        <li key={error}>{t(error)}</li>
-                      ))}
-                    </ul>
-                  </Message>
-                )}
-                <Button
-                  onClick={(e) => createBookingAndPay(e, stripe, elements)}
-                  id='request-to-book-button'
-                  disabled={loading}
-                  loading={loading}
-                >
-                  <Icon fitted name='lock' /> &nbsp; {t('reusable:request-cta.pay-btn')} {orderTotal} kr
-                </Button>
-                <p className='smallprint' style={{ marginTop: '2rem' }}>
-                  <Trans i18nKey='RequestToBook:smallprint'>
-                    Our payment provider is <a href='https://stripe.com/about'>Stripe</a>. When you request the booking
-                    we reserve the amount shown above from your bank card. Host then will have 3 days to accept or
-                    decline your booking request. In an event of cancelled or declined booking request, the reserved
-                    amount will be released within 7 days of the initial request date. You can read more on how we
-                    handle payments <Link to='/faq?section=payments&active=503'>in our FAQ</Link>.
-                  </Trans>
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1rem' }}>
-                  <Stripe height={'2rem'} />
-                </div>
-              </>
-            )}
-          </ElementsConsumer>
-        </Segment>
-        {stripePaymentProcessingDisplay && (
-          <div
-            style={{
-              width: '100vw',
-              height: '100vh',
-              position: 'fixed',
-              top: '0',
-              left: '0',
-              backdropFilter: 'blur(2rem)',
-            }}
-          >
-            <div style={{ margin: '13rem auto 0' }}>
-              <Spinner />
-            </div>
-            <div style={{ textAlign: 'center', margin: '2rem auto', maxWidth: '300px' }}>
-              <Header>{t('RequestToBook:payment-processed-header')}</Header>
-              <p>{t('RequestToBook:payment-processed-text')}</p>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  } else {
-    return <Spinner />;
-  }
+  //   return (
+  //     <div className='content-wrapper'>
+  //       <Header as='h1'>{t('RequestToBook:title')}</Header>
+  //       <Segment className='whitebox'>
+  //         <p className='small-centered-paragraph' style={{ marginBottom: '0.5rem' }}>
+  //           <Trans i18nKey='RequestToBook:request-info' count={parseInt(numberOfCats)}>
+  //             You are requesting a booking for
+  //             <strong style={{ color: '#c90c61' }}>{{ count: numberOfCats }} cat</strong> with
+  //             <strong style={{ color: '#c90c61' }}>{{ host: nickname }}</strong> during the dates of
+  //             <strong style={{ color: '#c90c61' }}>{{ checkin: checkIn }}</strong> until
+  //             <strong style={{ color: '#c90c61' }}>{{ checkout: checkOut }}</strong>.
+  //           </Trans>
+  //         </p>
+  //         <Form>
+  //           <Form.TextArea
+  //             label={t('reusable:plch.message')}
+  //             placeholder={t('RequestToBook:message-plch')}
+  //             required
+  //             id='message'
+  //             value={message}
+  //             onChange={(e) => setMessage(e.target.value)}
+  //           />
+  //         </Form>
+  //         <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
+  //           {t('reusable:remaining-chars')} {messageLength}
+  //         </p>
+  //         <Divider horizontal>
+  //           <div style={{ width: '135px', display: 'flex', justifyContent: 'space-between', margin: '1rem auto' }}>
+  //             <Visa height={'2rem'} />
+  //             <Mastercard height={'2rem'} />
+  //             <Amex height={'2rem'} />
+  //           </div>
+  //         </Divider>
+  //         <ElementsConsumer>
+  //           {({ stripe, elements }) => (
+  //             <>
+  //               <div className='payment-wrapper'>
+  //                 <StripeCardDetails
+  //                   onChangeCardHolder={(e) => setCardholderName(e.target.value)}
+  //                   onChangePostalCode={(e) => setPostalCode(e.target.value)}
+  //                   cardholderName={cardholderName}
+  //                   postalCode={postalCode}
+  //                   stripe={stripe}
+  //                   elements={elements}
+  //                 />
+  //                 <div className='order-total'>
+  //                   <p className='small-centered-paragraph' style={{ marginBottom: '0.5rem' }}>
+  //                     {t('RequestToBook:agree-to-pay')}
+  //                   </p>
+  //                   <Header id='total' as='h3' style={{ marginTop: '0', marginBottom: '0' }}>
+  //                     {orderTotal} kr
+  //                   </Header>
+  //                   <Header id='total' as='h5' style={{ marginTop: '0' }}>
+  //                     ({perDay} {t('reusable:price.per-day')})
+  //                   </Header>
+  //                 </div>
+  //               </div>
+  //               {errors.length > 0 && (
+  //                 <Message negative>
+  //                   <Message.Header>{t('RequestToBook:error-header')}</Message.Header>
+  //                   <ul>
+  //                     {errors.map((error) => (
+  //                       <li key={error}>{t(error)}</li>
+  //                     ))}
+  //                   </ul>
+  //                 </Message>
+  //               )}
+  //               <Button
+  //                 onClick={(e) => createBookingAndPay(e, stripe, elements)}
+  //                 id='request-to-book-button'
+  //                 disabled={loading}
+  //                 loading={loading}
+  //               >
+  //                 <Icon fitted name='lock' /> &nbsp; {t('reusable:request-cta.pay-btn')} {orderTotal} kr
+  //               </Button>
+  //               <p className='smallprint' style={{ marginTop: '2rem' }}>
+  //                 <Trans i18nKey='RequestToBook:smallprint'>
+  //                   Our payment provider is <a href='https://stripe.com/about'>Stripe</a>. When you request the booking
+  //                   we reserve the amount shown above from your bank card. Host then will have 3 days to accept or
+  //                   decline your booking request. In an event of cancelled or declined booking request, the reserved
+  //                   amount will be released within 7 days of the initial request date. You can read more on how we
+  //                   handle payments <Link to='/faq?section=payments&active=503'>in our FAQ</Link>.
+  //                 </Trans>
+  //               </p>
+  //               <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1rem' }}>
+  //                 <Stripe height={'2rem'} />
+  //               </div>
+  //             </>
+  //           )}
+  //         </ElementsConsumer>
+  //       </Segment>
+  //       {stripePaymentProcessingDisplay && (
+  //         <div
+  //           style={{
+  //             width: '100vw',
+  //             height: '100vh',
+  //             position: 'fixed',
+  //             top: '0',
+  //             left: '0',
+  //             backdropFilter: 'blur(2rem)',
+  //           }}
+  //         >
+  //           <div style={{ margin: '13rem auto 0' }}>
+  //             <Spinner />
+  //           </div>
+  //           <div style={{ textAlign: 'center', margin: '2rem auto', maxWidth: '300px' }}>
+  //             <Header>{t('RequestToBook:payment-processed-header')}</Header>
+  //             <p>{t('RequestToBook:payment-processed-text')}</p>
+  //           </div>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 const mapStateToProps = (state) => ({

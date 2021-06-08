@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
-import { Header, Segment, Form, Message, Button } from 'semantic-ui-react';
 import { Trans, useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import axios from 'axios';
@@ -107,58 +106,59 @@ const LeaveReview = (props) => {
     }
   };
 
-  if (ready) {
-    return (
-      <div className='content-wrapper'>
-        <Header as='h1'>{t('LeaveReview:title')}</Header>
-        <Segment className='whitebox'>
-          <p className='small-centered-paragraph' style={{ marginBottom: '2rem' }}>
-            <Trans i18nKey='LeaveReview:desc'>
-              Your cat(s) stayed with <strong style={{ color: '#c90c61' }}>{{ host: hostNickname }}</strong> during the
-              dates of <strong style={{ color: '#c90c61' }}>{{ startDate: bookingStart }}</strong> until
-              <strong style={{ color: '#c90c61' }}>{{ endDate: bookingEnd }}</strong>. Help us to improve KattBNB
-              community by reviewing your experience.
-            </Trans>
-          </p>
-          <Form>
-            <div className='required field'>
-              <label>{t('LeaveReview:label')}</label>
-              <ReviewScore
-                setScore={(e) => onScoreClick(e)}
-                score={reviewScore}
-                clickable={true}
-                displayNumerical={true}
-              />
-              <Form.TextArea
-                placeholder={t('LeaveReview:placeholder')}
-                required
-                id='review-body'
-                value={reviewBody}
-                onChange={(e) => setReviewBody(e.target.value)}
-              />
-            </div>
-          </Form>
-          <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-            {t('reusable:remaining-chars')} {1000 - reviewBody.length}
-          </p>
-          {errors.length > 0 && (
-            <Message negative>
-              <ul id='message-error-list'>
-                {errors.map((error) => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Message>
-          )}
-          <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>
-            {t('LeaveReview:cta')}
-          </Button>
-        </Segment>
-      </div>
-    );
-  } else {
-    return <Spinner />;
-  }
+  return <div>a</div>
+  // if (ready) {
+  //   return (
+  //     <div className='content-wrapper'>
+  //       <Header as='h1'>{t('LeaveReview:title')}</Header>
+  //       <Segment className='whitebox'>
+  //         <p className='small-centered-paragraph' style={{ marginBottom: '2rem' }}>
+  //           <Trans i18nKey='LeaveReview:desc'>
+  //             Your cat(s) stayed with <strong style={{ color: '#c90c61' }}>{{ host: hostNickname }}</strong> during the
+  //             dates of <strong style={{ color: '#c90c61' }}>{{ startDate: bookingStart }}</strong> until
+  //             <strong style={{ color: '#c90c61' }}>{{ endDate: bookingEnd }}</strong>. Help us to improve KattBNB
+  //             community by reviewing your experience.
+  //           </Trans>
+  //         </p>
+  //         <Form>
+  //           <div className='required field'>
+  //             <label>{t('LeaveReview:label')}</label>
+  //             <ReviewScore
+  //               setScore={(e) => onScoreClick(e)}
+  //               score={reviewScore}
+  //               clickable={true}
+  //               displayNumerical={true}
+  //             />
+  //             <Form.TextArea
+  //               placeholder={t('LeaveReview:placeholder')}
+  //               required
+  //               id='review-body'
+  //               value={reviewBody}
+  //               onChange={(e) => setReviewBody(e.target.value)}
+  //             />
+  //           </div>
+  //         </Form>
+  //         <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
+  //           {t('reusable:remaining-chars')} {1000 - reviewBody.length}
+  //         </p>
+  //         {errors.length > 0 && (
+  //           <Message negative>
+  //             <ul id='message-error-list'>
+  //               {errors.map((error) => (
+  //                 <li key={error}>{t(error)}</li>
+  //               ))}
+  //             </ul>
+  //           </Message>
+  //         )}
+  //         <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>
+  //           {t('LeaveReview:cta')}
+  //         </Button>
+  //       </Segment>
+  //     </div>
+  //   );
+  // } else {
+  //   return <Spinner />;
+  // }
 };
 
 export default withAuth(LeaveReview);
