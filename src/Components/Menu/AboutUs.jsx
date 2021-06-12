@@ -5,10 +5,16 @@ import { Helmet } from 'react-helmet';
 import FacebookIcon from '../Icons/FacebookIcon';
 import InstagramIcon from '../Icons/InstagramIcon';
 import LinkedinIcon from '../Icons/LinkedinIcon';
+import {Heading} from '../../UI-Components'
 
 const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs');
-  return <div>a</div>
+  return (
+    <>
+    <Heading>a</Heading>
+    <Heading color={'red'}>a</Heading>
+    </>
+  )
   // if (ready) {
   //   return (
   //     <>

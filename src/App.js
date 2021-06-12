@@ -42,6 +42,7 @@ import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
 import GlobalStyles from './Styles/global';
+import Theme from './Styles/theme'
 
 const App = (props) => {
   const [uids, setUids] = useState([]);
@@ -63,7 +64,7 @@ const App = (props) => {
   }, []);
 
   return (
-    <>
+    <Theme>
       <GlobalStyles />
       <Navbar />
       <ScrollToTop>
@@ -108,7 +109,7 @@ const App = (props) => {
         </Switch>
       </ScrollToTop>
       <Menu />
-    </>
+    </Theme>
   );
 };
 
