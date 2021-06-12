@@ -5,9 +5,6 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Header, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import FacebookIcon from './Icons/FacebookIcon';
-import InstagramIcon from './Icons/InstagramIcon';
-import LinkedinIcon from './Icons/LinkedinIcon';
 import { config } from '../weekly-cat-config';
 import WeeklyCatBadge from './Icons/WeeklyCatBadge';
 import Slider from 'react-slick';
@@ -114,7 +111,7 @@ const Landing = () => {
               <KattBNBLogomark width={'100px'} />
               <Header as='h1'>{t('Landing:title')}</Header>
               <p
-                style={{ textAlign: 'center', maxWidth: '300px' }}
+                style={{ textAlign: 'center', maxWidth: '400px' }}
                 dangerouslySetInnerHTML={{ __html: t('Landing:text') }}
               ></p>
               <div style={{ width: '165px' }}>
@@ -125,33 +122,7 @@ const Landing = () => {
                   <Button style={{ width: '100%' }}>{t('Landing:cta-become')}</Button>
                 </Link>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'center', margin: '4rem auto' }}>
-                <a
-                  href='https://www.facebook.com/kattbnb/'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-                >
-                  <FacebookIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-                </a>
-                <a
-                  href='https://www.instagram.com/kattbnb'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-                >
-                  <InstagramIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-                </a>
-                <a
-                  href='https://www.linkedin.com/company/28767809'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{ margin: '0 0.5rem', cursor: 'pointer' }}
-                >
-                  <LinkedinIcon height={'3rem'} fill={'silver'} class={'some-icon'} />
-                </a>
-              </div>
-              <p style={{ fontSize: 'small', color: '#a5a5a5' }}>
+              <p style={{ fontSize: 'small', color: '#a5a5a5', marginTop: '3rem' }}>
                 <Trans i18nKey='Landing:photo-credit'>
                   Photo credit:
                   <a href={config.link} target='_blank' rel='noopener noreferrer'>
