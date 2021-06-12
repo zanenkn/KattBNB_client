@@ -5,16 +5,16 @@ const GlobalStyles = createGlobalStyle`
   body {
     font-family: 'Lato', sans-serif;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   p {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
-    color: #808080;
+    color: #59565E;
     font-weight: 400;
-    margin: 0.5rem 0 0 0;
-    &first-child {
-      margin-top: 0;
-    }
+    margin: 0;
+    line-height: 1.3em;
   }
   h1 {
     font-family: 'Lato', sans-serif;
@@ -45,6 +45,11 @@ const GlobalStyles = createGlobalStyle`
     font-size: 1.2rem;
     font-weight: 700;
     margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
   
   .nav-icon {
