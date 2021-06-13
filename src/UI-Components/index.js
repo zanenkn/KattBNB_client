@@ -8,3 +8,4 @@ export { default as Container } from './Wrappers/Container/';
 // typography elements
 export { default as Header } from './Typography/Header';
 export { default as Text } from './Typography/Text';
+export { default as InlineLink } from './Typography/InlineLink';

@@ -5,6 +5,7 @@ export const theme = {
   colors: {
     base: '#59565E',
     main: '#C90C61',
+    mainDarker: '#A0094D',
   },
   spacing: {
     0: '0',
