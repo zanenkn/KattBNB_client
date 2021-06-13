@@ -2,15 +2,17 @@ import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import PropTypes from 'prop-types';
 
+const { colors, fontWeights, spacing } = theme;
+
 const Styled = styled.p`
-  color: ${(props) => theme.colors[props.color]};
-  text-align: ${(props) => (props.centered ? 'center' : props.right ? 'right' : 'left')};
-  font-weight: ${(props) => (props.bold ? '700' : '400')};
-  margin-bottom: ${(props) => props.space};
+  color: ${({ color }) => colors[color]};
+  text-align: ${({ centered, right }) => (centered ? 'center' : right ? 'right' : 'left')};
+  font-weight: ${({ bold }) => (bold ? fontWeights.bold : fontWeights.regular)};
+  margin-bottom: ${({ space }) => space};
 `;
 
 const Text = ({ color, centered, right, bold, space, ...rest }) => {
-  return <Styled color={color} centered={centered} right={right} bold={bold} space={theme.spacing[space]} {...rest} />;
+  return <Styled color={color} centered={centered} right={right} bold={bold} space={spacing[space]} {...rest} />;
 };
 
 Text.defaultProps = {
@@ -22,11 +24,11 @@ Text.defaultProps = {
 };
 
 Text.propTypes = {
-  color: PropTypes.oneOf(Object.keys(theme.colors)),
+  color: PropTypes.oneOf(Object.keys(colors)),
   centered: PropTypes.bool,
   right: PropTypes.bool,
   bold: PropTypes.bool,
-  space: PropTypes.oneOf(Object.keys(theme.spacing).map((key) => parseInt(key))),
+  space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
 };
 
 export default Text;

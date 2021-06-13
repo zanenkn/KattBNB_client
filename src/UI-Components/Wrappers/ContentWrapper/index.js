@@ -1,14 +1,21 @@
 import styled from 'styled-components';
+import { theme } from '../../../Styles/theme';
 
 const Styled = styled.div`
-  @media screen and (max-width: 768px) {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  box-sizing: border-box;
+  padding: ${theme.spacing[6]} ${theme.spacing[4]};
+
+  @media screen and (min-width: ${theme.screens.sm}) {
+    padding-left: ${theme.spacing[8]};
+    padding-right: ${theme.spacing[8]};
   }
+
+  @media screen and (min-width: ${theme.screens.lg}) {
+    padding: ${theme.spacing[8]} 0;
+  }
+
   margin: 0 auto;
-  padding-top: 5vw;
-  padding-bottom: 5vw;
-  max-width: 768px;
+  max-width: ${theme.screens.md};
   min-height: calc(var(--vh, 1vh) * 100 - 60px);
   position: relative;
   margin-top: 60px;

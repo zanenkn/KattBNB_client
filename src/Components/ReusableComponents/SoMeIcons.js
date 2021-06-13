@@ -10,7 +10,7 @@ const SoMeIcons = () => (
       rel='noopener noreferrer'
       style={{ margin: '0 0.5rem', cursor: 'pointer' }}
     >
-      <FacebookIcon height={'2rem'} fill={'silver'} />
+      <FacebookIcon height={'2rem'} fill={'silver'} class={'some-icon'} />
     </a>
     <a
       href='https://www.instagram.com/kattbnb'
@@ -18,7 +18,7 @@ const SoMeIcons = () => (
       rel='noopener noreferrer'
       style={{ margin: '0 0.5rem', cursor: 'pointer' }}
     >
-      <InstagramIcon height={'2rem'} fill={'silver'} />
+      <InstagramIcon height={'2rem'} fill={'silver'} class={'some-icon'} />
     </a>
     <a
       href='https://www.linkedin.com/company/28767809'
@@ -26,7 +26,7 @@ const SoMeIcons = () => (
       rel='noopener noreferrer'
       style={{ margin: '0 0.5rem', cursor: 'pointer' }}
     >
-      <LinkedinIcon height={'2rem'} fill={'silver'} />
+      <LinkedinIcon height={'2rem'} fill={'silver'} class={'some-icon'} />
     </a>
   </div>
 );
