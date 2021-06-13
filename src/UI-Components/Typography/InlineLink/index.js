@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 const Styled = styled.a`
-  color: ${(props) => props.theme.colors.main};
-  font-weight: 700;
+  color: ${({ theme: { colors } }) => colors.main};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
   &:hover {
-    color: ${(props) => props.theme.colors.mainDarker};
+    color: ${({ theme: { colors } }) => colors.mainDarker};
     text-decoration: underline;
   }
 `;

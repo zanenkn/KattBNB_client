@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import PropTypes from 'prop-types';
 
+const { colors, spacing } = theme;
+
 const Styled = styled.h1`
-  color: ${(props) => theme.colors[props.color]};
-  text-align: ${(props) => (props.centered ? 'center' : 'left')};
-  margin-bottom: ${(props) => theme.spacing[props.space]};
+  color: ${({ color }) => colors[color]};
+  text-align: ${({ centered }) => (centered ? 'center' : 'left')};
+  margin-bottom: ${({ space }) => spacing[space]};
 `;
 
 const Header = ({ level, color, centered, space, ...rest }) => {
@@ -28,9 +30,9 @@ Header.defaultProps = {
 
 Header.propTypes = {
   level: PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
-  color: PropTypes.oneOf(Object.keys(theme.colors)),
+  color: PropTypes.oneOf(Object.keys(colors)),
   centered: PropTypes.bool,
-  space: PropTypes.oneOf(Object.keys(theme.spacing).map((key) => parseInt(key))),
+  space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
 };
 
 export default Header;
