@@ -10,3 +10,6 @@ export { default as Whitebox } from './Wrappers/Whitebox/';
 export { default as Header } from './Typography/Header';
 export { default as Text } from './Typography/Text';
 export { default as InlineLink } from './Typography/InlineLink';
+
+// form
+export { default as TextField } from './Form/TextField';

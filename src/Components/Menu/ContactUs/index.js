@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Whitebox, Text } from '../../../UI-Components';
+import { Header, Whitebox, Text, TextField } from '../../../UI-Components';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
 
 const ContactUs = (props) => {
@@ -84,17 +84,32 @@ const ContactUs = (props) => {
         {t('reusable:title.contact')}
       </Header>
       <Whitebox>
-        <Text>hej hej</Text>
+        <Text centered space={4}>
+          {t('ContactUs:contact-p')}
+        </Text>
+        <TextField
+          id='name'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          label={t('ContactUs:name-placeholder')}
+          space={4}
+          type='text'
+        />
+        <TextField
+          id='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          label={t('ContactUs:email-placeholder')}
+          space={4}
+          type='email'
+        />
       </Whitebox>
       {/* <Segment className='whitebox'>
             <Form name='contact-us'>
               <>
-                <p style={{ textAlign: 'center' }}>{t('ContactUs:contact-p')}</p>
+                <p style={{ textAlign: 'center' }}></p>
                 <Form.Input
-                  id='name'
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder={t('ContactUs:name-placeholder')}
+
                   style={{ marginBottom: '1rem' }}
                 />
                 <Form.Input

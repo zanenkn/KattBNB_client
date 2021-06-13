@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 export const theme = {
   colors: {
     base: '#59565E',
+    baseLighter: '#a8a5ac',
     main: '#C90C61',
     mainDarker: '#A0094D',
   },
