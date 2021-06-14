@@ -37,7 +37,6 @@ import AreaList from './Components/AreaList';
 import BlogListing from './Components/Blog/BlogListing';
 import BlogPost from './Components/Blog/BlogPost';
 import ScrollToTop from './Modules/ScrollToTop';
-import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +44,7 @@ import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
 import { ContentWrapper } from './UI-Components';
 
-const App = (props) => {
+const App = () => {
   const [uids, setUids] = useState([]);
   const { t } = useTranslation();
 
@@ -116,6 +115,4 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({ menuVisible: state.animation.menuVisible });
-
-export default connect(mapStateToProps)(App);
+export default App;

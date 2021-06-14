@@ -29,7 +29,7 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  level: PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
+  level: PropTypes.oneOf([1, 2, 3, 4, 5]),
   color: PropTypes.oneOf(Object.keys(colors)),
   centered: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
