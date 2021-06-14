@@ -8,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  p {
+  p, ul, li {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
     color: #59565E;
@@ -16,35 +16,30 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     line-height: 1.3em;
   }
-  h1 {
+  li {
+    margin-bottom: 0.75rem;
+  }
+
+  h1, h2, h3, h4, h5 {
     font-family: 'Lato', sans-serif;
-    font-size: 2.488rem;
     font-weight: 700;
     margin: 0;
+  }
+
+  h1 {
+    font-size: 2.488rem;
   }
   h2 {
-    font-family: 'Lato', sans-serif;
     font-size: 2.074rem;
-    font-weight: 700;
-    margin: 0;
   }
   h3 {
-    font-family: 'Lato', sans-serif;
     font-size: 1.728rem;
-    font-weight: 700;
-    margin: 0;
   }
   h4 {
-    font-family: 'Lato', sans-serif;
     font-size: 1.44rem;
-    font-weight: 700;
-    margin: 0;
   }
   h5 {
-    font-family: 'Lato', sans-serif;
     font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
   }
 
   a {
