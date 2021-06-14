@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
@@ -7,10 +7,12 @@ const { colors, spacing } = theme;
 
 const TextField = ({ label, onChange, space, type, value, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const input = useRef();
 
   const handleLabelClick = () => {
     if (!isFocused && !value) {
       setIsFocused(isFocused);
+      input.current.focus();
     }
   };
 
@@ -22,6 +24,7 @@ const TextField = ({ label, onChange, space, type, value, ...rest }) => {
         </Label>
       )}
       <Input
+        ref={input}
         value={value}
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}
