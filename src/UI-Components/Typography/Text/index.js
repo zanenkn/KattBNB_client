@@ -8,11 +8,22 @@ const Styled = styled.p`
   color: ${({ color }) => colors[color]};
   text-align: ${({ centered, right }) => (centered ? 'center' : right ? 'right' : 'left')};
   font-weight: ${({ bold }) => (bold ? fontWeights.bold : fontWeights.regular)};
+  font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
   margin-bottom: ${({ space }) => space};
 `;
 
-const Text = ({ color, centered, right, bold, space, ...rest }) => {
-  return <Styled color={color} centered={centered} right={right} bold={bold} space={spacing[space]} {...rest} />;
+const Text = ({ color, centered, right, bold, italic, space, ...rest }) => {
+  return (
+    <Styled
+      color={color}
+      centered={centered}
+      right={right}
+      bold={bold}
+      italic={italic}
+      space={spacing[space]}
+      {...rest}
+    />
+  );
 };
 
 Text.defaultProps = {
@@ -20,6 +31,7 @@ Text.defaultProps = {
   centered: false,
   right: false,
   bold: false,
+  italic: false,
   space: 4,
 };
 
@@ -28,6 +40,7 @@ Text.propTypes = {
   centered: PropTypes.bool,
   right: PropTypes.bool,
   bold: PropTypes.bool,
+  italic: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
 };
 
