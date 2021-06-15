@@ -50,7 +50,7 @@ const Guidelines = () => {
           </ul>
         </Container>
         <Whitebox centered={false} fixedWidth={false} space={0}>
-          <Header level={4} color='main'>
+          <Header level={4} color='primary'>
             {t('Guidelines:owner.checklist.title')}
           </Header>
           <ul>

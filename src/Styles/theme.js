@@ -3,10 +3,27 @@ import { ThemeProvider } from 'styled-components';
 
 export const theme = {
   colors: {
-    base: '#59565E',
-    baseLighter: '#a8a5ac',
-    main: '#C90C61',
-    mainDarker: '#A0094D',
+    primary: {
+      100: '#C90C61',
+      110: '#A0094D',
+    },
+    neutral: {
+      100: '#59565E',
+      110: '#3e3c41',
+      90: '#a8a5ac',
+    },
+    success: {
+      100: '#99cc99',
+      110: '#89B789',
+      120: '#415341',
+      20: '#ECF5EC',
+    },
+    danger: {
+      100: '#E58F93',
+      110: '#E0767A',
+      120: '#5B393A',
+      20: '#FCF3F4'
+    }
   },
   spacing: {
     0: '0',
@@ -39,6 +56,13 @@ export const theme = {
     regular: 400,
     bold: 700,
   },
+  fontSize: {
+    xs: '12px',
+    sm: '14px',
+    base: '16px',
+    lg: '20px',
+    xl: '24px',
+  }
 };
 
 const Theme = ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>;

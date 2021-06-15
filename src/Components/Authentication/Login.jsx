@@ -6,6 +6,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
+import { Header, InlineLink, Text, TextField, Whitebox, Button } from '../../UI-Components'
 
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
@@ -50,78 +51,76 @@ const Login = (props) => {
     }
   };
 
-  return <div>a</div>
-  // if (ready) {
-  //   return (
-  //     <div className='content-wrapper'>
-  //       <Header as='h1'>{t('Login:title')}</Header>
-  //       <Segment className='whitebox'>
-  //         <Form id='login-form'>
-  //           <Form.Input
-  //             required
-  //             id='email'
-  //             label={t('reusable:plch.email')}
-  //             value={email}
-  //             onChange={(e) => setEmail(e.target.value)}
-  //             placeholder={t('reusable:plch.email')}
-  //             onKeyPress={(e) => {
-  //               e.key === 'Enter' && logInUser();
-  //             }}
-  //           />
-  //           <Form.Input
-  //             required
-  //             id='password'
-  //             type='password'
-  //             label={t('reusable:plch.password')}
-  //             value={password}
-  //             onChange={(e) => setPassword(e.target.value)}
-  //             placeholder={t('reusable:plch.password')}
-  //             onKeyPress={(e) => {
-  //               e.key === 'Enter' && logInUser();
-  //             }}
-  //           />
-  //           {successDisplay === false && (
-  //             <div style={{ textAlign: 'right' }}>
-  //               <Header id='password-reset-link' as={Link} to='password-reset' className='fake-link-underlined'>
-  //                 {t('Login:forgot-link')}
-  //               </Header>
-  //             </div>
-  //           )}
-  //         </Form>
-  //         {errors.length > 0 && (
-  //           <Message negative style={{ textAlign: 'center' }}>
-  //             {errors}
-  //           </Message>
-  //         )}
-  //         {successDisplay && (
-  //           <Message success style={{ textAlign: 'center' }}>
-  //             {t('Login:success-msg')}
-  //           </Message>
-  //         )}
-  //         <Button
-  //           className='submit-button'
-  //           id='log-in-button'
-  //           disabled={loading}
-  //           loading={loading}
-  //           onClick={() => logInUser()}
-  //         >
-  //           {t('Login:title')}
-  //         </Button>
-  //         {successDisplay === false && (
-  //           <p style={{ textAlign: 'center', marginTop: '2rem' }}>
-  //             {t('Login:no-acc')}
-  //             <br></br>
-  //             <Header as={Link} to='sign-up' className='fake-link' id='create-account'>
-  //               {t('Login:signup-link')}
-  //             </Header>
-  //           </p>
-  //         )}
-  //       </Segment>
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+  if (!ready) return <Spinner />
+
+  return (
+    <>
+      <Header level={1} color='primary' centered>{t('Login:title')}</Header>
+      <Whitebox>
+        <TextField
+          required
+          id='email'
+          label={t('reusable:plch.email')}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && logInUser();
+          }}
+        />
+        <TextField
+          space={2}
+          required
+          id='password'
+          type='password'
+          label={t('reusable:plch.password')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && logInUser();
+          }}
+        />
+        {successDisplay === false && (
+          <Text right size='sm' space={6}>
+            <InlineLink as={Link} to='password-reset' color='neutral'>
+              {t('Login:forgot-link')}
+            </InlineLink>
+          </Text>
+        )}
+        {errors.length > 0 && (
+
+            <p>{errors}</p>
+  
+        )}
+        {successDisplay && (
+       
+            <p>{t('Login:success-msg')}</p>
+      
+        )}
+        <Button
+          id='log-in-button'
+          disabled={loading}
+          loading={loading}
+          onClick={() => logInUser()}
+          space={8}
+        >
+          {t('Login:title')}
+        </Button>
+        {successDisplay === false && (
+          <>
+            <Text centered space={1}>
+              {t('Login:no-acc')}
+            </Text>
+            <Text centered>
+              <InlineLink as={Link} to='sign-up' className='fake-link' id='create-account'>
+                {t('Login:signup-link')}
+              </InlineLink>
+            </Text>
+          </>
+        )}
+      </Whitebox>
+    </>
+  );
+
 };
 
 export default connect(null, { signInUser })(Login);

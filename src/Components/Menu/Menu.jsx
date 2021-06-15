@@ -13,7 +13,7 @@ const Menu = (props) => {
   const { t, ready } = useTranslation();
 
   const signOut = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     if (window.navigator.onLine === false) {
       window.alert(t('reusable:errors:window-navigator'));
     } else {

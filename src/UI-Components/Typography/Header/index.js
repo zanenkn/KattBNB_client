@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const { colors, spacing } = theme;
 
 const Styled = styled.h1`
-  color: ${({ color }) => colors[color]};
+  color: ${({ color }) => colors[color][100]};
   text-align: ${({ centered }) => (centered ? 'center' : 'left')};
   margin-bottom: ${({ space }) => spacing[space]};
 `;
@@ -24,7 +24,7 @@ const Header = ({ level, color, centered, space, ...rest }) => {
 
 Header.defaultProps = {
   level: 1,
-  color: 'base',
+  color: 'neutral',
   centered: false,
 };
 

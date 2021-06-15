@@ -24,6 +24,7 @@ const TextField = ({ label, onChange, space, type, value, ...rest }) => {
         </Label>
       )}
       <Input
+        type={type}
         ref={input}
         value={value}
         onChange={(e) => onChange(e)}
@@ -43,7 +44,7 @@ const TextFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: ${colors.base};
+  color: ${colors.neutral[100]};
   margin-bottom: ${({ space }) => spacing[space]};
 `;
 
@@ -57,8 +58,8 @@ const Label = styled.label`
   ${({ up }) =>
     up &&
     css`
-      color: ${colors.base};
-      transform: scale(0.9) translate(-2px, -2px);
+      color: ${colors.neutral[100]};
+      transform: scale(1) translate(-2px, -2px);
       font-weight: 700;
       font-style: normal;
     `}
@@ -73,9 +74,9 @@ const Input = styled.input`
   font-size: 16px;
   width: 100%;
   padding: ${padV}px ${padH}px;
-  border: 1px solid ${colors.baseLighter};
+  border: 1px solid ${colors.neutral[90]};
   &:focus {
-    border: 1px solid ${colors.base};
+    border: 1px solid ${colors.neutral[100]};
   }
 `;
 

@@ -31,7 +31,7 @@ const AboutUs = () => {
         />
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
-      <Header level={1} color='main' centered>
+      <Header level={1} color='primary' centered>
         {t('reusable:title.about')}
       </Header>
       <Container space={8}>

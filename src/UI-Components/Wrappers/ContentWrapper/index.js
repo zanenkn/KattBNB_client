@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Styled = styled.div`
   box-sizing: border-box;
-  padding: ${({ theme: { spacing } }) => spacing[6]} ${({ theme: { spacing } }) => spacing[4]};
+  padding: ${({ theme: { spacing } }) => spacing[6]};
 
   @media screen and (min-width: ${({ theme: { screens } }) => screens.sm}) {
     padding-left: ${({ theme: { spacing } }) => spacing[8]};
