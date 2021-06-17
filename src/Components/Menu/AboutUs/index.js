@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { Header, Text, Container, InlineLink } from '../../../UI-Components';
 import TeamMemberCard from './TeamMemberCard';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
-
+//MIGRATED
 const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs');
 

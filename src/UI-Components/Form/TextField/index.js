@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
-
+//TODO: needs disabled state
 const { colors, spacing } = theme;
 
 const TextField = ({ label, onChange, space, type, value, ...rest }) => {

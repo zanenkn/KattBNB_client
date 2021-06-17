@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { signInUser } from '../../reduxTokenAuthConfig';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { signInUser } from '../../../reduxTokenAuthConfig';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
-import { Header, InlineLink, Text, TextField, Whitebox, Button } from '../../UI-Components'
-
+import Spinner from '../../ReusableComponents/Spinner';
+import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
+//MIGRATION IN PROGRESS
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
 
@@ -51,11 +51,13 @@ const Login = (props) => {
     }
   };
 
-  if (!ready) return <Spinner />
+  if (!ready) return <Spinner />;
 
   return (
     <>
-      <Header level={1} color='primary' centered>{t('Login:title')}</Header>
+      <Header level={1} color='primary' centered>
+        {t('Login:title')}
+      </Header>
       <Whitebox>
         <TextField
           required
@@ -79,7 +81,7 @@ const Login = (props) => {
             e.key === 'Enter' && logInUser();
           }}
         />
-        {successDisplay === false && (
+        {!successDisplay && (
           <Text right size='sm' space={6}>
             <InlineLink as={Link} to='password-reset' color='neutral'>
               {t('Login:forgot-link')}
@@ -87,22 +89,16 @@ const Login = (props) => {
           </Text>
         )}
         {errors.length > 0 && (
-
-            <p>{errors}</p>
-  
+          <Notice nature='danger' header='Oh shitttttt!'>
+            <Text>{errors}</Text>
+          </Notice>
         )}
         {successDisplay && (
-       
-            <p>{t('Login:success-msg')}</p>
-      
+          <Notice nature='success'>
+            <Text>{t('Login:success-msg')}</Text>
+          </Notice>
         )}
-        <Button
-          id='log-in-button'
-          disabled={loading}
-          loading={loading}
-          onClick={() => logInUser()}
-          space={8}
-        >
+        <Button id='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()} space={8}>
           {t('Login:title')}
         </Button>
         {successDisplay === false && (
@@ -111,7 +107,7 @@ const Login = (props) => {
               {t('Login:no-acc')}
             </Text>
             <Text centered>
-              <InlineLink as={Link} to='sign-up' className='fake-link' id='create-account'>
+              <InlineLink as={Link} to='sign-up' id='create-account'>
                 {t('Login:signup-link')}
               </InlineLink>
             </Text>
@@ -120,7 +116,6 @@ const Login = (props) => {
       </Whitebox>
     </>
   );
-
 };
 
 export default connect(null, { signInUser })(Login);

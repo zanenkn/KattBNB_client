@@ -4,6 +4,10 @@ const Styled = styled.div`
   box-sizing: border-box;
   padding: ${({ theme: { spacing } }) => spacing[6]};
 
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
   @media screen and (min-width: ${({ theme: { screens } }) => screens.sm}) {
     padding-left: ${({ theme: { spacing } }) => spacing[8]};
     padding-right: ${({ theme: { spacing } }) => spacing[8]};

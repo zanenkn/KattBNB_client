@@ -22,7 +22,7 @@ export const theme = {
       100: '#E58F93',
       110: '#E0767A',
       120: '#5B393A',
-      20: '#FCF3F4'
+      20: '#fff0ee'
     }
   },
   spacing: {

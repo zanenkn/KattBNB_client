@@ -1,6 +1,7 @@
 // ui elements
 export { default as Avatar } from './Avatar/';
 export { default as Button } from './Button/';
+export { default as Notice } from './Notice/';
 
 // wrappers
 export { default as ContentWrapper } from './Wrappers/ContentWrapper/';
