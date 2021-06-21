@@ -80,7 +80,7 @@ const ContactUs = (props) => {
       {/* line below is used solely for relevant Cypress test */}
       {process.env.NODE_ENV !== 'production' && <p id='cypress-captcha'>{captcha}</p>}
 
-      <Header level={1} color='main' centered>
+      <Header level={1} color='primary' centered>
         {t('reusable:title.contact')}
       </Header>
       <Whitebox>
@@ -88,6 +88,7 @@ const ContactUs = (props) => {
           {t('ContactUs:contact-p')}
         </Text>
         <TextField
+          required
           id='name'
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -96,6 +97,7 @@ const ContactUs = (props) => {
           type='text'
         />
         <TextField
+          required
           id='email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
