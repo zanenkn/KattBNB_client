@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { passwordCheck } from '../../Modules/passwordCheck';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { passwordCheck } from '../../../Modules/passwordCheck';
 import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
+import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
+// MIGRATION IN PROGRESS
 
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
@@ -72,66 +74,60 @@ const ChangePassword = ({ location: { search } }) => {
     }
   };
 
-  return <div>a</div>
+  if (!ready) {
+    return <Spinner />;
+  }
 
-  // if (ready) {
-  //   return (
-  //     <div className='content-wrapper'>
-  //       <Header as='h1'>{t('ChangePassword:title')}</Header>
-  //       <Segment className='whitebox'>
-  //         <p style={{ textAlign: 'center' }}>{t('ChangePassword:instructions')}</p>
-  //         <Form>
-  //           <Form.Input
-  //             required
-  //             id='password'
-  //             label={t('reusable:plch.password')}
-  //             value={password}
-  //             onChange={(e) => setPassword(e.target.value)}
-  //             placeholder={t('reusable:plch.password')}
-  //             type='password'
-  //             onKeyPress={listenEnterKey}
-  //           />
-  //           <Form.Input
-  //             required
-  //             id='passwordConfirmation'
-  //             label={t('reusable:plch.password-confirmation')}
-  //             value={passwordConfirmation}
-  //             onChange={(e) => setPasswordConfirmation(e.target.value)}
-  //             placeholder={t('reusable:plch.password-confirmation')}
-  //             type='password'
-  //             onKeyPress={listenEnterKey}
-  //           />
-  //         </Form>
-  //         {errors.length > 0 && (
-  //           <Message negative>
-  //             <Message.Header style={{ textAlign: 'center' }}>{t('ChangePassword:error-header')}</Message.Header>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         )}
-  //         {successDisplay && (
-  //           <Message success style={{ textAlign: 'center' }}>
-  //             {t('ChangePassword:success-msg')}
-  //           </Message>
-  //         )}
-  //         <Button
-  //           className='submit-button'
-  //           id='change-pass-button'
-  //           disabled={loading}
-  //           loading={loading}
-  //           onClick={changePassword}
-  //         >
-  //           {t('ChangePassword:title')}
-  //         </Button>
-  //       </Segment>
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+  return (
+    <>
+      <Header centered color='primary'>
+        {t('ChangePassword:title')}
+      </Header>
+      <Whitebox>
+        <Text centered>{t('ChangePassword:instructions')}</Text>
+        <Container space={6}>
+          <TextField
+            required
+            id='password'
+            label={t('reusable:plch.password')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type='password'
+            onKeyPress={listenEnterKey}
+          />
+          <TextField
+            required
+            id='passwordConfirmation'
+            label={t('reusable:plch.password-confirmation')}
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            type='password'
+            onKeyPress={listenEnterKey}
+          />
+        </Container>
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <Header centered level={5}>
+              {t('ChangePassword:error-header')}
+            </Header>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
+        {successDisplay && (
+          <Notice nature='success' centered>
+            <Text centered>{t('ChangePassword:success-msg')}</Text>
+          </Notice>
+        )}
+        <Button id='change-pass-button' disabled={loading} loading={loading} onClick={changePassword}>
+          {t('ChangePassword:title')}
+        </Button>
+      </Whitebox>
+    </>
+  );
 };
 
 export default ChangePassword;
