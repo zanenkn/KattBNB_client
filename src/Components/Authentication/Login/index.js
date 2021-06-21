@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-//MIGRATION IN PROGRESS: button needs disabled state, link needs disabled state
+//MIGRATION IN PROGRESS: button needs disabled state
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
 
@@ -81,13 +81,12 @@ const Login = (props) => {
             e.key === 'Enter' && logInUser();
           }}
         />
-        {!successDisplay && (
-          <Text right size='sm' space={6}>
-            <InlineLink as={Link} to='password-reset' color='neutral'>
-              {t('Login:forgot-link')}
-            </InlineLink>
-          </Text>
-        )}
+        <Text right size='sm' space={6}>
+          <InlineLink as={Link} to='password-reset' color='neutral' disabled={successDisplay}>
+            {t('Login:forgot-link')}
+          </InlineLink>
+        </Text>
+
         {errors.length > 0 && (
           <Notice nature='danger'>
             <Text>{errors}</Text>
@@ -98,21 +97,18 @@ const Login = (props) => {
             <Text>{t('Login:success-msg')}</Text>
           </Notice>
         )}
+
         <Button id='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()} space={8}>
           {t('Login:title')}
         </Button>
-        {successDisplay === false && (
-          <>
-            <Text centered space={1}>
-              {t('Login:no-acc')}
-            </Text>
-            <Text centered>
-              <InlineLink as={Link} to='sign-up' id='create-account'>
-                {t('Login:signup-link')}
-              </InlineLink>
-            </Text>
-          </>
-        )}
+        <Text centered space={1}>
+          {t('Login:no-acc')}
+        </Text>
+        <Text centered>
+          <InlineLink as={Link} to='sign-up' id='create-account' disabled={successDisplay}>
+            {t('Login:signup-link')}
+          </InlineLink>
+        </Text>
       </Whitebox>
     </>
   );
