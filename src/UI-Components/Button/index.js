@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
 import PropTypes from 'prop-types';
 import Refresh from '../../Components/Icons/Refresh'
-
+//TODO: needs disabled state
 const { colors, spacing } = theme;
 
 const Styled = styled.button`

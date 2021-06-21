@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-//MIGRATION IN PROGRESS
+//MIGRATION IN PROGRESS: button needs disabled state, link needs disabled state
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
 
@@ -89,7 +89,7 @@ const Login = (props) => {
           </Text>
         )}
         {errors.length > 0 && (
-          <Notice nature='danger' header='Oh shitttttt!'>
+          <Notice nature='danger'>
             <Text>{errors}</Text>
           </Notice>
         )}
