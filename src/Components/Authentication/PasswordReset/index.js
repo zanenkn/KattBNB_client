@@ -5,7 +5,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-// MIGRATION IN PROGRESS
+//MIGRATED
 const PasswordReset = ({ history }) => {
   const { t, ready } = useTranslation('PasswordReset');
 

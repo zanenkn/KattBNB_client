@@ -7,8 +7,7 @@ import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-// MIGRATION IN PROGRESS
-
+//MIGRATED
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
 
