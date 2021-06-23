@@ -15,7 +15,7 @@ import SignupSuccess from './Components/Authentication/SignupSuccess';
 import PasswordReset from './Components/Authentication/PasswordReset';
 import ChangePassword from './Components/Authentication/ChangePassword';
 import PasswordResetSuccess from './Components/Authentication/PasswordResetSuccess';
-import UserPage from './Components/UserPage/UserPage';
+import UserPage from './Components/UserPage';
 import RequestToBook from './Components/Bookings/RequestToBook';
 import SuccessfulRequest from './Components/Bookings/SuccessfulRequest';
 import AllBookings from './Components/Bookings/AllBookings';

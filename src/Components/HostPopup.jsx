@@ -4,7 +4,7 @@ import { pricePerDay, finalTotal } from '../Modules/PriceCalculations';
 import RequestToBookCTA from './ReusableComponents/RequestToBookCTA';
 import { useTranslation, Trans } from 'react-i18next';
 import User from './Icons/User';
-import Location from './Icons/Location';
+//import Location from './Icons/src/Location';
 import Price from './Icons/Price';
 import Review from './Icons/Review';
 import Spinner from './ReusableComponents/Spinner';

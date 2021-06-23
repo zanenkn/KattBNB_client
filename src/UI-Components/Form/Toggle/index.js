@@ -23,5 +23,5 @@ Toggle.defaultProps = {
 Toggle.propTypes = {
   checked: PropTypes.bool.isRequired,
   color: PropTypes.oneOf(Object.keys(colors)),
-  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

@@ -130,7 +130,7 @@ class AvatarUpdateForm extends Component {
 
   render() {
     const { t } = this.props;
-    return <div>a</div>
+    return <div>avatar update form</div>
     // if (this.props.tReady) {
     //   let errorDisplay, avatarRotateRight, avatarRotateLeft, noAvatar;
 

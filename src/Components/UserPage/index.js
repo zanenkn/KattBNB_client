@@ -14,10 +14,12 @@ import NotificationsUpdateForm from './NotificationsUpdateForm';
 import LangPrefUpdateForm from './LangPrefUpdateForm';
 import { useTranslation } from 'react-i18next';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import Location from '../Icons/Location';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/AllReviews';
-
+import { Header, Notice, Text, Button, Container } from '../../UI-Components';
+import { User, Location } from '../Icons';
+import { FlexWrapper } from './styles';
+//MIGRATION IN PROGRESS
 const UserPage = (props) => {
   const hostProfileElement = useRef();
   const { t, ready } = useTranslation('UserPage');
@@ -350,285 +352,272 @@ const UserPage = (props) => {
       }
     }
   };
-  return <div>a</div>
 
-  // if (ready && loading === false) {
-  //   return (
-  //     <div className='content-wrapper'>
-  //       <Popup
-  //         modal
-  //         open={errors.length > 0}
-  //         closeOnDocumentClick={true}
-  //         onClose={() => setErrors([])}
-  //         position='top center'
-  //       >
-  //         <div>
-  //           <Message negative>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         </div>
-  //       </Popup>
-  //       <AvatarUpdateForm
-  //         avatar={props.avatar}
-  //         username={props.username}
-  //         userId={props.id}
-  //         closeAllForms={avatarFormHandler.bind(this)}
-  //       />
-  //       <Header id='nickname' as='h2' style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
-  //         <svg fill='#c90c61' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z' />
-  //         </svg>
-  //         &ensp;{props.username}
-  //       </Header>
-  //       <div
-  //         style={{
-  //           display: 'flex',
-  //           flexDirection: 'row',
-  //           alignItems: 'center',
-  //           marginBottom: '1rem',
-  //           justifyContent: 'center',
-  //         }}
-  //       >
-  //         <Location fill={'grey'} height={'1.2em'} />
-  //         <p style={{ margin: '0 0 0 0.5rem' }}>{element.location}</p>
-  //       </div>
-  //       <Divider hidden />
-  //       {hostProfile.length === 1 && loadingHostProfile === false && (
-  //         <>
-  //           <HostProfileProgressBar
-  //             stripeAccountId={element.stripeAccountId}
-  //             hostProfileId={hostProfile[0].id}
-  //             stripeState={hostStripeState}
-  //             email={props.email}
-  //           />
-  //           <HostProfile
-  //             id={hostProfile[0].id}
-  //             email={props.email}
-  //             description={element.description}
-  //             fullAddress={element.fullAddress}
-  //             rate={element.rate}
-  //             maxCats={element.maxCats}
-  //             supplement={element.supplement}
-  //             availability={element.availability}
-  //             score={hostProfileScore}
-  //             location={props.location}
-  //             incomingBookings={incomingBookings}
-  //             stripeState={hostStripeState}
-  //             stripeAccountId={element.stripeAccountId}
-  //             closeLocPasForms={closeLocationAndPasswordForms}
-  //             ref={hostProfileElement}
-  //             setElement={elementUpdateHandler.bind(this)}
-  //           />
-  //         </>
-  //       )}
-  //       <Divider hidden />
-  //       {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
-  //       {form.createHostProfileForm && hostProfile.length === 0 && (
-  //         <HostProfileForm user_id={props.id} closeForm={closeLocationAndPasswordForms} location={props.location} />
-  //       )}
-  //       {form.createHostProfileForm === false && hostProfile.length === 0 && (
-  //         <div style={{ maxWidth: '300px', margin: 'auto' }}>
-  //           <p className='small-centered-paragraph'>{t('UserPage:no-host-profile')}</p>
-  //           <Button id='createHostProfileForm' onClick={(e) => formHandler(e)}>
-  //             {t('UserPage:host-profile-cta')}
-  //           </Button>
-  //           <Divider hidden />
-  //           <Divider hidden />
-  //         </div>
-  //       )}
-  //       <Segment className='whitebox'>
-  //         <Header as='h2'>{t('UserPage:settings-header')}</Header>
-  //         <div style={{ width: 'max-content', margin: 'auto' }}>
-  //           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
-  //             <div className='zondicon-wrapper'>
-  //               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //                 <path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' />
-  //               </svg>
-  //             </div>
-  //             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{props.email}</p>
-  //           </div>
-  //           <div
-  //             id='user-location'
-  //             style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}
-  //           >
-  //             <div className='zondicon-wrapper'>
-  //               <svg fill='grey' height='1.2em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //                 <path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' />
-  //               </svg>
-  //             </div>
-  //             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{element.location}</p>
-  //             <Header
-  //               style={{ margin: '0' }}
-  //               as='strong'
-  //               id='editLocationForm'
-  //               onClick={(e) => formHandler(e)}
-  //               className='fake-link-underlined'
-  //             >
-  //               {t('reusable:cta.change')}
-  //             </Header>
-  //           </div>
-  //           <div
-  //             style={{
-  //               maxHeight: form.editLocationForm ? '1000px' : '0px',
-  //               height: 'auto',
-  //               overflow: 'hidden',
-  //               transition: 'max-height 1s ease-in-out',
-  //             }}
-  //           >
-  //             {form.editLocationForm && (
-  //               <LocationUpdateForm
-  //                 location={element.location}
-  //                 fullAddress={element.fullAddress}
-  //                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
-  //               />
-  //             )}
-  //           </div>
-  //           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
-  //             <div className='zondicon-wrapper'>
-  //               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //                 <path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' />
-  //               </svg>
-  //             </div>
-  //             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>******</p>
-  //             <Header
-  //               style={{ margin: '0' }}
-  //               as='strong'
-  //               id='editPasswordForm'
-  //               onClick={(e) => formHandler(e)}
-  //               className='fake-link-underlined'
-  //             >
-  //               {t('reusable:cta.change')}
-  //             </Header>
-  //           </div>
-  //           <div
-  //             style={{
-  //               maxHeight: form.editPasswordForm ? '1000px' : '0px',
-  //               height: 'auto',
-  //               overflow: 'hidden',
-  //               transition: 'max-height 1s ease-in-out',
-  //             }}
-  //           >
-  //             {form.editPasswordForm && (
-  //               <PasswordUpdateForm closeLocationAndPasswordForms={closeLocationAndPasswordForms} />
-  //             )}
-  //           </div>
-  //           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
-  //             <div className='zondicon-wrapper'>
-  //               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //                 <path d='M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z' />
-  //               </svg>
-  //             </div>
-  //             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{t('UserPage:notifications-header')}</p>
-  //             <Header
-  //               style={{ margin: '0' }}
-  //               as='strong'
-  //               id='editNotificationsForm'
-  //               onClick={(e) => formHandler(e)}
-  //               className='fake-link-underlined'
-  //             >
-  //               {t('reusable:cta.change')}
-  //             </Header>
-  //           </div>
-  //           <div
-  //             style={{
-  //               maxHeight: form.editNotificationsForm ? '1000px' : '0px',
-  //               height: 'auto',
-  //               overflow: 'hidden',
-  //               transition: 'max-height 1s ease-in-out',
-  //             }}
-  //           >
-  //             {form.editNotificationsForm && (
-  //               <NotificationsUpdateForm
-  //                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
-  //                 messageNotifications={element.messageNotifications}
-  //               />
-  //             )}
-  //           </div>
-  //           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-  //             <div className='zondicon-wrapper'>
-  //               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //                 <path d='M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-2.25a8 8 0 0 0 4-2.46V9a2 2 0 0 1-2-2V3.07a7.95 7.95 0 0 0-3-1V3a2 2 0 0 1-2 2v1a2 2 0 0 1-2 2v2h3a2 2 0 0 1 2 2v5.75zm-4 0V15a2 2 0 0 1-2-2v-1h-.5A1.5 1.5 0 0 1 4 10.5V8H2.25A8.01 8.01 0 0 0 8 17.75z' />
-  //               </svg>
-  //             </div>
-  //             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{t('UserPage:lang-pref-header')}</p>
-  //             <Header
-  //               style={{ margin: '0' }}
-  //               as='strong'
-  //               id='editLangPrefForm'
-  //               onClick={(e) => formHandler(e)}
-  //               className='fake-link-underlined'
-  //             >
-  //               {t('reusable:cta.change')}
-  //             </Header>
-  //           </div>
-  //           <div
-  //             style={{
-  //               maxHeight: form.editLangPrefForm ? '1000px' : '0px',
-  //               height: 'auto',
-  //               overflow: 'hidden',
-  //               transition: 'max-height 1s ease-in-out',
-  //             }}
-  //           >
-  //             {form.editLangPrefForm && (
-  //               <LangPrefUpdateForm
-  //                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
-  //                 langPref={element.langPref}
-  //               />
-  //             )}
-  //           </div>
-  //         </div>
-  //       </Segment>
-  //       <Divider hidden />
-  //       <Divider hidden />
-  //       {hostProfile.length === 1 && (
-  //         <Segment className='whitebox'>
-  //           <Header as='h2'>{t('UserPage:reviews-header')}</Header>
-  //           <div>
-  //             <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
-  //           </div>
-  //         </Segment>
-  //       )}
-  //       <Divider hidden />
-  //       <Header
-  //         id='delete-account-link'
-  //         onClick={() => destroyAccount()}
-  //         className='fake-link-underlined'
-  //         style={{ color: 'silver', marginBottom: '1rem', display: deleteDisplayNone && 'none' }}
-  //       >
-  //         {t('UserPage:delete-cta')}
-  //       </Header>
-  //     </div>
-  //   );
-  // } else if (ready && loading) {
-  //   return (
-  //     <div className='content-wrapper'>
-  //       <Popup
-  //         modal
-  //         open={errors.length > 0}
-  //         closeOnDocumentClick={true}
-  //         onClose={() => setErrors([])}
-  //         position='top center'
-  //       >
-  //         <div>
-  //           <Message negative>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         </div>
-  //       </Popup>
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+  if (!ready) return <Spinner />;
+
+  if (ready && loading) {
+    return (
+      <div className='content-wrapper'>
+        <Popup
+          modal
+          open={errors.length > 0}
+          closeOnDocumentClick={true}
+          onClose={() => setErrors([])}
+          position='top center'
+        >
+          <Notice nature='danger' space={0}>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        </Popup>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Popup
+        modal
+        open={errors.length > 0}
+        closeOnDocumentClick={true}
+        onClose={() => setErrors([])}
+        position='top center'
+      >
+        <div>
+          <Notice nature='danger' space={0}>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        </div>
+      </Popup>
+      <Container space={8}>
+        <AvatarUpdateForm
+          avatar={props.avatar}
+          username={props.username}
+          userId={props.id}
+          closeAllForms={avatarFormHandler.bind(this)}
+        />
+        <Header level={4} space={2} centered color='primary'>
+          <User fill={'primary'} height={4} />
+          &ensp;{props.username}
+        </Header>
+        <FlexWrapper>
+          <Location height={4} />
+          <Text>{element.location}</Text>
+        </FlexWrapper>
+      </Container>
+
+      {hostProfile.length === 1 && loadingHostProfile === false && (
+        <>
+          <HostProfileProgressBar
+            stripeAccountId={element.stripeAccountId}
+            hostProfileId={hostProfile[0].id}
+            stripeState={hostStripeState}
+            email={props.email}
+          />
+          <HostProfile
+            id={hostProfile[0].id}
+            email={props.email}
+            description={element.description}
+            fullAddress={element.fullAddress}
+            rate={element.rate}
+            maxCats={element.maxCats}
+            supplement={element.supplement}
+            availability={element.availability}
+            score={hostProfileScore}
+            location={props.location}
+            incomingBookings={incomingBookings}
+            stripeState={hostStripeState}
+            stripeAccountId={element.stripeAccountId}
+            closeLocPasForms={closeLocationAndPasswordForms}
+            ref={hostProfileElement}
+            setElement={elementUpdateHandler.bind(this)}
+          />
+        </>
+      )}
+      {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
+      {form.createHostProfileForm && hostProfile.length === 0 && (
+        <HostProfileForm user_id={props.id} closeForm={closeLocationAndPasswordForms} location={props.location} />
+      )}
+      {form.createHostProfileForm === false && hostProfile.length === 0 && (
+        <div style={{ maxWidth: '300px', margin: 'auto' }}>
+          <Text centered>{t('UserPage:no-host-profile')}</Text>
+          <Button id='createHostProfileForm' onClick={(e) => formHandler(e)}>
+            {t('UserPage:host-profile-cta')}
+          </Button>
+        </div>
+      )}
+    </>
+  );
 };
+
+//       <Segment className='whitebox'>
+//         <Header as='h2'>{t('UserPage:settings-header')}</Header>
+//         <div style={{ width: 'max-content', margin: 'auto' }}>
+//           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
+//             <div className='zondicon-wrapper'>
+//               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
+//                 <path d='M13.6 13.47A4.99 4.99 0 0 1 5 10a5 5 0 0 1 8-4V5h2v6.5a1.5 1.5 0 0 0 3 0V10a8 8 0 1 0-4.42 7.16l.9 1.79A10 10 0 1 1 20 10h-.18.17v1.5a3.5 3.5 0 0 1-6.4 1.97zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' />
+//               </svg>
+//             </div>
+//             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{props.email}</p>
+//           </div>
+//           <div
+//             id='user-location'
+//             style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}
+//           >
+//             <div className='zondicon-wrapper'>
+//               <svg fill='grey' height='1.2em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
+//                 <path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' />
+//               </svg>
+//             </div>
+//             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{element.location}</p>
+//             <Header
+//               style={{ margin: '0' }}
+//               as='strong'
+//               id='editLocationForm'
+//               onClick={(e) => formHandler(e)}
+//               className='fake-link-underlined'
+//             >
+//               {t('reusable:cta.change')}
+//             </Header>
+//           </div>
+//           <div
+//             style={{
+//               maxHeight: form.editLocationForm ? '1000px' : '0px',
+//               height: 'auto',
+//               overflow: 'hidden',
+//               transition: 'max-height 1s ease-in-out',
+//             }}
+//           >
+//             {form.editLocationForm && (
+//               <LocationUpdateForm
+//                 location={element.location}
+//                 fullAddress={element.fullAddress}
+//                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
+//               />
+//             )}
+//           </div>
+//           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
+//             <div className='zondicon-wrapper'>
+//               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
+//                 <path d='M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z' />
+//               </svg>
+//             </div>
+//             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>******</p>
+//             <Header
+//               style={{ margin: '0' }}
+//               as='strong'
+//               id='editPasswordForm'
+//               onClick={(e) => formHandler(e)}
+//               className='fake-link-underlined'
+//             >
+//               {t('reusable:cta.change')}
+//             </Header>
+//           </div>
+//           <div
+//             style={{
+//               maxHeight: form.editPasswordForm ? '1000px' : '0px',
+//               height: 'auto',
+//               overflow: 'hidden',
+//               transition: 'max-height 1s ease-in-out',
+//             }}
+//           >
+//             {form.editPasswordForm && (
+//               <PasswordUpdateForm closeLocationAndPasswordForms={closeLocationAndPasswordForms} />
+//             )}
+//           </div>
+//           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1rem' }}>
+//             <div className='zondicon-wrapper'>
+//               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
+//                 <path d='M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z' />
+//               </svg>
+//             </div>
+//             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{t('UserPage:notifications-header')}</p>
+//             <Header
+//               style={{ margin: '0' }}
+//               as='strong'
+//               id='editNotificationsForm'
+//               onClick={(e) => formHandler(e)}
+//               className='fake-link-underlined'
+//             >
+//               {t('reusable:cta.change')}
+//             </Header>
+//           </div>
+//           <div
+//             style={{
+//               maxHeight: form.editNotificationsForm ? '1000px' : '0px',
+//               height: 'auto',
+//               overflow: 'hidden',
+//               transition: 'max-height 1s ease-in-out',
+//             }}
+//           >
+//             {form.editNotificationsForm && (
+//               <NotificationsUpdateForm
+//                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
+//                 messageNotifications={element.messageNotifications}
+//               />
+//             )}
+//           </div>
+//           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+//             <div className='zondicon-wrapper'>
+//               <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
+//                 <path d='M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-2.25a8 8 0 0 0 4-2.46V9a2 2 0 0 1-2-2V3.07a7.95 7.95 0 0 0-3-1V3a2 2 0 0 1-2 2v1a2 2 0 0 1-2 2v2h3a2 2 0 0 1 2 2v5.75zm-4 0V15a2 2 0 0 1-2-2v-1h-.5A1.5 1.5 0 0 1 4 10.5V8H2.25A8.01 8.01 0 0 0 8 17.75z' />
+//               </svg>
+//             </div>
+//             <p style={{ margin: '0px 0.3rem 0 0.5rem' }}>{t('UserPage:lang-pref-header')}</p>
+//             <Header
+//               style={{ margin: '0' }}
+//               as='strong'
+//               id='editLangPrefForm'
+//               onClick={(e) => formHandler(e)}
+//               className='fake-link-underlined'
+//             >
+//               {t('reusable:cta.change')}
+//             </Header>
+//           </div>
+//           <div
+//             style={{
+//               maxHeight: form.editLangPrefForm ? '1000px' : '0px',
+//               height: 'auto',
+//               overflow: 'hidden',
+//               transition: 'max-height 1s ease-in-out',
+//             }}
+//           >
+//             {form.editLangPrefForm && (
+//               <LangPrefUpdateForm
+//                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
+//                 langPref={element.langPref}
+//               />
+//             )}
+//           </div>
+//         </div>
+//       </Segment>
+//       <Divider hidden />
+//       <Divider hidden />
+//       {hostProfile.length === 1 && (
+//         <Segment className='whitebox'>
+//           <Header as='h2'>{t('UserPage:reviews-header')}</Header>
+//           <div>
+//             <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
+//           </div>
+//         </Segment>
+//       )}
+//       <Divider hidden />
+//       <Header
+//         id='delete-account-link'
+//         onClick={() => destroyAccount()}
+//         className='fake-link-underlined'
+//         style={{ color: 'silver', marginBottom: '1rem', display: deleteDisplayNone && 'none' }}
+//       >
+//         {t('UserPage:delete-cta')}
+//       </Header>
 
 const mapStateToProps = (state) => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
