@@ -16,3 +16,4 @@ export { default as InlineLink } from './Typography/InlineLink';
 // form
 export { default as TextField } from './Form/TextField';
 export { default as Dropdown } from './Form/Dropdown';
+export { default as Toggle } from './Form/Toggle';

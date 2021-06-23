@@ -1,14 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
 
-const { colors } = theme;
+const { colors, spacing } = theme;
 
 export const Wrapper = styled.div`
   position: relative;
+  margin-bottom: ${({ space }) => spacing[space]};
 `;
 
 export const CloseOnOutsideElementClickEnabler = styled.div`
-  display: ${({ on }) => (on ? 'block' : 'none')};
+  display: ${({ isOn }) => (isOn ? 'block' : 'none')};
   width: 200vw;
   height: 200vh;
   backgroundcolor: transparent;

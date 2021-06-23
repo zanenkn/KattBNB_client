@@ -10,8 +10,9 @@ import { useTranslation, Trans } from 'react-i18next';
 import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-import { Dropdown, TextField, Header, Whitebox } from '../../../UI-Components';
-//MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip), Toggle (unstarted)
+import { Dropdown, TextField, Header, Whitebox, Toggle, Text, InlineLink } from '../../../UI-Components';
+import { FlexWrapper } from './styles';
+//MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip)
 const SignUp = (props) => {
   const { t, ready } = useTranslation('SignUp');
 
@@ -67,9 +68,9 @@ const SignUp = (props) => {
     }
   };
 
-  // if (props.history.action === 'POP') {
-  //   props.history.push({ pathname: '/' });
-  // }
+  if (props.history.action === 'POP') {
+    props.history.push({ pathname: '/' });
+  }
 
   if (!ready) return <Spinner />;
 
@@ -96,16 +97,27 @@ const SignUp = (props) => {
       </Header>
       <Whitebox>
         <TextField
-                required
-                id='email'
-                label={t('reusable:plch.email')}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyPress={(e) => {
-                  e.key === 'Enter' && createUser();
-                }}
+          required
+          id='email'
+          label={t('reusable:plch.email')}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && createUser();
+          }}
         />
         <Dropdown data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
+        <FlexWrapper>
+          <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
+          <Text tint={termsAccepted ? 100 : 60}>
+            <Trans i18nKey='SignUp:terms-label'>
+              I accept the
+              <InlineLink to='/legal' target='_blank' className='fake-link-underlined' color='neutral'>
+                Terms & Conditions
+              </InlineLink>
+            </Trans>
+          </Text>
+        </FlexWrapper>
       </Whitebox>
     </>
   );

@@ -12,9 +12,9 @@ import { Chevron } from '../../icons';
 import { theme } from '../../../Styles/theme';
 // TODO: placeholder/input, required prop, proptypes, default props
 
-const { colors, fontWeights, fontSize, spacing } = theme;
+const { colors } = theme;
 
-const AutocompleteDropdown = ({ data, onChange }) => {
+const AutocompleteDropdown = ({ data, onChange, space }) => {
   const [search, setSearch] = useState({
     text: '',
     suggestions: data,
@@ -53,8 +53,8 @@ const AutocompleteDropdown = ({ data, onChange }) => {
   const { suggestions } = search;
 
   return (
-    <Wrapper>
-      <CloseOnOutsideElementClickEnabler on={suggestionsDisplayed} onClick={() => setSuggestionsDisplayed(false)} />
+    <Wrapper space={space || 4}>
+      <CloseOnOutsideElementClickEnabler isOn={suggestionsDisplayed} onClick={() => setSuggestionsDisplayed(false)} />
       <div>
         <Input
           autoComplete='off'
