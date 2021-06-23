@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { LOCATION_OPTIONS } from '../../Modules/locationData';
-import { registerUser } from '../../reduxTokenAuthConfig';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { passwordCheck } from '../../Modules/passwordCheck';
+import LOCATION_OPTIONS from '../../../Modules/locationData.json';
+import { registerUser } from '../../../reduxTokenAuthConfig';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { passwordCheck } from '../../../Modules/passwordCheck';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import ClientCaptcha from 'react-client-captcha';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-
+import { Dropdown, TextField, Header, Whitebox } from '../../../UI-Components';
+//MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip), Toggle (unstarted)
 const SignUp = (props) => {
   const { t, ready } = useTranslation('SignUp');
 
@@ -66,11 +67,49 @@ const SignUp = (props) => {
     }
   };
 
-  if (props.history.action === 'POP') {
-    props.history.push({ pathname: '/' });
-  }
+  // if (props.history.action === 'POP') {
+  //   props.history.push({ pathname: '/' });
+  // }
 
-  return <div>a</div>
+  if (!ready) return <Spinner />;
+
+  return (
+    <>
+      <Helmet>
+        <title>KattBNB - registrera konto</title>
+        <meta
+          name='description'
+          content='Fullbokat i kattpensionat? Vi känner igen frustrationen. Registrera konto med KattBNB och hitta den perfekta kattvakten.'
+        />
+        <link rel='canonical' href='https://kattbnb.se/sign-up' />
+        <meta property='og:title' content='KattBNB - registrera konto' />
+        <meta property='og:url' content='https://kattbnb.se/sign-up' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content='Fullbokat i kattpensionat? Vi känner igen frustrationen. Registrera konto med KattBNB och hitta den perfekta kattvakten.'
+        />
+        <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
+      </Helmet>
+      <Header level={1} color='primary' centered>
+        {t('SignUp:title')}
+      </Header>
+      <Whitebox>
+        <TextField
+                required
+                id='email'
+                label={t('reusable:plch.email')}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={(e) => {
+                  e.key === 'Enter' && createUser();
+                }}
+        />
+        <Dropdown data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
+      </Whitebox>
+    </>
+  );
+
   // if (ready) {
   //   return (
   //     <>

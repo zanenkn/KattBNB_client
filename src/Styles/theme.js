@@ -4,13 +4,17 @@ import { ThemeProvider } from 'styled-components';
 export const theme = {
   colors: {
     primary: {
-      100: '#C90C61',
       110: '#A0094D',
+      100: '#C90C61',
     },
     neutral: {
-      100: '#59565E',
       110: '#3e3c41',
-      90: '#a8a5ac',
+      100: '#59565E',
+      80: '#807c87',
+      60: '#a8a5ac',
+      40: '#c5c3c8',
+      20: '#e3e2e5',
+      10: '#f7f7f7',
     },
     success: {
       100: '#99cc99',

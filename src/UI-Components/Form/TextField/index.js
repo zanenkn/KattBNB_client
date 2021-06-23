@@ -51,7 +51,7 @@ const TextFieldWrapper = styled.div`
 `;
 
 const Label = styled.label`
-  color: ${colors.neutral[90]};
+  color: ${colors.neutral[60]};
   font-size: ${labelSize}px;
   font-style: italic;
   will-change: transform;
@@ -81,9 +81,12 @@ const Input = styled.input`
   font-size: 16px;
   width: 100%;
   padding: ${padV}px ${padH}px;
-  border: 1px solid ${colors.neutral[90]};
+  border: 1px solid ${colors.neutral[60]};
   &:focus {
     border: 1px solid ${colors.neutral[100]};
+  }
+  &:-internal-autofill-selected {
+    background-color: transparent;
   }
 `;
 
