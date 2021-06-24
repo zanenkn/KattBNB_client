@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
+import { Container } from '../../UI-Components';
 
-const { spacing } = theme;
+const { spacing, colors } = theme;
 
-export const FlexWrapper = styled.div`
+export const FlexWrapper = styled(Container)`
   display: flex;
   flex-direction: row;
   align-items: center;
   ${({ centered }) => centered && 'justify-content: center'};
-  margin-bottom: ${spacing[4]};
 
   > * {
     margin-bottom: 0;
-    margin-right: ${spacing[2]};
+    margin-right: ${({ spaceBetween }) => spacing[spaceBetween]};
   }
 
   > *:last-child {
@@ -38,4 +38,27 @@ export const MaxWidth = styled.div`
 export const SettingsWrapper = styled.div`
   width: max-content;
   margin: auto;
+`;
+
+export const AvatarEditBtnWrapper = styled.div`
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: ${colors.primary[100]};
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  left: calc(50% + 35px);
+  bottom: 10px;
+`;
+
+export const AvatarUpdateFormWrapper = styled(Container)`
+  position: relative;
+`;
+
+export const WithCursorPointer = styled(Container)`
+  cursor: pointer;
 `;

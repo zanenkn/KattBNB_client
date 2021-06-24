@@ -176,6 +176,30 @@ const GlobalStyles = createGlobalStyle`
       transform: rotate(359deg);
     }
   }
+  .editor-canvas {
+    width: 100%!important;
+    height: 100%!important;
+    margin-bottom: 1rem;
+  }
+  .popup-content {
+    border: none !important;
+    padding: 2rem!important;
+    width: 80% !important;
+    max-width: 300px;
+    max-height: 95% !important;
+    display: table;
+  }
+  .avatar-popup-content {
+    width: 270px!important;
+    font-size: initial;
+  }
+  p > ul, li {
+    font-size: inherit;
+    color: inherit;
+  }
+  ul {
+    padding-inline-start: 20px;
+  }
 `;
 
 export default GlobalStyles;

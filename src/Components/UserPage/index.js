@@ -405,7 +405,7 @@ const UserPage = (props) => {
           <User fill={'primary'} height={4} />
           &ensp;{props.username}
         </Header>
-        <FlexWrapper centered>
+        <FlexWrapper centered spaceBetween={1}>
           <Location height={4} />
           <Text>{element.location}</Text>
         </FlexWrapper>
@@ -456,12 +456,12 @@ const UserPage = (props) => {
           {t('UserPage:settings-header')}
         </Header>
         <SettingsWrapper>
-          <FlexWrapper>
+          <FlexWrapper spaceBetween={2}>
             <Email height={4} />
             <Text>{props.email}</Text>
           </FlexWrapper>
 
-          <FlexWrapper id='user-location'>
+          <FlexWrapper spaceBetween={2} id='user-location'>
             <Location />
             <Text>{element.location}</Text>
             <InlineLink id='editLocationForm' onClick={(e) => formHandler(e)} text={'sm'}>
@@ -478,7 +478,7 @@ const UserPage = (props) => {
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper>
+          <FlexWrapper spaceBetween={2}>
             <Lock />
             <Text>******</Text>
             <InlineLink id='editPasswordForm' onClick={(e) => formHandler(e)} text={'sm'}>
@@ -491,7 +491,7 @@ const UserPage = (props) => {
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper>
+          <FlexWrapper spaceBetween={2}>
             <Notification />
             <Text>{t('UserPage:notifications-header')}</Text>
             <InlineLink id='editNotificationsForm' onClick={(e) => formHandler(e)} text={'sm'}>
@@ -507,7 +507,7 @@ const UserPage = (props) => {
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper>
+          <FlexWrapper spaceBetween={2}>
             <Globe />
             <Text>{t('UserPage:lang-pref-header')}</Text>
             <InlineLink id='editLangPrefForm' onClick={(e) => formHandler(e)} text={'sm'}>

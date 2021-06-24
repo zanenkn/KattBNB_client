@@ -15,6 +15,7 @@ export const theme = {
       40: '#c5c3c8',
       20: '#e3e2e5',
       10: '#f7f7f7',
+      0: '#fff',
     },
     success: {
       100: '#99cc99',
@@ -26,8 +27,8 @@ export const theme = {
       100: '#E58F93',
       110: '#E0767A',
       120: '#5B393A',
-      20: '#fff0ee'
-    }
+      20: '#fff0ee',
+    },
   },
   spacing: {
     0: '0',
@@ -66,7 +67,7 @@ export const theme = {
     base: '16px',
     lg: '20px',
     xl: '24px',
-  }
+  },
 };
 
 const Theme = ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>;
