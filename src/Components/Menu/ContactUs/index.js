@@ -8,7 +8,7 @@ import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Whitebox, Text, TextField, TextArea, Container, Button, Notice } from '../../../UI-Components';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
-//MIGRATION IN PROGRESS
+//MIGRATED
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
 
