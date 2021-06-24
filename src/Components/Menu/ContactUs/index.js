@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Whitebox, Text, TextField } from '../../../UI-Components';
+import { Header, Whitebox, Text, TextField, TextArea, Container, Button, Notice } from '../../../UI-Components';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
 //MIGRATION IN PROGRESS
 const ContactUs = (props) => {
@@ -105,62 +105,49 @@ const ContactUs = (props) => {
           space={4}
           type='email'
         />
+        <TextArea
+          required
+          id='message'
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          label={t('ContactUs:message-placeholder')}
+          space={2}
+        />
+        <Text size='sm' right space={0} italic>
+          {t('reusable:remaining-chars')} {1000 - message.length}
+        </Text>
+        <Container>
+          <ClientCaptcha
+            captchaCode={(code) => setCaptcha(code)}
+            fontFamily='bodoni'
+            fontColor='#c90c61'
+            charsCount={6}
+            backgroundColor='#e8e8e8'
+            width={130}
+          />
+        </Container>
+        <TextField
+          required
+          space={6}
+          id='userCaptcha'
+          value={userCaptcha}
+          onChange={(e) => setUserCaptcha(e.target.value)}
+          label={t('reusable:labels:captcha')}
+          autoComplete='off'
+        />
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
+        <Button onClick={sendMessage} loading={loading}>
+          {t('ContactUs:send-btn')}
+        </Button>
       </Whitebox>
-      {/* <Segment className='whitebox'>
-            <Form name='contact-us'>
-              <>
-                <p style={{ textAlign: 'center' }}></p>
-                <Form.Input
-
-                  style={{ marginBottom: '1rem' }}
-                />
-                <Form.Input
-                  id='email'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t('ContactUs:email-placeholder')}
-                  style={{ marginBottom: '1rem' }}
-                />
-                <TextArea
-                  id='message'
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder={t('ContactUs:message-placeholder')}
-                />
-                <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-                  {t('reusable:remaining-chars')} {1000 - message.length}
-                </p>
-                <div style={{ margin: '1em 0' }}>
-                  <ClientCaptcha
-                    captchaCode={(code) => setCaptcha(code)}
-                    fontFamily='bodoni'
-                    fontColor='#c90c61'
-                    charsCount={6}
-                    backgroundColor='#e8e8e8'
-                    width={130}
-                  />
-                </div>
-                <Form.Input
-                  id='userCaptcha'
-                  value={userCaptcha}
-                  onChange={(e) => setUserCaptcha(e.target.value)}
-                  placeholder={t('reusable:plch:captcha')}
-                />
-                {errors.length > 0 && (
-                  <Message negative>
-                    <ul id='message-error-list'>
-                      {errors.map((error) => (
-                        <li key={error}>{t(error)}</li>
-                      ))}
-                    </ul>
-                  </Message>
-                )}
-                <Button className='submit-button' onClick={sendMessage} loading={loading}>
-                  {t('ContactUs:send-btn')}
-                </Button>
-              </>
-            </Form>
-          </Segment> */}
       <SoMeIcons />
     </>
   );

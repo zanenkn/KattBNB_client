@@ -19,6 +19,16 @@ const GlobalStyles = createGlobalStyle`
   li {
     margin-bottom: 0.75rem;
   }
+  p > ul, li {
+    font-size: inherit;
+    color: inherit;
+  }
+  li:last-child {
+    margin-bottom: 0;
+  }
+  ul {
+    padding-inline-start: 20px;
+  }
 
   h1, h2, h3, h4, h5 {
     font-family: 'Lato', sans-serif;
@@ -193,12 +203,10 @@ const GlobalStyles = createGlobalStyle`
     width: 270px!important;
     font-size: initial;
   }
-  p > ul, li {
-    font-size: inherit;
-    color: inherit;
-  }
-  ul {
-    padding-inline-start: 20px;
+  #retryButton {
+    opacity: .2;
+    cursor: pointer;
+    display: flex;
   }
 `;
 

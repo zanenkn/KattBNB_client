@@ -5,7 +5,7 @@ import { theme } from '../../../Styles/theme';
 
 const { colors, spacing } = theme;
 
-const TextField = ({ label, onChange, required, space, type, value, ...rest }) => {
+const TextField = ({ autoComplete, label, onChange, required, space, type, value, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
 
@@ -30,6 +30,7 @@ const TextField = ({ label, onChange, required, space, type, value, ...rest }) =
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        autoComplete={autoComplete}
         {...rest}
       />
       {required && !value && <RequiredLabel focused={isFocused} />}
@@ -108,6 +109,7 @@ const RequiredLabel = styled.div`
 `;
 
 TextField.propTypes = {
+  autoComplete: PropTypes.oneOf(['on', 'off']),
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
@@ -117,6 +119,7 @@ TextField.propTypes = {
 };
 
 TextField.defaultProps = {
+  autoComplete: 'on',
   required: false,
   space: 4,
   type: 'text',

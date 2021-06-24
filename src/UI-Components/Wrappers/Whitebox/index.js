@@ -5,9 +5,13 @@ import PropTypes from 'prop-types';
 const { spacing, screens } = theme;
 
 const Styled = styled.div`
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
   position: relative;
   background: #ffffff;
-  margin: 0 ${({centered}) => centered ? 'auto' : '0'} ${({ space }) => spacing[space]};
+  margin: 0 ${({ centered }) => (centered ? 'auto' : '0')} ${({ space }) => spacing[space]};
   box-shadow: ${({ responsive }) => (responsive ? 'none' : '0px 0px 20px -5px rgba(0,0,0,0.2)')};
   border: none;
   padding: ${({ responsive, spacing }) => (responsive ? '0' : `${spacing[5]}`)};
@@ -15,7 +19,7 @@ const Styled = styled.div`
   border: none;
   max-width: 560px;
   box-sizing: border-box;
-  display: ${({fixedWidth}) => fixedWidth ? 'block' : 'inline-block'};
+  display: ${({ fixedWidth }) => (fixedWidth ? 'block' : 'inline-block')};
 
   @media screen and (min-width: ${screens.sm}) {
     box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);

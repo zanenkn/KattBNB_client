@@ -16,7 +16,6 @@ const Styled = styled.button`
   display: ${({ centered }) => (centered ? 'block' : 'inline-block')};
   margin: auto;
   font-weight: 700;
-  margin-bottom: ${({ space }) => spacing[space]};
   height: 39px;
   transition: all 0.5s ease;
   &:hover {
@@ -27,6 +26,7 @@ const Styled = styled.button`
 const Flex = styled.div`
   display: flex;
   position: relative;
+  margin-bottom: ${({ space }) => spacing[space]};
 `;
 
 const Icon = styled.div`
@@ -40,13 +40,13 @@ const Icon = styled.div`
 
 const Button = ({ centered, color, disabled, loading, space, ...rest }) => {
   return (
-    <Flex>
+    <Flex space={space}>
       {loading && (
         <Icon>
           <Refresh height='21' fill='#FAFAFA' className='spin-it' />
         </Icon>
       )}
-      <Styled centered={centered} color={color} disabled={disabled} $loading={loading} space={space} {...rest} />
+      <Styled centered={centered} color={color} disabled={disabled} $loading={loading} {...rest} />
     </Flex>
   );
 };
