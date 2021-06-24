@@ -532,16 +532,13 @@ const UserPage = (props) => {
           </div>
         </Whitebox>
       )}
-      <Text centered>
-        <InlineLink
-          id='delete-account-link'
-          onClick={() => destroyAccount()}
-          color='neutral'
-          style={{ display: deleteDisplayNone && 'none' }}
-        >
-          {t('UserPage:delete-cta')}
-        </InlineLink>
-      </Text>
+      {!deleteDisplayNone && (
+        <Text centered style={{ opacity: '0.3' }} size='sm'>
+          <InlineLink id='delete-account-link' onClick={() => destroyAccount()} color='neutral' discreet>
+            {t('UserPage:delete-cta')}
+          </InlineLink>
+        </Text>
+      )}
     </>
   );
 };
