@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 const Conversation = ({ id, username, avatar, history, location: { state } }) => {
   const { t, ready } = useTranslation('SingleConversation');
+  const lang = detectLanguage();
 
   const [newMessage, setNewMessage] = useState('');
   // eslint-disable-next-line
@@ -49,51 +50,173 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     let channelToSave;
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrors(['reusable:errors:window-navigator']);
-    } else if (window.history.state === null) {
+      return setErrors(['reusable:errors:window-navigator']);
+    }
+    if (window.history.state === null) {
       window.location.replace('/messenger');
-    } else {
+    }
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    let pathCable = process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
+    let cable = Cable.createConsumer(
+      `${pathCable}/api/v1/cable/conversation/${state.id}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
+    );
+    channelToSave = cable.subscriptions.create(
+      {
+        channel: 'ConversationsChannel',
+        conversations_id: state.id,
+      },
+      {
+        connected: () => {},
+        received: (data) => {
+          let receivedChatLogs = chatLogs;
+          receivedChatLogs.push(data.message);
+          setChatLogs(receivedChatLogs);
+          setChatLogsLength(chatLogs.length);
+          bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
+        },
+      }
+    );
+    setChannel(channelToSave);
+    const path = `/api/v1/conversations/${state.id}?locale=${lang}`;
+    axios
+      .get(path, { headers: headers })
+      .then((response) => {
+        const sortedResponse = response.data.message.sort(function (a, b) {
+          let dateA = new Date(a.created_at),
+            dateB = new Date(b.created_at);
+          return dateA - dateB;
+        });
+        setMessagesHistory(sortedResponse);
+        setLoading(false);
+        setErrors([]);
+        bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
+      })
+      .catch(({ response }) => {
+        if (response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (response.status === 500) {
+          setLoading(false);
+          setErrors(['reusable:errors:500']);
+        } else if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
+        } else {
+          setLoading(false);
+          setErrors(response.data.error);
+        }
+      });
+    return () => {
+      channelToSave.unsubscribe();
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    scrollDown();
+  }, [errors]);
+
+  const handleSendEvent = (event) => {
+    event.preventDefault();
+
+    const email = new RegExp(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);
+    const phone = new RegExp(/(([+]46)\s*(7)|07)[02369]\s*(\d{4})\s*(\d{3})/);
+
+    if (window.navigator.onLine === false) {
+      setImageUploadPopupOpen(false);
+      setErrors(['reusable:errors:window-navigator']);
+    }
+
+    if (newMessage.length < 1 || newMessage.length > 1000) {
+      return setErrors(['SingleConversation:message-body-error']);
+    }
+
+    if (email.test(newMessage) || phone.test(newMessage)) {
+      return setErrors(['SingleConversation:email-phone-error']);
+    }
+
+    const path = '/api/v1/auth/validate_token';
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+
+    axios
+      .get(path, { headers: headers })
+      .then(() => {
+        if (uploadedImage !== '') {
+          channel.send({
+            body: newMessage,
+            image: uploadedImage,
+            user_id: id,
+            conversation_id: state.id,
+          });
+          setNewMessage('');
+          setLoadingUploadButton(true);
+        } else {
+          channel.send({
+            body: newMessage,
+            image: uploadedImage,
+            user_id: id,
+            conversation_id: state.id,
+          });
+          setNewMessage('');
+        }
+      })
+      .catch(({ response }) => {
+        if (response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (response.status === 500) {
+          setErrors(['reusable:errors:500']);
+        } else if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
+        } else {
+          setErrors(response.data.error);
+        }
+      });
+  };
+
+  const scrollDown = () => {
+    setImageUploadPopupOpen(false);
+    setLoadingUploadButton(false);
+    bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const listenEnterKeyMessage = (event) => {
+    if (event.key === 'Enter') {
+      handleSendEvent(event);
+    }
+  };
+
+  const clearImage = () => {
+    setImageUploadButton(true);
+    setUploadedImage('');
+  };
+
+  const deleteConversation = () => {
+    if (window.navigator.onLine === false) {
+      return setErrors(['reusable:errors:window-navigator']);
+    }
+    if (window.confirm(t('SingleConversation:del-conversation'))) {
+      const path = `/api/v1/conversations/${state.id}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const lang = detectLanguage();
-      let pathCable =
-        process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
-      let cable = Cable.createConsumer(
-        `${pathCable}/api/v1/cable/conversation/${state.id}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
-      );
-      channelToSave = cable.subscriptions.create(
-        {
-          channel: 'ConversationsChannel',
-          conversations_id: state.id,
-        },
-        {
-          connected: () => {},
-          received: (data) => {
-            let receivedChatLogs = chatLogs;
-            receivedChatLogs.push(data.message);
-            setChatLogs(receivedChatLogs);
-            setChatLogsLength(chatLogs.length);
-            bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
-          },
-        }
-      );
-      setChannel(channelToSave);
-      const path = `/api/v1/conversations/${state.id}?locale=${lang}`;
+      const payload = {
+        hidden: id,
+        locale: lang,
+      };
       axios
-        .get(path, { headers: headers })
-        .then((response) => {
-          const sortedResponse = response.data.message.sort(function (a, b) {
-            let dateA = new Date(a.created_at),
-              dateB = new Date(b.created_at);
-            return dateA - dateB;
-          });
-          setMessagesHistory(sortedResponse);
-          setLoading(false);
-          setErrors([]);
-          bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
+        .patch(path, payload, { headers: headers })
+        .then(() => {
+          window.location.replace('/messenger');
         })
         .catch(({ response }) => {
           if (response === undefined) {
@@ -109,126 +232,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
             setErrors(response.data.error);
           }
         });
-    }
-    return () => {
-      channelToSave.unsubscribe();
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  const handleSendEvent = (event) => {
-    event.preventDefault();
-    if (window.navigator.onLine === false) {
-      setImageUploadPopupOpen(false);
-      handleError(['reusable:errors:window-navigator']);
-    } else {
-      const path = '/api/v1/auth/validate_token';
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
-      axios
-        .get(path, { headers: headers })
-        .then(() => {
-          if (uploadedImage !== '') {
-            channel.send({
-              body: newMessage,
-              image: uploadedImage,
-              user_id: id,
-              conversation_id: state.id,
-            });
-            setNewMessage('');
-            setLoadingUploadButton(true);
-          } else if (newMessage.length < 1 || newMessage.length > 1000) {
-            handleError(['SingleConversation:message-body-error']);
-          } else {
-            channel.send({
-              body: newMessage,
-              image: uploadedImage,
-              user_id: id,
-              conversation_id: state.id,
-            });
-            setNewMessage('');
-          }
-        })
-        .catch(({ response }) => {
-          if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (response.status === 500) {
-            handleError(['reusable:errors:500']);
-          } else if (response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else {
-            handleError(response.data.error);
-          }
-        });
-    }
-  };
-
-  const scrollDown = () => {
-    setImageUploadPopupOpen(false);
-    setLoadingUploadButton(false);
-    bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const listenEnterKeyMessage = (event) => {
-    if (event.key === 'Enter') {
-      handleSendEvent(event);
-    }
-  };
-
-  const handleError = (errors) => {
-    setErrors(errors);
-    bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const clearImage = () => {
-    setImageUploadButton(true);
-    setUploadedImage('');
-  };
-
-  const deleteConversation = () => {
-    const lang = detectLanguage();
-    setLoading(true);
-    if (window.navigator.onLine === false) {
-      setLoading(false);
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      if (window.confirm(t('SingleConversation:del-conversation'))) {
-        const path = `/api/v1/conversations/${state.id}`;
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        const payload = {
-          hidden: id,
-          locale: lang,
-        };
-        axios
-          .patch(path, payload, { headers: headers })
-          .then(() => {
-            window.location.replace('/messenger');
-          })
-          .catch(({ response }) => {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              setLoading(false);
-              setErrors(['reusable:errors:500']);
-            } else if (response.status === 401) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              setLoading(false);
-              setErrors(response.data.error);
-            }
-          });
-      } else {
-        setLoading(false);
-      }
     }
   };
 
