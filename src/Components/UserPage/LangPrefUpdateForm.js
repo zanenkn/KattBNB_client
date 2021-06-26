@@ -4,7 +4,8 @@ import Spinner from '../ReusableComponents/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { RadioButton } from '../../UI-Components';
+import { RadioButton, Button, Text, Notice } from '../../UI-Components';
+import { ButtonWrapper } from './styles';
 
 const LangPrefUpdateForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -66,20 +67,45 @@ const LangPrefUpdateForm = (props) => {
 
   return (
     <>
-      <div style={{ maxWidth: '194px' }}>
-        <RadioButton
-          label='Jag vill få epost från KattBNB på svenska'
-          value='sv-SE'
-          checked={langPref}
-          onChange={() => setLangPref('sv-SE')}
-        />
-        <RadioButton
-          label='I want to get emails from KattBNB in English'
-          value='en-US'
-          checked={langPref}
-          onChange={() => setLangPref('en-US')}
-        />
-      </div>
+      <RadioButton
+        label='Jag vill få epost från KattBNB på svenska'
+        value='sv-SE'
+        checked={langPref}
+        onChange={() => setLangPref('sv-SE')}
+      />
+      <RadioButton
+        label='I want to get emails from KattBNB in English'
+        value='en-US'
+        checked={langPref}
+        onChange={() => setLangPref('en-US')}
+      />
+      {errors.length > 0 && (
+        <Notice nature='danger'>
+          <Text bold centered size='sm'>
+            {t('reusable:errors:action-error-header')}
+          </Text>
+          <ul id='message-error-list'>
+            {errors.map((error) => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Notice>
+      )}
+      <ButtonWrapper>
+        <Button secondary color='neutral' onClick={() => props.closeLocationAndPasswordForms()}>
+          {t('reusable:cta.close')}
+        </Button>
+
+        <Button
+          id='email-language-submit-button'
+          color='success'
+          loading={loading}
+          disabled={loading}
+          onClick={() => updateLangPref()}
+        >
+          {t('reusable:cta.change')}
+        </Button>
+      </ButtonWrapper>
     </>
   );
 
@@ -119,18 +145,7 @@ const LangPrefUpdateForm = (props) => {
   //             </Form.Field>
   //           </Form>
   //         </div>
-  //         {errors.length > 0 && (
-  //           <Message negative>
-  //             <Message.Header style={{ textAlign: 'center' }}>
-  //               {t('reusable:errors:action-error-header')}
-  //             </Message.Header>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         )}
+
   //         <div className='button-wrapper'>
   //           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>
   //             {t('reusable:cta.close')}

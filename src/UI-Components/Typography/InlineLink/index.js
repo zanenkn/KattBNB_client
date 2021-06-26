@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import PropTypes from 'prop-types';
-import { inherits } from 'util';
 
 const { colors, fontWeights, fontSize } = theme;
 
 const Styled = styled.a`
-  color: ${({ color, discreet }) => colors[color][discreet ? 60 : 100]};
+  color: ${({ color, $discreet }) => colors[color][$discreet ? 60 : 100]};
   font-weight: ${fontWeights.bold};
   font-size: ${({ text }) => (text ? fontSize[text] : 'inherit')};
   opacity: ${({ disabled }) => (disabled ? '0.6' : '1')};
@@ -15,7 +14,7 @@ const Styled = styled.a`
     !disabled &&
     css`
       &:hover {
-        color: ${({ color, discreet }) => colors[color][discreet ? 80 : 110]};
+        color: ${({ color, $discreet }) => colors[color][$discreet ? 80 : 110]};
         text-decoration: underline;
       }
     `}
@@ -23,14 +22,14 @@ const Styled = styled.a`
 
 const InlineLink = ({ color, disabled, discreet, text, to, ...rest }) => {
   return (
-    <Styled color={color} disabled={disabled} discreet={discreet} text={text} to={disabled ? '#' : to} {...rest} />
+    <Styled color={color} disabled={disabled} $discreet={discreet} text={text} to={disabled ? '#' : to} {...rest} />
   );
 };
 
 InlineLink.defaultProps = {
   color: 'primary',
   disabled: false,
-  discreat: false,
+  discreet: false,
 };
 
 InlineLink.propTypes = {

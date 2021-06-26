@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {TextAreaWrapper, TextBox, Label, RequiredLabel} from './styles'
-
 import { theme } from '../../../Styles/theme';
 
-const { colors, spacing } = theme;
+const { spacing } = theme;
 
 const TextArea = ({ label, onChange, required, space, type, value, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);

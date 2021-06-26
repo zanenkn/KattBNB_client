@@ -58,7 +58,7 @@ export const Indicator = styled.div`
   ${Input}:checked + &::after {
     display: block;
     border-radius: 50%;
-    background-color: ${colors.primary[100]};
+    background-color: ${colors.success[100]};
     width: 6px;
     height: 6px;
     top: 50%;
@@ -73,6 +73,6 @@ export const Indicator = styled.div`
   ${Input}:disabled + & {
     pointer-events: none;
     opacity: 0.6;
-    background: #e6e6e6;
+    background: ${colors.neutral[20]};
   }
 `;

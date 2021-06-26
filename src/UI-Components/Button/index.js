@@ -7,11 +7,11 @@ const { colors, spacing } = theme;
 
 const Styled = styled.button`
   opacity: ${({ disabled }) => (disabled ? '0.6' : '1')};
-  color: ${({ color, $loading }) => ($loading ? colors[color][100] : '#fff')};
-  background-color: ${({ color }) => colors[color][100]};
+  color: ${({ $loading }) => ($loading ? 'transparent' : '#fff')};
+  background-color: ${({ color, secondary }) => colors[color][secondary ? 40 : 100]};
   border: none;
   border-radius: 3px;
-  padding: 0 2rem;
+  padding: 0 1.25rem;
   cursor: ${({ disabled, $loading }) => (!$loading && !disabled ? 'pointer' : 'not-allowed')};
   display: ${({ centered }) => (centered ? 'block' : 'inline-block')};
   margin: auto;
@@ -19,7 +19,7 @@ const Styled = styled.button`
   height: 39px;
   transition: all 0.5s ease;
   &:hover {
-    background-color: ${({ color, disabled, $loading }) => !$loading && !disabled && colors[color][110]};
+    background-color: ${({ color, disabled, $loading, secondary }) => !$loading && !disabled && colors[color][secondary ? 60 : 110]};
   }
 `;
 
@@ -38,7 +38,7 @@ const Icon = styled.div`
   cursor: pointer;
 `;
 
-const Button = ({ centered, color, disabled, loading, space, ...rest }) => {
+const Button = ({ centered, color, disabled, loading, secondary, space, ...rest }) => {
   return (
     <Flex space={space}>
       {loading && (
@@ -46,7 +46,7 @@ const Button = ({ centered, color, disabled, loading, space, ...rest }) => {
           <Refresh height='21' fill='#FAFAFA' className='spin-it' />
         </Icon>
       )}
-      <Styled centered={centered} color={color} disabled={disabled} $loading={loading} {...rest} />
+      <Styled centered={centered} color={color} disabled={disabled} $loading={loading} secondary={secondary} {...rest} />
     </Flex>
   );
 };
@@ -56,6 +56,7 @@ Button.defaultProps = {
   color: 'primary',
   disabled: false,
   loading: false,
+  secondary: false,
   space: 4,
 };
 
@@ -64,6 +65,7 @@ Button.propTypes = {
   color: PropTypes.oneOf(Object.keys(colors)),
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
+  secondary: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
 };
 

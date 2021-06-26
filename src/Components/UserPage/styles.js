@@ -64,3 +64,17 @@ export const AvatarUpdateFormWrapper = styled(Container)`
 export const WithCursorPointer = styled(Container)`
   cursor: pointer;
 `;
+
+export const ButtonWrapper = styled(Container)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  > * {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+  > *:last-child {
+    margin-right: 0;
+  }
+`
