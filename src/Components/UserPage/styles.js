@@ -25,6 +25,8 @@ export const UpdateFormWrapper = styled.div`
   height: auto;
   overflow: hidden;
   transition: max-height 1s ease-in-out;
+  width: 200px;
+  margin: auto;
 `;
 
 export const MaxWidth = styled.div`

@@ -4,6 +4,7 @@ import Spinner from '../ReusableComponents/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { RadioButton } from '../../UI-Components';
 
 const LangPrefUpdateForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -60,8 +61,28 @@ const LangPrefUpdateForm = (props) => {
       }
     }
   };
-  return <div>a</div>
-  // if (ready) {
+
+  if (!ready) return <Spinner />;
+
+  return (
+    <>
+      <div style={{ maxWidth: '194px' }}>
+        <RadioButton
+          label='Jag vill få epost från KattBNB på svenska'
+          value='sv-SE'
+          checked={langPref}
+          onChange={() => setLangPref('sv-SE')}
+        />
+        <RadioButton
+          label='I want to get emails from KattBNB in English'
+          value='en-US'
+          checked={langPref}
+          onChange={() => setLangPref('en-US')}
+        />
+      </div>
+    </>
+  );
+
   //   return (
   //     <div>
   //       <Divider />
@@ -128,9 +149,6 @@ const LangPrefUpdateForm = (props) => {
   //       <Divider style={{ marginBottom: '2rem' }} />
   //     </div>
   //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default LangPrefUpdateForm;
