@@ -7,3 +7,9 @@ const User = ({ fill, height }) => (
 );
 
 export default User;
+
+User.defaultProps = {
+  fill: 'neutral',
+  height: 4,
+  tint: 100,
+};

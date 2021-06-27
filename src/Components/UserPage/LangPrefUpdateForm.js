@@ -98,7 +98,7 @@ const LangPrefUpdateForm = (props) => {
 
         <Button
           id='email-language-submit-button'
-          color='success'
+          color='info'
           loading={loading}
           disabled={loading}
           onClick={() => updateLangPref()}

@@ -84,6 +84,7 @@ const AboutUs = () => {
           <Trans i18nKey='AboutUs:acknowledgements-felix'>
             Thank you
             <InlineLink
+              color='primary'
               href='https://www.linkedin.com/in/felix-bonnier-90b4561/'
               target='_blank'
               rel='noopener noreferrer'
@@ -98,6 +99,7 @@ const AboutUs = () => {
           <Trans i18nKey='AboutUs:acknowledgements-clarissa'>
             Thank you
             <InlineLink
+              color='primary'
               href='https://se.linkedin.com/in/living-and-breathing-tdd'
               target='_blank'
               rel='noopener noreferrer'

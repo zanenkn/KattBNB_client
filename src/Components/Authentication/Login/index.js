@@ -82,7 +82,7 @@ const Login = (props) => {
           }}
         />
         <Text right size='sm' space={6}>
-          <InlineLink as={Link} to='password-reset' color='neutral' discreet disabled={successDisplay}>
+          <InlineLink as={Link} to='password-reset' color='info' disabled={successDisplay}>
             {t('Login:forgot-link')}
           </InlineLink>
         </Text>
@@ -105,7 +105,7 @@ const Login = (props) => {
           {t('Login:no-acc')}
         </Text>
         <Text centered>
-          <InlineLink as={Link} to='sign-up' id='create-account' disabled={successDisplay}>
+          <InlineLink as={Link} to='sign-up' id='create-account' color='primary' disabled={successDisplay}>
             {t('Login:signup-link')}
           </InlineLink>
         </Text>

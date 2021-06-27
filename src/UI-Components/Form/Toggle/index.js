@@ -17,7 +17,7 @@ const Toggle = ({ checked, color, onClick }) => {
 export default Toggle;
 
 Toggle.defaultProps = {
-  color: 'primary',
+  color: 'success',
 };
 
 Toggle.propTypes = {

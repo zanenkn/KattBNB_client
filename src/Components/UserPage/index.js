@@ -401,8 +401,8 @@ const UserPage = (props) => {
           userId={props.id}
           closeAllForms={avatarFormHandler.bind(this)}
         />
-        <Header level={4} space={2} centered color='primary'>
-          <User fill={'primary'} height={4} />
+        <Header level={4} space={2} centered>
+          <User height={4} />
           &ensp;{props.username}
         </Header>
         <FlexWrapper centered spaceBetween={1}>
@@ -452,7 +452,7 @@ const UserPage = (props) => {
         </MaxWidth>
       )}
       <Whitebox>
-        <Header level={4} space={5} centered color='primary'>
+        <Header level={4} space={5} centered>
           {t('UserPage:settings-header')}
         </Header>
         <SettingsWrapper>
@@ -464,7 +464,7 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2} id='user-location'>
             <Location />
             <Text>{element.location}</Text>
-            <InlineLink id='editLocationForm' onClick={(e) => formHandler(e)} text={'sm'}>
+            <InlineLink id='editLocationForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
@@ -481,7 +481,7 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2}>
             <Lock />
             <Text>******</Text>
-            <InlineLink id='editPasswordForm' onClick={(e) => formHandler(e)} text={'sm'}>
+            <InlineLink id='editPasswordForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
@@ -494,7 +494,7 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2}>
             <Notification />
             <Text>{t('UserPage:notifications-header')}</Text>
-            <InlineLink id='editNotificationsForm' onClick={(e) => formHandler(e)} text={'sm'}>
+            <InlineLink id='editNotificationsForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
@@ -510,7 +510,7 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2}>
             <Globe />
             <Text>{t('UserPage:lang-pref-header')}</Text>
-            <InlineLink id='editLangPrefForm' onClick={(e) => formHandler(e)} text={'sm'}>
+            <InlineLink id='editLangPrefForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>

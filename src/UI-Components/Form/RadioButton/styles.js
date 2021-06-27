@@ -58,7 +58,7 @@ export const Indicator = styled.div`
   ${Input}:checked + &::after {
     display: block;
     border-radius: 50%;
-    background-color: ${colors.success[100]};
+    background-color: ${colors.neutral[100]};
     width: 6px;
     height: 6px;
     top: 50%;

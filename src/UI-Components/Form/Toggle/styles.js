@@ -25,7 +25,6 @@ export const Label = styled.label`
     height: 18px;
     margin: 3px;
     background: #ffffff;
-    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
     transition: 0.2s;
   }
 `;

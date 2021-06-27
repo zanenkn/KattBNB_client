@@ -47,7 +47,7 @@ export const AvatarEditBtnWrapper = styled.div`
   align-content: center;
   flex-direction: column;
   justify-content: center;
-  background-color: ${colors.primary[100]};
+  background-color: ${colors.info[100]};
   height: 30px;
   width: 30px;
   border-radius: 50%;

@@ -27,7 +27,7 @@ const InlineLink = ({ color, disabled, discreet, text, to, ...rest }) => {
 };
 
 InlineLink.defaultProps = {
-  color: 'primary',
+  color: 'neutral',
   disabled: false,
   discreet: false,
 };
