@@ -35,7 +35,7 @@ Notice.defaultProps = {
 };
 
 Notice.propTypes = {
-  nature: PropTypes.oneOf(['success', 'danger']).isRequired,
+  nature: PropTypes.oneOf(['success', 'danger', 'info']).isRequired,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
 };
 

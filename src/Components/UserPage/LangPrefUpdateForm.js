@@ -10,58 +10,60 @@ import { ButtonWrapper } from './styles';
 const LangPrefUpdateForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [info, setInfo] = useState(null);
   const [langPref, setLangPref] = useState(props.langPref);
 
   const { t, ready } = useTranslation('LangPrefUpdateForm');
 
-  const handleLangPrefChange = (e) => {
-    setLangPref(e.target.id);
-  };
-
   const updateLangPref = () => {
+    setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      if (langPref === props.langPref) {
-        setLoading(false);
-        setErrors(['LangPrefUpdateForm:update-error']);
-      } else {
-        setLoading(true);
-        const lang = detectLanguage();
-        const path = '/api/v1/auth/';
-        const payload = {
-          lang_pref: langPref,
-          locale: lang,
-        };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        axios
-          .put(path, payload, { headers: headers })
-          .then(() => {
-            window.alert(t('LangPrefUpdateForm:update-success'));
-            window.location.reload();
-          })
-          .catch((error) => {
-            if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
-              setLoading(false);
-              setErrors(['reusable:errors:500']);
-            } else if (error.response.status === 401 || error.response.status === 404) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              setLoading(false);
-              setErrors(error.response.data.errors.full_messages);
-            }
-          });
-      }
+      return setErrors(['reusable:errors:window-navigator']);
     }
+    if (langPref === props.langPref) {
+      setLoading(false);
+      return setInfo(['LangPrefUpdateForm:update-error']);
+    }
+
+    const lang = detectLanguage();
+    const path = '/api/v1/auth/';
+    const payload = {
+      lang_pref: langPref,
+      locale: lang,
+    };
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    axios
+      .put(path, payload, { headers: headers })
+      .then(() => {
+        window.alert(t('LangPrefUpdateForm:update-success'));
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (error.response.status === 500) {
+          setLoading(false);
+          setErrors(['reusable:errors:500']);
+        } else if (error.response.status === 401 || error.response.status === 404) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
+        } else {
+          setLoading(false);
+          setErrors(error.response.data.errors.full_messages);
+        }
+      });
   };
+
+  const handleRadioBtnClick = (value) => {
+    setErrors([])
+    setInfo(null)
+    setLangPref(value)
+  }
 
   if (!ready) return <Spinner />;
 
@@ -71,13 +73,13 @@ const LangPrefUpdateForm = (props) => {
         label='Jag vill få epost från KattBNB på svenska'
         value='sv-SE'
         checked={langPref}
-        onChange={() => setLangPref('sv-SE')}
+        onChange={() => handleRadioBtnClick('sv-SE')}
       />
       <RadioButton
         label='I want to get emails from KattBNB in English'
         value='en-US'
         checked={langPref}
-        onChange={() => setLangPref('en-US')}
+        onChange={() => handleRadioBtnClick('en-US')}
       />
       {errors.length > 0 && (
         <Notice nature='danger'>
@@ -89,6 +91,11 @@ const LangPrefUpdateForm = (props) => {
               <li key={error}>{t(error)}</li>
             ))}
           </ul>
+        </Notice>
+      )}
+      {info && (
+        <Notice nature='info'>
+          <Text centered>{t(info)}</Text>
         </Notice>
       )}
       <ButtonWrapper>
