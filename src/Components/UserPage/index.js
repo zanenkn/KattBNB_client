@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
 import HostProfileForm from '../HostProfile/HostProfileForm';
-import HostProfile from '../HostProfile/HostProfile';
+import HostProfile from '../HostProfile';
 import Spinner from '../ReusableComponents/Spinner';
 import { connect } from 'react-redux';
 import axios from 'axios';
