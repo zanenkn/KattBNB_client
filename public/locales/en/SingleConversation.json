@@ -1,5 +1,6 @@
 {
   "message-body-error": "The message cannot be empty or exceed 1000 characters!",
+  "email-phone-error": "Please do not share private information like phone numbers or email addresses on our messenger as that is against our Terms and Conditions.",
   "del-conversation": "Do you really want to delete this conversation?",
   "no-messages-yet": "You don't have any messages in this conversation (yet).",
   "error-message-header": "Could not send the message because of following error(s):",

@@ -63,6 +63,26 @@ describe('User can see messages of individual conversation', () => {
     cy.contains('The message cannot be empty or exceed 1000 characters!').should('exist');
   });
 
+  it('and not create a new message cause she enters a phone number', () => {
+    validateToken();
+    cy.get('#newMessage').clear();
+    cy.get('#newMessage').type('Call me maybe: 0708988086');
+    cy.get('#newMessage').type('{enter}');
+    cy.contains(
+      'Please do not share private information like phone numbers or email addresses on our messenger as that is against our Terms and Conditions.'
+    ).should('exist');
+  });
+
+  it('and not create a new message cause she enters an email', () => {
+    validateToken();
+    cy.get('#newMessage').clear();
+    cy.get('#newMessage').type('Haj, email me on zane@mail.com');
+    cy.get('#newMessage').type('{enter}');
+    cy.contains(
+      'Please do not share private information like phone numbers or email addresses on our messenger as that is against our Terms and Conditions.'
+    ).should('exist');
+  });
+
   it('and can only send a written message or an image, not both at the same time', () => {
     cy.get('#newMessage').clear();
     cy.get('#send').should('not.be.visible');

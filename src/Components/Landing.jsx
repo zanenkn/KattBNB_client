@@ -1,5 +1,6 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import KattBNBLogomark from './Icons/KattBNBLogomark';
+import KattBNBLogo from './Icons/KattBNBLogo';
 import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -7,49 +8,18 @@ import { Helmet } from 'react-helmet';
 import FacebookIcon from './Icons/FacebookIcon';
 import InstagramIcon from './Icons/InstagramIcon';
 import LinkedinIcon from './Icons/LinkedinIcon';
-import { config } from '../weekly-cat-config';
-import WeeklyCatBadge from './Icons/WeeklyCatBadge';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
-  const textRef = useRef(null);
-
-  const [carouselWidth, setCarouselWidth] = useState(null);
-  const [carouselHeight, setCarouselHeight] = useState(null);
+  const [dimentions, setDimentions] = useState('mobile');
+  const [ctaVisibility, setCtaVisibility] = useState('visible');
+  const mobileText = useRef(null);
 
   const { t, ready } = useTranslation('Landing');
 
-  const carouselWrapper = useCallback((node) => {
-    const resizeCarousel = () => {
-      if (node !== null) {
-        let height = node.clientHeight;
-        let width = node.clientWidth;
-        if (height > width) {
-          setCarouselWidth(`${width}px`);
-          setCarouselHeight(`${width}px`);
-        } else {
-          setCarouselWidth(`${height}px`);
-          setCarouselHeight(`${height}px`);
-        }
-      }
-    };
-    resizeCarousel();
-  }, []);
-
   const scrollDown = () => {
-    window.scrollTo({ top: textRef.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    cssEase: 'ease-in',
-    speed: 400,
-    lazyLoad: 'progressive',
+    window.scrollTo({ top: mobileText.current.getBoundingClientRect().top - 60, behavior: 'smooth' });
   };
   return <div>a</div>
   // if (ready) {
