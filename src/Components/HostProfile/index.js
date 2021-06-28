@@ -14,7 +14,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper } from './styles';
-import { Address } from '../Icons';
+import { Address, Cat } from '../Icons';
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -170,6 +170,7 @@ const HostProfile = forwardRef((props, ref) => {
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>
+
       {/* <div
             style={{
               maxHeight: form.editAddress ? '1000px' : '0px',
@@ -187,17 +188,17 @@ const HostProfile = forwardRef((props, ref) => {
                 setElement={props.setElement}
               />
             )}
-          </div>
-          <p id='maxCats'>
-            <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 236.62 236.62'>
-              <path d='M197.023,225.545c-1.145-9.533-11.68-10.614-17.805-9.958c-6.521-24.554,16.225-61.151,17.563-69.82c1.438-9.312-6.658-63.5-7.513-90.938C188.389,26.662,147.48-4.433,140.65,0.524c-6.768,7.484,9.748,17.585,1.054,26.245c-8.398,8.367-10.588,13.99-16.824,23.46c-15.976,24.255,27.318,24.558,27.318,24.558s-33.882,25.112-41.421,37.768c-6.943,11.656-9.854,24.696-18.232,35.688c-19.094,25.051-14.791,68.729-14.791,68.729s-36.17-11.839-16.264-53.133C76.643,132.406,84.107,86.02,50.016,97.95c-13.189,4.616,2.949,14.325,5.734,17.435c9.318,10.4,1.441,27.896-4.174,38.012c-15.037,27.091-20.496,55.475,11.154,72.978c14.063,7.776,33.055,9.7,52.17,9.982l48.64,0.14C179.564,237.294,197.689,234.298,197.023,225.545z' />
-            </svg>
-            &nbsp;{t('HostProfile:max-cats')} {props.maxCats}&ensp;
-            <Header as='strong' id='editMaxCatsForm' onClick={(e) => formHandler(e)} className='fake-link-underlined'>
+          </div> */}
+          
+          <FlexWrapper spaceBetween={2} id='maxCats'>
+            <Cat />
+            <Text>{t('HostProfile:max-cats')} {props.maxCats}</Text>
+            <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
               {t('reusable:cta:change')}
-            </Header>
-          </p>
-          <div
+            </InlineLink>
+          </FlexWrapper>
+
+          {/* <div
             style={{
               maxHeight: form.editMaxCatsForm ? '1000px' : '0px',
               height: 'auto',
