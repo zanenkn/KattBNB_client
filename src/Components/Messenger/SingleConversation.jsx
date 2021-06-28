@@ -127,7 +127,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
 
     if (window.navigator.onLine === false) {
       setImageUploadPopupOpen(false);
-      setErrors(['reusable:errors:window-navigator']);
+      return setErrors(['reusable:errors:window-navigator']);
     }
 
     if (newMessage.length < 1 || newMessage.length > 1000) {
@@ -222,13 +222,11 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
           if (response === undefined) {
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
-            setLoading(false);
             setErrors(['reusable:errors:500']);
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
           } else {
-            setLoading(false);
             setErrors(response.data.error);
           }
         });
