@@ -13,7 +13,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
-import { FlexWrapper } from './styles';
+import { FlexWrapper, UpdateFormWrapper } from './styles';
 import { Address, Cat } from '../Icons';
 
 const HostProfile = forwardRef((props, ref) => {
@@ -171,34 +171,27 @@ const HostProfile = forwardRef((props, ref) => {
         </InlineLink>
       </FlexWrapper>
 
-      {/* <div
-            style={{
-              maxHeight: form.editAddress ? '1000px' : '0px',
-              height: 'auto',
-              overflow: 'hidden',
-              transition: 'max-height 1s ease-in-out',
-            }}
-          >
-            {form.editAddress && (
-              <AddressUpdateForm
-                fullAddress={props.fullAddress}
-                id={props.id}
-                closeAllForms={closeAllForms.bind(this)}
-                location={props.location}
-                setElement={props.setElement}
-              />
-            )}
-          </div> */}
-          
-          <FlexWrapper spaceBetween={2} id='maxCats'>
-            <Cat />
-            <Text>{t('HostProfile:max-cats')} {props.maxCats}</Text>
-            <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
-              {t('reusable:cta:change')}
-            </InlineLink>
-          </FlexWrapper>
+      <UpdateFormWrapper open={form.editAddress}>
+        <AddressUpdateForm
+          fullAddress={props.fullAddress}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          location={props.location}
+          setElement={props.setElement}
+        />
+      </UpdateFormWrapper>
 
-          {/* <div
+      <FlexWrapper spaceBetween={2} id='maxCats'>
+        <Cat />
+        <Text>
+          {t('HostProfile:max-cats')} {props.maxCats}
+        </Text>
+        <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+          {t('reusable:cta:change')}
+        </InlineLink>
+      </FlexWrapper>
+
+      {/* <div
             style={{
               maxHeight: form.editMaxCatsForm ? '1000px' : '0px',
               height: 'auto',

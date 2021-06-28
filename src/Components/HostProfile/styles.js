@@ -19,3 +19,10 @@ export const FlexWrapper = styled(Container)`
     margin-right: 0;
   }
 `;
+
+export const UpdateFormWrapper = styled.div`
+  max-height: ${({ open }) => (open ? '1000px' : '0px')};
+  height: auto;
+  overflow: hidden;
+  transition: max-height 1s ease-in-out;
+`;
