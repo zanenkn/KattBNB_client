@@ -12,7 +12,7 @@ describe('User can log in and logout', () => {
   context('login', () => {
     it('succesfully', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.contains('Welcome to KattBNB!').should('exist');
+      cy.contains('Do you need a cat sitter?').should('exist');
     });
 
     it('unsuccessfuly with invalid credentials', () => {
@@ -53,7 +53,7 @@ describe('User can log in and logout', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
       cy.get('.hamburger-box').click();
       cy.get('#logout').click();
-      cy.contains('Welcome to KattBNB!').should('exist');
+      cy.contains('Do you need a cat sitter?').should('exist');
     });
   });
 });

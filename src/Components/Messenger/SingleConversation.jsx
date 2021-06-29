@@ -130,7 +130,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
       return setErrors(['reusable:errors:window-navigator']);
     }
 
-    if (newMessage.length < 1 || newMessage.length > 1000) {
+    if ((newMessage.length < 1 || newMessage.length > 1000) && uploadedImage === '') {
       return setErrors(['SingleConversation:message-body-error']);
     }
 
@@ -148,24 +148,14 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     axios
       .get(path, { headers: headers })
       .then(() => {
-        if (uploadedImage !== '') {
-          channel.send({
-            body: newMessage,
-            image: uploadedImage,
-            user_id: id,
-            conversation_id: state.id,
-          });
-          setNewMessage('');
-          setLoadingUploadButton(true);
-        } else {
-          channel.send({
-            body: newMessage,
-            image: uploadedImage,
-            user_id: id,
-            conversation_id: state.id,
-          });
-          setNewMessage('');
-        }
+        channel.send({
+          body: newMessage,
+          image: uploadedImage,
+          user_id: id,
+          conversation_id: state.id,
+        });
+        uploadedImage !== '' && setLoadingUploadButton(true);
+        setNewMessage('');    
       })
       .catch(({ response }) => {
         if (response === undefined) {

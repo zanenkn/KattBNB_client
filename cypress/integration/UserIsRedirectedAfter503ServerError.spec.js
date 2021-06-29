@@ -7,6 +7,6 @@ describe('User is redirected after 503 server error (Heroku maintenance mode)', 
 
   it('unsuccessfuly cause you cannot navigate manually to the path', () => {
     cy.visit('http://localhost:3000/is-not-available');
-    cy.contains('Welcome to KattBNB!').should('exist');
+    cy.contains('Do you need a cat sitter?').should('exist');
   });
 });

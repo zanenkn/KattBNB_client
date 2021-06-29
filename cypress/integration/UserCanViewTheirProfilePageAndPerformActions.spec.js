@@ -163,7 +163,7 @@ describe('User can view their profile page - happy path', () => {
     cy.get('#delete-account-link').click();
     checkWindowConfirm();
     checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!').should('exist');
+    cy.contains('Do you need a cat sitter?').should('exist');
   });
 
   it('and cannot delete their account cause of upcoming and request bookings', () => {
@@ -236,7 +236,7 @@ describe('User can view their profile page', () => {
     cy.get('#delete-account-link').click();
     checkWindowConfirm();
     checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!').should('exist');
+    cy.contains('Do you need a cat sitter?').should('exist');
   });
 });
 
