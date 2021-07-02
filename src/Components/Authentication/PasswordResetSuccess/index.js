@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../../ReusableComponents/Spinner';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Header, InlineLink, Whitebox, Text } from '../../../UI-Components';
 // MIGRATED
 
-const SignupSuccess = (props) => {
-  const { t, ready } = useTranslation('SignupSuccess');
+const PasswordResetSuccess = (props) => {
+  const { t, ready } = useTranslation('PasswordResetSuccess');
 
   if (props.currentUserIn) {
     wipeCredentials();
@@ -23,20 +23,18 @@ const SignupSuccess = (props) => {
 
   return (
     <>
-      <Header centered level={1}>
-        {t('SignupSuccess:title')}
+      <Header level={2} centered>
+        {t('PasswordResetSuccess:title')}
       </Header>
       <Whitebox>
         <Text centered>
-          <Trans i18nKey='SignupSuccess:p'>
-            You will need to confirm your email address in the next 24 hours in order to log in and start using our
-            services. To continue, please follow the instructions we have sent to your email. If you didn't receive our
-            message in your inbox make sure you check your spam folder, sometimes the confirmation email can end up
-            there. More in our
+          <Trans i18nKey='PasswordResetSuccess:p'>
+            You have successfully requested a password reset! To continue, please follow the instructions we have sent
+            to your email. If you didn't receive our message in your inbox, please refer to our
             <InlineLink as={Link} to='faq' color='info'>
               FAQ
             </InlineLink>
-            .
+            section.
           </Trans>
         </Text>
       </Whitebox>
@@ -46,4 +44,4 @@ const SignupSuccess = (props) => {
 
 const mapStateToProps = (state) => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn });
 
-export default connect(mapStateToProps)(SignupSuccess);
+export default connect(mapStateToProps)(PasswordResetSuccess);
