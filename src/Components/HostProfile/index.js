@@ -15,6 +15,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper } from './styles';
 import { Address, Cat, Description, Rate, Supplement, Availabilty } from '../Icons';
+//Migrated, elements needs to be centered inside Whitebox
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
