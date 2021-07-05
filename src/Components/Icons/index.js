@@ -13,3 +13,4 @@ export { default as Cat } from './src/Cat';
 export { default as Description } from './src/Description';
 export { default as Rate } from './src/Rate';
 export { default as Supplement } from './src/Supplement';
+export { default as Availabilty } from './src/Availabilty';

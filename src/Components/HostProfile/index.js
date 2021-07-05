@@ -14,7 +14,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper } from './styles';
-import { Address, Cat, Description, Rate, Supplement } from '../Icons';
+import { Address, Cat, Description, Rate, Supplement, Availabilty } from '../Icons';
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -235,16 +235,16 @@ const HostProfile = forwardRef((props, ref) => {
         )}
       </UpdateFormWrapper>
 
-          {/* <p id='availability' style={{ marginBottom: '0' }}>
-            <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-              <path d='M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z' />
-            </svg>
-            &nbsp;{t('HostProfile:availability')}&ensp;
-            <Header as='strong' id='editableCalendar' onClick={(e) => formHandler(e)} className='fake-link-underlined'>
-              {t('reusable:cta:change')}
-            </Header>
-          </p>
-          {form.editableCalendar ? (
+      <FlexWrapper spaceBetween={2} id='availability'>
+        <Availabilty />
+        <Text>{t('HostProfile:availability')}</Text>
+        <InlineLink id='editableCalendar' onClick={(e) => formHandler(e)} text='sm' color='info'>
+          {t('reusable:cta:change')}
+        </InlineLink>
+      </FlexWrapper>
+
+      <UpdateFormWrapper open={form.editableCalendar}>
+      {form.editableCalendar ? (
             <AvailabilityUpdateForm
               selectedDays={props.availability.map(function (date) {
                 return new Date(date);
@@ -260,7 +260,8 @@ const HostProfile = forwardRef((props, ref) => {
                 return new Date(date);
               })}
             />
-          )}  */}
+          )}  
+      </UpdateFormWrapper>
     </Whitebox>
   );
 });
