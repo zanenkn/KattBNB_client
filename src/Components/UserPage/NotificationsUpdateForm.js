@@ -4,6 +4,9 @@ import Spinner from '../ReusableComponents/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { Button, Notice, Dropdown, Text, Toggle } from '../../UI-Components';
+import { ButtonWrapper, FlexWrapper } from './styles';
+// Migration in progress
 
 const NotificationsUpdateForm = (props) => {
   const { t, ready } = useTranslation('NotificationsUpdateForm');
@@ -56,53 +59,57 @@ const NotificationsUpdateForm = (props) => {
       }
     }
   };
-  return <div>a</div>
-  // if (ready) {
-  //   return (
-  //     <div>
-  //       <Divider />
-  //       <div style={{ maxWidth: '194px', margin: 'auto' }}>
-  //         <div style={{ display: 'inline-flex' }}>
-  //           <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)}>
-  //             <Checkbox style={{ marginRight: '1em', padding: '0.5em' }} toggle checked={messageNotifications} />
-  //           </div>
-  //           <label style={{ paddingLeft: '1.5em', color: messageNotifications ? 'grey' : 'silver', fontSize: 'small' }}>
-  //             {t('NotificationsUpdateForm:label')}
-  //           </label>
-  //         </div>
-  //         {errors.length > 0 && (
-  //           <Message negative>
-  //             <Message.Header style={{ textAlign: 'center' }}>
-  //               {t('reusable:errors:action-error-header')}
-  //             </Message.Header>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         )}
-  //         <div className='button-wrapper'>
-  //           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>
-  //             {t('reusable:cta.close')}
-  //           </Button>
-  //           <Button
-  //             id='notifications-submit-button'
-  //             className='submit-button'
-  //             loading={loading}
-  //             disabled={loading}
-  //             onClick={() => updateMessageNotification()}
-  //           >
-  //             {t('reusable:cta.change')}
-  //           </Button>
-  //         </div>
-  //       </div>
-  //       <Divider style={{ marginBottom: '2rem' }} />
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+
+  if (!ready) {
+    return <Spinner />;
+  }
+
+  return (
+    <>
+      <FlexWrapper>
+        <Toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} />
+        <Text tint={messageNotifications ? 100 : 60}>{t('NotificationsUpdateForm:label')}</Text>
+      </FlexWrapper>
+    </>
+    // <div>
+    //   <Divider />
+    //   <div style={{ maxWidth: '194px', margin: 'auto' }}>
+    //     <div style={{ display: 'inline-flex' }}>
+    //       <div className='toggle' onClick={() => setMessageNotifications(!messageNotifications)}>
+    //         <Checkbox style={{ marginRight: '1em', padding: '0.5em' }} toggle checked={messageNotifications} />
+    //       </div>
+    //       <label style={{ paddingLeft: '1.5em', color: messageNotifications ? 'grey' : 'silver', fontSize: 'small' }}>
+    //         {t('NotificationsUpdateForm:label')}
+    //       </label>
+    //     </div>
+    //     {errors.length > 0 && (
+    //       <Message negative>
+    //         <Message.Header style={{ textAlign: 'center' }}>{t('reusable:errors:action-error-header')}</Message.Header>
+    //         <ul id='message-error-list'>
+    //           {errors.map((error) => (
+    //             <li key={error}>{t(error)}</li>
+    //           ))}
+    //         </ul>
+    //       </Message>
+    //     )}
+    //     <div className='button-wrapper'>
+    //       <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>
+    //         {t('reusable:cta.close')}
+    //       </Button>
+    //       <Button
+    //         id='notifications-submit-button'
+    //         className='submit-button'
+    //         loading={loading}
+    //         disabled={loading}
+    //         onClick={() => updateMessageNotification()}
+    //       >
+    //         {t('reusable:cta.change')}
+    //       </Button>
+    //     </div>
+    //   </div>
+    //   <Divider style={{ marginBottom: '2rem' }} />
+    // </div>
+  );
 };
 
 export default NotificationsUpdateForm;
