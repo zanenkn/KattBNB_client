@@ -14,7 +14,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper } from './styles';
-import { Address, Cat, Description, Rate } from '../Icons';
+import { Address, Cat, Description, Rate, Supplement } from '../Icons';
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -214,38 +214,28 @@ const HostProfile = forwardRef((props, ref) => {
         )}
       </UpdateFormWrapper>
 
-          {/* <p id='supplement'>
-            <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-              <path d='M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z' />
-            </svg>
-            &nbsp;{t('HostProfile:extra')} {props.supplement} {t('reusable:price:total-day')}&ensp;
-            <Header
-              as='strong'
-              id='editSupplementForm'
-              onClick={(e) => formHandler(e)}
-              className='fake-link-underlined'
-            >
-              {t('reusable:cta:change')}
-            </Header>
-          </p>
-          <div
-            style={{
-              maxHeight: form.editSupplementForm ? '1000px' : '0px',
-              height: 'auto',
-              overflow: 'hidden',
-              transition: 'max-height 1s ease-in-out',
-            }}
-          >
-            {form.editSupplementForm && (
-              <SupplementUpdateForm
-                supplement={props.supplement}
-                id={props.id}
-                closeAllForms={closeAllForms.bind(this)}
-                setElement={props.setElement}
-              />
-            )}
-          </div>
-          <p id='availability' style={{ marginBottom: '0' }}>
+      <FlexWrapper spaceBetween={2} id='supplement'>
+        <Supplement />
+        <Text>
+          {t('HostProfile:extra')} {props.supplement} {t('reusable:price:total-day')}
+        </Text>
+        <InlineLink id='editSupplementForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+          {t('reusable:cta:change')}
+        </InlineLink>
+      </FlexWrapper>
+
+      <UpdateFormWrapper open={form.editSupplementForm}>
+        {form.editSupplementForm && (
+          <SupplementUpdateForm
+            supplement={props.supplement}
+            id={props.id}
+            closeAllForms={closeAllForms.bind(this)}
+            setElement={props.setElement}
+          />
+        )}
+      </UpdateFormWrapper>
+
+          {/* <p id='availability' style={{ marginBottom: '0' }}>
             <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
               <path d='M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z' />
             </svg>
@@ -270,7 +260,7 @@ const HostProfile = forwardRef((props, ref) => {
                 return new Date(date);
               })}
             />
-          )} */}
+          )}  */}
     </Whitebox>
   );
 });
