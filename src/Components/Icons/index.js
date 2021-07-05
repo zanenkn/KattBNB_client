@@ -11,3 +11,4 @@ export { default as Notification } from './src/Notification';
 export { default as User } from './src/User';
 export { default as Cat } from './src/Cat';
 export { default as Description } from './src/Description';
+export { default as Rate } from './src/Rate';
