@@ -14,7 +14,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper } from './styles';
-import { Address, Cat } from '../Icons';
+import { Address, Cat, Description } from '../Icons';
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -132,37 +132,26 @@ const HostProfile = forwardRef((props, ref) => {
           </ul>
         </Notice>
       )}
-      {/* <p id='description'>
-            <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-              <path d='M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z' />
-            </svg>
-            &nbsp;{props.description}&ensp;
-            <Header
-              as='strong'
-              id='editDescriptionForm'
-              onClick={(e) => formHandler(e)}
-              className='fake-link-underlined'
-            >
-              {t('reusable:cta:change')}
-            </Header>
-          </p>
-          <div
-            style={{
-              maxHeight: form.editDescriptionForm ? '1000px' : '0px',
-              height: 'auto',
-              overflow: 'hidden',
-              transition: 'max-height 1s ease-in-out',
-            }}
-          >
-            {form.editDescriptionForm && (
-              <DescriptionUpdateForm
-                description={props.description}
-                id={props.id}
-                closeAllForms={closeAllForms.bind(this)}
-                setElement={props.setElement}
-              />
-            )}
-          </div> */}
+
+      <FlexWrapper spaceBetween={2} id='description'>
+        <Description />
+        <Text>{props.description}</Text>
+        <InlineLink id='editDescriptionForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+          {t('reusable:cta:change')}
+        </InlineLink>
+      </FlexWrapper>
+
+      <UpdateFormWrapper open={form.editDescriptionForm}>
+        {form.editDescriptionForm && (
+          <DescriptionUpdateForm
+            description={props.description}
+            id={props.id}
+            closeAllForms={closeAllForms.bind(this)}
+            setElement={props.setElement}
+          />
+        )}
+      </UpdateFormWrapper>
+
       <FlexWrapper spaceBetween={2} id='address'>
         <Address />
         <Text>{props.fullAddress}</Text>
@@ -172,13 +161,15 @@ const HostProfile = forwardRef((props, ref) => {
       </FlexWrapper>
 
       <UpdateFormWrapper open={form.editAddress}>
-        <AddressUpdateForm
-          fullAddress={props.fullAddress}
-          id={props.id}
-          closeAllForms={closeAllForms.bind(this)}
-          location={props.location}
-          setElement={props.setElement}
-        />
+        {form.editAddress && (
+          <AddressUpdateForm
+            fullAddress={props.fullAddress}
+            id={props.id}
+            closeAllForms={closeAllForms.bind(this)}
+            location={props.location}
+            setElement={props.setElement}
+          />
+        )}
       </UpdateFormWrapper>
 
       <FlexWrapper spaceBetween={2} id='maxCats'>
@@ -191,24 +182,18 @@ const HostProfile = forwardRef((props, ref) => {
         </InlineLink>
       </FlexWrapper>
 
-      {/* <div
-            style={{
-              maxHeight: form.editMaxCatsForm ? '1000px' : '0px',
-              height: 'auto',
-              overflow: 'hidden',
-              transition: 'max-height 1s ease-in-out',
-            }}
-          >
-            {form.editMaxCatsForm && (
-              <MaxCatsUpdateForm
-                maxCats={props.maxCats}
-                id={props.id}
-                closeAllForms={closeAllForms.bind(this)}
-                setElement={props.setElement}
-              />
-            )}
-          </div>
-          <p id='rate'>
+      <UpdateFormWrapper open={form.editMaxCatsForm}>
+        {form.editMaxCatsForm && (
+          <MaxCatsUpdateForm
+            maxCats={props.maxCats}
+            id={props.id}
+            closeAllForms={closeAllForms.bind(this)}
+            setElement={props.setElement}
+          />
+        )}
+      </UpdateFormWrapper>
+
+          {/* <p id='rate'>
             <svg fill='grey' height='1em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
               <path d='M18 6V4H2v2h16zm0 4H2v6h16v-6zM0 4c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm4 8h4v2H4v-2z' />
             </svg>
