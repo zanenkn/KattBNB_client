@@ -12,10 +12,11 @@ import queryString from 'query-string';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Header, Container, Text, TextField, Whitebox, Button, InlineLink, Notice } from '../../UI-Components';
-import { FlexWrapper, UpdateFormWrapper } from './styles';
-import { Address, Cat, Description, Rate, Supplement, Availabilty } from '../Icons';
-//Migrated, elements needs to be centered inside Whitebox
+import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components';
+import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
+import { Address, Cat, Rate, Supplement, Availabilty, User } from '../Icons';
+
+//Migrated
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -134,13 +135,13 @@ const HostProfile = forwardRef((props, ref) => {
         </Notice>
       )}
 
-      <FlexWrapper spaceBetween={2} id='description'>
-        <Description />
-        <Text>{props.description}</Text>
+      <DescriptionWrapper>
+        <User />
+        {props.description}
         <InlineLink id='editDescriptionForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
-      </FlexWrapper>
+      </DescriptionWrapper>
 
       <UpdateFormWrapper open={form.editDescriptionForm}>
         {form.editDescriptionForm && (
@@ -245,23 +246,23 @@ const HostProfile = forwardRef((props, ref) => {
       </FlexWrapper>
 
       <UpdateFormWrapper open={form.editableCalendar}>
-      {form.editableCalendar ? (
-            <AvailabilityUpdateForm
-              selectedDays={props.availability.map(function (date) {
-                return new Date(date);
-              })}
-              availability={props.availability}
-              id={props.id}
-              incomingBookings={props.incomingBookings}
-              closeAllForms={closeAllForms.bind(this)}
-            />
-          ) : (
-            <AvailabilityViewOnlyMode
-              selectedDays={props.availability.map(function (date) {
-                return new Date(date);
-              })}
-            />
-          )}  
+        {form.editableCalendar ? (
+          <AvailabilityUpdateForm
+            selectedDays={props.availability.map(function (date) {
+              return new Date(date);
+            })}
+            availability={props.availability}
+            id={props.id}
+            incomingBookings={props.incomingBookings}
+            closeAllForms={closeAllForms.bind(this)}
+          />
+        ) : (
+          <AvailabilityViewOnlyMode
+            selectedDays={props.availability.map(function (date) {
+              return new Date(date);
+            })}
+          />
+        )}
       </UpdateFormWrapper>
     </Whitebox>
   );

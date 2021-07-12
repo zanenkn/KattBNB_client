@@ -23,7 +23,7 @@ const PasswordResetSuccess = (props) => {
 
   return (
     <>
-      <Header level={2} centered>
+      <Header level={1} centered color='primary'>
         {t('PasswordResetSuccess:title')}
       </Header>
       <Whitebox>

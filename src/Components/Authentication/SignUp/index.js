@@ -112,7 +112,7 @@ const SignUp = (props) => {
           <Text tint={termsAccepted ? 100 : 60}>
             <Trans i18nKey='SignUp:terms-label'>
               I accept the
-              <InlineLink as={Link} to='legal' target='_blank' className='fake-link-underlined' color='info'>
+              <InlineLink as={Link} to='legal' target='_blank' color='info'>
                 Terms & Conditions
               </InlineLink>
             </Trans>

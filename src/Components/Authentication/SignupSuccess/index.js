@@ -23,7 +23,7 @@ const SignupSuccess = (props) => {
 
   return (
     <>
-      <Header centered level={1}>
+      <Header centered level={1} color='primary'>
         {t('SignupSuccess:title')}
       </Header>
       <Whitebox>
