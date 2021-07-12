@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
-import { Container } from '../../UI-Components';
+import { Container, Text } from '../../UI-Components';
 
 const { spacing } = theme;
 
@@ -26,3 +26,12 @@ export const UpdateFormWrapper = styled.div`
   overflow: hidden;
   transition: max-height 1s ease-in-out;
 `;
+
+export const DescriptionWrapper = styled(Text)`
+  > *:first-child {
+    margin-right: ${spacing[2]};
+  }
+  > *:last-child {
+    margin-left: ${spacing[2]};
+  }
+`

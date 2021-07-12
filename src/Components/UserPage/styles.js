@@ -20,6 +20,12 @@ export const FlexWrapper = styled(Container)`
   }
 `;
 
+export const NotificationsWrapper = styled(FlexWrapper)`
+  > *:first-child {
+    margin-right: 0.5rem;
+  }
+`;
+
 export const UpdateFormWrapper = styled.div`
   max-height: ${({ open }) => (open ? '1000px' : '0px')};
   height: auto;
@@ -77,4 +83,4 @@ export const ButtonWrapper = styled(Container)`
   > *:last-child {
     margin-right: 0;
   }
-`
+`;
