@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import { Button, Notice, Dropdown, Text } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
-// Waiting for dropdown
+// Migrated, Waiting for dropdown
 
 const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, location }) => {
   const { t, ready } = useTranslation('LocationUpdateForm');
@@ -15,6 +15,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
   const [newLocation, setNewLocation] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [info, setInfo] = useState(null);
 
   const listenEnterKeyLocation = (event) => {
     if (event.key === 'Enter') {
@@ -63,18 +64,19 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
   const updateLocation = () => {
     let address = fullAddress;
     if (window.navigator.onLine === false) {
-      APIerrorHandling(['reusable:errors:window-navigator']);
-    } else {
-      if (newLocation === location || newLocation === '') {
-        APIerrorHandling(['no-location-error']);
-      } else if (address !== '' && address.includes(newLocation) === false) {
-        if (window.confirm(t('LocationUpdateForm:no-match-alert'))) {
-          axiosCall();
-        }
-      } else {
-        axiosCall();
-      }
+      return APIerrorHandling(['reusable:errors:window-navigator']);
     }
+
+    if (newLocation === location || newLocation === '') {
+      setLoading(false);
+      return setInfo(['no-location-error']);
+    }
+
+    if (address !== '' && address.includes(newLocation) === false) {
+      return window.confirm(t('LocationUpdateForm:no-match-alert')) && axiosCall();
+    }
+
+    axiosCall();
   };
 
   if (!ready) {
@@ -83,38 +85,41 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
 
   return (
     <>
-        <Dropdown
-          // clearable
-          // search
-          // selection
-          placeholder={t('LocationUpdateForm:new-location-plch')}
-          data={LOCATION_OPTIONS}
-          id='location'
-          onChange={(val) => setNewLocation(val)}
-          onKeyPress={listenEnterKeyLocation}
-        />
+      <Dropdown
+        // clearable
+        // search
+        // selection
+        placeholder={t('LocationUpdateForm:new-location-plch')}
+        data={LOCATION_OPTIONS}
+        id='location'
+        onChange={(val) => setNewLocation(val)}
+        onKeyPress={listenEnterKeyLocation}
+      />
 
-        {errors.length > 0 && (
-          <Notice nature='danger'>
-            <Text bold centered size='sm'>{t('reusable:errors.action-error-header')}</Text>
-            <ul id='message-error-list'>
-              {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
-              ))}
-            </ul>
-          </Notice>
-        )}
+      {errors.length > 0 && (
+        <Notice nature='danger'>
+          <Text bold centered size='sm'>
+            {t('reusable:errors.action-error-header')}
+          </Text>
+          <ul id='message-error-list'>
+            {errors.map((error) => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Notice>
+      )}
+
+      {info && (
+        <Notice nature='info'>
+          <Text centered>{t(info)}</Text>
+        </Notice>
+      )}
 
       <ButtonWrapper>
-        <Button secondary={true} onClick={closeLocationAndPasswordForms}>
+        <Button secondary color='neutral' onClick={closeLocationAndPasswordForms}>
           {t('reusable:cta.close')}
         </Button>
-        <Button
-          id='location-submit-button'
-          disabled={loading}
-          loading={loading}
-          onClick={updateLocation}
-        >
+        <Button id='location-submit-button' color='info' disabled={loading} loading={loading} onClick={updateLocation}>
           {t('reusable:cta.change')}
         </Button>
       </ButtonWrapper>
