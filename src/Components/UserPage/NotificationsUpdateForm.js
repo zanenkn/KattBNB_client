@@ -6,7 +6,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Button, Notice, Dropdown, Text, Toggle } from '../../UI-Components';
 import { ButtonWrapper, NotificationsWrapper } from './styles';
-// Migration in progress
+// Migrated
 
 const NotificationsUpdateForm = (props) => {
   const { t, ready } = useTranslation('NotificationsUpdateForm');
