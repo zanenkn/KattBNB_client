@@ -1,7 +1,10 @@
 export { default as Camera } from './src/Camera';
+export { default as Cat } from './src/Cat';
+export { default as CreditCard } from './src/CreditCard';
 export { default as Edit } from './src/Edit';
 export { default as Email } from './src/Email';
 export { default as Globe } from './src/Globe';
+export { default as HostProfile } from './src/HostProfile';
 export { default as Location } from './src/Location';
 export { default as Address } from './src/Address';
 export { default as Lock } from './src/Lock';
@@ -13,3 +16,4 @@ export { default as Cat } from './src/Cat';
 export { default as Rate } from './src/Rate';
 export { default as Supplement } from './src/Supplement';
 export { default as Availabilty } from './src/Availabilty';
+export { default as Verified } from './src/Verified';
