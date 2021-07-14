@@ -5,9 +5,11 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-//MIGRATED
+// Completely MIGRATED
+
 const PasswordReset = ({ history }) => {
   const { t, ready } = useTranslation('PasswordReset');
+  const lang = detectLanguage();
 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
@@ -28,33 +30,32 @@ const PasswordReset = ({ history }) => {
   };
 
   const resetPassword = () => {
-    setLoading(true);
     if (window.navigator.onLine === false) {
-      axiosCallErrors(['reusable:errors:window-navigator']);
-    } else {
-      const lang = detectLanguage();
-      const path = '/api/v1/auth/password';
-      const payload = {
-        redirect_url: url,
-        email: email,
-        locale: lang,
-      };
-      axios
-        .post(path, payload)
-        .then(() => {
-          setErrors([]);
-          history.push('/password-reset-success');
-        })
-        .catch(({ response }) => {
-          if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (response.status === 500) {
-            axiosCallErrors(['reusable:errors:500']);
-          } else {
-            axiosCallErrors(response.data.errors);
-          }
-        });
+      return setErrors(['reusable:errors:window-navigator']);
     }
+
+    setLoading(true);
+    const path = '/api/v1/auth/password';
+    const payload = {
+      redirect_url: url,
+      email: email,
+      locale: lang,
+    };
+    axios
+      .post(path, payload)
+      .then(() => {
+        setErrors([]);
+        history.push('/password-reset-success');
+      })
+      .catch(({ response }) => {
+        if (response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (response.status === 500) {
+          axiosCallErrors(['reusable:errors:500']);
+        } else {
+          axiosCallErrors(response.data.errors);
+        }
+      });
   };
 
   if (!ready) {
@@ -66,8 +67,10 @@ const PasswordReset = ({ history }) => {
       <Header centered color='primary'>
         {t('PasswordReset:title')}
       </Header>
+
       <Whitebox>
         <Text centered>{t('PasswordReset:instructions')}</Text>
+
         <Container space={6}>
           <TextField
             required
@@ -78,6 +81,7 @@ const PasswordReset = ({ history }) => {
             onKeyPress={listenEnterKey}
           />
         </Container>
+
         {errors.length > 0 && (
           <Notice nature='danger'>
             <Header level={5} centered>
@@ -90,6 +94,7 @@ const PasswordReset = ({ history }) => {
             </ul>
           </Notice>
         )}
+
         <Button id='reset-pass-button' onClick={resetPassword} disabled={loading} loading={loading}>
           {t('PasswordReset:btn')}
         </Button>
