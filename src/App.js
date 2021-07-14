@@ -9,12 +9,11 @@ import ContactUs from './Components/Menu/ContactUs';
 import Faq from './Components/Menu/Faq';
 import Legal from './Components/Menu/Legal';
 import Guidelines from './Components/Menu/Guidelines';
+import SuccessScreenAuth from './Components/ReusableComponents/SuccessScreenAuth';
 import Login from './Components/Authentication/Login';
 import SignUp from './Components/Authentication/SignUp';
-import SignupSuccess from './Components/Authentication/SignupSuccess';
 import PasswordReset from './Components/Authentication/PasswordReset';
 import ChangePassword from './Components/Authentication/ChangePassword';
-import PasswordResetSuccess from './Components/Authentication/PasswordResetSuccess';
 import UserPage from './Components/UserPage';
 import RequestToBook from './Components/Bookings/RequestToBook';
 import SuccessfulRequest from './Components/Bookings/SuccessfulRequest';
@@ -79,10 +78,32 @@ const App = () => {
             <Route exact path='/legal' component={Legal}></Route>
             <Route exact path='/login' component={Login}></Route>
             <Route exact path='/sign-up' component={SignUp}></Route>
-            <Route exact path='/signup-success' component={SignupSuccess}></Route>
+            <Route
+              exact
+              path='/signup-success'
+              render={(props) => (
+                <SuccessScreenAuth
+                  {...props}
+                  translationFile={'SignupSuccess'}
+                  translationTitle={'SignupSuccess:title'}
+                  translationKey={'SignupSuccess:p'}
+                />
+              )}
+            />
             <Route exact path='/password-reset' component={PasswordReset}></Route>
             <Route exact path='/change-password' component={ChangePassword}></Route>
-            <Route exact path='/password-reset-success' component={PasswordResetSuccess}></Route>
+            <Route
+              exact
+              path='/password-reset-success'
+              render={(props) => (
+                <SuccessScreenAuth
+                  {...props}
+                  translationFile={'PasswordResetSuccess'}
+                  translationTitle={'PasswordResetSuccess:title'}
+                  translationKey={'PasswordResetSuccess:p'}
+                />
+              )}
+            />
             <Route exact path='/request-to-book' component={RequestToBook}></Route>
             <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
             <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>

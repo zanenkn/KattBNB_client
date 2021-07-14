@@ -5,24 +5,35 @@ import { useTranslation, Trans } from 'react-i18next';
 import Spinner from './Spinner';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, InlineLink, Whitebox, Text } from '../../UI-Components';
-// MIGRATED
+// COMPLETELY MIGRATED
 
-const Success = (props) => {
-  const { t } = useTranslation(props.translationName);
+const SuccessScreenAuth = ({ translationFile, translationKey, translationTitle, currentUserIn }) => {
+  const { t, ready } = useTranslation(translationFile);
+
+  if (currentUserIn) {
+    wipeCredentials();
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
+  }
+
+  if (!ready) {
+    return <Spinner />;
+  }
 
   return (
     <>
       <Header centered level={1} color='primary'>
-        {t(props.translationHeader)}
+        {t(translationTitle)}
       </Header>
       <Whitebox>
         <Text centered>
-          <Trans i18nKey={props.translationKey}>
+          <Trans i18nKey={translationKey}>
             text
             <InlineLink as={Link} to='faq' color='info'>
-              FAQ
+              link
             </InlineLink>
-            section.
+            .
           </Trans>
         </Text>
       </Whitebox>
@@ -30,4 +41,6 @@ const Success = (props) => {
   );
 };
 
-export default Success;
+const mapStateToProps = (state) => ({ currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn });
+
+export default connect(mapStateToProps)(SuccessScreenAuth);
