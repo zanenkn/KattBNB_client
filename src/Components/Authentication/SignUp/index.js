@@ -12,9 +12,12 @@ import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
 import { Dropdown, TextField, Header, Whitebox, Toggle, Text, InlineLink } from '../../../UI-Components';
 import { FlexWrapper } from './styles';
-//MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip)
+// MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip) + check if you need margin bottom in captcha when you complete it
+
 const SignUp = (props) => {
   const { t, ready } = useTranslation('SignUp');
+  const langPref = detectLanguage();
+  const lang = detectLanguage();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,51 +31,50 @@ const SignUp = (props) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const createUser = () => {
-    setLoading(true);
     if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-      setLoading(false);
-    } else {
-      if (termsAccepted === false) {
-        setErrors(['SignUp:terms-error']);
-        setLoading(false);
-      } else if (userCaptcha !== captcha) {
-        setErrors(['reusable:errors:captcha']);
-        setLoading(false);
-      } else if (passwordCheck(password) === false) {
-        setErrors(['SignUp:password-reg-ex']);
-        setLoading(false);
-      } else {
-        const { history, registerUser } = props;
-        const langPref = detectLanguage();
-        const lang = detectLanguage();
-        const url =
-          process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
-        registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
-          .then(() => {
-            setErrors([]);
-            history.push('/signup-success');
-          })
-          .catch((error) => {
-            if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
-              setErrors(['reusable:errors:500']);
-              setLoading(false);
-            } else {
-              setErrors(error.response.data.errors.full_messages);
-              setLoading(false);
-            }
-          });
-      }
+      return setErrors(['reusable:errors:window-navigator']);
     }
+
+    if (termsAccepted === false) {
+      return setErrors(['SignUp:terms-error']);
+    }
+
+    if (userCaptcha !== captcha) {
+      return setErrors(['reusable:errors:captcha']);
+    }
+
+    if (passwordCheck(password) === false) {
+      return setErrors(['SignUp:password-reg-ex']);
+    }
+
+    setLoading(true);
+    const { history, registerUser } = props;
+    const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
+    registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
+      .then(() => {
+        setErrors([]);
+        history.push('/signup-success');
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (error.response.status === 500) {
+          setErrors(['reusable:errors:500']);
+          setLoading(false);
+        } else {
+          setErrors(error.response.data.errors.full_messages);
+          setLoading(false);
+        }
+      });
   };
 
   if (props.history.action === 'POP') {
     props.history.push({ pathname: '/' });
   }
 
-  if (!ready) return <Spinner />;
+  if (!ready) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -92,9 +94,14 @@ const SignUp = (props) => {
         />
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
+
+      {/* line below is used solely for relevant Cypress test */}
+      {process.env.NODE_ENV !== 'production' && <p id='cypress-captcha'>{captcha}</p>}
+
       <Header level={1} color='primary' centered>
         {t('SignUp:title')}
       </Header>
+
       <Whitebox>
         <TextField
           required
@@ -106,7 +113,61 @@ const SignUp = (props) => {
             e.key === 'Enter' && createUser();
           }}
         />
+        <TextField
+          required
+          id='password'
+          type='password'
+          label={t('reusable:plch.password')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && createUser();
+          }}
+        />
+        <TextField
+          required
+          id='passwordConfirmation'
+          type='password'
+          label={t('reusable:plch.password-confirmation')}
+          value={passwordConfirmation}
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && createUser();
+          }}
+        />
+        <TextField
+          required
+          id='nickname'
+          label={t('SignUp:nickname-plch')}
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && createUser();
+          }}
+        />
+
         <Dropdown data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
+
+        <ClientCaptcha
+          captchaCode={(code) => setCaptcha(code)}
+          fontFamily='bodoni'
+          fontColor='#c90c61'
+          charsCount={6}
+          backgroundColor='#e8e8e8'
+          width={130}
+        />
+
+        <TextField
+          required
+          id='userCaptcha'
+          label={t('SignUp:captcha-label')}
+          value={userCaptcha}
+          onChange={(e) => setUserCaptcha(e.target.value)}
+          onKeyPress={(e) => {
+            e.key === 'Enter' && createUser();
+          }}
+        />
+
         <FlexWrapper>
           <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
           <Text tint={termsAccepted ? 100 : 60}>

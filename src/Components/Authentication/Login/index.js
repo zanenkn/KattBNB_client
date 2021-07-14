@@ -51,7 +51,9 @@ const Login = (props) => {
       });
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready) {
+    return <Spinner />;
+  }
 
   return (
     <>
