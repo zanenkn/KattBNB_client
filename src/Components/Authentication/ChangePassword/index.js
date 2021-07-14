@@ -7,7 +7,7 @@ import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-//MIGRATED
+// Completely MIGRATED
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
 
@@ -30,47 +30,49 @@ const ChangePassword = ({ location: { search } }) => {
 
   const changePassword = () => {
     if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      if (password === passwordConfirmation && passwordCheck(password) && search.length > 150) {
-        setLoading(true);
-        const lang = detectLanguage();
-        const path = '/api/v1/auth/password';
-        const payload = {
-          password: password,
-          password_confirmation: passwordConfirmation,
-          uid: queryString.parse(search).uid,
-          'access-token': queryString.parse(search).token,
-          client: queryString.parse(search).client,
-          locale: lang,
-        };
-        axios
-          .put(path, payload)
-          .then(() => {
-            setSuccessDisplay(true);
-            setErrors([]);
-            setTimeout(function () {
-              window.location.replace('/login');
-            }, 2000);
-          })
-          .catch(({ response }) => {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              axiosCallErrorCatching(['reusable:errors:500']);
-            } else if (response.status === 401) {
-              window.alert(t('reusable:errors:401-password'));
-              wipeCredentials('/password-reset');
-            } else {
-              axiosCallErrorCatching(response.data.errors.full_messages);
-            }
-          });
-      } else if (password === passwordConfirmation && passwordCheck(password) && search.length < 150) {
-        setErrors(['ChangePassword:error-1']);
-      } else {
-        setErrors(['ChangePassword:error-2']);
-      }
+      return setErrors(['reusable:errors:window-navigator']);
     }
+
+    if (password === passwordConfirmation && passwordCheck(password) && search.length < 150) {
+      return setErrors(['ChangePassword:error-1']);
+    }
+
+    if ((password === passwordConfirmation && !passwordCheck(password)) || password !== passwordConfirmation) {
+      return setErrors(['ChangePassword:error-2']);
+    }
+
+    setLoading(true);
+    const lang = detectLanguage();
+    const path = '/api/v1/auth/password';
+    const payload = {
+      password: password,
+      password_confirmation: passwordConfirmation,
+      uid: queryString.parse(search).uid,
+      'access-token': queryString.parse(search).token,
+      client: queryString.parse(search).client,
+      locale: lang,
+    };
+    axios
+      .put(path, payload)
+      .then(() => {
+        setSuccessDisplay(true);
+        setErrors([]);
+        setTimeout(function () {
+          window.location.replace('/login');
+        }, 2000);
+      })
+      .catch(({ response }) => {
+        if (response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (response.status === 500) {
+          axiosCallErrorCatching(['reusable:errors:500']);
+        } else if (response.status === 401) {
+          window.alert(t('reusable:errors:401-password'));
+          wipeCredentials('/password-reset');
+        } else {
+          axiosCallErrorCatching(response.data.errors.full_messages);
+        }
+      });
   };
 
   if (!ready) {
@@ -82,6 +84,7 @@ const ChangePassword = ({ location: { search } }) => {
       <Header centered color='primary'>
         {t('ChangePassword:title')}
       </Header>
+
       <Whitebox>
         <Text centered>{t('ChangePassword:instructions')}</Text>
         <Container space={6}>
@@ -104,6 +107,7 @@ const ChangePassword = ({ location: { search } }) => {
             onKeyPress={listenEnterKey}
           />
         </Container>
+
         {errors.length > 0 && (
           <Notice nature='danger'>
             <Header centered level={5}>
@@ -116,11 +120,13 @@ const ChangePassword = ({ location: { search } }) => {
             </ul>
           </Notice>
         )}
+
         {successDisplay && (
           <Notice nature='success' centered>
             <Text centered>{t('ChangePassword:success-msg')}</Text>
           </Notice>
         )}
+
         <Button id='change-pass-button' disabled={loading} loading={loading} onClick={changePassword}>
           {t('ChangePassword:title')}
         </Button>
