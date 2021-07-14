@@ -7,7 +7,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, InlineLink, Whitebox, Text } from '../../UI-Components';
 // COMPLETELY MIGRATED
 
-const SuccessScreenAuth = ({ translationFile, translationKey, translationTitle, currentUserIn }) => {
+const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
   const { t, ready } = useTranslation(translationFile);
 
   if (currentUserIn) {
@@ -24,11 +24,11 @@ const SuccessScreenAuth = ({ translationFile, translationKey, translationTitle, 
   return (
     <>
       <Header centered level={1} color='primary'>
-        {t(translationTitle)}
+        {t(`${translationFile}:title`)}
       </Header>
       <Whitebox>
         <Text centered>
-          <Trans i18nKey={translationKey}>
+          <Trans i18nKey={`${translationFile}:p`}>
             text
             <InlineLink as={Link} to='faq' color='info'>
               link

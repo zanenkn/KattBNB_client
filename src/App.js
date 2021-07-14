@@ -81,28 +81,14 @@ const App = () => {
             <Route
               exact
               path='/signup-success'
-              render={(props) => (
-                <SuccessScreenAuth
-                  {...props}
-                  translationFile={'SignupSuccess'}
-                  translationTitle={'SignupSuccess:title'}
-                  translationKey={'SignupSuccess:p'}
-                />
-              )}
+              render={(props) => <SuccessScreenAuth {...props} translationFile={'SignupSuccess'} />}
             />
             <Route exact path='/password-reset' component={PasswordReset}></Route>
             <Route exact path='/change-password' component={ChangePassword}></Route>
             <Route
               exact
               path='/password-reset-success'
-              render={(props) => (
-                <SuccessScreenAuth
-                  {...props}
-                  translationFile={'PasswordResetSuccess'}
-                  translationTitle={'PasswordResetSuccess:title'}
-                  translationKey={'PasswordResetSuccess:p'}
-                />
-              )}
+              render={(props) => <SuccessScreenAuth {...props} translationFile={'PasswordResetSuccess'} />}
             />
             <Route exact path='/request-to-book' component={RequestToBook}></Route>
             <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
