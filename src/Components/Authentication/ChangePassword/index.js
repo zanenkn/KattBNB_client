@@ -8,8 +8,10 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
 // Completely MIGRATED
+
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
+  const lang = detectLanguage();
 
   const [errors, setErrors] = useState([]);
   const [successDisplay, setSuccessDisplay] = useState(false);
@@ -42,7 +44,6 @@ const ChangePassword = ({ location: { search } }) => {
     }
 
     setLoading(true);
-    const lang = detectLanguage();
     const path = '/api/v1/auth/password';
     const payload = {
       password: password,

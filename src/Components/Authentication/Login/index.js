@@ -7,9 +7,11 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
-//MIGRATED
+// Completely MIGRATED
+
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
+  const locale = detectLanguage();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,37 +20,35 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
 
   const logInUser = () => {
-    setLoading(true);
     if (window.navigator.onLine === false) {
-      setLoading(false);
-      setErrors(t('reusable:errors:window-navigator'));
-    } else {
-      const locale = detectLanguage();
-      const { history, signInUser } = props;
-      signInUser({ email, password, locale })
-        .then(() => {
-          setSuccessDisplay(true);
-          setErrors([]);
-          if (history === undefined) {
-            window.location.reload();
-          } else if (history.length <= 2) {
-            history.push('/');
-          } else {
-            history.go(-1);
-          }
-        })
-        .catch((error) => {
-          if (error.response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            setLoading(false);
-            setErrors(t('reusable:errors:500'));
-          } else {
-            setLoading(false);
-            setErrors(error.response.data.errors[0]);
-          }
-        });
+      return setErrors(t('reusable:errors:window-navigator'));
     }
+
+    setLoading(true);
+    const { history, signInUser } = props;
+    signInUser({ email, password, locale })
+      .then(() => {
+        setSuccessDisplay(true);
+        setErrors([]);
+        if (history === undefined) {
+          window.location.reload();
+        } else if (history.length <= 2) {
+          history.push('/');
+        } else {
+          history.go(-1);
+        }
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (error.response.status === 500) {
+          setLoading(false);
+          setErrors(t('reusable:errors:500'));
+        } else {
+          setLoading(false);
+          setErrors(error.response.data.errors[0]);
+        }
+      });
   };
 
   if (!ready) return <Spinner />;
@@ -58,6 +58,7 @@ const Login = (props) => {
       <Header level={1} color='primary' centered>
         {t('Login:title')}
       </Header>
+
       <Whitebox>
         <TextField
           required
@@ -81,6 +82,7 @@ const Login = (props) => {
             e.key === 'Enter' && logInUser();
           }}
         />
+
         <Text right size='sm' space={6}>
           <InlineLink as={Link} to='password-reset' color='info' disabled={successDisplay}>
             {t('Login:forgot-link')}
@@ -92,6 +94,7 @@ const Login = (props) => {
             <Text>{errors}</Text>
           </Notice>
         )}
+
         {successDisplay && (
           <Notice nature='success'>
             <Text>{t('Login:success-msg')}</Text>
@@ -101,9 +104,11 @@ const Login = (props) => {
         <Button id='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()} space={8}>
           {t('Login:title')}
         </Button>
+
         <Text centered space={1}>
           {t('Login:no-acc')}
         </Text>
+
         <Text centered>
           <InlineLink as={Link} to='sign-up' id='create-account' color='primary' disabled={successDisplay}>
             {t('Login:signup-link')}
