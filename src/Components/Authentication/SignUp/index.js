@@ -20,10 +20,10 @@ import {
   InlineLink,
   Notice,
   Button,
+  Container,
 } from '../../../UI-Components';
 import { FlexWrapper } from './styles';
-// MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip) + check if you need margin bottom in captcha when you complete it
-// + check top margin for sign up button
+// MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip)
 
 const SignUp = (props) => {
   const { t, ready } = useTranslation('SignUp');
@@ -61,6 +61,7 @@ const SignUp = (props) => {
     setLoading(true);
     const { history, registerUser } = props;
     const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
+
     registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
       .then(() => {
         setErrors([]);
@@ -157,19 +158,23 @@ const SignUp = (props) => {
           }}
         />
 
-        <Dropdown data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
+        <Dropdown space={6} data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
 
-        <ClientCaptcha
-          captchaCode={(code) => setCaptcha(code)}
-          fontFamily='bodoni'
-          fontColor='#c90c61'
-          charsCount={6}
-          backgroundColor='#e8e8e8'
-          width={130}
-        />
+        <Container>
+          <ClientCaptcha
+            captchaCode={(code) => setCaptcha(code)}
+            fontFamily='bodoni'
+            fontColor='#c90c61'
+            charsCount={6}
+            backgroundColor='#e8e8e8'
+            width={130}
+          />
+        </Container>
 
         <TextField
+          autoComplete='off'
           required
+          space={6}
           id='userCaptcha'
           label={t('SignUp:captcha-label')}
           value={userCaptcha}
@@ -179,7 +184,7 @@ const SignUp = (props) => {
           }}
         />
 
-        <FlexWrapper>
+        <FlexWrapper space={6}>
           <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
           <Text tint={termsAccepted ? 100 : 60}>
             <Trans i18nKey='SignUp:terms-label'>
@@ -194,7 +199,7 @@ const SignUp = (props) => {
         {errors.length > 0 && (
           <Notice nature='danger'>
             <Header level={5} centered>
-              {t('SignUp:error-header')}:
+              {t('SignUp:error-header')}
             </Header>
             <ul id='message-error-list'>
               {errors.map((error) => (
