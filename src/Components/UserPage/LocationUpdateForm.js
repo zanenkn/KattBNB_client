@@ -86,10 +86,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
   return (
     <>
       <Dropdown
-        // clearable
-        // search
-        // selection
-        placeholder={t('LocationUpdateForm:new-location-plch')}
+        label={t('LocationUpdateForm:new-location-plch')}
         data={LOCATION_OPTIONS}
         id='location'
         onChange={(val) => setNewLocation(val)}

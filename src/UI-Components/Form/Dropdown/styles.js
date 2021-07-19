@@ -1,11 +1,15 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { theme } from '../../../Styles/theme';
 
 const { colors, spacing } = theme;
 
 export const Wrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: ${colors.neutral[100]};
   margin-bottom: ${({ space }) => spacing[space]};
+  position: relative;
 `;
 
 export const CloseOnOutsideElementClickEnabler = styled.div`
@@ -21,7 +25,7 @@ export const CloseOnOutsideElementClickEnabler = styled.div`
 
 export const InputIcon = styled.span`
   position: absolute;
-  top: 10px;
+  top: 25px;
   right: 10px;
   height: 32px;
   width: 32px;
@@ -63,7 +67,7 @@ export const DropdownOptionButton = styled.button`
   text-align: left;
   &:active {
     outline: none;
-    color: #0076f5;
+    color: ${colors.neutral[60]};
   }
 `;
 export const Input = styled.input`
@@ -82,4 +86,30 @@ export const Input = styled.input`
       transform: rotate(90deg);
     }
   }
+`;
+
+const padV = 16;
+const padH = 16;
+const labelSize = 14;
+
+export const Label = styled.label`
+  color: ${colors.neutral[60]};
+  font-size: ${labelSize}px;
+  font-style: italic;
+  will-change: transform;
+  transition: transform 0.3s cubic-bezier(0.06, 0.67, 0.32, 0.82);
+  transform: translate(${padH}px, ${1.333 * labelSize + padV}px);
+  ${({ up, required }) =>
+    up &&
+    css`
+      color: ${colors.neutral[100]};
+      transform: scale(1) translate(0px, -2px);
+      font-weight: 700;
+      font-style: normal;
+      ${required &&
+      `::after { 
+          content: " *";
+          color: ${colors.primary[100]}
+        }`}
+    `}
 `;

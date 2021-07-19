@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   DropdownContainer,
   InputIcon,
@@ -7,6 +7,7 @@ import {
   DropdownOptionButton,
   Wrapper,
   CloseOnOutsideElementClickEnabler,
+  Label,
 } from './styles';
 import { Chevron } from '../../icons';
 import { theme } from '../../../Styles/theme';
@@ -14,13 +15,15 @@ import { theme } from '../../../Styles/theme';
 
 const { colors } = theme;
 
-const AutocompleteDropdown = ({ data, onChange, space }) => {
+const AutocompleteDropdown = ({ data, onChange, space, label }) => {
   const [search, setSearch] = useState({
     text: '',
     suggestions: data,
   });
 
   const [suggestionsDisplayed, setSuggestionsDisplayed] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const input = useRef();
 
   const onTextChanged = (e) => {
     const value = e.target.value;
@@ -41,13 +44,21 @@ const AutocompleteDropdown = ({ data, onChange, space }) => {
       text: value.name,
       suggestions: [],
     });
-
+    setIsFocused(true);
     onChange(value.name);
   };
 
   const onInputFocus = () => {
     setSuggestionsDisplayed(true);
     setSearch({ suggestions: data, text: '' });
+
+    setIsFocused(true);
+    input.current.focus();
+  };
+
+  const onInputBlur = () => {
+    setSearch((old) => ({ ...old, text: '' }));
+    setIsFocused(false);
   };
 
   const { suggestions } = search;
@@ -55,13 +66,21 @@ const AutocompleteDropdown = ({ data, onChange, space }) => {
   return (
     <Wrapper space={space || 4}>
       <CloseOnOutsideElementClickEnabler isOn={suggestionsDisplayed} onClick={() => setSuggestionsDisplayed(false)} />
-      <div>
+
+      {label && (
+        <Label up={isFocused} required={true} onClick={() => onInputFocus()}>
+          {label}
+        </Label>
+      )}
+      <div style={{width: '100%'}}>
         <Input
+          ref={input}
           autoComplete='off'
           value={search.text}
           onChange={onTextChanged}
           onFocus={() => onInputFocus()}
-          onBlur={() => setSearch((old) => ({ ...old, text: '' }))}
+          onBlur={() => setIsFocused(false)}
+          onBlur={() => onInputBlur()}
           type={'text'}
         />
         <InputIcon isOpen={suggestionsDisplayed}>

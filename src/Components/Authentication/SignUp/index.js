@@ -158,7 +158,7 @@ const SignUp = (props) => {
           }}
         />
 
-        <Dropdown space={6} data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} />
+        <Dropdown space={6} data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} label={t('SignUp:location-plch')} />
 
         <Container>
           <ClientCaptcha
