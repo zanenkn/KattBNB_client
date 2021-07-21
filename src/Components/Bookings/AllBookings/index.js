@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import { BoxShadow, TopBox } from './styles';
 import { Header, ContentWrapper, Text, Button, Notice } from '../../../UI-Components';
-// Almost migrated, Text color and other styling
+// Migrated => Check text color and other styling, check comments below
 
 const AllBookings = ({ id, history, username }) => {
   const { t, ready } = useTranslation('AllBookings');
@@ -81,8 +81,7 @@ const AllBookings = ({ id, history, username }) => {
 
     if (outgoingRequests !== 0 || outgoingUpcoming !== 0 || outgoingHistory !== 0) {
       outgoingBookingStats = (
-        // white text?
-        <Text size='sm' centered>
+        <Text size='sm' centered color='neutral' tint={0}>
           {t('AllBookings:requests')}&nbsp;{outgoingRequests}&thinsp;
           {t('AllBookings:upcoming')}&nbsp;{outgoingUpcoming}&thinsp;
           {t('AllBookings:history')}&nbsp;{outgoingHistory}
@@ -91,8 +90,11 @@ const AllBookings = ({ id, history, username }) => {
       outgoingText = <Text centered>{t('AllBookings:outgoing-text')}</Text>;
       outgoingCTA = (
         <Header
+          level={5}
           centered
-          style={{ cursor: 'pointer', marginTop: '1rem', textDecoration: 'underline' }}
+          pointer
+          underlined
+          // check if you need ---marginTop: '1rem'---
           id='view-outgoing-bookings'
           onClick={() => {
             history.push({
@@ -106,8 +108,7 @@ const AllBookings = ({ id, history, username }) => {
       );
     } else {
       outgoingBookingStats = (
-        // white text?
-        <Text centered size='sm'>
+        <Text centered size='sm' tint={0}>
           {t('AllBookings:outgoing-booking-stats')}
         </Text>
       );
@@ -115,7 +116,9 @@ const AllBookings = ({ id, history, username }) => {
       outgoingCTA = (
         <Header
           centered
-          style={{ cursor: 'pointer', marginTop: '1rem', textDecoration: 'underline' }}
+          pointer
+          underlined
+          // check if you need ---marginTop: '1rem'---
           id='view-outgoing-bookings'
           onClick={() => {
             history.push('/search');
@@ -128,8 +131,7 @@ const AllBookings = ({ id, history, username }) => {
 
     if (incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0) {
       incomingBookingStats = (
-        // white text?
-        <Text size='sm' centered>
+        <Text size='sm' centered tint={0}>
           {t('AllBookings:requests')}&nbsp;{incomingRequests}&thinsp;
           {t('AllBookings:upcoming')}&nbsp;{incomingUpcoming}&thinsp;
           {t('AllBookings:history')}&nbsp;{incomingHistory}
@@ -137,6 +139,7 @@ const AllBookings = ({ id, history, username }) => {
       );
       if (incomingRequests !== 0) {
         incomingText = (
+          // do we need the color on line 146 ????
           <Text centered>
             <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
               You have
@@ -162,8 +165,10 @@ const AllBookings = ({ id, history, username }) => {
         incomingText = <Text centered>{t('AllBookings:incoming-text-2')}</Text>;
         incomingCTA = (
           <Header
+            pointer
+            underlined
             centered
-            style={{ cursor: 'pointer', marginTop: '1rem', textDecoration: 'underline' }}
+            // check if you need ---marginTop: '1rem'---
             id='view-incoming-bookings'
             onClick={() => {
               history.push({
@@ -178,8 +183,7 @@ const AllBookings = ({ id, history, username }) => {
       }
     } else {
       incomingBookingStats = (
-        // White text ???
-        <Text centered size='sm'>
+        <Text centered size='sm' tint={0}>
           {t('AllBookings:outgoing-booking-stats')}
         </Text>
       );
@@ -187,7 +191,9 @@ const AllBookings = ({ id, history, username }) => {
       incomingCTA = (
         <Header
           centered
-          style={{ cursor: 'pointer', marginTop: '1rem', textDecoration: 'underline' }}
+          pointer
+          underlined
+          // check if you need ---marginTop: '1rem'---
           id='view-incoming-bookings'
           onClick={() => {
             history.push('/faq?section=sitter&active=201');
@@ -201,8 +207,9 @@ const AllBookings = ({ id, history, username }) => {
     outgoingSegment = (
       <BoxShadow>
         <TopBox>
-          {/* white text ??? */}
-          <Header level={3}>{t('AllBookings:outgoing-segment')}</Header>
+          <Header centered tint={0} level={3}>
+            {t('AllBookings:outgoing-segment')}
+          </Header>
           {outgoingBookingStats}
         </TopBox>
         {outgoingText}
@@ -213,8 +220,9 @@ const AllBookings = ({ id, history, username }) => {
     incomingSegment = (
       <BoxShadow>
         <TopBox>
-          {/* white text ??? */}
-          <Header level={3}>{t('AllBookings:incoming-segment')}</Header>
+          <Header centered tint={0} level={3}>
+            {t('AllBookings:incoming-segment')}
+          </Header>
           {incomingBookingStats}
         </TopBox>
         {incomingText}
@@ -243,8 +251,9 @@ const AllBookings = ({ id, history, username }) => {
             )}
           </div>
         </Popup>
+
         <ContentWrapper>
-          <Header>
+          <Header centered>
             {t('AllBookings:hi')} {username}!
           </Header>
           <Text centered>{t('AllBookings:header-page')}</Text>
