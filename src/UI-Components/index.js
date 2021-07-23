@@ -9,6 +9,7 @@ export { default as Container } from './Wrappers/Container/';
 export { default as Whitebox } from './Wrappers/Whitebox/';
 
 // typography elements
+export { default as Accent } from './Typography/Accent';
 export { default as Header } from './Typography/Header';
 export { default as Text } from './Typography/Text';
 export { default as InlineLink } from './Typography/InlineLink';

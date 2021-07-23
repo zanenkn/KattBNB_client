@@ -1,34 +1,21 @@
 import styled from 'styled-components';
+import { theme } from '../../../Styles/theme';
+import { Container } from '../../../UI-Components';
 
-export const BoxShadow = styled.div`
-  margin-top: 2rem;
-  padding: 2rem;
+const { spacing, colors } = theme;
+
+export const BoxShadow = styled(Container)`
   box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
-
+  width: 100%;
   @media screen and (min-width: 700px) {
     width: 560px;
-    padding: 4rem;
   }
 `;
 
-export const TopBox = styled.div`
-  padding: 1rem;
-  padding-top: 2rem;
-  background: #c90c61;
-
-  @media screen and (max-width: 700px) {
-    margin-bottom: 1rem;
-    margin-top: -2rem;
-    margin-left: -2rem;
-    margin-right: -2rem;
-  }
-
-  @media screen and (min-width: 700px) {
-    margin-bottom: 2rem;
-    margin-top: -4rem;
-    margin-left: -4rem;
-    margin-right: -4rem;
-  }
+export const Section = styled(Container)`
+  background: ${({ top }) => (top ? colors.primary[100] : colors.white[100])};
+  padding: ${spacing[6]};
+  margin-bottom: 0;
 `;
 
 export const ReversibleWrapper = styled.div`

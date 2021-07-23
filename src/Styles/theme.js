@@ -54,6 +54,9 @@ export const theme = {
       20: '#F2F7FC',
       10: '#f8fafc',
     },
+    white: {
+      100: '#fff',
+    },
   },
   spacing: {
     0: '0',

@@ -8,7 +8,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import { ReversibleWrapper } from './styles';
-import { Header, Text, Notice } from '../../../UI-Components';
+import { Header, Text, Notice, Container, Accent } from '../../../UI-Components';
 import BookingSegment from './bookingSegment';
 // Migrated => Check text color and other styling, check comments below
 
@@ -102,11 +102,13 @@ const AllBookings = ({ id, history, username }) => {
           )}
         </div>
       </Popup>
+      <Container space={6}>
+        <Header centered space={2} level={2}>
+          {t('AllBookings:hi')} {username}!
+        </Header>
+        <Text centered>{t('AllBookings:header-page')}</Text>
+      </Container>
 
-      <Header centered>
-        {t('AllBookings:hi')} {username}!
-      </Header>
-      <Text centered>{t('AllBookings:header-page')}</Text>
       <ReversibleWrapper revert={userHasIncomingBookings}>
         <BookingSegment
           id='outgoing-bookings'
@@ -139,7 +141,7 @@ const AllBookings = ({ id, history, username }) => {
             hasIncomingRequest ? (
               <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
                 You have
-                <strong style={{ color: '#c90c61' }}>{{ count: incomingRequests }} incoming booking request</strong>
+                <Accent color='primary'>{{ count: incomingRequests }} incoming booking request</Accent>
                 awaiting your decision.
               </Trans>
             ) : userHasIncomingBookings ? (
