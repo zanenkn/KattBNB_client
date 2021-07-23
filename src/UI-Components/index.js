@@ -4,8 +4,9 @@ export { default as Button } from './Button/';
 export { default as Notice } from './Notice/';
 
 // wrappers
-export { default as ContentWrapper } from './Wrappers/ContentWrapper/';
 export { default as Container } from './Wrappers/Container/';
+export { default as ContentWrapper } from './Wrappers/ContentWrapper/';
+export { default as LinkIcon } from './Wrappers/LinkIcon/';
 export { default as Whitebox } from './Wrappers/Whitebox/';
 
 // typography elements

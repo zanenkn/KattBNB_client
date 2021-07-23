@@ -7,9 +7,7 @@ const { spacing, colors } = theme;
 export const BoxShadow = styled(Container)`
   box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
   width: 100%;
-  @media screen and (min-width: 700px) {
-    width: 560px;
-  }
+  max-width: 560px;
 `;
 
 export const Section = styled(Container)`
