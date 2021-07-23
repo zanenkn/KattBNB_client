@@ -48,7 +48,7 @@ Text.propTypes = {
   italic: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   size: PropTypes.string,
-  tint: PropTypes.oneOf([100, 80, 60, 40, 20, 10])
+  tint: PropTypes.oneOf([100, 80, 60, 40, 20, 10, 0])
 };
 
 export default Text;
