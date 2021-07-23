@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
+import { PostWrapper, PostImage } from '../styles';
+import { Container, Header, Text } from '../../../UI-Components';
 
 const BlogListing = () => {
   const fetchData = async () => {
@@ -30,7 +32,7 @@ const BlogListing = () => {
     return <Spinner />;
   }
   return (
-    <div className='styled-content-wrapper'>
+    <>
       {posts.map((post) => {
         return (
           <Link
@@ -39,17 +41,19 @@ const BlogListing = () => {
               state: { post: post },
             }}
           >
-            <div className='post-wrapper'>
-              <img className='post-image' src={post.data.featured_image.url} alt='' />
-              <div>
-                <h2>{post.data.title[0].text}</h2>
-                <p>{post.data.date}</p>
-              </div>
-            </div>
+            <PostWrapper space={8}>
+              <PostImage className='post-image' src={post.data.featured_image.url} alt='' />
+              <Container>
+                <Header level={3} space={2}>
+                  {post.data.title[0].text}
+                </Header>
+                <Text italic>{post.data.date}</Text>
+              </Container>
+            </PostWrapper>
           </Link>
         );
       })}
-    </div>
+    </>
   );
 };
 

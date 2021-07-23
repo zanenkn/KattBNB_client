@@ -6,6 +6,9 @@ const { spacing } = theme;
 
 const Styled = styled.div`
   margin-bottom: ${({ space }) => spacing[space]};
+  > *:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const Container = ({ space, ...rest }) => {
