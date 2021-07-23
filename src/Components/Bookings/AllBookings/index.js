@@ -7,8 +7,9 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
-import { BoxShadow, TopBox } from './styles';
-import { Header, ContentWrapper, Text, Button, Notice } from '../../../UI-Components';
+import { ReversibleWrapper } from './styles';
+import { Header, Text, Notice } from '../../../UI-Components';
+import BookingSegment from './bookingSegment';
 // Migrated => Check text color and other styling, check comments below
 
 const AllBookings = ({ id, history, username }) => {
@@ -18,6 +19,23 @@ const AllBookings = ({ id, history, username }) => {
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
   const lang = detectLanguage();
+
+  let outgoingRequests = parseInt(stats.out_requests);
+  let outgoingUpcoming = parseInt(stats.out_upcoming);
+  let outgoingHistory = parseInt(stats.out_history);
+  let incomingRequests = parseInt(stats.in_requests);
+  let incomingUpcoming = parseInt(stats.in_upcoming);
+  let incomingHistory = parseInt(stats.in_history);
+
+  const userHasIncomingBookings = incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0;
+  const userHasOutgoingBookings = outgoingRequests !== 0 || outgoingUpcoming !== 0 || outgoingHistory !== 0;
+  const hasIncomingRequest = incomingRequests !== 0;
+
+  const getBookingStats = (requests, upcoming, history) => {
+    return `${t('AllBookings:requests')}&nbsp;${requests}
+    &thinsp;${t('AllBookings:upcoming')}&nbsp;${upcoming}
+    &thinsp;${t('AllBookings:history')}&nbsp;${history}`;
+  };
 
   const axiosCallErrorHandling = (errorMessage) => {
     setLoading(false);
@@ -63,215 +81,87 @@ const AllBookings = ({ id, history, username }) => {
     return <Spinner />;
   }
 
-  if (ready && loading === false) {
-    let outgoingRequests = parseInt(stats.out_requests);
-    let outgoingUpcoming = parseInt(stats.out_upcoming);
-    let outgoingHistory = parseInt(stats.out_history);
-    let incomingRequests = parseInt(stats.in_requests);
-    let incomingUpcoming = parseInt(stats.in_upcoming);
-    let incomingHistory = parseInt(stats.in_history);
-    let incomingBookingStats,
-      incomingSegment,
-      incomingText,
-      incomingCTA,
-      outgoingBookingStats,
-      outgoingSegment,
-      outgoingText,
-      outgoingCTA;
-
-    if (outgoingRequests !== 0 || outgoingUpcoming !== 0 || outgoingHistory !== 0) {
-      outgoingBookingStats = (
-        <Text size='sm' centered color='neutral' tint={0}>
-          {t('AllBookings:requests')}&nbsp;{outgoingRequests}&thinsp;
-          {t('AllBookings:upcoming')}&nbsp;{outgoingUpcoming}&thinsp;
-          {t('AllBookings:history')}&nbsp;{outgoingHistory}
-        </Text>
-      );
-      outgoingText = <Text centered>{t('AllBookings:outgoing-text')}</Text>;
-      outgoingCTA = (
-        <Header
-          level={5}
-          centered
-          pointer
-          underlined
-          // check if you need ---marginTop: '1rem'---
-          id='view-outgoing-bookings'
-          onClick={() => {
-            history.push({
-              pathname: '/outgoing-bookings',
-              state: { userId: id },
-            });
-          }}
-        >
-          {t('AllBookings:view')}
-        </Header>
-      );
-    } else {
-      outgoingBookingStats = (
-        <Text centered size='sm' tint={0}>
-          {t('AllBookings:outgoing-booking-stats')}
-        </Text>
-      );
-      outgoingText = <Text centered>{t('AllBookings:outgoing-text-2')}</Text>;
-      outgoingCTA = (
-        <Header
-          centered
-          pointer
-          underlined
-          // check if you need ---marginTop: '1rem'---
-          id='view-outgoing-bookings'
-          onClick={() => {
-            history.push('/search');
-          }}
-        >
-          {t('AllBookings:outgoing-cta')}
-        </Header>
-      );
-    }
-
-    if (incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0) {
-      incomingBookingStats = (
-        <Text size='sm' centered tint={0}>
-          {t('AllBookings:requests')}&nbsp;{incomingRequests}&thinsp;
-          {t('AllBookings:upcoming')}&nbsp;{incomingUpcoming}&thinsp;
-          {t('AllBookings:history')}&nbsp;{incomingHistory}
-        </Text>
-      );
-      if (incomingRequests !== 0) {
-        incomingText = (
-          // do we need the color on line 146 ????
-          <Text centered>
-            <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
-              You have
-              <strong style={{ color: '#c90c61' }}>{{ count: incomingRequests }} incoming booking request</strong>
-              awaiting your decision.
-            </Trans>
-          </Text>
-        );
-        incomingCTA = (
-          <Button
-            id='view-incoming-bookings'
-            onClick={() => {
-              history.push({
-                pathname: '/incoming-bookings',
-                state: { hostNickname: username },
-              });
-            }}
-          >
-            {t('AllBookings:view')}
-          </Button>
-        );
-      } else {
-        incomingText = <Text centered>{t('AllBookings:incoming-text-2')}</Text>;
-        incomingCTA = (
-          <Header
-            pointer
-            underlined
-            centered
-            // check if you need ---marginTop: '1rem'---
-            id='view-incoming-bookings'
-            onClick={() => {
-              history.push({
-                pathname: '/incoming-bookings',
-                state: { hostNickname: username },
-              });
-            }}
-          >
-            {t('AllBookings:view')}
-          </Header>
-        );
-      }
-    } else {
-      incomingBookingStats = (
-        <Text centered size='sm' tint={0}>
-          {t('AllBookings:outgoing-booking-stats')}
-        </Text>
-      );
-      incomingText = <Text centered>{t('AllBookings:incoming-text-3')}</Text>;
-      incomingCTA = (
-        <Header
-          centered
-          pointer
-          underlined
-          // check if you need ---marginTop: '1rem'---
-          id='view-incoming-bookings'
-          onClick={() => {
-            history.push('/faq?section=sitter&active=201');
-          }}
-        >
-          {t('AllBookings:incoming-cta')}
-        </Header>
-      );
-    }
-
-    outgoingSegment = (
-      <BoxShadow>
-        <TopBox>
-          <Header centered tint={0} level={3}>
-            {t('AllBookings:outgoing-segment')}
-          </Header>
-          {outgoingBookingStats}
-        </TopBox>
-        {outgoingText}
-        {outgoingCTA}
-      </BoxShadow>
-    );
-
-    incomingSegment = (
-      <BoxShadow>
-        <TopBox>
-          <Header centered tint={0} level={3}>
-            {t('AllBookings:incoming-segment')}
-          </Header>
-          {incomingBookingStats}
-        </TopBox>
-        {incomingText}
-        {incomingCTA}
-      </BoxShadow>
-    );
-
-    return (
-      <>
-        <Popup
-          modal
-          open={errors.length > 0}
-          closeOnDocumentClick={true}
-          onClose={() => setErrors([])}
-          position='top center'
-        >
-          <div>
-            {errors.length > 0 && (
-              <Notice nature='danger'>
-                <ul id='message-error-list'>
-                  {errors.map((error) => (
-                    <li key={error}>{t(error)}</li>
-                  ))}
-                </ul>
-              </Notice>
-            )}
-          </div>
-        </Popup>
-
-        <ContentWrapper>
-          <Header centered>
-            {t('AllBookings:hi')} {username}!
-          </Header>
-          <Text centered>{t('AllBookings:header-page')}</Text>
-          {incomingRequests !== 0 || incomingUpcoming !== 0 || incomingHistory !== 0 ? (
-            <>
-              {incomingSegment}
-              {outgoingSegment}
-            </>
-          ) : (
-            <>
-              {outgoingSegment}
-              {incomingSegment}
-            </>
+  return (
+    <>
+      <Popup
+        modal
+        open={errors.length > 0}
+        closeOnDocumentClick={true}
+        onClose={() => setErrors([])}
+        position='top center'
+      >
+        <div>
+          {errors.length > 0 && (
+            <Notice nature='danger'>
+              <ul id='message-error-list'>
+                {errors.map((error) => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Notice>
           )}
-        </ContentWrapper>
-      </>
-    );
-  }
+        </div>
+      </Popup>
+
+      <Header centered>
+        {t('AllBookings:hi')} {username}!
+      </Header>
+      <Text centered>{t('AllBookings:header-page')}</Text>
+      <ReversibleWrapper revert={userHasIncomingBookings}>
+        <BookingSegment
+          id='outgoing-bookings'
+          header={t('AllBookings:outgoing-segment')}
+          stats={
+            userHasOutgoingBookings
+              ? getBookingStats(outgoingRequests, outgoingUpcoming, outgoingHistory)
+              : t('AllBookings:outgoing-booking-stats')
+          }
+          text={userHasOutgoingBookings ? t('AllBookings:outgoing-text') : t('AllBookings:outgoing-text-2')}
+          cta={userHasOutgoingBookings ? t('AllBookings:view') : t('AllBookings:outgoing-cta')}
+          ctaAction={() =>
+            userHasOutgoingBookings
+              ? history.push({
+                  pathname: '/outgoing-bookings',
+                  state: { userId: id },
+                })
+              : history.push('/search')
+          }
+        />
+        <BookingSegment
+          id='incoming-bookings'
+          header={t('AllBookings:incoming-segment')}
+          stats={
+            userHasIncomingBookings
+              ? getBookingStats(incomingRequests, incomingUpcoming, incomingHistory)
+              : t('AllBookings:outgoing-booking-stats')
+          }
+          text={
+            hasIncomingRequest ? (
+              <Trans count={parseInt(incomingRequests)} i18nKey='AllBookings:incoming-text'>
+                You have
+                <strong style={{ color: '#c90c61' }}>{{ count: incomingRequests }} incoming booking request</strong>
+                awaiting your decision.
+              </Trans>
+            ) : userHasIncomingBookings ? (
+              t('AllBookings:incoming-text-2')
+            ) : (
+              t('AllBookings:incoming-text-3')
+            )
+          }
+          cta={userHasIncomingBookings ? t('AllBookings:view') : t('AllBookings:incoming-cta')}
+          ctaAction={() =>
+            userHasIncomingBookings
+              ? history.push({
+                  pathname: '/incoming-bookings',
+                  state: { hostNickname: username },
+                })
+              : history.push('/faq?section=sitter&active=201')
+          }
+          ctaIsButton={hasIncomingRequest}
+        />
+      </ReversibleWrapper>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => ({

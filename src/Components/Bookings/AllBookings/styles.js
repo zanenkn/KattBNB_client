@@ -30,3 +30,9 @@ export const TopBox = styled.div`
     margin-right: -4rem;
   }
 `;
+
+export const ReversibleWrapper = styled.div`
+  display: flex;
+  flex-direction: ${({ revert }) => (revert ? 'column-reverse' : 'column')};
+  align-items: center;
+`;
