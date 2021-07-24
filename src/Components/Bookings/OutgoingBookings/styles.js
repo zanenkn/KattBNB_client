@@ -7,3 +7,7 @@ const { spacing, screens, colors, fontWeights } = theme;
 export const StyledContentWrapper = styled(ContentWrapper)`
   padding-top: ${({ padding }) => padding}px;
 `;
+
+export const SectionWrapper = styled.div`
+  padding-top: ${spacing[6]};
+`
