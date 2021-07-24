@@ -10,7 +10,8 @@ import OutgoingRequests from './outgoingRequests';
 import OutgoingUpcoming from './outgoingUpcoming';
 import OutgoingHistory from './outgoingHistory';
 
-import {SecondaryStickyHeader} from './styles'
+import { SecondaryStickyHeader } from '../../../UI-Components';
+import { StyledContentWrapper } from './styles';
 
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');
@@ -77,31 +78,30 @@ const OutgoingBookings = ({ location: { state } }) => {
     });
   };
 
-    let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
-    let requestsSection, upcomingSection, historySection;
-    let outgoingRequests = [];
-    let outgoingUpcoming = [];
-    let outgoingHistory = [];
-    outgoingBookings.map((booking) => {
-      if (booking.status === 'pending') {
-        outgoingRequests.push(booking);
-      } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-        outgoingUpcoming.push(booking);
-      } else {
-        outgoingHistory.push(booking);
-      }
-      return null;
-    });
+  let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
+  let requestsSection, upcomingSection, historySection;
+  let outgoingRequests = [];
+  let outgoingUpcoming = [];
+  let outgoingHistory = [];
+  outgoingBookings.map((booking) => {
+    if (booking.status === 'pending') {
+      outgoingRequests.push(booking);
+    } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+      outgoingUpcoming.push(booking);
+    } else {
+      outgoingHistory.push(booking);
+    }
+    return null;
+  });
 
-  if(!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner />;
 
   return (
     <>
-    <SecondaryStickyHeader>something</SecondaryStickyHeader>
-    <p>aaa</p>
+      <SecondaryStickyHeader>something</SecondaryStickyHeader>
+      <StyledContentWrapper padding={150}>aaaa</StyledContentWrapper>
     </>
-  )
-
+  );
 
   //     <>
   //       <div id='secondary-sticky' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -195,9 +195,6 @@ const OutgoingBookings = ({ location: { state } }) => {
   //         </div>
   //       </Container>
   //     </>
-
-
-
 };
 
 export default withAuth(OutgoingBookings);

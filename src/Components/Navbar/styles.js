@@ -1,6 +1,9 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { theme } from '../../Styles/theme';
 
-export const Nav = styled.div `
+const { colors, screens } = theme;
+
+export const Nav = styled.div`
   height: 60px;
   margin: auto;
   background: #c90c61;
@@ -10,16 +13,16 @@ export const Nav = styled.div `
   position: fixed;
   top: 0;
   z-index: 5000;
-  width: 100%;  
-  @media (min-height: 736px) {
+  width: 100%;
+  @media (min-height: ${screens.md}) {
     height: 75px;
   }
-  @media (min-height: 1024px) {
+  @media (min-height: ${screens.lg}) {
     height: 90px;
   }
-`
+`;
 
-export const NavInnerWrap = styled.div `
+export const NavInnerWrap = styled.div`
   width: 100%;
   max-width: 288px;
   margin: auto;
@@ -40,18 +43,18 @@ export const NavInnerWrap = styled.div `
   @media (min-width: 1440px) {
     max-width: 1200px;
   }
-`
+`;
 
-export const Navlink = styled.div `
-  padding: 0!important;
-  width: unset!important;
+export const Navlink = styled.div`
+  padding: 0 !important;
+  width: unset !important;
   float: right;
   margin: auto 0 auto auto;
-  position: relative
-`
+  position: relative;
+`;
 
-export const IconWrapper = styled.div `
+export const IconWrapper = styled.div`
   display: flex;
   flex-disrection: row;
   width: 100%;
-`
+`;

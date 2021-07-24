@@ -7,6 +7,7 @@ export { default as Notice } from './Notice/';
 export { default as Container } from './Wrappers/Container/';
 export { default as ContentWrapper } from './Wrappers/ContentWrapper/';
 export { default as LinkIcon } from './Wrappers/LinkIcon/';
+export { default as SecondaryStickyHeader } from './Wrappers/SecondaryStickyHeader/';
 export { default as Whitebox } from './Wrappers/Whitebox/';
 
 // typography elements
