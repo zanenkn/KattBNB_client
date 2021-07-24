@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import withAuth from '../../HOC/withAuth';
-import Spinner from '../ReusableComponents/Spinner';
+import withAuth from '../../../HOC/withAuth';
+import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import moment from 'moment';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import OutgoingRequests from './OutgoingRequests';
-import OutgoingUpcoming from './OutgoingUpcoming';
-import OutgoingHistory from './OutgoingHistory';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import OutgoingRequests from './outgoingRequests';
+import OutgoingUpcoming from './outgoingUpcoming';
+import OutgoingHistory from './outgoingHistory';
 
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Spinner from '../ReusableComponents/Spinner';
+// import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 

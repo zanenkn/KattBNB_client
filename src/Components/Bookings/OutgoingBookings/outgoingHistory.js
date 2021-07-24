@@ -1,11 +1,11 @@
 import React from 'react';
-import moment from 'moment';
-import Spinner from '../ReusableComponents/Spinner';
+// import moment from 'moment';
+// import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import OutRequestDeclinedPopup from './OutRequestDeclinedPopup';
-import OutRequestCancelledPopup from './OutRequestCancelledPopup';
-import Popup from 'reactjs-popup';
-import ViewYourReviewPopup from '../Reviews/ViewYourReviewPopup';
+// import OutRequestDeclinedPopup from './OutRequestDeclinedPopup';
+// import OutRequestCancelledPopup from './OutRequestCancelledPopup';
+// import Popup from 'reactjs-popup';
+// import ViewYourReviewPopup from '../Reviews/ViewYourReviewPopup';
 import { withRouter } from 'react-router-dom';
 
 const OutgoingHistory = (props) => {

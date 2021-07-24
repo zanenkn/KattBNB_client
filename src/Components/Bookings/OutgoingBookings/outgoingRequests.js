@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import Spinner from '../ReusableComponents/Spinner';
+// import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import Popup from 'reactjs-popup';
-import OutRequestUserMessagePopup from './OutRequestUserMessagePopup';
+// import Popup from 'reactjs-popup';
+// import OutRequestUserMessagePopup from './OutRequestUserMessagePopup';
 
 const OutgoingRequests = (props) => {
   const { t, ready } = useTranslation('OutgoingRequests');
