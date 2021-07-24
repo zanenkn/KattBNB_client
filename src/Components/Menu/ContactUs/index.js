@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Whitebox, Text, TextField, TextArea, Container, Button, Notice } from '../../../UI-Components';
+import { Header, Whitebox, Text, TextField, TextArea, Container, Button, Notice, ContentWrapper } from '../../../UI-Components';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
 //MIGRATED
 const ContactUs = (props) => {
@@ -60,7 +60,7 @@ const ContactUs = (props) => {
   if (!ready) return <Spinner />;
 
   return (
-    <>
+    <ContentWrapper>
       <Helmet>
         <title>KattBNB vill höra från dig!</title>
         <meta
@@ -149,7 +149,7 @@ const ContactUs = (props) => {
         </Button>
       </Whitebox>
       <SoMeIcons />
-    </>
+    </ContentWrapper>
   );
 };
 

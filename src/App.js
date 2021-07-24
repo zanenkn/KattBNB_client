@@ -41,7 +41,6 @@ import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
 import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
-import { ContentWrapper } from './UI-Components';
 
 const App = () => {
   const [uids, setUids] = useState([]);
@@ -66,57 +65,55 @@ const App = () => {
     <Theme>
       <GlobalStyles />
       <Navbar />
-      <ContentWrapper>
-        <ScrollToTop>
-          <Switch>
-            <Route exact path='/' component={Landing}></Route>
-            <Route exact path='/search' component={Search}></Route>
-            <Route exact path='/search-results' component={SearchResults}></Route>
-            <Route exact path='/about-us' component={AboutUs}></Route>
-            <Route exact path='/contact-us' component={ContactUs}></Route>
-            <Route exact path='/faq' component={Faq}></Route>
-            <Route exact path='/legal' component={Legal}></Route>
-            <Route exact path='/login' component={Login}></Route>
-            <Route exact path='/sign-up' component={SignUp}></Route>
-            <Route
-              exact
-              path='/signup-success'
-              render={(props) => <SuccessScreenAuth {...props} translationFile={'SignupSuccess'} />}
-            />
-            <Route exact path='/password-reset' component={PasswordReset}></Route>
-            <Route exact path='/change-password' component={ChangePassword}></Route>
-            <Route
-              exact
-              path='/password-reset-success'
-              render={(props) => <SuccessScreenAuth {...props} translationFile={'PasswordResetSuccess'} />}
-            />
-            <Route exact path='/request-to-book' component={RequestToBook}></Route>
-            <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
-            <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
-            <Route exact path='/booking-details' component={BookingDetails}></Route>
-            <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
-            <Route exact path='/partners' component={Partners}></Route>
-            <Route exact path='/guidelines' component={Guidelines}></Route>
-            <Route exact path='/is-not-available' component={Error503}></Route>
-            <Route exact path='/become-host' component={HostEn}></Route>
-            <Route exact path='/bli-kattvakt' component={HostSe}></Route>
-            <Route exact path='/successful-review' component={SuccessfulReview}></Route>
-            <Route exact path='/user-page' component={UserPage}></Route>
-            <Route exact path='/all-bookings' component={AllBookings}></Route>
-            <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
-            <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
-            <Route exact path='/messenger' component={AllConversations}></Route>
-            <Route exact path='/conversation' component={Conversation}></Route>
-            <Route exact path='/leave-a-review' component={LeaveReview}></Route>
-            <Route exact path='/booking-receipt' component={Receipt}></Route>
-            <Route exact path='/area-list' component={AreaList}></Route>
-            <Route exact path='/blog' component={BlogListing}></Route>
-            {uids.map((uid) => (
-              <Route exact path={`/blog/${uid}`} key={uid} component={BlogPost}></Route>
-            ))}
-          </Switch>
-        </ScrollToTop>
-      </ContentWrapper>
+      <ScrollToTop>
+        <Switch>
+          <Route exact path='/' component={Landing}></Route>
+          <Route exact path='/search' component={Search}></Route>
+          <Route exact path='/search-results' component={SearchResults}></Route>
+          <Route exact path='/about-us' component={AboutUs}></Route>
+          <Route exact path='/contact-us' component={ContactUs}></Route>
+          <Route exact path='/faq' component={Faq}></Route>
+          <Route exact path='/legal' component={Legal}></Route>
+          <Route exact path='/login' component={Login}></Route>
+          <Route exact path='/sign-up' component={SignUp}></Route>
+          <Route
+            exact
+            path='/signup-success'
+            render={(props) => <SuccessScreenAuth {...props} translationFile={'SignupSuccess'} />}
+          />
+          <Route exact path='/password-reset' component={PasswordReset}></Route>
+          <Route exact path='/change-password' component={ChangePassword}></Route>
+          <Route
+            exact
+            path='/password-reset-success'
+            render={(props) => <SuccessScreenAuth {...props} translationFile={'PasswordResetSuccess'} />}
+          />
+          <Route exact path='/request-to-book' component={RequestToBook}></Route>
+          <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
+          <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
+          <Route exact path='/booking-details' component={BookingDetails}></Route>
+          <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
+          <Route exact path='/partners' component={Partners}></Route>
+          <Route exact path='/guidelines' component={Guidelines}></Route>
+          <Route exact path='/is-not-available' component={Error503}></Route>
+          <Route exact path='/become-host' component={HostEn}></Route>
+          <Route exact path='/bli-kattvakt' component={HostSe}></Route>
+          <Route exact path='/successful-review' component={SuccessfulReview}></Route>
+          <Route exact path='/user-page' component={UserPage}></Route>
+          <Route exact path='/all-bookings' component={AllBookings}></Route>
+          <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
+          <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
+          <Route exact path='/messenger' component={AllConversations}></Route>
+          <Route exact path='/conversation' component={Conversation}></Route>
+          <Route exact path='/leave-a-review' component={LeaveReview}></Route>
+          <Route exact path='/booking-receipt' component={Receipt}></Route>
+          <Route exact path='/area-list' component={AreaList}></Route>
+          <Route exact path='/blog' component={BlogListing}></Route>
+          {uids.map((uid) => (
+            <Route exact path={`/blog/${uid}`} key={uid} component={BlogPost}></Route>
+          ))}
+        </Switch>
+      </ScrollToTop>
       <Menu />
     </Theme>
   );

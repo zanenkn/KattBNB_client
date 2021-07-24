@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-import { Header, Text, Container, InlineLink } from '../../../UI-Components';
+import { Header, Text, Container, InlineLink, ContentWrapper } from '../../../UI-Components';
 import TeamMemberCard from './TeamMemberCard';
 import SoMeIcons from '../../ReusableComponents/SoMeIcons';
 //MIGRATED
@@ -14,7 +14,7 @@ const AboutUs = () => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Helmet>
         <title>KattBNB - hitta kattvakt nära dig!</title>
         <meta
@@ -112,7 +112,7 @@ const AboutUs = () => {
         </Text>
       </Container>
       <SoMeIcons />
-    </>
+    </ContentWrapper>
   );
 };
 

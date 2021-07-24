@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import { PostWrapper, PostImage } from '../styles';
-import { Container, Header, Text } from '../../../UI-Components';
+import { Container, ContentWrapper, Header, Text } from '../../../UI-Components';
 
 const BlogListing = () => {
   const fetchData = async () => {
@@ -32,7 +32,7 @@ const BlogListing = () => {
     return <Spinner />;
   }
   return (
-    <>
+    <ContentWrapper>
       {posts.map((post) => {
         return (
           <Link
@@ -53,7 +53,7 @@ const BlogListing = () => {
           </Link>
         );
       })}
-    </>
+    </ContentWrapper>
   );
 };
 

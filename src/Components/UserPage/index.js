@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/AllReviews';
-import { Header, Notice, Text, Button, Container, Whitebox, InlineLink } from '../../UI-Components';
+import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
 import { User, Location, Email, Lock, Notification, Globe } from '../Icons';
 import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
 //MIGRATION IN PROGRESS
@@ -378,7 +378,7 @@ const UserPage = (props) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Popup
         modal
         open={errors.length > 0}
@@ -539,7 +539,7 @@ const UserPage = (props) => {
           </InlineLink>
         </Text>
       )}
-    </>
+    </ContentWrapper>
   );
 };
 

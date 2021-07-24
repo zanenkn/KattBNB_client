@@ -6,7 +6,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
+import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 // Completely MIGRATED
 
 const Login = (props) => {
@@ -56,7 +56,7 @@ const Login = (props) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Header level={1} color='primary' centered>
         {t('Login:title')}
       </Header>
@@ -117,7 +117,7 @@ const Login = (props) => {
           </InlineLink>
         </Text>
       </Whitebox>
-    </>
+    </ContentWrapper>
   );
 };
 

@@ -4,7 +4,7 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
+import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 // Completely MIGRATED
 
 const PasswordReset = ({ history }) => {
@@ -63,7 +63,7 @@ const PasswordReset = ({ history }) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Header centered color='primary'>
         {t('PasswordReset:title')}
       </Header>
@@ -99,7 +99,7 @@ const PasswordReset = ({ history }) => {
           {t('PasswordReset:btn')}
         </Button>
       </Whitebox>
-    </>
+    </ContentWrapper>
   );
 };
 

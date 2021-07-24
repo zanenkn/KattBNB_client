@@ -6,7 +6,7 @@ import { passwordCheck } from '../../../Modules/passwordCheck';
 import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Container, Text, TextField, Whitebox, Button, Notice } from '../../../UI-Components';
+import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 // Completely MIGRATED
 
 const ChangePassword = ({ location: { search } }) => {
@@ -81,7 +81,7 @@ const ChangePassword = ({ location: { search } }) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Header centered color='primary'>
         {t('ChangePassword:title')}
       </Header>
@@ -132,7 +132,7 @@ const ChangePassword = ({ location: { search } }) => {
           {t('ChangePassword:title')}
         </Button>
       </Whitebox>
-    </>
+    </ContentWrapper>
   );
 };
 

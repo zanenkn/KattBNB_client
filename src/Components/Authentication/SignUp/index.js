@@ -21,6 +21,7 @@ import {
   Notice,
   Button,
   Container,
+  ContentWrapper,
 } from '../../../UI-Components';
 import { FlexWrapper } from './styles';
 // MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip)
@@ -89,7 +90,7 @@ const SignUp = (props) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Helmet>
         <title>KattBNB - registrera konto</title>
         <meta
@@ -158,7 +159,12 @@ const SignUp = (props) => {
           }}
         />
 
-        <Dropdown space={6} data={LOCATION_OPTIONS} onChange={(val) => setLocation(val)} label={t('SignUp:location-plch')} />
+        <Dropdown
+          space={6}
+          data={LOCATION_OPTIONS}
+          onChange={(val) => setLocation(val)}
+          label={t('SignUp:location-plch')}
+        />
 
         <Container>
           <ClientCaptcha
@@ -213,7 +219,7 @@ const SignUp = (props) => {
           {t('SignUp:title')}
         </Button>
       </Whitebox>
-    </>
+    </ContentWrapper>
   );
 };
 

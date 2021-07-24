@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import Spinner from './Spinner';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Header, InlineLink, Whitebox, Text } from '../../UI-Components';
+import { Header, InlineLink, Whitebox, Text, ContentWrapper } from '../../UI-Components';
 // COMPLETELY MIGRATED
 
 const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
@@ -22,7 +22,7 @@ const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Header centered level={1} color='primary'>
         {t(`${translationFile}:title`)}
       </Header>
@@ -37,7 +37,7 @@ const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
           </Trans>
         </Text>
       </Whitebox>
-    </>
+    </ContentWrapper>
   );
 };
 

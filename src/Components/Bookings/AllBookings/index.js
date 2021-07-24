@@ -8,7 +8,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import { ReversibleWrapper } from './styles';
-import { Header, Text, Notice, Container, Accent } from '../../../UI-Components';
+import { Header, Text, Notice, Container, Accent, ContentWrapper } from '../../../UI-Components';
 import BookingSegment from './bookingSegment';
 // Migrated => Check text color and other styling, check comments below
 
@@ -82,7 +82,7 @@ const AllBookings = ({ id, history, username }) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Popup
         modal
         open={errors.length > 0}
@@ -162,7 +162,7 @@ const AllBookings = ({ id, history, username }) => {
           ctaIsButton={hasIncomingRequest}
         />
       </ReversibleWrapper>
-    </>
+    </ContentWrapper>
   );
 };
 

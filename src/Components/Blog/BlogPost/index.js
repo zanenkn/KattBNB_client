@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { FacebookSimple, LinkedinSimple, TwitterSimple } from '../../Icons';
 import { useTranslation } from 'react-i18next';
 import { FeaturedImage, FlexWrapper, AuthorAvatar, PrismicRichText, ShareIcons } from '../styles';
-import { Header, Text, LinkIcon } from '../../../UI-Components';
+import { Header, Text, LinkIcon, ContentWrapper } from '../../../UI-Components';
 
 const BlogPost = ({ location: { state } }) => {
   const [post, setPost] = useState(null);
@@ -55,7 +55,7 @@ const BlogPost = ({ location: { state } }) => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Helmet>
         <title>{`${post.seo_title[0].text} | KattBNB`}</title>
         <meta name='description' content={post.seo_description[0].text} />
@@ -103,7 +103,7 @@ const BlogPost = ({ location: { state } }) => {
           <LinkedinSimple height={6} tint={40} />
         </LinkIcon>
       </ShareIcons>
-    </>
+    </ContentWrapper>
   );
 };
 

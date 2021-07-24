@@ -10,6 +10,8 @@ import OutgoingRequests from './outgoingRequests';
 import OutgoingUpcoming from './outgoingUpcoming';
 import OutgoingHistory from './outgoingHistory';
 
+import {SecondaryStickyHeader} from './styles'
+
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');
 
@@ -74,26 +76,33 @@ const OutgoingBookings = ({ location: { state } }) => {
       behavior: 'smooth',
     });
   };
-  return <div>a</div>
 
-  // if (ready && loading === false) {
-  //   let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
-  //   let requestsSection, upcomingSection, historySection;
-  //   let outgoingRequests = [];
-  //   let outgoingUpcoming = [];
-  //   let outgoingHistory = [];
-  //   outgoingBookings.map((booking) => {
-  //     if (booking.status === 'pending') {
-  //       outgoingRequests.push(booking);
-  //     } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-  //       outgoingUpcoming.push(booking);
-  //     } else {
-  //       outgoingHistory.push(booking);
-  //     }
-  //     return null;
-  //   });
+    let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
+    let requestsSection, upcomingSection, historySection;
+    let outgoingRequests = [];
+    let outgoingUpcoming = [];
+    let outgoingHistory = [];
+    outgoingBookings.map((booking) => {
+      if (booking.status === 'pending') {
+        outgoingRequests.push(booking);
+      } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
+        outgoingUpcoming.push(booking);
+      } else {
+        outgoingHistory.push(booking);
+      }
+      return null;
+    });
 
-  //   return (
+  if(!ready || loading) return <Spinner />;
+
+  return (
+    <>
+    <SecondaryStickyHeader>something</SecondaryStickyHeader>
+    <p>aaa</p>
+    </>
+  )
+
+
   //     <>
   //       <div id='secondary-sticky' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
   //         <Header as='h1' style={{ marginBottom: '0', margin: '0 auto' }}>
@@ -186,10 +195,9 @@ const OutgoingBookings = ({ location: { state } }) => {
   //         </div>
   //       </Container>
   //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+
+
+
 };
 
 export default withAuth(OutgoingBookings);

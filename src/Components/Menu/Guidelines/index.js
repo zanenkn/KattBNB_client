@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
-import { Header, Text, Container, Whitebox } from '../../../UI-Components';
+import { Header, Text, Container, Whitebox, ContentWrapper } from '../../../UI-Components';
 //MIGRATED
 const Guidelines = () => {
   const { t, ready } = useTranslation('Guidelines');
@@ -12,7 +12,7 @@ const Guidelines = () => {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Helmet>
         <title>KattBNB - att tänka på innan vistelsen</title>
         <meta
@@ -81,7 +81,7 @@ const Guidelines = () => {
           <li>{t('Guidelines:host.list-item9')}</li>
         </ul>
       </Container>
-    </>
+    </ContentWrapper>
   );
 };
 
