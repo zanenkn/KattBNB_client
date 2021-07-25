@@ -9,13 +9,11 @@ import ViewYourReviewPopup from '../../Reviews/ViewReviewPopup';
 import { withRouter } from 'react-router-dom';
 import { Container } from '../../../UI-Components';
 
-const OutgoingHistory = ({historyBookings, history}) => {
+const OutgoingHistory = ({ bookings, history }) => {
   const { t, ready } = useTranslation('OutgoingHistory');
-  let sortedHistory = historyBookings;
-  sortedHistory.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 
   if (!ready) return <Spinner />;
-  if (historyBookings.length < 1) {
+  if (bookings.length < 1) {
     return (
       <p className='small-centered-paragraph'>
         <strong>{t('OutgoingHistory:no-history')}</strong>
@@ -26,11 +24,11 @@ const OutgoingHistory = ({historyBookings, history}) => {
   return (
     <>
       <p className='small-centered-paragraph'>
-        <Trans count={parseInt(historyBookings.length)} i18nKey='OutgoingHistory:main-header'>
-          <strong>You have {{ count: historyBookings.length }} past booking.</strong>
+        <Trans count={parseInt(bookings.length)} i18nKey='OutgoingHistory:main-header'>
+          <strong>You have {{ count: bookings.length }} past booking.</strong>
         </Trans>
       </p>
-      {sortedHistory.map((booking) => {
+      {bookings.map((booking) => {
         if (booking.status === 'declined') {
           return (
             <Container

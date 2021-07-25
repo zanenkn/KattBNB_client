@@ -6,29 +6,28 @@ import Popup from 'reactjs-popup';
 import OutRequestUserMessagePopup from '../OutRequestUserMessagePopup';
 import { Text, Container } from '../../../UI-Components';
 
-const OutgoingRequests = ({ requests }) => {
+const OutgoingRequests = ({ bookings }) => {
   const { t, ready } = useTranslation('OutgoingRequests');
 
   if (!ready) return <Spinner />;
 
-  if (requests.length < 1) {
+  if (bookings.length < 1) {
     return (
       <Text bold centered>
         {t('OutgoingRequests:no-req')}
       </Text>
     );
   }
-  let sortedRequests = requests;
-  sortedRequests.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
   return (
     <>
       <Text centered bold>
-        <Trans count={parseInt(requests.length)} i18nKey='OutgoingRequests:main-header'>
-          You have made {{ count: requests.length }} booking request.
+        <Trans count={parseInt(bookings.length)} i18nKey='OutgoingRequests:main-header'>
+          You have made {{ count: bookings.length }} booking request.
         </Trans>
       </Text>
       <Text centered>{t('OutgoingRequests:desc')}</Text>
-      {sortedRequests.map((request) => {
+      {bookings.map((request) => {
         return (
           <Container
             style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}

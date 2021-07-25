@@ -137,16 +137,20 @@ const OutgoingBookings = ({ location: { state } }) => {
           <Header level={2} centered>
             {t('OutgoingBookings:requests')}
           </Header>
-          <OutgoingRequests requests={outgoingBookings.filter((booking) => booking.status === 'pending')} />
+          <OutgoingRequests
+            bookings={outgoingBookings
+              .filter((booking) => booking.status === 'pending')
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())}
+          />
         </SectionWrapper>
         <SectionWrapper ref={upcomingSection}>
           <Header level={2} centered>
             {t('OutgoingBookings:upcoming')}
           </Header>
           <OutgoingUpcoming
-            upcoming={outgoingBookings.filter(
-              (booking) => booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today
-            )}
+            bookings={outgoingBookings
+              .filter((booking) => booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())}
           />
         </SectionWrapper>
         <SectionWrapper ref={historySection}>
@@ -154,7 +158,9 @@ const OutgoingBookings = ({ location: { state } }) => {
             {t('OutgoingBookings:history')}
           </Header>
           <OutgoingHistory
-            historyBookings={outgoingBookings.filter((booking) => booking.dates[booking.dates.length - 1] < today)}
+            bookings={outgoingBookings
+              .filter((booking) => booking.dates[booking.dates.length - 1] < today)
+              .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
           />
         </SectionWrapper>
         {/* <div className='scroll-to-top '>

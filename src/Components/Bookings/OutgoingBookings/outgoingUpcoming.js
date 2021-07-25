@@ -5,12 +5,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { Container } from '../../../UI-Components';
 
-const OutgoingUpcoming = ({ upcoming, history }) => {
+const OutgoingUpcoming = ({ bookings, history }) => {
   const { t, ready } = useTranslation('OutgoingUpcoming');
 
   if (!ready) return <Spinner />;
 
-  if (upcoming.length < 1) {
+  if (bookings.length < 1) {
     return (
       <p className='small-centered-paragraph'>
         <strong>{t('OutgoingUpcoming:no-upc')}</strong>
@@ -18,18 +18,15 @@ const OutgoingUpcoming = ({ upcoming, history }) => {
     );
   }
 
-  let sortedUpcoming = upcoming;
-  sortedUpcoming.sort((a, b) => a.dates[0] - b.dates[0]);
-
   return (
     <>
       <p className='small-centered-paragraph'>
-        <Trans count={parseInt(upcoming.length)} i18nKey='OutgoingUpcoming:main-header'>
-          <strong>You have {{ count: upcoming.length }} upcoming booking.</strong>
+        <Trans count={parseInt(bookings.length)} i18nKey='OutgoingUpcoming:main-header'>
+          <strong>You have {{ count: bookings.length }} upcoming booking.</strong>
         </Trans>
       </p>
       <p style={{ textAlign: 'center' }}>{t('OutgoingUpcoming:desc')}</p>
-      {sortedUpcoming.map((upcoming) => {
+      {bookings.map((upcoming) => {
         return (
           <Container
             style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
