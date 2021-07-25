@@ -26,6 +26,7 @@ const OutgoingBookings = ({ location: { state } }) => {
   const historySection = useRef(null);
 
   const secondaryHeaderHeight = 150;
+  const today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
 
   const handleScroll = () => {
     setScrollYPosition(window.scrollY);
@@ -34,6 +35,19 @@ const OutgoingBookings = ({ location: { state } }) => {
   const axiosCallStateHandling = (loadingState, errorMessage) => {
     setLoading(loadingState);
     setErrors(errorMessage);
+  };
+
+  const scrollToTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollToSection = (section) => {
+    window.scrollTo({ top: section.current.offsetTop - secondaryHeaderHeight, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -75,36 +89,6 @@ const OutgoingBookings = ({ location: { state } }) => {
     // eslint-disable-next-line
   }, []);
 
-  const scrollToTop = (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  const scrollToSection = (section) => {
-    window.scrollTo({ top: section.current.offsetTop - secondaryHeaderHeight, behavior: 'smooth' });
-  };
-
-  let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
-
-  let outgoingRequests = [];
-  let outgoingUpcoming = [];
-  let outgoingHistory = [];
-
-  outgoingBookings.map((booking) => {
-    if (booking.status === 'pending') {
-      outgoingRequests.push(booking);
-    } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-      outgoingUpcoming.push(booking);
-    } else {
-      outgoingHistory.push(booking);
-    }
-    return null;
-  });
-
   if (!ready || loading) return <Spinner />;
 
   return (
@@ -139,7 +123,6 @@ const OutgoingBookings = ({ location: { state } }) => {
         </div>
       </SecondaryStickyHeader>
       <StyledContentWrapper padding={secondaryHeaderHeight}>
-
         {/* {errors.length > 0 && (
           <Message negative>
             <ul id='message-error-list'>
@@ -154,19 +137,25 @@ const OutgoingBookings = ({ location: { state } }) => {
           <Header level={2} centered>
             {t('OutgoingBookings:requests')}
           </Header>
-          <OutgoingRequests requests={outgoingRequests} />
+          <OutgoingRequests requests={outgoingBookings.filter((booking) => booking.status === 'pending')} />
         </SectionWrapper>
         <SectionWrapper ref={upcomingSection}>
           <Header level={2} centered>
             {t('OutgoingBookings:upcoming')}
           </Header>
-          <OutgoingUpcoming upcoming={outgoingUpcoming} />
+          <OutgoingUpcoming
+            upcoming={outgoingBookings.filter(
+              (booking) => booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today
+            )}
+          />
         </SectionWrapper>
         <SectionWrapper ref={historySection}>
           <Header level={2} centered>
             {t('OutgoingBookings:history')}
           </Header>
-          <OutgoingHistory outHistoryBookings={outgoingHistory} />
+          <OutgoingHistory
+            historyBookings={outgoingBookings.filter((booking) => booking.dates[booking.dates.length - 1] < today)}
+          />
         </SectionWrapper>
         {/* <div className='scroll-to-top '>
           <Icon

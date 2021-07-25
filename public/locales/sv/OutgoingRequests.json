@@ -1,5 +1,5 @@
 {
-  "main-header": "<0>Du har skickat {{count}} bokningsförfrågan.</0>",
+  "main-header": "Du har skickat {{count}} bokningsförfrågan.",
   "main-header_plural": "<0>Du har skickat {{count}} bokningsförfrågningar.</0>",
   "desc": "Det här är bokningsförfrågningar som du har skickat och som är i väntan på bekräftelse från kattvakten",
   "req-desc": "Du har skickat en bokningsförfrågan för vistelse hos <1>{{nickname}}</1> för din <3>{{count}} katt</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",
