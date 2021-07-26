@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
@@ -7,10 +7,14 @@ import OutRequestCancelledPopup from '../OutRequestCancelledPopup';
 import Popup from 'reactjs-popup';
 import ViewYourReviewPopup from '../../Reviews/ViewReviewPopup';
 import { withRouter } from 'react-router-dom';
-import { Container } from '../../../UI-Components';
+import Booking from './booking';
 
 const OutgoingHistory = ({ bookings, history }) => {
   const { t, ready } = useTranslation('OutgoingHistory');
+
+  const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
+  const [bookingCanceledPopupOpened, setBookingCanceledPopupOpened] = useState(false);
+  const [viewReviewPopupOpened, setViewReviewPopupOpened] = useState(false);
 
   if (!ready) return <Spinner />;
   if (bookings.length < 1) {
@@ -31,16 +35,11 @@ const OutgoingHistory = ({ bookings, history }) => {
       {bookings.map((booking) => {
         if (booking.status === 'declined') {
           return (
-            <Container
-              style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-              id={booking.id}
-              data-cy='outgoing-history'
-              key={booking.id}
-            >
-              <p className='small-centered-paragraph'>
-                <strong>{t('OutgoingHistory:declined-req-header')}</strong>
-              </p>
-              <p className='small-centered-paragraph'>
+            <Booking
+              key={'bookingnr' + booking.id}
+              testId='outgoing-history'
+              header={t('OutgoingHistory:declined-req-header')}
+              text={
                 <Trans count={parseInt(booking.number_of_cats)} i18nKey='OutgoingHistory:declined-req-desc'>
                   Your request to book a stay with <strong>{{ nickname: booking.host_nickname }}</strong> for your
                   <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
@@ -48,12 +47,16 @@ const OutgoingHistory = ({ bookings, history }) => {
                   <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
                   got declined.
                 </Trans>
-              </p>
+              }
+              booking={booking}
+              links={[{ text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(true) }]}
+            >
               <Popup
                 modal
-                trigger={<p className='fake-link-underlined'>{t('OutgoingHistory:view-message')}</p>}
+                open={bookingDeclinedPopupOpened}
                 position='top center'
                 closeOnDocumentClick={true}
+                onClose={() => setBookingDeclinedPopupOpened(false)}
               >
                 <OutRequestDeclinedPopup
                   id={booking.id}
@@ -64,20 +67,16 @@ const OutgoingHistory = ({ bookings, history }) => {
                   endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
                 />
               </Popup>
-            </Container>
+            </Booking>
           );
-        } else if (booking.status === 'canceled') {
+        }
+        if (booking.status === 'canceled') {
           return (
-            <Container
-              style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-              id={booking.id}
-              data-cy='outgoing-history'
-              key={booking.id}
-            >
-              <p className='small-centered-paragraph'>
-                <strong>{t('OutgoingHistory:canceled-req-header')}</strong>
-              </p>
-              <p className='small-centered-paragraph'>
+            <Booking
+              key={'bookingnr' + booking.id}
+              testId='outgoing-history'
+              header={t('OutgoingHistory:canceled-req-header')}
+              text={
                 <Trans count={parseInt(booking.number_of_cats)} i18nKey='OutgoingHistory:canceled-req-desc'>
                   Your request to book a stay with <strong>{{ nickname: booking.host_nickname }}</strong> for your
                   <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
@@ -85,10 +84,14 @@ const OutgoingHistory = ({ bookings, history }) => {
                   <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
                   got canceled.
                 </Trans>
-              </p>
+              }
+              booking={booking}
+              links={[{ text: t('OutgoingHistory:why'), action: () => setBookingCanceledPopupOpened(true) }]}
+            >
               <Popup
                 modal
-                trigger={<p className='fake-link-underlined'>{t('OutgoingHistory:why')}</p>}
+                open={bookingCanceledPopupOpened}
+                onClose={() => setBookingCanceledPopupOpened(false)}
                 position='top center'
                 closeOnDocumentClick={true}
               >
@@ -98,97 +101,82 @@ const OutgoingHistory = ({ bookings, history }) => {
                   endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
                 />
               </Popup>
-            </Container>
-          );
-        } else {
-          return (
-            <Container
-              style={{
-                backgroundColor: booking.review_id === null && booking.host_profile_id !== null ? '#f3dde6' : '#e8e8e8',
-                marginTop: '2rem',
-                padding: '2rem',
-              }}
-              id={booking.id}
-              data-cy='outgoing-history'
-              key={booking.id}
-            >
-              <p className='small-centered-paragraph'>
-                <Trans i18nKey='OutgoingHistory:req-desc'>
-                  Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of
-                  <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
-                  <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
-                </Trans>
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                {booking.review_id === null && booking.host_profile_id !== null ? (
-                  <span>
-                    <p
-                      className='fake-link-underlined'
-                      id='leave-review'
-                      onClick={() => {
-                        history.push({
-                          pathname: '/leave-a-review',
-                          state: {
-                            userId: booking.user_id,
-                            hostProfileId: booking.host_profile_id,
-                            bookingId: booking.id,
-                            hostNickname: booking.host_nickname,
-                            startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
-                            endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
-                          },
-                        });
-                      }}
-                    >
-                      {t('OutgoingHistory:leave-review')}
-                    </p>
-                  </span>
-                ) : booking.review_id === null && booking.host_profile_id === null ? (
-                  <span>
-                    <p className='small-centered-paragraph'>{t('OutgoingHistory:no-host-no-review')}</p>
-                  </span>
-                ) : (
-                  <Popup
-                    modal
-                    trigger={
-                      <span>
-                        <p className='fake-link-underlined'>{t('OutgoingHistory:view-review')}</p>
-                      </span>
-                    }
-                    position='top center'
-                    closeOnDocumentClick={true}
-                  >
-                    <ViewYourReviewPopup
-                      id={booking.review_id}
-                      startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                      endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-                    />
-                  </Popup>
-                )}
-                <p
-                  className='fake-link-underlined'
-                  id={`booking-receipt-${booking.id}`}
-                  style={{ marginLeft: '0.5rem' }}
-                  onClick={() => {
-                    history.push({
-                      pathname: '/booking-receipt',
-                      state: {
-                        nickname: booking.host_nickname,
-                        startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
-                        endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
-                        priceTotal: booking.price_total,
-                        numberOfCats: booking.number_of_cats,
-                        bookingId: booking.id,
-                        createdAt: moment(booking.created_at).format('YYYY-MM-DD'),
-                      },
-                    });
-                  }}
-                >
-                  {t('reusable:cta:view-receipt')}
-                </p>
-              </div>
-            </Container>
+            </Booking>
           );
         }
+        return (
+          <Booking
+            key={'bookingnr' + booking.id}
+            testId='outgoing-history'
+            text={
+              <Trans i18nKey='OutgoingHistory:req-desc'>
+                Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of
+                <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+              </Trans>
+            }
+            extraText={
+              booking.review_id === null && booking.host_profile_id === null && t('OutgoingHistory:no-host-no-review')
+            }
+            booking={booking}
+            cta={
+              booking.review_id === null &&
+              booking.host_profile_id !== null && {
+                text: t('OutgoingHistory:leave-review'),
+                action: () => {
+                  history.push({
+                    pathname: '/leave-a-review',
+                    state: {
+                      userId: booking.user_id,
+                      hostProfileId: booking.host_profile_id,
+                      bookingId: booking.id,
+                      hostNickname: booking.host_nickname,
+                      startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                      endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
+                    },
+                  });
+                },
+              }
+            }
+            links={[
+              booking.review_id !== null && {
+                text: t('OutgoingHistory:view-review'),
+                action: () => setViewReviewPopupOpened(true),
+              },
+              {
+                text: t('reusable:cta:view-receipt'),
+                action: () => {
+                  history.push({
+                    pathname: '/booking-receipt',
+                    state: {
+                      nickname: booking.host_nickname,
+                      startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
+                      endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
+                      priceTotal: booking.price_total,
+                      numberOfCats: booking.number_of_cats,
+                      bookingId: booking.id,
+                      createdAt: moment(booking.created_at).format('YYYY-MM-DD'),
+                    },
+                  });
+                },
+              },
+            ]}
+          >
+            <Popup
+              modal
+              open={viewReviewPopupOpened}
+              onClose={() => setViewReviewPopupOpened(false)}
+              position='top center'
+              closeOnDocumentClick={true}
+            >
+              <ViewYourReviewPopup
+                id={booking.review_id}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
+            </Popup>
+          </Booking>
+        );
       })}
     </>
   );
