@@ -1,11 +1,15 @@
 import React from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
+import Popup from 'reactjs-popup';
 
 const OutRequestUserMessagePopup = (props) => {
   const { ready } = useTranslation('OutRequestUserMessagePopup');
-  return <div>a</div>
-  // if (ready) {
+  return (
+    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
+      OutRequestUserMessagePopup
+    </Popup>
+  ); // if (ready) {
   //   return (
   //     <>
   //       <div style={{ margin: '-2rem -2rem 2rem', background: '#c90c61', padding: '2rem' }}>

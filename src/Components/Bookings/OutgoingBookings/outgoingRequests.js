@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import Popup from 'reactjs-popup';
-import OutRequestUserMessagePopup from '../OutRequestUserMessagePopup';
-import { Text, Container } from '../../../UI-Components';
+import OutRequestUserMessagePopup from '../outRequestUserMessagePopup';
+import { Text } from '../../../UI-Components';
 import Booking from './booking';
 
 const OutgoingRequests = ({ bookings }) => {
   const { t, ready } = useTranslation('OutgoingRequests');
+
+  const [userMessagePopupOpened, setUserMessagePopupOpened] = useState(false);
 
   if (!ready) return <Spinner />;
 
@@ -50,23 +51,23 @@ const OutgoingRequests = ({ bookings }) => {
               </Trans>
             }
             booking={request}
-            links={[]}
+            links={[
+              {
+                text: t('OutgoingRequests:view-message'),
+                action: () => setUserMessagePopupOpened(true),
+              },
+            ]}
           >
-            <Popup
-              modal
-              trigger={<p className='fake-link-underlined'>{t('OutgoingRequests:view-message')}</p>}
-              position='top center'
-              closeOnDocumentClick={true}
-            >
-              <OutRequestUserMessagePopup
-                id={request.id}
-                nickname={request.user.nickname}
-                message={request.message}
-                avatar={request.user.profile_avatar}
-                startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
-                endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-              />
-            </Popup>
+            <OutRequestUserMessagePopup
+              id={request.id}
+              open={userMessagePopupOpened}
+              onClose={() => setUserMessagePopupOpened(false)}
+              nickname={request.user.nickname}
+              message={request.message}
+              avatar={request.user.profile_avatar}
+              startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+              endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+            />
           </Booking>
         );
       })}
