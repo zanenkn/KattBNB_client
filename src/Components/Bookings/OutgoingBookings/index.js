@@ -134,7 +134,7 @@ const OutgoingBookings = ({ location: { state } }) => {
         )} */}
 
         <SectionWrapper ref={requestsSection}>
-          <Header level={2} centered>
+          <Header level={2} centered space={2}>
             {t('OutgoingBookings:requests')}
           </Header>
           <OutgoingRequests
@@ -144,7 +144,7 @@ const OutgoingBookings = ({ location: { state } }) => {
           />
         </SectionWrapper>
         <SectionWrapper ref={upcomingSection}>
-          <Header level={2} centered>
+          <Header level={2} centered space={2}>
             {t('OutgoingBookings:upcoming')}
           </Header>
           <OutgoingUpcoming
@@ -154,7 +154,7 @@ const OutgoingBookings = ({ location: { state } }) => {
           />
         </SectionWrapper>
         <SectionWrapper ref={historySection}>
-          <Header level={2} centered>
+          <Header level={2} centered space={2}>
             {t('OutgoingBookings:history')}
           </Header>
           <OutgoingHistory

@@ -8,6 +8,7 @@ import Popup from 'reactjs-popup';
 import ViewYourReviewPopup from '../../Reviews/ViewReviewPopup';
 import { withRouter } from 'react-router-dom';
 import Booking from './booking';
+import { Text } from '../../../UI-Components';
 
 const OutgoingHistory = ({ bookings, history }) => {
   const { t, ready } = useTranslation('OutgoingHistory');
@@ -27,11 +28,11 @@ const OutgoingHistory = ({ bookings, history }) => {
 
   return (
     <>
-      <p className='small-centered-paragraph'>
+      <Text centered bold space={6}>
         <Trans count={parseInt(bookings.length)} i18nKey='OutgoingHistory:main-header'>
-          <strong>You have {{ count: bookings.length }} past booking.</strong>
+          You have {{ count: bookings.length }} past booking.
         </Trans>
-      </p>
+      </Text>
       {bookings.map((booking) => {
         if (booking.status === 'declined') {
           return (

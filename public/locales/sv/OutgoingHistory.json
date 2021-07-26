@@ -1,6 +1,6 @@
 {
-  "main-header": "<0>Du har {{count}} tidigare bokning.</0>",
-  "main-header_plural": "<0>Du har {{count}} tidigare bokningar.</0>",
+  "main-header": "Du har {{count}} tidigare bokning.",
+  "main-header_plural": "Du har {{count}} tidigare bokningar.",
   "declined-req-header": "AVSLAGEN FÖRFRÅGAN",
   "declined-req-desc": "Din förfrågan om att boka en vistelse hos <1>{{nickname}}</1> för din <3>{{count}} katt</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7> avslogs.",
   "declined-req-desc_plural": "Din förfrågan om att boka en vistelse hos <1>{{nickname}}</1> för dina <3>{{count}} katter</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7> avslogs.",

@@ -1,28 +1,34 @@
-import { Container, Text, Button } from '../../../UI-Components';
+import { Text, Button, InlineLink } from '../../../UI-Components';
+import { BookingContainer, BookingLinks } from './styles';
 
 const Booking = ({ header, text, extraText, links, cta, booking, testId, children }) => {
   return (
-    <Container
-      id={booking.id}
-      data-cy={testId}
-    >
-      {header && <Text bold>{header}</Text>}
+    <BookingContainer id={booking.id} data-cy={testId}>
+      {header && (
+        <Text bold centered>
+          {header}
+        </Text>
+      )}
       <Text>{text}</Text>
       {extraText && (
         <Text centered italic>
           {extraText}
         </Text>
       )}
-      {cta && <Button onClick={() => cta.action()}>{cta.text}</Button>}
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      {cta && (
+        <Button onClick={() => cta.action()} space={0}>
+          {cta.text}
+        </Button>
+      )}
+      <BookingLinks>
         {links.map((link, i) => (
-          <p key={'link' + i} onClick={() => link.action()}>
+          <InlineLink color='info' key={'link' + i} onClick={() => link.action()}>
             {link.text}
-          </p>
+          </InlineLink>
         ))}
-      </div>
+      </BookingLinks>
       {children}
-    </Container>
+    </BookingContainer>
   );
 };
 
