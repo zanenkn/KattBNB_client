@@ -2,10 +2,15 @@ import React from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 const OutRequestCancelledPopup = (props) => {
   const { t, ready } = useTranslation('OutRequestCancelledPopup');
-  return <div>a</div>
+  return (
+    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
+      OutRequestCancelledPopup
+    </Popup>
+  );
   // if (ready) {
   //   return (
   //     <>

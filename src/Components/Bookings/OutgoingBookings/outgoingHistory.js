@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import OutRequestDeclinedPopup from '../OutRequestDeclinedPopup';
-import OutRequestCancelledPopup from '../OutRequestCancelledPopup';
-import Popup from 'reactjs-popup';
-import ViewYourReviewPopup from '../../Reviews/ViewReviewPopup';
+import ViewYourReviewPopup from '../viewYourReviewPopup';
+import OutRequestDeclinedPopup from '../outRequestDeclinedPopup';
+import OutRequestCancelledPopup from '../outRequestCancelledPopup';
 import { withRouter } from 'react-router-dom';
 import Booking from './booking';
 import { Text } from '../../../UI-Components';
@@ -18,6 +17,7 @@ const OutgoingHistory = ({ bookings, history }) => {
   const [viewReviewPopupOpened, setViewReviewPopupOpened] = useState(false);
 
   if (!ready) return <Spinner />;
+
   if (bookings.length < 1) {
     return (
       <p className='small-centered-paragraph'>
@@ -52,22 +52,16 @@ const OutgoingHistory = ({ bookings, history }) => {
               booking={booking}
               links={[{ text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(true) }]}
             >
-              <Popup
-                modal
+              <OutRequestDeclinedPopup
                 open={bookingDeclinedPopupOpened}
-                position='top center'
-                closeOnDocumentClick={true}
                 onClose={() => setBookingDeclinedPopupOpened(false)}
-              >
-                <OutRequestDeclinedPopup
-                  id={booking.id}
-                  nickname={booking.host_nickname}
-                  message={booking.host_message}
-                  avatar={booking.host_avatar}
-                  startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                  endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-                />
-              </Popup>
+                id={booking.id}
+                nickname={booking.host_nickname}
+                message={booking.host_message}
+                avatar={booking.host_avatar}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
             </Booking>
           );
         }
@@ -89,19 +83,13 @@ const OutgoingHistory = ({ bookings, history }) => {
               booking={booking}
               links={[{ text: t('OutgoingHistory:why'), action: () => setBookingCanceledPopupOpened(true) }]}
             >
-              <Popup
-                modal
+              <OutRequestCancelledPopup
                 open={bookingCanceledPopupOpened}
                 onClose={() => setBookingCanceledPopupOpened(false)}
-                position='top center'
-                closeOnDocumentClick={true}
-              >
-                <OutRequestCancelledPopup
-                  nickname={booking.host_nickname}
-                  startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                  endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-                />
-              </Popup>
+                nickname={booking.host_nickname}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
             </Booking>
           );
         }
@@ -163,19 +151,13 @@ const OutgoingHistory = ({ bookings, history }) => {
               },
             ]}
           >
-            <Popup
-              modal
+            <ViewYourReviewPopup
               open={viewReviewPopupOpened}
               onClose={() => setViewReviewPopupOpened(false)}
-              position='top center'
-              closeOnDocumentClick={true}
-            >
-              <ViewYourReviewPopup
-                id={booking.review_id}
-                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-              />
-            </Popup>
+              id={booking.review_id}
+              startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+              endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+            />
           </Booking>
         );
       })}
