@@ -13,9 +13,9 @@ const OutgoingUpcoming = ({ bookings, history }) => {
 
   if (bookings.length < 1) {
     return (
-      <p className='small-centered-paragraph'>
-        <strong>{t('OutgoingUpcoming:no-upc')}</strong>
-      </p>
+      <Text bold centered>
+        {t('OutgoingUpcoming:no-upc')}
+      </Text>
     );
   }
 

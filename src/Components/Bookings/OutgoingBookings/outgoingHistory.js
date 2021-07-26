@@ -20,9 +20,9 @@ const OutgoingHistory = ({ bookings, history }) => {
 
   if (bookings.length < 1) {
     return (
-      <p className='small-centered-paragraph'>
-        <strong>{t('OutgoingHistory:no-history')}</strong>
-      </p>
+      <Text bold centered>
+        {t('OutgoingHistory:no-history')}
+      </Text>
     );
   }
 
