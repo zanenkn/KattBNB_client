@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
-import IncRequestDeclinedPopup from './IncRequestDeclinedPopup';
+import IncRequestDeclinedPopup from '../IncRequestDeclinedPopup';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
-import ViewReviewPopup from '../Reviews/ViewReviewPopup';
+import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
 
 const IncomingHistory = (props) => {
   const { t, ready } = useTranslation('IncomingHistory');

@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import withAuth from '../../HOC/withAuth';
-import Spinner from '../ReusableComponents/Spinner';
+import React, { useState, useEffect, useRef } from 'react';
+import withAuth from '../../../HOC/withAuth';
+import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import moment from 'moment';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import IncomingRequests from './IncomingRequests';
 import IncomingUpcoming from './IncomingUpcoming';
 import IncomingHistory from './IncomingHistory';
+
+import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
+import { SectionWrapper, StyledContentWrapper } from './styles';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');
@@ -17,6 +20,13 @@ const IncomingBookings = ({ location: { state } }) => {
   const [incomingBookings, setIncomingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
+  const today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
+
+  const secondaryHeaderHeight = 150;
+
+  const requestsSection = useRef(null);
+  const upcomingSection = useRef(null);
+  const historySection = useRef(null);
 
   const handleScroll = () => {
     setScrollYPosition(window.scrollY);
@@ -25,6 +35,10 @@ const IncomingBookings = ({ location: { state } }) => {
   const axiosCallStateHandling = (loadingState, errorMessage) => {
     setLoading(loadingState);
     setErrors(errorMessage);
+  };
+
+  const scrollToSection = (section) => {
+    window.scrollTo({ top: section.current.offsetTop - secondaryHeaderHeight, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -75,71 +89,97 @@ const IncomingBookings = ({ location: { state } }) => {
     });
   };
 
-  return <div>a</div>
-  // if (ready && loading === false) {
-  //   let today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
-  //   let requestsSection, upcomingSection, historySection;
-  //   let incomingRequests = [];
-  //   let incomingUpcoming = [];
-  //   let incomingHistory = [];
-  //   incomingBookings.map((booking) => {
-  //     if (booking.status === 'pending') {
-  //       incomingRequests.push(booking);
-  //     } else if (booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today) {
-  //       incomingUpcoming.push(booking);
-  //     } else {
-  //       incomingHistory.push(booking);
-  //     }
-  //     return null;
-  //   });
+  if (!ready || loading) return <Spinner />;
 
+  return (
+    <>
+      <SecondaryStickyHeader height={secondaryHeaderHeight}>
+        <Header level={3} centered space={2}>
+          {t('IncomingBookings:main-header')}
+        </Header>
+        <Text centered>{t('IncomingBookings:main-desc')}</Text>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            onClick={() => {
+              scrollToSection(requestsSection);
+            }}
+          >
+            {t('IncomingBookings:requests')}
+          </Button>
+          <Button
+            onClick={() => {
+              scrollToSection(upcomingSection);
+            }}
+          >
+            {t('IncomingBookings:upcoming')}
+          </Button>
+          <Button
+            onClick={() => {
+              scrollToSection(historySection);
+            }}
+          >
+            {t('IncomingBookings:history')}
+          </Button>
+        </div>
+      </SecondaryStickyHeader>
+      <StyledContentWrapper padding={secondaryHeaderHeight}>
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
+
+        <SectionWrapper ref={requestsSection}>
+          <Header level={2} centered space={2}>
+            {t('IncomingBookings:requests')}
+          </Header>
+          <IncomingRequests
+            bookings={incomingBookings
+              .filter((booking) => booking.status === 'pending')
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())}
+          />
+        </SectionWrapper>
+        <SectionWrapper ref={upcomingSection}>
+          <Header level={2} centered space={2}>
+            {t('IncomingBookings:upcoming')}
+          </Header>
+          <IncomingUpcoming
+            bookings={incomingBookings
+              .filter((booking) => booking.status === 'accepted' && booking.dates[booking.dates.length - 1] > today)
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())}
+          />
+        </SectionWrapper>
+        <SectionWrapper ref={historySection}>
+          <Header level={2} centered space={2}>
+            {t('IncomingBookings:history')}
+          </Header>
+          <IncomingHistory
+            bookings={incomingBookings
+              .filter((booking) => booking.dates[booking.dates.length - 1] < today)
+              .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
+          />
+        </SectionWrapper>
+        {/* <div className='scroll-to-top '>
+          <Icon
+            link='#'
+            name='angle up'
+            size='huge'
+            color='grey'
+            style={scrollYPosition < 200 ? { display: 'none' } : { display: 'block' }}
+            onClick={scrollToTop}
+          />
+        </div> */}
+      </StyledContentWrapper>
+    </>
+  );
   //   return (
   //     <>
-  //       <div id='secondary-sticky' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-  //         <Header as='h1' style={{ marginBottom: '0', margin: '0 auto', alignSelf: 'flex-start' }}>
-  //           {t('IncomingBookings:main-header')}
-  //         </Header>
-  //         <p style={{ textAlign: 'center', margin: '0 auto 1rem' }}>{t('IncomingBookings:main-desc')}</p>
-  //         <div style={{ display: 'flex', justifyContent: 'center' }}>
-  //           <Button.Group size='mini'>
-  //             <Button
-  //               style={{ marginTop: '0' }}
-  //               onClick={() => {
-  //                 requestsSection.scrollIntoView({ behavior: 'smooth' });
-  //               }}
-  //             >
-  //               {t('IncomingBookings:requests')}
-  //             </Button>
-  //             <Button
-  //               style={{ marginTop: '0' }}
-  //               onClick={() => {
-  //                 upcomingSection.scrollIntoView({ behavior: 'smooth' });
-  //               }}
-  //             >
-  //               {t('IncomingBookings:upcoming')}
-  //             </Button>
-  //             <Button
-  //               style={{ marginTop: '0' }}
-  //               onClick={() => {
-  //                 historySection.scrollIntoView({ behavior: 'smooth' });
-  //               }}
-  //             >
-  //               {t('IncomingBookings:history')}
-  //             </Button>
-  //           </Button.Group>
-  //         </div>
-  //       </div>
   //       <Container style={{ paddingTop: '150px' }}>
   //         <div className='expanding-wrapper'>
-  //           {errors.length > 0 && (
-  //             <Message negative>
-  //               <ul id='message-error-list'>
-  //                 {errors.map((error) => (
-  //                   <li key={error}>{t(error)}</li>
-  //                 ))}
-  //               </ul>
-  //             </Message>
-  //           )}
   //           <div
   //             ref={(el) => {
   //               requestsSection = el;

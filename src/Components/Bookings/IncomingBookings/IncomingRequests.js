@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Popup from 'reactjs-popup';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
-import IncRequestPopup from './IncRequestPopup';
-import DeclineRequestPopup from './DeclineRequestPopup';
+// import IncRequestPopup from '../IncRequestPopup';
+// import DeclineRequestPopup from '../DeclineRequestPopup';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 
 const IncomingRequests = ({ history, requests }) => {
