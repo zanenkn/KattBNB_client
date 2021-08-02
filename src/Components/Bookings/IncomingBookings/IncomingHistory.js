@@ -9,9 +9,13 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
+import Booking from '../OutgoingBookings/booking';
+
+// Started migration, finished declined bookings
 
 const IncomingHistory = (props) => {
   const { t, ready } = useTranslation('IncomingHistory');
+  const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
 
   const [errors, setErrors] = useState([]);
 
@@ -64,164 +68,144 @@ const IncomingHistory = (props) => {
         });
     }
   };
-  return <div>a</div>
-  // if (ready) {
-  //   let sortedHistory = props.inHistoryBookings;
-  //   sortedHistory.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  if (!ready) return <Spinner />;
 
-  //   if (props.inHistoryBookings.length > 0) {
-  //     return (
-  //       <>
-  //         <p className='small-centered-paragraph'>
-  //           <Trans count={parseInt(props.inHistoryBookings.length)} i18nKey='IncomingHistory:main-title'>
-  //             <strong>You have {{ count: props.inHistoryBookings.length }} past booking.</strong>
-  //           </Trans>
-  //         </p>
-  //         {sortedHistory.map((booking) => {
-  //           if (booking.status === 'declined') {
-  //             return (
-  //               <Container
-  //                 style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-  //                 id={booking.id}
-  //                 data-cy='incoming-history'
-  //                 key={booking.id}
-  //               >
-  //                 <p className='small-centered-paragraph'>
-  //                   <strong>{t('IncomingHistory:declined-request')}</strong>
-  //                 </p>
-  //                 <p className='small-centered-paragraph'>
-  //                   <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:declined-desc'>
-  //                     You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for
-  //                     their <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
-  //                     <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
-  //                     <strong>
-  //                       {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
-  //                     </strong>
-  //                     .
-  //                   </Trans>
-  //                 </p>
-  //                 <Popup
-  //                   modal
-  //                   trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-message')}</p>}
-  //                   position='top center'
-  //                   closeOnDocumentClick={true}
-  //                 >
-  //                   <IncRequestDeclinedPopup
-  //                     id={booking.id}
-  //                     nickname={booking.user.nickname}
-  //                     message={booking.host_message}
-  //                     startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-  //                     endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-  //                   />
-  //                 </Popup>
-  //               </Container>
-  //             );
-  //           } else if (booking.status === 'canceled') {
-  //             return (
-  //               <Container
-  //                 style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-  //                 id={booking.id}
-  //                 data-cy='incoming-history'
-  //                 key={booking.id}
-  //               >
-  //                 <p className='small-centered-paragraph'>
-  //                   <strong>{t('IncomingHistory:canceled-request')}</strong>
-  //                 </p>
-  //                 <p className='small-centered-paragraph'>
-  //                   <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:canceled-desc'>
-  //                     A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their
-  //                     <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
-  //                     <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
-  //                     <strong>
-  //                       {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
-  //                     </strong>
-  //                     got canceled due to no answer from you within 3 days time.
-  //                   </Trans>
-  //                 </p>
-  //               </Container>
-  //             );
-  //           } else {
-  //             return (
-  //               <>
-  //                 <Container
-  //                   style={{
-  //                     backgroundColor: booking.review_id === null ? '#f3dde6' : '#e8e8e8',
-  //                     marginTop: '2rem',
-  //                     padding: '2rem',
-  //                   }}
-  //                   id={booking.id}
-  //                   data-cy='incoming-history'
-  //                   key={booking.id}
-  //                 >
-  //                   <p className='small-centered-paragraph'>
-  //                     <Trans i18nKey='IncomingHistory:other-history'>
-  //                       You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of
-  //                       <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
-  //                       <strong>
-  //                         {{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}
-  //                       </strong>
-  //                       .
-  //                     </Trans>
-  //                   </p>
-  //                   {booking.review_id === null ? (
-  //                     <p
-  //                       className='fake-link-underlined'
-  //                       id='ask-review'
-  //                       onClick={(e) =>
-  //                         messageUser(
-  //                           e,
-  //                           booking.host_id,
-  //                           booking.user_id,
-  //                           booking.user.profile_avatar,
-  //                           booking.user.location,
-  //                           booking.user.nickname
-  //                         )
-  //                       }
-  //                     >
-  //                       {t('IncomingHistory:ask-review')}
-  //                     </p>
-  //                   ) : (
-  //                     <Popup
-  //                       modal
-  //                       trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-review')}</p>}
-  //                       position='top center'
-  //                       closeOnDocumentClick={true}
-  //                     >
-  //                       <ViewReviewPopup
-  //                         id={booking.review_id}
-  //                         startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-  //                         endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-  //                       />
-  //                     </Popup>
-  //                   )}
-  //                 </Container>
-  //                 {errors.length > 0 && (
-  //                   <Message negative>
-  //                     <ul id='message-error-list'>
-  //                       {errors.map((error) => (
-  //                         <li key={error}>{t(error)}</li>
-  //                       ))}
-  //                     </ul>
-  //                   </Message>
-  //                 )}
-  //               </>
-  //             );
-  //           }
-  //         })}
-  //       </>
-  //     );
-  //   } else {
-  //     return (
-  //       <>
-  //         <p className='small-centered-paragraph'>
-  //           <strong>{t('IncomingHistory:no-past-bookings')}</strong>
-  //         </p>
-  //       </>
-  //     );
-  //   }
-  // } else {
-  //   return <Spinner />;
-  // }
+  if (props.bookings.length < 1) {
+    return (
+      <Text bold centered>
+        {t('IncomingHistory:no-past-bookings')}
+      </Text>
+    );
+  }
+
+  return (
+    <>
+      <Text centered bold space={6}>
+        <Trans count={parseInt(props.bookings.length)} i18nKey='IncomingHistory:main-title'>
+          You have {{ count: props.bookings.length }} past booking.
+        </Trans>
+      </Text>
+
+      {bookings.map((booking) => {
+        if (booking.status === 'declined') {
+          return (
+            <Booking
+              key={'bookingnr' + booking.id}
+              testId='incoming-history'
+              header={t('IncomingHistory:declined-request')}
+              text={
+                <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:declined-desc'>
+                  You declined a booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their
+                  <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
+                  <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                  <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+                </Trans>
+              }
+              booking={booking}
+              links={[{ text: t('IncomingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(true) }]}
+            >
+              <IncRequestDeclinedPopup
+                open={bookingDeclinedPopupOpened}
+                onClose={() => setBookingDeclinedPopupOpened(false)}
+                id={booking.id}
+                nickname={booking.user.nickname}
+                message={booking.host_message}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
+
+            </Booking>
+          );
+        } else if (booking.status === 'canceled') {
+          return (
+            <Container
+              style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
+              id={booking.id}
+              data-cy='incoming-history'
+              key={booking.id}
+            >
+              <p className='small-centered-paragraph'>
+                <strong>{t('IncomingHistory:canceled-request')}</strong>
+              </p>
+              <p className='small-centered-paragraph'>
+                <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:canceled-desc'>
+                  A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their
+                  <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
+                  <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                  <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
+                  got canceled due to no answer from you within 3 days time.
+                </Trans>
+              </p>
+            </Container>
+          );
+        } else {
+          return (
+            <>
+              <Container
+                style={{
+                  backgroundColor: booking.review_id === null ? '#f3dde6' : '#e8e8e8',
+                  marginTop: '2rem',
+                  padding: '2rem',
+                }}
+                id={booking.id}
+                data-cy='incoming-history'
+                key={booking.id}
+              >
+                <p className='small-centered-paragraph'>
+                  <Trans i18nKey='IncomingHistory:other-history'>
+                    You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of
+                    <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                    <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
+                    .
+                  </Trans>
+                </p>
+                {booking.review_id === null ? (
+                  <p
+                    className='fake-link-underlined'
+                    id='ask-review'
+                    onClick={(e) =>
+                      messageUser(
+                        e,
+                        booking.host_id,
+                        booking.user_id,
+                        booking.user.profile_avatar,
+                        booking.user.location,
+                        booking.user.nickname
+                      )
+                    }
+                  >
+                    {t('IncomingHistory:ask-review')}
+                  </p>
+                ) : (
+                  <Popup
+                    modal
+                    trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-review')}</p>}
+                    position='top center'
+                    closeOnDocumentClick={true}
+                  >
+                    <ViewReviewPopup
+                      id={booking.review_id}
+                      startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                      endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+                    />
+                  </Popup>
+                )}
+              </Container>
+              {errors.length > 0 && (
+                <Message negative>
+                  <ul id='message-error-list'>
+                    {errors.map((error) => (
+                      <li key={error}>{t(error)}</li>
+                    ))}
+                  </ul>
+                </Message>
+              )}
+            </>
+          );
+        }
+      })}
+    </>
+  );
 };
 
 export default withRouter(IncomingHistory);
