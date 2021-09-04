@@ -11,7 +11,7 @@ import OutgoingUpcoming from './outgoingUpcoming';
 import OutgoingHistory from './outgoingHistory';
 
 import { SecondaryStickyHeader, Header, Button, Text } from '../../../UI-Components';
-import { SectionWrapper, StyledContentWrapper } from './styles';
+import { SectionWrapper, StyledContentWrapper } from '../common/styles';
 
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');

@@ -9,7 +9,7 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
-import Booking from '../OutgoingBookings/booking';
+import Booking from '../common/booking';
 import { Text, Notice } from '../../../UI-Components';
 // Completely MIGRATED
 
@@ -67,7 +67,7 @@ const IncomingHistory = ({ bookings, history }) => {
         }
       });
   };
-  
+
   if (!ready) return <Spinner />;
 
   if (bookings.length < 1) {

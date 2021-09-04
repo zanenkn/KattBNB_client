@@ -4,7 +4,7 @@ import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import OutRequestUserMessagePopup from '../outRequestUserMessagePopup';
 import { Text } from '../../../UI-Components';
-import Booking from './booking';
+import Booking from '../common/booking';
 
 const OutgoingRequests = ({ bookings }) => {
   const { t, ready } = useTranslation('OutgoingRequests');

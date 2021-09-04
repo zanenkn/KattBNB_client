@@ -6,7 +6,7 @@ import ViewYourReviewPopup from '../viewYourReviewPopup';
 import OutRequestDeclinedPopup from '../outRequestDeclinedPopup';
 import OutRequestCancelledPopup from '../outRequestCancelledPopup';
 import { withRouter } from 'react-router-dom';
-import Booking from './booking';
+import Booking from '../common/booking';
 import { Text } from '../../../UI-Components';
 
 const OutgoingHistory = ({ bookings, history }) => {

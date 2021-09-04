@@ -3,7 +3,7 @@ import moment from 'moment';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import Booking from './booking';
+import Booking from '../common/booking';
 import { Text } from '../../../UI-Components';
 
 const OutgoingUpcoming = ({ bookings, history }) => {

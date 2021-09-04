@@ -6,12 +6,12 @@ import axios from 'axios';
 import moment from 'moment';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
-import IncomingRequests from './IncomingRequests';
-import IncomingUpcoming from './IncomingUpcoming';
-import IncomingHistory from './IncomingHistory';
+import IncomingRequests from './incomingRequests';
+import IncomingUpcoming from './incomingUpcoming';
+import IncomingHistory from './incomingHistory';
 
 import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
-import { SectionWrapper, StyledContentWrapper } from './styles';
+import { SectionWrapper, StyledContentWrapper } from '../common/styles';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');
