@@ -26,3 +26,20 @@ export const BookingLinks = styled.div`
   justify-content: space-between;
   margin-top: ${spacing[5]};
 `;
+
+export const ScrollToTop = styled.div`
+  position: fixed;
+  bottom: 0px;
+  z-index: 300;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  > svg {
+    display: ${({ show }) => (show ? 'block' : 'none')};
+    fill: ${colors.neutral[60]};
+    transition: all 0.5s ease;
+  }
+  &:hover > svg {
+    fill: ${colors.neutral[80]};
+  }
+`;

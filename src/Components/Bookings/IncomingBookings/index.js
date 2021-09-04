@@ -9,9 +9,9 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import IncomingRequests from './incomingRequests';
 import IncomingUpcoming from './incomingUpcoming';
 import IncomingHistory from './incomingHistory';
-
 import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
-import { SectionWrapper, StyledContentWrapper } from '../common/styles';
+import { SectionWrapper, StyledContentWrapper, ScrollToTop } from '../common/styles';
+import { CheveronUp } from '../../Icons';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');
@@ -163,16 +163,9 @@ const IncomingBookings = ({ location: { state } }) => {
               .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
           />
         </SectionWrapper>
-        {/* <div className='scroll-to-top '>
-          <Icon
-            link='#'
-            name='angle up'
-            size='huge'
-            color='grey'
-            style={scrollYPosition < 200 ? { display: 'none' } : { display: 'block' }}
-            onClick={scrollToTop}
-          />
-        </div> */}
+        <ScrollToTop onClick={scrollToTop} show={scrollYPosition > 200}>
+          <CheveronUp height={10} />
+        </ScrollToTop>
       </StyledContentWrapper>
     </>
   );

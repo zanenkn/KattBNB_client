@@ -1,5 +1,6 @@
 export { default as Camera } from './src/Camera';
 export { default as Cat } from './src/Cat';
+export { default as CheveronUp } from './src/CheveronUp';
 export { default as CreditCard } from './src/CreditCard';
 export { default as Edit } from './src/Edit';
 export { default as Email } from './src/Email';
