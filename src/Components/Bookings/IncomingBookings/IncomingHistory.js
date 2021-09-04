@@ -10,68 +10,67 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
 import Booking from '../OutgoingBookings/booking';
-import { Text, Container } from '../../../UI-Components';
+import { Text, Notice } from '../../../UI-Components';
+// Completely MIGRATED
 
-// Started migration, finished declined bookings
-
-const IncomingHistory = (props) => {
+const IncomingHistory = ({ bookings, history }) => {
   const { t, ready } = useTranslation('IncomingHistory');
-  const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
 
+  const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
+  const [viewReviewPopupOpened, setViewReviewPopupOpened] = useState(false);
   const [errors, setErrors] = useState([]);
 
-  const messageUser = (e, hostId, userId, userAvatar, userLocation, userNickname) => {
-    e.preventDefault();
+  const messageUser = (hostId, userId, userAvatar, userLocation, userNickname) => {
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
-    } else {
-      const lang = detectLanguage();
-      const path = '/api/v1/conversations';
-      const payload = {
-        user1_id: hostId,
-        user2_id: userId,
-        locale: lang,
-      };
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
-      axios
-        .post(path, payload, { headers: headers })
-        .then((response) => {
-          props.history.push({
-            pathname: '/conversation',
-            state: {
-              id: response.data.id,
-              user: {
-                profile_avatar: userAvatar,
-                id: userId,
-                location: userLocation,
-                nickname: userNickname,
-              },
-            },
-          });
-        })
-        .catch((error) => {
-          if (error.response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            setErrors(['reusable:errors:500']);
-          } else if (error.response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else if (error.response.status === 422) {
-            setErrors(['reusable:errors:422-conversation']);
-          } else {
-            setErrors(error.response.data.error);
-          }
-        });
     }
+    const lang = detectLanguage();
+    const path = '/api/v1/conversations';
+    const payload = {
+      user1_id: hostId,
+      user2_id: userId,
+      locale: lang,
+    };
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    axios
+      .post(path, payload, { headers: headers })
+      .then((response) => {
+        history.push({
+          pathname: '/conversation',
+          state: {
+            id: response.data.id,
+            user: {
+              profile_avatar: userAvatar,
+              id: userId,
+              location: userLocation,
+              nickname: userNickname,
+            },
+          },
+        });
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          wipeCredentials('/is-not-available?atm');
+        } else if (error.response.status === 500) {
+          setErrors(['reusable:errors:500']);
+        } else if (error.response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
+        } else if (error.response.status === 422) {
+          setErrors(['reusable:errors:422-conversation']);
+        } else {
+          setErrors(error.response.data.error);
+        }
+      });
   };
+  
   if (!ready) return <Spinner />;
 
-  if (props.bookings.length < 1) {
+  if (bookings.length < 1) {
     return (
       <Text bold centered>
         {t('IncomingHistory:no-past-bookings')}
@@ -82,12 +81,32 @@ const IncomingHistory = (props) => {
   return (
     <>
       <Text centered bold space={6}>
-        <Trans count={parseInt(props.bookings.length)} i18nKey='IncomingHistory:main-title'>
-          You have {{ count: props.bookings.length }} past booking.
+        <Trans count={parseInt(bookings.length)} i18nKey='IncomingHistory:main-title'>
+          You have {{ count: bookings.length }} past booking.
         </Trans>
       </Text>
 
-      {props.bookings.map((booking) => {
+      <Popup
+        modal
+        open={errors.length > 0}
+        closeOnDocumentClick={true}
+        onClose={() => setErrors([])}
+        position='top center'
+      >
+        <div>
+          {errors.length > 0 && (
+            <Notice nature='danger'>
+              <ul id='message-error-list'>
+                {errors.map((error) => (
+                  <li key={error}>{t(error)}</li>
+                ))}
+              </ul>
+            </Notice>
+          )}
+        </div>
+      </Popup>
+
+      {bookings.map((booking) => {
         if (booking.status === 'declined') {
           return (
             <Booking
@@ -116,18 +135,14 @@ const IncomingHistory = (props) => {
               />
             </Booking>
           );
-        } else if (booking.status === 'canceled') {
+        }
+        if (booking.status === 'canceled') {
           return (
-            <Container
-              style={{ backgroundColor: '#e8e8e8', marginTop: '2rem', padding: '2rem' }}
-              id={booking.id}
-              data-cy='incoming-history'
-              key={booking.id}
-            >
-              <p className='small-centered-paragraph'>
-                <strong>{t('IncomingHistory:canceled-request')}</strong>
-              </p>
-              <p className='small-centered-paragraph'>
+            <Booking
+              key={'bookingnr' + booking.id}
+              testId='incoming-history'
+              header={t('IncomingHistory:canceled-request')}
+              text={
                 <Trans count={parseInt(booking.number_of_cats)} i18nKey='IncomingHistory:canceled-desc'>
                   A booking request from <strong>{{ nickname: booking.user.nickname }}</strong> for their
                   <strong>{{ count: booking.number_of_cats }} cat</strong> during the dates of
@@ -135,74 +150,53 @@ const IncomingHistory = (props) => {
                   <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
                   got canceled due to no answer from you within 3 days time.
                 </Trans>
-              </p>
-            </Container>
-          );
-        } else {
-          return (
-            <>
-              <Container
-                style={{
-                  backgroundColor: booking.review_id === null ? '#f3dde6' : '#e8e8e8',
-                  marginTop: '2rem',
-                  padding: '2rem',
-                }}
-                id={booking.id}
-                data-cy='incoming-history'
-                key={booking.id}
-              >
-                <p className='small-centered-paragraph'>
-                  <Trans i18nKey='IncomingHistory:other-history'>
-                    You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of
-                    <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
-                    <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>
-                    .
-                  </Trans>
-                </p>
-                {booking.review_id === null ? (
-                  <p
-                    className='fake-link-underlined'
-                    id='ask-review'
-                    onClick={(e) =>
-                      messageUser(
-                        e,
-                        booking.host_id,
-                        booking.user_id,
-                        booking.user.profile_avatar,
-                        booking.user.location,
-                        booking.user.nickname
-                      )
-                    }
-                  >
-                    {t('IncomingHistory:ask-review')}
-                  </p>
-                ) : (
-                  <Popup
-                    modal
-                    trigger={<p className='fake-link-underlined'>{t('IncomingHistory:view-review')}</p>}
-                    position='top center'
-                    closeOnDocumentClick={true}
-                  >
-                    <ViewReviewPopup
-                      id={booking.review_id}
-                      startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-                      endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-                    />
-                  </Popup>
-                )}
-              </Container>
-              {/* {errors.length > 0 && (
-                <Message negative>
-                  <ul id='message-error-list'>
-                    {errors.map((error) => (
-                      <li key={error}>{t(error)}</li>
-                    ))}
-                  </ul>
-                </Message>
-              )} */}
-            </>
+              }
+              booking={booking}
+            ></Booking>
           );
         }
+        return (
+          <Booking
+            key={'bookingnr' + booking.id}
+            testId='incoming-history'
+            text={
+              <Trans i18nKey='IncomingHistory:other-history'>
+                Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of
+                <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
+                <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
+              </Trans>
+            }
+            booking={booking}
+            cta={
+              booking.review_id === null &&
+              booking.host_profile_id !== null && {
+                text: t('IncomingHistory:ask-review'),
+                action: () =>
+                  messageUser(
+                    booking.host_id,
+                    booking.user_id,
+                    booking.user.profile_avatar,
+                    booking.user.location,
+                    booking.user.nickname
+                  ),
+              }
+            }
+            links={[
+              booking.review_id !== null && {
+                text: t('IncomingHistory:view-review'),
+                action: () => setViewReviewPopupOpened(true),
+              },
+            ]}
+          >
+            <ViewReviewPopup
+              id={booking.review_id}
+              open={viewReviewPopupOpened}
+              onClose={() => setViewReviewPopupOpened(false)}
+              startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+              endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+            />
+          </Booking>
+        );
       })}
     </>
   );

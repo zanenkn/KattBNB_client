@@ -21,8 +21,8 @@ const Booking = ({ header, text, extraText, links, cta, booking, testId, childre
         </Button>
       )}
       <BookingLinks>
-        {links.map((link, i) => (
-          <InlineLink color='info' key={'link' + i} onClick={() => link.action()}>
+        {links?.map((link, i) => (
+          <InlineLink color='info' key={'link' + booking.id + '-' + i} onClick={() => link.action()}>
             {link.text}
           </InlineLink>
         ))}

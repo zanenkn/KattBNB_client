@@ -7,6 +7,8 @@ import axios from 'axios';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import moment from 'moment';
+import Popup from 'reactjs-popup';
+
 
 const ViewReviewPopup = (props) => {
   const { t, ready } = useTranslation('ViewReviewPopup');
@@ -65,7 +67,11 @@ const ViewReviewPopup = (props) => {
     }
     // eslint-disable-next-line
   }, []);
-  return <div>a</div>
+  return (
+    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
+      ViewReviewPopup
+    </Popup>
+  )
   // if (ready) {
   //   moment.locale(lang);
   //   return errors !== null ? (

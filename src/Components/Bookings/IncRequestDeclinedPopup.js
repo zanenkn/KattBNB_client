@@ -3,12 +3,14 @@ import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
 
-
 const IncRequestDeclinedPopup = (props) => {
   const { t, ready } = useTranslation('IncRequestDeclinedPopup');
-  <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
-    IncRequestDeclinedPopup
-  </Popup>;
+  return (
+    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
+      IncRequestDeclinedPopup
+    </Popup>
+  );
+
   // if (ready) {
   //   return (
   //     <>

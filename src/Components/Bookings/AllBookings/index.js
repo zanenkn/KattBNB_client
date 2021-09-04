@@ -10,7 +10,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { ReversibleWrapper } from './styles';
 import { Header, Text, Notice, Container, Accent, ContentWrapper } from '../../../UI-Components';
 import BookingSegment from './bookingSegment';
-// Migrated => Check text color and other styling, check comments below
+// Completely MIGRATED
 
 const AllBookings = ({ id, history, username }) => {
   const { t, ready } = useTranslation('AllBookings');
