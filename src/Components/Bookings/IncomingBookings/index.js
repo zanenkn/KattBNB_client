@@ -123,7 +123,7 @@ const IncomingBookings = ({ location: { state } }) => {
         </div>
       </SecondaryStickyHeader>
       <StyledContentWrapper padding={secondaryHeaderHeight}>
-        {errors.length > 0 && (
+        {/* {errors.length > 0 && (
           <Notice nature='danger'>
             <ul id='message-error-list'>
               {errors.map((error) => (
@@ -131,14 +131,14 @@ const IncomingBookings = ({ location: { state } }) => {
               ))}
             </ul>
           </Notice>
-        )}
+        )} */}
 
         <SectionWrapper ref={requestsSection}>
           <Header level={2} centered space={2}>
             {t('IncomingBookings:requests')}
           </Header>
           <IncomingRequests
-            bookings={incomingBookings
+            requests={incomingBookings
               .filter((booking) => booking.status === 'pending')
               .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())}
           />

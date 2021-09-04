@@ -10,6 +10,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
 import Booking from '../OutgoingBookings/booking';
+import { Text, Container } from '../../../UI-Components';
 
 // Started migration, finished declined bookings
 
@@ -86,7 +87,7 @@ const IncomingHistory = (props) => {
         </Trans>
       </Text>
 
-      {bookings.map((booking) => {
+      {props.bookings.map((booking) => {
         if (booking.status === 'declined') {
           return (
             <Booking
@@ -113,7 +114,6 @@ const IncomingHistory = (props) => {
                 startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
                 endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
               />
-
             </Booking>
           );
         } else if (booking.status === 'canceled') {
@@ -191,7 +191,7 @@ const IncomingHistory = (props) => {
                   </Popup>
                 )}
               </Container>
-              {errors.length > 0 && (
+              {/* {errors.length > 0 && (
                 <Message negative>
                   <ul id='message-error-list'>
                     {errors.map((error) => (
@@ -199,7 +199,7 @@ const IncomingHistory = (props) => {
                     ))}
                   </ul>
                 </Message>
-              )}
+              )} */}
             </>
           );
         }
