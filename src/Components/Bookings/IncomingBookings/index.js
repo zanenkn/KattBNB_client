@@ -123,7 +123,7 @@ const IncomingBookings = ({ location: { state } }) => {
         </div>
       </SecondaryStickyHeader>
       <StyledContentWrapper padding={secondaryHeaderHeight}>
-        {/* {errors.length > 0 && (
+        {errors.length > 0 && (
           <Notice nature='danger'>
             <ul id='message-error-list'>
               {errors.map((error) => (
@@ -131,8 +131,7 @@ const IncomingBookings = ({ location: { state } }) => {
               ))}
             </ul>
           </Notice>
-        )} */}
-
+        )}
         <SectionWrapper ref={requestsSection}>
           <Header level={2} centered space={2}>
             {t('IncomingBookings:requests')}
@@ -169,60 +168,6 @@ const IncomingBookings = ({ location: { state } }) => {
       </StyledContentWrapper>
     </>
   );
-  //   return (
-  //     <>
-  //       <Container style={{ paddingTop: '150px' }}>
-  //         <div className='expanding-wrapper'>
-  //           <div
-  //             ref={(el) => {
-  //               requestsSection = el;
-  //             }}
-  //             className='booking-type-wrapper'
-  //           >
-  //             <Header as='h2' style={{ marginBottom: '0', marginTop: '2rem' }}>
-  //               {t('IncomingBookings:requests')}
-  //             </Header>
-  //             <IncomingRequests requests={incomingRequests} />
-  //           </div>
-  //           <div
-  //             ref={(el) => {
-  //               upcomingSection = el;
-  //             }}
-  //             className='booking-type-wrapper'
-  //           >
-  //             <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
-  //               {t('IncomingBookings:upcoming')}
-  //             </Header>
-  //             <IncomingUpcoming upcoming={incomingUpcoming} />
-  //           </div>
-  //           <div
-  //             ref={(el) => {
-  //               historySection = el;
-  //             }}
-  //             className='booking-type-wrapper'
-  //           >
-  //             <Header as='h2' style={{ marginBottom: '0', marginTop: '3rem' }}>
-  //               {t('IncomingBookings:history')}
-  //             </Header>
-  //             <IncomingHistory inHistoryBookings={incomingHistory} />
-  //           </div>
-  //           <div className='scroll-to-top '>
-  //             <Icon
-  //               link='#'
-  //               name='angle up'
-  //               size='huge'
-  //               color='grey'
-  //               style={scrollYPosition < 200 ? { display: 'none' } : { display: 'block' }}
-  //               onClick={scrollToTop}
-  //             />
-  //           </div>
-  //         </div>
-  //       </Container>
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default withAuth(IncomingBookings);

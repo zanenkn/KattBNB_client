@@ -9,7 +9,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import OutgoingRequests from './outgoingRequests';
 import OutgoingUpcoming from './outgoingUpcoming';
 import OutgoingHistory from './outgoingHistory';
-import { SecondaryStickyHeader, Header, Button, Text } from '../../../UI-Components';
+import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
 import { ScrollToTop, SectionWrapper, StyledContentWrapper } from '../common/styles';
 import { CheveronUp } from '../../Icons';
 
@@ -123,16 +123,15 @@ const OutgoingBookings = ({ location: { state } }) => {
         </div>
       </SecondaryStickyHeader>
       <StyledContentWrapper padding={secondaryHeaderHeight}>
-        {/* {errors.length > 0 && (
-          <Message negative>
+        {errors.length > 0 && (
+          <Notice nature='danger'>
             <ul id='message-error-list'>
               {errors.map((error) => (
                 <li key={error}>{t(error)}</li>
               ))}
             </ul>
-          </Message>
-        )} */}
-
+          </Notice>
+        )}
         <SectionWrapper ref={requestsSection}>
           <Header level={2} centered space={2}>
             {t('OutgoingBookings:requests')}
