@@ -37,30 +37,10 @@ import BlogListing from './Components/Blog/BlogListing';
 import BlogPost from './Components/Blog/BlogPost';
 import ScrollToTop from './Modules/ScrollToTop';
 import { Switch, Route } from 'react-router-dom';
-import Prismic from 'prismic-javascript';
-import { useTranslation } from 'react-i18next';
 import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
 
 const App = () => {
-  const [uids, setUids] = useState([]);
-  const { t } = useTranslation();
-
-  const fetchData = async () => {
-    const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
-    const response = await Client.query(Prismic.Predicates.at('document.type', 'post'), { fetch: 'post.uid' });
-    setUids(response.results.map((result) => result.uid));
-  };
-
-  useEffect(() => {
-    try {
-      fetchData();
-    } catch (error) {
-      window.alertwindow.alert(t('reusable:errors:500'));
-    }
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <Theme>
       <GlobalStyles />
@@ -109,9 +89,7 @@ const App = () => {
           <Route exact path='/booking-receipt' component={Receipt}></Route>
           <Route exact path='/area-list' component={AreaList}></Route>
           <Route exact path='/blog' component={BlogListing}></Route>
-          {uids.map((uid) => (
-            <Route exact path={`/blog/${uid}`} key={uid} component={BlogPost}></Route>
-          ))}
+          <Route exact path={'/blog/:uid'} component={BlogPost}></Route>
         </Switch>
       </ScrollToTop>
       <Menu />
