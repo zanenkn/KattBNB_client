@@ -4,7 +4,7 @@ import Spinner from '../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { detectLanguage } from '../../Modules/detectLanguage';
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 
 const Legal = () => {

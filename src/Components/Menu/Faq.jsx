@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 import { detectLanguage } from '../../Modules/detectLanguage';
 
