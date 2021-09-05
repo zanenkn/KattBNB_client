@@ -72,7 +72,7 @@ const Menu = (props) => {
         <Link as={MenuLink} id='contact' to='/contact-us' onClick={() => props.menuVisbilityHandler()}>
           {t('reusable:title.contact')}
         </Link>
-        <Link as={MenuLink} id='blog' to='/blog' onClick={() => props.menuVisbilityHandler()}>
+        <Link as={MenuLink} id='blog' to='/blog/all/1' onClick={() => props.menuVisbilityHandler()}>
           {t('reusable:title.stories')}
         </Link>
         <Link as={MenuLink}  id='legal' to='/legal' onClick={() => props.menuVisbilityHandler()}>

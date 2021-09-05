@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fvilers/disable-react-devtools": "^1.2.1",
+    "@prismicio/client": "^5.1.0",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.15.0",
     "actioncable": "^5.2.4-5",

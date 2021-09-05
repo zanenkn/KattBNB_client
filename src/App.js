@@ -88,7 +88,7 @@ const App = () => {
           <Route exact path='/leave-a-review' component={LeaveReview}></Route>
           <Route exact path='/booking-receipt' component={Receipt}></Route>
           <Route exact path='/area-list' component={AreaList}></Route>
-          <Route exact path='/blog' component={BlogListing}></Route>
+          <Route exact path='/blog/:category/:page' component={BlogListing}></Route>
           <Route exact path={'/blog/:uid'} component={BlogPost}></Route>
         </Switch>
       </ScrollToTop>

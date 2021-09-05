@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import { PostWrapper, PostImage } from '../styles';
 import { Container, ContentWrapper, Header, Text } from '../../../UI-Components';
+import Navigation from './navigation'
 
-const BlogListing = () => {
+const BlogListing = ({match}) => {
   const fetchData = async () => {
     const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
     const response = await Client.query(Prismic.Predicates.at('document.type', 'post'), {
       orderings: '[my.post.date desc]',
-      pageSize: 10,
+      pageSize: 5,
+      page: match.params.page
     });
     setPosts(response.results);
+    setTotalPages(response.total_pages)
   };
 
   const [posts, setPosts] = useState([]);
+  const [totalPages, setTotalPages] = useState(null)
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -36,6 +40,7 @@ const BlogListing = () => {
       {posts.map((post) => {
         return (
           <Link
+            key={post.uid}
             to={{
               pathname: `/blog/${post.uid}`,
               state: { post: post },
@@ -53,6 +58,7 @@ const BlogListing = () => {
           </Link>
         );
       })}
+      <Navigation currentPage={parseInt(match.params.page)} total={totalPages} />
     </ContentWrapper>
   );
 };

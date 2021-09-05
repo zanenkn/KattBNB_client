@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
-import Prismic from 'prismic-javascript';
+import Prismic from '@prismicio/client';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
 import { FacebookSimple, LinkedinSimple, TwitterSimple } from '../../Icons';
