@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
 import { Header, Text } from '../../UI-Components';
 import { PopupHeaderWrapper } from './common/styles';
+// Completely MIGRATED
 
 const IncRequestDeclinedPopup = (props) => {
   const { t, ready } = useTranslation('IncRequestDeclinedPopup');

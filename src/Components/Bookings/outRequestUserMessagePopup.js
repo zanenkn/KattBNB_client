@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
 import { Header, Text } from '../../UI-Components';
 import { PopupHeaderWrapper, FlexWrapper, SmallAvatar } from './common/styles';
+// Completely MIGRATED
 
 const OutRequestUserMessagePopup = ({ open, onClose, startDate, endDate, avatar, nickname, message }) => {
   const { ready } = useTranslation('OutRequestUserMessagePopup');
