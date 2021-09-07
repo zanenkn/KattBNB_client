@@ -3,49 +3,48 @@ import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import { InlineLink, Header, Text } from '../../UI-Components';
+import { PopupHeaderWrapper } from './common/styles';
 
-const OutRequestCancelledPopup = (props) => {
+const OutRequestCancelledPopup = ({ open, onClose, startDate, endDate, nickname }) => {
   const { t, ready } = useTranslation('OutRequestCancelledPopup');
+
+  if (!ready) return <Spinner />;
+
   return (
-    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
-      OutRequestCancelledPopup
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+      <PopupHeaderWrapper>
+        <Header level={3} color='white' space={2}>
+          {t('OutRequestCancelledPopup:main-header')}
+        </Header>
+
+        <Text color={'white'}>
+          <Trans i18nKey='OutRequestCancelledPopup:desc'>
+            Your booking request for the dates of <strong>{{ startDate: startDate }}</strong> until
+            <strong>{{ endDate: endDate }}</strong> got cancelled.
+          </Trans>
+        </Text>
+      </PopupHeaderWrapper>
+
+      <Text>
+        <Trans i18nKey='OutRequestCancelledPopup:explanation'>
+          Your booking got automatically cancelled due to
+          <strong>{{ nickname: nickname }}</strong> not responding for
+          3 days.
+        </Trans>
+      </Text>
+
+      <Text>
+        <Trans i18nKey='OutRequestCancelledPopup:try-again'>
+          Try to
+          <InlineLink as={Link} to='/search' color="info">
+            search again
+          </InlineLink>
+          , we hope you find a perfect host soon!
+        </Trans>
+      </Text>
     </Popup>
   );
-  // if (ready) {
-  //   return (
-  //     <>
-  //       <div style={{ margin: '-2rem -2rem 2rem', background: '#c90c61', padding: '2rem' }}>
-  //         <Header as='h2' style={{ color: '#ffffff', textAlign: 'left' }}>
-  //           {t('OutRequestCancelledPopup:main-header')}
-  //         </Header>
-  //         <p style={{ color: '#ffffff', fontSize: 'small' }}>
-  //           <Trans i18nKey='OutRequestCancelledPopup:desc'>
-  //             Your booking request for the dates of <strong>{{ startDate: props.startDate }}</strong> until
-  //             <strong>{{ endDate: props.endDate }}</strong> got cancelled.
-  //           </Trans>
-  //         </p>
-  //       </div>
-  //       <p style={{ margin: '1rem 0 0' }}>
-  //         <Trans i18nKey='OutRequestCancelledPopup:explanation'>
-  //           Your booking got automatically cancelled due to
-  //           <strong style={{ fontStyle: 'normal', color: '#c90c61' }}>{{ nickname: props.nickname }}</strong> not
-  //           responding for 3 days.
-  //         </Trans>
-  //       </p>
-  //       <p style={{ margin: '1rem 0 0' }}>
-  //         <Trans i18nKey='OutRequestCancelledPopup:try-again'>
-  //           Try to
-  //           <Header as={Link} to='/search' className='fake-link-underlined-reg' style={{ fontStyle: 'normal' }}>
-  //             search again
-  //           </Header>
-  //           , we hope you find a perfect host soon!
-  //         </Trans>
-  //       </p>
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default OutRequestCancelledPopup;
