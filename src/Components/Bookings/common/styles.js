@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
-import { ContentWrapper, Container } from '../../../UI-Components';
+import { ContentWrapper, Container, Avatar } from '../../../UI-Components';
 
 const { spacing, colors } = theme;
 
@@ -51,4 +51,16 @@ export const PopupHeaderWrapper = styled.div`
   > :last-child {
     margin-bottom: 0;
   }
+`
+
+export const FlexWrapper = styled(Container)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const SmallAvatar = styled(Avatar)`
+  width: ${spacing[6]};
+  height: ${spacing[6]};
+  margin: 0 ${spacing[2]} 0 0;
 `

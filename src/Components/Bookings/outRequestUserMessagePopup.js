@@ -2,42 +2,41 @@ import React from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
+import { Header, Text } from '../../UI-Components';
+import { PopupHeaderWrapper, FlexWrapper, SmallAvatar } from './common/styles';
 
-const OutRequestUserMessagePopup = (props) => {
+const OutRequestUserMessagePopup = ({ open, onClose, startDate, endDate, avatar, nickname, message }) => {
   const { ready } = useTranslation('OutRequestUserMessagePopup');
+
+  if (!ready) return <Spinner />;
+
   return (
-    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
-      OutRequestUserMessagePopup
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+      <PopupHeaderWrapper>
+        <Text color={'white'}>
+          <Trans i18nKey='OutRequestUserMessagePopup:main-title'>
+            Your booking request for the dates of <strong>{{ startDate: startDate }}</strong> until
+            <strong>{{ endDate: endDate }}</strong>.
+          </Trans>
+        </Text>
+      </PopupHeaderWrapper>
+
+      <FlexWrapper>
+        <SmallAvatar
+          src={
+            avatar === null
+              ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+              : avatar
+          }
+        />
+        <Header level={5}>{nickname}</Header>
+      </FlexWrapper>
+
+      <Text italic space={0}>
+        {message}
+      </Text>
     </Popup>
-  ); // if (ready) {
-  //   return (
-  //     <>
-  //       <div style={{ margin: '-2rem -2rem 2rem', background: '#c90c61', padding: '2rem' }}>
-  //         <p style={{ color: '#ffffff', fontSize: 'small' }}>
-  //           <Trans i18nKey='OutRequestUserMessagePopup:main-title'>
-  //             Your booking request for the dates of <strong>{{ startDate: props.startDate }}</strong> until
-  //             <strong>{{ endDate: props.endDate }}</strong>.
-  //           </Trans>
-  //         </p>
-  //       </div>
-  //       <div style={{ display: 'flex', alignItems: 'center' }}>
-  //         <Image
-  //           src={
-  //             props.avatar === null
-  //               ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-  //               : props.avatar
-  //           }
-  //           size='small'
-  //           style={{ borderRadius: '50%', width: '3rem', height: '3rem' }}
-  //         ></Image>
-  //         <Header style={{ margin: '0 1rem' }}>{props.nickname}</Header>
-  //       </div>
-  //       <p style={{ fontSize: 'small', fontStyle: 'italic', margin: '1rem 0 0' }}>{props.message}</p>
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+  );
 };
 
 export default OutRequestUserMessagePopup;
