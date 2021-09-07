@@ -43,3 +43,12 @@ export const ScrollToTop = styled.div`
     fill: ${colors.neutral[80]};
   }
 `;
+
+export const PopupHeaderWrapper = styled.div`
+  margin: -${spacing[6]} -${spacing[6]} ${spacing[6]};
+  background: ${colors.primary[100]}; 
+  padding: ${spacing[6]};
+  > :last-child {
+    margin-bottom: 0;
+  }
+`

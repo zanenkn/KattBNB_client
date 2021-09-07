@@ -192,12 +192,13 @@ const GlobalStyles = createGlobalStyle`
     margin-bottom: 1rem;
   }
   .popup-content {
-    border: none !important;
+    border: none!important;
     padding: 2rem!important;
-    width: 80% !important;
+    width: 80%!important;
     max-width: 300px;
-    max-height: 95% !important;
+    max-height: 95%!important;
     display: table;
+    box-sizing: border-box;
   }
   .avatar-popup-content {
     width: 270px!important;
