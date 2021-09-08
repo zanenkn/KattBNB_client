@@ -9,6 +9,7 @@ export { default as Email } from './src/Email';
 export { default as FacebookSimple } from './src/FacebookSimple';
 export { default as Globe } from './src/Globe';
 export { default as HostProfile } from './src/HostProfile';
+export { default as KattBNBMain } from './src/KattBNBMain';
 export { default as LinkedinSimple } from './src/LinkedinSimple';
 export { default as Location } from './src/Location';
 export { default as Address } from './src/Address';

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
 
-const { colors, screens } = theme;
+const { colors, screens, spacing } = theme;
 
 export const Nav = styled.div`
   height: 60px;
   margin: auto;
-  background: #c90c61;
+  background: ${colors.primary[100]};
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -24,24 +24,15 @@ export const Nav = styled.div`
 
 export const NavInnerWrap = styled.div`
   width: 100%;
-  max-width: 288px;
+  max-width: ${screens.lg};
   margin: auto;
   display: flex;
   flex-direction: row;
-  @media (min-width: 375px) {
-    max-height: 343px;
-  }
-  @media (min-width: 425px) {
-    max-width: 393px;
-  }
-  @media (min-width: 768px) {
-    max-width: 688px;
-  }
-  @media (min-width: 1024px) {
-    max-width: 944px;
-  }
-  @media (min-width: 1440px) {
-    max-width: 1200px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 ${spacing[6]};
+  @media (min-width: ${screens.xl}) {
+    padding: 0;
   }
 `;
 

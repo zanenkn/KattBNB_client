@@ -22,7 +22,6 @@ const MobileNav = (props) => {
           </button>
         </div>
         <IconWrapper>
-          <p>mobile</p>
           <Navlink
             as={Link}
             to='/search'
