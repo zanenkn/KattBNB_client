@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Landing from './Components/Landing';
-import Navbar from './Components/Navbar/';
+import Responsive from './Components/ReusableComponents/Responsive';
+import MobileNav from './Components/Navbar/Mobile';
+import DesktopNav from './Components/Navbar/Desktop';
 import Menu from './Components/Menu/Menu';
 import Search from './Components/Search';
 import SearchResults from './Components/SearchResults';
@@ -44,7 +46,12 @@ const App = () => {
   return (
     <Theme>
       <GlobalStyles />
-      <Navbar />
+      <Responsive displayIn={['mobile']}>
+        <MobileNav />
+      </Responsive>
+      <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
+        <DesktopNav />
+      </Responsive>
       <ScrollToTop>
         <Switch>
           <Route exact path='/' component={Landing}></Route>

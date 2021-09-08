@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Nav, NavInnerWrap, Navlink, IconWrapper } from './styles';
+import { Nav, NavInnerWrap, Navlink, IconWrapper } from '../styles';
 
-const Navbar = (props) => {
+const MobileNav = (props) => {
   let noAvatar = `https://ui-avatars.com/api/?name=${props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
 
   return (
@@ -22,6 +22,7 @@ const Navbar = (props) => {
           </button>
         </div>
         <IconWrapper>
+          <p>mobile</p>
           <Navlink
             as={Link}
             to='/search'
@@ -123,4 +124,4 @@ const mapStateToProps = (state) => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(MobileNav);
