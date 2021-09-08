@@ -6,6 +6,7 @@ export { default as Notice } from './Notice/';
 // wrappers
 export { default as Container } from './Wrappers/Container/';
 export { default as ContentWrapper } from './Wrappers/ContentWrapper/';
+export { default as Flexbox } from './Wrappers/Flexbox/';
 export { default as LinkIcon } from './Wrappers/LinkIcon/';
 export { default as SecondaryStickyHeader } from './Wrappers/SecondaryStickyHeader/';
 export { default as Whitebox } from './Wrappers/Whitebox/';
