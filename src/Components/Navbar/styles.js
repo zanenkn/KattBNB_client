@@ -31,6 +31,9 @@ export const NavInnerWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 ${spacing[6]};
+  @media (min-width: ${screens.md}) {
+    padding: 0 ${spacing[10]};
+  }
   @media (min-width: ${screens.xl}) {
     padding: 0;
   }
