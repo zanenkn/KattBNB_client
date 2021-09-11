@@ -52,3 +52,8 @@ export const IconWrapper = styled.div`
   flex-disrection: row;
   width: 100%;
 `;
+
+export const MenuDivider = styled.hr`
+  margin: ${spacing[4]} 0;
+  border: ${colors.neutral[100]} solid 1px;
+`

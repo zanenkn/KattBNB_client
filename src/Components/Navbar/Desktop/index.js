@@ -1,14 +1,39 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { KattBNBMain } from '../../Icons';
 import { Container, InlineLink, Text } from '../../../UI-Components';
-import { Nav, NavInnerWrap } from '../styles';
+import { Nav, NavInnerWrap, MenuDivider } from '../styles';
 import { MenuItem, Submenu, SubmenuItem, ItemWrapper } from './styles';
+import LanguageSwitcher from '../../ReusableComponents/LanguageSwitcher';
 
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
-  let noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
+  const noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
   const [showSubmenus, setShowSubmenus] = useState(true);
+  const { t } = useTranslation();
+
+  const signOut = () => {
+    if (window.navigator.onLine === false) {
+      window.alert(t('reusable:errors:window-navigator'));
+    }
+    const path = '/api/v1/auth/sign_out';
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    axios
+      .delete(path, { headers: headers })
+      .then(() => {
+        wipeCredentials('/');
+      })
+      .catch(() => {
+        wipeCredentials('/login');
+      });
+  };
 
   return (
     <Nav>
@@ -93,6 +118,10 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                       Settings
                     </InlineLink>
                   </SubmenuItem>
+                  <MenuDivider />
+                  <SubmenuItem>
+                    <InlineLink onClick={() => signOut()}>Log out</InlineLink>
+                  </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
                       FAQ
@@ -118,6 +147,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                 </>
               )}
+              <LanguageSwitcher />
             </Submenu>
           </MenuItem>
         </ItemWrapper>
