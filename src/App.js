@@ -1,4 +1,5 @@
 import React from 'react';
+import withFooter from './HOC/withFooter';
 import Landing from './Components/Landing';
 import Responsive from './Components/ReusableComponents/Responsive';
 import MobileNav from './Components/Navbar/Mobile';
@@ -57,7 +58,7 @@ const App = () => {
           <Route exact path='/' component={Landing}></Route>
           <Route exact path='/search' component={Search}></Route>
           <Route exact path='/search-results' component={SearchResults}></Route>
-          <Route exact path='/about-us' component={AboutUs}></Route>
+          <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
           <Route exact path='/contact-us' component={ContactUs}></Route>
           <Route exact path='/faq' component={Faq}></Route>
           <Route exact path='/legal' component={Legal}></Route>
