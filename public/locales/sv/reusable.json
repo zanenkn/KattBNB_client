@@ -32,8 +32,10 @@
     "legal": "Användarvillkor",
     "area": "Välj ditt område:"
   },
-  "menu": {
+  "navigation": {
     "search": "Hitta kattvakt",
+    "become-sitter": "Bli kattvakt",
+    "sitters-near-you": "Kattvakter nära dig",
     "about": "Om oss",
     "about-kattbnb": "Om KattBNB",
     "blog": "Blogg",
@@ -47,7 +49,9 @@
     "settings": "Inställningar",
     "logout": "Logga ut",
     "terms": "Användarvillkor",
-    "partners": "Partners"
+    "partners": "Partners",
+    "tips": "Tips",
+    "support": "Kundservice"
   },
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",

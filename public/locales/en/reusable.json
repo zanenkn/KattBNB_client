@@ -32,8 +32,10 @@
     "legal": "Terms & conditions",
     "area": "Choose your area:"
   },
-  "menu": {
+  "navigation": {
     "search": "Find a cat sitter",
+    "become-sitter": "Become a cat sitter",
+    "sitters-near-you": "Cat sitters near you",
     "about": "About",
     "about-kattbnb": "About KattBNB",
     "blog": "Blog",
@@ -46,8 +48,10 @@
     "bookings": "Bookings",
     "settings": "Settings",
     "logout": "Log out",
+    "terms": "Terms & conditions",
     "partners": "Partners",
-    "terms": "Terms & conditions"
+    "tips": "Tips",
+    "support": "Support"
   },
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",

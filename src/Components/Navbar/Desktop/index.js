@@ -45,27 +45,27 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
         <ItemWrapper>
           <MenuItem>
             <InlineLink as={Link} to='/search'>
-              {t('reusable:menu.search')}
+              {t('reusable:navigation.search')}
             </InlineLink>
           </MenuItem>
 
           <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            <Text>{t('reusable:menu.about')}</Text>
+            <Text>{t('reusable:navigation.about')}</Text>
 
             <Submenu>
               <SubmenuItem>
                 <InlineLink as={Link} to='/about-us' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:menu.about-kattbnb')}
+                  {t('reusable:navigation.about-kattbnb')}
                 </InlineLink>
               </SubmenuItem>
               <SubmenuItem>
                 <InlineLink as={Link} to='/blog/all/1' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:menu.blog')}
+                  {t('reusable:navigation.blog')}
                 </InlineLink>
               </SubmenuItem>
               <SubmenuItem>
                 <InlineLink as={Link} to='/contact-us' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:menu.contact')}
+                  {t('reusable:navigation.contact')}
                 </InlineLink>
               </SubmenuItem>
             </Submenu>
@@ -77,31 +77,31 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                 <>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/user-page' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.user-page')}
+                      {t('reusable:navigation.user-page')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/all-bookings' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.bookings')}
+                      {t('reusable:navigation.bookings')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/messages' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.messages')}
+                      {t('reusable:navigation.messages')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.settings')}
+                      {t('reusable:navigation.settings')}
                     </InlineLink>
                   </SubmenuItem>
                   <MenuDivider />
                   <SubmenuItem>
-                    <InlineLink onClick={() => signOut()}>{t('reusable:menu.logout')}</InlineLink>
+                    <InlineLink onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.faq')}
+                      {t('reusable:navigation.faq')}
                     </InlineLink>
                   </SubmenuItem>
                 </>
@@ -109,17 +109,17 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                 <>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.login')}
+                      {t('reusable:navigation.login')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.signup')}
+                      {t('reusable:navigation.signup')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:menu.faq')}
+                      {t('reusable:navigation.faq')}
                     </InlineLink>
                   </SubmenuItem>
                 </>
