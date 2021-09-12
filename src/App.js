@@ -59,7 +59,7 @@ const App = () => {
           <Route exact path='/search' component={Search}></Route>
           <Route exact path='/search-results' component={SearchResults}></Route>
           <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
-          <Route exact path='/contact-us' component={ContactUs}></Route>
+          <Route exact path='/contact-us' component={withFooter(ContactUs)}></Route>
           <Route exact path='/faq' component={Faq}></Route>
           <Route exact path='/legal' component={Legal}></Route>
           <Route exact path='/login' component={Login}></Route>
@@ -96,8 +96,8 @@ const App = () => {
           <Route exact path='/leave-a-review' component={LeaveReview}></Route>
           <Route exact path='/booking-receipt' component={Receipt}></Route>
           <Route exact path='/area-list' component={AreaList}></Route>
-          <Route exact path='/blog/:category/:page' component={BlogListing}></Route>
-          <Route exact path={'/blog/:uid'} component={BlogPost}></Route>
+          <Route exact path='/blog/:category/:page' component={withFooter(BlogListing)}></Route>
+          <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route>
         </Switch>
       </ScrollToTop>
       <Menu />

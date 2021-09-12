@@ -5,8 +5,8 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { KattBNBMain, UserRound } from '../../Icons';
-import { Container, InlineLink, Text } from '../../../UI-Components';
-import { Nav, NavInnerWrap, MenuDivider } from '../styles';
+import { Container, InlineLink, Text, Divider } from '../../../UI-Components';
+import { Nav, NavInnerWrap } from '../styles';
 import { MenuItem, Submenu, SubmenuItem, ItemWrapper, MenuAvatar } from './styles';
 import LanguageSwitcher from '../../ReusableComponents/LanguageSwitcher';
 
@@ -95,7 +95,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                       {t('reusable:navigation.settings')}
                     </InlineLink>
                   </SubmenuItem>
-                  <MenuDivider />
+                  <Divider />
                   <SubmenuItem>
                     <InlineLink onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
                   </SubmenuItem>
@@ -124,7 +124,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                 </>
               )}
-              <MenuDivider />
+              <Divider />
               <LanguageSwitcher />
             </Submenu>
           </MenuItem>

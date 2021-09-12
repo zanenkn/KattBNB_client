@@ -1,9 +1,10 @@
-import { StyledFooter, FooterInnerWrap, ColumnGrid } from './styles';
-import { Text } from '../../UI-Components';
+import { StyledFooter, FooterInnerWrap, ColumnGrid, BottomFlexbox, SocialWrapper } from './styles';
+import { Text, Divider, InlineLink } from '../../UI-Components';
 import LanguageSwitcher from '../ReusableComponents/LanguageSwitcher';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n';
+import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../Icons';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -80,6 +81,24 @@ const Footer = () => {
             <LanguageSwitcher openByDefault color='white' label={t('reusable:navigation.language')} />
           </li>
         </ColumnGrid>
+
+        <Divider color='white' />
+        <BottomFlexbox>
+          <Text space={0} size='xs' color='white'>
+            © {new Date().getFullYear()} KattBNB AB | Reg.nr. 559252-4481
+          </Text>
+          <SocialWrapper>
+            <a href='https://www.facebook.com/kattbnb/' target='_blank' rel='noopener noreferrer'>
+              <FacebookIcon fill='white' height={6} />
+            </a>
+            <a href='https://www.instagram.com/kattbnb' target='_blank' rel='noopener noreferrer'>
+              <InstagramIcon fill='white' height={6} />
+            </a>
+            <a href='https://www.linkedin.com/company/kattbnb' target='_blank' rel='noopener noreferrer'>
+              <LinkedinIcon fill='white' height={6} />
+            </a>
+          </SocialWrapper>
+        </BottomFlexbox>
       </FooterInnerWrap>
     </StyledFooter>
   );

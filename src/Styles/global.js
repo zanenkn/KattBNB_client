@@ -168,12 +168,6 @@ const GlobalStyles = createGlobalStyle`
     transform: rotate(-90deg);
     transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
   }
-  .some-icon {
-    transition: all 0.5s ease;
-  }
-  .some-icon:hover {
-    fill: #c90c61;
-  }
   .spin-it {
     animation: rotation 2s infinite linear;
   }

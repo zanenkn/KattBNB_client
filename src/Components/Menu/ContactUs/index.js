@@ -6,8 +6,17 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
 import Spinner from '../../ReusableComponents/Spinner';
-import { Header, Whitebox, Text, TextField, TextArea, Container, Button, Notice, ContentWrapper } from '../../../UI-Components';
-import SoMeIcons from '../../ReusableComponents/SoMeIcons';
+import {
+  Header,
+  Whitebox,
+  Text,
+  TextField,
+  TextArea,
+  Container,
+  Button,
+  Notice,
+  ContentWrapper,
+} from '../../../UI-Components';
 //MIGRATED
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
@@ -148,7 +157,6 @@ const ContactUs = (props) => {
           {t('ContactUs:send-btn')}
         </Button>
       </Whitebox>
-      <SoMeIcons />
     </ContentWrapper>
   );
 };

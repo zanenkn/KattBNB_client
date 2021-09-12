@@ -4,7 +4,6 @@ import Spinner from '../../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
 import { Header, Text, Container, InlineLink, ContentWrapper } from '../../../UI-Components';
 import TeamMemberCard from './TeamMemberCard';
-import SoMeIcons from '../../ReusableComponents/SoMeIcons';
 //MIGRATED
 const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs');
@@ -111,7 +110,6 @@ const AboutUs = () => {
           </Trans>
         </Text>
       </Container>
-      <SoMeIcons />
     </ContentWrapper>
   );
 };

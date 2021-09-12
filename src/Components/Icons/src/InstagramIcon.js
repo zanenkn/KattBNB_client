@@ -1,14 +1,8 @@
-import React from 'react';
+import { colors, spacing } from '../constants';
 
-const InstagramIcon = (props) => {
+const InstagramIcon = ({ fill, height, tint }) => {
   return (
-    <svg
-      height={props.height}
-      fill={props.fill}
-      className={props.class}
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 1080 1080'
-    >
+    <svg fill={colors[fill][tint]} height={spacing[height]} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1080'>
       <g>
         <g>
           <path
@@ -60,3 +54,9 @@ const InstagramIcon = (props) => {
 };
 
 export default InstagramIcon;
+
+InstagramIcon.defaultProps = {
+  fill: 'neutral',
+  height: 4,
+  tint: 100,
+};

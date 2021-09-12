@@ -1,14 +1,8 @@
-import React from 'react';
+import { colors, spacing } from '../constants';
 
-const FacebookIcon = (props) => {
+const FacebookIcon = ({ fill, height, tint }) => {
   return (
-    <svg
-      height={props.height}
-      fill={props.fill}
-      className={props.class}
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 1080 1080'
-    >
+    <svg fill={colors[fill][tint]} height={spacing[height]} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1080'>
       <g>
         <path
           d='M540,0C242.24,0,0,242.24,0,540c0,297.75,242.24,540,540,540s540-242.25,540-540C1080,242.24,837.76,0,540,0z
@@ -65,3 +59,9 @@ const FacebookIcon = (props) => {
 };
 
 export default FacebookIcon;
+
+FacebookIcon.defaultProps = {
+  fill: 'neutral',
+  height: 4,
+  tint: 100,
+};

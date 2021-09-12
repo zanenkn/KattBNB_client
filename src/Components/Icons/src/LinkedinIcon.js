@@ -1,14 +1,8 @@
-import React from 'react';
+import { colors, spacing } from '../constants';
 
-const LinkedinIcon = (props) => {
+const LinkedinIcon = ({ fill, height, tint }) => {
   return (
-    <svg
-      height={props.height}
-      fill={props.fill}
-      className={props.class}
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='0 0 1080 1080'
-    >
+    <svg fill={colors[fill][tint]} height={spacing[height]} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1080'>
       <path d='M593.81,477.69h0.81v-1.2C594.38,476.9,594.03,477.3,593.81,477.69z' />
       <path
         d='M540,0C242.24,0,0,242.24,0,540s242.24,540,540,540s540-242.24,540-540S837.76,0,540,0z M404.95,782.75
@@ -25,3 +19,9 @@ const LinkedinIcon = (props) => {
 };
 
 export default LinkedinIcon;
+
+LinkedinIcon.defaultProps = {
+  fill: 'neutral',
+  height: 4,
+  tint: 100,
+};

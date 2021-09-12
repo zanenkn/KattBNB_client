@@ -5,10 +5,7 @@ import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import FacebookIcon from './Icons/FacebookIcon';
-import InstagramIcon from './Icons/InstagramIcon';
-import LinkedinIcon from './Icons/LinkedinIcon';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import FacebookIcon from './Icons/src/FacebookIcon';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {
