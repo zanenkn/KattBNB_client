@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { KattBNBMain, UserRound } from '../../Icons';
 import { Container, InlineLink, Text } from '../../../UI-Components';
 import { Nav, NavInnerWrap, MenuDivider } from '../styles';
-import { MenuItem, Submenu, SubmenuItem, ItemWrapper } from './styles';
+import { MenuItem, Submenu, SubmenuItem, ItemWrapper, MenuAvatar } from './styles';
 import LanguageSwitcher from '../../ReusableComponents/LanguageSwitcher';
 
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
@@ -71,20 +71,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
             </Submenu>
           </MenuItem>
           <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            {currentUserIn ? (
-              <img
-                src={avatar || noAvatar}
-                style={{
-                  height: '30px',
-                  width: '30px',
-                  padding: '1px',
-                  border: 'white solid 2px',
-                  borderRadius: '50%',
-                }}
-              ></img>
-            ) : (
-            <UserRound fill='white' height={6}/>
-            )}
+            {currentUserIn ? <MenuAvatar size='sm' src={avatar || noAvatar} /> : <UserRound fill='white' height={6} />}
             <Submenu>
               {currentUserIn ? (
                 <>

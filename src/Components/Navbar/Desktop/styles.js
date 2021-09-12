@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
-import { Text } from '../../../UI-Components';
+import { Avatar } from '../../../UI-Components';
 
 const { fontWeights, fontSize, colors, spacing } = theme;
 
@@ -88,4 +88,11 @@ export const SubmenuItem = styled.li`
   > a:hover {
     text-decoration: none;
   }
+`;
+
+export const MenuAvatar = styled(Avatar)`
+  padding: 1px;
+  border: white solid 2px;
+  box-sizing: border-box;
+  margin: 3px 0;
 `;
