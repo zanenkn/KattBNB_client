@@ -51,7 +51,8 @@
     "terms": "Användarvillkor",
     "partners": "Partners",
     "tips": "Tips",
-    "support": "Kundservice"
+    "support": "Kundservice",
+    "language": "Språk"
   },
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",

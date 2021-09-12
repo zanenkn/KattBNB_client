@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import { Flexbox } from '../../../UI-Components';
 
@@ -8,7 +8,11 @@ export const StyledFlexbox = styled(Flexbox)``;
 
 export const MainLabel = styled(Flexbox)`
   justify-content: start;
-  cursor: pointer;
+  ${({ isLink }) =>
+    isLink &&
+    css`
+      cursor: pointer;
+    `}
   > p {
     margin: 0 0 0 ${spacing[2]};
     font-weight: ${fontWeights.bold};

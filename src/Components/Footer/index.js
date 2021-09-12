@@ -77,7 +77,7 @@ const Footer = () => {
             </ul>
           </li>
           <li>
-            <LanguageSwitcher />
+            <LanguageSwitcher openByDefault color='white' label={t('reusable:navigation.language')} />
           </li>
         </ColumnGrid>
       </FooterInnerWrap>

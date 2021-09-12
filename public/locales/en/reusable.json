@@ -51,7 +51,8 @@
     "terms": "Terms & conditions",
     "partners": "Partners",
     "tips": "Tips",
-    "support": "Support"
+    "support": "Support",
+    "language": "Language"
   },
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",
