@@ -32,6 +32,23 @@
     "legal": "Användarvillkor",
     "area": "Välj ditt område:"
   },
+  "menu": {
+    "search": "Hitta kattvakt",
+    "about": "Om oss",
+    "about-kattbnb": "Om KattBNB",
+    "blog": "Blogg",
+    "contact": "Kontakta oss",
+    "login": "Logga in",
+    "signup": "Registrera konto",
+    "faq": "Frågor och svar",
+    "user-page": "Användarprofil",
+    "messages": "Meddelanden",
+    "bookings": "Bokningar",
+    "settings": "Inställningar",
+    "logout": "Logga ut",
+    "terms": "Användarvillkor",
+    "partners": "Partners"
+  },
   "errors": {
     "action-error-header": "Åtgärden kunde inte slutföras på grund av följande fel:",
     "update-number-fields": "Fältet är tomt, oförändrat eller så är numret ogiltigt!",

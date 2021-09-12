@@ -32,6 +32,23 @@
     "legal": "Terms & conditions",
     "area": "Choose your area:"
   },
+  "menu": {
+    "search": "Find a cat sitter",
+    "about": "About",
+    "about-kattbnb": "About KattBNB",
+    "blog": "Blog",
+    "contact": "Contact us",
+    "login": "Log in",
+    "signup": "Create account",
+    "faq": "FAQ",
+    "user-page": "User page",
+    "messages": "Messages",
+    "bookings": "Bookings",
+    "settings": "Settings",
+    "logout": "Log out",
+    "partners": "Partners",
+    "terms": "Terms & conditions"
+  },
   "errors": {
     "action-error-header": "Action could not be completed because of following error(s):",
     "update-number-fields": "The field is blank, unchanged or the number is invalid!",

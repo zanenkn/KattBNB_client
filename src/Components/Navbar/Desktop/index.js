@@ -45,27 +45,27 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
         <ItemWrapper>
           <MenuItem>
             <InlineLink as={Link} to='/search'>
-              Find a cat sitter
+              {t('reusable:menu.search')}
             </InlineLink>
           </MenuItem>
 
           <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            <Text>About</Text>
+            <Text>{t('reusable:menu.about')}</Text>
 
             <Submenu>
               <SubmenuItem>
                 <InlineLink as={Link} to='/about-us' onClick={() => setShowSubmenus(false)}>
-                  About KattBNB
+                  {t('reusable:menu.about-kattbnb')}
                 </InlineLink>
               </SubmenuItem>
               <SubmenuItem>
                 <InlineLink as={Link} to='/blog/all/1' onClick={() => setShowSubmenus(false)}>
-                  Blog
+                  {t('reusable:menu.blog')}
                 </InlineLink>
               </SubmenuItem>
               <SubmenuItem>
                 <InlineLink as={Link} to='/contact-us' onClick={() => setShowSubmenus(false)}>
-                  Contact us
+                  {t('reusable:menu.contact')}
                 </InlineLink>
               </SubmenuItem>
             </Submenu>
@@ -100,31 +100,31 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                 <>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/user-page' onClick={() => setShowSubmenus(false)}>
-                      User page
+                      {t('reusable:menu.user-page')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/all-bookings' onClick={() => setShowSubmenus(false)}>
-                      Bookings
+                      {t('reusable:menu.bookings')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/messages' onClick={() => setShowSubmenus(false)}>
-                      Messages
+                      {t('reusable:menu.messages')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/' onClick={() => setShowSubmenus(false)}>
-                      Settings
+                      {t('reusable:menu.settings')}
                     </InlineLink>
                   </SubmenuItem>
                   <MenuDivider />
                   <SubmenuItem>
-                    <InlineLink onClick={() => signOut()}>Log out</InlineLink>
+                    <InlineLink onClick={() => signOut()}>{t('reusable:menu.logout')}</InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      FAQ
+                      {t('reusable:menu.faq')}
                     </InlineLink>
                   </SubmenuItem>
                 </>
@@ -132,21 +132,22 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                 <>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
-                      Log in
+                      {t('reusable:menu.login')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
-                      Sign up
+                      {t('reusable:menu.signup')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      FAQ
+                      {t('reusable:menu.faq')}
                     </InlineLink>
                   </SubmenuItem>
                 </>
               )}
+              <MenuDivider />
               <LanguageSwitcher />
             </Submenu>
           </MenuItem>

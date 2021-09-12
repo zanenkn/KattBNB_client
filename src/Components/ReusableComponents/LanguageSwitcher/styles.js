@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
-import { Flexbox, Text } from '../../../UI-Components';
+import { Flexbox } from '../../../UI-Components';
 
 const { fontWeights, spacing } = theme;
 
 export const StyledFlexbox = styled(Flexbox)``;
 
 export const MainLabel = styled(Flexbox)`
+  justify-content: start;
   cursor: pointer;
   > p {
     margin: 0 0 0 ${spacing[2]};
@@ -22,6 +23,7 @@ export const Options = styled.div`
 `;
 
 export const Option = styled(Flexbox)`
+  justify-content: start;
   cursor: pointer;
   margin: ${spacing[4]} 0 0 0;
   > svg {
