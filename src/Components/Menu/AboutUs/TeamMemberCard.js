@@ -5,7 +5,7 @@ const TeamMemberCard = ({ img, link, name, title, text }) => {
   return (
     <Container space={7}>
       <Container>
-        <Avatar src={img} />
+        <Avatar centered src={img} />
       </Container>
       <Header level={5} space={0} color='primary' centered>
         <a href={link} target='_blank' rel='noopener noreferrer'>

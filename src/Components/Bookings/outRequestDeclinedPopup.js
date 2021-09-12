@@ -2,8 +2,8 @@ import React from 'react';
 import Spinner from '../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
-import { Header, Text } from '../../UI-Components';
-import { PopupHeaderWrapper, FlexWrapper, SmallAvatar } from './common/styles';
+import { Header, Text, Avatar } from '../../UI-Components';
+import { PopupHeaderWrapper, FlexWrapper } from './common/styles';
 // Completely MIGRATED
 
 const OutRequestDeclinedPopup = ({ open, onClose, startDate, endDate, avatar, nickname, message }) => {
@@ -26,7 +26,8 @@ const OutRequestDeclinedPopup = ({ open, onClose, startDate, endDate, avatar, ni
       </PopupHeaderWrapper>
 
       <FlexWrapper>
-        <SmallAvatar
+        <Avatar
+          size='sm'
           src={
             avatar === null
               ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`

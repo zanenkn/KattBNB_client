@@ -129,7 +129,7 @@ class AvatarUpdateForm extends Component {
 
     return (
       <AvatarUpdateFormWrapper onClick={this.props.closeAllForms}>
-        <Avatar src={this.props.avatar === null ? noAvatar : this.props.avatar} style={{ borderRadius: '50%' }} />
+        <Avatar centered src={this.props.avatar === null ? noAvatar : this.props.avatar} />
         <Popup
           modal
           className='avatar-popup'

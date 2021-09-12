@@ -17,6 +17,7 @@ export const MenuItem = styled.li`
   margin-left: ${({ icon }) => (icon ? spacing[7] : spacing[5])};
   margin-bottom: 0;
   position: relative;
+  line-height: 0;
 
   &:hover > ul {
     opacity: ${({ showSubmenus }) => (showSubmenus ? '1' : '0')};
@@ -35,6 +36,10 @@ export const MenuItem = styled.li`
   > a:hover {
     text-decoration: none;
     color: ${colors.white[100]};
+  }
+
+  > svg {
+    padding: 4px 0;
   }
 `;
 

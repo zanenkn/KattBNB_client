@@ -1,10 +1,17 @@
 import styled, { css } from 'styled-components';
+import { theme } from '../../../Styles/theme';
+
+const { spacing } = theme;
 
 export const StyledFlexbox = styled.div`
   display: flex;
   flex-direction: ${({ direction }) => direction};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  margin-bottom: ${({ space }) => spacing[space]};
+  > *:last-child {
+    margin-bottom: 0;
+  }
 
   ${({ direction, verticalAlign }) => {
     if (direction === 'row') {

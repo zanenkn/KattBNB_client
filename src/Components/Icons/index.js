@@ -19,6 +19,7 @@ export { default as RotateLeft } from './src/RotateLeft';
 export { default as RotateRight } from './src/RotateRight';
 export { default as Notification } from './src/Notification';
 export { default as User } from './src/User';
+export { default as UserRound } from './src/UserRound';
 export { default as Rate } from './src/Rate';
 export { default as Supplement } from './src/Supplement';
 export { default as TwitterSimple } from './src/TwitterSimple';

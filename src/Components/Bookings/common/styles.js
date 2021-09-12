@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
-import { ContentWrapper, Container, Avatar } from '../../../UI-Components';
+import { ContentWrapper, Container, Flexbox } from '../../../UI-Components';
 
 const { spacing, colors } = theme;
 
@@ -46,21 +46,20 @@ export const ScrollToTop = styled.div`
 
 export const PopupHeaderWrapper = styled.div`
   margin: -${spacing[6]} -${spacing[6]} ${spacing[6]};
-  background: ${colors.primary[100]}; 
+  background: ${colors.primary[100]};
   padding: ${spacing[6]};
   > :last-child {
     margin-bottom: 0;
   }
-`
-
-export const FlexWrapper = styled(Container)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 `;
 
-export const SmallAvatar = styled(Avatar)`
-  width: ${spacing[6]};
-  height: ${spacing[6]};
-  margin: 0 ${spacing[2]} 0 0;
-`
+export const FlexWrapper = styled(Flexbox)`
+  justify-content: start;
+  margin-bottom: ${spacing[4]};
+  > img {
+    margin: 0 ${spacing[2]} 0 0;
+  }
+  > h5 {
+    margin: 0;
+  }
+`;
