@@ -12,6 +12,7 @@ describe('User can log in and logout', () => {
   context('login', () => {
     it('succesfully', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
+      cy.get('[data-cy=user-avatar]').should('exist')
       cy.contains('You have succesfully logged in!').should('exist');
     });
 
@@ -25,6 +26,7 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
+      cy.get('[data-cy=user-avatar]').should('not.exist')
       cy.contains('Invalid login credentials. Please try again.').should('exist');
     });
 
@@ -38,6 +40,7 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
+      cy.get('[data-cy=user-avatar]').should('not.exist')
       cy.contains(`A confirmation email was sent to your account at ${email}.`).should('exist');
     });
   });
@@ -51,9 +54,10 @@ describe('User can log in and logout', () => {
         response: 'fixture:successful_signout.json',
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.get('.hamburger-box').click();
-      cy.get('#logout').click();
-      cy.contains('Welcome to KattBNB!').should('exist');
+
+      cy.get('[data-cy=log-out]').click({force: true})
+      cy.get('[data-cy=user-avatar]').should('not.exist')
+      cy.get('[data-cy=visitor-avatar]').should('exist')
     });
   });
 });

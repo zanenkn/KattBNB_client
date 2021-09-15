@@ -70,8 +70,8 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               </SubmenuItem>
             </Submenu>
           </MenuItem>
-          <MenuItem data-cy="user-menu" showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            {currentUserIn ? <MenuAvatar size='sm' src={avatar || noAvatar} /> : <UserRound fill='white' height={6} />}
+          <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
+            {currentUserIn ? <MenuAvatar data-cy="user-avatar" size='sm' src={avatar || noAvatar} /> : <UserRound data-cy="visitor-avatar" fill='white' height={6} />}
             <Submenu>
               {currentUserIn ? (
                 <>
@@ -97,7 +97,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                   <Divider />
                   <SubmenuItem>
-                    <InlineLink onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
+                    <InlineLink data-cy="log-out" onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
@@ -108,7 +108,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               ) : (
                 <>
                   <SubmenuItem>
-                    <InlineLink as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink data-cy="go-to-login" as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.login')}
                     </InlineLink>
                   </SubmenuItem>
