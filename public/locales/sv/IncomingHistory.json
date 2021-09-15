@@ -1,6 +1,6 @@
 {
-  "main-title": "<0>Du har {{count}} tidigare bokning.</0>",
-  "main-title_plural": "<0>Du har {{count}} tidigare bokningar.</0>",
+  "main-title": "Du har {{count}} tidigare bokning.",
+  "main-title_plural": "Du har {{count}} tidigare bokningar.",
   "declined-request": "AVSLAGEN FÖRFRÅGAN",
   "declined-desc": "Du avslog en bokningsförfrågan från <1>{{nickname}}</1> för deras <3>{{count}} katt</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",
   "declined-desc_plural": "Du avslog en bokningsförfrågan från <1>{{nickname}}</1> för deras <3>{{count}} katter</3> under datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",

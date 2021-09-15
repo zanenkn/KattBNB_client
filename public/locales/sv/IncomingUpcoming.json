@@ -1,6 +1,6 @@
 {
-  "main-title": "<0>Du har {{count}} kommande bokning.</0>",
-  "main-title_plural": "<0>Du har {{count}} kommande bokningar.</0>",
+  "main-title": "Du har {{count}} kommande bokning.",
+  "main-title_plural": "Du har {{count}} kommande bokningar.",
   "main-desc": "Detta är bekräftade kommande bokningar. Kontakta dessa kattägare för att organisera avlämning och upphämtning.",
   "booking-info": "Du har godkänt en vistelse för <3>{{count}} katt</3> tillhörande <1>{{nickname}}</1> för datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",
   "booking-info_plural": "Du har godkänt en vistelse för <3>{{count}} katter</3> tillhörande <1>{{nickname}}</1> för datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",

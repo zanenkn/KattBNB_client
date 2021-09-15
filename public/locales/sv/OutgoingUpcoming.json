@@ -1,6 +1,6 @@
 {
-  "main-header": "<0>Du har {{count}} kommande bokning.</0>",
-  "main-header_plural": "<0>Du har {{count}} kommande bokningar.</0>",
+  "main-header": "Du har {{count}} kommande bokning.",
+  "main-header_plural": "Du har {{count}} kommande bokningar.",
   "desc": "Detta är bekräftade kommande bokningar. Kontakta dessa kattvaktare för att organisera avlämning och upphämtning.",
   "upc-desc": "Du har bokat en vistelse med <1>{{nickname}}</1> för din <3>{{count}} katt</3> för datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",
   "upc-desc_plural": "Du har bokat en vistelse med <1>{{nickname}}</1> för dina <3>{{count}} katter</3> för datumen <5>{{startDate}}</5> till <7>{{endDate}}</7>.",

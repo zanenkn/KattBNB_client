@@ -1,6 +1,6 @@
 {
   "main-header": "You have made {{count}} booking request.",
-  "main-header_plural": "<0>You have made {{count}} booking requests.</0>",
+  "main-header_plural": "You have made {{count}} booking requests.",
   "desc": "These are requests to book you have made awaiting confirmation from host(s).",
   "req-desc": "You have requested to book a stay with <1>{{nickname}}</1> for your <3>{{count}} cat</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",
   "req-desc_plural": "You have requested to book a stay with <1>{{nickname}}</1> for your <3>{{count}} cats</3> during the dates of <5>{{startDate}}</5> until <7>{{endDate}}</7>.",

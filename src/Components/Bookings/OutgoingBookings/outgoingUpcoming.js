@@ -23,7 +23,7 @@ const OutgoingUpcoming = ({ bookings, history }) => {
     <>
       <Text centered bold space={2}>
         <Trans count={parseInt(bookings.length)} i18nKey='OutgoingUpcoming:main-header'>
-          <strong>You have {{ count: bookings.length }} upcoming booking.</strong>
+          You have {{ count: bookings.length }} upcoming booking.
         </Trans>
       </Text>
       <Text space={6} centered>
