@@ -8,12 +8,10 @@ Cypress.Commands.add('login', (fixture = {}, email, password, status) => {
       uid: email,
     },
   });
-  cy.visit('http://localhost:3000');
-  cy.get('.hamburger-box').click();
-  cy.get('#login').click();
-  cy.get('#login-form').within(() => {
-    cy.get('#email').type(email);
-    cy.get('#password').type(password);
+  cy.visit('http://localhost:3000/login');
+  cy.get('[data-cy=login-form]').within(() => {
+    cy.get('[data-cy=email]').type(email);
+    cy.get('[data-cy=password]').type(password);
   });
-  cy.get('.submit-button').click();
+  cy.get('[data-cy=log-in-button]').click();
 });

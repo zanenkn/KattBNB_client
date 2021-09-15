@@ -61,10 +61,10 @@ const Login = (props) => {
         {t('Login:title')}
       </Header>
 
-      <Whitebox>
+      <Whitebox data-cy="login-form">
         <TextField
           required
-          id='email'
+          data-cy='email'
           label={t('reusable:plch.email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -75,7 +75,7 @@ const Login = (props) => {
         <TextField
           space={2}
           required
-          id='password'
+          data-cy='password'
           type='password'
           label={t('reusable:plch.password')}
           value={password}
@@ -103,7 +103,7 @@ const Login = (props) => {
           </Notice>
         )}
 
-        <Button id='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()} space={8}>
+        <Button data-cy='log-in-button' disabled={loading} loading={loading} onClick={() => logInUser()} space={8}>
           {t('Login:title')}
         </Button>
 

@@ -70,7 +70,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               </SubmenuItem>
             </Submenu>
           </MenuItem>
-          <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
+          <MenuItem data-cy="user-menu" showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
             {currentUserIn ? <MenuAvatar size='sm' src={avatar || noAvatar} /> : <UserRound fill='white' height={6} />}
             <Submenu>
               {currentUserIn ? (

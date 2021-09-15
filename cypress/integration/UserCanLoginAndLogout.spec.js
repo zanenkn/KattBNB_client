@@ -12,7 +12,7 @@ describe('User can log in and logout', () => {
   context('login', () => {
     it('succesfully', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.contains('Welcome to KattBNB!').should('exist');
+      cy.contains('You have succesfully logged in!').should('exist');
     });
 
     it('unsuccessfuly with invalid credentials', () => {
