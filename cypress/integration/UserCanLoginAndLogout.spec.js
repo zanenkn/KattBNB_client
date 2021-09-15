@@ -47,11 +47,9 @@ describe('User can log in and logout', () => {
 
   context('logout', () => {
     it('successfully', () => {
-      cy.route({
-        method: 'DELETE',
-        url: 'http://localhost:3007/api/v1/auth/sign_out',
-        status: 200,
-        response: 'fixture:successful_signout.json',
+      cy.intercept('DELETE', 'http://localhost:3007/api/v1/auth/sign_out', {
+        statusCode: 200,
+        body: 'fixture:successful_signout.json',
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
 
