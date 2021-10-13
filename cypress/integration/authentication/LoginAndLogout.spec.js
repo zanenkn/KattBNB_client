@@ -56,7 +56,7 @@ describe('User can log in and logout', () => {
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
 
-      nav.goTo.logout();
+      nav.to.logout();
       nav.userAvatar().should('not.exist');
       nav.visitorAvatar().should('exist');
     });

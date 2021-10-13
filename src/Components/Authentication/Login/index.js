@@ -112,7 +112,7 @@ const Login = (props) => {
         </Text>
 
         <Text centered>
-          <InlineLink as={Link} to='sign-up' id='create-account' color='primary' disabled={successDisplay}>
+          <InlineLink as={Link} to='sign-up' data-cy='create-account' color='primary' disabled={successDisplay}>
             {t('Login:signup-link')}
           </InlineLink>
         </Text>

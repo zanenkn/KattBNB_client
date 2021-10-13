@@ -118,7 +118,7 @@ const SignUp = (props) => {
       <Whitebox>
         <TextField
           required
-          id='email'
+          data-cy='email'
           label={t('reusable:plch.email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -128,7 +128,7 @@ const SignUp = (props) => {
         />
         <TextField
           required
-          id='password'
+          data-cy='password'
           type='password'
           label={t('reusable:plch.password')}
           value={password}
@@ -139,7 +139,7 @@ const SignUp = (props) => {
         />
         <TextField
           required
-          id='passwordConfirmation'
+          data-cy='password-confirmation'
           type='password'
           label={t('reusable:plch.password-confirmation')}
           value={passwordConfirmation}
@@ -150,7 +150,7 @@ const SignUp = (props) => {
         />
         <TextField
           required
-          id='nickname'
+          data-cy='nickname'
           label={t('SignUp:nickname-plch')}
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
@@ -161,6 +161,7 @@ const SignUp = (props) => {
 
         <Dropdown
           space={6}
+          data-cy='location'
           data={LOCATION_OPTIONS}
           onChange={(val) => setLocation(val)}
           label={t('SignUp:location-plch')}
@@ -181,7 +182,7 @@ const SignUp = (props) => {
           autoComplete='off'
           required
           space={6}
-          id='userCaptcha'
+          data-cy='captcha'
           label={t('SignUp:captcha-label')}
           value={userCaptcha}
           onChange={(e) => setUserCaptcha(e.target.value)}
@@ -191,7 +192,7 @@ const SignUp = (props) => {
         />
 
         <FlexWrapper space={6}>
-          <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
+          <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} data-cy='tnc-toggle'/>
           <Text tint={termsAccepted ? 100 : 60}>
             <Trans i18nKey='SignUp:terms-label'>
               I accept the
@@ -203,7 +204,7 @@ const SignUp = (props) => {
         </FlexWrapper>
 
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice nature='danger' data-cy='signup-errors'>
             <Header level={5} centered>
               {t('SignUp:error-header')}
             </Header>
@@ -215,7 +216,7 @@ const SignUp = (props) => {
           </Notice>
         )}
 
-        <Button id='sign-up-button' onClick={() => createUser()} loading={loading} disabled={loading}>
+        <Button data-cy='signup-button' onClick={() => createUser()} loading={loading} disabled={loading}>
           {t('SignUp:title')}
         </Button>
       </Whitebox>

@@ -5,9 +5,9 @@ import { theme } from '../../../Styles/theme';
 
 const { colors } = theme;
 
-const Toggle = ({ checked, color, onClick }) => {
+const Toggle = ({ checked, color, onClick, ...rest }) => {
   return (
-    <Wrapper>
+    <Wrapper {...rest}>
       <Input id='checkbox' type='checkbox' checked={checked} color={color} onChange={onClick} />
       <Label htmlFor='checkbox' />
     </Wrapper>

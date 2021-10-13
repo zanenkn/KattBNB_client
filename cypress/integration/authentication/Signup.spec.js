@@ -1,3 +1,7 @@
+import nav from '../../pages/navigation';
+import login from '../../pages/login';
+import signup from '../../pages/signup';
+
 const api = 'http://localhost:3007/api/v1';
 
 function signupPostRequest(status, response) {
@@ -11,41 +15,51 @@ function signupPostRequest(status, response) {
 }
 
 describe('Visitor can sign up', () => {
+  beforeEach(() => {
+    nav.landing();
+    nav.to.login();
+    login.createAccountLink().click();
+  });
+
   it('and gets an error message if Terms & Conditions are not accepted', () => {
-    cy.visit('http://localhost:3000');
-    cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.get('#create-account').click();
-    cy.get('#signup-form').within(() => {
-      let text = [
-        ['#email', 'george@'],
-        ['#password', 'passWORD'],
-        ['#passwordConfirmation', 'passWORD'],
-        ['#nickname', 'KittenPrincess'],
-      ];
-      text.forEach((element) => {
-        cy.get(element[0]).type(element[1]);
-      });
-    });
-    cy.get('#sign-up-button').click();
-    cy.contains('You must accept the Terms and Conditions to continue!').should('exist');
+    signup.fields.email().type('george@');
+    signup.fields.password().type('passWORD');
+    signup.fields.passwordConfirmation().type('passWORD');
+    signup.fields.nickname().type('KittenPrincess');
+    signup.submit().click();
+
+    signup.errors().should('exist').and('include.text', 'You must accept the Terms and Conditions to continue!');
   });
 
   it('and gets error message if captcha is invalid', () => {
-    cy.get('.fitted > label').click();
-    cy.get('#sign-up-button').click();
-    cy.contains("You didn't input the captcha phrase correctly, please try again!").should('exist');
+    signup.fields.email().type('george@');
+    signup.fields.password().type('passWORD');
+    signup.fields.passwordConfirmation().type('passWORD');
+    signup.fields.nickname().type('KittenPrincess');
+    signup.fields.captcha().type('abc123');
+    signup.fields.tncToggle().click();
+    signup.submit().click();
+
+    signup
+      .errors()
+      .should('exist')
+      .and('include.text', "You didn't input the captcha phrase correctly, please try again!");
   });
 
   it('and gets error message cause password is invalid', () => {
-    cy.get('#cypress-captcha').then((span) => {
-      const cap = span.text();
-      cy.get('#userCaptcha').type(cap);
-    });
-    cy.get('#sign-up-button').click();
-    cy.contains(
-      'Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!'
-    ).should('exist');
+
+    signup.fields.email().type('george@');
+    signup.fields.password().type('passWORD');
+    signup.fields.passwordConfirmation().type('passWORD');
+    signup.fields.nickname().type('KittenPrincess');
+    signup.fillCaptcha()
+    signup.fields.tncToggle().click();
+    signup.submit().click();
+
+    signup
+      .errors()
+      .should('exist')
+      .and('include.text', "Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!");
   });
 
   it('and gets various error messages from API', () => {
