@@ -92,7 +92,7 @@ const Login = (props) => {
         </Text>
 
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice nature='danger' data-cy='login-errors'>
             <Text>{errors}</Text>
           </Notice>
         )}

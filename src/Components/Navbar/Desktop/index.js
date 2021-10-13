@@ -97,7 +97,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                   <Divider />
                   <SubmenuItem>
-                    <InlineLink data-cy="log-out" onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
+                    <InlineLink data-cy="nav-logout" onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
@@ -108,7 +108,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               ) : (
                 <>
                   <SubmenuItem>
-                    <InlineLink data-cy="go-to-login" as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink data-cy="nav-login" as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.login')}
                     </InlineLink>
                   </SubmenuItem>

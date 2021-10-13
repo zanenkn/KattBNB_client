@@ -1,3 +1,6 @@
+import nav from '../../pages/navigation';
+import login from '../../pages/login';
+
 const email = 'george@mail.com';
 const errors = {
   credentials: 'Invalid login credentials. Please try again.',
@@ -9,11 +12,11 @@ describe('User can log in and logout', () => {
   beforeEach(() => {
     cy.server();
   });
+
   context('login', () => {
     it('succesfully', () => {
       cy.login('fixture:successful_login.json', email, 'password', 200);
-      cy.get('[data-cy=user-avatar]').should('exist')
-      cy.contains('You have succesfully logged in!').should('exist');
+      nav.userAvatar().should('exist');
     });
 
     it('unsuccessfuly with invalid credentials', () => {
@@ -26,8 +29,8 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
-      cy.get('[data-cy=user-avatar]').should('not.exist')
-      cy.contains('Invalid login credentials. Please try again.').should('exist');
+      nav.userAvatar().should('not.exist');
+      login.error().should('exist').and('have.text', errors.credentials);
     });
 
     it('unsuccessfuly cause of unconfirmed email address', () => {
@@ -40,8 +43,8 @@ describe('User can log in and logout', () => {
         'wrongpassword',
         401
       );
-      cy.get('[data-cy=user-avatar]').should('not.exist')
-      cy.contains(`A confirmation email was sent to your account at ${email}.`).should('exist');
+      nav.userAvatar().should('not.exist');
+      login.error().should('exist').and('have.text', errors.confirmation);
     });
   });
 
@@ -53,9 +56,9 @@ describe('User can log in and logout', () => {
       });
       cy.login('fixture:successful_login.json', email, 'password', 200);
 
-      cy.get('[data-cy=log-out]').click({force: true})
-      cy.get('[data-cy=user-avatar]').should('not.exist')
-      cy.get('[data-cy=visitor-avatar]').should('exist')
+      nav.goTo.logout();
+      nav.userAvatar().should('not.exist');
+      nav.visitorAvatar().should('exist');
     });
   });
 });
