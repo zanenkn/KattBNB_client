@@ -161,7 +161,7 @@ const SignUp = (props) => {
 
         <Dropdown
           space={6}
-          data-cy='location'
+          id='location'
           data={LOCATION_OPTIONS}
           onChange={(val) => setLocation(val)}
           label={t('SignUp:location-plch')}

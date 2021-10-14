@@ -22,7 +22,7 @@ describe('Visitor can sign up', () => {
   });
 
   it('and gets an error message if Terms & Conditions are not accepted', () => {
-    signup.fields.email().type('george@');
+    signup.fields.email().type('george@mail.com');
     signup.fields.password().type('passWORD');
     signup.fields.passwordConfirmation().type('passWORD');
     signup.fields.nickname().type('KittenPrincess');
@@ -32,7 +32,7 @@ describe('Visitor can sign up', () => {
   });
 
   it('and gets error message if captcha is invalid', () => {
-    signup.fields.email().type('george@');
+    signup.fields.email().type('george@mail.com');
     signup.fields.password().type('passWORD');
     signup.fields.passwordConfirmation().type('passWORD');
     signup.fields.nickname().type('KittenPrincess');
@@ -48,10 +48,46 @@ describe('Visitor can sign up', () => {
 
   it('and gets error message cause password is invalid', () => {
 
-    signup.fields.email().type('george@');
+    signup.fields.email().type('george@mail.com');
     signup.fields.password().type('passWORD');
     signup.fields.passwordConfirmation().type('passWORD');
     signup.fields.nickname().type('KittenPrincess');
+    signup.fillCaptcha()
+    signup.fields.tncToggle().click();
+    signup.submit().click();
+
+    signup
+      .errors()
+      .should('exist')
+      .and('include.text', "Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!");
+  });
+
+  it('backend error: non matching password', () => {
+    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
+    signup.fields.email().type('george@mail.com');
+    signup.fields.password().type('passWORD1');
+    signup.fields.passwordConfirmation().type('somethingElse2');
+    signup.fields.nickname().type('KittenPrincess');
+    signup.fields.location().click()
+    signup.fields.locationOption('Alvesta').click()
+    signup.fillCaptcha()
+    signup.fields.tncToggle().click();
+    signup.submit().click();
+
+    signup
+      .errors()
+      .should('exist')
+      .and('include.text', "Password confirmation doesn't match Password");
+  });
+
+  it('backend error: invalid password', () => {
+    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
+    signup.fields.email().type('george@mail.com');
+    signup.fields.password().type('passWORD');
+    signup.fields.passwordConfirmation().type('passWORD');
+    signup.fields.nickname().type('KittenPrincess');
+    signup.fields.location().click()
+    signup.fields.locationOption('Alvesta').click()
     signup.fillCaptcha()
     signup.fields.tncToggle().click();
     signup.submit().click();

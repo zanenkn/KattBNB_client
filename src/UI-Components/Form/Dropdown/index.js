@@ -15,7 +15,7 @@ import { theme } from '../../../Styles/theme';
 
 const { colors } = theme;
 
-const AutocompleteDropdown = ({ data, onChange, space, label }) => {
+const AutocompleteDropdown = ({ data, onChange, space, label, id }) => {
   const [search, setSearch] = useState({
     text: '',
     suggestions: data,
@@ -72,7 +72,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label }) => {
           {label}
         </Label>
       )}
-      <div style={{width: '100%'}}>
+      <div style={{width: '100%'}} data-cy={`${id}-dropdown`}>
         <Input
           ref={input}
           autoComplete='off'
@@ -90,7 +90,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label }) => {
       {suggestions.length > 0 && suggestionsDisplayed && (
         <DropdownContainer>
           {suggestions.map((item) => (
-            <DropdownOption key={item.code}>
+            <DropdownOption key={item.code} data-cy={`${id}-option-${item.name}`}>
               <DropdownOptionButton key={item.code} onClick={() => suggestionSelected(item)}>
                 {item.name}
               </DropdownOptionButton>

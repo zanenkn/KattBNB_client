@@ -4,7 +4,8 @@ class Signup {
     password: () => cy.get('[data-cy=password]'),
     passwordConfirmation: () => cy.get('[data-cy=password-confirmation]'),
     nickname: () => cy.get('[data-cy=nickname]'),
-    location: () => cy.get('[data-cy=location]'),
+    location: () => cy.get('[data-cy=location-dropdown]'),
+    locationOption: (opt) => cy.get(`[data-cy=location-option-${opt}]`),
     captcha: () => cy.get('[data-cy=captcha]'),
     tncToggle: () => cy.get('[data-cy=tnc-toggle]')
   }
