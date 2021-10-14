@@ -14,122 +14,117 @@ function signupPostRequest(status, response) {
   });
 }
 
-describe('Visitor can sign up', () => {
-  beforeEach(() => {
+describe('Signup', () => {
+  describe('unsuccessful', () => {
+    beforeEach(() => {
+      nav.landing();
+      nav.to.login();
+      login.createAccountLink().click();
+    });
+
+    it('with error: Terms & Conditions are not accepted', () => {
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD');
+      signup.fields.passwordConfirmation().type('passWORD');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', 'You must accept the Terms and Conditions to continue!');
+    });
+
+    it('with error: captcha invalid', () => {
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD');
+      signup.fields.passwordConfirmation().type('passWORD');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.captcha().type('abc123');
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup
+        .errors()
+        .should('exist')
+        .and('include.text', "You didn't input the captcha phrase correctly, please try again!");
+    });
+
+    it('with error: invalid password', () => {
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD');
+      signup.fields.passwordConfirmation().type('passWORD');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup
+        .errors()
+        .should('exist')
+        .and(
+          'include.text',
+          'Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!'
+        );
+    });
+
+    it('with backend error: non matching password', () => {
+      signupPostRequest(422, 'fixture:signup/unsuccessful_no_match_password.json');
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('somethingElse2');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', "Password confirmation doesn't match Password");
+    });
+
+    it('with backend error: invalid email', () => {
+      signupPostRequest(422, 'fixture:signup/unsuccessful_invalid_email.json');
+      signup.fields.email().type('george@mail');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('passWORD1');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', 'Email is not an email');
+    });
+
+    it('with backend error: no location', () => {
+      signupPostRequest(422, 'fixture:signup/unsuccessful_no_location.json');
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('passWORD1');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', "Location can't be blank");
+    });
+  });
+
+  it('succesful', () => {
     nav.landing();
-    nav.to.login();
-    login.createAccountLink().click();
-  });
-
-  it('and gets an error message if Terms & Conditions are not accepted', () => {
-    signup.fields.email().type('george@mail.com');
-    signup.fields.password().type('passWORD');
-    signup.fields.passwordConfirmation().type('passWORD');
-    signup.fields.nickname().type('KittenPrincess');
-    signup.submit().click();
-
-    signup.errors().should('exist').and('include.text', 'You must accept the Terms and Conditions to continue!');
-  });
-
-  it('and gets error message if captcha is invalid', () => {
-    signup.fields.email().type('george@mail.com');
-    signup.fields.password().type('passWORD');
-    signup.fields.passwordConfirmation().type('passWORD');
-    signup.fields.nickname().type('KittenPrincess');
-    signup.fields.captcha().type('abc123');
-    signup.fields.tncToggle().click();
-    signup.submit().click();
-
-    signup
-      .errors()
-      .should('exist')
-      .and('include.text', "You didn't input the captcha phrase correctly, please try again!");
-  });
-
-  it('and gets error message cause password is invalid', () => {
-
-    signup.fields.email().type('george@mail.com');
-    signup.fields.password().type('passWORD');
-    signup.fields.passwordConfirmation().type('passWORD');
-    signup.fields.nickname().type('KittenPrincess');
-    signup.fillCaptcha()
-    signup.fields.tncToggle().click();
-    signup.submit().click();
-
-    signup
-      .errors()
-      .should('exist')
-      .and('include.text', "Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!");
-  });
-
-  it('backend error: non matching password', () => {
-    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
-    signup.fields.email().type('george@mail.com');
+    nav.to.signup();
+    signupPostRequest(200, 'fixture:signup/successful.json');
+    signup.fields.email().type('zane@mail.com');
     signup.fields.password().type('passWORD1');
-    signup.fields.passwordConfirmation().type('somethingElse2');
+    signup.fields.passwordConfirmation().type('passWORD1');
     signup.fields.nickname().type('KittenPrincess');
-    signup.fields.location().click()
-    signup.fields.locationOption('Alvesta').click()
-    signup.fillCaptcha()
+    signup.fields.location().click();
+    signup.fields.locationOption('Alvesta').click();
+    signup.fillCaptcha();
     signup.fields.tncToggle().click();
     signup.submit().click();
 
-    signup
-      .errors()
-      .should('exist')
-      .and('include.text', "Password confirmation doesn't match Password");
-  });
-
-  it('backend error: invalid password', () => {
-    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
-    signup.fields.email().type('george@mail.com');
-    signup.fields.password().type('passWORD');
-    signup.fields.passwordConfirmation().type('passWORD');
-    signup.fields.nickname().type('KittenPrincess');
-    signup.fields.location().click()
-    signup.fields.locationOption('Alvesta').click()
-    signup.fillCaptcha()
-    signup.fields.tncToggle().click();
-    signup.submit().click();
-
-    signup
-      .errors()
-      .should('exist')
-      .and('include.text', "Password must be between 6 to 20 characters and must contain at least one numeric digit, one uppercase and one lowercase letter!");
-  });
-
-  it('and gets various error messages from API', () => {
-    signupPostRequest(422, 'fixture:unsuccessful_signup.json');
-    let text = [
-      ['#password', 'Am@zing-paSS1'],
-      ['#passwordConfirmation', 'Am@zing-paSs1'],
-    ];
-    text.forEach((element) => {
-      cy.get(element[0]).clear().type(element[1]);
-    });
-    cy.get('#sign-up-button').click();
-    cy.contains("Password confirmation doesn't match Password").should('exist');
-    cy.contains('Email is not an email').should('exist');
-    cy.contains("Location can't be blank").should('exist');
-  });
-
-  it('successfully', () => {
-    signupPostRequest(200, 'fixture:successful_signup.json');
-    cy.get('#signup-form').within(() => {
-      let text = [
-        ['#email', 'zane@mail.com'],
-        ['#password', 'Am@zing-pass12'],
-        ['#passwordConfirmation', 'Am@zing-pass12'],
-        ['#nickname', 'KittenPrincess'],
-      ];
-      text.forEach((element) => {
-        cy.get(element[0]).clear().type(element[1]);
-      });
-    });
-    cy.get('.dropdown:nth-child(3)').click();
-    cy.get('.item:nth-child(2)').click();
-    cy.get('#sign-up-button').click();
     cy.location('pathname').should('eq', '/signup-success');
-    cy.contains('Almost done!').should('exist');
   });
 });

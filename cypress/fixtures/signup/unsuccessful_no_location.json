@@ -13,13 +13,8 @@
     "updated_at": null
   },
   "errors": {
-    "password_confirmation": ["doesn't match Password"],
-    "password": ["is too short (minimum is 6 characters)"],
-    "email": ["is not an email"],
     "location": ["can't be blank"],
     "full_messages": [
-      "Password confirmation doesn't match Password",
-      "Email is not an email",
       "Location can't be blank"
     ]
   }

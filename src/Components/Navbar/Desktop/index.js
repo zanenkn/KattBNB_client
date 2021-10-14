@@ -71,7 +71,11 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
             </Submenu>
           </MenuItem>
           <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            {currentUserIn ? <MenuAvatar data-cy="user-avatar" size='sm' src={avatar || noAvatar} /> : <UserRound data-cy="visitor-avatar" fill='white' height={6} />}
+            {currentUserIn ? (
+              <MenuAvatar data-cy='user-avatar' size='sm' src={avatar || noAvatar} />
+            ) : (
+              <UserRound data-cy='visitor-avatar' fill='white' height={6} />
+            )}
             <Submenu>
               {currentUserIn ? (
                 <>
@@ -97,7 +101,9 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                   <Divider />
                   <SubmenuItem>
-                    <InlineLink data-cy="nav-logout" onClick={() => signOut()}>{t('reusable:navigation.logout')}</InlineLink>
+                    <InlineLink data-cy='nav-logout' onClick={() => signOut()}>
+                      {t('reusable:navigation.logout')}
+                    </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
                     <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
@@ -108,12 +114,12 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               ) : (
                 <>
                   <SubmenuItem>
-                    <InlineLink data-cy="nav-login" as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink data-cy='nav-login' as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.login')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
-                    <InlineLink as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink data-cy='nav-signup' as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.signup')}
                     </InlineLink>
                   </SubmenuItem>
