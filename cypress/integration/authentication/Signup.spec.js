@@ -6,16 +6,14 @@ const api = 'http://localhost:3007/api/v1';
 
 function signupPostRequest(status, response) {
   cy.server();
-  cy.route({
-    method: 'POST',
-    url: `${api}/auth`,
-    status: status,
-    response: response,
+  cy.intercept('POST', `${api}/auth`, {
+    statusCode: status,
+    fixture: response,
   });
 }
 
 describe('Signup', () => {
-  describe('unsuccessful', () => {
+  context('unsuccessful', () => {
     beforeEach(() => {
       nav.landing();
       nav.to.login();
@@ -68,7 +66,7 @@ describe('Signup', () => {
     });
 
     it('with backend error: non matching password', () => {
-      signupPostRequest(422, 'fixture:signup/unsuccessful_no_match_password.json');
+      signupPostRequest(422, 'signup/unsuccessful_no_match_password.json');
       signup.fields.email().type('george@mail.com');
       signup.fields.password().type('passWORD1');
       signup.fields.passwordConfirmation().type('somethingElse2');
@@ -83,7 +81,7 @@ describe('Signup', () => {
     });
 
     it('with backend error: invalid email', () => {
-      signupPostRequest(422, 'fixture:signup/unsuccessful_invalid_email.json');
+      signupPostRequest(422, 'signup/unsuccessful_invalid_email.json');
       signup.fields.email().type('george@mail');
       signup.fields.password().type('passWORD1');
       signup.fields.passwordConfirmation().type('passWORD1');
@@ -98,7 +96,7 @@ describe('Signup', () => {
     });
 
     it('with backend error: no location', () => {
-      signupPostRequest(422, 'fixture:signup/unsuccessful_no_location.json');
+      signupPostRequest(422, 'signup/unsuccessful_no_location.json');
       signup.fields.email().type('george@mail.com');
       signup.fields.password().type('passWORD1');
       signup.fields.passwordConfirmation().type('passWORD1');
@@ -111,20 +109,22 @@ describe('Signup', () => {
     });
   });
 
-  it('succesful', () => {
-    nav.landing();
-    nav.to.signup();
-    signupPostRequest(200, 'fixture:signup/successful.json');
-    signup.fields.email().type('zane@mail.com');
-    signup.fields.password().type('passWORD1');
-    signup.fields.passwordConfirmation().type('passWORD1');
-    signup.fields.nickname().type('KittenPrincess');
-    signup.fields.location().click();
-    signup.fields.locationOption('Alvesta').click();
-    signup.fillCaptcha();
-    signup.fields.tncToggle().click();
-    signup.submit().click();
+  context('succesful', () => {
+    it('no errors', () => {
+      nav.landing();
+      nav.to.signup();
+      signupPostRequest(200, 'signup/successful.json');
+      signup.fields.email().type('zane@mail.com');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('passWORD1');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
 
-    cy.location('pathname').should('eq', '/signup-success');
+      cy.location('pathname').should('eq', '/signup-success');
+    });
   });
 });

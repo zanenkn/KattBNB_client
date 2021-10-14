@@ -1,48 +1,30 @@
 import nav from '../../pages/navigation';
 import login from '../../pages/login';
 
-const email = 'george@mail.com';
 const errors = {
   credentials: 'Invalid login credentials. Please try again.',
-  confirmation: `A confirmation email was sent to your account at ${email}. 
-                You must follow the instructions in the email before your account can be activated`,
+  confirmation: 'A confirmation email was sent to your account at george@mail.com. You must follow the instructions in the email before your account can be activated',
 };
 
-describe('User can log in and logout', () => {
+describe('Login and logout', () => {
   beforeEach(() => {
     cy.server();
   });
 
   context('login', () => {
     it('succesfully', () => {
-      cy.login('fixture:successful_login.json', email, 'password', 200);
+      cy.login('login/successful.json', 'george@mail.com', 'password', 200);
       nav.userAvatar().should('exist');
     });
 
     it('unsuccessfuly with invalid credentials', () => {
-      cy.login(
-        {
-          success: false,
-          errors: [errors.credentials],
-        },
-        email,
-        'wrongpassword',
-        401
-      );
+      cy.login('login/unsuccesful_invalid_credentials.json', 'george@mail.com', 'wrongpassword', 401);
       nav.userAvatar().should('not.exist');
       login.error().should('exist').and('have.text', errors.credentials);
     });
 
     it('unsuccessfuly cause of unconfirmed email address', () => {
-      cy.login(
-        {
-          success: false,
-          errors: [errors.confirmation],
-        },
-        email,
-        'wrongpassword',
-        401
-      );
+      cy.login('login/unsuccessful_unconfirmed_email.json', 'george@mail.com', 'wrongpassword', 401);
       nav.userAvatar().should('not.exist');
       login.error().should('exist').and('have.text', errors.confirmation);
     });
@@ -54,8 +36,8 @@ describe('User can log in and logout', () => {
         statusCode: 200,
         body: 'fixture:successful_signout.json',
       });
-      cy.login('fixture:successful_login.json', email, 'password', 200);
 
+      cy.login('login/successful.json', 'george@mail.com', 'password', 200);
       nav.to.logout();
       nav.userAvatar().should('not.exist');
       nav.visitorAvatar().should('exist');

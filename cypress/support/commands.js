@@ -1,12 +1,11 @@
-Cypress.Commands.add('login', (fixture = {}, email, password, status) => {
-  cy.route({
-    method: 'POST',
-    url: 'http://localhost:3007/api/v1/auth/sign_in',
-    status: status,
-    response: fixture,
+Cypress.Commands.add('login', (response = {}, email, password, status) => {
+  cy.server();
+  cy.intercept('POST', 'http://localhost:3007/api/v1/auth/sign_in', {
+    statusCode: status,
+    fixture: response,
     headers: {
       uid: email,
-    },
+    }
   });
   cy.visit('http://localhost:3000');
   cy.get('[data-cy=nav-login]').click({force: true})
