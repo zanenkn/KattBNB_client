@@ -1,11 +1,12 @@
+import nav from '../../pages/navigation';
+import bookings from '../../pages/bookings';
+
 const api = 'http://localhost:3007/api/v1';
 
 function stripeCall(id) {
-  cy.route({
-    method: 'GET',
-    url: `${api}/stripe?locale=en-US&host_profile_id=${id}&occasion=retrieve`,
-    status: 200,
-    response: 'fixture:stripe_verification_no_errors',
+  cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${id}&occasion=retrieve`, {
+    statusCode: 200,
+    fixture: 'stripe_verification_no_errors',
   });
 }
 
@@ -14,31 +15,28 @@ function bookingDisplayOrder(element, text1, text2) {
   cy.get(element).last().should('include.text', text2);
 }
 
-describe('User can view their incoming bookings', () => {
-  before(() => {
+describe('Incoming bookings', () => {
+  beforeEach(() => {
     cy.server();
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:all_host_bookings.json',
+    cy.intercept('GET', `${api}/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`, {
+      statusCode: 200,
+      fixture: 'bookings/all_host_bookings.json',
     });
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-      status: 200,
-      response: 'fixture:booking_stats.json',
+    cy.intercept('GET', `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`, {
+      statusCode: 200,
+      fixture: 'bookings/booking_stats.json',
     });
     stripeCall(10);
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
-    cy.get('#view-incoming-bookings').click();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+
+    nav.to.bookings();
+    bookings.all.ctaToIncoming().click()
   });
 
-  it('and see correct stats of bookings', () => {
-    cy.get('[data-cy=incoming-upcoming]').should('have.length', 2);
-    cy.get('[data-cy=incoming-requests]').should('have.length', 2);
-    cy.get('[data-cy=incoming-history]').should('have.length', 5);
+  it('displays correct amount of bookings', () => {
+    bookings.incoming.upcomingBooking().should('have.length', 2);
+    //bookings.incoming.bookingRequest.should('have.length', 2)
+    bookings.incoming.pastBooking().should('have.length', 5);
   });
 
   it('and see upcoming bookings displayed in correct chronological order', () => {
@@ -57,12 +55,12 @@ describe('User can view their incoming bookings', () => {
     );
   });
 
-  it('and see history bookings displayed in correct chronological order', () => {
-    bookingDisplayOrder(
-      '[data-cy=incoming-history]',
-      "You hosted AcceptedOfThePast's cat(s) during the dates of 2019-11-26 until 2019-11-19.",
-      'A booking request from Canceled1 for their 1 cat during the dates of 2051-08-03 until 2051-08-08 got canceled due to no answer from you within 3 days time.'
-    );
+  it.only('displays history bookings sorted chronologically', () => {
+    bookings.incoming.getPastBooking(0).should('have.id', '6')
+    bookings.incoming.getPastBooking(1).should('have.id', '5')
+    bookings.incoming.getPastBooking(2).should('have.id', '9')
+    bookings.incoming.getPastBooking(3).should('have.id', '4')
+    bookings.incoming.getPastBooking(4).should('have.id', '13')
   });
 
   it('and see the message left by the user when they click the relevant link of a requested booking', () => {

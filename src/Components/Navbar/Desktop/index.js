@@ -85,7 +85,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
-                    <InlineLink as={Link} to='/all-bookings' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink data-cy='nav-bookings' as={Link} to='/all-bookings' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.bookings')}
                     </InlineLink>
                   </SubmenuItem>

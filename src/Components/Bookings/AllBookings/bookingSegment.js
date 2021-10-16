@@ -13,12 +13,12 @@ const BookingSegment = ({ id, header, stats, text, cta, ctaAction, ctaIsButton }
       <Section>
         <Text centered space={5}>{text}</Text>
         {ctaIsButton ? (
-          <Button onClick={() => ctaAction()} id={`view-${id}`}>
+          <Button onClick={() => ctaAction()} data-cy={`view-${id}`}>
             {cta}
           </Button>
         ) : (
           <Text centered>
-            <InlineLink onClick={() => ctaAction()} id={`view-${id}`}>
+            <InlineLink onClick={() => ctaAction()} data-cy={`view-${id}`}>
               {cta}
             </InlineLink>
           </Text>

@@ -159,7 +159,7 @@ const IncomingBookings = ({ location: { state } }) => {
           <IncomingHistory
             bookings={incomingBookings
               .filter((booking) => booking.dates[booking.dates.length - 1] < today)
-              .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
+              .sort((a, b) => new Date(b.dates[0]).getTime() - new Date(a.dates[0]).getTime())}
           />
         </SectionWrapper>
         <ScrollToTop onClick={scrollToTop} show={scrollYPosition > 200}>
