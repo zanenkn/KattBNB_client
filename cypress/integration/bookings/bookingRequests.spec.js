@@ -56,8 +56,8 @@ describe('User can answer booking request', () => {
       response: 'fixture:stripe_verification_no_errors',
     });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.bookings()
-    bookings.all.ctaToIncoming().click()
+    nav.to.bookings();
+    bookings.all.ctaToIncoming().click();
   });
 
   it('and successfully accept', () => {
@@ -117,8 +117,8 @@ describe('User encounters error when accepting a booking request', () => {
       response: 'fixture:stripe_verification_no_errors',
     });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.bookings()
-    bookings.all.ctaToIncoming().click()
+    nav.to.bookings();
+    bookings.all.ctaToIncoming().click();
     cy.get('#accept-2').click();
     cy.on('window:alert', (str) => {
       expect(str).to.equal(
@@ -134,8 +134,7 @@ describe('User cannot accept booking requests', () => {
     cy.server();
     updateBooking();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.bookings()
-    
+    nav.to.bookings();
   });
 
   it('if no stripe information is provided', () => {
@@ -145,7 +144,7 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: { message: 'No account' },
     });
-    bookings.all.ctaToIncoming().click()
+    bookings.all.ctaToIncoming().click();
     cy.get('[style="text-align: center; margin: 2rem 0px;"]')
       .invoke('text')
       .then((text) => {
@@ -161,7 +160,7 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: 'fixture:stripe_pending_verification.json',
     });
-    bookings.all.ctaToIncoming().click()
+    bookings.all.ctaToIncoming().click();
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
       'include.text',
       'Your verification is pending, please check back later.'
@@ -177,7 +176,7 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: 'fixture:stripe_verification_errors.json',
     });
-    bookings.all.ctaToIncoming().click()
+    bookings.all.ctaToIncoming().click();
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
       'include.text',
       'You have entered your payment information but are not yet verified with'

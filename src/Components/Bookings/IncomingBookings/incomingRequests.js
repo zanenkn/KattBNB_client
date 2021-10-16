@@ -251,7 +251,7 @@ const IncomingRequests = ({ history, requests }) => {
       )}
 
       {requests.map((request) => (
-        <div className='booking-request' data-cy='incoming-requests' key={request.id}>
+        <div data-cy='incoming-request' key={request.id} id={request.id}>
           <Text></Text>
           {formatPrice(request.price_total)} kr
           <Text>

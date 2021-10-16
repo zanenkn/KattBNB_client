@@ -10,11 +10,6 @@ function stripeCall(id) {
   });
 }
 
-function bookingDisplayOrder(element, text1, text2) {
-  cy.get(element).first().should('include.text', text1);
-  cy.get(element).last().should('include.text', text2);
-}
-
 describe('Incoming bookings', () => {
   beforeEach(() => {
     cy.server();
@@ -30,37 +25,34 @@ describe('Incoming bookings', () => {
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
 
     nav.to.bookings();
-    bookings.all.ctaToIncoming().click()
+    bookings.all.ctaToIncoming().click();
   });
 
   it('displays correct amount of bookings', () => {
     bookings.incoming.upcomingBooking().should('have.length', 2);
-    //bookings.incoming.bookingRequest.should('have.length', 2)
+    bookings.incoming.bookingRequest().should('have.length', 2);
     bookings.incoming.pastBooking().should('have.length', 5);
   });
 
-  it('and see upcoming bookings displayed in correct chronological order', () => {
-    bookingDisplayOrder(
-      '[data-cy=incoming-upcoming]',
-      "You have approved a stay for Accepted2's 1 cat for the dates of 2051-08-03 until 2051-08-07.",
-      "You have approved a stay for Accepted1's 1 cat for the dates of 2051-08-04 until 2051-08-08."
-    );
+  it('displays upcoming bookings in correct chronological order', () => {
+    // chronologically by booking start date - nearest upcoming first
+    bookings.incoming.getUpcomingBooking(0).should('have.id', '7');
+    bookings.incoming.getUpcomingBooking(1).should('have.id', '8');
   });
 
-  it('and see requested bookings displayed in correct chronological order', () => {
-    bookingDisplayOrder(
-      '[data-cy=incoming-requests]',
-      'Pending1 wants to book a stay for their 1 cat during the dates of 2051-08-04 until 2051-08-05.',
-      'Pending2 wants to book a stay for their 1 cat during the dates of 2051-08-04 until 2051-08-05.'
-    );
+  it.only('and see requested bookings displayed in correct chronological order', () => {
+    // chronologically by created_at date - latest first
+    bookings.incoming.getBookingRequest(0).should('have.id', '2');
+    bookings.incoming.getBookingRequest(1).should('have.id', '1');
   });
 
-  it.only('displays history bookings sorted chronologically', () => {
-    bookings.incoming.getPastBooking(0).should('have.id', '6')
-    bookings.incoming.getPastBooking(1).should('have.id', '5')
-    bookings.incoming.getPastBooking(2).should('have.id', '9')
-    bookings.incoming.getPastBooking(3).should('have.id', '4')
-    bookings.incoming.getPastBooking(4).should('have.id', '13')
+  it('displays history bookings sorted chronologically', () => {
+    // chronologically by booking start date - most recent first
+    bookings.incoming.getPastBooking(0).should('have.id', '6');
+    bookings.incoming.getPastBooking(1).should('have.id', '5');
+    bookings.incoming.getPastBooking(2).should('have.id', '9');
+    bookings.incoming.getPastBooking(3).should('have.id', '4');
+    bookings.incoming.getPastBooking(4).should('have.id', '13');
   });
 
   it('and see the message left by the user when they click the relevant link of a requested booking', () => {
