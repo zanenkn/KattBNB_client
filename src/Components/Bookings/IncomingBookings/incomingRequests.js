@@ -5,11 +5,12 @@ import Popup from 'reactjs-popup';
 import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 // import IncRequestPopup from '../IncRequestPopup';
-// import DeclineRequestPopup from '../DeclineRequestPopup';
+import DeclineRequestPopup from '../declineRequestPopup';
 import axios from 'axios';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
+import { Text, Notice, Button } from '../../../UI-Components';
 
 const IncomingRequests = ({ history, requests }) => {
   const { t, ready } = useTranslation('IncomingRequests');
@@ -23,6 +24,7 @@ const IncomingRequests = ({ history, requests }) => {
   const [stripeAccountID, setStripeAccountID] = useState('');
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
+  const [declinePopupOpen, setDeclinePopupOpen] = useState(false);
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
@@ -169,7 +171,160 @@ const IncomingRequests = ({ history, requests }) => {
       }
     }
   };
-  return <div>a</div>
+
+  const formatPrice = (price) => {
+    const priceWithDecimalsString = price.toFixed(2);
+    if (
+      priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' &&
+      priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0'
+    ) {
+      return parseFloat(priceWithDecimalsString);
+    } else {
+      return priceWithDecimalsString;
+    }
+  };
+
+  if (!ready || loading) return <Spinner />;
+
+  if (requests.length < 1) {
+    return (
+      <Text bold centered>
+        {t('IncomingRequests:no-requests')}
+      </Text>
+    );
+  }
+
+  return (
+    <>
+      <Text centered bold space={6}>
+        <Trans count={parseInt(requests.length)} i18nKey='IncomingRequests:requests-to-display'>
+          You have received {{ count: requests.length }} booking request.
+        </Trans>
+      </Text>
+      {errors.length > 0 && (
+        <Notice nature='danger'>
+          <Text bold centered size='sm'>
+            {t('IncomingRequests:main-header-error')}
+          </Text>
+          <ul id='message-error-list'>
+            {errors.map((error) => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Notice>
+      )}
+      {stripeAccountID === null ? (
+        <>
+          <p style={{ textAlign: 'center', margin: '2rem 0' }}>
+            <Trans i18nKey={'IncomingRequests:step-1-text'}>
+              You made a host profile but have not provided us with your payment information. Without that we cannot
+              transfer the money for your gigs! Please visit your&nbsp;
+              <Link to={'/user-page'}>
+                <span className='fake-link-underlined-reg'>profile page</span>
+              </Link>
+              &nbsp;to fix that.
+            </Trans>
+          </p>
+        </>
+      ) : (
+        stripeAccountErrors.length > 0 && (
+          <>
+            <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
+              {t('reusable:stripe:step-2-text')}&ensp;
+              {stripePendingVerification
+                ? t('reusable:stripe:step-2-pending')
+                : t('reusable:stripe:step-2-go-to-dashboard')}
+            </p>
+            {!stripePendingVerification && (
+              <Button
+                onClick={() => fetchStripeDashboardLink()}
+                loading={stripeDashboardButtonLoading}
+                disabled={stripeDashboardButtonLoading}
+                id='progress-bar-cta'
+                style={{ marginBottom: '2rem' }}
+              >
+                {t('reusable:stripe:stripe-dashboard-cta')}
+              </Button>
+            )}
+          </>
+        )
+      )}
+
+      {requests.map((request) => (
+        <div className='booking-request' data-cy='incoming-requests' key={request.id}>
+          <Text></Text>
+          {formatPrice(request.price_total)} kr
+          <Text>
+            <Trans i18nKey='IncomingRequests:must-reply'>
+              You must reply before
+              <strong>{{ date: moment(request.created_at).add(3, 'days').format('YYYY-MM-DD') }}</strong>
+            </Trans>
+          </Text>
+          <Text>
+            <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
+              <strong style={{ color: '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay
+              for their
+              <strong style={{ color: '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of
+              <strong style={{ color: '#c90c61' }}>
+                {{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}
+              </strong>
+              until
+              <strong style={{ color: '#c90c61' }}>
+                {{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}
+              </strong>
+              .
+            </Trans>
+            {payoutSuccess ? (
+              <>
+                <Button onClick={() => setDeclinePopupOpen(true)}>Decline</Button>
+                <Button onClick={(e) => acceptRequest(e, request)}>Accept</Button>
+              </>
+            ) : stripeAccountID === null ? (
+              <>
+                <p style={{ textAlign: 'center' }}>
+                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
+                    You made a host profile but have not provided us with your payment information. Without that we
+                    cannot transfer the money for your gigs! Please visit your&nbsp;
+                    <Link to={'/user-page'}>
+                      <span className='fake-link-underlined-reg'>profile page</span>
+                    </Link>
+                    &nbsp;to fix that.
+                  </Trans>
+                </p>
+              </>
+            ) : (
+              stripeAccountErrors.length > 0 && (
+                <>
+                  <p style={{ textAlign: 'center', fontSize: 'unset' }}>
+                    {t('reusable:stripe:step-2-text')}&ensp;
+                    {stripePendingVerification ? (
+                      t('reusable:stripe:step-2-pending')
+                    ) : (
+                      <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
+                        In order for you to accept a request, you should&nbsp;
+                        <span onClick={() => fetchStripeDashboardLink()} className='fake-link-underlined'>
+                          complete your verification
+                        </span>
+                        &nbsp;with our payment provider (Stripe).
+                      </Trans>
+                    )}
+                  </p>
+                </>
+              )
+            )}
+          </Text>
+          <DeclineRequestPopup
+            id={request.id}
+            nickname={request.user.nickname}
+            startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+            endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+            declModalCloseState={declModalCloseState}
+            open={declinePopupOpen}
+          />
+        </div>
+      ))}
+    </>
+  );
 
   // if (ready && loading === false) {
   //   let sortedRequests = requests;

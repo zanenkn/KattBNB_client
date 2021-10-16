@@ -4,8 +4,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import Popup from 'reactjs-popup';
+import { Header, Text } from '../../UI-Components';
+import { PopupHeaderWrapper } from './common/styles';
 
-const DeclineRequestPopup = (props) => {
+const DeclineRequestPopup = ({open, onClose, startDate, endDate, nickname, id, declModalCloseState }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');
 
   const [loading, setLoading] = useState(false);
@@ -19,11 +22,11 @@ const DeclineRequestPopup = (props) => {
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
-      props.declModalCloseState(true);
+      declModalCloseState(true);
     } else {
       if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
         if (message !== '' && message.length < 201) {
-          const path = `/api/v1/bookings/${props.id}`;
+          const path = `/api/v1/bookings/${id}`;
           const headers = {
             uid: window.localStorage.getItem('uid'),
             client: window.localStorage.getItem('client'),
@@ -45,34 +48,53 @@ const DeclineRequestPopup = (props) => {
               } else if (error.response.status === 500) {
                 setLoading(false);
                 setErrors(['reusable:errors:500']);
-                props.declModalCloseState(true);
+                declModalCloseState(true);
               } else if (error.response.status === 401) {
                 window.alert(t('reusable:errors:401'));
                 wipeCredentials('/');
               } else {
                 setLoading(false);
                 setErrors(error.response.data.error);
-                props.declModalCloseState(true);
+                declModalCloseState(true);
               }
             });
         } else {
           setLoading(false);
           setErrors(['DeclineRequestPopup:decline-error']);
-          props.declModalCloseState(true);
+          declModalCloseState(true);
         }
       } else {
         setLoading(false);
-        props.declModalCloseState(true);
+        declModalCloseState(true);
       }
     }
   };
 
   const declineCTA = (e) => {
-    props.declModalCloseState(false);
+    declModalCloseState(false);
     declineBooking(e);
   };
 
-  return <div>a</div>
+  if (!ready) return <Spinner />;
+
+  return (
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+      <PopupHeaderWrapper>
+        <Header level={3} color='white' space={2}>
+          {t('DeclineRequestPopup:page-header')}
+        </Header>
+      </PopupHeaderWrapper>
+
+      <Text>
+        something
+      </Text>
+    </Popup>
+  );
+
+
+
+
+
   // if (ready) {
   //   return (
   //     <>

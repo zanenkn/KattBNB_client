@@ -1,5 +1,8 @@
+import nav from '../../pages/navigation';
+import bookings from '../../pages/bookings';
+
 const api = 'http://localhost:3007/api/v1';
-const bookings = `${api}/bookings`;
+const bookingsRoute = `${api}/bookings`;
 const auth_token_validation = `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com`;
 const url = {
   stripe: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
@@ -8,19 +11,19 @@ const url = {
 function updateBooking() {
   cy.route({
     method: 'GET',
-    url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
+    url: `${bookingsRoute}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
     status: 200,
-    response: 'fixture:booking_stats.json',
+    response: 'fixture:bookings/booking_stats.json',
   });
   cy.route({
     method: 'GET',
-    url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
+    url: `${bookingsRoute}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
     status: 200,
-    response: 'fixture:all_host_bookings.json',
+    response: 'fixture:bookings/all_host_bookings.json',
   });
   cy.route({
     method: 'PATCH',
-    url: `${bookings}/2`,
+    url: `${bookingsRoute}/2`,
     status: 200,
     response: 'fixture:successful_booking_update.json',
   });
@@ -52,9 +55,9 @@ describe('User can answer booking request', () => {
       status: 200,
       response: 'fixture:stripe_verification_no_errors',
     });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
-    cy.get('#view-incoming-bookings').click();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.bookings()
+    bookings.all.ctaToIncoming().click()
   });
 
   it('and successfully accept', () => {
@@ -89,19 +92,19 @@ describe('User encounters error when accepting a booking request', () => {
     cy.server();
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookingsRoute}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
-      response: 'fixture:booking_stats.json',
+      response: 'fixture:bookings/booking_stats.json',
     });
     cy.route({
       method: 'GET',
-      url: `${bookings}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
+      url: `${bookingsRoute}?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
       status: 200,
-      response: 'fixture:all_host_bookings.json',
+      response: 'fixture:bookings/all_host_bookings.json',
     });
     cy.route({
       method: 'PATCH',
-      url: `${bookings}/2`,
+      url: `${bookingsRoute}/2`,
       status: 555,
       response: {
         error: 'There was a problem connecting to our payments infrastructure provider. Please try again later.',
@@ -113,9 +116,9 @@ describe('User encounters error when accepting a booking request', () => {
       status: 200,
       response: 'fixture:stripe_verification_no_errors',
     });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
-    cy.get('#view-incoming-bookings').click();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.bookings()
+    bookings.all.ctaToIncoming().click()
     cy.get('#accept-2').click();
     cy.on('window:alert', (str) => {
       expect(str).to.equal(
@@ -130,8 +133,9 @@ describe('User cannot accept booking requests', () => {
   beforeEach(() => {
     cy.server();
     updateBooking();
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#bookings-icon').click({ force: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.bookings()
+    
   });
 
   it('if no stripe information is provided', () => {
@@ -141,7 +145,7 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: { message: 'No account' },
     });
-    cy.get('#view-incoming-bookings').click();
+    bookings.all.ctaToIncoming().click()
     cy.get('[style="text-align: center; margin: 2rem 0px;"]')
       .invoke('text')
       .then((text) => {
@@ -157,7 +161,7 @@ describe('User cannot accept booking requests', () => {
       status: 200,
       response: 'fixture:stripe_pending_verification.json',
     });
-    cy.get('#view-incoming-bookings').click();
+    bookings.all.ctaToIncoming().click()
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
       'include.text',
       'Your verification is pending, please check back later.'
@@ -166,14 +170,14 @@ describe('User cannot accept booking requests', () => {
     checkPopover();
   });
 
-  it('if stripe verification is complete and errors exist', () => {
+  it.only('if stripe verification is complete and errors exist', () => {
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,
       status: 200,
       response: 'fixture:stripe_verification_errors.json',
     });
-    cy.get('#view-incoming-bookings').click();
+    bookings.all.ctaToIncoming().click()
     cy.get('[style="text-align: center; margin-top: 2rem; font-size: unset;"]').should(
       'include.text',
       'You have entered your payment information but are not yet verified with'
