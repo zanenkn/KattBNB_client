@@ -9,6 +9,8 @@ class Bookings {
     getPastBooking: (i) => this.incoming.pastBooking().eq(i),
     getUpcomingBooking: (i) => this.incoming.upcomingBooking().eq(i),
     getBookingRequest: (i) => this.incoming.bookingRequest().eq(i),
+    acceptRequestButton: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=accept-request]'),
+    declineRequestButton: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=decline-request]'),
   };
 }
 

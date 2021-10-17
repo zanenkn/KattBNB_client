@@ -41,30 +41,37 @@ function checkPopover() {
 describe('User can answer booking request', () => {
   beforeEach(() => {
     cy.server();
+
     updateBooking();
     //token step needed only when declining a booking
-    cy.route({
-      method: 'GET',
-      url: `${auth_token_validation}`,
-      status: 200,
-      response: 'fixture:validate_token.json',
+    cy.intercept('GET', `${api}/host_profiles?user_id=66&locale=en-US`, {
+      statusCode: 200,
+      fixture: 'host_profile_index.json',
+    }).as('getRoute');
+
+    cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
+      statusCode: 200,
+      fixture: 'host_profile_individual.json',
     });
-    cy.route({
-      method: 'GET',
-      url: `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`,
-      status: 200,
-      response: 'fixture:stripe_verification_no_errors',
+
+    cy.intercept('GET', `${auth_token_validation}`, {
+      statusCode: 200,
+      fixture: 'validate_token.json',
     });
+
+    cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=10&occasion=retrieve`, {
+      statusCode: 200,
+      fixture: 'stripe_verification_no_errors',
+    });
+
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.bookings();
-    bookings.all.ctaToIncoming().click();
   });
 
   it('and successfully accept', () => {
-    cy.get('#accept-2').trigger('mouseover');
-    cy.get('#popover-2').should('not.exist');
-    cy.get('#accept-2').click();
-    cy.contains('You have successfully accepted a booking request.').should('exist');
+    nav.to.bookings();
+    bookings.all.ctaToIncoming().click();
+    bookings.incoming.acceptRequestButton(0).click();
+    cy.location('pathname').should('eq', '/request-accepted-success');
   });
 
   it('and successfully decline', () => {
@@ -90,6 +97,17 @@ describe('User can answer booking request', () => {
 describe('User encounters error when accepting a booking request', () => {
   it('cause of Stripe error during payment', () => {
     cy.server();
+    cy.intercept('GET', `${api}/host_profiles?user_id=66&locale=en-US`, {
+      statusCode: 200,
+      fixture: 'host_profile_index.json',
+    }).as('getRoute');
+
+    cy.route({
+      method: 'GET',
+      url: `${api}/host_profiles/1?locale=en-US`,
+      status: 200,
+      response: 'fixture:host_profile_individual.json',
+    });
     cy.route({
       method: 'GET',
       url: `${bookingsRoute}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
@@ -133,6 +151,17 @@ describe('User cannot accept booking requests', () => {
   beforeEach(() => {
     cy.server();
     updateBooking();
+    cy.intercept('GET', `${api}/host_profiles?user_id=66&locale=en-US`, {
+      statusCode: 200,
+      fixture: 'host_profile_index.json',
+    }).as('getRoute');
+
+    cy.route({
+      method: 'GET',
+      url: `${api}/host_profiles/1?locale=en-US`,
+      status: 200,
+      response: 'fixture:host_profile_individual.json',
+    });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.bookings();
   });
@@ -169,7 +198,7 @@ describe('User cannot accept booking requests', () => {
     checkPopover();
   });
 
-  it.only('if stripe verification is complete and errors exist', () => {
+  it('if stripe verification is complete and errors exist', () => {
     cy.route({
       method: 'GET',
       url: `${url.stripe}`,

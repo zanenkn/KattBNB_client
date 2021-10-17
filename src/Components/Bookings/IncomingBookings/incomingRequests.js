@@ -21,6 +21,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
   const [stripeAccountID, setStripeAccountID] = useState('');
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
+  const [loading, setLoading] = useState(true)
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
@@ -39,10 +40,13 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
           setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false);
+          setLoading(false)
         } else {
           setStripeAccountID(null);
+          setLoading(false)
         }
       } catch ({ response }) {
+        setLoading(false)
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 555) {
@@ -63,7 +67,9 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     }
     if (requests.length > 0) {
       fetchStripeAccountDetails();
+      return;
     }
+    setLoading(false)
     // eslint-disable-next-line
   }, []);
 
@@ -100,7 +106,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     }
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready || loading) return <Spinner />;
 
   if (requests.length < 1) {
     return (

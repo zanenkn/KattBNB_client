@@ -7,6 +7,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { BoxShadow, Section } from '../common/styles';
+import { withRouter } from 'react-router-dom';
 
 const BookingRequest = ({
   t,
@@ -49,7 +50,7 @@ const BookingRequest = ({
       return;
     }
     if (window.confirm(t('IncomingRequests:accept-request'))) {
-      const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`;
+      const path = `/api/v1/bookings/${e.target.id}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -120,11 +121,11 @@ const BookingRequest = ({
           </Trans>
         </Text>
         {payoutSuccess ? (
-          <Flexbox spaceItemsX={3}>
-            <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)}>
+          <Flexbox spaceItemsX={3} data-cy='booking-request-cta-section'>
+            <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)} data-cy='decline-request'>
               {t('reusable:cta:decline')}
             </Button>
-            <Button onClick={(e) => acceptRequest(e, request)}>{t('reusable:cta:accept')}</Button>
+            <Button onClick={(e) => acceptRequest(e, request)} data-cy='accept-request' id={request.id}>{t('reusable:cta:accept')}</Button>
           </Flexbox>
         ) : stripeAccountID === null ? (
           <>
@@ -159,4 +160,4 @@ const BookingRequest = ({
   );
 };
 
-export default BookingRequest;
+export default withRouter(BookingRequest);
