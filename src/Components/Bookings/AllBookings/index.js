@@ -12,7 +12,7 @@ import { Header, Text, Notice, Container, Accent, ContentWrapper } from '../../.
 import BookingSegment from './bookingSegment';
 // Completely MIGRATED
 
-const AllBookings = ({ id, history, username }) => {
+const AllBookings = ({ id, history, username, dispatch }) => {
   const { t, ready } = useTranslation('AllBookings');
 
   const [errors, setErrors] = useState([]);
@@ -40,6 +40,21 @@ const AllBookings = ({ id, history, username }) => {
   const axiosCallErrorHandling = (errorMessage) => {
     setLoading(false);
     setErrors(errorMessage);
+  };
+
+  const getHostProfile = () => {
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+
+    const lang = detectLanguage();
+    axios.get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`).then((res) => {
+      axios.get(`/api/v1/host_profiles/${res.data[0].id}?locale=${lang}`, { headers: headers }).then((response) => {
+        dispatch({ type: 'HOST_PROFILE_FETCHED', hostProfile: response.data });
+      });
+    });
   };
 
   useEffect(() => {
@@ -73,6 +88,8 @@ const AllBookings = ({ id, history, username }) => {
           axiosCallErrorHandling([response.data.error]);
         }
       });
+
+    getHostProfile();
 
     // eslint-disable-next-line
   }, []);
@@ -169,6 +186,7 @@ const AllBookings = ({ id, history, username }) => {
 const mapStateToProps = (state) => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   id: state.reduxTokenAuth.currentUser.attributes.id,
+  hostProfile: state.hostProfile.data,
 });
 
 export default connect(mapStateToProps)(withAuth(AllBookings));

@@ -185,7 +185,7 @@ const HostProfileProgressBar = (props) => {
 
           <Button
             id='progress-bar-cta'
-            onClick={`location.href=https://connect.stripe.com/express/oauth/authorize?client_id=${
+            onClick={() => window.open(`https://connect.stripe.com/express/oauth/authorize?client_id=${
               process.env.REACT_APP_OFFICIAL === 'yes'
                 ? process.env.REACT_APP_STRIPE_CLIENT_ID
                 : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST
@@ -193,7 +193,7 @@ const HostProfileProgressBar = (props) => {
               props.stripeState
             }&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${
               props.email
-            }&stripe_user[country]=SE`}
+            }&stripe_user[country]=SE`, '_self')}
           >
             {t('HostProfileProgressBar:stripe-onboarding-cta')}
           </Button>

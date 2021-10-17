@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 
 const { spacing } = theme;
 
-const Flexbox = ({ direction, height, horizontalAlign, space, verticalAlign, width, ...rest }) => {
+const Flexbox = ({ direction, height, horizontalAlign, space, spaceItems, spaceItemsX, spaceItemsY, verticalAlign, width, ...rest }) => {
   return (
     <StyledFlexbox
       direction={direction}
       height={height}
       horizontalAlign={horizontalAlign}
       space={space}
+      spaceItems={spaceItems}
+      spaceItemsX={spaceItemsX}
+      spaceItemsY={spaceItemsY}
       verticalAlign={verticalAlign}
       width={width}
       {...rest}
@@ -23,6 +26,9 @@ Flexbox.propTypes = {
   height: PropTypes.string,
   horizontalAlign: PropTypes.oneOf(['left', 'right', 'center']),
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
+  spaceItems: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
+  spaceItemsX: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
+  spaceItemsY: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center']),
   width: PropTypes.string,
 };
@@ -32,6 +38,9 @@ Flexbox.defaultProps = {
   height: 'auto',
   horizontalAlign: 'center',
   space: 0,
+  spaceItems: null,
+  spaceItemsX: null,
+  spaceItemsY: null,
   verticalAlign: 'center',
   width: 'auto',
 };

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import { ContentWrapper, Container, Flexbox } from '../../../UI-Components';
 
@@ -62,4 +62,26 @@ export const FlexWrapper = styled(Flexbox)`
   > h5 {
     margin: 0;
   }
+`;
+
+export const BoxShadow = styled(Container)`
+  box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 560px;
+`;
+
+export const Section = styled(Container)`
+  ${({ top, neutral }) =>
+    top
+      ? css`
+          background: ${neutral ? colors.neutral[60] : colors.primary[100]};
+          > * {
+            color: ${colors.white[100]};
+          }
+        `
+      : css`
+          background: ${colors.white[100]};
+        `}
+  padding: ${spacing[6]};
+  margin-bottom: 0;
 `;

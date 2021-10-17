@@ -97,6 +97,8 @@
     "step-2-text": "Du har angett din betalningsinformation men har ännu inte bekräftats hos vår betalväxel (Stripe).",
     "step-2-pending": "Vår betalväxel verifierar fortfarande dina uppgifter, vänligen återkom senare.",
     "step-2-go-to-dashboard": "Besök din betalningspanel för att slutföra din verifiering.",
-    "stripe-dashboard-cta": "Min betalningspanel"
-  }
+    "stripe-dashboard-cta": "Min betalningspanel",
+    "onboarding-cta": "Ange betalningsinformation"
+  },
+  "important": "Viktigt!"
 }

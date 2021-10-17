@@ -97,6 +97,8 @@
     "step-2-text": "You have entered your payment information but are not yet verified with our payment provider (Stripe).",
     "step-2-pending": "Your verification is pending, please check back later.",
     "step-2-go-to-dashboard": "Please visit your payment dashboard to complete your verification.",
-    "stripe-dashboard-cta": "My payment dashboard"
-  }
+    "stripe-dashboard-cta": "My payment dashboard",
+    "onboarding-cta": "Enter payment information"
+  },
+  "important": "Important!"
 }

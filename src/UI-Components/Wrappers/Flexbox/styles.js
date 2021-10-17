@@ -9,8 +9,18 @@ export const StyledFlexbox = styled.div`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   margin-bottom: ${({ space }) => spacing[space]};
-  > *:last-child {
-    margin-bottom: 0;
+  > * {
+    margin: 0;
+
+    ${({ spaceItemsX }) => css`
+      padding: 0 ${spacing[spaceItemsX]};
+    `}
+    ${({ spaceItemsY }) => css`
+      padding: ${spacing[spaceItemsY]} 0;
+    `}
+    ${({ spaceItems }) => css`
+      padding: ${spacing[spaceItems]};
+    `}
   }
 
   ${({ direction, verticalAlign }) => {

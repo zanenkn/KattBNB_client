@@ -9,6 +9,7 @@
   "book-a-stay_plural": "<0>{{nickname}}</0> vill boka en vistelse för deras <2>{{count}} katter</2> under datumen <4>{{startDate}}</4> till <6>{{endDate}}</6>.",
   "view-message": "Visa meddelanden",
   "no-requests": "Du har inga bokningsförfrågningar",
-  "stripe-step1": "Du skapade en kattvaktsprofil men har inte gett oss din betalningsinformation ännu. Utan den kan vi inte överföra pengarna från dina bokningar! Besök din <1>profilsida</1> för att lägga in den.",
-  "stripe-step2-complete-verification": "För att du ska kunna acceptera en bokningsförfrågan bör du <1>slutföra din verifiering</1> hos vår betalväxel (Stripe)."
+  "stripe-step1": "För att du ska kunna acceptera denna bokning behöver vi din betalningsinformation. Utan den kan vi inte överföra pengarna för dina kattpassningar!",
+  "stripe-step2-complete-verification": "För att du ska kunna acceptera denna bokningsförfrågan bör du besöka din betalningspanel och slutföra din verifiering hos vår betalväxel (Stripe).",
+  "stripe-step2-pending": "Vår betalväxel (Stripe) verifierar fortfarande dina uppgifter. Du kommer att kunna acceptera denna bokningsförfrågan så snart du har verifierats. Vänligen återkom senare."
 }

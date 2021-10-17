@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import Popup from 'reactjs-popup';
 import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 // import IncRequestPopup from '../IncRequestPopup';
-import DeclineRequestPopup from '../declineRequestPopup';
 import axios from 'axios';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
 import { Text, Notice, Button } from '../../../UI-Components';
+import BookingRequest from './bookingRequest';
+import { connect } from 'react-redux';
+import { getRedirectBase } from '../../../utils/getRedirectBase';
 
-const IncomingRequests = ({ history, requests }) => {
+const IncomingRequests = ({ history, requests, stripeState, email }) => {
   const { t, ready } = useTranslation('IncomingRequests');
 
-  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
-  const [iconsDisabled, setIconsDisabled] = useState(false);
-  const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [payoutSuccess, setPayoutSuccess] = useState(false);
   const [stripeAccountErrors, setStripeAccountErrors] = useState([]);
   const [stripeAccountID, setStripeAccountID] = useState('');
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
-  const [declinePopupOpen, setDeclinePopupOpen] = useState(false);
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
-      setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
@@ -44,22 +39,18 @@ const IncomingRequests = ({ history, requests }) => {
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
           setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false);
-          setLoading(false);
         } else {
           setStripeAccountID(null);
-          setLoading(false);
         }
       } catch ({ response }) {
         if (response === undefined) {
           wipeCredentials('/is-not-available?atm');
         } else if (response.status === 555) {
-          setLoading(false);
           setErrors([response.data.error]);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setLoading(false);
           setErrors([response.data.error]);
         }
       }
@@ -72,72 +63,9 @@ const IncomingRequests = ({ history, requests }) => {
     }
     if (requests.length > 0) {
       fetchStripeAccountDetails();
-    } else {
-      setLoading(false);
     }
     // eslint-disable-next-line
   }, []);
-
-  const declModalCloseState = (state) => {
-    setCloseOnDocumentClick(state);
-  };
-
-  const acceptRequest = (e, requestData) => {
-    e.preventDefault();
-    const lang = detectLanguage();
-    setIconsDisabled(true);
-    if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-      setIconsDisabled(false);
-    } else {
-      if (window.confirm(t('IncomingRequests:accept-request'))) {
-        const path = `/api/v1/bookings/${e.target.id.split('-')[1]}`;
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        const payload = {
-          status: 'accepted',
-          host_message: 'accepted by host',
-          locale: lang,
-        };
-        axios
-          .patch(path, payload, { headers: headers })
-          .then(() => {
-            history.push({
-              pathname: '/request-accepted-success',
-              state: {
-                cats: requestData.number_of_cats,
-                inDate: new Date(requestData.dates[0]),
-                outDate: new Date(requestData.dates[requestData.dates.length - 1]),
-                price: requestData.price_total,
-                user: requestData.user.nickname,
-              },
-            });
-          })
-          .catch(({ response }) => {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              setErrors(['reusable:errors:500']);
-              setIconsDisabled(false);
-            } else if (response.status === 555 || response.status === 427) {
-              window.alert(response.data.error);
-              history.push('/all-bookings');
-            } else if (response.status === 401) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              setErrors(response.data.error);
-              setIconsDisabled(false);
-            }
-          });
-      } else {
-        setIconsDisabled(false);
-      }
-    }
-  };
 
   const fetchStripeDashboardLink = async () => {
     if (window.navigator.onLine === false) {
@@ -172,19 +100,7 @@ const IncomingRequests = ({ history, requests }) => {
     }
   };
 
-  const formatPrice = (price) => {
-    const priceWithDecimalsString = price.toFixed(2);
-    if (
-      priceWithDecimalsString[priceWithDecimalsString.length - 1] === '0' &&
-      priceWithDecimalsString[priceWithDecimalsString.length - 2] === '0'
-    ) {
-      return parseFloat(priceWithDecimalsString);
-    } else {
-      return priceWithDecimalsString;
-    }
-  };
-
-  if (!ready || loading) return <Spinner />;
+  if (!ready) return <Spinner />;
 
   if (requests.length < 1) {
     return (
@@ -213,115 +129,22 @@ const IncomingRequests = ({ history, requests }) => {
           </ul>
         </Notice>
       )}
-      {stripeAccountID === null ? (
-        <>
-          <p style={{ textAlign: 'center', margin: '2rem 0' }}>
-            <Trans i18nKey={'IncomingRequests:step-1-text'}>
-              You made a host profile but have not provided us with your payment information. Without that we cannot
-              transfer the money for your gigs! Please visit your&nbsp;
-              <Link to={'/user-page'}>
-                <span className='fake-link-underlined-reg'>profile page</span>
-              </Link>
-              &nbsp;to fix that.
-            </Trans>
-          </p>
-        </>
-      ) : (
-        stripeAccountErrors.length > 0 && (
-          <>
-            <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
-              {t('reusable:stripe:step-2-text')}&ensp;
-              {stripePendingVerification
-                ? t('reusable:stripe:step-2-pending')
-                : t('reusable:stripe:step-2-go-to-dashboard')}
-            </p>
-            {!stripePendingVerification && (
-              <Button
-                onClick={() => fetchStripeDashboardLink()}
-                loading={stripeDashboardButtonLoading}
-                disabled={stripeDashboardButtonLoading}
-                id='progress-bar-cta'
-                style={{ marginBottom: '2rem' }}
-              >
-                {t('reusable:stripe:stripe-dashboard-cta')}
-              </Button>
-            )}
-          </>
-        )
-      )}
 
       {requests.map((request) => (
-        <div data-cy='incoming-request' key={request.id} id={request.id}>
-          <Text></Text>
-          {formatPrice(request.price_total)} kr
-          <Text>
-            <Trans i18nKey='IncomingRequests:must-reply'>
-              You must reply before
-              <strong>{{ date: moment(request.created_at).add(3, 'days').format('YYYY-MM-DD') }}</strong>
-            </Trans>
-          </Text>
-          <Text>
-            <Trans count={parseInt(request.number_of_cats)} i18nKey='IncomingRequests:book-a-stay'>
-              <strong style={{ color: '#c90c61' }}>{{ nickname: request.user.nickname }}</strong> wants to book a stay
-              for their
-              <strong style={{ color: '#c90c61' }}>{{ count: request.number_of_cats }} cat</strong> during the dates of
-              <strong style={{ color: '#c90c61' }}>
-                {{ startDate: moment(request.dates[0]).format('YYYY-MM-DD') }}
-              </strong>
-              until
-              <strong style={{ color: '#c90c61' }}>
-                {{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}
-              </strong>
-              .
-            </Trans>
-            {payoutSuccess ? (
-              <>
-                <Button onClick={() => setDeclinePopupOpen(true)}>Decline</Button>
-                <Button onClick={(e) => acceptRequest(e, request)}>Accept</Button>
-              </>
-            ) : stripeAccountID === null ? (
-              <>
-                <p style={{ textAlign: 'center' }}>
-                  <Trans i18nKey={'IncomingRequests:step-1-text'}>
-                    You made a host profile but have not provided us with your payment information. Without that we
-                    cannot transfer the money for your gigs! Please visit your&nbsp;
-                    <Link to={'/user-page'}>
-                      <span className='fake-link-underlined-reg'>profile page</span>
-                    </Link>
-                    &nbsp;to fix that.
-                  </Trans>
-                </p>
-              </>
-            ) : (
-              stripeAccountErrors.length > 0 && (
-                <>
-                  <p style={{ textAlign: 'center', fontSize: 'unset' }}>
-                    {t('reusable:stripe:step-2-text')}&ensp;
-                    {stripePendingVerification ? (
-                      t('reusable:stripe:step-2-pending')
-                    ) : (
-                      <Trans i18nKey={'IncomingRequest:stripe-step2-complete-verification'}>
-                        In order for you to accept a request, you should&nbsp;
-                        <span onClick={() => fetchStripeDashboardLink()} className='fake-link-underlined'>
-                          complete your verification
-                        </span>
-                        &nbsp;with our payment provider (Stripe).
-                      </Trans>
-                    )}
-                  </p>
-                </>
-              )
-            )}
-          </Text>
-          <DeclineRequestPopup
-            id={request.id}
-            nickname={request.user.nickname}
-            startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
-            endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-            declModalCloseState={declModalCloseState}
-            open={declinePopupOpen}
-          />
-        </div>
+        <BookingRequest
+          request={request}
+          t={t}
+          payoutSuccess={payoutSuccess}
+          fetchStripeDashboardLink={() => fetchStripeDashboardLink()}
+          stripeAccountID={stripeAccountID}
+          stripeAccountErrors={stripeAccountErrors}
+          stripePendingVerification={setStripePendingVerification}
+          onboardingUrl={`https://connect.stripe.com/express/oauth/authorize?client_id=${
+            process.env.REACT_APP_OFFICIAL === 'yes'
+              ? process.env.REACT_APP_STRIPE_CLIENT_ID
+              : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST
+          }&response_type=code&state=${stripeState}&suggested_capabilities[]=transfers&redirect_uri=${getRedirectBase()}/all-bookings&stripe_user[email]=${email}&stripe_user[country]=SE`}
+        />
       ))}
     </>
   );
@@ -554,4 +377,9 @@ const IncomingRequests = ({ history, requests }) => {
   // }
 };
 
-export default withRouter(IncomingRequests);
+const mapStateToProps = (state) => ({
+  email: state.reduxTokenAuth.currentUser.attributes.uid,
+  stripeState: state.hostProfile.data.stripe_state,
+});
+
+export default connect(mapStateToProps)(withRouter(IncomingRequests));
