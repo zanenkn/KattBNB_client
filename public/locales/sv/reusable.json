@@ -78,6 +78,8 @@
     "save": "Spara",
     "close": "Stäng",
     "confirm": "Bekräfta",
+    "decline": "Avslå",
+    "accept": "Acceptera",
     "make-host-profile": "Skapa en kattvaktsprofil",
     "reply": "Svara",
     "view-receipt": "Kvitto"

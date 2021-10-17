@@ -78,6 +78,8 @@
     "save": "Save",
     "close": "Close",
     "confirm": "Confirm",
+    "decline": "Decline",
+    "accept": "Accept",
     "make-host-profile": "Make a host profile",
     "reply": "Reply",
     "view-receipt": "Receipt"

@@ -12,15 +12,14 @@ export const StyledFlexbox = styled.div`
   > * {
     margin: 0;
 
-    ${({ spaceItemsX }) => css`
-      padding: 0 ${spacing[spaceItemsX]};
-    `}
-    ${({ spaceItemsY }) => css`
-      padding: ${spacing[spaceItemsY]} 0;
-    `}
-    ${({ spaceItems }) => css`
-      padding: ${spacing[spaceItems]};
-    `}
+    ${({ spaceItemsX, spaceItemsY, spaceItems }) =>
+      spaceItems > 0
+        ? css`
+            padding: ${spacing[spaceItems]};
+          `
+        : css`
+            padding: ${spacing[spaceItemsY]} ${spacing[spaceItemsX]};
+          `}
   }
 
   ${({ direction, verticalAlign }) => {

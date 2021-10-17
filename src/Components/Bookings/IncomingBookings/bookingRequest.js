@@ -121,12 +121,16 @@ const BookingRequest = ({
         </Text>
         {payoutSuccess ? (
           <Flexbox spaceItemsX={3}>
-            <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)}>Decline</Button>
-            <Button onClick={(e) => acceptRequest(e, request)}>Accept</Button>
+            <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)}>
+              {t('reusable:cta:decline')}
+            </Button>
+            <Button onClick={(e) => acceptRequest(e, request)}>{t('reusable:cta:accept')}</Button>
           </Flexbox>
         ) : stripeAccountID === null ? (
           <>
-            <Header level={5} centered color='primary'>{t('reusable:important')}</Header>
+            <Header level={5} centered color='primary'>
+              {t('reusable:important')}
+            </Header>
             <Text centered>{t('IncomingRequests:stripe-step1')}</Text>
             <Button onClick={() => window.open(onboardingUrl, '_self')}>{t('reusable:stripe:onboarding-cta')}</Button>
           </>
@@ -134,7 +138,9 @@ const BookingRequest = ({
           <Text centered>{t('IncomingRequests:stripe-step2-pending')}</Text>
         ) : (
           <>
-            <Header level={5} centered color='primary'>{t('reusable:important')}</Header>
+            <Header level={5} centered color='primary'>
+              {t('reusable:important')}
+            </Header>
             <Text centered>{t('IncomingRequests:stripe-step2-complete-verification')}</Text>
             <Button onClick={() => fetchStripeDashboardLink()}>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
           </>

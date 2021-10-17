@@ -4,7 +4,18 @@ import PropTypes from 'prop-types';
 
 const { spacing } = theme;
 
-const Flexbox = ({ direction, height, horizontalAlign, space, spaceItems, spaceItemsX, spaceItemsY, verticalAlign, width, ...rest }) => {
+const Flexbox = ({
+  direction,
+  height,
+  horizontalAlign,
+  space,
+  spaceItems,
+  spaceItemsX,
+  spaceItemsY,
+  verticalAlign,
+  width,
+  ...rest
+}) => {
   return (
     <StyledFlexbox
       direction={direction}
@@ -38,9 +49,9 @@ Flexbox.defaultProps = {
   height: 'auto',
   horizontalAlign: 'center',
   space: 0,
-  spaceItems: null,
-  spaceItemsX: null,
-  spaceItemsY: null,
+  spaceItems: 0,
+  spaceItemsX: 0,
+  spaceItemsY: 0,
   verticalAlign: 'center',
   width: 'auto',
 };
