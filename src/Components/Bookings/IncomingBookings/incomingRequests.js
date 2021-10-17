@@ -37,9 +37,10 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
         };
         const response = await axios.get(path, { headers: headers });
         if (!response.data.message) {
+          console.log(response.data.requirements)
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
-          setStripePendingVerification(response.data.requirements.pending_verification.length > 0 ? true : false);
+          setStripePendingVerification(!!response.data.requirements.pending_verification.length);
           setLoading(false)
         } else {
           setStripeAccountID(null);
@@ -144,7 +145,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
           fetchStripeDashboardLink={() => fetchStripeDashboardLink()}
           stripeAccountID={stripeAccountID}
           stripeAccountErrors={stripeAccountErrors}
-          stripePendingVerification={setStripePendingVerification}
+          stripePendingVerification={stripePendingVerification}
           onboardingUrl={`https://connect.stripe.com/express/oauth/authorize?client_id=${
             process.env.REACT_APP_OFFICIAL === 'yes'
               ? process.env.REACT_APP_STRIPE_CLIENT_ID

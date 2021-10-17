@@ -11,6 +11,8 @@ class Bookings {
     getBookingRequest: (i) => this.incoming.bookingRequest().eq(i),
     acceptRequestButton: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=accept-request]'),
     declineRequestButton: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=decline-request]'),
+    stripeAlert: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=stripe-alert]'),
+    bookingRequestCtaSection: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=booking-request-cta-section]'),
   };
 }
 
