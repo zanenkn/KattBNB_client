@@ -23,7 +23,6 @@ const BookingRequest = ({
   const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [declinePopupOpen, setDeclinePopupOpen] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [iconsDisabled, setIconsDisabled] = useState(false);
 
   const declModalCloseState = (state) => {
     setCloseOnDocumentClick(state);
@@ -43,10 +42,8 @@ const BookingRequest = ({
 
   const acceptRequest = (e, requestData) => {
     const lang = detectLanguage();
-    setIconsDisabled(true);
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
-      setIconsDisabled(false);
       return;
     }
     if (window.confirm(t('IncomingRequests:accept-request'))) {
@@ -80,7 +77,6 @@ const BookingRequest = ({
             wipeCredentials('/is-not-available?atm');
           } else if (response.status === 500) {
             setErrors(['reusable:errors:500']);
-            setIconsDisabled(false);
           } else if (response.status === 555 || response.status === 427) {
             window.alert(response.data.error);
             history.push('/all-bookings');
@@ -89,11 +85,8 @@ const BookingRequest = ({
             wipeCredentials('/');
           } else {
             setErrors(response.data.error);
-            setIconsDisabled(false);
           }
         });
-    } else {
-      setIconsDisabled(false);
     }
   };
 
@@ -153,6 +146,7 @@ const BookingRequest = ({
 
         <DeclineRequestPopup
           id={request.id}
+          onClose={() => setDeclinePopupOpen(false)}
           nickname={request.user.nickname}
           startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
           endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}

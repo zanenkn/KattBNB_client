@@ -5,10 +5,10 @@ import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import Popup from 'reactjs-popup';
-import { Header, Text } from '../../UI-Components';
+import { Header, Text, TextArea, Button, Notice } from '../../UI-Components';
 import { PopupHeaderWrapper } from './common/styles';
 
-const DeclineRequestPopup = ({open, onClose, startDate, endDate, nickname, id, declModalCloseState }) => {
+const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id, declModalCloseState }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');
 
   const [loading, setLoading] = useState(false);
@@ -86,61 +86,41 @@ const DeclineRequestPopup = ({open, onClose, startDate, endDate, nickname, id, d
       </PopupHeaderWrapper>
 
       <Text>
-        something
+        <Trans i18nKey='DeclineRequestPopup:page-desc'>
+          You are about to decline a booking request from
+          <strong>{{ nickname: nickname }}</strong> for the dates of
+          <strong>{{ startDate: startDate }}</strong> until
+          <strong>{{ endDate: endDate }}</strong>.
+        </Trans>
       </Text>
+      <TextArea
+        space={1}
+        label={t('DeclineRequestPopup:text-area-label')}
+        required
+        data-cy='message'
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <Text size='sm' italic>
+        {t('reusable:remaining-chars')} {200 - message.length}
+      </Text>
+      {errors.length > 0 && (
+        <Notice nature='danger'>
+          <Text bold centered size='sm'>
+            {t('DeclineRequestPopup:error-message-header')}
+          </Text>
+          <ul id='message-error-list'>
+            {errors.map((error) => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Notice>
+      )}
+      <Button data-cy='decline-button' disabled={loading} loading={loading} onClick={declineCTA}>
+        {t('DeclineRequestPopup:decline-cta')}
+      </Button>
     </Popup>
   );
-
-
-
-
-
-  // if (ready) {
-  //   return (
-  //     <>
-  //       <Header as='h2'>{t('DeclineRequestPopup:page-header')}</Header>
-  //       <p className='small-centered-paragraph'>
-  //         <Trans i18nKey='DeclineRequestPopup:page-desc'>
-  //           You are about to decline a booking request from
-  //           <strong style={{ color: '#c90c61' }}>{{ nickname: props.nickname }}</strong> for the dates of
-  //           <strong style={{ color: '#c90c61' }}>{{ startDate: props.startDate }}</strong> until
-  //           <strong style={{ color: '#c90c61' }}>{{ endDate: props.endDate }}</strong>
-  //         </Trans>
-  //       </p>
-  //       <Form>
-  //         <Form.TextArea
-  //           style={{ minHeight: '120px' }}
-  //           label={t('DeclineRequestPopup:text-area-label')}
-  //           placeholder={t('DeclineRequestPopup:text-area-plch')}
-  //           required
-  //           id='message'
-  //           value={message}
-  //           onChange={(e) => setMessage(e.target.value)}
-  //         />
-  //       </Form>
-  //       <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-  //         {t('reusable:remaining-chars')} {200 - message.length}
-  //       </p>
-  //       {errors.length > 0 && (
-  //         <Message negative>
-  //           <Message.Header style={{ textAlign: 'center' }}>
-  //             {t('DeclineRequestPopup:error-message-header')}
-  //           </Message.Header>
-  //           <ul id='message-error-list'>
-  //             {errors.map((error) => (
-  //               <li key={error}>{t(error)}</li>
-  //             ))}
-  //           </ul>
-  //         </Message>
-  //       )}
-  //       <Button id='decline-button' disabled={loading} loading={loading} onClick={declineCTA}>
-  //         {t('DeclineRequestPopup:decline-cta')}
-  //       </Button>
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default DeclineRequestPopup;
