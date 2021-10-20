@@ -1,8 +1,3 @@
-const failed_password_reset = {
-  success: false,
-  errors: [`Unable to find user with email george@mail.com.`],
-};
-
 import login from '../../pages/login';
 import nav from '../../pages/navigation';
 import passwordReset from '../../pages/passwordReset';
@@ -16,7 +11,7 @@ describe('User can reset password', () => {
     login.passwordResetLink().click();
   });
 
-  it.only('successfully', () => {
+  it('successfully', () => {
     cy.intercept('POST', `${api}/auth/password`, {
       statusCode: 200,
       body: {
@@ -54,22 +49,52 @@ describe('User can reset password', () => {
   });
 
   it('unsuccessfully - no email present in the database', () => {
-    passwordReset('POST', 404, failed_password_reset);
-    typeEmail('georgethegreek@mail.com');
-    cy.contains(`Unable to find user with email ${email}.`).should('exist');
+    cy.intercept('POST', `${api}/auth/password`, {
+      statusCode: 404,
+      body: {
+        success: false,
+        errors: [`Unable to find user with email georgethegreek@mail.com.`],
+      },
+    });
+
+    passwordReset.emailField().type('georgethegreek@mail.com');
+    passwordReset.submitButton().click();
+
+    passwordReset
+      .errorNotice()
+      .should('exist')
+      .and('include.text', 'Unable to find user with email georgethegreek@mail.com.');
   });
 
   it('unsuccessfully - errors while typing new password', () => {
-    cy.visit(`${url.client}/change-password`);
-    typePasswords('new', 'new_password');
-    cy.contains(
-      'Check that both fields are an exact match with each other, they are between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!'
-    ).should('exist');
+    cy.visit(`${client}/change-password`);
+
+    passwordReset.passwordField().type('new');
+    passwordReset.passwordConfirmationField().type('new_password');
+    passwordReset.changePasswordButton().click();
+
+    passwordReset
+      .errorNotice()
+      .should('exist')
+      .and(
+        'include.text',
+        'Check that both fields are an exact match with each other, they are between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!'
+      );
   });
 
   it('unsuccessfully - visits page with invalid params', () => {
-    cy.visit(`${url.client}/change-password`);
-    typePasswords('new_passworD1', 'new_passworD1');
-    cy.contains("You should first visit the login page and click on the 'Forgot your password?' link").should('exist');
+    cy.visit(`${client}/change-password`);
+
+    passwordReset.passwordField().type('new_pAssword1');
+    passwordReset.passwordConfirmationField().type('new_pAssword1');
+    passwordReset.changePasswordButton().click();
+
+    passwordReset
+      .errorNotice()
+      .should('exist')
+      .and(
+        'include.text',
+        "You should first visit the login page and click on the 'Forgot your password?' link"
+      );
   });
 });

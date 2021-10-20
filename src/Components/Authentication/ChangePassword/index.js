@@ -110,7 +110,7 @@ const ChangePassword = ({ location: { search } }) => {
         </Container>
 
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice data-cy='error-notice' nature='danger'>
             <Header centered level={5}>
               {t('ChangePassword:error-header')}
             </Header>

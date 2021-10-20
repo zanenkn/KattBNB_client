@@ -83,7 +83,7 @@ const PasswordReset = ({ history }) => {
         </Container>
 
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice data-cy='error-notice' nature='danger'>
             <Header level={5} centered>
               {t('PasswordReset:error-header')}:
             </Header>

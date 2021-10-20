@@ -5,6 +5,7 @@ class PasswordReset {
   passwordConfirmationField = () => cy.get('[data-cy=password-confirmation]');
   changePasswordButton = () => cy.get('[data-cy=change-pass-button]');
   successNotice = () => cy.get('[data-cy=success-notice]');
+  errorNotice = () => cy.get('[data-cy=error-notice]');
 }
 
 module.exports = new PasswordReset();
