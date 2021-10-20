@@ -74,7 +74,7 @@ const PasswordReset = ({ history }) => {
         <Container space={6}>
           <TextField
             required
-            id='email'
+            data-cy='email'
             label={t('reusable:plch.email')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -95,7 +95,7 @@ const PasswordReset = ({ history }) => {
           </Notice>
         )}
 
-        <Button id='reset-pass-button' onClick={resetPassword} disabled={loading} loading={loading}>
+        <Button data-cy='reset-pass-button' onClick={resetPassword} disabled={loading} loading={loading}>
           {t('PasswordReset:btn')}
         </Button>
       </Whitebox>

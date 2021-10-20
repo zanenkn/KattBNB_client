@@ -1,59 +1,56 @@
-const email = 'george@mail.com';
-const successful_password_reset = {
-  success: true,
-  message: `An email has been sent to ${email} containing instructions for resetting your password.`,
-};
 const failed_password_reset = {
   success: false,
-  errors: [`Unable to find user with email ${email}.`],
-};
-const url = {
-  api_pass: 'http://localhost:3007/api/v1/auth/password',
-  client: 'http://localhost:3000',
+  errors: [`Unable to find user with email george@mail.com.`],
 };
 
-function passwordReset(method, status, response) {
-  cy.route({
-    method: method,
-    url: `${url.api_pass}`,
-    status: status,
-    response: response,
-  });
-}
-
-function typePasswords(password, pass_confirmation) {
-  cy.get('#password').type(password);
-  cy.get('#passwordConfirmation').type(pass_confirmation);
-  cy.get('#change-pass-button').click();
-}
-
-function typeEmail(email_address) {
-  cy.get('#email').type(email_address);
-  cy.get('#reset-pass-button').click();
-}
+import login from '../../pages/login';
+import nav from '../../pages/navigation';
+import passwordReset from '../../pages/passwordReset';
+import { api, client } from '../../support/constants';
 
 describe('User can reset password', () => {
   beforeEach(() => {
     cy.server();
-    cy.visit(`${url.client}`);
-    cy.get('.hamburger-box').click();
-    cy.get('#login').click();
-    cy.get('#login-form').within(() => {
-      cy.get('#password-reset-link').click();
-    });
+    nav.landing();
+    nav.to.login();
+    login.passwordResetLink().click();
   });
 
-  it('successfully', () => {
-    passwordReset('POST', 200, successful_password_reset);
-    passwordReset('PUT', 200, successful_password_reset);
-    typeEmail(email);
-    cy.contains('Successful password reset request!').should('exist');
+  it.only('successfully', () => {
+    cy.intercept('POST', `${api}/auth/password`, {
+      statusCode: 200,
+      body: {
+        success: true,
+        message: `An email has been sent to george@mail.com containing instructions for resetting your password.`,
+      },
+    });
+
+    cy.intercept('PUT', `${api}/auth/password`, {
+      statusCode: 200,
+      body: {
+        success: true,
+        message: `An email has been sent to george@mail.com containing instructions for resetting your password.`,
+      },
+    });
+
+    passwordReset.emailField().type('george@mail.com');
+    passwordReset.submitButton().click();
+
+    cy.location('pathname').should('eq', '/password-reset-success');
+
     cy.visit(
-      `${url.client}/change-password?uid=kasgdh@mail.com&access-token=ansbhfdghje5754d5rfe545&katiallo=cdmhfshruj54fg54r5ft4r&katiallo=cdmhfshruj54fg54r5ft4r&katiallo=cdmhfshruj54fg54r5ft4r`
+      `${client}/change-password?uid=kasgdh@mail.com&access-token=ansbhfdghje5754d5rfe545&katiallo=cdmhfshruj54fg54r5ft4r&katiallo=cdmhfshruj54fg54r5ft4r&katiallo=cdmhfshruj54fg54r5ft4r`
     );
-    typePasswords('new_pAssword1', 'new_pAssword1');
-    cy.contains('You have succesfully changed your password! Please wait to be redirected.').should('exist');
-    cy.contains('Log in').should('exist');
+
+    passwordReset.passwordField().type('new_pAssword1');
+    passwordReset.passwordConfirmationField().type('new_pAssword1');
+    passwordReset.changePasswordButton().click();
+
+    passwordReset
+      .successNotice()
+      .should('have.text', 'You have succesfully changed your password! Please wait to be redirected.');
+
+    cy.location('pathname').should('eq', '/login');
   });
 
   it('unsuccessfully - no email present in the database', () => {

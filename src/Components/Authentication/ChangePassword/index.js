@@ -91,7 +91,7 @@ const ChangePassword = ({ location: { search } }) => {
         <Container space={6}>
           <TextField
             required
-            id='password'
+            data-cy='password'
             label={t('reusable:plch.password')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -100,7 +100,7 @@ const ChangePassword = ({ location: { search } }) => {
           />
           <TextField
             required
-            id='passwordConfirmation'
+            data-cy='password-confirmation'
             label={t('reusable:plch.password-confirmation')}
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -123,12 +123,12 @@ const ChangePassword = ({ location: { search } }) => {
         )}
 
         {successDisplay && (
-          <Notice nature='success' centered>
+          <Notice data-cy='success-notice' nature='success' centered>
             <Text centered>{t('ChangePassword:success-msg')}</Text>
           </Notice>
         )}
 
-        <Button id='change-pass-button' disabled={loading} loading={loading} onClick={changePassword}>
+        <Button data-cy='change-pass-button' disabled={loading} loading={loading} onClick={changePassword}>
           {t('ChangePassword:title')}
         </Button>
       </Whitebox>

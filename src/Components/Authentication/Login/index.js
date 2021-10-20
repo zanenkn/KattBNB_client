@@ -61,7 +61,7 @@ const Login = (props) => {
         {t('Login:title')}
       </Header>
 
-      <Whitebox data-cy="login-form">
+      <Whitebox data-cy='login-form'>
         <TextField
           required
           data-cy='email'
@@ -86,7 +86,13 @@ const Login = (props) => {
         />
 
         <Text right size='sm' space={6}>
-          <InlineLink as={Link} to='password-reset' color='info' disabled={successDisplay}>
+          <InlineLink
+            as={Link}
+            data-cy='password-reset-link'
+            to='password-reset'
+            color='info'
+            disabled={successDisplay}
+          >
             {t('Login:forgot-link')}
           </InlineLink>
         </Text>
