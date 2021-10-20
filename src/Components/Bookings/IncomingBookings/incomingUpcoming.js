@@ -16,8 +16,7 @@ const IncomingUpcoming = ({ id, history, bookings }) => {
 
   const [errors, setErrors] = useState([]);
 
-  const messageUser = (e, userId, userAvatar, userLocation, userNickname) => {
-    e.preventDefault();
+  const messageUser = (userId, userAvatar, userLocation, userNickname) => {
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
     } else {
@@ -118,9 +117,8 @@ const IncomingUpcoming = ({ id, history, bookings }) => {
             links={[
               {
                 text: `${t('IncomingUpcoming:message')} ${upcoming.user.nickname}`,
-                action: (e) =>
+                action: () =>
                   messageUser(
-                    e,
                     upcoming.user_id,
                     upcoming.user.profile_avatar,
                     upcoming.user.location,
