@@ -57,11 +57,13 @@ describe('User can answer booking request', () => {
     cy.location('pathname').should('eq', '/request-accepted-success');
   });
 
-  it('and successfully decline', () => {
+  it.only('and successfully decline', () => {
     nav.to.bookings();
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
+    bookings.declineRequestPopup.textField().type('No sorry')
+    bookings.declineRequestPopup.submitButton().click()
     // TODO: FINISH THIS
   });
 

@@ -14,6 +14,10 @@ class Bookings {
     stripeAlert: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=stripe-alert]'),
     bookingRequestCtaSection: (i) => this.incoming.bookingRequest().eq(i).find('[data-cy=booking-request-cta-section]'),
   };
+  declineRequestPopup = {
+    textField: () => cy.get('[data-cy=message]'),
+    submitButton: () => cy.get('[data-cy=decline-button]')
+  }
 }
 
 module.exports = new Bookings();
