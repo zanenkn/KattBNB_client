@@ -29,7 +29,7 @@ describe('User can answer booking request', () => {
     cy.intercept('GET', `${api}/host_profiles?user_id=66&locale=en-US`, {
       statusCode: 200,
       fixture: 'host_profile_index.json',
-    }).as('getRoute');
+    });
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
@@ -58,12 +58,19 @@ describe('User can answer booking request', () => {
   });
 
   it.only('and successfully decline', () => {
+    // i dunno why this here makes it work but the intercept (in beforeEach) doesnt manage to stub it
+    cy.route({
+      method: 'GET',
+      url: `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com`,
+      status: 200,
+      response: 'fixture:validate_token.json',
+    });
     nav.to.bookings();
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
-    bookings.declineRequestPopup.textField().type('No sorry')
-    bookings.declineRequestPopup.submitButton().click()
+    bookings.declineRequestPopup.textField().type('No sorry');
+    bookings.declineRequestPopup.submitButton().click();
     // TODO: FINISH THIS
   });
 
