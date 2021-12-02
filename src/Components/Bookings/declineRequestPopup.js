@@ -101,11 +101,11 @@ const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id, 
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <Text size='sm' italic>
+      <Text size='sm' italic data-cy='remaining-characters'>
         {t('reusable:remaining-chars')} {200 - message.length}
       </Text>
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='decline-error'>
           <Text bold centered size='sm'>
             {t('DeclineRequestPopup:error-message-header')}
           </Text>

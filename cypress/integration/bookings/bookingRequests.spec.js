@@ -57,7 +57,7 @@ describe('User can answer booking request', () => {
     cy.location('pathname').should('eq', '/request-accepted-success');
   });
 
-  it.only('and successfully decline', () => {
+  it('and successfully decline', () => {
     // i dunno why this here makes it work but the intercept (in beforeEach) doesnt manage to stub it
     cy.route({
       method: 'GET',
@@ -65,21 +65,54 @@ describe('User can answer booking request', () => {
       status: 200,
       response: 'fixture:validate_token.json',
     });
+
     nav.to.bookings();
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
     bookings.declineRequestPopup.textField().type('No sorry');
     bookings.declineRequestPopup.submitButton().click();
-    // TODO: FINISH THIS
+    cy.location('pathname').should('eq', '/all-bookings');
   });
 
-  it('and unsuccessfully decline cause they enter no message or message > 200 characters', () => {
+  it('and unsuccessfully decline cause they enter no message', () => {
+    cy.route({
+      method: 'GET',
+      url: `${api}/reviews/null`,
+      status: 200,
+      response: 'fixture:one_review_incoming.json',
+    });
+
     nav.to.bookings();
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
-    // TODO: FINISH THIS
+    cy.get('[data-cy=decline-button]').click();
+    cy.get('[data-cy=decline-error]').should(
+      'include.text',
+      "Message can't be blank or contain more than 200 characters"
+    );
+  });
+
+  it('and unsuccessfully decline cause they enter a message longer than 200 characters', () => {
+    cy.route({
+      method: 'GET',
+      url: `${api}/reviews/null`,
+      status: 200,
+      response: 'fixture:one_review_incoming.json',
+    });
+
+    nav.to.bookings();
+    bookings.all.ctaToIncoming().click();
+    bookings.incoming.stripeAlert(0).should('not.exist');
+    bookings.incoming.declineRequestButton(0).click();
+    cy.get('[data-cy=message]').type('this a very long message, '.repeat(10));
+    cy.get('[data-cy=decline-button]').click();
+    cy.get('[data-cy=decline-error]').should(
+      'include.text',
+      "Message can't be blank or contain more than 200 characters"
+    );
+    cy.get('[data-cy=remaining-characters]').should('have.text', 'Remaining characters: -60');
   });
 });
 
