@@ -87,14 +87,14 @@ describe('User can answer booking request', () => {
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
-    cy.get('[data-cy=decline-button]').click();
-    cy.get('[data-cy=decline-error]').should(
-      'include.text',
-      "Message can't be blank or contain more than 200 characters"
-    );
+    bookings.declineRequestPopup.submitButton().click();
+    bookings.declineRequestPopup
+      .error()
+      .should('exist')
+      .and('include.text', "Message can't be blank or contain more than 200 characters");
   });
 
-  it('and unsuccessfully decline cause they enter a message longer than 200 characters', () => {
+  it.only('and unsuccessfully decline cause they enter a message longer than 200 characters', () => {
     cy.route({
       method: 'GET',
       url: `${api}/reviews/null`,
@@ -106,13 +106,13 @@ describe('User can answer booking request', () => {
     bookings.all.ctaToIncoming().click();
     bookings.incoming.stripeAlert(0).should('not.exist');
     bookings.incoming.declineRequestButton(0).click();
-    cy.get('[data-cy=message]').type('this a very long message, '.repeat(10));
-    cy.get('[data-cy=decline-button]').click();
-    cy.get('[data-cy=decline-error]').should(
-      'include.text',
-      "Message can't be blank or contain more than 200 characters"
-    );
-    cy.get('[data-cy=remaining-characters]').should('have.text', 'Remaining characters: -60');
+    bookings.declineRequestPopup.textField().type('this a very long message, '.repeat(10));
+    bookings.declineRequestPopup.submitButton().click();
+    bookings.declineRequestPopup
+      .error()
+      .should('exist')
+      .and('include.text', "Message can't be blank or contain more than 200 characters");
+    bookings.declineRequestPopup.remainingCharacters().should('have.text', 'Remaining characters: -60');
   });
 });
 

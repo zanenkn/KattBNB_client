@@ -16,7 +16,9 @@ class Bookings {
   };
   declineRequestPopup = {
     textField: () => cy.get('[data-cy=message]'),
-    submitButton: () => cy.get('[data-cy=decline-button]')
+    submitButton: () => cy.get('[data-cy=decline-button]'),
+    error: () => cy.get('[data-cy=decline-error]'),
+    remainingCharacters: () => cy.get('[data-cy=remaining-characters]')
   }
 }
 
