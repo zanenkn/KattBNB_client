@@ -36,14 +36,14 @@ const Receipt = ({ history }) => {
         <Flexbox space={5}>
           <KattBNBLogo width={'90px'} />
         </Flexbox>
-        <Text space={5}>
+        <Text space={8}>
           KattBNB AB
           <br />
           Reg. nr. 559252-4481
           <br />
           {t('Receipt:issued', { date: createdAt })}
         </Text>
-        <Header level='4' centered space={5}>
+        <Header level='4' centered space={6}>
           {t('Receipt:header', { nr: bookingId })}
         </Header>
         <StyledFlexbox verticalAlign={'bottom'}>
@@ -64,7 +64,7 @@ const Receipt = ({ history }) => {
           <Text>{t('Receipt:vat')}</Text>
           <Text>{formatPrice(swedishVAT)} kr</Text>
         </StyledFlexbox>
-        <Divider />
+        <Divider bottom={5} />
         <StyledFlexbox verticalAlign={'bottom'}>
           <Text bold color='primary'>
             {t('Receipt:total')}

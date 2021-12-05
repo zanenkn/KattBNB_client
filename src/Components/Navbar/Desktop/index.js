@@ -99,7 +99,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                       {t('reusable:navigation.settings')}
                     </InlineLink>
                   </SubmenuItem>
-                  <Divider />
+                  <Divider thick />
                   <SubmenuItem>
                     <InlineLink data-cy='nav-logout' onClick={() => signOut()}>
                       {t('reusable:navigation.logout')}
@@ -130,7 +130,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                   </SubmenuItem>
                 </>
               )}
-              <Divider />
+              <Divider thick />
               <LanguageSwitcher />
             </Submenu>
           </MenuItem>
