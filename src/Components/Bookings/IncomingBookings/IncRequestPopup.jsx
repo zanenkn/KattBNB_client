@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 
 const IncRequestPopup = (props) => {

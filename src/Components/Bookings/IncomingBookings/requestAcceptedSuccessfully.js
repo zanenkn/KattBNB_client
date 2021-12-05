@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import ICalendarLink from 'react-icalendar-link';
-import { Whitebox, ContentWrapper, Header, Text, InlineLink, Flexbox } from '../../UI-Components';
+import { Whitebox, ContentWrapper, Header, Text, InlineLink, Flexbox } from '../../../UI-Components';
 import styled from 'styled-components';
 
 const StyledFlexbox = styled(Flexbox)`

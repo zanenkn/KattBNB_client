@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import withAuth from '../../HOC/withAuth';
-import Spinner from '../ReusableComponents/Spinner';
-import KattBNBLogo from '../Icons/KattBNBLogo';
-import { formatPrice, priceOfOneAmount } from '../../Modules/PriceCalculations';
+import withAuth from '../../../HOC/withAuth';
+import Spinner from '../../ReusableComponents/Spinner';
+import KattBNBLogo from '../../Icons/KattBNBLogo';
+import { formatPrice, priceOfOneAmount } from '../../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
-import { ContentWrapper, Divider, Header, Whitebox, Flexbox, Text } from '../../UI-Components';
+import { ContentWrapper, Divider, Header, Whitebox, Flexbox, Text } from '../../../UI-Components';
 import styled from 'styled-components';
 
 const StyledFlexbox = styled(Flexbox)`

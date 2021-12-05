@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import OutRequestUserMessagePopup from '../outRequestUserMessagePopup';
+import OutRequestUserMessagePopup from './outRequestUserMessagePopup';
 import { Text } from '../../../UI-Components';
 import Booking from '../common/booking';
 

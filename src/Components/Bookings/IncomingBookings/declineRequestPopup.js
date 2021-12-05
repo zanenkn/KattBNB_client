@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import Popup from 'reactjs-popup';
-import { Header, Text, TextArea, Button, Notice } from '../../UI-Components';
-import { PopupHeaderWrapper } from './common/styles';
+import { Header, Text, TextArea, Button, Notice } from '../../../UI-Components';
+import { PopupHeaderWrapper } from '../common/styles';
 
 const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id, declModalCloseState }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');

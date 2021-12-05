@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import HostProfileView from '../HostProfileView/HostProfileView';
-import Spinner from '../ReusableComponents/Spinner';
+import HostProfileView from '../../HostProfileView/HostProfileView';
+import Spinner from '../../ReusableComponents/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import { priceOfOneAmount } from '../../Modules/PriceCalculations';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { priceOfOneAmount } from '../../../Modules/PriceCalculations';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 
 const BookingDetails = ({ history, id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');

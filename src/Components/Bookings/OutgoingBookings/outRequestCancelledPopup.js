@@ -1,10 +1,10 @@
 import React from 'react';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../ReusableComponents/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import { InlineLink, Header, Text } from '../../UI-Components';
-import { PopupHeaderWrapper } from './common/styles';
+import { InlineLink, Header, Text } from '../../../UI-Components';
+import { PopupHeaderWrapper } from '../common/styles';
 
 const OutRequestCancelledPopup = ({ open, onClose, startDate, endDate, nickname }) => {
   const { t, ready } = useTranslation('OutRequestCancelledPopup');

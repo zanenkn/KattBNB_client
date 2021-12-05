@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DeclineRequestPopup from '../declineRequestPopup';
+import DeclineRequestPopup from './declineRequestPopup';
 import moment from 'moment';
 import { Text, Header, Button, Flexbox } from '../../../UI-Components';
 import { Trans } from 'react-i18next';
