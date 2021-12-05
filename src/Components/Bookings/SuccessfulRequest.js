@@ -24,8 +24,13 @@ const SuccessfulRequest = ({ history }) => {
     }
     // eslint-disable-next-line
   }, []);
+
+  if (!ready) {
+    return <Spinner />
+  }
+
   return <div>a</div>
-  // if (ready) {
+
   //   return (
   //     <div className='content-wrapper'>
   //       <Header as='h1'>{t('SuccessfulRequest:title')}</Header>
@@ -52,9 +57,7 @@ const SuccessfulRequest = ({ history }) => {
   //       </Segment>
   //     </div>
   //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+
 };
 
 export default SuccessfulRequest;
