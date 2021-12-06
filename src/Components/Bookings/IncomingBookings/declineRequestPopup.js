@@ -8,9 +8,10 @@ import Popup from 'reactjs-popup';
 import { Header, Text, TextArea, Button, Notice } from '../../../UI-Components';
 import { PopupHeaderWrapper } from '../common/styles';
 
-const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id, declModalCloseState }) => {
+const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');
 
+  const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState('');
@@ -19,66 +20,60 @@ const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id, 
     e.preventDefault();
     const lang = detectLanguage();
     setLoading(true);
+    setCloseOnDocumentClick(false);
     if (window.navigator.onLine === false) {
       setLoading(false);
       setErrors(['reusable:errors:window-navigator']);
-      declModalCloseState(true);
-    } else {
-      if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
-        if (message !== '' && message.length < 201) {
-          const path = `/api/v1/bookings/${id}`;
-          const headers = {
-            uid: window.localStorage.getItem('uid'),
-            client: window.localStorage.getItem('client'),
-            'access-token': window.localStorage.getItem('access-token'),
-          };
-          const payload = {
-            host_message: message,
-            status: 'declined',
-            locale: lang,
-          };
-          axios
-            .patch(path, payload, { headers: headers })
-            .then(() => {
-              window.location.replace('/all-bookings');
-            })
-            .catch((error) => {
-              if (error.response === undefined) {
-                wipeCredentials('/is-not-available?atm');
-              } else if (error.response.status === 500) {
-                setLoading(false);
-                setErrors(['reusable:errors:500']);
-                declModalCloseState(true);
-              } else if (error.response.status === 401) {
-                window.alert(t('reusable:errors:401'));
-                wipeCredentials('/');
-              } else {
-                setLoading(false);
-                setErrors(error.response.data.error);
-                declModalCloseState(true);
-              }
-            });
-        } else {
-          setLoading(false);
-          setErrors(['DeclineRequestPopup:decline-error']);
-          declModalCloseState(true);
-        }
+    }
+    if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
+      if (message !== '' && message.length < 201) {
+        const path = `/api/v1/bookings/${id}`;
+        const headers = {
+          uid: window.localStorage.getItem('uid'),
+          client: window.localStorage.getItem('client'),
+          'access-token': window.localStorage.getItem('access-token'),
+        };
+        const payload = {
+          host_message: message,
+          status: 'declined',
+          locale: lang,
+        };
+        axios
+          .patch(path, payload, { headers: headers })
+          .then(() => {
+            window.location.replace('/all-bookings');
+          })
+          .catch((error) => {
+            if (error.response === undefined) {
+              wipeCredentials('/is-not-available?atm');
+            } else if (error.response.status === 500) {
+              setLoading(false);
+              setErrors(['reusable:errors:500']);
+            } else if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/');
+            } else {
+              setLoading(false);
+              setErrors(error.response.data.error);
+            }
+          });
       } else {
         setLoading(false);
-        declModalCloseState(true);
+        setErrors(['DeclineRequestPopup:decline-error']);
       }
     }
   };
 
   const declineCTA = (e) => {
-    declModalCloseState(false);
     declineBooking(e);
+    setCloseOnDocumentClick(true);
+    setLoading(false);
   };
 
   if (!ready) return <Spinner />;
 
   return (
-    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={closeOnDocumentClick}>
       <PopupHeaderWrapper>
         <Header level={3} color='white' space={2}>
           {t('DeclineRequestPopup:page-header')}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import DeclineRequestPopup from './declineRequestPopup';
+import IncRequestPopup from './incRequestPopup';
 import moment from 'moment';
-import { Text, Header, Button, Flexbox } from '../../../UI-Components';
+import { Text, Header, Button, Flexbox, InlineLink, Container } from '../../../UI-Components';
 import { Trans } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../../Modules/detectLanguage';
@@ -20,13 +21,9 @@ const BookingRequest = ({
   stripePendingVerification,
   onboardingUrl,
 }) => {
-  const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [declinePopupOpen, setDeclinePopupOpen] = useState(false);
+  const [userMessagePopupOpen, setUserMessagePopupOpen] = useState(false);
   const [errors, setErrors] = useState([]);
-
-  const declModalCloseState = (state) => {
-    setCloseOnDocumentClick(state);
-  };
 
   const formatPrice = (price) => {
     const priceWithDecimalsString = price.toFixed(2);
@@ -113,6 +110,7 @@ const BookingRequest = ({
             <strong>{{ endDate: moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
           </Trans>
         </Text>
+        <Container space={6}>
         {payoutSuccess ? (
           <Flexbox spaceItemsX={3} data-cy='booking-request-cta-section'>
             <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)} data-cy='decline-request'>
@@ -134,7 +132,7 @@ const BookingRequest = ({
           <Text data-cy='stripe-alert' centered>
             {t('IncomingRequests:stripe-step2-pending')}
           </Text>
-        ) : stripeAccountErrors.length > 0  && !stripePendingVerification ? (
+        ) : stripeAccountErrors.length > 0 && !stripePendingVerification ? (
           <div data-cy='stripe-alert'>
             <Header level={5} centered color='primary'>
               {t('reusable:important')}
@@ -143,6 +141,20 @@ const BookingRequest = ({
             <Button onClick={() => fetchStripeDashboardLink()}>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
           </div>
         ) : null}
+        </Container>
+
+        <InlineLink color='info' onClick={() => setUserMessagePopupOpen(true)}>{t('IncomingRequests:view-message')}</InlineLink>
+
+        <IncRequestPopup
+          open={userMessagePopupOpen}
+          onClose={() => setUserMessagePopupOpen(false)}
+          nickname={request.user.nickname}
+          numberOfCats={request.number_of_cats}
+          startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
+          endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
+          message={request.message}
+          avatar={request.user.profile_avatar}
+        />
 
         <DeclineRequestPopup
           id={request.id}
@@ -150,7 +162,6 @@ const BookingRequest = ({
           nickname={request.user.nickname}
           startDate={moment(request.dates[0]).format('YYYY-MM-DD')}
           endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
-          declModalCloseState={declModalCloseState}
           open={declinePopupOpen}
         />
       </Section>
