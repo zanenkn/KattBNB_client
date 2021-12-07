@@ -85,3 +85,8 @@ export const Section = styled(Container)`
   padding: ${spacing[6]};
   margin-bottom: 0;
 `;
+
+export const ScrollWrapper = styled(Container)`
+  max-height: 200px; 
+  overflow: auto
+`

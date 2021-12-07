@@ -8,7 +8,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
-import ViewReviewPopup from '../../Reviews/ViewReviewPopup';
+import ViewReviewPopup from './viewReviewPopup';
 import Booking from '../common/booking';
 import { Text, Notice } from '../../../UI-Components';
 // Completely MIGRATED
@@ -184,17 +184,19 @@ const IncomingHistory = ({ bookings, history }) => {
             links={[
               booking.review_id !== null && {
                 text: t('IncomingHistory:view-review'),
-                action: () => setViewReviewPopupOpened(true),
+                action: () => setViewReviewPopupOpened(booking.review_id),
               },
             ]}
           >
-            <ViewReviewPopup
-              id={booking.review_id}
-              open={viewReviewPopupOpened}
-              onClose={() => setViewReviewPopupOpened(false)}
-              startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-              endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-            />
+            {booking.review_id && (
+              <ViewReviewPopup
+                id={booking.review_id}
+                open={viewReviewPopupOpened === booking.review_id}
+                onClose={() => setViewReviewPopupOpened(false)}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
+            )}
           </Booking>
         );
       })}
