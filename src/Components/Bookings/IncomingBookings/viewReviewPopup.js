@@ -92,7 +92,7 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
           </Trans>
         </Text>
       </PopupHeaderWrapper>
-      {/* <ReviewScore score={score} displayNumerical={true} /> */}
+      <ReviewScore score={score} displayNumerical={true} primaryColor={'primary'} secondaryColor={'neutral'} />
       <FlexWrapper>
         <Avatar
           size='sm'
@@ -112,7 +112,9 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
         <>
           <Divider />
 
-          <Text size='sm' bold space={2}>{t('ViewReviewPopup:you-replied')}</Text>
+          <Text size='sm' bold space={2}>
+            {t('ViewReviewPopup:you-replied')}
+          </Text>
           <Text size='sm'>{moment(reviewUpdatedAt).fromNow()}</Text>
 
           <Text italic>{hostReply}</Text>
