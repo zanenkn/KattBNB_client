@@ -122,7 +122,9 @@ const IncomingHistory = ({ bookings, history }) => {
                 </Trans>
               }
               booking={booking}
-              links={[{ text: t('IncomingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) }]}
+              links={[
+                { text: t('IncomingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) },
+              ]}
             >
               <IncRequestDeclinedPopup
                 open={bookingDeclinedPopupOpened === booking.id}
@@ -161,7 +163,7 @@ const IncomingHistory = ({ bookings, history }) => {
             testId='incoming-history'
             text={
               <Trans i18nKey='IncomingHistory:other-history'>
-                Your cat(s) stayed with <strong>{{ nickname: booking.host_nickname }}</strong> during the dates of
+                You hosted <strong>{{ nickname: booking.user.nickname }}'s</strong> cat(s) during the dates of
                 <strong>{{ startDate: moment(booking.dates[0]).format('YYYY-MM-DD') }}</strong> until
                 <strong>{{ endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD') }}</strong>.
               </Trans>

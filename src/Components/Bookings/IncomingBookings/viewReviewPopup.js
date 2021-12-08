@@ -14,6 +14,7 @@ import { PopupHeaderWrapper, FlexWrapper, ScrollWrapper } from '../common/styles
 const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
   const { t, ready } = useTranslation('ViewReviewPopup');
   const lang = detectLanguage();
+  moment.locale(lang);
 
   const [nickname, setNickname] = useState(null);
   const [message, setMessage] = useState(null);
