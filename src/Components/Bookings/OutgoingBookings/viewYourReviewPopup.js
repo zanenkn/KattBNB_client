@@ -7,10 +7,13 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import moment from 'moment';
 import Popup from 'reactjs-popup';
+import { Header, Text, Avatar, Divider, Notice } from '../../../UI-Components';
+import { PopupHeaderWrapper, FlexWrapper, ScrollWrapper } from '../common/styles';
 
-const ViewYourReviewPopup = (props) => {
+const ViewYourReviewPopup = ({ id, open, onClose, startDate, endDate }) => {
   const { t, ready } = useTranslation('ViewYourReviewPopup');
   const lang = detectLanguage();
+  moment.locale(lang);
 
   const [nickname, setNickname] = useState(null);
   const [message, setMessage] = useState(null);
@@ -25,7 +28,7 @@ const ViewYourReviewPopup = (props) => {
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
     } else {
-      const path = `/api/v1/reviews/${props.id}`;
+      const path = `/api/v1/reviews/${id}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -58,78 +61,57 @@ const ViewYourReviewPopup = (props) => {
     }
     // eslint-disable-next-line
   }, []);
+
+  if (!ready) return <Spinner />;
+
+  if (errors) {
+    return (
+      <Notice nature='danger'>
+        <Text centered>{t(errors[0])}</Text>
+      </Notice>
+    );
+  }
+
   return (
-    <Popup modal open={props.open} onClose={props.onClose} position='top center' closeOnDocumentClick={true}>
-      ViewYourReviewPopup
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+      <PopupHeaderWrapper>
+        <Header level={3} color='white' space={2}>
+          {t('ViewYourReviewPopup:main-header')}
+        </Header>
+        <Text color='white'>
+          <Trans i18nKey='ViewYourReviewPopup:desc'>
+            You reviewed your booking with <strong>{{ nickname: nickname }}</strong> for the dates of
+            <strong>{{ startDate: startDate }}</strong> until <strong>{{ endDate: endDate }}</strong>.
+          </Trans>
+        </Text>
+      </PopupHeaderWrapper>
+      <ReviewScore score={score} displayNumerical={true} primaryColor={'primary'} secondaryColor={'neutral'} />
+      <Header level={5}>{t('ViewYourReviewPopup:you-said')}</Header>
+      <Text size='sm'>{moment(reviewDate).fromNow()}</Text>
+      <ScrollWrapper>
+        <Text italic>{message}</Text>
+      </ScrollWrapper>
+      {hostReply && (
+        <>
+          <Divider />
+          <FlexWrapper>
+            <Avatar
+              size='sm'
+              src={
+                hostAvatar === null
+                  ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+                  : hostAvatar
+              }
+            />
+            <Header level={5}>{nickname}</Header>
+          </FlexWrapper>
+          <Text size='sm'>{moment(reviewUpdatedAt).fromNow()}</Text>
+
+          <Text italic>{hostReply}</Text>
+        </>
+      )}
     </Popup>
   );
-  // if (ready) {
-  //   moment.locale(lang);
-  //   return errors !== null ? (
-  //     <Message negative style={{ textAlign: 'center' }}>
-  //       {t(errors[0])}
-  //     </Message>
-  //   ) : (
-  //     <>
-  //       <div style={{ margin: '-2rem -2rem 1rem', background: '#c90c61', padding: '2rem' }}>
-  //         <Header as='h2' style={{ color: '#ffffff', textAlign: 'left' }}>
-  //           {t('ViewYourReviewPopup:main-header')}
-  //         </Header>
-  //         <p style={{ color: '#ffffff', fontSize: 'small' }}>
-  //           <Trans i18nKey='ViewYourReviewPopup:desc'>
-  //             You reviewed your booking with <strong>{{ nickname: nickname }}</strong> for the dates of
-  //             <strong>{{ startDate: props.startDate }}</strong> until <strong>{{ endDate: props.endDate }}</strong>.
-  //           </Trans>
-  //         </p>
-  //       </div>
-  //       <div style={{ display: 'flex' }}>
-  //         <ReviewScore score={score} displayNumerical={true} />
-  //       </div>
-  //       <div style={{ display: 'flex', alignItems: 'baseline' }}>
-  //         <Header as='h4' style={{ margin: '0 0.5rem 0.5rem 0' }}>
-  //           {t('ViewYourReviewPopup:you-said')}
-  //         </Header>
-  //         <p style={{ fontSize: 'small' }}>{moment(reviewDate).fromNow()}</p>
-  //       </div>
-  //       <div style={{ maxHeight: '200px', overflow: 'auto', fontSize: 'small', fontStyle: 'italic' }}>
-  //         <p>{message}</p>
-  //       </div>
-  //       {hostReply && (
-  //         <>
-  //           <Divider style={{ marginTop: '2rem' }} />
-  //           <div style={{ display: 'flex', alignItems: 'center' }}>
-  //             <Image
-  //               src={
-  //                 hostAvatar === null
-  //                   ? `https://ui-avatars.com/api/?name=${nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-  //                   : hostAvatar
-  //               }
-  //               size='small'
-  //               style={{ borderRadius: '50%', width: '3rem', height: '3rem' }}
-  //             ></Image>
-  //             <div style={{ display: 'flex', alignItems: 'baseline' }}>
-  //               <Header style={{ margin: '0 0.5rem' }}>{nickname}</Header>
-  //               <p style={{ fontSize: 'small' }}>{moment(reviewUpdatedAt).fromNow()}</p>
-  //             </div>
-  //           </div>
-  //           <div
-  //             style={{
-  //               maxHeight: '200px',
-  //               overflow: 'auto',
-  //               fontSize: 'small',
-  //               fontStyle: 'italic',
-  //               margin: '1rem auto',
-  //             }}
-  //           >
-  //             <p>{hostReply}</p>
-  //           </div>
-  //         </>
-  //       )}
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default ViewYourReviewPopup;

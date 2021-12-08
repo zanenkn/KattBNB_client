@@ -50,7 +50,9 @@ const OutgoingHistory = ({ bookings, history }) => {
                 </Trans>
               }
               booking={booking}
-              links={[{ text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) }]}
+              links={[
+                { text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) },
+              ]}
             >
               <OutRequestDeclinedPopup
                 open={bookingDeclinedPopupOpened === booking.id}
@@ -151,13 +153,15 @@ const OutgoingHistory = ({ bookings, history }) => {
               },
             ]}
           >
-            <ViewYourReviewPopup
-              open={viewReviewPopupOpened===booking.review_id}
-              onClose={() => setViewReviewPopupOpened(false)}
-              id={booking.review_id}
-              startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
-              endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
-            />
+            {booking.review_id && (
+              <ViewYourReviewPopup
+                open={viewReviewPopupOpened === booking.review_id}
+                onClose={() => setViewReviewPopupOpened(false)}
+                id={booking.review_id}
+                startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
+                endDate={moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD')}
+              />
+            )}
           </Booking>
         );
       })}
