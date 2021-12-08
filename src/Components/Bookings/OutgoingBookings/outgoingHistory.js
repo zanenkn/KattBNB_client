@@ -50,10 +50,10 @@ const OutgoingHistory = ({ bookings, history }) => {
                 </Trans>
               }
               booking={booking}
-              links={[{ text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(true) }]}
+              links={[{ text: t('OutgoingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) }]}
             >
               <OutRequestDeclinedPopup
-                open={bookingDeclinedPopupOpened}
+                open={bookingDeclinedPopupOpened === booking.id}
                 onClose={() => setBookingDeclinedPopupOpened(false)}
                 id={booking.id}
                 nickname={booking.host_nickname}
@@ -81,10 +81,10 @@ const OutgoingHistory = ({ bookings, history }) => {
                 </Trans>
               }
               booking={booking}
-              links={[{ text: t('OutgoingHistory:why'), action: () => setBookingCanceledPopupOpened(true) }]}
+              links={[{ text: t('OutgoingHistory:why'), action: () => setBookingCanceledPopupOpened(booking.id) }]}
             >
               <OutRequestCancelledPopup
-                open={bookingCanceledPopupOpened}
+                open={bookingCanceledPopupOpened === booking.id}
                 onClose={() => setBookingCanceledPopupOpened(false)}
                 nickname={booking.host_nickname}
                 startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}
@@ -130,7 +130,7 @@ const OutgoingHistory = ({ bookings, history }) => {
             links={[
               booking.review_id !== null && {
                 text: t('OutgoingHistory:view-review'),
-                action: () => setViewReviewPopupOpened(true),
+                action: () => setViewReviewPopupOpened(booking.review_id),
               },
               {
                 text: t('reusable:cta:view-receipt'),
@@ -152,7 +152,7 @@ const OutgoingHistory = ({ bookings, history }) => {
             ]}
           >
             <ViewYourReviewPopup
-              open={viewReviewPopupOpened}
+              open={viewReviewPopupOpened===booking.review_id}
               onClose={() => setViewReviewPopupOpened(false)}
               id={booking.review_id}
               startDate={moment(booking.dates[0]).format('YYYY-MM-DD')}

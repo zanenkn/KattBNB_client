@@ -54,13 +54,13 @@ const OutgoingRequests = ({ bookings }) => {
             links={[
               {
                 text: t('OutgoingRequests:view-message'),
-                action: () => setUserMessagePopupOpened(true),
+                action: () => setUserMessagePopupOpened(request.id),
               },
             ]}
           >
             <OutRequestUserMessagePopup
               id={request.id}
-              open={userMessagePopupOpened}
+              open={userMessagePopupOpened === request.id}
               onClose={() => setUserMessagePopupOpened(false)}
               nickname={request.user.nickname}
               message={request.message}

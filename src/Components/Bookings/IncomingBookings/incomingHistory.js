@@ -122,10 +122,10 @@ const IncomingHistory = ({ bookings, history }) => {
                 </Trans>
               }
               booking={booking}
-              links={[{ text: t('IncomingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(true) }]}
+              links={[{ text: t('IncomingHistory:view-message'), action: () => setBookingDeclinedPopupOpened(booking.id) }]}
             >
               <IncRequestDeclinedPopup
-                open={bookingDeclinedPopupOpened}
+                open={bookingDeclinedPopupOpened === booking.id}
                 onClose={() => setBookingDeclinedPopupOpened(false)}
                 id={booking.id}
                 nickname={booking.user.nickname}
