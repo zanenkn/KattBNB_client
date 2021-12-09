@@ -19,6 +19,7 @@ export { default as Text } from './Typography/Text';
 export { default as InlineLink } from './Typography/InlineLink';
 
 // form
+export { default as DayPicker } from './Form/DayPicker';
 export { default as Dropdown } from './Form/Dropdown';
 export { default as RadioButton } from './Form/RadioButton';
 export { default as TextArea } from './Form/TextArea';
