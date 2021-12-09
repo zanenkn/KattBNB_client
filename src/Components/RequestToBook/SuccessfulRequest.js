@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../ReusableComponents/Spinner';
 import moment from 'moment';
 import { Trans, useTranslation } from 'react-i18next';
 

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../ReusableComponents/Spinner';
 import moment from 'moment';
 import axios from 'axios';
 import StripeCardDetails from './StripeCardDetails';
 import { ElementsConsumer, CardNumberElement } from '@stripe/react-stripe-js';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
-import { pricePerDay, hostTotal, finalTotal } from '../../../Modules/PriceCalculations';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { pricePerDay, hostTotal, finalTotal } from '../../Modules/PriceCalculations';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Visa from '../../Icons/Visa';
-import Mastercard from '../../Icons/Mastercard';
-import Amex from '../../Icons/Amex';
-import Stripe from '../../Icons/Stripe';
+import Visa from '../Icons/Visa';
+import Mastercard from '../Icons/Mastercard';
+import Amex from '../Icons/Amex';
+import Stripe from '../Icons/Stripe';
 
 const RequestToBook = (props) => {
   const { t, ready } = useTranslation('RequestToBook');

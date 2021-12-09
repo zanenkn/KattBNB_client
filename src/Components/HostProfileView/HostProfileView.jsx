@@ -14,7 +14,7 @@ const HostProfileView = (props) => {
   let locationAndPrice, sendMessage, requestToBook;
 
   const { t, ready } = useTranslation('HostProfileView');
-  return <div>a</div>
+  return <div>HostProfileView</div>
   // if (ready) {
   //   if (props.location && props.numberOfCats === 0) {
   //     let totalRate = priceOfOneAmount(props.rate);

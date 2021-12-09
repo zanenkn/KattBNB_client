@@ -22,6 +22,18 @@ export const StyledFlexbox = styled.div`
           `}
   }
 
+  > *:first-child {
+    padding-left: 0
+  }
+
+  > *:last-child {
+    padding-right: 0
+  }
+
+  > p {
+    margin-bottom: 0;
+  }
+
   ${({ direction, verticalAlign }) => {
     if (direction === 'row') {
       switch (verticalAlign) {
