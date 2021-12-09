@@ -1,4 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from './theme';
+
+const { colors, spacing } = theme;
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
@@ -293,6 +296,23 @@ const GlobalStyles = createGlobalStyle`
     }
     100% {
       opacity: 0;
+    }
+  }
+  .DayPickerInput > input {
+    background-color: transparent;
+    box-sizing: border-box;
+    color: inherit;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    width: 100%;
+    padding: ${spacing[4]} ${spacing[4]};
+    border: 1px solid ${colors.neutral[60]};
+    &:focus {
+      border: 1px solid ${colors.neutral[100]};
+    }
+    &:-internal-autofill-selected {
+      background-color: transparent;
     }
   }
 `;

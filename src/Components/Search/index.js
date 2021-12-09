@@ -10,7 +10,17 @@ import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/momen
 import { withTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import { Helmet } from 'react-helmet';
-import { Whitebox, Header, InlineLink, Dropdown, TextField, Button, Notice, Text } from '../../UI-Components';
+import {
+  Whitebox,
+  Header,
+  InlineLink,
+  Dropdown,
+  TextField,
+  Button,
+  Notice,
+  Text,
+  DayPicker,
+} from '../../UI-Components';
 
 class Search extends Component {
   constructor(props) {
@@ -46,9 +56,9 @@ class Search extends Component {
     if (!from) {
       return;
     }
-    if (moment(to).diff(moment(from), 'months') < 2) {
-      this.to.getDayPicker().showMonth(from);
-    }
+    // if (moment(to).diff(moment(from), 'months') < 2) {
+    //   this.to.getDayPicker().showMonth(from);
+    // }
   }
 
   async handleFromChange(from) {
@@ -136,8 +146,12 @@ class Search extends Component {
         </Header>
         <Whitebox>
           <div id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-            <DayPickerInput
-              value={from || t('Search:checkin')}
+            <DayPicker
+              label={t('Search:checkin')}
+              required
+              id='from'
+              value={from}
+              onChange={this.handleFromChange}
               format='LL'
               formatDate={formatDate}
               parseDate={parseDate}
@@ -154,11 +168,14 @@ class Search extends Component {
                 locale: lang,
                 showWeekNumbers: true,
               }}
-              onDayChange={this.handleFromChange}
             />
-            <DayPickerInput
-              ref={(el) => (this.to = el)}
-              value={to || t('Search:checkout')}
+            <DayPicker
+              dayPickerRef={(el) => (this.to = el)}
+              label={t('Search:checkout')}
+              required
+              id='from'
+              value={to || ''}
+              onChange={this.handleToChange}
               format='LL'
               formatDate={formatDate}
               parseDate={parseDate}
@@ -175,14 +192,15 @@ class Search extends Component {
                 locale: lang,
                 numberOfMonths: 1,
               }}
-              onDayChange={this.handleToChange}
             />
+
             <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
               <InlineLink style={{ textAlign: 'right' }} onClick={this.clearDates}>
                 {t('Search:reset')}
               </InlineLink>
             </div>
             <Dropdown
+              label={t('Search:where')}
               data={LOCATION_OPTIONS}
               id='location'
               onChange={(val) => this.setState({ location: val })}
@@ -216,124 +234,13 @@ class Search extends Component {
             {t('Search:cta')}
           </Button>
           <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <InlineLink to='/area-list' discreet>
+            <InlineLink as={Link} to='/area-list' discreet>
               {t('Search:sitters-near-you')}
             </InlineLink>
           </div>
         </Whitebox>
       </>
     );
-    // if (tReady) {
-    //   let errorDisplay;
-    //   const lang = detectLanguage();
-    //   const { from, to } = this.state;
-    //   const modifiers = { start: from, end: to };
-    //   const today = new Date();
-
-    //   return (
-    //     <div className='content-wrapper'>
-
-    //       <Segment className='whitebox'>
-    //         <Form id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-    //           <div className='required field' style={{ marginBottom: '0.5em' }}>
-    //             <label>{t('Search:when')}</label>
-    //             <div className='InputFromTo'>
-    //               <DayPickerInput
-    //                 value={from || t('Search:checkin')}
-    //                 format='LL'
-    //                 formatDate={formatDate}
-    //                 parseDate={parseDate}
-    //                 inputProps={{ readOnly: true }}
-    //                 dayPickerProps={{
-    //                   selectedDays: [from, { from, to }],
-    //                   disabledDays: { after: to, before: today },
-    //                   fromMonth: today,
-    //                   toMonth: to,
-    //                   modifiers,
-    //                   numberOfMonths: 1,
-    //                   firstDayOfWeek: 1,
-    //                   localeUtils: MomentLocaleUtils,
-    //                   locale: lang,
-    //                   showWeekNumbers: true,
-    //                 }}
-    //                 onDayChange={this.handleFromChange}
-    //               />
-    //             </div>
-    //             <div className='InputFromTo' style={{ marginTop: '0.5em' }}>
-    //               <DayPickerInput
-    //                 ref={(el) => (this.to = el)}
-    //                 value={to || t('Search:checkout')}
-    //                 format='LL'
-    //                 formatDate={formatDate}
-    //                 parseDate={parseDate}
-    //                 inputProps={
-    //                   this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }
-    //                 }
-    //                 dayPickerProps={{
-    //                   selectedDays: [from, { from, to }],
-    //                   disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
-    //                   modifiers,
-    //                   firstDayOfWeek: 1,
-    //                   showWeekNumbers: true,
-    //                   month: from,
-    //                   fromMonth: from,
-    //                   localeUtils: MomentLocaleUtils,
-    //                   locale: lang,
-    //                   numberOfMonths: 1,
-    //                 }}
-    //                 onDayChange={this.handleToChange}
-    //               />
-    //             </div>
-    //           </div>
-    //           <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
-    //             <Header className='fake-link-underlined' style={{ textAlign: 'right' }} onClick={this.clearDates}>
-    //               {t('Search:reset')}
-    //             </Header>
-    //           </div>
-    //           <div className='required field' style={{ marginBottom: '1.5em' }}>
-    //             <label>{t('Search:where')}</label>
-    //             <Dropdown
-    //               clearable
-    //               search
-    //               selection
-    //               value={this.state.location}
-    //               placeholder={t('Search:where-plch')}
-    //               options={LOCATION_OPTIONS}
-    //               id='location'
-    //               onChange={this.handleLocationChange}
-    //               onKeyPress={this.listenEnterKeySearch}
-    //             />
-    //           </div>
-    //           <Form.Input
-    //             label={t('Search:how-many')}
-    //             type='number'
-    //             required
-    //             id='cats'
-    //             value={this.state.cats}
-    //             onChange={this.onChangeHandler}
-    //             onKeyPress={this.listenEnterKeySearch}
-    //             style={{ maxWidth: '180px', height: '38px' }}
-    //           />
-    //         </Form>
-    //         {errorDisplay}
-    //         <div className='button-wrapper'>
-    //           <div>
-    //             <Button id='search-button' className='submit-button' onClick={this.search}>
-    //               {t('Search:cta')}
-    //             </Button>
-    //           </div>
-    //         </div>
-    //         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    //           <Link to='/area-list' className='discreet-link'>
-    //             {t('Search:sitters-near-you')}
-    //           </Link>
-    //         </div>
-    //       </Segment>
-    //     </div>
-    //   );
-    // } else {
-    //   return <Spinner />;
-    // }
   }
 }
 
