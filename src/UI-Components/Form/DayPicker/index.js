@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+// TODO> clean up this fucking mess
 
 const { colors, spacing } = theme;
 
@@ -26,7 +27,7 @@ const DayPicker = ({
   const handleLabelClick = () => {
     if (!isFocused && !value) {
       setIsFocused(isFocused);
-      input.current.focus();
+      input.current.children[0].children[0].focus()
     }
   };
 
@@ -46,19 +47,9 @@ const DayPicker = ({
           parseDate={parseDate}
           inputProps={inputProps}
           dayPickerProps={dayPickerProps}
-          onDayChange={(e) => onChange(e)}
+          onDayChange={() => onChange()}
           {...rest}
         />
-        {/* <Input
-        type={type}
-        ref={input}
-        value={value}
-        onChange={(e) => onChange(e)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        autoComplete={autoComplete}
-        {...rest}
-      /> */}
       </div>
       {required && !value && <RequiredLabel focused={isFocused} />}
     </DayPickerWrapper>

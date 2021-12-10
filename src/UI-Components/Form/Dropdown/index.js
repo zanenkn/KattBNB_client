@@ -59,6 +59,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id }) => {
   const onInputBlur = () => {
     setSearch((old) => ({ ...old, text: '' }));
     setIsFocused(false);
+    onChange('');
   };
 
   const { suggestions } = search;
