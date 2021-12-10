@@ -19,6 +19,7 @@ import {
   DayPicker,
   ContentWrapper,
 } from '../../UI-Components';
+import { formValidation } from '../../Modules/formValidation';
 
 const Search = ({ history }) => {
   const { t, ready } = useTranslation('Search');
@@ -66,7 +67,6 @@ const Search = ({ history }) => {
   const clearDates = () => {
     setFrom(undefined);
     setTo(undefined);
-    setErrors('');
   };
 
   const listenEnterKeySearch = (event) => {
@@ -75,9 +75,8 @@ const Search = ({ history }) => {
     }
   };
 
-  const search = () => {
-    // a little mvp validator
-    const validator = [
+  const validator = formValidation({
+    fields: [
       {
         condition: cats <= 0 || cats % 1 !== 0,
         error: 'Search:error-1',
@@ -90,19 +89,11 @@ const Search = ({ history }) => {
         condition: !to || !from,
         error: 'Search:error-3',
       },
-    ];
+    ],
+    errorSetter: (val) => setErrors(val),
+  });
 
-    const validationFail = validator.some((el) => el.condition);
-
-    if (validationFail) {
-      validator.map((element) => {
-        if (element.condition) {
-          setErrors((prev) => [...prev, element.error]);
-        }
-      });
-      return;
-    }
-
+  const search = () => {
     const utcFrom = Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate());
     const msFrom = new Date(utcFrom).getTime();
     const utcTo = Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate());
@@ -228,7 +219,7 @@ const Search = ({ history }) => {
           </Notice>
         )}
 
-        <Button id='search-button' onClick={() => search()}>
+        <Button id='search-button' onClick={() => validator.onSubmit(search)}>
           {t('Search:cta')}
         </Button>
         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
