@@ -12,12 +12,12 @@ import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
 
-const HostPopup = ({ id, open, onClose, currentSearch }) => {
+const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
   const { t, ready } = useTranslation('HostPopup');
-  const { host, loading } = useFetchHost(id);
+  const { loading } = useFetchHost(id);
   console.log('transformed response', host);
 
-  if (loading) {
+  if (loading || !ready) {
     return (
       <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
         <Spinner />
@@ -27,7 +27,8 @@ const HostPopup = ({ id, open, onClose, currentSearch }) => {
 
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
-      <p>host profile nr {id}</p>
+      <p>{host.name}</p>
+      <p>{host.rate}</p>
       <p>the current search is from {currentSearch.start} to {currentSearch.end} in {currentSearch.location}</p>
     </Popup>
   );
@@ -133,6 +134,7 @@ const HostPopup = ({ id, open, onClose, currentSearch }) => {
 const mapStateToProps = (state) => ({
   currentUserId: state.reduxTokenAuth.currentUser.attributes.id,
   currentSearch: state.currentSearch,
+  host: state.currentHostProfile
 });
 
 export default connect(mapStateToProps)(HostPopup);
