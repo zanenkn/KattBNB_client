@@ -9,7 +9,7 @@ export const SearchCriteriaWrapper = styled(Container)`
   margin: auto;
 `;
 
-export const UtilWrapper = styled(Flexbox)`
+export const JustifiedWrapper = styled(Flexbox)`
   justify-content: space-between;
 `;
 
@@ -21,7 +21,7 @@ export const RoundButton = styled.div`
   height: ${spacing[6]};
   width: ${spacing[6]};
   border-radius: 50%;
-  background-color: ${({ active }) => (active ? colors['primary'][100] : colors['neutral'][60])};
+  background-color: ${({ active }) => (active ? colors['info'][100] : colors['neutral'][60])};
   margin-right: ${spacing[2]};
   cursor: pointer;
   > svg {

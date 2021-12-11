@@ -6,7 +6,6 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
-import { Helmet } from 'react-helmet';
 import {
   Whitebox,
   Header,
@@ -20,6 +19,7 @@ import {
   ContentWrapper,
 } from '../../UI-Components';
 import { formValidation } from '../../Modules/formValidation';
+import SEO from '../ReusableComponents/SEO';
 
 const Search = ({ history }) => {
   const { t, ready } = useTranslation('Search');
@@ -37,27 +37,24 @@ const Search = ({ history }) => {
   const [errors, setErrors] = useState([]);
   const modifiers = { start: from, end: to };
 
-  // tbc
+  useEffect(() => {
+    if (history.location.state !== undefined) {
+      setFrom(history.location.state.checkInDate);
+      setTo(history.location.state.checkOutDate);
+      setSearchLocation(history.location.state.locationName);
+      setCats(history.location.state.numberOfCats);
+    }
+  }, []);
 
   // useEffect(() => {
-  //   if (history.location.state !== undefined) {
-  //     this.setState({
-  //       from: history.location.state.checkInDate,
-  //       to: history.location.state.checkOutDate,
-  //       location: history.location.state.location,
-  //       cats: history.location.state.numberOfCats,
-  //     });
+  //   if (from !== undefined) {
+  //     toField.current.getInput().focus();
   //   }
-  // }, []);
-
-  useEffect(() => {
-    if (from !== undefined) {
-      toField.current.getInput().focus();
-    }
-  }, [from]);
+  // }, [from]);
 
   const handleFromChange = () => {
     setFrom(fromField.current.state.month);
+    toField.current.getInput().focus();
   };
 
   const handleToChange = () => {
@@ -109,22 +106,7 @@ const Search = ({ history }) => {
 
   return (
     <ContentWrapper>
-      <Helmet>
-        <title>KattBNB - boka kattvakt online!</title>
-        <meta
-          name='description'
-          content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!'
-        />
-        <link rel='canonical' href='https://kattbnb.se/search' />
-        <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-        <meta property='og:url' content='https://kattbnb.se/search' />
-        <meta property='og:type' content='website' />
-        <meta
-          property='og:description'
-          content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
-        />
-        <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-      </Helmet>
+      <SEO page='search'/>
       <Header color='primary' centered>
         {t('Search:title')}
       </Header>
@@ -189,6 +171,7 @@ const Search = ({ history }) => {
             </InlineLink>
           </div>
           <Dropdown
+            defaultValue={history.location?.state?.locationName}
             label={t('Search:where')}
             data={LOCATION_OPTIONS}
             id='location'

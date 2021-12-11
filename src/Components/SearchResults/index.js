@@ -5,7 +5,6 @@ import List from './list';
 import GoogleMap from './map';
 import HostProfileView from '../HostProfileView/HostProfileView';
 import moment from 'moment';
-import 'moment/locale/sv';
 import axios from 'axios';
 import { finalTotal } from '../../Modules/PriceCalculations';
 import { detectLanguage } from '../../Modules/detectLanguage';
@@ -17,9 +16,10 @@ import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
 import Refresh from '../Icons/Refresh';
-import { Flexbox, Header, SecondaryStickyHeader, Text } from '../../UI-Components';
+import { Flexbox, InlineLink, SecondaryStickyHeader, Text } from '../../UI-Components';
 import { Location, Cat, Availabilty, Map as MapIcon, List as ListIcon } from '../Icons';
-import { SearchCriteriaWrapper, UtilWrapper, RoundButton, SearchResultWrapper, MapWrapper } from './styles';
+import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, MapWrapper, JustifiedWrapper } from './styles';
+import { Link } from 'react-router-dom';
 
 const SearchResults = (props) => {
   const { t, ready } = useTranslation('SearchResults');
@@ -309,35 +309,6 @@ const SearchResults = (props) => {
     }
   };
 
-  let resultCounter
-
-  switch (results) {
-    case 'list':
-      resultCounter = <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />;
-      break;
-    case 'map':
-      resultCounter = allLocationsLoaded ? (
-        <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
-      ) : (
-        <Refresh height={'28px'} fill={'silver'} className={'spin-it'} />
-      );
-      break;
-    case 'profile':
-      resultCounter = (
-        <Header
-          id='list-return'
-          //onClick={switchResultView}
-          className='fake-link-underlined'
-          style={{ textAlign: 'right' }}
-        >
-          {t('SearchResults:back')}
-        </Header>
-      );
-      break;
-    default:
-      break;
-  }
-
   if (!ready || loading) return <Spinner />;
 
   return (
@@ -403,23 +374,42 @@ const SearchResults = (props) => {
 
       <SecondaryStickyHeader>
         <SearchCriteriaWrapper>
-          <Flexbox spaceItemsX={2} horizontalAlign='left' space={2}>
-            <Flexbox spaceItemsX={1}>
-              <Location />
-              <Text>{locationName}</Text>
-            </Flexbox>
-            <Flexbox spaceItemsX={1}>
-              <Cat />
-              <Text>{numberOfCats}</Text>
-            </Flexbox>
-          </Flexbox>
-          <Flexbox spaceItemsX={1} horizontalAlign='left' space={4}>
+          <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
             <Availabilty />
             <Text>
               {moment(checkInDate).format('LL')} - {moment(checkOutDate).format('LL')}
             </Text>
           </Flexbox>
-          <UtilWrapper>
+
+          <JustifiedWrapper horizontalAlign='left' space={6}>
+            <Flexbox spaceItemsX={2}>
+              <Flexbox spaceItemsX={1}>
+                <Location />
+                <Text>{locationName}</Text>
+              </Flexbox>
+              <Flexbox spaceItemsX={1}>
+                <Cat />
+                <Text>{numberOfCats}</Text>
+              </Flexbox>
+            </Flexbox>
+            <InlineLink
+              color='info'
+              as={Link}
+              to={{
+                pathname: '/search',
+                state: {
+                  checkInDate: new Date(checkInDate),
+                  checkOutDate: new Date(checkOutDate),
+                  locationName: locationName,
+                  numberOfCats: numberOfCats,
+                },
+              }}
+            >
+              Change search
+            </InlineLink>
+          </JustifiedWrapper>
+
+          <JustifiedWrapper>
             <Flexbox>
               <RoundButton active={results === 'map'} id='map-button' onClick={() => setResults('map')}>
                 <MapIcon />
@@ -428,61 +418,76 @@ const SearchResults = (props) => {
                 <ListIcon />
               </RoundButton>
             </Flexbox>
-            {resultCounter}
-          </UtilWrapper>
+            {results === 'list' && (
+              <Text>
+                <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
+              </Text>
+            )}
+            {results === 'map' && (
+              <Text>
+                {allLocationsLoaded ? (
+                  <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
+                ) : (
+                  <Refresh height={'28px'} fill={'silver'} className={'spin-it'} />
+                )}
+              </Text>
+            )}
+            {results === 'profile' && (
+              <InlineLink onClick={() => setResults('map')}>{t('SearchResults:back')}</InlineLink>
+            )}
+          </JustifiedWrapper>
         </SearchCriteriaWrapper>
       </SecondaryStickyHeader>
 
-        {results === 'list' && (
-          <SearchResultWrapper padding={150}>
-            <List
-              finalAvailableHosts={availableByLocation}
-              numberOfCats={numberOfCats}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              location={locationName}
-              handleListItemClick={(id, hostStatus) => getHostById(id, hostStatus)}
-            />
-          </SearchResultWrapper>
-        )}
-        {results === 'map' && (
-          <MapWrapper padding={150}>
-            <GoogleMap
-              numberOfCats={numberOfCats}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              mapCenterLat={locationLat}
-              mapCenterLong={locationLong}
-              byLocationAvailableHosts={availableByLocation}
-              allAvailableHosts={availableAllLocations}
-              handleDatapointClick={(id, hostStatus) => getHostById(id, hostStatus)}
-            />
-          </MapWrapper>
-        )}
-        {results === 'profile' && (
-          <SearchResultWrapper padding={150}>
-            <HostProfileView
-              numberOfCats={numberOfCats}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              hostId={hostId}
-              currentUserId={id}
-              avatar={hostAvatar}
-              nickname={hostNickname}
-              location={hostLocation}
-              rate={hostRate}
-              supplement={hostSupplement}
-              description={hostDescription}
-              lat={hostLat}
-              long={hostLong}
-              hostProfileId={hostProfileId}
-              score={score}
-              requestToBookButtonClick={requestToBookButtonClick}
-              messageHost={messageHost}
-            />
-          </SearchResultWrapper>
-        )}
-
+      {results === 'list' && (
+        <SearchResultWrapper padding={150}>
+          <List
+            finalAvailableHosts={availableByLocation}
+            numberOfCats={numberOfCats}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            location={locationName}
+            handleListItemClick={(id, hostStatus) => getHostById(id, hostStatus)}
+          />
+        </SearchResultWrapper>
+      )}
+      {results === 'map' && (
+        <MapWrapper padding={150}>
+          <GoogleMap
+            numberOfCats={numberOfCats}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            mapCenterLat={locationLat}
+            mapCenterLong={locationLong}
+            byLocationAvailableHosts={availableByLocation}
+            allAvailableHosts={availableAllLocations}
+            handleDatapointClick={(id, hostStatus) => getHostById(id, hostStatus)}
+          />
+        </MapWrapper>
+      )}
+      {results === 'profile' && (
+        <SearchResultWrapper padding={150}>
+          <HostProfileView
+            numberOfCats={numberOfCats}
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            hostId={hostId}
+            currentUserId={id}
+            avatar={hostAvatar}
+            nickname={hostNickname}
+            location={hostLocation}
+            rate={hostRate}
+            supplement={hostSupplement}
+            description={hostDescription}
+            lat={hostLat}
+            long={hostLong}
+            hostProfileId={hostProfileId}
+            score={score}
+            requestToBookButtonClick={requestToBookButtonClick}
+            messageHost={messageHost}
+          />
+        </SearchResultWrapper>
+      )}
     </>
   );
 };
