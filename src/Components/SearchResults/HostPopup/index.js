@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReviewScore from '../../ReusableComponents/ReviewScore';
 import { pricePerDay, finalTotal } from '../../../Modules/PriceCalculations';
 import RequestToBookCTA from '../../ReusableComponents/RequestToBookCTA';
@@ -11,7 +12,7 @@ import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
 
-const HostPopup = ({ id, open, onClose }) => {
+const HostPopup = ({ id, open, onClose, currentSearch }) => {
   const { t, ready } = useTranslation('HostPopup');
   const { host, loading } = useFetchHost(id);
   console.log('transformed response', host);
@@ -27,6 +28,7 @@ const HostPopup = ({ id, open, onClose }) => {
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
       <p>host profile nr {id}</p>
+      <p>the current search is from {currentSearch.start} to {currentSearch.end} in {currentSearch.location}</p>
     </Popup>
   );
 
@@ -128,4 +130,9 @@ const HostPopup = ({ id, open, onClose }) => {
   // }
 };
 
-export default HostPopup;
+const mapStateToProps = (state) => ({
+  currentUserId: state.reduxTokenAuth.currentUser.attributes.id,
+  currentSearch: state.currentSearch,
+});
+
+export default connect(mapStateToProps)(HostPopup);

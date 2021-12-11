@@ -292,7 +292,7 @@ const SearchResults = (props) => {
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
 
-      {hostPopupOpen && <HostPopup open={!!hostPopupOpen} id={hostPopupOpen} onClose={()=> setHostPopupOpen(false)}/>}
+      {hostPopupOpen && <HostPopup open={!!hostPopupOpen} id={hostPopupOpen} onClose={() => setHostPopupOpen(false)} />}
 
       <Popup
         modal
@@ -432,6 +432,9 @@ const SearchResults = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });
+const mapStateToProps = (state) => ({
+  id: state.reduxTokenAuth.currentUser.attributes.id,
+  currentSearch: state.currentSearch,
+});
 
 export default connect(mapStateToProps)(SearchResults);

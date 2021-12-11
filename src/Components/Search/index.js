@@ -21,7 +21,7 @@ import {
 import { formValidation } from '../../Modules/formValidation';
 import SEO from '../ReusableComponents/SEO';
 
-const Search = ({ history }) => {
+const Search = ({ history, dispatch }) => {
   const { t, ready } = useTranslation('Search');
   const lang = detectLanguage();
 
@@ -96,6 +96,16 @@ const Search = ({ history }) => {
     const utcTo = Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate());
     const msTo = new Date(utcTo).getTime();
 
+    dispatch({
+      type: 'SEARCHED',
+      currentSearch: {
+        start: msFrom,
+        end: msTo,
+        cats: cats,
+        location: searchLocation,
+      },
+    });
+
     history.push({
       pathname: '/search-results',
       search: `?from=${msFrom}&to=${msTo}&cats=${cats}&location=${searchLocation}&view=map`,
@@ -106,7 +116,7 @@ const Search = ({ history }) => {
 
   return (
     <ContentWrapper>
-      <SEO page='search'/>
+      <SEO page='search' />
       <Header color='primary' centered>
         {t('Search:title')}
       </Header>
