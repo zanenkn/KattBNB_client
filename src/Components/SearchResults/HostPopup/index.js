@@ -1,17 +1,36 @@
 import React from 'react';
-import ReviewScore from './ReusableComponents/ReviewScore';
-import { pricePerDay, finalTotal } from '../Modules/PriceCalculations';
-import RequestToBookCTA from './ReusableComponents/RequestToBookCTA';
+import ReviewScore from '../../ReusableComponents/ReviewScore';
+import { pricePerDay, finalTotal } from '../../../Modules/PriceCalculations';
+import RequestToBookCTA from '../../ReusableComponents/RequestToBookCTA';
 import { useTranslation, Trans } from 'react-i18next';
-import User from './Icons/User';
+import User from '../../Icons/User';
 //import Location from './Icons/src/Location';
-import Price from './Icons/Price';
-import Review from './Icons/Review';
-import Spinner from './ReusableComponents/Spinner';
+import Price from '../../Icons/Price';
+import Review from '../../Icons/Review';
+import Spinner from '../../ReusableComponents/Spinner';
+import Popup from 'reactjs-popup';
+import { useFetchHost } from './useFetchHost';
 
-const HostPopup = (props) => {
+const HostPopup = ({ id, open, onClose }) => {
   const { t, ready } = useTranslation('HostPopup');
-  return <div>a</div>
+  const { host, loading } = useFetchHost(id);
+  console.log('transformed response', host);
+
+  if (loading) {
+    return (
+      <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+        <Spinner />
+      </Popup>
+    );
+  }
+
+  return (
+    <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
+      <p>host profile nr {id}</p>
+    </Popup>
+  );
+
+
   // if (ready) {
   //   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate);
   //   let orderTotal = finalTotal(

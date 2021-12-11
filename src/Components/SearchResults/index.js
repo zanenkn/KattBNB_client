@@ -10,7 +10,7 @@ import { finalTotal } from '../../Modules/PriceCalculations';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import Popup from 'reactjs-popup';
-import HostPopup from '../HostPopup';
+import HostPopup from './HostPopup';
 import Spinner from '../ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
@@ -38,7 +38,9 @@ const SearchResults = (props) => {
   const [score, setScore] = useState('');
   const [reviewsCount, setReviewsCount] = useState('');
   const [results, setResults] = useState('');
-  const [openHostPopup, setOpenHostPopup] = useState(false);
+
+  const [hostPopupOpen, setHostPopupOpen] = useState(false);
+
   const [scrollOffset, setScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hostPopupLoading, setHostPopupLoading] = useState(true);
@@ -170,48 +172,9 @@ const SearchResults = (props) => {
 
   const handleHostProfileClick = () => {
     setResults('profile');
-    setOpenHostPopup(false);
+
     setScrollOffset(window.pageYOffset);
     window.scrollTo(0, 0);
-  };
-
-  const getHostById = (id, status) => {
-    if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      axios
-        .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
-        .then(({ data }) => {
-          if (data.length === 1) {
-            setHostId(data[0].user.id);
-            setHostAvatar(data[0].user.profile_avatar);
-            setHostNickname(data[0].user.nickname);
-            setHostLocation(data[0].user.location);
-            setHostRate(data[0].price_per_day_1_cat);
-            setHostSupplement(data[0].supplement_price_per_cat_per_day);
-            setHostDescription(data[0].description);
-            setHostLat(data[0].lat);
-            setHostLong(data[0].long);
-            setHostProfileId(data[0].id);
-            setScore(data[0].score);
-            setReviewsCount(data[0].reviews_count);
-            setHostAvailable(status);
-            setOpenHostPopup(true);
-            setHostPopupLoading(false);
-          } else {
-            setErrors(['reusable:errors:index-no-host-1']);
-          }
-        })
-        .catch(({ response }) => {
-          if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (response.status === 500) {
-            setErrors(['reusable:errors:500']);
-          } else {
-            setErrors(response.data.error);
-          }
-        });
-    }
   };
 
   const resetHost = () => {
@@ -231,7 +194,6 @@ const SearchResults = (props) => {
   };
 
   const closeModal = () => {
-    setOpenHostPopup(false);
     setHostPopupLoading(true);
     if (results !== 'profile') {
       resetHost();
@@ -329,31 +291,9 @@ const SearchResults = (props) => {
         />
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
-      <Popup modal open={openHostPopup} closeOnDocumentClick={true} onClose={closeModal} position='top center'>
-        <div>
-          {hostPopupLoading ? (
-            <Spinner />
-          ) : (
-            <HostPopup
-              numberOfCats={numberOfCats}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              avatar={hostAvatar}
-              nickname={hostNickname}
-              location={hostLocation}
-              rate={hostRate}
-              supplement={hostSupplement}
-              score={score}
-              reviewsCount={reviewsCount}
-              handleHostProfileClick={handleHostProfileClick}
-              requestToBookButtonClick={requestToBookButtonClick}
-              hostAvailable={hostAvailable}
-              messageHost={messageHost}
-              allowToBook={hostId === id ? false : true}
-            />
-          )}
-        </div>
-      </Popup>
+
+      {hostPopupOpen && <HostPopup open={!!hostPopupOpen} id={hostPopupOpen} onClose={()=> setHostPopupOpen(false)}/>}
+
       <Popup
         modal
         open={errors.length > 0}
@@ -447,7 +387,7 @@ const SearchResults = (props) => {
             checkInDate={checkInDate}
             checkOutDate={checkOutDate}
             location={locationName}
-            handleListItemClick={(id, hostStatus) => getHostById(id, hostStatus)}
+            handleListItemClick={(id) => setHostPopupOpen(id)}
           />
         </SearchResultWrapper>
       )}
@@ -461,7 +401,7 @@ const SearchResults = (props) => {
             mapCenterLong={locationLong}
             byLocationAvailableHosts={availableByLocation}
             allAvailableHosts={availableAllLocations}
-            handleDatapointClick={(id, hostStatus) => getHostById(id, hostStatus)}
+            handleDatapointClick={(id) => setHostPopupOpen(id)}
           />
         </MapWrapper>
       )}
