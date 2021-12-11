@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet';
 import { SeoSrc } from './seoSrc';
 
 const SEO = ({page}) => {
-  debugger
   return (
     <Helmet>
       <title>{SeoSrc[page]['title']}</title>

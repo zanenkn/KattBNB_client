@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
-import Marker from './Marker';
+import Marker from './marker';
 import mapStyles from '../../Modules/MapStyle.js';
-import ClusterMarker from './ClusterMarker';
+import ClusterMarker from './clusterMarker';
 
 const GoogleMap = ({
   allAvailableHosts,

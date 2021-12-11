@@ -2,6 +2,7 @@
 export { default as Avatar } from './Avatar/';
 export { default as Button } from './Button/';
 export { default as Notice } from './Notice/';
+export { default as PriceLabel } from './PriceLabel/';
 
 // wrappers
 export { default as Container } from './Wrappers/Container/';
