@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import axios from 'axios';
+import { useDispatch } from 'react-redux'
 
 export const useFetchHost = (id) => {
   const lang = detectLanguage();
   const [errors, setErrors] = useState([]);
   const [host, setHost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch()
 
   if (window.navigator.onLine === false) {
     setErrors((prev) => [...prev, 'reusable:errors:window-navigator']);
@@ -22,6 +24,10 @@ export const useFetchHost = (id) => {
         }
         const transformedResponse = transformResponseToHost(data[0]);
         setHost(transformedResponse);
+        dispatch({
+          type: 'HOST_PROFILE_FETCHED',
+          hostProfile: transformedResponse,
+        });
         setLoading(false);
       })
       .catch(({ response }) => {

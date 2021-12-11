@@ -26,6 +26,7 @@ const SearchResults = (props) => {
   const lang = detectLanguage();
   moment.locale(lang);
 
+
   const { id, history } = props;
 
   const [checkInDate, setCheckInDate] = useState('');
@@ -292,7 +293,17 @@ const SearchResults = (props) => {
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
 
-      {hostPopupOpen && <HostPopup open={!!hostPopupOpen} id={hostPopupOpen} onClose={() => setHostPopupOpen(false)} />}
+      {hostPopupOpen && 
+        <HostPopup 
+        open={!!hostPopupOpen} 
+        id={hostPopupOpen} 
+        onClose={() => {
+          props.dispatch({
+            type: 'HOST_PROFILE_RESET'
+          });
+          setHostPopupOpen(false)
+        }} />
+        }
 
       <Popup
         modal
