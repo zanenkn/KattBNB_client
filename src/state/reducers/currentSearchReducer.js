@@ -3,7 +3,7 @@ const initialState = {};
 const currentSearchReducer = (state = initialState, action) => {
   
   switch (action.type) {
-    case 'SEARCHED':
+    case 'NEW_SEARCH':
       return {
         ...state,
         ...action.currentSearch,

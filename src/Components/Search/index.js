@@ -39,8 +39,8 @@ const Search = ({ history, dispatch, currentSearch }) => {
 
   useEffect(() => {
     if (!!Object.keys(currentSearch).length) {
-      setFrom(moment(currentSearch.start).format('LL'));
-      setTo(moment(currentSearch.end).format('LL'));
+      setFrom(currentSearch.start);
+      setTo(currentSearch.end);
       setSearchLocation(currentSearch.location);
       setCats(currentSearch.cats);
     }
@@ -106,7 +106,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
 
   const search = () => {
     dispatch({
-      type: 'SEARCHED',
+      type: 'NEW_SEARCH',
       currentSearch: {
         start: from,
         end: to,
