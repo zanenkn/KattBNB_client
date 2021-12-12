@@ -4,18 +4,21 @@ import ReviewScore from '../../ReusableComponents/ReviewScore';
 import { pricePerDay, finalTotal } from '../../../Modules/PriceCalculations';
 import RequestToBookCTA from '../../ReusableComponents/RequestToBookCTA';
 import { useTranslation, Trans } from 'react-i18next';
-import User from '../../Icons/User';
-//import Location from './Icons/src/Location';
+import { Location, User } from '../../Icons';
 import Price from '../../Icons/Price';
 import Review from '../../Icons/Review';
 import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
+import { Avatar, Flexbox, Text } from '../../../UI-Components';
 
 const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
   console.log('transformed response', host);
+
+  const perDay = pricePerDay(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+  const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
 
   if (loading || !ready) {
     return (
@@ -27,55 +30,51 @@ const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
 
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
-      <p>{host.name}</p>
+      <Avatar
+        src={
+          host.avatar === null
+            ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+            : host.avatar
+        }
+      />
+      {host.score && <ReviewScore score={host.score} center={true} displayNumerical={true} />}
+
+      <Flexbox>
+        <User />
+        <Text>{host.name}</Text>
+      </Flexbox>
+      <Flexbox>
+        <Text>
+          <span style={{ whiteSpace: 'nowrap' }}>
+            <Location />
+            &nbsp;{host.location}&ensp;
+          </span>
+          <span style={{ whiteSpace: 'nowrap' }}>
+            <Price fill={'grey'} height={'0.8em'} />
+            &nbsp;{perDay} {t('reusable:price.per-day')}&ensp;
+          </span>
+          {host.reviewsCount && (
+            <span style={{ whiteSpace: 'nowrap' }}>
+              <Review fill={'grey'} height={'0.8em'} />
+              &nbsp;{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}
+            </span>
+          )}
+        </Text>
+      </Flexbox>
+
       <p>{host.rate}</p>
-      <p>the current search is from {currentSearch.start} to {currentSearch.end} in {currentSearch.location}</p>
+      <p>
+        the current search is from {currentSearch.start} to {currentSearch.end} in {currentSearch.location}
+      </p>
     </Popup>
   );
 
-
   // if (ready) {
-  //   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate);
-  //   let orderTotal = finalTotal(
-  //     props.rate,
-  //     props.numberOfCats,
-  //     props.supplement,
-  //     props.checkInDate,
-  //     props.checkOutDate
-  //   );
 
   //   return (
   //     <>
-  //       <Image
-  //         src={
-  //           props.avatar === null
-  //             ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-  //             : props.avatar
-  //         }
-  //         size='small'
-  //         style={{ borderRadius: '50%', margin: 'auto', marginBottom: '0.5rem' }}
-  //       ></Image>
-  //       {props.score && <ReviewScore score={props.score} height={'1rem'} center={true} displayNumerical={true} />}
-  //       <Header as='h2' style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
-  //         <User fill={'#c90c61'} height={'0.8em'} />
-  //         &ensp;{props.nickname}
-  //       </Header>
-  //       <Header as='h4' style={{ marginBottom: '0', marginTop: '0', lineHeight: '150%' }}>
-  //         <span style={{ whiteSpace: 'nowrap' }}>
-  //           <Location fill={'grey'} height={'0.8em'} />
-  //           &nbsp;{props.location}&ensp;
-  //         </span>
-  //         <span style={{ whiteSpace: 'nowrap' }}>
-  //           <Price fill={'grey'} height={'0.8em'} />
-  //           &nbsp;{perDay} {t('reusable:price.per-day')}&ensp;
-  //         </span>
-  //         {props.reviewsCount && (
-  //           <span style={{ whiteSpace: 'nowrap' }}>
-  //             <Review fill={'grey'} height={'0.8em'} />
-  //             &nbsp;{t('reusable:reviews', { count: parseInt(props.reviewsCount) })}
-  //           </span>
-  //         )}
-  //       </Header>
+  //
+
   //       {props.allowToBook && (
   //         <Header
   //           onClick={props.handleHostProfileClick}
@@ -134,7 +133,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
 const mapStateToProps = (state) => ({
   currentUserId: state.reduxTokenAuth.currentUser.attributes.id,
   currentSearch: state.currentSearch,
-  host: state.currentHostProfile
+  host: state.currentHostProfile,
 });
 
 export default connect(mapStateToProps)(HostPopup);
