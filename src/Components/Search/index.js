@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,7 @@ import {
 import { formValidation } from '../../Modules/formValidation';
 import SEO from '../ReusableComponents/SEO';
 
-const Search = ({ history, dispatch }) => {
+const Search = ({ history, dispatch, currentSearch }) => {
   const { t, ready } = useTranslation('Search');
   const lang = detectLanguage();
 
@@ -30,19 +31,18 @@ const Search = ({ history, dispatch }) => {
 
   const today = new Date();
 
-  const [from, setFrom] = useState(undefined);
-  const [to, setTo] = useState(undefined);
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
   const [searchLocation, setSearchLocation] = useState(null);
   const [cats, setCats] = useState(null);
   const [errors, setErrors] = useState([]);
-  const modifiers = { start: from, end: to };
 
   useEffect(() => {
-    if (history.location.state !== undefined) {
-      setFrom(history.location.state.checkInDate);
-      setTo(history.location.state.checkOutDate);
-      setSearchLocation(history.location.state.locationName);
-      setCats(history.location.state.numberOfCats);
+    if (!!Object.keys(currentSearch).length) {
+      setFrom(moment(currentSearch.start).format('LL'));
+      setTo(moment(currentSearch.end).format('LL'));
+      setSearchLocation(currentSearch.location);
+      setCats(currentSearch.cats);
     }
   }, []);
 
@@ -53,17 +53,31 @@ const Search = ({ history, dispatch }) => {
   // }, [from]);
 
   const handleFromChange = () => {
-    setFrom(fromField.current.state.month);
+    const utcFrom = Date.UTC(
+      fromField.current.state.month.getUTCFullYear(),
+      fromField.current.state.month.getUTCMonth(),
+      fromField.current.state.month.getUTCDate()
+    );
+    const msFrom = new Date(utcFrom).getTime();
+
+    setFrom(msFrom);
     toField.current.getInput().focus();
   };
 
   const handleToChange = () => {
-    setTo(toField.current.state.month);
+    const utcTo = Date.UTC(
+      toField.current.state.month.getUTCFullYear(),
+      toField.current.state.month.getUTCMonth(),
+      toField.current.state.month.getUTCDate()
+    );
+    const msTo = new Date(utcTo).getTime();
+
+    setTo(msTo);
   };
 
   const clearDates = () => {
-    setFrom(undefined);
-    setTo(undefined);
+    setFrom(null);
+    setTo(null);
   };
 
   const listenEnterKeySearch = (event) => {
@@ -91,16 +105,11 @@ const Search = ({ history, dispatch }) => {
   });
 
   const search = () => {
-    const utcFrom = Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate());
-    const msFrom = new Date(utcFrom).getTime();
-    const utcTo = Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate());
-    const msTo = new Date(utcTo).getTime();
-
     dispatch({
       type: 'SEARCHED',
       currentSearch: {
-        start: msFrom,
-        end: msTo,
+        start: from,
+        end: to,
         cats: cats,
         location: searchLocation,
       },
@@ -108,7 +117,7 @@ const Search = ({ history, dispatch }) => {
 
     history.push({
       pathname: '/search-results',
-      search: `?from=${msFrom}&to=${msTo}&cats=${cats}&location=${searchLocation}&view=map`,
+      search: `?from=${from}&to=${to}&cats=${cats}&location=${searchLocation}&view=map`,
     });
   };
 
@@ -127,18 +136,17 @@ const Search = ({ history, dispatch }) => {
             label={t('Search:checkin')}
             required
             id='from'
-            value={from}
+            value={from ? moment(from).format('LL') : ''}
             onChange={() => handleFromChange()}
             format='LL'
             formatDate={formatDate}
             parseDate={parseDate}
             inputProps={{ readOnly: true, placeholder: false }}
             dayPickerProps={{
-              selectedDays: [from, { from, to }],
-              disabledDays: { after: to, before: today },
+              selectedDays: { from: new Date(from), to: new Date(to) },
+              disabledDays: { after: new Date(to), before: today },
               fromMonth: today,
-              toMonth: to,
-              modifiers,
+              toMonth: new Date(to),
               numberOfMonths: 1,
               firstDayOfWeek: 1,
               localeUtils: MomentLocaleUtils,
@@ -151,37 +159,36 @@ const Search = ({ history, dispatch }) => {
             label={t('Search:checkout')}
             required
             id='from'
-            value={to || ''}
+            value={to ? moment(to).format('LL') : ''}
             onChange={() => handleToChange()}
             format='LL'
             formatDate={formatDate}
             parseDate={parseDate}
             inputProps={{
-              disabled: from === undefined,
-              readOnly: !(from === undefined),
+              disabled: !from,
+              readOnly: !!from,
               placeholder: false,
             }}
             dayPickerProps={{
-              selectedDays: [from, { from, to }],
-              disabledDays: from !== undefined ? { before: from } : { before: today },
-              modifiers,
+              selectedDays: { from: new Date(from), to: new Date(to) },
+              disabledDays: { before: from ? new Date(from) : today },
               firstDayOfWeek: 1,
               showWeekNumbers: true,
-              month: from,
-              fromMonth: from,
+              month: new Date(from),
+              fromMonth: new Date(from),
               localeUtils: MomentLocaleUtils,
               locale: lang,
               numberOfMonths: 1,
             }}
           />
 
-          <div style={{ visibility: from === undefined && to === undefined ? 'hidden' : 'visible' }}>
+          <div style={{ visibility: !from && !to ? 'hidden' : 'visible' }}>
             <InlineLink style={{ textAlign: 'right' }} onClick={() => clearDates()}>
               {t('Search:reset')}
             </InlineLink>
           </div>
           <Dropdown
-            defaultValue={history.location?.state?.locationName}
+            defaultValue={currentSearch.location}
             label={t('Search:where')}
             data={LOCATION_OPTIONS}
             id='location'
@@ -225,6 +232,9 @@ const Search = ({ history, dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ location: state.reduxTokenAuth.currentUser.attributes.location });
+const mapStateToProps = (state) => ({
+  location: state.reduxTokenAuth.currentUser.attributes.location,
+  currentSearch: state.currentSearch,
+});
 
 export default connect(mapStateToProps)(Search);
