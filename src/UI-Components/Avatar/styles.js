@@ -17,4 +17,5 @@ export const StyledAvatar = styled.img`
   height: ${({size}) => sizes[size]};
   display: block;
   ${({centered}) => centered && css`margin: auto;`}
+  margin-bottom: ${({space}) => spacing[space]};
 `;

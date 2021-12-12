@@ -71,7 +71,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         window.history.replaceState(null, null, window.location.search.concat('&view=map'));
       }
 
-      let searchParams = {}
+      let searchParams = {};
 
       if (!!Object.keys(currentSearch).length) {
         searchParams.from = currentSearch.start;
@@ -79,7 +79,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         searchParams.location = currentSearch.location;
         searchParams.cats = currentSearch.cats;
       } else {
-        searchParams.location = queryString.parse(location.search).location || "Göteborg";
+        searchParams.location = queryString.parse(location.search).location || 'Göteborg';
         searchParams.cats = queryString.parse(location.search).cats || 1;
         searchParams.from = parseInt(queryString.parse(location.search).from) || today + 86400000;
         searchParams.to = parseInt(queryString.parse(location.search).to) || today + 86400000;
@@ -106,7 +106,13 @@ const SearchResults = ({ id, currentSearch, location }) => {
           host.id = host.user.id;
           host.lat = parseFloat(host.lat);
           host.lng = parseFloat(host.long);
-          host.total = finalTotal(host.price_per_day_1_cat, searchParams.cats, host.supplement_price_per_cat_per_day, searchParams.from, searchParams.to);
+          host.total = finalTotal(
+            host.price_per_day_1_cat,
+            searchParams.cats,
+            host.supplement_price_per_cat_per_day,
+            searchParams.from,
+            searchParams.to
+          );
           return null;
         });
       };
@@ -133,6 +139,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         setLoading(false);
         setResults(queryString.parse(location.search).view ? queryString.parse(location.search).view : 'map');
         geolocationDataAddress(searchParams.location);
+
         const responseAllLocations = await axios.get(
           `/api/v1/host_profiles?startDate=${searchParams.from}&endDate=${searchParams.to}&cats=${searchParams.cats}&locale=${lang}`
         );
@@ -170,8 +177,10 @@ const SearchResults = ({ id, currentSearch, location }) => {
     //resetHost();
   }, [results]);
 
-  const handleHostProfileClick = () => {
+  const toHostProfile = () => {
+    // probs can be solved with useEffect somehow
     setResults('profile');
+    setHostPopupOpen(false);
 
     setScrollOffset(window.pageYOffset);
     window.scrollTo(0, 0);
@@ -278,7 +287,14 @@ const SearchResults = ({ id, currentSearch, location }) => {
         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
       </Helmet>
 
-      {hostPopupOpen && <HostPopup open={!!hostPopupOpen} id={hostPopupOpen} onClose={() => onCloseHostPopup()} />}
+      {hostPopupOpen && (
+        <HostPopup
+          open={!!hostPopupOpen}
+          id={hostPopupOpen}
+          onClose={() => onCloseHostPopup()}
+          toHostProfile={() => toHostProfile()}
+        />
+      )}
 
       <Popup
         modal

@@ -4,15 +4,13 @@ import ReviewScore from '../../ReusableComponents/ReviewScore';
 import { pricePerDay, finalTotal } from '../../../Modules/PriceCalculations';
 import RequestToBookCTA from '../../ReusableComponents/RequestToBookCTA';
 import { useTranslation, Trans } from 'react-i18next';
-import { Location, User } from '../../Icons';
-import Price from '../../Icons/Price';
-import Review from '../../Icons/Review';
+import { Location, User, CreditCard, Review } from '../../Icons';
 import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
-import { Avatar, Flexbox, Text } from '../../../UI-Components';
+import { Avatar, Flexbox, Text, Header, Container, InlineLink } from '../../../UI-Components';
 
-const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
+const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile }) => {
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
   console.log('transformed response', host);
@@ -30,50 +28,51 @@ const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
 
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
-      <Avatar
-        src={
-          host.avatar === null
-            ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-            : host.avatar
-        }
-      />
-      {host.score && <ReviewScore score={host.score} center={true} displayNumerical={true} />}
+      <Flexbox direction='column'>
+        <Avatar
+          space={4}
+          src={
+            !host.avatar
+              ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+              : host.avatar
+          }
+        />
+        {host.score && (
+          <Container>
+            <ReviewScore score={host.score} center={true} displayNumerical={true} height={4} margin={0} />
+          </Container>
+        )}
 
-      <Flexbox>
-        <User />
-        <Text>{host.name}</Text>
-      </Flexbox>
-      <Flexbox>
-        <Text>
-          <span style={{ whiteSpace: 'nowrap' }}>
+        <Flexbox spaceItemsX={1} space={2}>
+          <User />
+          <Header level={4}>{host.name}</Header>
+        </Flexbox>
+        <Flexbox spaceItemsX={2}>
+          <Flexbox spaceItemsX={1}>
             <Location />
-            &nbsp;{host.location}&ensp;
-          </span>
-          <span style={{ whiteSpace: 'nowrap' }}>
-            <Price fill={'grey'} height={'0.8em'} />
-            &nbsp;{perDay} {t('reusable:price.per-day')}&ensp;
-          </span>
-          {host.reviewsCount && (
-            <span style={{ whiteSpace: 'nowrap' }}>
-              <Review fill={'grey'} height={'0.8em'} />
-              &nbsp;{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}
-            </span>
-          )}
-        </Text>
+            <Text>{host.location}</Text>
+          </Flexbox>
+          <Flexbox spaceItemsX={1}>
+            <CreditCard />
+            <Text>
+              {perDay} {t('reusable:price.per-day')}
+            </Text>
+          </Flexbox>
+        </Flexbox>
+        {host.reviewsCount && (
+          <Flexbox spaceItemsX={1}>
+            <Review />
+            <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
+          </Flexbox>
+        )}
+        {loggedInUserId !== host.userId && (
+          <InlineLink color={'primary'} onClick={() => toHostProfile()}>
+            {t('HostPopup:more')}
+          </InlineLink>
+        )}
       </Flexbox>
-
-      <p>{host.rate}</p>
-      <p>
-        the current search is from {currentSearch.start} to {currentSearch.end} in {currentSearch.location}
-      </p>
     </Popup>
   );
-
-  // if (ready) {
-
-  //   return (
-  //     <>
-  //
 
   //       {props.allowToBook && (
   //         <Header
@@ -92,6 +91,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
   //           {t('HostPopup:more')}
   //         </Header>
   //       )}
+
   //       {props.allowToBook ? (
   //         <RequestToBookCTA
   //           numberOfCats={props.numberOfCats}
@@ -131,7 +131,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host }) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentUserId: state.reduxTokenAuth.currentUser.attributes.id,
+  loggedInUserId: state.reduxTokenAuth.currentUser.attributes.id,
   currentSearch: state.currentSearch,
   host: state.currentHostProfile,
 });
