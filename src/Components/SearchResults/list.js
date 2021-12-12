@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import Spinner from '../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import User from '../Icons/User';
-import Review from '../Icons/Review';
+import Review from '../Icons/src/Review';
 import AvailableHost from '../Icons/AvailableHost';
 
 const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {

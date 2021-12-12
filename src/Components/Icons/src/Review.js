@@ -1,8 +1,8 @@
-import React from 'react';
+import { colors, spacing } from '../constants';
 
-const Review = (props) => {
+const Review = ({ fill, height, tint }) => {
   return (
-    <svg fill={props.fill} height={props.height} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 25'>
+    <svg fill={colors[fill][tint]} height={spacing[height]} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 25'>
       <path
         d='M24.7,13c0.4-0.3,0.4-0.9,0-1.3l-2-1.6c-0.3-0.2-0.4-0.6-0.3-0.9l0.9-2.4c0.2-0.5-0.1-1-0.6-1.1l-2.5-0.4
       c-0.3-0.1-0.6-0.3-0.7-0.7L19,2.2c-0.1-0.5-0.6-0.8-1.1-0.6l-2.4,0.9c-0.3,0.1-0.7,0-0.9-0.2L13,0.3c-0.3-0.4-0.9-0.4-1.3,0l-1.6,2
@@ -17,3 +17,9 @@ const Review = (props) => {
 };
 
 export default Review;
+
+Review.defaultProps = {
+  fill: 'neutral',
+  height: 4,
+  tint: 100,
+};

@@ -20,6 +20,7 @@ export { default as Location } from './src/Location';
 export { default as Address } from './src/Address';
 export { default as Lock } from './src/Lock';
 export { default as Map } from './src/Map';
+export { default as Review } from './src/Review';
 export { default as RotateLeft } from './src/RotateLeft';
 export { default as RotateRight } from './src/RotateRight';
 export { default as Notification } from './src/Notification';
