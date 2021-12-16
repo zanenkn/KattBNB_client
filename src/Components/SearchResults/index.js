@@ -6,7 +6,7 @@ import GoogleMap from './map';
 import HostProfileView from '../HostProfileView/HostProfileView';
 import moment from 'moment';
 import axios from 'axios';
-import { getDaysArray } from '../../utils/getDaysArray'
+import { getDaysArray } from '../../utils/getDaysArray';
 import { finalTotal } from '../../Modules/PriceCalculations';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -19,14 +19,16 @@ import { Helmet } from 'react-helmet';
 import Refresh from '../Icons/Refresh';
 import { Flexbox, InlineLink, SecondaryStickyHeader, Text } from '../../UI-Components';
 import { Location, Cat, Availabilty, Map as MapIcon, List as ListIcon } from '../Icons';
-import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, MapWrapper, JustifiedWrapper } from './styles';
+import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, JustifiedWrapper, BackLinkWrapper } from './styles';
 import { Link } from 'react-router-dom';
+import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 const SearchResults = ({ id, currentSearch, location }) => {
   const lang = detectLanguage();
 
   const { t, ready } = useTranslation('SearchResults');
   const dispatch = useDispatch();
+  const device = useDeviceInfo();
 
   const [scrollOffset, setScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -92,7 +94,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
             end: searchParams.to,
             cats: searchParams.cats,
             location: searchParams.location,
-            dates: getDaysArray(searchParams.from, searchParams.to)
+            dates: getDaysArray(searchParams.from, searchParams.to),
           },
         });
       }
@@ -158,6 +160,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
       } catch ({ response }) {
         if (response === undefined) {
           //wipeCredentials('/is-not-available?atm');
+          // gotta stop wiping credentials every time something went wrong and we dont know what. a general error is needed.
         } else if (response.status === 500) {
           setLoading(false);
           setErrors(['reusable:errors:500']);
@@ -196,24 +199,6 @@ const SearchResults = ({ id, currentSearch, location }) => {
       setHostPopupOpen(false);
     }
   };
-
-  // const requestToBookButtonClick = () => {
-  //   if (id === undefined) {
-  //     history.push('/login');
-  //   } else {
-  //     history.push({
-  //       pathname: '/request-to-book',
-  //       state: {
-  //         numberOfCats: numberOfCats,
-  //         checkInDate: checkInDate,
-  //         checkOutDate: checkOutDate,
-  //         nickname: hostNickname,
-  //         hostRate: hostRate,
-  //         hostSupplement: hostSupplement,
-  //       },
-  //     });
-  //   }
-  // };
 
   // const messageHost = (e) => {
   //   e.preventDefault();
@@ -321,7 +306,8 @@ const SearchResults = ({ id, currentSearch, location }) => {
           <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
             <Availabilty />
             <Text>
-              {moment(from).format('LL')} - {moment(to).format('LL')}
+              {moment(from).format(device.width > 375 ? 'LL' : 'll')} -{' '}
+              {moment(to).format(device.width > 375 ? 'LL' : 'll')}
             </Text>
           </Flexbox>
 
@@ -336,9 +322,11 @@ const SearchResults = ({ id, currentSearch, location }) => {
                 <Text>{cats}</Text>
               </Flexbox>
             </Flexbox>
-            <InlineLink color='info' as={Link} to={'/search'}>
-              Change search
-            </InlineLink>
+            <BackLinkWrapper>
+              <InlineLink color='info' as={Link} to={'/search'}>
+                {device.type === 'mobile' ? 'Change' : 'Change search'}
+              </InlineLink>
+            </BackLinkWrapper>
           </JustifiedWrapper>
 
           <JustifiedWrapper>
@@ -377,7 +365,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         </SearchResultWrapper>
       )}
       {results === 'map' && (
-        <MapWrapper padding={150}>
+        <SearchResultWrapper padding={150}>
           <GoogleMap
             mapCenterLat={locationLat}
             mapCenterLong={locationLong}
@@ -385,7 +373,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
             allAvailableHosts={availableAllLocations}
             handleDatapointClick={(id) => setHostPopupOpen(id)}
           />
-        </MapWrapper>
+        </SearchResultWrapper>
       )}
       {results === 'profile' && (
         <SearchResultWrapper padding={150}>
