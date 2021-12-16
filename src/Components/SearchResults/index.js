@@ -30,7 +30,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
   const dispatch = useDispatch();
   const device = useDeviceInfo();
 
-  const [scrollOffset, setScrollOffset] = useState(0);
+  const [listScrollOffset, setListScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
 
@@ -174,30 +174,28 @@ const SearchResults = ({ id, currentSearch, location }) => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, scrollOffset);
+    setHostPopupOpen(false);
+    results === 'list' && window.scrollTo(0, listScrollOffset);
+
     const href = new URL(window.location.href);
-    href.searchParams.set('view', results || 'map');
+    href.searchParams.set('view', results);
+
+    if (results === 'profile') {
+      href.searchParams.append('host', hostPopupOpen);
+    } else {
+      href.searchParams.delete('host');
+    }
 
     window.history.replaceState(null, null, href.search);
-    //resetHost();
   }, [results]);
-
-  const toHostProfile = () => {
-    // probs can be solved with useEffect somehow
-    setResults('profile');
-    setHostPopupOpen(false);
-
-    setScrollOffset(window.pageYOffset);
-    window.scrollTo(0, 0);
-  };
 
   const onCloseHostPopup = () => {
     if (results !== 'profile') {
       dispatch({
         type: 'HOST_PROFILE_RESET',
       });
-      setHostPopupOpen(false);
     }
+    setHostPopupOpen(false);
   };
 
   // const messageHost = (e) => {
@@ -279,7 +277,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
           open={!!hostPopupOpen}
           id={hostPopupOpen}
           onClose={() => onCloseHostPopup()}
-          toHostProfile={() => toHostProfile()}
+          toHostProfile={() => setResults('profile')}
         />
       )}
 
@@ -361,7 +359,11 @@ const SearchResults = ({ id, currentSearch, location }) => {
 
       {results === 'list' && (
         <SearchResultWrapper padding={150}>
-          <List finalAvailableHosts={availableByLocation} handleListItemClick={(id) => setHostPopupOpen(id)} />
+          <List
+            finalAvailableHosts={availableByLocation}
+            handleListItemClick={(id) => setHostPopupOpen(id)}
+            onUnmount={() => setListScrollOffset(window.pageYOffset)}
+          />
         </SearchResultWrapper>
       )}
       {results === 'map' && (

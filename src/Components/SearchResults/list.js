@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import ReviewScore from '../../common/ReviewScore';
 import { pricePerDay, finalTotal } from '../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
@@ -8,7 +8,14 @@ import { Link } from 'react-router-dom';
 // import Review from '../icons/src/Review';
 //import AvailableHost from '../icons/AvailableHost';
 
-const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {
+const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick, onUnmount }) => {
+  useLayoutEffect(() => {
+    return () => {
+      onUnmount()
+    }
+  }, [])
+
+
   const { t, ready } = useTranslation('List');
   return <div>this is a list</div>
   // if (ready) {
