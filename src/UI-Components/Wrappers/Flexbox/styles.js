@@ -5,6 +5,7 @@ const { spacing } = theme;
 
 export const StyledFlexbox = styled.div`
   display: flex;
+  flex-wrap: ${({wrap}) => wrap ? 'wrap' : 'unset'};
   flex-direction: ${({ direction }) => direction};
   width: ${({ width }) => width};
   height: ${({ height }) => height};

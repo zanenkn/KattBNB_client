@@ -15,4 +15,8 @@ export const FlexWrapper = styled(Flexbox)`
     margin-right: 0.5rem;
     cursor: ${({ clickable }) => (clickable ? 'pointer' : 'unset')};
   }
+
+  & > *:last-child {
+    margin-right: 0;
+  }
 `;

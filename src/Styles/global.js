@@ -192,10 +192,13 @@ const GlobalStyles = createGlobalStyle`
     border: none!important;
     padding: 2rem!important;
     width: 80%!important;
-    max-width: 300px;
+    max-width: 360px;
     max-height: 95%!important;
     display: table;
     box-sizing: border-box;
+    > *:last-child {
+      margin-bottom: 0;
+    }
   }
   .avatar-popup-content {
     width: 270px!important;

@@ -38,3 +38,17 @@ export const MapWrapper = styled.div`
   height: calc(var(--vh, 1vh) * 100 - 225px);
   width: 100%;
 `
+
+export const Badge = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: ${({nature}) => nature === 'availability' ? colors['success'][100] : colors['neutral'][60]};
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  clip-path: polygon(0 0,100% 0,100% 100%,0 0);
+  display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 20px 20px 0 0;
+`
