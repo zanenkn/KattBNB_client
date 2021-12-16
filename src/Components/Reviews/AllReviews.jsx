@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react';
 import HostReplyReview from './HostReplyReview';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import axios from 'axios';
-import ReviewScore from '../ReusableComponents/ReviewScore';
+import ReviewScore from '../../common/ReviewScore';
 import moment from 'moment';
 
 const AllReviews = (props) => {

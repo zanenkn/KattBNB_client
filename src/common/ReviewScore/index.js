@@ -1,9 +1,9 @@
 import React from 'react';
 import HalfPaw from './halfPaw';
 import Paw from './paw';
-import { theme } from '../../../Styles/theme';
+import { theme } from '../../Styles/theme';
 import { FlexWrapper } from './styles';
-import { Text } from '../../../UI-Components';
+import { Text } from '../../UI-Components';
 import PropTypes from 'prop-types';
 
 const { colors, spacing } = theme;

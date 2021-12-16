@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
 import { Header, Text, Avatar } from '../../../UI-Components';

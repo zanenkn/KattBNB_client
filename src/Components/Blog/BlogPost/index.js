@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { RichText } from 'prismic-reactjs';
 import Prismic from '@prismicio/client';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Helmet } from 'react-helmet';
-import { FacebookSimple, LinkedinSimple, TwitterSimple } from '../../Icons';
+import { FacebookSimple, LinkedinSimple, TwitterSimple } from '../../../icons';
 import { useTranslation } from 'react-i18next';
 import { FeaturedImage, FlexWrapper, AuthorAvatar, PrismicRichText, ShareIcons } from '../styles';
 import { Header, Text, LinkIcon, ContentWrapper } from '../../../UI-Components';

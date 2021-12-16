@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 // import IncRequestPopup from '../IncRequestPopup';
 import axios from 'axios';

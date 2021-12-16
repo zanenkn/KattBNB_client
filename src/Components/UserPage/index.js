@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
 import HostProfileForm from '../HostProfile/HostProfileForm';
 import HostProfile from '../HostProfile';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
@@ -17,7 +17,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/AllReviews';
 import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
-import { User, Location, Email, Lock, Notification, Globe } from '../Icons';
+import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
 import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
 //MIGRATION IN PROGRESS
 const UserPage = (props) => {

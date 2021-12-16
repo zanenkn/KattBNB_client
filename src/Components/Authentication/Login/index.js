@@ -5,7 +5,7 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 // Completely MIGRATED
 

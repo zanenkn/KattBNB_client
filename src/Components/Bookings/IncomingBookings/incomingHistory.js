@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import Popup from 'reactjs-popup';
 import IncRequestDeclinedPopup from './incRequestDeclinedPopup';
 import axios from 'axios';

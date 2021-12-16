@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { Header, Text, Container, Whitebox, ContentWrapper } from '../../../UI-Components';

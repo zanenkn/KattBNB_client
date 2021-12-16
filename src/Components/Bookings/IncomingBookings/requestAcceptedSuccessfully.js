@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import ICalendarLink from 'react-icalendar-link';

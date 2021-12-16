@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import i18n from '../../../i18n';
-import { Globe, Checkmark } from '../../Icons';
+import i18n from '../../i18n';
+import { Globe, Checkmark } from '../../icons';
 import { MainLabel, Options, Option } from './styles';
-import { Text } from '../../../UI-Components';
+import { Text } from '../../UI-Components';
 import PropTypes from 'prop-types';
 
 const LanguageSwitcher = ({ openByDefault, color, label }) => {

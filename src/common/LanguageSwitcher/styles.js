@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import { theme } from '../../../Styles/theme';
-import { Flexbox } from '../../../UI-Components';
+import { theme } from '../../Styles/theme';
+import { Flexbox } from '../../UI-Components';
 
 const { fontWeights, spacing } = theme;
 

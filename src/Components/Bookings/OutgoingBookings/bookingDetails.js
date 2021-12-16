@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import HostProfileView from '../../HostProfileView/HostProfileView';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
@@ -10,7 +10,7 @@ import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Header, Text, ContentWrapper, Notice, Whitebox, Flexbox } from '../../../UI-Components';
 import { CenteredTable } from './styles';
-import { Address, Availabilty, Cat, Rate } from '../../Icons';
+import { Address, Availabilty, Cat, Rate } from '../../../icons';
 
 const BookingDetails = ({ history, id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');

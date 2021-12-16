@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { detectLanguage } from '../../Modules/detectLanguage';

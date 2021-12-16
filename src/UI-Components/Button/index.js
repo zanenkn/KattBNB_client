@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
 import PropTypes from 'prop-types';
-import Refresh from '../../Components/Icons/Refresh';
+import Refresh from '../../icons/Refresh';
 
 const { colors, spacing } = theme;
 
@@ -19,7 +19,8 @@ const Styled = styled.button`
   height: 39px;
   transition: all 0.5s ease;
   &:hover {
-    background-color: ${({ color, disabled, $loading, secondary }) => !$loading && !disabled && colors[color][secondary ? 60 : 110]};
+    background-color: ${({ color, disabled, $loading, secondary }) =>
+      !$loading && !disabled && colors[color][secondary ? 60 : 110]};
   }
 `;
 
@@ -46,7 +47,14 @@ const Button = ({ centered, color, disabled, loading, secondary, space, ...rest 
           <Refresh height='21' fill='#FAFAFA' className='spin-it' />
         </Icon>
       )}
-      <Styled centered={centered} color={color} disabled={disabled} $loading={loading} secondary={secondary} {...rest} />
+      <Styled
+        centered={centered}
+        color={color}
+        disabled={disabled}
+        $loading={loading}
+        secondary={secondary}
+        {...rest}
+      />
     </Flex>
   );
 };

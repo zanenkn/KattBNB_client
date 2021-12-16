@@ -7,7 +7,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import '../../NpmPackageCSS/react-day-picker.css';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
 

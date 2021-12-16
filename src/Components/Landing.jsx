@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import KattBNBLogomark from './Icons/KattBNBLogomark';
-import KattBNBLogo from './Icons/KattBNBLogo';
-import Spinner from './ReusableComponents/Spinner';
+// import KattBNBLogomark from './Icons/KattBNBLogomark';
+// import KattBNBLogo from './Icons/KattBNBLogo';
+// import Spinner from './ReusableComponents/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import FacebookIcon from './Icons/src/FacebookIcon';
+// import FacebookIcon from './Icons/src/FacebookIcon';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Landing = () => {

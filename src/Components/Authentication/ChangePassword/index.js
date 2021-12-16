@@ -5,7 +5,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { passwordCheck } from '../../../Modules/passwordCheck';
 import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 // Completely MIGRATED
 

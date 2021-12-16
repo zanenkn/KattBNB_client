@@ -3,7 +3,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { withTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import '../../NpmPackageCSS/react-day-picker.css';

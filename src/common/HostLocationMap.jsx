@@ -1,7 +1,7 @@
 import React from 'react';
-import Spinner from '../ReusableComponents/Spinner';
-import GoogleMapReact from 'google-map-react';
-import mapStyles from '../../Modules/MapStyle.js';
+// import Spinner from '../../common/Spinner';
+// import GoogleMapReact from 'google-map-react';
+// import mapStyles from '../../Modules/MapStyle.js';
 import { useTranslation, Trans } from 'react-i18next';
 
 const HostLocationMap = ({ address, lat, long, nickname }) => {

@@ -4,7 +4,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { passwordCheck } from '../../Modules/passwordCheck';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
   const { t, ready } = useTranslation('PasswordUpdateForm');

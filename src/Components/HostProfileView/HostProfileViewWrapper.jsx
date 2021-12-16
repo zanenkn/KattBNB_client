@@ -4,7 +4,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import HostProfileView from './HostProfileView';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const HostProfileViewWrapper = (props) => {
   const { t } = useTranslation('HostProfileViewWrapper');

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import Popup from 'reactjs-popup';
 import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';

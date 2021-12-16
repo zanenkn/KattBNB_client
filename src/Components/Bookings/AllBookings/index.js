@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../../HOC/withAuth';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { detectLanguage } from '../../../Modules/detectLanguage';

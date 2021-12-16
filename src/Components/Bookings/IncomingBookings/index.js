@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../../HOC/withAuth';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import moment from 'moment';
@@ -11,7 +11,7 @@ import IncomingUpcoming from './incomingUpcoming';
 import IncomingHistory from './incomingHistory';
 import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
 import { SectionWrapper, StyledContentWrapper, ScrollToTop } from '../common/styles';
-import { CheveronUp } from '../../Icons';
+import { CheveronUp } from '../../../icons';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');

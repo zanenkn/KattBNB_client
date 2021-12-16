@@ -7,14 +7,14 @@ import SupplementUpdateForm from './SupplementUpdateForm';
 import AvailabilityUpdateForm from './AvailabilityUpdateForm';
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode';
 import AddressUpdateForm from './AddressUpdateForm';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import queryString from 'query-string';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
-import { Address, Cat, Rate, Supplement, Availabilty, User } from '../Icons';
+import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
 
 //Migrated
 

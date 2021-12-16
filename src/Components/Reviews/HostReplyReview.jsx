@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const HostReplyReviewForm = (props) => {
   const { t, ready } = useTranslation('HostReplyReview');
