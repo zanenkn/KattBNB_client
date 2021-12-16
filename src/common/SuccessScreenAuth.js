@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import Spinner from './Spinner';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Header, InlineLink, Whitebox, Text, ContentWrapper } from '../../UI-Components';
+import { wipeCredentials } from '../Modules/wipeCredentials';
+import { Header, InlineLink, Whitebox, Text, ContentWrapper } from '../UI-Components';
 // COMPLETELY MIGRATED
 
 const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {

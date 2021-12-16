@@ -1,12 +1,12 @@
 import React from 'react';
-import ReviewScore from '../ReusableComponents/ReviewScore';
+import ReviewScore from '../../common/ReviewScore';
 import AllReviews from '../Reviews/AllReviews';
-import HostLocationMap from '../ReusableComponents/HostLocationMap';
-import RequestToBookCTA from '../ReusableComponents/RequestToBookCTA';
-import MessageHostCTA from '../ReusableComponents/MessageHostCTA';
+import HostLocationMap from '../../common/HostLocationMap';
+import RequestToBookCTA from '../../common/RequestToBookCTA';
+import MessageHostCTA from '../../common/MessageHostCTA';
 import { pricePerDay, priceOfOneAmount, finalTotal } from '../../Modules/PriceCalculations';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const HostProfileView = (props) => {
   let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate);

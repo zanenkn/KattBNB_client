@@ -5,7 +5,7 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import {
   Header,
   Whitebox,

@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { Trans, useTranslation } from 'react-i18next';
-import { Text, Header, Button, Container } from '../../../UI-Components';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+import { Text, Header, Button, Container } from '../../UI-Components';
+import { detectLanguage } from '../../Modules/detectLanguage';
 
 const RequestToBookCTA = ({cats, hostName, checkInDate, checkOutDate, orderTotal, onClick}) => {
   const { t, ready } = useTranslation();

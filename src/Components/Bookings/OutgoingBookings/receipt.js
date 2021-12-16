@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import withAuth from '../../../HOC/withAuth';
-import Spinner from '../../ReusableComponents/Spinner';
-import KattBNBLogo from '../../Icons/KattBNBLogo';
+import Spinner from '../../../common/Spinner';
+import KattBNBLogo from '../../../icons/KattBNBLogo';
 import { formatPrice, priceOfOneAmount } from '../../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
 import { ContentWrapper, Divider, Header, Whitebox, Flexbox, Text } from '../../../UI-Components';

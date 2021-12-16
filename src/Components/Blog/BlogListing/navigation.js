@@ -1,6 +1,6 @@
 import { CurrentPageNumber, NavigationWrapper } from './styles';
 import { Link } from 'react-router-dom';
-import { CheveronLeft, CheveronRight } from '../../Icons';
+import { CheveronLeft, CheveronRight } from '../../../icons';
 
 const Navigation = ({ currentPage, total }) => {
   return (

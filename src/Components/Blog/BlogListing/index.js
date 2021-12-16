@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Prismic from '@prismicio/client';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../ReusableComponents/Spinner';
+import Spinner from '../../../common/Spinner';
 import { Link } from 'react-router-dom';
 import { PostWrapper, PostImage } from '../styles';
 import { Container, ContentWrapper, Header, Text } from '../../../UI-Components';

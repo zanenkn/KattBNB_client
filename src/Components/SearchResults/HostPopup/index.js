@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import ReviewScore from '../../ReusableComponents/ReviewScore';
-import Responsive from '../../ReusableComponents/Responsive';
+import ReviewScore from '../../../common/ReviewScore';
+import Responsive from '../../../common/Responsive';
 import { finalTotal } from '../../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
-import { Location, User, Review, AvailableHost } from '../../Icons';
-import Spinner from '../../ReusableComponents/Spinner';
+import { Location, User, Review, AvailableHost } from '../../../icons';
+import Spinner from '../../../common/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
 import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';

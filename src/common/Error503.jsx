@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import Spinner from './Spinner';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
+import { wipeCredentials } from '../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 
 const Error503 = (props) => {

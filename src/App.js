@@ -1,7 +1,7 @@
 import './Styles/global.css'
 import withFooter from './HOC/withFooter';
 import Landing from './Components/Landing';
-import Responsive from './Components/ReusableComponents/Responsive';
+import Responsive from './common/Responsive';
 import MobileNav from './Components/Navbar/Mobile';
 import DesktopNav from './Components/Navbar/Desktop';
 import Menu from './Components/Menu/Menu';
@@ -12,7 +12,7 @@ import ContactUs from './Components/Menu/ContactUs';
 import Faq from './Components/Menu/Faq';
 import Legal from './Components/Menu/Legal';
 import Guidelines from './Components/Menu/Guidelines';
-import SuccessScreenAuth from './Components/ReusableComponents/SuccessScreenAuth';
+import SuccessScreenAuth from './common/SuccessScreenAuth';
 import Login from './Components/Authentication/Login';
 import SignUp from './Components/Authentication/SignUp';
 import PasswordReset from './Components/Authentication/PasswordReset';
@@ -28,7 +28,7 @@ import BookingDetails from './Components/Bookings/OutgoingBookings/bookingDetail
 import AllConversations from './Components/Messenger/AllConversations';
 import Conversation from './Components/Messenger/SingleConversation';
 import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper';
-import Error503 from './Components/ReusableComponents/Error503';
+import Error503 from './common/Error503';
 import Partners from './Components/Menu/Partners';
 import HostEn from './Components/HostEn';
 import HostSe from './Components/HostSe';

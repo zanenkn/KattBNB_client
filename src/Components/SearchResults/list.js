@@ -1,12 +1,12 @@
 import React from 'react';
-import ReviewScore from '../ReusableComponents/ReviewScore';
+import ReviewScore from '../../common/ReviewScore';
 import { pricePerDay, finalTotal } from '../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { Link } from 'react-router-dom';
-import User from '../Icons/User';
-import Review from '../Icons/src/Review';
-//import AvailableHost from '../Icons/AvailableHost';
+// import User from '../icons/User';
+// import Review from '../icons/src/Review';
+//import AvailableHost from '../icons/AvailableHost';
 
 const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {
   const { t, ready } = useTranslation('List');

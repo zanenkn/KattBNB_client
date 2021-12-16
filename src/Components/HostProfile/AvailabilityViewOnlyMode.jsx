@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import DayPicker from 'react-day-picker';
 import '../../NpmPackageCSS/react-day-picker.css';
 import MomentLocaleUtils from 'react-day-picker/moment';

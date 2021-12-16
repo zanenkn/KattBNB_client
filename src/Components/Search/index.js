@@ -7,7 +7,7 @@ import { getDaysArray } from '../../utils/getDaysArray';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import {
   Whitebox,
   Header,
@@ -21,7 +21,7 @@ import {
   ContentWrapper,
 } from '../../UI-Components';
 import { formValidation } from '../../Modules/formValidation';
-import SEO from '../ReusableComponents/SEO';
+import SEO from '../../common/SEO';
 
 const Search = ({ history, dispatch, currentSearch }) => {
   const { t, ready } = useTranslation('Search');

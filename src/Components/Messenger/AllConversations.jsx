@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { connect } from 'react-redux';
 import timeFormat from '../../Modules/dateFormatting';
 import moment from 'moment';

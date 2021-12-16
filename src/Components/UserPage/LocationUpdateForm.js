@@ -4,7 +4,7 @@ import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { Button, Notice, Dropdown, Text } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
 // Migrated, Waiting for dropdown

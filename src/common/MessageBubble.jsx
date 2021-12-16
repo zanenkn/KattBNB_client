@@ -1,13 +1,13 @@
 import React from 'react';
 import Spinner from './Spinner';
 import { useTranslation } from 'react-i18next';
-import timeFormat from '../../Modules/dateFormatting';
-import { detectLanguage } from '../../Modules/detectLanguage';
+// import timeFormat from '../../Modules/dateFormatting';
+// import { detectLanguage } from '../../Modules/detectLanguage';
 import moment from 'moment';
 
 const MessageBubble = (props) => {
   const { t, ready } = useTranslation('MessageBubble');
-  const lang = detectLanguage();
+  // const lang = detectLanguage();
 
   let textAlign, flexDirection, margin, border, avatar, nickname, content;
   content = window.navigator.userAgent.includes('Firefox') ? '-moz-fit-content' : 'fit-content';

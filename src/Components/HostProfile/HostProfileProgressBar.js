@@ -3,7 +3,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { Link } from 'react-router-dom';
 
 import { Button, Notice, Text } from '../../UI-Components';
@@ -19,7 +19,7 @@ import {
   StepIcon,
   CtaWrapper,
 } from './styles';
-import { HostProfile, CreditCard, Verified } from '../Icons';
+import { HostProfile, CreditCard, Verified } from '../../icons';
 
 const HostProfileProgressBar = (props) => {
   const [errors, setErrors] = useState([]);
