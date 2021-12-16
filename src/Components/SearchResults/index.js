@@ -6,6 +6,7 @@ import GoogleMap from './map';
 import HostProfileView from '../HostProfileView/HostProfileView';
 import moment from 'moment';
 import axios from 'axios';
+import { getDaysArray } from '../../utils/getDaysArray'
 import { finalTotal } from '../../Modules/PriceCalculations';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -91,6 +92,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
             end: searchParams.to,
             cats: searchParams.cats,
             location: searchParams.location,
+            dates: getDaysArray(searchParams.from, searchParams.to)
           },
         });
       }

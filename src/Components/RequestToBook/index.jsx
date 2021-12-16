@@ -84,7 +84,7 @@ const RequestToBook = (props) => {
   };
 
   useEffect(() => {
-    if (props.history.location.state === undefined || props.history.action === 'POP') {
+    if (props.history.action === 'POP') {
       props.history.push({ pathname: '/' });
     } else {
       const {

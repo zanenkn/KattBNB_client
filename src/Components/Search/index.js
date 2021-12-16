@@ -3,6 +3,7 @@ import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { getDaysArray } from '../../utils/getDaysArray';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 import { useTranslation } from 'react-i18next';
@@ -112,6 +113,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
         end: to,
         cats: cats,
         location: searchLocation,
+        dates: getDaysArray(from, to),
       },
     });
 

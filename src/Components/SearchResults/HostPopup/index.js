@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import ReviewScore from '../../ReusableComponents/ReviewScore';
-import { pricePerDay, finalTotal } from '../../../Modules/PriceCalculations';
-import RequestToBookCTA from '../../ReusableComponents/RequestToBookCTA';
+import Responsive from '../../ReusableComponents/Responsive';
+import { finalTotal } from '../../../Modules/PriceCalculations';
 import { useTranslation, Trans } from 'react-i18next';
-import { Location, User, CreditCard, Review } from '../../Icons';
+import { Location, User, Review, AvailableHost } from '../../Icons';
 import Spinner from '../../ReusableComponents/Spinner';
 import Popup from 'reactjs-popup';
 import { useFetchHost } from './useFetchHost';
-import { Avatar, Flexbox, Text, Header, Container, InlineLink } from '../../../UI-Components';
+import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';
+import { useHistory } from 'react-router';
+import moment from 'moment';
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { useDeviceInfo } from '../../../hooks/useDeviceInfo';
+import { Badge } from '../styles';
 
 const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile }) => {
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
-  console.log('transformed response', host);
+  const history = useHistory();
+  const device = useDeviceInfo().type;
 
-  const perDay = pricePerDay(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+  const lang = detectLanguage();
+  moment.locale(lang);
+
+  const [isAvailable, setIsAvailable] = useState(false);
+
   const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+
+  useEffect(() => {
+    if (currentSearch?.dates?.every((date) => host?.availability?.includes(date))) {
+      setIsAvailable(true);
+    }
+  }, [currentSearch, host]);
 
   if (loading || !ready) {
     return (
@@ -28,36 +44,35 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
 
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
-      <Flexbox direction='column'>
-        <Avatar
-          space={4}
-          src={
-            !host.avatar
-              ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-              : host.avatar
-          }
-        />
-        {host.score && (
-          <Container>
-            <ReviewScore score={host.score} center={true} displayNumerical={true} height={4} margin={0} />
-          </Container>
-        )}
+      {(isAvailable || host?.reviewsCount) && (
+        <Badge nature={isAvailable ? 'availability' : 'reviews'}>
+          {isAvailable ? <AvailableHost fill={'white'} height={6} /> : <Review fill={'white'} height={6} />}
+        </Badge>
+      )}
+      <Avatar
+        size={device === 'mobile' ? 'md' : 'xl'}
+        centered
+        space={4}
+        src={
+          !host.avatar
+            ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+            : host.avatar
+        }
+      />
+      {host.score && (
+        <Container>
+          <ReviewScore score={host.score} center={true} height={6} margin={0} primaryColor='neutral' />
+        </Container>
+      )}
 
-        <Flexbox spaceItemsX={1} space={2}>
-          <User />
-          <Header level={4}>{host.name}</Header>
-        </Flexbox>
-        <Flexbox spaceItemsX={2}>
-          <Flexbox spaceItemsX={1}>
-            <Location />
-            <Text>{host.location}</Text>
-          </Flexbox>
-          <Flexbox spaceItemsX={1}>
-            <CreditCard />
-            <Text>
-              {perDay} {t('reusable:price.per-day')}
-            </Text>
-          </Flexbox>
+      <Flexbox spaceItemsX={1} space={2}>
+        <User />
+        <Header level={4}>{host.name}</Header>
+      </Flexbox>
+      <Flexbox spaceItemsX={2} space={2} wrap>
+        <Flexbox spaceItemsX={1}>
+          <Location />
+          <Text>{host.location}</Text>
         </Flexbox>
         {host.reviewsCount && (
           <Flexbox spaceItemsX={1}>
@@ -65,69 +80,78 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
             <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
           </Flexbox>
         )}
-        {loggedInUserId !== host.userId && (
+        {isAvailable && (
+          <Flexbox spaceItemsX={1}>
+            <AvailableHost />
+            <Text>Is available</Text>
+          </Flexbox>
+        )}
+      </Flexbox>
+
+      {loggedInUserId !== host.userId && (
+        <Flexbox space={4}>
           <InlineLink color={'primary'} onClick={() => toHostProfile()}>
             {t('HostPopup:more')}
           </InlineLink>
-        )}
-      </Flexbox>
+        </Flexbox>
+      )}
+      <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
+        <Text centered space={4}>
+          <Trans i18nKey='reusable:request-cta.txt' count={parseInt(currentSearch.cats)}>
+            The stay for <strong>{{ count: currentSearch.cats }} cat</strong> with
+            <strong>{{ host: host.name }}</strong> during the dates of
+            <strong>{{ checkin: moment(currentSearch.checkInDate).format('MMMM Do') }}</strong>
+            until
+            <strong>{{ checkout: moment(currentSearch.checkOutDate).format('MMMM Do') }}</strong>
+            would in total cost
+          </Trans>
+        </Text>
+      </Responsive>
+
+      <Responsive displayIn={['mobile']}>
+        <Text bold centered space={0}>
+          Total for this booking:
+        </Text>
+      </Responsive>
+
+      <Header level={4} centered space={4}>
+        {orderTotal} kr
+      </Header>
+
+      {!isAvailable && (
+        <>
+          {/* idea: push to messenger with a default message? */}
+          <Button id='message-host' onClick={() => console.log('to the messenger i go')} space={2}>
+            Send a message
+          </Button>
+
+          <Text centered bold space={2}>
+            or
+          </Text>
+        </>
+      )}
+
+      <Button
+        secondary={!isAvailable}
+        space={6}
+        id='request-to-book'
+        onClick={() => history.push('/request-to-book')}
+        color={isAvailable ? 'primary' : 'neutral'}
+      >
+        {t('reusable:request-cta.btn')}
+      </Button>
+
+      {loggedInUserId !== host.userId && !isAvailable && (
+        <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
+          <Text size='sm'>
+            When you send a booking request, we will temporarily reserve the total cost of the booking from your card.
+            This cat sitter have not added information about their availability for the dates you chose. You can choose
+            either to message them first to see if they are available or send a booking request straight away.
+          </Text>
+        </Responsive>
+      )}
     </Popup>
   );
-
-  //       {props.allowToBook && (
-  //         <Header
-  //           onClick={props.handleHostProfileClick}
-  //           className='fake-link-underlined'
-  //           id='more'
-  //           style={{
-  //             marginTop: '0.5rem',
-  //             marginBottom: '1.5rem',
-  //             textAlign: 'center',
-  //             marginLeft: 'auto',
-  //             marginRight: 'auto',
-  //             display: 'table',
-  //           }}
-  //         >
-  //           {t('HostPopup:more')}
-  //         </Header>
-  //       )}
-
-  //       {props.allowToBook ? (
-  //         <RequestToBookCTA
-  //           numberOfCats={props.numberOfCats}
-  //           nickname={props.nickname}
-  //           checkInDate={props.checkInDate}
-  //           checkOutDate={props.checkOutDate}
-  //           orderTotal={orderTotal}
-  //           requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
-  //         />
-  //       ) : (
-  //         <p className='small-centered-paragraph' style={{ marginTop: '1rem' }}>
-  //           {t('HostPopup:own-profile-warning')}
-  //         </p>
-  //       )}
-  //       {props.allowToBook && !props.hostAvailable && (
-  //         <p className='small-centered-paragraph'>
-  //           <Trans i18nKey='HostPopup:host-availability-disclaimer'>
-  //             This cat sitter have not added information about their availability for the dates you chose. You can still
-  //             send them a booking request or
-  //             <span
-  //               id='send-message'
-  //               className='fake-link-underlined'
-  //               style={{ display: 'contents' }}
-  //               onClick={props.messageHost}
-  //             >
-  //               contact them
-  //             </span>
-  //             first to see if they are available.
-  //           </Trans>
-  //         </p>
-  //       )}
-  //     </>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 const mapStateToProps = (state) => ({

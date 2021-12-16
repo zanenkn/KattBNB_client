@@ -6,7 +6,7 @@ import Spinner from '../ReusableComponents/Spinner';
 import { Link } from 'react-router-dom';
 import User from '../Icons/User';
 import Review from '../Icons/src/Review';
-import AvailableHost from '../Icons/AvailableHost';
+//import AvailableHost from '../Icons/AvailableHost';
 
 const List = ({ finalAvailableHosts, checkInDate, checkOutDate, location, numberOfCats, handleListItemClick }) => {
   const { t, ready } = useTranslation('List');

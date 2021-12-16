@@ -14,6 +14,7 @@ const Flexbox = ({
   spaceItemsY,
   verticalAlign,
   width,
+  wrap,
   ...rest
 }) => {
   return (
@@ -27,6 +28,7 @@ const Flexbox = ({
       spaceItemsY={spaceItemsY}
       verticalAlign={verticalAlign}
       width={width}
+      wrap={wrap}
       {...rest}
     />
   );
@@ -42,6 +44,7 @@ Flexbox.propTypes = {
   spaceItemsY: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center']),
   width: PropTypes.string,
+  wrap: PropTypes.bool,
 };
 
 Flexbox.defaultProps = {
@@ -54,6 +57,7 @@ Flexbox.defaultProps = {
   spaceItemsY: 0,
   verticalAlign: 'center',
   width: 'auto',
+  wrap: false,
 };
 
 Flexbox.displayName = 'Flexbox';
