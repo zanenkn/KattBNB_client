@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
-import { Container, Flexbox, ContentWrapper } from '../../UI-Components';
+import { Container, Flexbox } from '../../UI-Components';
 
-const { spacing, colors } = theme;
+const { spacing, colors, screens, navbar } = theme;
 
 export const SearchCriteriaWrapper = styled(Container)`
   display: table;
@@ -25,30 +25,40 @@ export const RoundButton = styled.div`
   margin-right: ${spacing[2]};
   cursor: pointer;
   > svg {
-    fill: ${colors['white'][100]}
+    fill: ${colors['white'][100]};
   }
 `;
 
-export const SearchResultWrapper = styled(ContentWrapper)`
-  padding-top: ${({ padding }) => padding}px;
-`;
+export const SearchResultWrapper = styled.div`
+  padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.sm})`};
+  height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.sm})`};
 
-export const MapWrapper = styled.div`
-  padding-top: 225px;
-  height: calc(var(--vh, 1vh) * 100 - 225px);
+  @media (min-height: ${screens.md}) {
+    padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.md})`};
+    height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.md})`};
+  }
+  @media (min-height: ${screens.lg}) {
+    padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.lg})`};
+    height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.lg})`};
+  }
+
   width: 100%;
-`
+`;
 
 export const Badge = styled.div`
   width: 100px;
   height: 100px;
-  background-color: ${({nature}) => nature === 'availability' ? colors['success'][100] : colors['neutral'][60]};
+  background-color: ${({ nature }) => (nature === 'availability' ? colors['success'][100] : colors['neutral'][60])};
   position: absolute;
   top: -1px;
   right: -1px;
-  clip-path: polygon(0 0,100% 0,100% 100%,0 0);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
   display: flex;
-    flex-direction: column;
-    align-items: end;
-    padding: 20px 20px 0 0;
-`
+  flex-direction: column;
+  align-items: end;
+  padding: 20px 20px 0 0;
+`;
+
+export const BackLinkWrapper = styled.div`
+  margin-left: ${spacing[4]};
+`;

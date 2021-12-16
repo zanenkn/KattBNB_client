@@ -96,6 +96,11 @@ export const theme = {
     lg: '20px',
     xl: '24px',
   },
+  navbar: {
+    sm: '60px',
+    md: '75px',
+    lg: '90px',
+  },
 };
 
 const Theme = ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>;

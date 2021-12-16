@@ -144,7 +144,6 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
       {loggedInUserId !== host.userId && !isAvailable && (
         <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
           <Text size='sm'>
-            When you send a booking request, we will temporarily reserve the total cost of the booking from your card.
             This cat sitter have not added information about their availability for the dates you chose. You can choose
             either to message them first to see if they are available or send a booking request straight away.
           </Text>
