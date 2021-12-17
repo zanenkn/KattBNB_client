@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
 import PropTypes from 'prop-types';
-import Refresh from '../../icons/Refresh';
+import { Refresh } from '../../icons';
 
 const { colors, spacing } = theme;
 
@@ -44,7 +44,9 @@ const Button = ({ centered, color, disabled, loading, secondary, space, ...rest 
     <Flex space={space}>
       {loading && (
         <Icon>
-          <Refresh height='21' fill='#FAFAFA' className='spin-it' />
+          <div className='spin-it'>
+            <Refresh height={5} fill='neutral' tint={10} />
+          </div>
         </Icon>
       )}
       <Styled
