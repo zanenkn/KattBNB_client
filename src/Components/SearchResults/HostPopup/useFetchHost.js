@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
+import { detectLanguage } from '../../../Modules/detectLanguage';
 
 export const useFetchHost = (id) => {
   const lang = detectLanguage();
@@ -32,7 +32,7 @@ export const useFetchHost = (id) => {
       })
       .catch(({ response }) => {
         if (response === undefined) {
-          //wipeCredentials('/is-not-available?atm');
+          setErrors((prev) => [...prev, 'reusable:errors:unknown']);
         }
         if (response.status === 500) {
           setErrors((prev) => [...prev, 'reusable:errors:500']);
@@ -61,14 +61,5 @@ const transformResponseToHost = (data) => {
     reviewsCount: data.reviews_count,
     score: data.score,
     supplement: data.supplement_price_per_cat_per_day,
-
-    // checkInDate={checkInDate}
-    // checkOutDate={checkOutDate}
-
-    // handleHostProfileClick={handleHostProfileClick}
-    // requestToBookButtonClick={requestToBookButtonClick}
-    // hostAvailable={hostAvailable}
-    // messageHost={messageHost}
-    // allowToBook={hostId === id ? false : true}
   };
 };

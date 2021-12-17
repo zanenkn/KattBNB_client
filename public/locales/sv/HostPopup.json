@@ -1,5 +1,7 @@
 {
   "more": "Läs mer",
-  "host-availability-disclaimer": "Denna kattvakt har inte lagt till någon information om deras tillgänglighet för de valda datumen. Du kan fortfarande skicka dem en bokningsförfrågan, eller först <1>kontakta dem</1>, för att se om de är tillgängliga.",
+  "available": "Tillgänglig",
+  "total": "Summa för denna bokning:",
+  "host-availability-disclaimer": "Denna kattvakt har inte lagt till någon information om deras tillgänglighet för de valda datumen. Du kan välja att antingen skicka ett meddelande till dem först för att se om de är tillgängliga eller skicka bokningsförfrågan direkt.",
   "own-profile-warning": "Det är din egen kattvaktsprofil. Välj en annan från kartan."
 }

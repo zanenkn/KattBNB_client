@@ -1,5 +1,7 @@
 {
   "more": "Read more",
-  "host-availability-disclaimer": "This cat sitter have not added information about their availability for the dates you chose. You can still send them a booking request or <1>contact them</1> first to see if they are available.",
+  "available": "Available",
+  "total": "Total for this booking:",
+  "host-availability-disclaimer": "This cat sitter have not added information about their availability for the dates you chose. You can choose either to message them first to see if they are available or send a booking request straight away.",
   "own-profile-warning": "That's your own host profile. Please select another host from the map."
 }
