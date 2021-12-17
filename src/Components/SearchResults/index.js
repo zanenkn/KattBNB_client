@@ -8,7 +8,6 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
-import { Helmet } from 'react-helmet';
 
 import { getDaysArray } from '../../utils/getDaysArray';
 import { finalTotal } from '../../Modules/PriceCalculations';
@@ -25,6 +24,7 @@ import List from './list';
 import GoogleMap from './map';
 import HostProfileView from '../HostProfileView/HostProfileView';
 import HostPopup from './HostPopup';
+import SEO from '../../common/SEO';
 
 const SearchResults = ({ id, currentSearch, location }) => {
   const lang = detectLanguage();
@@ -204,22 +204,13 @@ const SearchResults = ({ id, currentSearch, location }) => {
 
   return (
     <>
-      <Helmet>
-        <title>{`Kattvakt i ${searchLocation} | KattBNB`}</title>
-        <meta
-          name='description'
-          content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
-        />
-        <link rel='canonical' href={`https://kattbnb.se/search-results/${window.location.search}`} />
-        <meta property='og:title' content={`Kattvakt i ${searchLocation} | KattBNB`} />
-        <meta property='og:url' content={`https://kattbnb.se/search-results/${window.location.search}`} />
-        <meta property='og:type' content='website' />
-        <meta
-          property='og:description'
-          content='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
-        />
-        <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-      </Helmet>
+      <SEO
+        title={`Kattvakt i ${searchLocation} | KattBNB`}
+        description='Lämna din katt i trygga händer - hos en pålitlig kattvakt som verkligen bryr sig. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+        href={`/search-results/${window.location.search}`}
+        type='website'
+        image='KattBNB_og.jpg'
+      />
 
       {hostPopupOpen && (
         <HostPopup
@@ -237,13 +228,13 @@ const SearchResults = ({ id, currentSearch, location }) => {
         onClose={() => setErrors([])}
         position='top center'
       >
-          <Notice nature='danger'>
-            <ul>
-              {errors.map((error) => (
-                <li key={error}>{t(error, {timestamp: (new Date).getTime()})}</li>
-              ))}
-            </ul>
-          </Notice>
+        <Notice nature='danger'>
+          <ul>
+            {errors.map((error) => (
+              <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+            ))}
+          </ul>
+        </Notice>
       </Popup>
 
       <SecondaryStickyHeader>
@@ -294,7 +285,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
                   <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
                 ) : (
                   <div className='spin-it'>
-                    <Refresh height={5} tint={80}/>
+                    <Refresh height={5} tint={80} />
                   </div>
                 )}
               </Text>
@@ -328,10 +319,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
       )}
       {results === 'profile' && (
         <SearchResultWrapper padding={150}>
-          <HostProfileView
-          //requestToBookButtonClick={requestToBookButtonClick}
-          //messageHost={messageHost}
-          />
+          <HostProfileView />
         </SearchResultWrapper>
       )}
     </>
