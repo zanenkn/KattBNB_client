@@ -1,14 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import LOCATION_OPTIONS from '../../Modules/locationData.json';
+
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
+
+import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import { getDaysArray } from '../../utils/getDaysArray';
 import { detectLanguage } from '../../Modules/detectLanguage';
-import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
-import { useTranslation } from 'react-i18next';
+import { formValidation } from '../../Modules/formValidation';
+
 import Spinner from '../../common/Spinner';
+import SEO from '../../common/SEO';
 import {
+  Flexbox,
   Whitebox,
   Header,
   InlineLink,
@@ -20,8 +26,6 @@ import {
   DayPicker,
   ContentWrapper,
 } from '../../UI-Components';
-import { formValidation } from '../../Modules/formValidation';
-import SEO from '../../common/SEO';
 
 const Search = ({ history, dispatch, currentSearch }) => {
   const { t, ready } = useTranslation('Search');
@@ -38,6 +42,8 @@ const Search = ({ history, dispatch, currentSearch }) => {
   const [cats, setCats] = useState(null);
   const [errors, setErrors] = useState([]);
 
+  const modifiers = { start: new Date(from), end: new Date(to) };
+
   useEffect(() => {
     if (!!Object.keys(currentSearch).length) {
       setFrom(currentSearch.start);
@@ -46,12 +52,6 @@ const Search = ({ history, dispatch, currentSearch }) => {
       setCats(currentSearch.cats);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (from !== undefined) {
-  //     toField.current.getInput().focus();
-  //   }
-  // }, [from]);
 
   const handleFromChange = () => {
     const utcFrom = Date.UTC(
@@ -145,15 +145,16 @@ const Search = ({ history, dispatch, currentSearch }) => {
             parseDate={parseDate}
             inputProps={{ readOnly: true, placeholder: false }}
             dayPickerProps={{
-              selectedDays: { from: new Date(from), to: new Date(to) },
+              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
               disabledDays: { after: new Date(to), before: today },
               fromMonth: today,
-              toMonth: new Date(to),
+              toMonth: to ? new Date(to) : undefined,
               numberOfMonths: 1,
               firstDayOfWeek: 1,
               localeUtils: MomentLocaleUtils,
               locale: lang,
               showWeekNumbers: true,
+              modifiers,
             }}
           />
           <DayPicker
@@ -163,16 +164,16 @@ const Search = ({ history, dispatch, currentSearch }) => {
             id='from'
             value={to ? moment(to).format('LL') : ''}
             onChange={() => handleToChange()}
+            space={1}
             format='LL'
             formatDate={formatDate}
             parseDate={parseDate}
             inputProps={{
-              disabled: !from,
               readOnly: !!from,
               placeholder: false,
             }}
             dayPickerProps={{
-              selectedDays: { from: new Date(from), to: new Date(to) },
+              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
               disabledDays: { before: from ? new Date(from) : today },
               firstDayOfWeek: 1,
               showWeekNumbers: true,
@@ -181,14 +182,15 @@ const Search = ({ history, dispatch, currentSearch }) => {
               localeUtils: MomentLocaleUtils,
               locale: lang,
               numberOfMonths: 1,
+              modifiers,
             }}
           />
 
-          <div style={{ visibility: !from && !to ? 'hidden' : 'visible' }}>
-            <InlineLink style={{ textAlign: 'right' }} onClick={() => clearDates()}>
+          <Flexbox horizontalAlign='right' space={3} style={{ visibility: !from && !to ? 'hidden' : 'visible' }}>
+            <InlineLink onClick={() => clearDates()} text='sm' color='info'>
               {t('Search:reset')}
             </InlineLink>
-          </div>
+          </Flexbox>
           <Dropdown
             defaultValue={currentSearch.location}
             label={t('Search:where')}
