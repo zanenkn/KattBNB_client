@@ -83,7 +83,8 @@
     "accept": "Acceptera",
     "make-host-profile": "Skapa en kattvaktsprofil",
     "reply": "Svara",
-    "view-receipt": "Kvitto"
+    "view-receipt": "Kvitto",
+    "send-message": "Skicka meddelande"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
@@ -103,5 +104,6 @@
     "stripe-dashboard-cta": "Min betalningspanel",
     "onboarding-cta": "Ange betalningsinformation"
   },
-  "important": "Viktigt!"
+  "important": "Viktigt!",
+  "or": "eller"
 }

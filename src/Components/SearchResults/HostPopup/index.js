@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
+
 import { connect } from 'react-redux';
-import ReviewScore from '../../../common/ReviewScore';
-import Responsive from '../../../common/Responsive';
-import { finalTotal } from '../../../Modules/PriceCalculations';
-import { useTranslation, Trans } from 'react-i18next';
-import { Location, User, Review, AvailableHost } from '../../../icons';
-import Spinner from '../../../common/Spinner';
-import Popup from 'reactjs-popup';
-import { useFetchHost } from './useFetchHost';
-import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';
 import { useHistory } from 'react-router';
 import moment from 'moment';
+import { useTranslation, Trans } from 'react-i18next';
+import Popup from 'reactjs-popup';
+
+import { finalTotal } from '../../../Modules/PriceCalculations';
+import { useFetchHost } from './useFetchHost';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { useDeviceInfo } from '../../../hooks/useDeviceInfo';
+
+import ReviewScore from '../../../common/ReviewScore';
+import Responsive from '../../../common/Responsive';
+import Spinner from '../../../common/Spinner';
+
 import { Badge } from '../styles';
+import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';
+import { Location, User, Review, AvailableHost } from '../../../icons';
 
 const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile }) => {
   const { t, ready } = useTranslation('HostPopup');
@@ -83,7 +87,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
         {isAvailable && (
           <Flexbox spaceItemsX={1}>
             <AvailableHost />
-            <Text>Is available</Text>
+            <Text>{t('HostPopup:available')}</Text>
           </Flexbox>
         )}
       </Flexbox>
@@ -110,7 +114,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
 
       <Responsive displayIn={['mobile']}>
         <Text bold centered space={0}>
-          Total for this booking:
+          {t('HostPopup:total')}
         </Text>
       </Responsive>
 
@@ -121,12 +125,12 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
       {!isAvailable && (
         <>
           {/* idea: push to messenger with a default message? */}
-          <Button id='message-host' onClick={() => console.log('to the messenger i go')} space={2}>
-            Send a message
+          <Button id='message-host' onClick={() => console.log('TODO: to the messenger i go')} space={2}>
+            {t('reusable:cta.send-message')}
           </Button>
 
           <Text centered bold space={2}>
-            or
+            {t('reusable:or')}
           </Text>
         </>
       )}
@@ -143,10 +147,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
 
       {loggedInUserId !== host.userId && !isAvailable && (
         <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
-          <Text size='sm'>
-            This cat sitter have not added information about their availability for the dates you chose. You can choose
-            either to message them first to see if they are available or send a booking request straight away.
-          </Text>
+          <Text size='sm'>{t('HostPopup:host-availability-disclaimer')}</Text>
         </Responsive>
       )}
     </Popup>
