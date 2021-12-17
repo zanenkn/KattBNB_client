@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
+
 import { connect, useDispatch } from 'react-redux';
 import Geocode from 'react-geocode';
-import List from './list';
-import GoogleMap from './map';
-import HostProfileView from '../HostProfileView/HostProfileView';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
-import { getDaysArray } from '../../utils/getDaysArray';
-import { finalTotal } from '../../Modules/PriceCalculations';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
 import Popup from 'reactjs-popup';
-import HostPopup from './HostPopup';
-import Spinner from '../../common/Spinner';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
 import { Helmet } from 'react-helmet';
-import Refresh from '../../icons/Refresh';
-import { Flexbox, InlineLink, SecondaryStickyHeader, Text } from '../../UI-Components';
-import { Location, Cat, Availabilty, Map as MapIcon, List as ListIcon } from '../../icons';
-import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, JustifiedWrapper, BackLinkWrapper } from './styles';
-import { Link } from 'react-router-dom';
+
+import { getDaysArray } from '../../utils/getDaysArray';
+import { finalTotal } from '../../Modules/PriceCalculations';
+import { detectLanguage } from '../../Modules/detectLanguage';
 import { useDeviceInfo } from '../../hooks/useDeviceInfo';
+
+import Spinner from '../../common/Spinner';
+
+import { Flexbox, InlineLink, SecondaryStickyHeader, Text, Notice } from '../../UI-Components';
+import { Location, Cat, Availabilty, Map as MapIcon, Refresh, List as ListIcon } from '../../icons';
+import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, JustifiedWrapper, BackLinkWrapper } from './styles';
+
+import List from './list';
+import GoogleMap from './map';
+import HostProfileView from '../HostProfileView/HostProfileView';
+import HostPopup from './HostPopup';
 
 const SearchResults = ({ id, currentSearch, location }) => {
   const lang = detectLanguage();
@@ -159,8 +162,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         setAllLocationsLoaded(true);
       } catch ({ response }) {
         if (response === undefined) {
-          //wipeCredentials('/is-not-available?atm');
-          // gotta stop wiping credentials every time something went wrong and we dont know what. a general error is needed.
+          setErrors(['reusable:errors:unknown']);
         } else if (response.status === 500) {
           setLoading(false);
           setErrors(['reusable:errors:500']);
@@ -197,59 +199,6 @@ const SearchResults = ({ id, currentSearch, location }) => {
     }
     setHostPopupOpen(false);
   };
-
-  // const messageHost = (e) => {
-  //   e.preventDefault();
-  //   if (window.navigator.onLine === false) {
-  //     setErrors(['reusable:errors:window-navigator']);
-  //   } else {
-  //     if (id === undefined) {
-  //       history.push('/login');
-  //     } else {
-  //       const path = '/api/v1/conversations';
-  //       const payload = {
-  //         user1_id: id,
-  //         user2_id: hostId,
-  //         locale: lang,
-  //       };
-  //       const headers = {
-  //         uid: window.localStorage.getItem('uid'),
-  //         client: window.localStorage.getItem('client'),
-  //         'access-token': window.localStorage.getItem('access-token'),
-  //       };
-  //       axios
-  //         .post(path, payload, { headers: headers })
-  //         .then(({ data }) => {
-  //           history.push({
-  //             pathname: '/conversation',
-  //             state: {
-  //               id: data.id,
-  //               user: {
-  //                 profile_avatar: hostAvatar,
-  //                 id: hostId,
-  //                 location: hostLocation,
-  //                 nickname: hostNickname,
-  //               },
-  //             },
-  //           });
-  //         })
-  //         .catch(({ response }) => {
-  //           if (response === undefined) {
-  //             wipeCredentials('/is-not-available?atm');
-  //           } else if (response.status === 500) {
-  //             setErrors(['reusable:errors:500']);
-  //           } else if (response.status === 401) {
-  //             window.alert(t('reusable:errors:401'));
-  //             wipeCredentials('/');
-  //           } else if (response.status === 422) {
-  //             setErrors(['reusable:errors:422-conversation']);
-  //           } else {
-  //             setErrors(response.data.error);
-  //           }
-  //         });
-  //     }
-  //   }
-  // };
 
   if (!ready || loading) return <Spinner />;
 
@@ -288,15 +237,13 @@ const SearchResults = ({ id, currentSearch, location }) => {
         onClose={() => setErrors([])}
         position='top center'
       >
-        <div>
-          {/* <Message negative>
-            <ul id='message-error-list'>
+          <Notice nature='danger'>
+            <ul>
               {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
+                <li key={error}>{t(error, {timestamp: (new Date).getTime()})}</li>
               ))}
             </ul>
-          </Message> */}
-        </div>
+          </Notice>
       </Popup>
 
       <SecondaryStickyHeader>
@@ -322,7 +269,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
             </Flexbox>
             <BackLinkWrapper>
               <InlineLink color='info' as={Link} to={'/search'}>
-                {device.type === 'mobile' ? 'Change' : 'Change search'}
+                {device.type === 'mobile' ? t('reusable:cta:change') : t('SearchResults:change-search')}
               </InlineLink>
             </BackLinkWrapper>
           </JustifiedWrapper>
@@ -346,7 +293,9 @@ const SearchResults = ({ id, currentSearch, location }) => {
                 {allLocationsLoaded ? (
                   <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
                 ) : (
-                  <Refresh height={'28px'} fill={'silver'} className={'spin-it'} />
+                  <div className='spin-it'>
+                    <Refresh height={5} tint={80}/>
+                  </div>
                 )}
               </Text>
             )}

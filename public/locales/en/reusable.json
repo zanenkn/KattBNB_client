@@ -67,7 +67,8 @@
     "google-error-2": "There was a problem contacting the Google server. Try again in a minute. If the problem persists contact KattBNB support.",
     "index-no-host-1": "This host does not exist! Please refresh the page.",
     "index-no-host-2": "This host does not exist! Please search again to get updated results.",
-    "captcha": "You didn't input the captcha phrase correctly, please try again!"
+    "captcha": "You didn't input the captcha phrase correctly, please try again!",
+    "unknown": "Something went wrong! Please try back at a later time. If the problem still persists, please let us know and send us this timestamp: {{timestamp}}"
   },
   "remaining-chars": "Remaining characters:",
   "reviews": "{{count}} review",

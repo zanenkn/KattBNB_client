@@ -172,6 +172,7 @@ const GlobalStyles = createGlobalStyle`
     transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
   }
   .spin-it {
+    display: flex;
     animation: rotation 2s infinite linear;
   }
   

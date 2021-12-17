@@ -1,4 +1,5 @@
 {
   "back": "Tillbaka till resultat",
-  "counter": "{{count}} resultat"
+  "counter": "{{count}} resultat",
+  "change-search": "Ändra sökning"
 }
