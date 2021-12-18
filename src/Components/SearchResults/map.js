@@ -1,9 +1,9 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
-import Marker from './marker';
 import mapStyles from '../../Modules/MapStyle.js';
 import { DatapointCounter } from './styles';
+import Marker from './marker';
 
 const GoogleMap = ({ allAvailableHosts, byLocationAvailableHosts, handleDatapointClick, onUnmount, config }) => {
   useLayoutEffect(() => {
@@ -86,17 +86,17 @@ const GoogleMap = ({ allAvailableHosts, byLocationAvailableHosts, handleDatapoin
                 onClick={() => zoomAndPan(12, clusterLat, clusterLng)}
                 pointCount={pointCount}
                 pointLength={points.length}
-                available={supercluster.getLeaves(cluster.id, 1, 0).some((host) => host.properties.available)}
+                available={supercluster.getLeaves(cluster.id).some((host) => host.properties.available)}
+                expandable
               >
                 {pointCount}
               </DatapointCounter>
             );
           } else {
             const clusterMarker =
-              supercluster.getLeaves(cluster.id, 1, 0).find((host) => host.properties.available) ||
+              supercluster.getLeaves(cluster.id).find((host) => host.properties.available) ||
               supercluster.getLeaves(cluster.id, 1, 0)[0];
             const { id, total, available } = clusterMarker.properties;
-
             return (
               <Marker
                 key={`cluster-${cluster.id}`}
