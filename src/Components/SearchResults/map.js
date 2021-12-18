@@ -3,16 +3,9 @@ import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 import Marker from './marker';
 import mapStyles from '../../Modules/MapStyle.js';
-import ClusterMarker from './clusterMarker';
+import { DatapointCounter } from './styles';
 
-const GoogleMap = ({
-  allAvailableHosts,
-  byLocationAvailableHosts,
-  handleDatapointClick,
-  onUnmount,
-  config
-}) => {
-  
+const GoogleMap = ({ allAvailableHosts, byLocationAvailableHosts, handleDatapointClick, onUnmount, config }) => {
   useLayoutEffect(() => {
     return () => {
       onUnmount(mapRef.current.getCenter().lat(), mapRef.current.getCenter().lng(), mapRef.current.zoom);
@@ -83,22 +76,26 @@ const GoogleMap = ({
       {clusters.map((cluster) => {
         const [clusterLng, clusterLat] = cluster.geometry.coordinates;
         const { cluster: isCluster, point_count: pointCount } = cluster.properties;
-
         if (isCluster) {
           if (zoom < 10) {
             return (
-              <ClusterMarker
+              <DatapointCounter
                 lat={clusterLat}
                 lng={clusterLng}
                 key={`cluster-${cluster.id}`}
                 onClick={() => zoomAndPan(12, clusterLat, clusterLng)}
                 pointCount={pointCount}
                 pointLength={points.length}
-              />
+                available={supercluster.getLeaves(cluster.id, 1, 0).some((host) => host.properties.available)}
+              >
+                {pointCount}
+              </DatapointCounter>
             );
           } else {
-            let clusterMarker = supercluster.getLeaves(cluster.id, 1, 0)[0];
-            let { id, total } = clusterMarker.properties;
+            const clusterMarker =
+              supercluster.getLeaves(cluster.id, 1, 0).find((host) => host.properties.available) ||
+              supercluster.getLeaves(cluster.id, 1, 0)[0];
+            const { id, total, available } = clusterMarker.properties;
 
             return (
               <Marker
@@ -107,7 +104,7 @@ const GoogleMap = ({
                 lng={clusterMarker.geometry.coordinates[0]}
                 id={id}
                 total={total}
-                available
+                available={available}
                 onClick={() =>
                   zoomAndPan(Math.min(supercluster.getClusterExpansionZoom(cluster.id), 20), clusterLat, clusterLng)
                 }

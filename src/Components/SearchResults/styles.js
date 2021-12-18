@@ -98,3 +98,18 @@ export const ListItem = styled(Container)`
   max-width: 400px;
   position: relative;
 `;
+
+export const DatapointCounter = styled.div`
+  width: ${(pointCount, pointLength, expandable) => (expandable ? 10 + (pointCount / pointLength) * 20 : '25')}px;
+  height: ${(pointCount, pointLength, expandable) => (expandable ? 10 + (pointCount / pointLength) * 20 : '25')}px;
+  color: ${colors['white'][100]};
+  background-color: ${({ available }) => available ? colors['success'][100] : colors['neutral'][100]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+`;
