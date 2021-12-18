@@ -32,7 +32,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
             <InlineLink as={Link} to='/search' color='info'>
               changing your search criteria
             </InlineLink>
-            or{' '}
+            or
             <InlineLink onClick={() => switchToMap()} color='info'>
               go to the map view
             </InlineLink>{' '}

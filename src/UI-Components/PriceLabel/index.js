@@ -1,7 +1,16 @@
-import { StyledPriceLabel } from "./styles";
+import { StyledPriceLabel } from './styles';
+import PropTypes from 'prop-types';
 
-const PriceLabel = ({ color, ...rest }) => {
-  return <StyledPriceLabel color={color} {...rest} />;
+const PriceLabel = ({ available, ...rest }) => {
+  return <StyledPriceLabel available={available} {...rest} />;
 };
 
 export default PriceLabel;
+
+PriceLabel.defaultProps = {
+  available: false,
+};
+
+PriceLabel.propTypes = {
+  available: PropTypes.bool,
+};
