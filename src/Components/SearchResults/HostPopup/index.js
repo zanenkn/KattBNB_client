@@ -87,7 +87,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
         {isAvailable && (
           <Flexbox spaceItemsX={1}>
             <AvailableHost />
-            <Text>{t('HostPopup:available')}</Text>
+            <Text>{t('reusable:available')}</Text>
           </Flexbox>
         )}
       </Flexbox>

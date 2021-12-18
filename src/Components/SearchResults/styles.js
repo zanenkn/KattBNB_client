@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from '../../Styles/theme';
 import { Container, Flexbox } from '../../UI-Components';
 
@@ -30,16 +30,18 @@ export const RoundButton = styled.div`
 `;
 
 export const SearchResultWrapper = styled.div`
+  background-color: ${({ background }) => (background ? colors[background][20] : colors[['white']][100])};
   padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.sm})`};
-  height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.sm})`};
+
+  ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.sm})`};
 
   @media (min-height: ${screens.md}) {
     padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.md})`};
-    height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.md})`};
+    ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.md})`};
   }
   @media (min-height: ${screens.lg}) {
     padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.lg})`};
-    height: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.lg})`};
+    ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.lg})`};
   }
 
   width: 100%;
@@ -61,4 +63,22 @@ export const Badge = styled.div`
 
 export const BackLinkWrapper = styled.div`
   margin-left: ${spacing[4]};
+`;
+
+export const ListWrapper = styled.div`
+  padding: ${spacing[6]} ${spacing[4]};
+
+  @media (min-width: ${screens.md}) {
+    padding: ${spacing[6]};
+  }
+`;
+export const ListItem = styled(Container)`
+  background-color: ${colors['white'][100]};
+  padding: ${spacing[4]};
+  @media (min-width: ${screens.md}) {
+    padding: ${spacing[6]};
+  }
+  margin: 0 auto ${spacing[5]};
+  max-width: 400px;
+  position: relative;
 `;
