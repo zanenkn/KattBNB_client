@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { theme } from './theme';
 
-const { colors, spacing } = theme;
+const { colors, spacing, screens } = theme;
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -39,19 +39,33 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h1 {
-    font-size: 2.488rem;
+    font-size: 1.802rem;
   }
-  h2 {
-    font-size: 2.074rem;
-  }
-  h3 {
-    font-size: 1.728rem;
-  }
-  h4 {
-    font-size: 1.44rem;
-  }
-  h5 {
-    font-size: 1.2rem;
+  
+  h2 {font-size: 1.602rem;}
+  
+  h3 {font-size: 1.424rem;}
+  
+  h4 {font-size: 1.266rem;}
+  
+  h5 {font-size: 1.125rem;}
+
+  @media (min-width: ${screens.md}) {
+    h1 {
+      font-size: 2.488rem;
+    }
+    h2 {
+      font-size: 2.074rem;
+    }
+    h3 {
+      font-size: 1.728rem;
+    }
+    h4 {
+      font-size: 1.44rem;
+    }
+    h5 {
+      font-size: 1.2rem;
+    }
   }
 
   a {
