@@ -298,16 +298,17 @@ const SearchResults = ({ id, currentSearch, location }) => {
       </SecondaryStickyHeader>
 
       {results === 'list' && (
-        <SearchResultWrapper padding={150}>
+        <SearchResultWrapper padding={150} background='neutral'>
           <List
             finalAvailableHosts={availableByLocation}
             handleListItemClick={(id) => setHostPopupOpen(id)}
             onUnmount={() => setListScrollOffset(window.pageYOffset)}
+            switchToMap={() => setResults('map')}
           />
         </SearchResultWrapper>
       )}
       {results === 'map' && (
-        <SearchResultWrapper padding={150}>
+        <SearchResultWrapper padding={150} map>
           <GoogleMap
             mapCenterLat={locationLat}
             mapCenterLong={locationLong}
