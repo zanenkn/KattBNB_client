@@ -46,8 +46,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
   const [searchLocation, setSearchLocation] = useState(null);
   const [cats, setCats] = useState(null);
 
-  const [locationLat, setLocationLat] = useState(null);
-  const [locationLong, setLocationLong] = useState(null);
+  const [mapConfig, setMapConfig] = useState({});
 
   const [results, setResults] = useState('');
   const [hostPopupOpen, setHostPopupOpen] = useState(false);
@@ -58,10 +57,9 @@ const SearchResults = ({ id, currentSearch, location }) => {
 
   const geolocationDataAddress = (place) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
-    Geocode.fromAddress(place).then((response) => {
+    Geocode.fromAddress(`${place} Sweden`).then((response) => {
       const { lat, lng } = response.results[0].geometry.location;
-      setLocationLat(lat);
-      setLocationLong(lng);
+      setMapConfig((prev) => ({...prev, lat: lat, lng: lng, zoom: 12}))
     });
   };
 
@@ -310,11 +308,11 @@ const SearchResults = ({ id, currentSearch, location }) => {
       {results === 'map' && (
         <SearchResultWrapper padding={150} map>
           <GoogleMap
-            mapCenterLat={locationLat}
-            mapCenterLong={locationLong}
             byLocationAvailableHosts={availableByLocation}
             allAvailableHosts={availableAllLocations}
             handleDatapointClick={(id) => setHostPopupOpen(id)}
+            onUnmount={(lat, lng, zoom) => setMapConfig({ lat: lat, lng: lng, zoom: zoom })}
+            config={mapConfig}
           />
         </SearchResultWrapper>
       )}

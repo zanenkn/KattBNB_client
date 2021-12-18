@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 import Marker from './marker';
@@ -8,10 +8,17 @@ import ClusterMarker from './clusterMarker';
 const GoogleMap = ({
   allAvailableHosts,
   byLocationAvailableHosts,
-  mapCenterLat,
-  mapCenterLong,
   handleDatapointClick,
+  onUnmount,
+  config
 }) => {
+  
+  useLayoutEffect(() => {
+    return () => {
+      onUnmount(mapRef.current.getCenter().lat(), mapRef.current.getCenter().lng(), mapRef.current.zoom);
+    };
+  }, []);
+
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(12);
@@ -48,10 +55,10 @@ const GoogleMap = ({
     <GoogleMapReact
       defaultCenter={{ lat: 59.330651, lng: 18.068562 }}
       center={{
-        lat: mapCenterLat,
-        lng: mapCenterLong,
+        lat: config.lat,
+        lng: config.lng,
       }}
-      defaultZoom={12}
+      defaultZoom={config.zoom}
       options={{
         styles: mapStyles,
         restriction: {
