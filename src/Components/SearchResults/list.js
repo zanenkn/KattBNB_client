@@ -49,29 +49,29 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
         return (
           <ListItem key={host.id} onClick={() => handleListItemClick(host.id)}>
             {(host.available || host.reviews_count) && (
-              <Badge nature={host.available ? 'availability' : 'reviews'}>
+              <Badge responsive nature={host.available ? 'availability' : 'reviews'}>
                 {host.available ? <AvailableHost fill='white' height={6} /> : <Review fill='white' height={6} />}
               </Badge>
             )}
-            {host.score && <ReviewScore score={host.score} displayNumerical={true} />}
+            {host.score && (
+              <Container>
+                <ReviewScore score={host.score} displayNumerical={true} primaryColor='neutral' margin='0' />
+              </Container>
+            )}
             <Flexbox horizontalAlign='left' spaceItemsX={4}>
               <Flexbox direction='column'>
                 <Avatar
-                  space={2}
+                  responsive
                   src={
                     !host.user.profile_avatar
                       ? `https://ui-avatars.com/api/?name=${host.user.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
                       : host.user.profile_avatar
                   }
                 />
-                <Flexbox spaceItemsX={1}>
-                  <User />
-                  <Header level={5}>{host.user.nickname}</Header>
-                </Flexbox>
               </Flexbox>
 
               <Flexbox direction='column' horizontalAlign='left'>
-                <Container space={1}>
+                <Container space={2}>
                   <Header level={3}>
                     {finalTotal(
                       host.price_per_day_1_cat,
@@ -82,6 +82,14 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
                     )}{' '}
                     kr
                   </Header>
+                </Container>
+                <Container space={1}>
+                  <Flexbox spaceItemsX={1}>
+                    <User />
+                    <Text bold level={5}>
+                      {host.user.nickname}
+                    </Text>
+                  </Flexbox>
                 </Container>
                 {host.score && (
                   <Flexbox spaceItemsX={1}>

@@ -33,21 +33,36 @@ export const SearchResultWrapper = styled.div`
   background-color: ${({ background }) => (background ? colors[background][20] : colors[['white']][100])};
   padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.sm})`};
 
-  ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.sm})`};
+  ${({ map }) => (map ? 'height' : 'min-height')}: ${({ padding }) =>
+    `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.sm})`};
 
   @media (min-height: ${screens.md}) {
     padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.md})`};
-    ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.md})`};
+    ${({ map }) => (map ? 'height' : 'min-height')}: ${({ padding }) =>
+      `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.md})`};
   }
   @media (min-height: ${screens.lg}) {
     padding-top: ${({ padding }) => `calc(${padding}px + ${navbar.lg})`};
-    ${({map}) => map ? 'height' : 'min-height'}: ${({ padding }) => `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.lg})`};
+    ${({ map }) => (map ? 'height' : 'min-height')}: ${({ padding }) =>
+      `calc(var(--vh, 1vh) * 100 - ${padding}px - ${navbar.lg})`};
   }
 
   width: 100%;
 `;
 
 export const Badge = styled.div`
+  ${({ responsive }) =>
+    responsive &&
+    css`
+      @media (max-width: ${screens.md}) {
+        width: 70px;
+        height: 70px;
+        padding: ${spacing[3]} ${spacing[3]} 0 0;
+        > svg {
+          height: 1.5rem;
+        }
+      }
+    `}
   width: 100px;
   height: 100px;
   background-color: ${({ nature }) => (nature === 'availability' ? colors['success'][100] : colors['neutral'][60])};
@@ -58,7 +73,7 @@ export const Badge = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
-  padding: 20px 20px 0 0;
+  padding: ${spacing[5]} ${spacing[5]} 0 0;
 `;
 
 export const BackLinkWrapper = styled.div`
@@ -73,8 +88,9 @@ export const ListWrapper = styled.div`
   }
 `;
 export const ListItem = styled(Container)`
+  cursor: pointer;
   background-color: ${colors['white'][100]};
-  padding: ${spacing[4]};
+  padding: ${spacing[5]} ${spacing[4]};
   @media (min-width: ${screens.md}) {
     padding: ${spacing[6]};
   }
