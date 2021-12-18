@@ -1,5 +1,6 @@
 import React from 'react';
 import { PriceLabel } from '../../UI-Components';
+import { DatapointCounter } from './styles';
 
 const Marker = ({ cluster, available, id, onClick, total, pointCount }) => {
   return (
@@ -9,30 +10,13 @@ const Marker = ({ cluster, available, id, onClick, total, pointCount }) => {
         position: 'absolute',
         display: cluster ? 'flex' : 'block',
       }}
-      onClick={(e) => onClick(id, available)}
+      onClick={() => onClick(id, available)}
     >
       <PriceLabel color={available ? 'success' : 'neutral'} id={id}>
         {total}&nbsp;kr
       </PriceLabel>
-      {cluster && (
-        <div
-          style={{
-            height: '25px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '25px',
-            fontSize: '10px',
-            fontWeight: 'bold',
-            backgroundColor: '#c90c61',
-            color: '#ffffff',
-            borderRadius: '9999px',
-            marginLeft: '5px',
-          }}
-        >
-          +{pointCount - 1}
-        </div>
-      )}
+
+      {cluster && <DatapointCounter available={available}>+{pointCount - 1}</DatapointCounter>}
     </div>
   );
 };
