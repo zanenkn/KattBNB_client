@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import HostProfileView from '../../HostProfileView/HostProfileView';
+import HostInfo from '../../HostProfileView/hostInfo';
 import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -145,7 +145,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
       <Header level={2} centered>
         {t('BookingDetails:about-host')}
       </Header>
-      <HostProfileView
+      <HostInfo
         numberOfCats={numberOfCats}
         hostId={hostId}
         avatar={avatar}

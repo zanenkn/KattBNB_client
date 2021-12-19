@@ -22,7 +22,7 @@ import { SearchCriteriaWrapper, RoundButton, SearchResultWrapper, JustifiedWrapp
 
 import List from './list';
 import GoogleMap from './map';
-import HostProfileView from '../HostProfileView/HostProfileView';
+import Profile from './profile';
 import HostPopup from './HostPopup';
 import SEO from '../../common/SEO';
 
@@ -59,7 +59,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
     Geocode.fromAddress(`${place} Sweden`).then((response) => {
       const { lat, lng } = response.results[0].geometry.location;
-      setMapConfig((prev) => ({...prev, lat: lat, lng: lng, zoom: 12}))
+      setMapConfig((prev) => ({ ...prev, lat: lat, lng: lng, zoom: 12 }));
     });
   };
 
@@ -180,10 +180,15 @@ const SearchResults = ({ id, currentSearch, location }) => {
     const href = new URL(window.location.href);
     href.searchParams.set('view', results);
 
-    if (results === 'profile') {
+    if (results === 'profile' && hostPopupOpen) {
       href.searchParams.append('host', hostPopupOpen);
-    } else {
+    }
+
+    if (results === 'map' || results === 'list') {
       href.searchParams.delete('host');
+      dispatch({
+        type: 'HOST_PROFILE_RESET',
+      });
     }
 
     window.history.replaceState(null, null, href.search);
@@ -318,7 +323,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
       )}
       {results === 'profile' && (
         <SearchResultWrapper padding={150}>
-          <HostProfileView />
+          <Profile currentSearch={currentSearch} id={queryString.parse(location.search).host} />
         </SearchResultWrapper>
       )}
     </>
