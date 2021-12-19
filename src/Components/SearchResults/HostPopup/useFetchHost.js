@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 
 export const useFetchHost = (id) => {
@@ -8,38 +8,45 @@ export const useFetchHost = (id) => {
   const [errors, setErrors] = useState([]);
   const [host, setHost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const currentHost = useSelector((state) => state.currentHostProfile);
 
   if (window.navigator.onLine === false) {
     setErrors((prev) => [...prev, 'reusable:errors:window-navigator']);
   }
   useEffect(() => {
-    axios
-      .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
-      .then(({ data }) => {
-        if (!data.length) {
-          setErrors((prev) => [...prev, 'reusable:errors:index-no-host-1']);
+    if (Object.keys(currentHost).length) {
+      setHost(currentHost);
+      setLoading(false);
+    } else {
+      axios
+        .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
+        .then(({ data }) => {
+          if (!data.length) {
+            setErrors((prev) => [...prev, 'reusable:errors:index-no-host-1']);
+            setLoading(false);
+            return;
+          }
+          const transformedResponse = transformResponseToHost(data[0]);
+          setHost(transformedResponse);
+          dispatch({
+            type: 'HOST_PROFILE_FETCHED',
+            hostProfile: transformedResponse,
+          });
           setLoading(false);
-          return;
-        }
-        const transformedResponse = transformResponseToHost(data[0]);
-        setHost(transformedResponse);
-        dispatch({
-          type: 'HOST_PROFILE_FETCHED',
-          hostProfile: transformedResponse,
+        })
+        .catch(({ response }) => {
+          if (response === undefined) {
+            setErrors((prev) => [...prev, 'reusable:errors:unknown']);
+          }
+          if (response.status === 500) {
+            setErrors((prev) => [...prev, 'reusable:errors:500']);
+          }
+          setErrors((prev) => [...prev, response.data.error]);
+          setLoading(false);
         });
-        setLoading(false);
-      })
-      .catch(({ response }) => {
-        if (response === undefined) {
-          setErrors((prev) => [...prev, 'reusable:errors:unknown']);
-        }
-        if (response.status === 500) {
-          setErrors((prev) => [...prev, 'reusable:errors:500']);
-        }
-        setErrors((prev) => [...prev, response.data.error]);
-        setLoading(false);
-      });
+    }
   }, []);
 
   return { loading, errors, host };

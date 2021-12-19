@@ -7,14 +7,46 @@ import MessageHostCTA from '../../common/MessageHostCTA';
 import { pricePerDay, priceOfOneAmount, finalTotal } from '../../Modules/PriceCalculations';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
+import { Avatar } from '../../UI-Components';
 
-const HostProfileView = (props) => {
-  let perDay = pricePerDay(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate);
-  let orderTotal = finalTotal(props.rate, props.numberOfCats, props.supplement, props.checkInDate, props.checkOutDate);
-  let locationAndPrice, sendMessage, requestToBook;
+const HostInfo = ({ currentSearch, host, id }) => {
+  // let perDay = pricePerDay(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+  // let orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+  
+  // let locationAndPrice, sendMessage, requestToBook;
+
+  //         numberOfCats={0}
+
+  //         hostId={props.location.state.userId}
+  //         avatar={props.location.state.avatar}
+  //         nickname={props.location.state.nickname}
+
+  //         location={props.location.state.location}
+  //         rate={parseFloat(hostProfile.price_per_day_1_cat)}
+  //         supplement={parseFloat(hostProfile.supplement_price_per_cat_per_day)}
+  //         description={hostProfile.description}
+  //         lat={lat}
+  //         long={long}
+  //         noMessage={props.location.state.noMessage}
+  //         score={hostProfile.score}
+  //         hostProfileId={hostProfile.id}
 
   const { t, ready } = useTranslation('HostProfileView');
-  return <div>HostProfileView</div>
+
+  if (!ready) return <Spinner />;
+
+  return (
+    <>
+      <Avatar
+        src={
+          !host.avatar
+            ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
+            : host.avatar
+        }
+      />
+    </>
+  );
+
   // if (ready) {
   //   if (props.location && props.numberOfCats === 0) {
   //     let totalRate = priceOfOneAmount(props.rate);
@@ -102,4 +134,4 @@ const HostProfileView = (props) => {
   // }
 };
 
-export default HostProfileView;
+export default HostInfo;
