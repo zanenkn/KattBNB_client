@@ -1,44 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
+import moment from 'moment';
+
+import { finalTotal, roundUp } from '../../Modules/PriceCalculations';
+import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 import ReviewScore from '../../common/ReviewScore';
 import HostLocationMap from '../../common/HostLocationMap';
-
-import { finalTotal, roundUp } from '../../Modules/PriceCalculations';
-
 import Spinner from '../../common/Spinner';
-import { Avatar, Button, Flexbox, Text, Header, InlineLink } from '../../UI-Components';
-import { ReversibleWrapper } from './styles';
-import { AvailableHost, CreditCard, Location, Review, User } from '../../icons';
 
+import { Avatar, Button, Flexbox, Text, Header, InlineLink, Container, Whitebox } from '../../UI-Components';
+import { BookingCTAWrapper, ReversibleWrapper } from './styles';
+import { Availabilty, AvailableHost, CreditCard, Location, Review, User, Cat } from '../../icons';
 
 import AllReviews from '../Reviews/AllReviews';
-const HostInfo = ({ currentSearch, host, id }) => {
-  const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
 
-  // let locationAndPrice, sendMessage, requestToBook;
-
-  //         numberOfCats={0}
-
-  //         hostId={props.location.state.userId}
-  //         avatar={props.location.state.avatar}
-  //         nickname={props.location.state.nickname}
-
-  //         location={props.location.state.location}
-  //         rate={parseFloat(hostProfile.price_per_day_1_cat)}
-  //         supplement={parseFloat(hostProfile.supplement_price_per_cat_per_day)}
-  //         description={hostProfile.description}
-  //         lat={lat}
-  //         long={long}
-  //         noMessage={props.location.state.noMessage}
-  //         score={hostProfile.score}
-  //         hostProfileId={hostProfile.id}
-
+const HostInfo = ({ currentSearch, host }) => {
   const { t, ready } = useTranslation('HostInfo');
+  const device = useDeviceInfo();
+  const history = useHistory();
 
   const [isAvailable, setIsAvailable] = useState(false);
+
+  const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
 
   useEffect(() => {
     if (currentSearch?.dates?.every((date) => host?.availability?.includes(date))) {
@@ -64,63 +50,108 @@ const HostInfo = ({ currentSearch, host, id }) => {
         <User />
         <Header level={4}>{host.name}</Header>
       </Flexbox>
-      <Flexbox space={5}>
-        <Flexbox wrap spaceItemsX={2} maxWidth={'300px'}>
+      <Flexbox space={5} maxWidth='300px' direction='column' center>
+        <Flexbox spaceItemsX={2}>
           <Flexbox spaceItemsX={1} space={1}>
             <Location />
             <Text>{host.location}</Text>
           </Flexbox>
           <Flexbox spaceItemsX={1} space={1}>
             <CreditCard />
-            <Text>from {roundUp(host.rate)} kr per day</Text>
+            <Text>{t('reusable:price.from-per-day', { rate: roundUp(host.rate) })}</Text>
           </Flexbox>
-          {host.score && (
-            <Flexbox spaceItemsX={1} space={1}>
-              <Review />
-              <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
-            </Flexbox>
-          )}
-          {isAvailable && (
-            <Flexbox spaceItemsX={1} space={1}>
-              <AvailableHost />
-              <Text>Available for your chosen dates</Text>
-            </Flexbox>
-          )}
         </Flexbox>
-      </Flexbox>
-      <Text space={5}>{host.description}</Text>
 
-      <ReversibleWrapper revert={isAvailable}>
-        <Button secondary={isAvailable} color={isAvailable ? 'neutral' : 'primary'} space={2}>
-          Send a message
-        </Button>
-        {currentSearch && (
-          <>
-            <Text bold space={2}>
-              or
-            </Text>
-            <Button secondary={!isAvailable} color={!isAvailable ? 'neutral' : 'primary'} space={2}>
-              Request to book - {orderTotal} kr
-            </Button>
-          </>
+        {host.score && (
+          <Flexbox spaceItemsX={1} space={1}>
+            <Review />
+            <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
+          </Flexbox>
         )}
-      </ReversibleWrapper>
-      {currentSearch && !isAvailable && (
-        <Text size='xs'>
-          {/* TODO: fix a proper link to FAQ when its ready */}
-          <Trans i18nKey='HostInfo:host-availability-disclaimer' values={{ amount: orderTotal }}>
-            Text
-            <InlineLink as={Link} to={'/faq'}>
-              here
-            </InlineLink>
-            .
-          </Trans>
-        </Text>
-      )}
+        {isAvailable && (
+          <Flexbox spaceItemsX={1} space={1}>
+            <AvailableHost />
+            <Text>{t('reusable:available-for-dates')}</Text>
+          </Flexbox>
+        )}
+      </Flexbox>
+      <Container space={6}>
+        <Text space={5}>{host.description}</Text>
 
-      <Header level={4}>{t('HostInfo:reviews-title')}</Header>
-      <AllReviews />
-      <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
+        <ReversibleWrapper revert={isAvailable}>
+          <Button
+            secondary={isAvailable}
+            color={isAvailable ? 'neutral' : 'primary'}
+            space={2}
+            onClick={() => console.log('TODO: to the messenger i go')}
+          >
+            {t('reusable:cta.send-message')}
+          </Button>
+          {currentSearch && (
+            <>
+              <Text bold space={2}>
+                or
+              </Text>
+              <Button
+                secondary={!isAvailable}
+                color={!isAvailable ? 'neutral' : 'primary'}
+                space={2}
+                onClick={() => history.push('/request-to-book')}
+              >
+                {t('reusable:cta.book')} - {orderTotal} kr
+              </Button>
+            </>
+          )}
+        </ReversibleWrapper>
+        {currentSearch && !isAvailable && (
+          <Text size='xs'>
+            {/* TODO: fix a proper link to FAQ when its ready */}
+            <Trans i18nKey='HostInfo:host-availability-disclaimer' values={{ amount: orderTotal }}>
+              Text
+              <InlineLink as={Link} to={'/faq'}>
+                here
+              </InlineLink>
+              .
+            </Trans>
+          </Text>
+        )}
+      </Container>
+      <Container space={6}>
+        <Header level={4}>{t('HostInfo:reviews-title')}</Header>
+        <AllReviews />
+      </Container>
+      <Container space={6}>
+        <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
+      </Container>
+      {isAvailable && (
+        <Whitebox responsive={false}>
+          <Header level={3} centered>
+            {t('reusable:cta.book-host-now', { host: host.name })}
+          </Header>
+          <BookingCTAWrapper>
+            <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
+              <Availabilty />
+              <Text>
+                {moment(currentSearch.from).format(device.width > 375 ? 'LL' : 'll')} -{' '}
+                {moment(currentSearch.to).format(device.width > 375 ? 'LL' : 'll')}
+              </Text>
+            </Flexbox>
+            <Flexbox spaceItemsX={2} horizontalAlign='left'>
+              <Flexbox spaceItemsX={1}>
+                <Location />
+                <Text>{currentSearch.location}</Text>
+              </Flexbox>
+              <Flexbox spaceItemsX={1}>
+                <Cat />
+                <Text>{currentSearch.cats}</Text>
+              </Flexbox>
+            </Flexbox>
+          </BookingCTAWrapper>
+          <Button secondary={!isAvailable} space={2}>
+            {t('reusable:cta.book')} - {orderTotal} kr
+          </Button>
+        </Whitebox>
+      )}
     </>
   );
 };

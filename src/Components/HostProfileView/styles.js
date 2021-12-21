@@ -9,3 +9,8 @@ export const ReversibleWrapper = styled.div`
   align-items: center;
   margin-bottom: ${spacing[4]};
 `;
+
+export const BookingCTAWrapper = styled.div`
+  display: table;
+  margin: auto auto ${spacing[6]};
+`;

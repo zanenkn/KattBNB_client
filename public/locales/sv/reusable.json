@@ -3,7 +3,8 @@
     "per-day": "kr/dag",
     "total": "kr totalt",
     "total-for-1": "kr/dag för 1 katt",
-    "total-day": "kr/dag per katt"
+    "total-day": "kr/dag per katt",
+    "from-per-day": "från {{rate}} kr/dag"
   },
   "request-cta": {
     "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
@@ -84,7 +85,10 @@
     "make-host-profile": "Skapa en kattvaktsprofil",
     "reply": "Svara",
     "view-receipt": "Kvitto",
-    "send-message": "Skicka meddelande"
+    "send-message": "Skicka meddelande",
+    "request-to-book": "Förfråga bokning",
+    "book": "Boka",
+    "book-host-now": "Boka med {{host}} nu"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
@@ -106,5 +110,6 @@
   },
   "important": "Viktigt!",
   "or": "eller",
-  "available": "Tillgänglig"
+  "available": "Tillgänglig",
+  "available-for-dates": "Tillgänglig för datum du sökte"
 }
