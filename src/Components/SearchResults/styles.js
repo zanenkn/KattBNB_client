@@ -80,8 +80,10 @@ export const BackLinkWrapper = styled.div`
   margin-left: ${spacing[4]};
 `;
 
-export const ListWrapper = styled.div`
+export const InnerResultWrapper = styled.div`
   padding: ${spacing[6]} ${spacing[4]};
+  max-width: 560px;
+  margin: auto;
 
   @media (min-width: ${screens.md}) {
     padding: ${spacing[6]};
