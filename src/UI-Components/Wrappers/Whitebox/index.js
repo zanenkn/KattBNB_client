@@ -14,7 +14,7 @@ const Styled = styled.div`
   margin: 0 ${({ centered }) => (centered ? 'auto' : '0')} ${({ space }) => spacing[space]};
   box-shadow: ${({ responsive }) => (responsive ? 'none' : '0px 0px 20px -5px rgba(0,0,0,0.2)')};
   border: none;
-  padding: ${({ responsive, spacing }) => (responsive ? '0' : `${spacing[5]}`)};
+  padding: ${({ responsive }) => (responsive ? '0' : spacing[5])};
   border-radius: 0;
   border: none;
   max-width: 560px;

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const { spacing } = theme;
 
 const Flexbox = ({
+  center,
   direction,
   height,
   horizontalAlign,
@@ -19,6 +20,7 @@ const Flexbox = ({
 }) => {
   return (
     <StyledFlexbox
+      center={center}
       direction={direction}
       height={height}
       horizontalAlign={horizontalAlign}
@@ -35,6 +37,7 @@ const Flexbox = ({
 };
 
 Flexbox.propTypes = {
+  center: PropTypes.bool,
   direction: PropTypes.oneOf(['row', 'column']),
   height: PropTypes.string,
   horizontalAlign: PropTypes.oneOf(['left', 'right', 'center']),
@@ -48,6 +51,7 @@ Flexbox.propTypes = {
 };
 
 Flexbox.defaultProps = {
+  center: false,
   direction: 'row',
   height: 'auto',
   horizontalAlign: 'center',
