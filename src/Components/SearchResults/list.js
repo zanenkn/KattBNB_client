@@ -10,7 +10,7 @@ import Spinner from '../../common/Spinner';
 import ReviewScore from '../../common/ReviewScore';
 
 import { Avatar, Container, Flexbox, Header, InlineLink, Text } from '../../UI-Components';
-import { ListWrapper, ListItem, Badge } from './styles';
+import { InnerResultWrapper, ListItem, Badge } from './styles';
 import { AvailableHost, Review, User } from '../../icons';
 
 const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmount, switchToMap }) => {
@@ -25,7 +25,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
 
   if (!finalAvailableHosts.length) {
     return (
-      <ListWrapper>
+      <InnerResultWrapper>
         <Text centered>
           <Trans i18nKey='List:no-results'>
             Your search did not yield any results! Try
@@ -39,12 +39,12 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
             to find cat sitters in nearby areas.
           </Trans>
         </Text>
-      </ListWrapper>
+      </InnerResultWrapper>
     );
   }
 
   return (
-    <ListWrapper>
+    <InnerResultWrapper>
       {finalAvailableHosts.map((host) => {
         return (
           <ListItem key={host.id} onClick={() => handleListItemClick(host.id)}>
@@ -108,7 +108,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
           </ListItem>
         );
       })}
-    </ListWrapper>
+    </InnerResultWrapper>
   );
 };
 

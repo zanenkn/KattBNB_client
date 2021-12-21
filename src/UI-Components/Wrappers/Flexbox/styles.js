@@ -7,7 +7,7 @@ export const StyledFlexbox = styled.div`
   display: flex;
   flex-wrap: ${({wrap}) => wrap ? 'wrap' : 'unset'};
   flex-direction: ${({ direction }) => direction};
-  width: ${({ width }) => width};
+  max-width: ${({ maxWidth }) => maxWidth};
   height: ${({ height }) => height};
   margin-bottom: ${({ space }) => spacing[space]};
   > * {

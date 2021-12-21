@@ -18,6 +18,7 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     margin: 0;
     line-height: 1.3em;
+    white-space: pre-line;
   }
   li {
     margin-bottom: 0.75rem;

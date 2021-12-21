@@ -13,7 +13,7 @@ const Flexbox = ({
   spaceItemsX,
   spaceItemsY,
   verticalAlign,
-  width,
+  maxWidth,
   wrap,
   ...rest
 }) => {
@@ -27,7 +27,7 @@ const Flexbox = ({
       spaceItemsX={spaceItemsX}
       spaceItemsY={spaceItemsY}
       verticalAlign={verticalAlign}
-      width={width}
+      maxWidth={maxWidth}
       wrap={wrap}
       {...rest}
     />
@@ -43,7 +43,7 @@ Flexbox.propTypes = {
   spaceItemsX: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   spaceItemsY: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center']),
-  width: PropTypes.string,
+  maxWidth: PropTypes.string,
   wrap: PropTypes.bool,
 };
 
@@ -56,7 +56,7 @@ Flexbox.defaultProps = {
   spaceItemsX: 0,
   spaceItemsY: 0,
   verticalAlign: 'center',
-  width: 'auto',
+  maxWidth: 'unset',
   wrap: false,
 };
 

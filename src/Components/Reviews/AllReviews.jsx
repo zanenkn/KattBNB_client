@@ -62,7 +62,7 @@ const AllReviews = (props) => {
     }
     // eslint-disable-next-line
   }, [reload]);
-  return <div>a</div>
+  return <div>here will be reviews component</div>
   // if (ready && loading === false) {
   //   moment.locale(lang);
   //   return (

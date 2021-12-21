@@ -1,0 +1,7 @@
+{
+  "questions": "Frågor?",
+  "send-msg": "Du kan skicka ett meddelande till <1>{{host}}</1> och ta reda på det.",
+  "send-cta": "Skicka nu",
+  "reviews-title": "Recensioner",
+  "host-availability-disclaimer": "Denna kattvakt har inte lagt till information om sin tillgänglighet för de datum du sökte. Du kan fortfarande skicka en bokningsförfrågan till dem, men om kattvakten inte kan acceptera bokningen kan det ta ett par dagar innan bokningsbeloppet ({{amount}} kr) landar tillbaka på ditt bankkonto. \n Läs mer: <1>varför är det så</1>."
+}

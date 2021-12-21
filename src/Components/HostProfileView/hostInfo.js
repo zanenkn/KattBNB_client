@@ -1,18 +1,23 @@
-import React from 'react';
-import ReviewScore from '../../common/ReviewScore';
-import AllReviews from '../Reviews/AllReviews';
-import HostLocationMap from '../../common/HostLocationMap';
-import RequestToBookCTA from '../../common/RequestToBookCTA';
-import MessageHostCTA from '../../common/MessageHostCTA';
-import { pricePerDay, priceOfOneAmount, finalTotal } from '../../Modules/PriceCalculations';
-import { useTranslation } from 'react-i18next';
-import Spinner from '../../common/Spinner';
-import { Avatar } from '../../UI-Components';
+import React, { useState, useEffect } from 'react';
 
+import { Link } from 'react-router-dom';
+import { useTranslation, Trans } from 'react-i18next';
+
+import ReviewScore from '../../common/ReviewScore';
+import HostLocationMap from '../../common/HostLocationMap';
+
+import { finalTotal, roundUp } from '../../Modules/PriceCalculations';
+
+import Spinner from '../../common/Spinner';
+import { Avatar, Button, Flexbox, Text, Header, InlineLink } from '../../UI-Components';
+import { ReversibleWrapper } from './styles';
+import { AvailableHost, CreditCard, Location, Review, User } from '../../icons';
+
+
+import AllReviews from '../Reviews/AllReviews';
 const HostInfo = ({ currentSearch, host, id }) => {
-  // let perDay = pricePerDay(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
-  // let orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
-  
+  const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+
   // let locationAndPrice, sendMessage, requestToBook;
 
   //         numberOfCats={0}
@@ -31,107 +36,93 @@ const HostInfo = ({ currentSearch, host, id }) => {
   //         score={hostProfile.score}
   //         hostProfileId={hostProfile.id}
 
-  const { t, ready } = useTranslation('HostProfileView');
+  const { t, ready } = useTranslation('HostInfo');
+
+  const [isAvailable, setIsAvailable] = useState(false);
+
+  useEffect(() => {
+    if (currentSearch?.dates?.every((date) => host?.availability?.includes(date))) {
+      setIsAvailable(true);
+    }
+  }, [currentSearch, host]);
 
   if (!ready) return <Spinner />;
 
   return (
     <>
       <Avatar
+        centered
+        space={4}
         src={
           !host.avatar
             ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
             : host.avatar
         }
       />
+      {host.reviewsCount && <ReviewScore center score={host.score} primaryColor={'neutral'} />}
+      <Flexbox spaceItemsX={1} space={2}>
+        <User />
+        <Header level={4}>{host.name}</Header>
+      </Flexbox>
+      <Flexbox space={5}>
+        <Flexbox wrap spaceItemsX={2} maxWidth={'300px'}>
+          <Flexbox spaceItemsX={1} space={1}>
+            <Location />
+            <Text>{host.location}</Text>
+          </Flexbox>
+          <Flexbox spaceItemsX={1} space={1}>
+            <CreditCard />
+            <Text>from {roundUp(host.rate)} kr per day</Text>
+          </Flexbox>
+          {host.score && (
+            <Flexbox spaceItemsX={1} space={1}>
+              <Review />
+              <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
+            </Flexbox>
+          )}
+          {isAvailable && (
+            <Flexbox spaceItemsX={1} space={1}>
+              <AvailableHost />
+              <Text>Available for your chosen dates</Text>
+            </Flexbox>
+          )}
+        </Flexbox>
+      </Flexbox>
+      <Text space={5}>{host.description}</Text>
+
+      <ReversibleWrapper revert={isAvailable}>
+        <Button secondary={isAvailable} color={isAvailable ? 'neutral' : 'primary'} space={2}>
+          Send a message
+        </Button>
+        {currentSearch && (
+          <>
+            <Text bold space={2}>
+              or
+            </Text>
+            <Button secondary={!isAvailable} color={!isAvailable ? 'neutral' : 'primary'} space={2}>
+              Request to book - {orderTotal} kr
+            </Button>
+          </>
+        )}
+      </ReversibleWrapper>
+      {currentSearch && !isAvailable && (
+        <Text size='xs'>
+          {/* TODO: fix a proper link to FAQ when its ready */}
+          <Trans i18nKey='HostInfo:host-availability-disclaimer' values={{ amount: orderTotal }}>
+            Text
+            <InlineLink as={Link} to={'/faq'}>
+              here
+            </InlineLink>
+            .
+          </Trans>
+        </Text>
+      )}
+
+      <Header level={4}>{t('HostInfo:reviews-title')}</Header>
+      <AllReviews />
+      <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
     </>
   );
-
-  // if (ready) {
-  //   if (props.location && props.numberOfCats === 0) {
-  //     let totalRate = priceOfOneAmount(props.rate);
-  //     locationAndPrice = (
-  //       <Header id='per-day' as='h4' style={{ marginTop: '0' }}>
-  //         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' />
-  //         </svg>
-  //         &nbsp;{props.location}&ensp;
-  //         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' />
-  //         </svg>
-  //         &nbsp;{totalRate} {t('reusable:price.total-for-1')}
-  //       </Header>
-  //     );
-  //   } else if (props.location) {
-  //     locationAndPrice = (
-  //       <Header id='per-day' as='h4' style={{ marginTop: '0' }}>
-  //         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M10 20S3 10.87 3 7a7 7 0 1 1 14 0c0 3.87-7 13-7 13zm0-11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' />
-  //         </svg>
-  //         &nbsp;{props.location}&ensp;
-  //         <svg fill='grey' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M0 10V2l2-2h8l10 10-10 10L0 10zm4.5-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' />
-  //         </svg>
-  //         &nbsp;{perDay} {t('reusable:price.per-day')}
-  //       </Header>
-  //     );
-  //   }
-
-  //   if (props.noMessage !== true) {
-  //     sendMessage = <MessageHostCTA nickname={props.nickname} messageHost={props.messageHost.bind(this)} />;
-  //   }
-
-  //   if (props.requestToBookButtonClick) {
-  //     requestToBook = (
-  //       <div style={{ marginTop: '3rem' }}>
-  //         <RequestToBookCTA
-  //           numberOfCats={props.numberOfCats}
-  //           nickname={props.nickname}
-  //           checkInDate={props.checkInDate}
-  //           checkOutDate={props.checkOutDate}
-  //           orderTotal={orderTotal}
-  //           requestToBookButtonClick={props.requestToBookButtonClick.bind(this)}
-  //         />
-  //       </div>
-  //     );
-  //   }
-
-  //   return (
-  //     <div className='expanding-wrapper' style={{ paddingTop: '2rem' }}>
-  //       <Image
-  //         id='avatar'
-  //         src={
-  //           props.avatar === null
-  //             ? `https://ui-avatars.com/api/?name=${props.nickname}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-  //             : props.avatar
-  //         }
-  //         size='small'
-  //         style={{ borderRadius: '50%', margin: 'auto', marginBottom: '0.5rem' }}
-  //       ></Image>
-  //       {props.score != null && (
-  //         <ReviewScore score={props.score} height={'1rem'} center={true} displayNumerical={true} />
-  //       )}
-  //       <Header id='nickname' as='h2' style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}>
-  //         <svg fill='#c90c61' height='0.8em' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-  //           <path d='M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z' />
-  //         </svg>
-  //         &ensp;{props.nickname}
-  //       </Header>
-  //       {locationAndPrice}
-  //       <p id='description'>{props.description}</p>
-  //       {sendMessage}
-  //       <Header as='h3' style={{ textAlign: 'left', margin: '4rem 0px 2rem' }}>
-  //         {t('HostProfileView:reviews-title')}
-  //       </Header>
-  //       <AllReviews hostProfileId={props.hostProfileId} score={props.score} />
-  //       {requestToBook}
-  //       <HostLocationMap lat={props.lat} long={props.long} nickname={props.nickname} address={props.address} />
-  //       {requestToBook}
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
 };
 
 export default HostInfo;
