@@ -143,7 +143,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
           onClick={() => history.push('/request-to-book')}
           color={isAvailable ? 'primary' : 'neutral'}
         >
-          {t('reusable:request-cta.btn')}
+          {isAvailable ? t('reusable:cta.book') : t('reusable:request-cta.btn')}
         </Button>
 
         {loggedInUserId !== host.userId && !isAvailable && (
