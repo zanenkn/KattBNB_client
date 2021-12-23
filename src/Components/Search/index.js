@@ -13,6 +13,7 @@ import { formValidation } from '../../Modules/formValidation';
 
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
+
 import {
   Flexbox,
   Whitebox,
@@ -143,7 +144,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
             format='LL'
             formatDate={formatDate}
             parseDate={parseDate}
-            inputProps={{ readOnly: true, placeholder: false }}
+            inputProps={{ readOnly: true, placeholder: undefined }}
             dayPickerProps={{
               selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
               disabledDays: { after: new Date(to), before: today },
@@ -170,7 +171,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
             parseDate={parseDate}
             inputProps={{
               readOnly: !!from,
-              placeholder: false,
+              placeholder: undefined,
             }}
             dayPickerProps={{
               selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },

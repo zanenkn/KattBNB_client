@@ -4,7 +4,7 @@ import { theme } from '../../Styles/theme';
 const { fontSize, spacing, fontWeights, colors } = theme;
 
 export const StyledPriceLabel = styled.div`
-  background-color: ${({available}) => available? colors['success'][100] : colors['neutral'][80]};
+  background-color: ${({ available }) => (available ? colors['success'][100] : colors['neutral'][80])};
   color: ${colors['white'][100]};
   font-size: ${fontSize['sm']};
   font-weight: ${fontWeights['bold']};
@@ -20,11 +20,9 @@ export const StyledPriceLabel = styled.div`
     width: 0;
     height: 0;
     border: 7px solid transparent;
-    border-top-color: ${({available}) => available? colors['success'][100] : colors['neutral'][80]};
+    border-top-color: ${({ available }) => (available ? colors['success'][100] : colors['neutral'][80])};
     border-bottom: 0;
     margin-left: -7px;
     margin-bottom: -7px;
   }
-  
-
-`
+`;

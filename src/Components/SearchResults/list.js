@@ -55,7 +55,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
             )}
             {host.score && (
               <Container>
-                <ReviewScore score={host.score} displayNumerical={true} primaryColor='neutral' margin='0' />
+                <ReviewScore score={host.score} displayNumerical={true} primaryColor='neutral' margin={0} />
               </Container>
             )}
             <Flexbox horizontalAlign='left' spaceItemsX={4}>
