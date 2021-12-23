@@ -98,7 +98,7 @@ const HostInfo = ({ currentSearch, host }) => {
                 space={2}
                 onClick={() => history.push('/request-to-book')}
               >
-                {t('reusable:cta.book')} - {orderTotal} kr
+                {isAvailable ? `${t('reusable:cta.book')} - ${orderTotal} kr` : t('reusable:request-cta.btn')} 
               </Button>
             </>
           )}
