@@ -60,12 +60,12 @@ ReviewScore.defaultProps = {
 };
 
 ReviewScore.propTypes = {
-  margin: PropTypes.oneOf(Object.keys(spacing)),
+  margin: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
   center: PropTypes.bool,
   clickable: PropTypes.bool,
   score: PropTypes.number,
   setScore: PropTypes.func,
-  height: PropTypes.oneOf(Object.keys(spacing)),
+  height: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
   displayNumerical: PropTypes.bool,
   primaryColor: PropTypes.oneOf(Object.keys(colors)),
   secondaryColor: PropTypes.oneOf(Object.keys(colors)),

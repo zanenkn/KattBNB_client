@@ -15,6 +15,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 import Spinner from '../../common/Spinner';
+import SEO from '../../common/SEO';
 
 import { Flexbox, InlineLink, SecondaryStickyHeader, Text, Notice } from '../../UI-Components';
 import { Location, Cat, Availabilty, Map as MapIcon, Refresh, List as ListIcon } from '../../icons';
@@ -24,7 +25,6 @@ import List from './list';
 import GoogleMap from './map';
 import Profile from './profile';
 import HostPopup from './HostPopup';
-import SEO from '../../common/SEO';
 
 const SearchResults = ({ id, currentSearch, location }) => {
   const lang = detectLanguage();

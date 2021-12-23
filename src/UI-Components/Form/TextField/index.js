@@ -26,7 +26,7 @@ const TextField = ({ autoComplete, label, onChange, required, space, type, value
       <Input
         type={type}
         ref={input}
-        value={value}
+        value={value || ''}
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -115,7 +115,7 @@ TextField.propTypes = {
   required: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   type: PropTypes.oneOf(['email', 'text', 'password', 'number']),
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
 };
 
 TextField.defaultProps = {
