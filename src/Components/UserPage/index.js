@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
-import HostProfileForm from '../HostProfile/HostProfileForm';
+import HostProfileForm from '../HostProfile/hostProfileForm';
 import HostProfile from '../HostProfile';
 import Spinner from '../../common/Spinner';
 import { connect } from 'react-redux';
@@ -441,7 +441,11 @@ const UserPage = (props) => {
       )}
       {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
       {form.createHostProfileForm && hostProfile.length === 0 && (
-        <HostProfileForm user_id={props.id} closeForm={closeLocationAndPasswordForms} location={props.location} />
+        <HostProfileForm
+          user_id={props.id}
+          closeForm={() => closeLocationAndPasswordForms()}
+          location={props.location}
+        />
       )}
       {form.createHostProfileForm === false && hostProfile.length === 0 && (
         <MaxWidth>
