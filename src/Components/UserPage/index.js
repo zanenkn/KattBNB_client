@@ -442,7 +442,7 @@ const UserPage = (props) => {
       {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
       {form.createHostProfileForm && hostProfile.length === 0 && (
         <HostProfileForm
-          user_id={props.id}
+          userId={props.id}
           closeForm={() => closeLocationAndPasswordForms()}
           location={props.location}
         />

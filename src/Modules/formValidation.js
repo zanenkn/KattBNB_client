@@ -1,6 +1,10 @@
+export const conditions = {
+  nonEmptyString: (val) => val === '',
+  nonEmptyArray: (val) => Array.isArray(val) && !val.length,
+};
+
 export const formValidation = (args) => {
   const failedValidation = args.fields.some((el) => el.condition);
-
   function onSubmit(actuallySubmit) {
     if (failedValidation) {
       args.fields.map((element) => {

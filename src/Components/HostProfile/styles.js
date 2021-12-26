@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../../Styles/theme';
-import { Container, Text } from '../../UI-Components';
+import { Container, Flexbox, Text } from '../../UI-Components';
 
-const { spacing, colors } = theme;
+const { spacing, colors, fontSize, fontWeights } = theme;
 
 export const FlexWrapper = styled(Container)`
   display: flex;
@@ -27,7 +27,6 @@ export const UpdateFormWrapper = styled.div`
   transition: max-height 1s ease-in-out;
 `;
 
-
 export const DescriptionWrapper = styled(Text)`
   > *:first-child {
     margin-right: ${spacing[2]};
@@ -35,7 +34,7 @@ export const DescriptionWrapper = styled(Text)`
   > *:last-child {
     margin-left: ${spacing[2]};
   }
-`
+`;
 
 // PROGRESS BAR //
 
@@ -150,4 +149,22 @@ export const InnerLine = styled.div`
   background: ${colors.success[100]};
   height: 100%;
   max-width: ${({ width }) => width};
+`;
+
+export const AddressSearchWrapper = styled(Flexbox)`
+  > *:first-child {
+    flex-grow: 1;
+  }
+  > *:last-child {
+    margin: ${spacing[4]} 0 0;
+  }
+`;
+export const Label = styled.p`
+  font-weight: ${fontWeights['bold']};
+  font-size: ${fontSize['sm']};
+  margin-bottom: ${spacing[2]};
+  :after {
+    content: ' *';
+    color: ${colors['primary'][100]}
+  }
 `;

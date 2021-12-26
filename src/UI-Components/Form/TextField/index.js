@@ -26,6 +26,7 @@ const TextField = ({ autoComplete, label, onChange, required, space, type, value
       <Input
         type={type}
         ref={input}
+        onWheel={() => type === 'number' ? input.current.blur() : undefined}
         value={value || ''}
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}

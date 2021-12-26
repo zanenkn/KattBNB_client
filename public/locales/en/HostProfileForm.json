@@ -1,21 +1,33 @@
 {
-  "create-error-1": "Please check that all numeric fields are positive!",
-  "create-success": "You have successfully created your host profile!",
-  "address-label": "Your full address",
-  "create-error-2": "Cat sitter profile could not be saved because of following error(s):",
+  "create-error-title": "In order to create your cat sitter profile:",
+  "errors": {
+    "about": "Please enter a description about yourself",
+    "address": "Please enter your address",
+    "rate": "Please enter your daily rate",
+    "supplement": "Please enter your daily supplement for one cat",
+    "max-cats": "Please enter the max amount of cats you can host at the same time",
+    "availability": "Please enter your availability"
+  },
+
   "create-profile": "Create cat sitter profile",
   "create-profile-main-title": "Fill in this information about yourself and start hosting cats today!",
-  "about-you-label": "About you",
-  "about-you-plch": "Please write shortly about yourself and your experience with cats..",
-  "address-message": "Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!",
-  "rate-label": "Your rate",
-  "rate-plch": "Your daily rate in kr/day",
-  "max-cats-label": "Max cats accepted",
-  "max-cats-plch": "Max amount",
-  "supplement-label": "Supplement",
-  "explain-supplement-1": "What does this mean?",
-  "availability-title": "Availability",
-  "availability-details": "Please mark the dates when you are available to host!",
+  "labels": {
+    "about": "About you",
+    "address": "Your full address",
+    "rate": "Your rate",
+    "max-cats": "Max cats accepted",
+    "supplement": "Supplement",
+    "availability": "Availability"
+  },
+  "helpers": {
+    "about": "Please tell us about yourself and your experience with cats. Unsure what to mention? Read more: <1>how to make a great cat sitter profile</1>.",
+    "address": "Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!",
+    "rate": "How much you want to get paid for taking care of one cat per day?",
+    "max-cats": "How many cats are you ok with having over at your place?",
+    "supplement": "How much do you want to het paid per one more cat per day?",
+    "example-title": "How does this work?",
+    "availability": "Please mark the dates when you are available to host!"
+  },
   "address-search-plch": "Search..",
   "not-right": "Not right?"
 }
