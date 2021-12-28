@@ -42,6 +42,7 @@ import ScrollToTop from './Modules/ScrollToTop';
 import { Switch, Route } from 'react-router-dom';
 import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
+import HostProfileForm from './Components/HostProfileForm';
 
 const App = () => {
   return (
@@ -96,6 +97,7 @@ const App = () => {
           <Route exact path='/leave-a-review' component={LeaveReview}></Route>
           <Route exact path='/booking-receipt' component={Receipt}></Route>
           <Route exact path='/area-list' component={AreaList}></Route>
+          <Route exact path='/create-host-profile' component={HostProfileForm}></Route>
           <Route exact path='/blog/:category/:page' component={withFooter(BlogListing)}></Route>
           <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route>
         </Switch>

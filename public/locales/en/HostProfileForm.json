@@ -9,7 +9,7 @@
     "availability": "Please enter your availability"
   },
 
-  "create-profile": "Create cat sitter profile",
+  "create-profile": "Create your cat sitter profile",
   "create-profile-main-title": "Fill in this information about yourself and start hosting cats today!",
   "labels": {
     "about": "About you",
@@ -24,10 +24,11 @@
     "address": "Don’t worry, this will only be revealed to cat owners that have a confirmed booking with you!",
     "rate": "How much you want to get paid for taking care of one cat per day?",
     "max-cats": "How many cats are you ok with having over at your place?",
-    "supplement": "How much do you want to het paid per one more cat per day?",
+    "supplement": "How much do you want to get paid per one more cat per day?",
     "example-title": "How does this work?",
     "availability": "Please mark the dates when you are available to host:"
   },
-  "address-search-plch": "Search..",
-  "not-right": "Not right?"
+  "not-right": "Not right?",
+  "cta": "Create cat sitter profile",
+  "disclaimer": "By creating a cat sitter profile you agree that we use the this information to display search results for other users and visitors of the site. We will only display our full address to users that you have agreed to book with, although we will show your approximate location to users searching for cat sitters in your area."
 }

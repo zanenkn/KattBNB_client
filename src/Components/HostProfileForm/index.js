@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
+
 import { useTranslation, Trans } from 'react-i18next';
 import Geocode from 'react-geocode';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import DayPicker from 'react-day-picker';
+import MomentLocaleUtils from 'react-day-picker/moment';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import DayPicker, { DateUtils } from 'react-day-picker';
-import '../../NpmPackageCSS/react-day-picker.css';
-import MomentLocaleUtils from 'react-day-picker/moment';
-import Spinner from '../../common/Spinner';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
+import { formValidation, conditions as validate } from '../../Modules/formValidation';
+
+import Spinner from '../../common/Spinner';
+
 import {
   ContentWrapper,
   Text,
@@ -23,12 +30,9 @@ import {
   Container,
   Divider,
 } from '../../UI-Components';
-import { formValidation, conditions as validate } from '../../Modules/formValidation';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 import { AddressSearchWrapper, Label, StackableWrapper } from './styles';
 
-const HostProfileForm = ({ closeForm, userId, location }) => {
+const HostProfileForm = ({ userId, location }) => {
   const { t, ready } = useTranslation('HostProfileForm');
   const history = useHistory();
 
@@ -176,10 +180,7 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
     axios
       .post(path, payload, { headers: headers })
       .then(() => {
-        setErrors([]);
-        setTimeout(function () {
-          history.push('/user-page');
-        }, 500);
+        history.push('/user-page');
       })
       .catch((error) => {
         if (error.response === undefined) {
@@ -200,7 +201,7 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
   if (!ready) return <Spinner />;
 
   return (
-    <Container space={8}>
+    <ContentWrapper>
       <Header centered level={3} color='primary' space={2}>
         {t('HostProfileForm:create-profile')}
       </Header>
@@ -229,16 +230,18 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
 
       {addressSearch ? (
         <AddressSearchWrapper spaceItemsX={2} space={2}>
-          <TextField
-            space={0}
-            style={{ flexGrow: 1 }}
-            label={t('HostProfileForm:labels.address')}
-            required
-            id='userInputAddress'
-            value={userInputAddress}
-            onChange={(e) => setUserInputAddress(e.target.value)}
-            onBlur={() => (userInputAddress !== '' ? geolocationDataAddress() : undefined)}
-          />
+          <Container space={0}>
+            <TextField
+              space={0}
+              style={{ flexGrow: 1 }}
+              label={t('HostProfileForm:labels.address')}
+              required
+              id='userInputAddress'
+              value={userInputAddress}
+              onChange={(e) => setUserInputAddress(e.target.value)}
+              onBlur={() => (userInputAddress !== '' ? geolocationDataAddress() : undefined)}
+            />
+          </Container>
           <Button id='search' onClick={() => geolocationDataAddress()}>
             {t('reusable:cta:confirm')}
           </Button>
@@ -292,22 +295,6 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
             space={2}
             min='1'
             type='number'
-            label={t('HostProfileForm:labels.max-cats')}
-            id='maxCats'
-            value={newHost.maxCats}
-            onChange={(e) => setNewHost((prev) => ({ ...prev, maxCats: Math.round(e.target.value).toString() }))}
-            required
-            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
-          />
-          <Text space={6} size='sm'>
-            {t('HostProfileForm:helpers.max-cats')}
-          </Text>
-        </Container>
-        <Container>
-          <TextField
-            space={2}
-            min='1'
-            type='number'
             label={t('HostProfileForm:labels.supplement')}
             id='supplement'
             value={newHost.supplement}
@@ -317,6 +304,22 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
           />
           <Text space={6} size='sm'>
             {t('HostProfileForm:helpers.supplement')}
+          </Text>
+        </Container>
+        <Container>
+          <TextField
+            space={2}
+            min='1'
+            type='number'
+            label={t('HostProfileForm:labels.max-cats')}
+            id='maxCats'
+            value={newHost.maxCats}
+            onChange={(e) => setNewHost((prev) => ({ ...prev, maxCats: Math.round(e.target.value).toString() }))}
+            required
+            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
+          />
+          <Text space={6} size='sm'>
+            {t('HostProfileForm:helpers.max-cats')}
           </Text>
         </Container>
       </StackableWrapper>
@@ -341,6 +344,7 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
           locale={lang}
         />
       </Container>
+      <Divider bottom={8} />
 
       {errors.length > 0 && (
         <Notice nature='danger'>
@@ -354,27 +358,24 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
           </ul>
         </Notice>
       )}
-
-      <Text centered>
-        By creating a cat sitter profile you agree that we show these details to other users when they search, etc.
+      <Text centered space={6}>
+        {t('HostProfileForm:disclaimer')}
       </Text>
-
-      <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' onClick={() => closeForm()}>
-          Cancel
-        </Button>
-        <Button
-          id='save-host-profile-button'
-          disabled={loading}
-          loading={loading}
-          onClick={() => validator.onSubmit(createHostProfile)}
-        >
-          {t('reusable:cta.save')}
-        </Button>
-      </Flexbox>
-      <Divider />
-    </Container>
+      <Button
+        id='save-host-profile-button'
+        disabled={loading}
+        loading={loading}
+        onClick={() => validator.onSubmit(createHostProfile)}
+      >
+        {t('HostProfileForm:cta')}
+      </Button>
+    </ContentWrapper>
   );
 };
 
-export default HostProfileForm;
+const mapStateToProps = (state) => ({
+  location: state.reduxTokenAuth.currentUser.attributes.location,
+  userId: state.reduxTokenAuth.currentUser.attributes.id,
+});
+
+export default connect(mapStateToProps)(HostProfileForm);

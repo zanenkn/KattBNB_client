@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import withAuth from '../../HOC/withAuth';
-import HostProfileForm from '../HostProfile/hostProfileForm';
 import HostProfile from '../HostProfile';
 import Spinner from '../../common/Spinner';
 import { connect } from 'react-redux';
@@ -19,15 +18,16 @@ import AllReviews from '../Reviews/AllReviews';
 import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
 import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
 import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
+import { useHistory } from 'react-router';
 //MIGRATION IN PROGRESS
 const UserPage = (props) => {
   const hostProfileElement = useRef();
   const { t, ready } = useTranslation('UserPage');
+  const history = useHistory()
 
   const [form, setForm] = useState({
     editLocationForm: false,
     editPasswordForm: false,
-    createHostProfileForm: false,
     editNotificationsForm: false,
     editLangPrefForm: false,
   });
@@ -196,8 +196,7 @@ const UserPage = (props) => {
       editLocationForm: false,
       editPasswordForm: false,
       editNotificationsForm: false,
-      editLangPrefForm: false,
-      createHostProfileForm: false,
+      editLangPrefForm: false
     }));
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms();
@@ -210,8 +209,7 @@ const UserPage = (props) => {
       editLocationForm: false,
       editPasswordForm: false,
       editNotificationsForm: false,
-      editLangPrefForm: false,
-      createHostProfileForm: false,
+      editLangPrefForm: false
     }));
   };
 
@@ -219,7 +217,6 @@ const UserPage = (props) => {
     let states = [
       'editLocationForm',
       'editPasswordForm',
-      'createHostProfileForm',
       'editNotificationsForm',
       'editLangPrefForm',
     ];
@@ -231,7 +228,6 @@ const UserPage = (props) => {
           editPasswordForm: false,
           editNotificationsForm: false,
           editLangPrefForm: false,
-          createHostProfileForm: false,
           [stt]: !form[stt],
         }));
       }
@@ -440,17 +436,11 @@ const UserPage = (props) => {
         </>
       )}
       {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
-      {form.createHostProfileForm && hostProfile.length === 0 && (
-        <HostProfileForm
-          userId={props.id}
-          closeForm={() => closeLocationAndPasswordForms()}
-          location={props.location}
-        />
-      )}
-      {form.createHostProfileForm === false && hostProfile.length === 0 && (
+
+      {!hostProfile.length && (
         <MaxWidth>
           <Text centered>{t('UserPage:no-host-profile')}</Text>
-          <Button id='createHostProfileForm' onClick={(e) => formHandler(e)}>
+          <Button id='createHostProfileForm' onClick={() => history.push('/create-host-profile')}>
             {t('UserPage:host-profile-cta')}
           </Button>
         </MaxWidth>
