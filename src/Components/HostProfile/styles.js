@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { theme } from '../../Styles/theme';
 import { Container, Flexbox, Text } from '../../UI-Components';
 
-const { spacing, colors, fontSize, fontWeights } = theme;
+const { spacing, colors, fontSize, fontWeights, screens } = theme;
 
 export const FlexWrapper = styled(Container)`
   display: flex;
@@ -165,6 +165,29 @@ export const Label = styled.p`
   margin-bottom: ${spacing[2]};
   :after {
     content: ' *';
-    color: ${colors['primary'][100]}
+    color: ${colors['primary'][100]};
+  }
+`;
+
+export const StackableWrapper = styled(Flexbox)`
+  justify-content: space-between;
+  align-items: flex-start;
+
+  > div {
+    width: 100%;
+  }
+
+  @media (min-width: ${screens.md}) {
+    > div {
+      box-sizing: border-box;
+      padding: 0 ${spacing[2]};
+      max-width: 33%;
+    }
+    > div:first-child {
+      padding-left: 0;
+    }
+    > div:last-child {
+      padding-right: 0;
+    }
   }
 `;

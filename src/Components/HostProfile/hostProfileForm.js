@@ -20,11 +20,13 @@ import {
   Button,
   Notice,
   InlineLink,
+  Container,
+  Divider,
 } from '../../UI-Components';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { AddressSearchWrapper, Label } from './styles';
+import { AddressSearchWrapper, Label, StackableWrapper } from './styles';
 
 const HostProfileForm = ({ closeForm, userId, location }) => {
   const { t, ready } = useTranslation('HostProfileForm');
@@ -198,7 +200,7 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
   if (!ready) return <Spinner />;
 
   return (
-    <>
+    <Container space={8}>
       <Header centered level={3} color='primary' space={2}>
         {t('HostProfileForm:create-profile')}
       </Header>
@@ -211,7 +213,12 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
         required
       />
       <Text space={6} size='sm'>
-        <Trans i18nKey={'HostProfileForm:helpers.about'}>text <InlineLink color='info' as={Link} to='/blog/hur-skapar-man-en-bra-kattvaktsprofil' target='_blank' >link</InlineLink></Trans>
+        <Trans i18nKey={'HostProfileForm:helpers.about'}>
+          text
+          <InlineLink color='info' as={Link} to='/blog/hur-skapar-man-en-bra-kattvaktsprofil' target='_blank'>
+            link
+          </InlineLink>
+        </Trans>
       </Text>
 
       {addressErrors && (
@@ -224,7 +231,7 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
         <AddressSearchWrapper spaceItemsX={2} space={2}>
           <TextField
             space={0}
-            style={{flexGrow: 1}}
+            style={{ flexGrow: 1 }}
             label={t('HostProfileForm:labels.address')}
             required
             id='userInputAddress'
@@ -238,73 +245,102 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
         </AddressSearchWrapper>
       ) : (
         <>
-        <Label>{t('HostProfileForm:labels.address')}</Label>
-        <Flexbox spaceItemsX={2} space={2} horizontalAlign='left' space={6}>
-          <Text>{newHost.address}</Text>
-          <InlineLink
-            color='info'
-            onClick={() => {
-              setAddressSearch(true);
-              setNewHost((prev) => ({
-                ...prev,
-                address: '',
-                lat: '',
-                long: '',
-                latitude: '',
-                longitude: '',
-              }));
-            }}
-          >
-            {t('HostProfileForm:not-right')}
-          </InlineLink>
-        </Flexbox>
+          <Label>{t('HostProfileForm:labels.address')}</Label>
+          <Flexbox spaceItemsX={2} space={2} horizontalAlign='left' space={6}>
+            <Text>{newHost.address}</Text>
+            <InlineLink
+              color='info'
+              onClick={() => {
+                setAddressSearch(true);
+                setNewHost((prev) => ({
+                  ...prev,
+                  address: '',
+                  lat: '',
+                  long: '',
+                  latitude: '',
+                  longitude: '',
+                }));
+              }}
+            >
+              {t('HostProfileForm:not-right')}
+            </InlineLink>
+          </Flexbox>
         </>
       )}
-      <Text space={6} size='sm'>{t('HostProfileForm:helpers.address')}</Text>
+      <Text space={6} size='sm'>
+        {t('HostProfileForm:helpers.address')}
+      </Text>
+      <StackableWrapper space={2}>
+        <Container>
+          <TextField
+            space={2}
+            min='1'
+            type='number'
+            label={t('HostProfileForm:labels.rate')}
+            id='rate'
+            value={newHost.rate}
+            onChange={(e) => setNewHost((prev) => ({ ...prev, rate: e.target.value }))}
+            required
+            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
+          />
+          <Text space={6} size='sm'>
+            {t('HostProfileForm:helpers.rate')}
+          </Text>
+        </Container>
+        <Container>
+          <TextField
+            space={2}
+            min='1'
+            type='number'
+            label={t('HostProfileForm:labels.max-cats')}
+            id='maxCats'
+            value={newHost.maxCats}
+            onChange={(e) => setNewHost((prev) => ({ ...prev, maxCats: Math.round(e.target.value).toString() }))}
+            required
+            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
+          />
+          <Text space={6} size='sm'>
+            {t('HostProfileForm:helpers.max-cats')}
+          </Text>
+        </Container>
+        <Container>
+          <TextField
+            space={2}
+            min='1'
+            type='number'
+            label={t('HostProfileForm:labels.supplement')}
+            id='supplement'
+            value={newHost.supplement}
+            onChange={(e) => setNewHost((prev) => ({ ...prev, supplement: e.target.value }))}
+            required
+            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
+          />
+          <Text space={6} size='sm'>
+            {t('HostProfileForm:helpers.supplement')}
+          </Text>
+        </Container>
+      </StackableWrapper>
+      <Notice nature='info' space={6}>
+        <Text bold space={2}>
+          {t('HostProfileForm:helpers.example-title')}
+        </Text>
+        <Text>{t('reusable:explain-supplement')}</Text>
+      </Notice>
 
-      <TextField
-        min='1'
-        type='number'
-        label={t('HostProfileForm:labels.rate')}
-        id='rate'
-        value={newHost.rate}
-        onChange={(e) => setNewHost((prev) => ({ ...prev, rate: e.target.value }))}
-        required
-        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
-      />
-
-      <TextField
-        min='1'
-        type='number'
-        label={t('HostProfileForm:labels.max-cats')}
-        id='maxCats'
-        value={newHost.maxCats}
-        onChange={(e) => setNewHost((prev) => ({ ...prev, maxCats: Math.round(e.target.value).toString() }))}
-        required
-        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
-      />
-      <TextField
-        min='1'
-        type='number'
-        label={t('HostProfileForm:labels.supplement')}
-        id='supplement'
-        value={newHost.supplement}
-        onChange={(e) => setNewHost((prev) => ({ ...prev, supplement: e.target.value }))}
-        required
-        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
-      />
-
-      <Text>{t('HostProfileForm:labels.availability')}</Text>
-      <DayPicker
-        showWeekNumbers
-        fromMonth={today}
-        disabledDays={{ before: today }}
-        firstDayOfWeek={1}
-        selectedDays={selectedDays}
-        onDayClick={(day) => handleDayClick(day)}
-        localeUtils={MomentLocaleUtils}
-        locale={lang}
-      />
+      <Label>{t('HostProfileForm:labels.availability')}</Label>
+      <Text>{t('HostProfileForm:helpers.availability')}</Text>
+      <Container space={8}>
+        <DayPicker
+          showWeekNumbers
+          fromMonth={today}
+          disabledDays={{ before: today }}
+          firstDayOfWeek={1}
+          selectedDays={selectedDays}
+          onDayClick={(day) => handleDayClick(day)}
+          localeUtils={MomentLocaleUtils}
+          locale={lang}
+        />
+      </Container>
 
       {errors.length > 0 && (
         <Notice nature='danger'>
@@ -319,6 +355,10 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
         </Notice>
       )}
 
+      <Text centered>
+        By creating a cat sitter profile you agree that we show these details to other users when they search, etc.
+      </Text>
+
       <Flexbox spaceItemsX={2}>
         <Button secondary color='neutral' onClick={() => closeForm()}>
           Cancel
@@ -332,7 +372,8 @@ const HostProfileForm = ({ closeForm, userId, location }) => {
           {t('reusable:cta.save')}
         </Button>
       </Flexbox>
-    </>
+      <Divider />
+    </Container>
   );
 };
 
