@@ -344,8 +344,6 @@ const HostProfileForm = ({ userId, location }) => {
           locale={lang}
         />
       </Container>
-      <Divider bottom={8} />
-
       {errors.length > 0 && (
         <Notice nature='danger'>
           <Text bold centered>
