@@ -40,9 +40,8 @@ const HostInfo = ({ currentSearch, host }) => {
         centered
         space={4}
         src={
-          !host.avatar
-            ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-            : host.avatar
+          host.avatar ??
+          `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
         }
       />
       {host.reviewsCount && <ReviewScore center score={host.score} primaryColor={'neutral'} />}
@@ -94,11 +93,11 @@ const HostInfo = ({ currentSearch, host }) => {
               </Text>
               <Button
                 secondary={!isAvailable}
-                color={!isAvailable ? 'neutral' : 'primary'}
+                color={isAvailable ? 'primary' : 'neutral'}
                 space={2}
                 onClick={() => history.push('/request-to-book')}
               >
-                {isAvailable ? `${t('reusable:cta.book')} - ${orderTotal} kr` : t('reusable:request-cta.btn')} 
+                {isAvailable ? `${t('reusable:cta.book')} - ${orderTotal} kr` : t('reusable:request-cta.btn')}
               </Button>
             </>
           )}
