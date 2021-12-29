@@ -59,9 +59,8 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
           centered
           space={4}
           src={
-            !host.avatar
-              ? `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
-              : host.avatar
+            host.avatar ??
+            `https://ui-avatars.com/api/?name=${host.name}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`
           }
         />
         {host.score && (
