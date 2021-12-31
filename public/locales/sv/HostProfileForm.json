@@ -4,7 +4,7 @@
     "about": "Vänligen ange en beskrivning om dig själv",
     "address": "Vänligen ange din adress",
     "rate": "Vänligen ange ditt pris",
-    "supplement": "Vänligen ditt dagliga tillägg för en katt",
+    "supplement": "Vänligen ange ditt dagliga tillägg för en katt",
     "max-cats": "Vänligen ange det maximala antalet katter som du kan passa samtidigt",
     "availability": "Vänligen ange din tillgänglighet"
   },
@@ -19,8 +19,8 @@
     "availability": "Tillgänglighet"
   },
   "helpers": {
-    "about": "Berätta oss om dig själv och din erfarenhet med katter Osäker på vad du ska nämna? Läs mer: <1>hur skapar man en bra kattvaktsprofil</1>.",
-    "address": "Oroa dig inte, detta kommer bara att avslöjas för kattägare som har en bekräftad bokning med dig!",
+    "about": "Berätta för oss om dig själv och din erfarenhet med katter Osäker på vad du ska nämna? Läs mer: <1>hur skapar man en bra kattvaktsprofil</1>.",
+    "address": "Oroa dig inte, detta kommer bara att synas för kattägare som har en bekräftad bokning med dig!",
     "rate": "Hur mycket vill du få betalt för att ta hand om en katt per dag?",
     "max-cats": "Hur många katter samtidigt är du okej med att ha hemma hos dig?",
     "supplement": "Hur mycket vill du få betalt för en katt till per dag?",
@@ -29,5 +29,5 @@
   },
   "not-right": "Inte rätt?",
   "cta": "Skapa kattvaktsprofil",
-  "disclaimer": "Genom att skapa en kattvaktsprofil godkänner du att vi använder denna information för att visa sökresultat för andra användare och besökare på sidan. Din fullständiga adress kommer enbart avslöjas för kattägare som har en bekräftad bokning med dig, dock vi visar din ungefärliga plats för alla användare som söker efter kattvakter i ditt område."
+  "disclaimer": "Genom att skapa en kattvaktsprofil godkänner du att vi använder denna information för att visa sökresultat för andra användare och besökare på sidan. Din fullständiga adress kommer enbart synas för kattägare som har en bekräftad bokning med dig, dock visar vi din ungefärliga plats för alla användare som söker efter kattvakter i ditt område."
 }
