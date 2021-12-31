@@ -5,7 +5,7 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
-import { Button, Notice, Dropdown, Text } from '../../UI-Components';
+import { Button, Notice, Dropdown, Text, Divider } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
 // Migrated, Waiting for dropdown
 
@@ -85,6 +85,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
 
   return (
     <>
+      <Divider bottom={5}/>
       <Dropdown
         label={t('LocationUpdateForm:new-location-plch')}
         data={LOCATION_OPTIONS}
@@ -114,12 +115,13 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
 
       <ButtonWrapper>
         <Button secondary color='neutral' onClick={closeLocationAndPasswordForms}>
-          {t('reusable:cta.close')}
+          {t('reusable:cta.cancel')}
         </Button>
         <Button id='location-submit-button' color='info' disabled={loading} loading={loading} onClick={updateLocation}>
-          {t('reusable:cta.change')}
+          {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
+      <Divider top={5} bottom={6}/>
     </>
   );
 };

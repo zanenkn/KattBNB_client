@@ -4,7 +4,7 @@ import Spinner from '../../common/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { RadioButton, Button, Text, Notice } from '../../UI-Components';
+import { RadioButton, Button, Text, Notice, Divider } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
 
 const LangPrefUpdateForm = (props) => {
@@ -60,15 +60,16 @@ const LangPrefUpdateForm = (props) => {
   };
 
   const handleRadioBtnClick = (value) => {
-    setErrors([])
-    setInfo(null)
-    setLangPref(value)
-  }
+    setErrors([]);
+    setInfo(null);
+    setLangPref(value);
+  };
 
   if (!ready) return <Spinner />;
 
   return (
     <>
+      <Divider />
       <RadioButton
         label='Jag vill få epost från KattBNB på svenska'
         value='sv-SE'
@@ -100,7 +101,7 @@ const LangPrefUpdateForm = (props) => {
       )}
       <ButtonWrapper>
         <Button secondary color='neutral' onClick={() => props.closeLocationAndPasswordForms()}>
-          {t('reusable:cta.close')}
+          {t('reusable:cta.cancel')}
         </Button>
 
         <Button
@@ -110,67 +111,12 @@ const LangPrefUpdateForm = (props) => {
           disabled={loading}
           onClick={() => updateLangPref()}
         >
-          {t('reusable:cta.change')}
+          {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
+      <Divider top={5}/>
     </>
   );
-
-  //   return (
-  //     <div>
-  //       <Divider />
-  //       <div style={{ maxWidth: '194px', margin: 'auto' }}>
-  //         <div style={{ display: 'inline-flex' }}>
-  //           <Form>
-  //             <Form.Field>
-  //               <Checkbox
-  //                 radio
-  //                 label={
-  //                   <label style={{ color: langPref === 'sv-SE' ? 'grey' : 'silver', fontSize: 'small' }}>
-  //                     Jag vill få epost från KattBNB på svenska
-  //                   </label>
-  //                 }
-  //                 name='checkboxRadioGroup'
-  //                 id='sv-SE'
-  //                 checked={langPref === 'sv-SE'}
-  //                 onChange={(e) => handleLangPrefChange(e)}
-  //               />
-  //             </Form.Field>
-  //             <Form.Field>
-  //               <Checkbox
-  //                 radio
-  //                 label={
-  //                   <label style={{ color: langPref === 'en-US' ? 'grey' : 'silver', fontSize: 'small' }}>
-  //                     I want to get emails from KattBNB in English
-  //                   </label>
-  //                 }
-  //                 name='checkboxRadioGroup'
-  //                 id='en-US'
-  //                 checked={langPref === 'en-US'}
-  //                 onChange={(e) => handleLangPrefChange(e)}
-  //               />
-  //             </Form.Field>
-  //           </Form>
-  //         </div>
-
-  //         <div className='button-wrapper'>
-  //           <Button secondary className='cancel-button' onClick={() => props.closeLocationAndPasswordForms()}>
-  //             {t('reusable:cta.close')}
-  //           </Button>
-  //           <Button
-  //             id='email-language-submit-button'
-  //             className='submit-button'
-  //             loading={loading}
-  //             disabled={loading}
-  //             onClick={() => updateLangPref()}
-  //           >
-  //             {t('reusable:cta.change')}
-  //           </Button>
-  //         </div>
-  //       </div>
-  //       <Divider style={{ marginBottom: '2rem' }} />
-  //     </div>
-  //   );
 };
 
 export default LangPrefUpdateForm;

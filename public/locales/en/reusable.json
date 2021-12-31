@@ -78,6 +78,7 @@
   "cta": {
     "change": "Change",
     "save": "Save",
+    "cancel": "Cancel",
     "close": "Close",
     "confirm": "Confirm",
     "decline": "Decline",

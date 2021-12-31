@@ -4,7 +4,7 @@ import Spinner from '../../common/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Button, Notice, Dropdown, Text, Toggle } from '../../UI-Components';
+import { Button, Notice, Divider, Text, Toggle } from '../../UI-Components';
 import { ButtonWrapper, NotificationsWrapper } from './styles';
 // Migrated
 
@@ -67,6 +67,7 @@ const NotificationsUpdateForm = (props) => {
 
   return (
     <>
+      <Divider />
       <NotificationsWrapper>
         <Toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} />
         <Text tint={messageNotifications ? 100 : 60}>{t('NotificationsUpdateForm:label')}</Text>
@@ -93,7 +94,7 @@ const NotificationsUpdateForm = (props) => {
 
       <ButtonWrapper>
         <Button secondary color='neutral' onClick={() => props.closeLocationAndPasswordForms()}>
-          {t('reusable:cta.close')}
+          {t('reusable:cta.cancel')}
         </Button>
         <Button
           id='notifications-submit-button'
@@ -102,9 +103,10 @@ const NotificationsUpdateForm = (props) => {
           loading={loading}
           onClick={() => updateMessageNotification()}
         >
-          {t('reusable:cta.change')}
+          {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
+      <Divider top={5} bottom={6}/>
     </>
   );
 };
