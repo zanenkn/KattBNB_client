@@ -1,4 +1,4 @@
-import React from 'react';
+import './Styles/global.css'
 import withFooter from './HOC/withFooter';
 import Landing from './Components/Landing';
 import Responsive from './Components/ReusableComponents/Responsive';
