@@ -1,20 +1,25 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
+
 import { useTranslation } from 'react-i18next';
+import queryString from 'query-string';
+import axios from 'axios';
+
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+
+import Spinner from '../../common/Spinner';
+
+import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components';
+import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
+import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
+
 import MaxCatsUpdateForm from './MaxCatsUpdateForm';
-import DescriptionUpdateForm from './DescriptionUpdateForm';
+import DescriptionUpdateForm from './descriptionUpdateForm';
 import RateUpdateForm from './RateUpdateForm';
 import SupplementUpdateForm from './SupplementUpdateForm';
 import AvailabilityUpdateForm from './AvailabilityUpdateForm';
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode';
 import AddressUpdateForm from './AddressUpdateForm';
-import Spinner from '../../common/Spinner';
-import queryString from 'query-string';
-import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components';
-import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
-import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
 
 //Migrated
 
@@ -144,34 +149,30 @@ const HostProfile = forwardRef((props, ref) => {
       </DescriptionWrapper>
 
       <UpdateFormWrapper open={form.editDescriptionForm}>
-        {form.editDescriptionForm && (
-          <DescriptionUpdateForm
-            description={props.description}
-            id={props.id}
-            closeAllForms={closeAllForms.bind(this)}
-            setElement={props.setElement}
-          />
-        )}
+        <DescriptionUpdateForm
+          description={props.description}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
+        />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='address'>
+      <DescriptionWrapper id='address'>
         <Address />
-        <Text>{props.fullAddress}</Text>
+        {props.fullAddress}
         <InlineLink id='editAddress' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
-      </FlexWrapper>
+      </DescriptionWrapper>
 
       <UpdateFormWrapper open={form.editAddress}>
-        {form.editAddress && (
-          <AddressUpdateForm
-            fullAddress={props.fullAddress}
-            id={props.id}
-            closeAllForms={closeAllForms.bind(this)}
-            location={props.location}
-            setElement={props.setElement}
-          />
-        )}
+        <AddressUpdateForm
+          fullAddress={props.fullAddress}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          location={props.location}
+          setElement={props.setElement}
+        />
       </UpdateFormWrapper>
 
       <FlexWrapper spaceBetween={2} id='maxCats'>
@@ -185,14 +186,12 @@ const HostProfile = forwardRef((props, ref) => {
       </FlexWrapper>
 
       <UpdateFormWrapper open={form.editMaxCatsForm}>
-        {form.editMaxCatsForm && (
-          <MaxCatsUpdateForm
-            maxCats={props.maxCats}
-            id={props.id}
-            closeAllForms={closeAllForms.bind(this)}
-            setElement={props.setElement}
-          />
-        )}
+        <MaxCatsUpdateForm
+          maxCats={props.maxCats}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
+        />
       </UpdateFormWrapper>
 
       <FlexWrapper spaceBetween={2} id='rate'>
@@ -206,14 +205,12 @@ const HostProfile = forwardRef((props, ref) => {
       </FlexWrapper>
 
       <UpdateFormWrapper open={form.editRateForm}>
-        {form.editRateForm && (
-          <RateUpdateForm
-            rate={props.rate}
-            id={props.id}
-            closeAllForms={closeAllForms.bind(this)}
-            setElement={props.setElement}
-          />
-        )}
+        <RateUpdateForm
+          rate={props.rate}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
+        />
       </UpdateFormWrapper>
 
       <FlexWrapper spaceBetween={2} id='supplement'>
@@ -227,14 +224,12 @@ const HostProfile = forwardRef((props, ref) => {
       </FlexWrapper>
 
       <UpdateFormWrapper open={form.editSupplementForm}>
-        {form.editSupplementForm && (
-          <SupplementUpdateForm
-            supplement={props.supplement}
-            id={props.id}
-            closeAllForms={closeAllForms.bind(this)}
-            setElement={props.setElement}
-          />
-        )}
+        <SupplementUpdateForm
+          supplement={props.supplement}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
+        />
       </UpdateFormWrapper>
 
       <FlexWrapper spaceBetween={2} id='availability'>
