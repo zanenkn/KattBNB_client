@@ -10,6 +10,7 @@ const Styled = styled.a`
   font-size: ${({ text }) => (text ? fontSize[text] : 'inherit')};
   opacity: ${({ disabled }) => (disabled ? '0.6' : '1')};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  white-space: ${({ noBreak }) => (noBreak ? 'nowrap' : 'inherit')};
   ${({ disabled }) =>
     !disabled &&
     css`
@@ -20,9 +21,17 @@ const Styled = styled.a`
     `}
 `;
 
-const InlineLink = ({ color, disabled, discreet, text, to, ...rest }) => {
+const InlineLink = ({ color, disabled, discreet, text, to, noBreak, ...rest }) => {
   return (
-    <Styled color={color} disabled={disabled} $discreet={discreet} text={text} to={disabled ? '#' : to} {...rest} />
+    <Styled
+      color={color}
+      disabled={disabled}
+      $discreet={discreet}
+      text={text}
+      to={disabled ? '#' : to}
+      noBreak={noBreak}
+      {...rest}
+    />
   );
 };
 
@@ -30,6 +39,7 @@ InlineLink.defaultProps = {
   color: 'neutral',
   disabled: false,
   discreet: false,
+  noBreak: false,
 };
 
 InlineLink.propTypes = {
@@ -38,6 +48,7 @@ InlineLink.propTypes = {
   discreet: PropTypes.bool,
   text: PropTypes.oneOf(Object.keys(fontSize)),
   to: PropTypes.string,
+  noBreak: PropTypes.bool,
 };
 
 export default InlineLink;

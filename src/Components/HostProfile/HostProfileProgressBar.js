@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+
 import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
-import Spinner from '../../common/Spinner';
 import { Link } from 'react-router-dom';
 
-import { Button, Notice, Text } from '../../UI-Components';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+
+import Spinner from '../../common/Spinner';
+
+import { Button, Container, InlineLink, Notice, Text } from '../../UI-Components';
 import {
   Explained,
   InnerLine,
@@ -21,7 +24,7 @@ import {
 } from './styles';
 import { HostProfile, CreditCard, Verified } from '../../icons';
 
-const HostProfileProgressBar = (props) => {
+const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfileId}) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
@@ -39,7 +42,7 @@ const HostProfileProgressBar = (props) => {
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=retrieve`;
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfileId}&occasion=retrieve`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -84,7 +87,7 @@ const HostProfileProgressBar = (props) => {
       try {
         setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${props.hostProfileId}&occasion=login_link`;
+        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfileId}&occasion=login_link`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -95,12 +98,12 @@ const HostProfileProgressBar = (props) => {
         setStripeDashboardButtonLoading(false);
       } catch (error) {
         if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors('reusable:errors.unknown');
         } else if (error.response.status === 555) {
           setErrors([error.response.data.error]);
           setStripeDashboardButtonLoading(false);
         } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'));
+          window.alert(t('reusable:errors.401'));
           wipeCredentials('/');
         } else {
           setErrors([error.response.data.error]);
@@ -129,8 +132,8 @@ const HostProfileProgressBar = (props) => {
   if (loading || !ready) return <Spinner />;
 
   return (
-    <>
-      <ProgressBarWrapper space={6}>
+    <Container space={8}>
+      <ProgressBarWrapper space={5}>
         <Explained>
           <StepIcon active={activeStep >= 1}>
             <HostProfile height={6} />
@@ -170,16 +173,14 @@ const HostProfileProgressBar = (props) => {
           />
         </Explained>
       </ProgressBarWrapper>
-      {props.stripeAccountId === null ? (
-        <CtaWrapper space={8}>
-          <Text centered space={6}>
+      {stripeAccountId === null ? (
+        <CtaWrapper>
+          <Text centered space={5}>
             <Trans i18nKey={'reusable:stripe:step-1-text'}>
-              You made a host profile but have not provided us with your payment information. Without that we cannot
-              transfer the money for your gigs!
-              <Link to='/faq?section=payments&active=503' className='fake-link-underlined'>
-                Read more
-              </Link>
-              on how we handle payments and your information
+              text
+              <InlineLink as={Link} to='/faq?section=payments&active=503' color='info'>
+                link
+              </InlineLink>
             </Trans>
           </Text>
 
@@ -190,9 +191,9 @@ const HostProfileProgressBar = (props) => {
                 ? process.env.REACT_APP_STRIPE_CLIENT_ID
                 : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST
             }&response_type=code&state=${
-              props.stripeState
+              stripeState
             }&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${
-              props.email
+              email
             }&stripe_user[country]=SE`, '_self')}
           >
             {t('HostProfileProgressBar:stripe-onboarding-cta')}
@@ -201,6 +202,7 @@ const HostProfileProgressBar = (props) => {
       ) : payoutSuccess ? (
         <>
           <Button
+            color='info'
             onClick={() => fetchStripeDashboardLink()}
             loading={stripeDashboardButtonLoading}
             disabled={stripeDashboardButtonLoading}
@@ -211,14 +213,15 @@ const HostProfileProgressBar = (props) => {
         </>
       ) : (
         stripeAccountErrors.length > 0 && (
-          <>
-            <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: 'unset' }}>
+          <CtaWrapper>
+            <Text centered space={5}>
               {t('reusable:stripe:step-2-text')}&ensp;
               {stripePendingVerification
                 ? t('reusable:stripe:step-2-pending')
                 : t('reusable:stripe:step-2-go-to-dashboard')}
-            </p>
+            </Text>
             <Button
+              color={stripePendingVerification ? 'info' : 'primary'}
               onClick={() => fetchStripeDashboardLink()}
               loading={stripeDashboardButtonLoading}
               disabled={stripeDashboardButtonLoading}
@@ -226,7 +229,7 @@ const HostProfileProgressBar = (props) => {
             >
               {t('reusable:stripe:stripe-dashboard-cta')}
             </Button>
-          </>
+          </CtaWrapper>
         )
       )}
       {errors.length > 0 && (
@@ -241,7 +244,7 @@ const HostProfileProgressBar = (props) => {
           </ul>
         </Notice>
       )}
-    </>
+    </Container>
   );
 };
 

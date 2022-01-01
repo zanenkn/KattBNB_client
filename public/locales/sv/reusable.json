@@ -102,7 +102,7 @@
   "explain-supplement": "Låt oss säga att ditt pris är 120 kr/dag för en katt och ditt tillägg för ytterligare katter är 35 kr/dag. Det betyder att om du är kattvakt åt en katt under tre dagar är betalningen 120 x 3 = 360 kr. Om du däremot går med på att vara kattvakt för två katter från samma ägare i tre dagar är din betalning (120 + 35) x 3 = 465 kr",
   "deleted-user": "Raderad användare",
   "stripe": {
-    "step-1-text": "Du skapade en kattvaktsprofil men har inte gett oss din betalningsinformation. Utan den kan vi inte överföra pengarna för dina kattpassningar! <1>Läs mer</1> om hur vi hanterar betalningar och din information.",
+    "step-1-text": "Du skapade en kattvaktsprofil men har inte gett oss din betalningsinformation. Utan den kan vi inte överföra pengarna för dina kattpassningar! Läs mer: <1>hur vi hanterar betalningar och din information</1>.",
     "step-2-text": "Du har angett din betalningsinformation men har ännu inte bekräftats hos vår betalväxel (Stripe).",
     "step-2-pending": "Vår betalväxel verifierar fortfarande dina uppgifter, vänligen återkom senare.",
     "step-2-go-to-dashboard": "Besök din betalningspanel för att slutföra din verifiering.",

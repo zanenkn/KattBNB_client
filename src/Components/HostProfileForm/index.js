@@ -28,7 +28,6 @@ import {
   Notice,
   InlineLink,
   Container,
-  Divider,
 } from '../../UI-Components';
 import { AddressSearchWrapper, Label, StackableWrapper } from './styles';
 
