@@ -4,11 +4,11 @@ require('babel-register')({
 
 const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
-const locations = require('../Modules/locationData').LOCATION_OPTIONS;
+const locations = require('../Modules/locationData');
 
 let locationQuery = [];
 
-locations.map((location) => locationQuery.push(location.text));
+locations.map((location) => locationQuery.push(location['name']));
 
 const config = {
   '/search-results?location=:query': [{ query: locationQuery }],
