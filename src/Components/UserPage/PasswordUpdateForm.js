@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import { passwordCheck } from '../../Modules/passwordCheck';
+import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
 import Spinner from '../../common/Spinner';
 
@@ -21,59 +21,63 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
-  const listenEnterKeyPassword = (event) => {
-    if (event.key === 'Enter') {
-      updatePassword();
-    }
-  };
-
-  const axiosCallErrorCatching = (errorMessage) => {
-    setLoading(false);
-    setErrors(errorMessage);
-  };
+  const validator = formValidation({
+    fields: [
+      {
+        condition: window.navigator.onLine === false,
+        error: 'reusable:errors:window-navigator',
+      },
+      {
+        condition: validate.nonEmptyString(currentPassword),
+        error: 'PasswordUpdateForm:errors.empty-password',
+      },
+      {
+        condition: validate.validPassword(newPassword),
+        error: 'PasswordUpdateForm:errors.invalid-new-password',
+      },
+      {
+        condition: newPassword !== newPasswordConfirmation,
+        error: 'PasswordUpdateForm:errors.non-match-passwords',
+      },
+    ],
+    errorSetter: (val) => setErrors(val),
+  });
 
   const updatePassword = () => {
-    if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      if (newPassword === newPasswordConfirmation && passwordCheck(newPassword)) {
-        setLoading(true);
-        const lang = detectLanguage();
-        const path = '/api/v1/auth/password';
-        const payload = {
-          current_password: currentPassword,
-          password: newPassword,
-          password_confirmation: newPasswordConfirmation,
-          locale: lang,
-        };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        axios
-          .put(path, payload, { headers: headers })
-          .then(() => {
-            setErrors([]);
-            window.alert(t('PasswordUpdateForm:success-alert'));
-            wipeCredentials('/login');
-          })
-          .catch(({ response }) => {
-            if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (response.status === 500) {
-              axiosCallErrorCatching(['reusable:errors:500']);
-            } else if (response.status === 401 || response.status === 404) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              axiosCallErrorCatching(response.data.errors.full_messages);
-            }
-          });
-      } else {
-        setErrors(['PasswordUpdateForm:error']);
-      }
-    }
+    setLoading(true);
+    const lang = detectLanguage();
+    const path = '/api/v1/auth/password';
+    const payload = {
+      current_password: currentPassword,
+      password: newPassword,
+      password_confirmation: newPasswordConfirmation,
+      locale: lang,
+    };
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    axios
+      .put(path, payload, { headers: headers })
+      .then(() => {
+        setErrors([]);
+        window.alert(t('PasswordUpdateForm:success-alert'));
+        wipeCredentials('/login');
+      })
+      .catch(({ response }) => {
+        setLoading(false);
+        if (response === undefined) {
+          setErrors(['reusable:errors:unknown']);
+        } else if (response.status === 500) {
+          setErrors(['reusable:errors:500']);
+        } else if (response.status === 401 || response.status === 404) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/');
+        } else {
+          setErrors([...response.data.errors.full_messages]);
+        }
+      });
   };
 
   if (!ready) {
@@ -83,7 +87,6 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
   return (
     <>
       <Divider bottom={5} />
-
       <TextField
         required
         id='currentPassword'
@@ -91,7 +94,8 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
         type='password'
         onChange={(e) => setCurrentPassword(e.target.value)}
         label={t('PasswordUpdateForm:plch.current-pass')}
-        onKeyPress={listenEnterKeyPassword}
+        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updatePassword)}
+        autocomplete='off'
       />
       <TextField
         required
@@ -100,7 +104,8 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
         type='password'
         onChange={(e) => setNewPassword(e.target.value)}
         label={t('PasswordUpdateForm:plch.new-pass')}
-        onKeyPress={listenEnterKeyPassword}
+        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updatePassword)}
+        autocomplete='new-password'
       />
       <TextField
         required
@@ -109,7 +114,8 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
         type='password'
         onChange={(e) => setNewPasswordConfirmation(e.target.value)}
         label={t('PasswordUpdateForm:plch.new-pass-confirm')}
-        onKeyPress={listenEnterKeyPassword}
+        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updatePassword)}
+        autocomplete='off'
       />
       <Text centered>{t('PasswordUpdateForm:info')}</Text>
 
@@ -132,12 +138,11 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
           color='info'
           disabled={loading}
           loading={loading}
-          onClick={() => updatePassword()}
+          onClick={() => validator.onSubmit(updatePassword)}
         >
           {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
-
       <Divider top={5} bottom={6} />
     </>
   );

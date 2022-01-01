@@ -1,6 +1,7 @@
 export const conditions = {
   nonEmptyString: (val) => val === '',
   nonEmptyArray: (val) => Array.isArray(val) && !val.length,
+  validPassword: (val) => !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(val),
 };
 
 export const formValidation = (args) => {
