@@ -10,7 +10,7 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 import { Flexbox, Text, TextArea, Notice, Button, InlineLink } from '../../UI-Components';
 
 const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) => {
-  const { t } = useTranslation(['DescriptionUpdateForm', 'HostProfileForm']);
+  const { t } = useTranslation(['HostProfileForm']);
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
     fields: [
       {
         condition: validate.nonEmptyString(newDescription),
-        error: 'DescriptionUpdateForm:update-error',
+        error: 'HostProfileForm:errors.about',
       },
       {
         condition: window.navigator.onLine === false,
@@ -52,7 +52,6 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
     axios
       .patch(path, payload, { headers: headers })
       .then(() => {
-        window.alert(t('DescriptionUpdateForm:update-success'));
         setElement('description', newDescription);
         closeAllForms();
       })
@@ -90,9 +89,6 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
       />
       {errors.length > 0 && (
         <Notice nature='danger'>
-          <Text bold centered>
-            {t('reusable:errors:action-error-header')}
-          </Text>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>

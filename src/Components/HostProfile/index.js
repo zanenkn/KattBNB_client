@@ -19,7 +19,7 @@ import RateUpdateForm from './RateUpdateForm';
 import SupplementUpdateForm from './SupplementUpdateForm';
 import AvailabilityUpdateForm from './AvailabilityUpdateForm';
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode';
-import AddressUpdateForm from './AddressUpdateForm';
+import AddressUpdateForm from './addressUpdateForm';
 
 //Migrated
 
@@ -175,25 +175,6 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='maxCats'>
-        <Cat />
-        <Text>
-          {t('HostProfile:max-cats')} {props.maxCats}
-        </Text>
-        <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
-          {t('reusable:cta:change')}
-        </InlineLink>
-      </FlexWrapper>
-
-      <UpdateFormWrapper open={form.editMaxCatsForm}>
-        <MaxCatsUpdateForm
-          maxCats={props.maxCats}
-          id={props.id}
-          closeAllForms={closeAllForms.bind(this)}
-          setElement={props.setElement}
-        />
-      </UpdateFormWrapper>
-
       <FlexWrapper spaceBetween={2} id='rate'>
         <Rate />
         <Text>
@@ -226,6 +207,25 @@ const HostProfile = forwardRef((props, ref) => {
       <UpdateFormWrapper open={form.editSupplementForm}>
         <SupplementUpdateForm
           supplement={props.supplement}
+          id={props.id}
+          closeAllForms={closeAllForms.bind(this)}
+          setElement={props.setElement}
+        />
+      </UpdateFormWrapper>
+
+      <FlexWrapper spaceBetween={2} id='maxCats'>
+        <Cat />
+        <Text>
+          {t('HostProfile:max-cats')} {props.maxCats}
+        </Text>
+        <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+          {t('reusable:cta:change')}
+        </InlineLink>
+      </FlexWrapper>
+
+      <UpdateFormWrapper open={form.editMaxCatsForm}>
+        <MaxCatsUpdateForm
+          maxCats={props.maxCats}
           id={props.id}
           closeAllForms={closeAllForms.bind(this)}
           setElement={props.setElement}

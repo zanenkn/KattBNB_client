@@ -25,6 +25,7 @@ export const StyledUpdateFormWrapper = styled.div`
   height: auto;
   overflow: hidden;
   transition: max-height 1s ease-in-out;
+  padding: 0 2px;
 `;
 
 export const UpdateFormWrapper = ({ open, children }) => {
