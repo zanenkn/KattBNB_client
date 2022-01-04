@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploader from 'react-images-upload';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const ImageUploadPopup = (props) => {
   const { t, ready } = useTranslation('ImageUploadPopup');

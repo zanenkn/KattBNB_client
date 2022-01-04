@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   DropdownContainer,
   InputIcon,
@@ -11,11 +11,11 @@ import {
 } from './styles';
 import { Chevron } from '../../icons';
 import { theme } from '../../../Styles/theme';
-// TODO: placeholder/input, required prop, proptypes, default props
+// TODO: placeholder/input, required prop, proptypes, default props. default value?
 
 const { colors } = theme;
 
-const AutocompleteDropdown = ({ data, onChange, space, label, id }) => {
+const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }) => {
   const [search, setSearch] = useState({
     text: '',
     suggestions: data,
@@ -24,6 +24,13 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id }) => {
   const [suggestionsDisplayed, setSuggestionsDisplayed] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
+
+
+  useEffect(() => {
+    if(defaultValue && search.text === '') {
+      suggestionSelected({name: defaultValue})
+    }
+  }, [])
 
   const onTextChanged = (e) => {
     const value = e.target.value;
@@ -59,6 +66,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id }) => {
   const onInputBlur = () => {
     setSearch((old) => ({ ...old, text: '' }));
     setIsFocused(false);
+    onChange('')
   };
 
   const { suggestions } = search;

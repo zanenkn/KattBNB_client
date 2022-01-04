@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const { spacing } = theme;
 
 const Flexbox = ({
+  center,
   direction,
   height,
   horizontalAlign,
@@ -13,11 +14,13 @@ const Flexbox = ({
   spaceItemsX,
   spaceItemsY,
   verticalAlign,
-  width,
+  maxWidth,
+  wrap,
   ...rest
 }) => {
   return (
     <StyledFlexbox
+      center={center}
       direction={direction}
       height={height}
       horizontalAlign={horizontalAlign}
@@ -26,13 +29,15 @@ const Flexbox = ({
       spaceItemsX={spaceItemsX}
       spaceItemsY={spaceItemsY}
       verticalAlign={verticalAlign}
-      width={width}
+      maxWidth={maxWidth}
+      wrap={wrap?.toString()}
       {...rest}
     />
   );
 };
 
 Flexbox.propTypes = {
+  center: PropTypes.bool,
   direction: PropTypes.oneOf(['row', 'column']),
   height: PropTypes.string,
   horizontalAlign: PropTypes.oneOf(['left', 'right', 'center']),
@@ -41,10 +46,12 @@ Flexbox.propTypes = {
   spaceItemsX: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   spaceItemsY: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center']),
-  width: PropTypes.string,
+  maxWidth: PropTypes.string,
+  wrap: PropTypes.bool,
 };
 
 Flexbox.defaultProps = {
+  center: false,
   direction: 'row',
   height: 'auto',
   horizontalAlign: 'center',
@@ -53,7 +60,8 @@ Flexbox.defaultProps = {
   spaceItemsX: 0,
   spaceItemsY: 0,
   verticalAlign: 'center',
-  width: 'auto',
+  maxWidth: 'unset',
+  wrap: false,
 };
 
 Flexbox.displayName = 'Flexbox';

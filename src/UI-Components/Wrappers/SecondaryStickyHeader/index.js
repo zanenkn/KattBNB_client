@@ -12,10 +12,10 @@ export default SecondaryStickyHeader;
 
 SecondaryStickyHeader.defaultProps = {
   height: 150,
-  padding: '4',
+  padding: 4,
 };
 
 SecondaryStickyHeader.propTypes = {
   height: PropTypes.number,
-  padding: PropTypes.oneOf(Object.keys(spacing)),
+  padding: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
 };

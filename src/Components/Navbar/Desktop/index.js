@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { KattBNBMain, UserRound } from '../../Icons';
+import { KattBNBMain, UserRound } from '../../../icons';
 import { Container, InlineLink, Text, Divider } from '../../../UI-Components';
 import { Nav, NavInnerWrap } from '../styles';
 import { MenuItem, Submenu, SubmenuItem, ItemWrapper, MenuAvatar } from './styles';
-import LanguageSwitcher from '../../ReusableComponents/LanguageSwitcher';
+import LanguageSwitcher from '../../../common/LanguageSwitcher';
 
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
   const noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;

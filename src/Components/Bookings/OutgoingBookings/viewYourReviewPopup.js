@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Spinner from '../../ReusableComponents/Spinner';
-import ReviewScore from '../../ReusableComponents/ReviewScore';
+import Spinner from '../../../common/Spinner';
+import ReviewScore from '../../../common/ReviewScore';
 import { Trans, useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';

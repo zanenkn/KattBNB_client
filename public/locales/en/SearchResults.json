@@ -1,4 +1,5 @@
 {
   "back": "Back to results",
-  "counter": "{{count}} result(s)"
+  "counter": "{{count}} result(s)",
+  "change-search": "Change search"
 }

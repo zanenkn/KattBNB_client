@@ -1,10 +1,10 @@
 import { StyledFooter, FooterInnerWrap, ColumnGrid, BottomFlexbox, SocialWrapper } from './styles';
 import { Text, Divider } from '../../UI-Components';
-import LanguageSwitcher from '../ReusableComponents/LanguageSwitcher';
+import LanguageSwitcher from '../../common/LanguageSwitcher';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18n';
-import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../Icons';
+import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../../icons';
 
 const Footer = () => {
   const { t } = useTranslation();

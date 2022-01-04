@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const Partners = () => {
   const { t, ready } = useTranslation('Partners');

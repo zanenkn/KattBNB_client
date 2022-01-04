@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Geocode from 'react-geocode';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 
 const AddressUpdateForm = (props) => {
   const { t, ready } = useTranslation('AddressUpdateForm');

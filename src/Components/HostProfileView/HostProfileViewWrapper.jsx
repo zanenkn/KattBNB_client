@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import HostProfileView from './HostProfileView';
-import Spinner from '../ReusableComponents/Spinner';
+import HostInfo from './hostInfo';
+import Spinner from '../../common/Spinner';
 
 const HostProfileViewWrapper = (props) => {
   const { t } = useTranslation('HostProfileViewWrapper');

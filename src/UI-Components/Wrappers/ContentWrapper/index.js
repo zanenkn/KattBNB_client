@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
 
-const { spacing, screens } = theme;
+const { spacing, screens, navbar } = theme;
 
 const Styled = styled.div`
   box-sizing: border-box;
@@ -22,17 +22,17 @@ const Styled = styled.div`
 
   margin: 0 auto;
   max-width: ${screens.md};
-  min-height: calc(var(--vh, 1vh) * 100 - 60px);
+  min-height: calc(var(--vh, 1vh) * 100 - ${navbar.sm});
   position: relative;
-  margin-top: 60px;
+  margin-top: ${navbar.sm};
 
   @media screen and (min-height: ${screens.md}) {
-    min-height: calc(var(--vh, 1vh) * 100 - 75px);
-    margin-top: 75px;
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.md});
+    margin-top: ${navbar.md};
   }
   @media screen and (min-height: ${screens.lg}) {
-    min-height: calc(var(--vh, 1vh) * 100 - 90px);
-    margin-top: 90px;
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.lg});
+    margin-top: ${navbar.lg};
   }
 `;
 

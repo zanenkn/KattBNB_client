@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
 import { Trans, useTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import ReviewScore from '../ReusableComponents/ReviewScore';
+import ReviewScore from '../../common/ReviewScore';
 import queryString from 'query-string';
 
 const LeaveReview = (props) => {

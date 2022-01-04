@@ -5,13 +5,19 @@ const { spacing } = theme;
 
 export const StyledFlexbox = styled.div`
   display: flex;
+  flex-wrap: ${({ wrap }) => (wrap ? 'wrap' : 'unset')};
   flex-direction: ${({ direction }) => direction};
-  width: ${({ width }) => width};
+  max-width: ${({ maxWidth }) => maxWidth};
   height: ${({ height }) => height};
   margin-bottom: ${({ space }) => spacing[space]};
+  ${({ center, maxWidth }) =>
+    center &&
+    maxWidth &&
+    css`
+      margin-left: auto;
+      margin-right: auto;
+    `}
   > * {
-    margin: 0;
-
     ${({ spaceItemsX, spaceItemsY, spaceItems }) =>
       spaceItems > 0
         ? css`
@@ -23,14 +29,22 @@ export const StyledFlexbox = styled.div`
   }
 
   > *:first-child {
-    padding-left: 0
+    padding-left: 0;
   }
 
   > *:last-child {
-    padding-right: 0
+    padding-right: 0;
   }
 
   > p {
+    margin-bottom: 0;
+  }
+
+  > h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     margin-bottom: 0;
   }
 

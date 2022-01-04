@@ -2,6 +2,7 @@
 export { default as Avatar } from './Avatar/';
 export { default as Button } from './Button/';
 export { default as Notice } from './Notice/';
+export { default as PriceLabel } from './PriceLabel/';
 
 // wrappers
 export { default as Container } from './Wrappers/Container/';
@@ -19,6 +20,7 @@ export { default as Text } from './Typography/Text';
 export { default as InlineLink } from './Typography/InlineLink';
 
 // form
+export { default as DayPicker } from './Form/DayPicker';
 export { default as Dropdown } from './Form/Dropdown';
 export { default as RadioButton } from './Form/RadioButton';
 export { default as TextArea } from './Form/TextArea';

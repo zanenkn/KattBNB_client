@@ -1,342 +1,245 @@
-import React, { Component } from 'react';
-import LOCATION_OPTIONS from '../../Modules/locationData.json';
+import React, { useState, useRef, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { connect } from 'react-redux';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-//import '../NpmPackageCSS/react-day-picker-range.css';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
-import { withTranslation } from 'react-i18next';
-import Spinner from '../ReusableComponents/Spinner';
-import { Helmet } from 'react-helmet';
-import { Whitebox, Header, InlineLink, Dropdown, TextField, Button, Notice, Text } from '../../UI-Components';
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.handleFromChange = this.handleFromChange.bind(this);
-    this.handleToChange = this.handleToChange.bind(this);
-    this.state = {
-      errors: '',
-      location: this.props.location,
-      cats: '',
-      from: undefined,
-      to: undefined,
-    };
-  }
+import LOCATION_OPTIONS from '../../Modules/locationData.json';
+import { getDaysArray } from '../../utils/getDaysArray';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { formValidation } from '../../Modules/formValidation';
 
-  componentDidMount() {
-    if (this.props.history.location.state !== undefined) {
-      this.setState({
-        from: this.props.history.location.state.checkInDate,
-        to: this.props.history.location.state.checkOutDate,
-        location: this.props.history.location.state.location,
-        cats: this.props.history.location.state.numberOfCats,
-      });
+import Spinner from '../../common/Spinner';
+import SEO from '../../common/SEO';
+
+import {
+  Flexbox,
+  Whitebox,
+  Header,
+  InlineLink,
+  Dropdown,
+  TextField,
+  Button,
+  Notice,
+  Text,
+  DayPicker,
+  ContentWrapper,
+} from '../../UI-Components';
+
+const Search = ({ history, dispatch, currentSearch }) => {
+  const { t, ready } = useTranslation('Search');
+  const lang = detectLanguage();
+
+  const toField = useRef(null);
+  const fromField = useRef(null);
+
+  const today = new Date();
+
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
+  const [searchLocation, setSearchLocation] = useState(null);
+  const [cats, setCats] = useState(null);
+  const [errors, setErrors] = useState([]);
+
+  const modifiers = { start: new Date(from), end: new Date(to) };
+
+  useEffect(() => {
+    if (!!Object.keys(currentSearch).length) {
+      setFrom(currentSearch.start);
+      setTo(currentSearch.end);
+      setSearchLocation(currentSearch.location);
+      setCats(currentSearch.cats);
     }
-  }
+  }, []);
 
-  onChangeHandler = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
+  const handleFromChange = () => {
+    const utcFrom = Date.UTC(
+      fromField.current.state.month.getUTCFullYear(),
+      fromField.current.state.month.getUTCMonth(),
+      fromField.current.state.month.getUTCDate()
+    );
+    const msFrom = new Date(utcFrom).getTime();
+
+    setFrom(msFrom);
+    toField.current.getInput().focus();
   };
 
-  showFromMonth() {
-    const { from, to } = this.state;
-    if (!from) {
-      return;
+  const handleToChange = () => {
+    const utcTo = Date.UTC(
+      toField.current.state.month.getUTCFullYear(),
+      toField.current.state.month.getUTCMonth(),
+      toField.current.state.month.getUTCDate()
+    );
+    const msTo = new Date(utcTo).getTime();
+
+    setTo(msTo);
+  };
+
+  const clearDates = () => {
+    setFrom(null);
+    setTo(null);
+  };
+
+  const listenEnterKeySearch = (event) => {
+    if (event.key === 'Enter') {
+      search(event);
     }
-    if (moment(to).diff(moment(from), 'months') < 2) {
-      this.to.getDayPicker().showMonth(from);
-    }
-  }
+  };
 
-  async handleFromChange(from) {
-    await this.setState({ from });
-    this.to.getInput().focus();
-  }
+  const validator = formValidation({
+    fields: [
+      {
+        condition: cats <= 0 || cats % 1 !== 0,
+        error: 'Search:error-1',
+      },
+      {
+        condition: !searchLocation,
+        error: 'Search:error-2',
+      },
+      {
+        condition: !to || !from,
+        error: 'Search:error-3',
+      },
+    ],
+    errorSetter: (val) => setErrors(val),
+  });
 
-  handleToChange(to) {
-    this.setState({ to }, this.showFromMonth);
-  }
+  const search = () => {
+    dispatch({
+      type: 'NEW_SEARCH',
+      currentSearch: {
+        start: from,
+        end: to,
+        cats: cats,
+        location: searchLocation,
+        dates: getDaysArray(from, to),
+      },
+    });
 
-  clearDates = () => {
-    this.setState({
-      from: undefined,
-      to: undefined,
-      errors: '',
+    history.push({
+      pathname: '/search-results',
+      search: `?from=${from}&to=${to}&cats=${cats}&location=${searchLocation}&view=map`,
     });
   };
 
-  listenEnterKeySearch = (event) => {
-    if (event.key === 'Enter') {
-      this.search(event);
-    }
-  };
+  if (!ready) return <Spinner />;
 
-  search = (e) => {
-    e.preventDefault();
-    if (this.state.cats <= 0 || this.state.cats % 1 !== 0) {
-      this.setState({
-        errors: ['Search:error-1'],
-      });
-    } else if (this.state.location === '' || this.state.location === undefined) {
-      this.setState({
-        errors: ['Search:error-2'],
-      });
-    } else if (this.state.to === undefined || this.state.from === undefined) {
-      this.setState({
-        errors: ['Search:error-3'],
-      });
-    } else {
-      let utcFrom = Date.UTC(
-        this.state.from.getUTCFullYear(),
-        this.state.from.getUTCMonth(),
-        this.state.from.getUTCDate()
-      );
-      let msFrom = new Date(utcFrom).getTime();
-      let utcTo = Date.UTC(this.state.to.getUTCFullYear(), this.state.to.getUTCMonth(), this.state.to.getUTCDate());
-      let msTo = new Date(utcTo).getTime();
-      this.props.history.push({
-        pathname: '/search-results',
-        search: `?from=${msFrom}&to=${msTo}&cats=${this.state.cats}&location=${this.state.location}&view=map`,
-      });
-    }
-  };
-
-  render() {
-    const { t, tReady } = this.props;
-    const lang = detectLanguage();
-    const { from, to } = this.state;
-    const modifiers = { start: from, end: to };
-    const today = new Date();
-
-    if (!tReady) return <Spinner />;
-
-    return (
-      <>
-        <Helmet>
-          <title>KattBNB - boka kattvakt online!</title>
-          <meta
-            name='description'
-            content='Det är inte enkelt att hitta en pålitlig kattvakt. Men lugn, vi löser det. På KattBNB bokar du kattvakt online - snabbt och enkelt!'
+  return (
+    <ContentWrapper>
+      <SEO page='search' />
+      <Header color='primary' centered>
+        {t('Search:title')}
+      </Header>
+      <Whitebox>
+        <div id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
+          <DayPicker
+            dayPickerRef={fromField}
+            label={t('Search:checkin')}
+            required
+            id='from'
+            value={from ? moment(from).format('LL') : ''}
+            onChange={() => handleFromChange()}
+            format='LL'
+            formatDate={formatDate}
+            parseDate={parseDate}
+            inputProps={{ readOnly: true, placeholder: undefined }}
+            dayPickerProps={{
+              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
+              disabledDays: { after: new Date(to), before: today },
+              fromMonth: today,
+              toMonth: to ? new Date(to) : undefined,
+              numberOfMonths: 1,
+              firstDayOfWeek: 1,
+              localeUtils: MomentLocaleUtils,
+              locale: lang,
+              showWeekNumbers: true,
+              modifiers,
+            }}
           />
-          <link rel='canonical' href='https://kattbnb.se/search' />
-          <meta property='og:title' content='KattBNB - boka kattvakt online!' />
-          <meta property='og:url' content='https://kattbnb.se/search' />
-          <meta property='og:type' content='website' />
-          <meta
-            property='og:description'
-            content='Ställ inte in din semester. Vi har kattvakt till din katt. På KattBNB bokar du kattpassning online - snabbt och enkelt!'
+          <DayPicker
+            dayPickerRef={toField}
+            label={t('Search:checkout')}
+            required
+            id='from'
+            value={to ? moment(to).format('LL') : ''}
+            onChange={() => handleToChange()}
+            space={1}
+            format='LL'
+            formatDate={formatDate}
+            parseDate={parseDate}
+            inputProps={{
+              readOnly: !!from,
+              placeholder: undefined,
+            }}
+            dayPickerProps={{
+              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
+              disabledDays: { before: from ? new Date(from) : today },
+              firstDayOfWeek: 1,
+              showWeekNumbers: true,
+              month: new Date(from),
+              fromMonth: new Date(from),
+              localeUtils: MomentLocaleUtils,
+              locale: lang,
+              numberOfMonths: 1,
+              modifiers,
+            }}
           />
-          <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-        </Helmet>
-        <Header color='primary' centered>
-          {t('Search:title')}
-        </Header>
-        <Whitebox>
-          <div id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-            <DayPickerInput
-              value={from || t('Search:checkin')}
-              format='LL'
-              formatDate={formatDate}
-              parseDate={parseDate}
-              inputProps={{ readOnly: true }}
-              dayPickerProps={{
-                selectedDays: [from, { from, to }],
-                disabledDays: { after: to, before: today },
-                fromMonth: today,
-                toMonth: to,
-                modifiers,
-                numberOfMonths: 1,
-                firstDayOfWeek: 1,
-                localeUtils: MomentLocaleUtils,
-                locale: lang,
-                showWeekNumbers: true,
-              }}
-              onDayChange={this.handleFromChange}
-            />
-            <DayPickerInput
-              ref={(el) => (this.to = el)}
-              value={to || t('Search:checkout')}
-              format='LL'
-              formatDate={formatDate}
-              parseDate={parseDate}
-              inputProps={this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }}
-              dayPickerProps={{
-                selectedDays: [from, { from, to }],
-                disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
-                modifiers,
-                firstDayOfWeek: 1,
-                showWeekNumbers: true,
-                month: from,
-                fromMonth: from,
-                localeUtils: MomentLocaleUtils,
-                locale: lang,
-                numberOfMonths: 1,
-              }}
-              onDayChange={this.handleToChange}
-            />
-            <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
-              <InlineLink style={{ textAlign: 'right' }} onClick={this.clearDates}>
-                {t('Search:reset')}
-              </InlineLink>
-            </div>
-            <Dropdown
-              data={LOCATION_OPTIONS}
-              id='location'
-              onChange={(val) => this.setState({ location: val })}
-              onKeyPress={this.listenEnterKeySearch}
-            />
-            <TextField
-              label={t('Search:how-many')}
-              type='number'
-              required
-              id='cats'
-              value={this.state.cats}
-              onChange={this.onChangeHandler}
-              onKeyPress={this.listenEnterKeySearch}
-            />
-          </div>
 
-          {this.state.errors !== '' && (
-            <Notice nature='danger'>
-              <Text bold centered>
-                {t('Search:error-header')}
-              </Text>
-              <ul>
-                {this.state.errors.map((error) => (
-                  <li key={error}>{t(error)}</li>
-                ))}
-              </ul>
-            </Notice>
-          )}
-
-          <Button id='search-button' onClick={this.search}>
-            {t('Search:cta')}
-          </Button>
-          <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <InlineLink to='/area-list' discreet>
-              {t('Search:sitters-near-you')}
+          <Flexbox horizontalAlign='right' space={3} style={{ visibility: !from && !to ? 'hidden' : 'visible' }}>
+            <InlineLink onClick={() => clearDates()} text='sm' color='info'>
+              {t('Search:reset')}
             </InlineLink>
-          </div>
-        </Whitebox>
-      </>
-    );
-    // if (tReady) {
-    //   let errorDisplay;
-    //   const lang = detectLanguage();
-    //   const { from, to } = this.state;
-    //   const modifiers = { start: from, end: to };
-    //   const today = new Date();
+          </Flexbox>
+          <Dropdown
+            defaultValue={currentSearch.location}
+            label={t('Search:where')}
+            data={LOCATION_OPTIONS}
+            id='location'
+            onChange={(val) => setSearchLocation(val)}
+            onKeyPress={(e) => listenEnterKeySearch(e)}
+          />
+          <TextField
+            label={t('Search:how-many')}
+            type='number'
+            required
+            id='cats'
+            value={cats}
+            onChange={(e) => setCats(e.target.value)}
+            onKeyPress={(e) => listenEnterKeySearch(e)}
+          />
+        </div>
 
-    //   return (
-    //     <div className='content-wrapper'>
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <Text bold centered>
+              {t('Search:error-header')}
+            </Text>
+            <ul>
+              {errors.map((error) => (
+                <li key={error}>{t(error)}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
 
-    //       <Segment className='whitebox'>
-    //         <Form id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-    //           <div className='required field' style={{ marginBottom: '0.5em' }}>
-    //             <label>{t('Search:when')}</label>
-    //             <div className='InputFromTo'>
-    //               <DayPickerInput
-    //                 value={from || t('Search:checkin')}
-    //                 format='LL'
-    //                 formatDate={formatDate}
-    //                 parseDate={parseDate}
-    //                 inputProps={{ readOnly: true }}
-    //                 dayPickerProps={{
-    //                   selectedDays: [from, { from, to }],
-    //                   disabledDays: { after: to, before: today },
-    //                   fromMonth: today,
-    //                   toMonth: to,
-    //                   modifiers,
-    //                   numberOfMonths: 1,
-    //                   firstDayOfWeek: 1,
-    //                   localeUtils: MomentLocaleUtils,
-    //                   locale: lang,
-    //                   showWeekNumbers: true,
-    //                 }}
-    //                 onDayChange={this.handleFromChange}
-    //               />
-    //             </div>
-    //             <div className='InputFromTo' style={{ marginTop: '0.5em' }}>
-    //               <DayPickerInput
-    //                 ref={(el) => (this.to = el)}
-    //                 value={to || t('Search:checkout')}
-    //                 format='LL'
-    //                 formatDate={formatDate}
-    //                 parseDate={parseDate}
-    //                 inputProps={
-    //                   this.state.from === undefined ? { disabled: true } : { disabled: false, readOnly: true }
-    //                 }
-    //                 dayPickerProps={{
-    //                   selectedDays: [from, { from, to }],
-    //                   disabledDays: this.state.from !== undefined ? { before: from } : { before: today },
-    //                   modifiers,
-    //                   firstDayOfWeek: 1,
-    //                   showWeekNumbers: true,
-    //                   month: from,
-    //                   fromMonth: from,
-    //                   localeUtils: MomentLocaleUtils,
-    //                   locale: lang,
-    //                   numberOfMonths: 1,
-    //                 }}
-    //                 onDayChange={this.handleToChange}
-    //               />
-    //             </div>
-    //           </div>
-    //           <div style={this.state.from === undefined && this.state.to === undefined ? { visibility: 'hidden' } : {}}>
-    //             <Header className='fake-link-underlined' style={{ textAlign: 'right' }} onClick={this.clearDates}>
-    //               {t('Search:reset')}
-    //             </Header>
-    //           </div>
-    //           <div className='required field' style={{ marginBottom: '1.5em' }}>
-    //             <label>{t('Search:where')}</label>
-    //             <Dropdown
-    //               clearable
-    //               search
-    //               selection
-    //               value={this.state.location}
-    //               placeholder={t('Search:where-plch')}
-    //               options={LOCATION_OPTIONS}
-    //               id='location'
-    //               onChange={this.handleLocationChange}
-    //               onKeyPress={this.listenEnterKeySearch}
-    //             />
-    //           </div>
-    //           <Form.Input
-    //             label={t('Search:how-many')}
-    //             type='number'
-    //             required
-    //             id='cats'
-    //             value={this.state.cats}
-    //             onChange={this.onChangeHandler}
-    //             onKeyPress={this.listenEnterKeySearch}
-    //             style={{ maxWidth: '180px', height: '38px' }}
-    //           />
-    //         </Form>
-    //         {errorDisplay}
-    //         <div className='button-wrapper'>
-    //           <div>
-    //             <Button id='search-button' className='submit-button' onClick={this.search}>
-    //               {t('Search:cta')}
-    //             </Button>
-    //           </div>
-    //         </div>
-    //         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    //           <Link to='/area-list' className='discreet-link'>
-    //             {t('Search:sitters-near-you')}
-    //           </Link>
-    //         </div>
-    //       </Segment>
-    //     </div>
-    //   );
-    // } else {
-    //   return <Spinner />;
-    // }
-  }
-}
+        <Button id='search-button' onClick={() => validator.onSubmit(search)}>
+          {t('Search:cta')}
+        </Button>
+        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <InlineLink as={Link} to='/area-list' discreet>
+            {t('Search:sitters-near-you')}
+          </InlineLink>
+        </div>
+      </Whitebox>
+    </ContentWrapper>
+  );
+};
 
-const mapStateToProps = (state) => ({ location: state.reduxTokenAuth.currentUser.attributes.location });
+const mapStateToProps = (state) => ({
+  location: state.reduxTokenAuth.currentUser.attributes.location,
+  currentSearch: state.currentSearch,
+});
 
-export default withTranslation('Search')(connect(mapStateToProps)(Search));
+export default connect(mapStateToProps)(Search);

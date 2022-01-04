@@ -1,4 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from './theme';
+
+const { colors, spacing, screens } = theme;
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -14,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     margin: 0;
     line-height: 1.3em;
+    white-space: pre-line;
   }
   li {
     margin-bottom: 0.75rem;
@@ -36,19 +40,33 @@ const GlobalStyles = createGlobalStyle`
   }
 
   h1 {
-    font-size: 2.488rem;
+    font-size: 1.802rem;
   }
-  h2 {
-    font-size: 2.074rem;
-  }
-  h3 {
-    font-size: 1.728rem;
-  }
-  h4 {
-    font-size: 1.44rem;
-  }
-  h5 {
-    font-size: 1.2rem;
+  
+  h2 {font-size: 1.602rem;}
+  
+  h3 {font-size: 1.424rem;}
+  
+  h4 {font-size: 1.266rem;}
+  
+  h5 {font-size: 1.125rem;}
+
+  @media (min-width: ${screens.md}) {
+    h1 {
+      font-size: 2.488rem;
+    }
+    h2 {
+      font-size: 2.074rem;
+    }
+    h3 {
+      font-size: 1.728rem;
+    }
+    h4 {
+      font-size: 1.44rem;
+    }
+    h5 {
+      font-size: 1.2rem;
+    }
   }
 
   a {
@@ -168,6 +186,7 @@ const GlobalStyles = createGlobalStyle`
     transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); 
   }
   .spin-it {
+    display: flex;
     animation: rotation 2s infinite linear;
   }
   
@@ -188,10 +207,13 @@ const GlobalStyles = createGlobalStyle`
     border: none!important;
     padding: 2rem!important;
     width: 80%!important;
-    max-width: 300px;
+    max-width: 360px;
     max-height: 95%!important;
     display: table;
     box-sizing: border-box;
+    > *:last-child {
+      margin-bottom: 0;
+    }
   }
   .avatar-popup-content {
     width: 270px!important;
@@ -293,6 +315,48 @@ const GlobalStyles = createGlobalStyle`
     100% {
       opacity: 0;
     }
+  }
+  .DayPickerInput > input {
+    background-color: transparent;
+    box-sizing: border-box;
+    color: inherit;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    width: 100%;
+    padding: ${spacing[4]} ${spacing[4]};
+    border: 1px solid ${colors.neutral[60]};
+    &:focus {
+      border: 1px solid ${colors.neutral[100]};
+    }
+    &:-internal-autofill-selected {
+      background-color: transparent;
+    }
+  }
+
+  .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #eaecec !important;
+    color: #c90c61;
+  }
+  
+  .InputFromTo .DayPicker-Day {
+    border-radius: 0 !important;
+  }
+  
+  .InputFromTo .DayPicker-Day--start {
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+  }
+  
+  .InputFromTo .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+  }
+  
+  .InputFromTo .DayPickerInput-Overlay {
+    width: 254px;
+    margin-left: -39px;
+    margin-top: 0.5em;
   }
 `;
 

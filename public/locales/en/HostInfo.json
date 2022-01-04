@@ -1,0 +1,7 @@
+{
+  "questions": "Questions?",
+  "send-msg": "You can send a message to <1>{{host}}</1> and find out.",
+  "send-cta": "Send now",
+  "reviews-title": "Reviews",
+  "host-availability-disclaimer": "This cat sitter have not added information about their availability for the dates you searched. You can still send them a booking request. However, in case the cat sitter can not accept the booking it can take couple of days before the booking amount ({{amount}} kr) is available to you again in your bank account. \n Read more: <1>why is that</1>."
+}

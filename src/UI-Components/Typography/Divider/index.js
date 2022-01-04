@@ -16,9 +16,9 @@ Divider.defaultProps = {
 };
 
 Divider.propTypes = {
-  bottom: PropTypes.oneOf(Object.keys(spacing)),
+  bottom: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
   color: PropTypes.oneOf(Object.keys(colors)),
-  top: PropTypes.oneOf(Object.keys(spacing)),
+  top: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
   thick: PropTypes.bool,
 };
 

@@ -4,10 +4,10 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import ReactAvatarEditor from 'react-avatar-editor';
 import Popup from 'reactjs-popup';
-import Spinner from '../ReusableComponents/Spinner';
+import Spinner from '../../common/Spinner';
 import { withTranslation } from 'react-i18next';
 import { Avatar, Button, Text, Notice, Container } from '../../UI-Components';
-import { Edit, Camera, RotateLeft, RotateRight } from '../Icons';
+import { Edit, Camera, RotateLeft, RotateRight } from '../../icons';
 import { AvatarEditBtnWrapper, AvatarUpdateFormWrapper, FlexWrapper, WithCursorPointer } from './styles';
 //MIGRATED
 class AvatarUpdateForm extends Component {

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
 
-const { colors, screens, spacing } = theme;
+const { colors, screens, spacing, navbar } = theme;
 
 export const Nav = styled.div`
-  height: 60px;
+  height: ${navbar.sm};
   margin: auto;
   background: ${colors.primary[100]};
   display: flex;
@@ -15,10 +15,10 @@ export const Nav = styled.div`
   z-index: 5000;
   width: 100%;
   @media (min-height: ${screens.md}) {
-    height: 75px;
+    height: ${navbar.md};
   }
   @media (min-height: ${screens.lg}) {
-    height: 90px;
+    height: ${navbar.lg};
   }
 `;
 
@@ -56,4 +56,4 @@ export const IconWrapper = styled.div`
 export const MenuDivider = styled.hr`
   margin: ${spacing[4]} 0;
   border: ${colors.neutral[100]} solid 1px;
-`
+`;

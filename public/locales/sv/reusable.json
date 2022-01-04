@@ -3,7 +3,8 @@
     "per-day": "kr/dag",
     "total": "kr totalt",
     "total-for-1": "kr/dag för 1 katt",
-    "total-day": "kr/dag per katt"
+    "total-day": "kr/dag per katt",
+    "from-per-day": "från {{rate}} kr/dag"
   },
   "request-cta": {
     "txt": "Vistelsen för <1>{{count}} katt</1> hos <3>{{host}}</3> mellan datumen <5>{{checkin}}</5> och <7>{{checkout}}</7> kommer totalt att kosta",
@@ -67,7 +68,8 @@
     "google-error-2": "Det gick inte att kontakta Google-servern. Försök igen om en stund. Om problemet kvarstår kontakta KattBNB support.",
     "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
     "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
-    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!"
+    "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
+    "unknown": "Något gick fel! Försök igen vid ett senare tillfälle. Om problemet kvarstår, vänligen meddela oss, och gärna skicka med denna tidsstämpel: {{timestamp}}"
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",
@@ -82,7 +84,11 @@
     "accept": "Acceptera",
     "make-host-profile": "Skapa en kattvaktsprofil",
     "reply": "Svara",
-    "view-receipt": "Kvitto"
+    "view-receipt": "Kvitto",
+    "send-message": "Skicka meddelande",
+    "request-to-book": "Förfråga bokning",
+    "book": "Boka",
+    "book-host-now": "Boka med {{host}} nu"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
@@ -102,5 +108,8 @@
     "stripe-dashboard-cta": "Min betalningspanel",
     "onboarding-cta": "Ange betalningsinformation"
   },
-  "important": "Viktigt!"
+  "important": "Viktigt!",
+  "or": "eller",
+  "available": "Tillgänglig",
+  "available-for-dates": "Tillgänglig för datum du sökte"
 }
