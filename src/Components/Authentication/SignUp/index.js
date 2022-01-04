@@ -4,6 +4,7 @@ import { registerUser } from '../../../reduxTokenAuthConfig';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { passwordCheck } from '../../../Modules/passwordCheck';
+import { formValidation } from '../../../Modules/formValidation';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
@@ -42,23 +43,29 @@ const SignUp = (props) => {
   const [userCaptcha, setUserCaptcha] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
 
+  const validator = formValidation({
+    fields: [
+      {
+        condition: window.navigator.onLine === false,
+        error: 'reusable:errors:window-navigator',
+      },
+      {
+        condition: termsAccepted === false,
+        error: 'SignUp:terms-error',
+      },
+      {
+        condition: userCaptcha !== captcha,
+        error: 'reusable:errors:captcha',
+      },
+      {
+        condition: passwordCheck(password) === false,
+        error: 'SignUp:password-reg-ex',
+      },
+    ],
+    errorSetter: (val) => setErrors(val),
+  });
+
   const createUser = () => {
-    if (window.navigator.onLine === false) {
-      return setErrors(['reusable:errors:window-navigator']);
-    }
-
-    if (termsAccepted === false) {
-      return setErrors(['SignUp:terms-error']);
-    }
-
-    if (userCaptcha !== captcha) {
-      return setErrors(['reusable:errors:captcha']);
-    }
-
-    if (passwordCheck(password) === false) {
-      return setErrors(['SignUp:password-reg-ex']);
-    }
-
     setLoading(true);
     const { history, registerUser } = props;
     const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
@@ -192,7 +199,7 @@ const SignUp = (props) => {
         />
 
         <FlexWrapper space={6}>
-          <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} data-cy='tnc-toggle'/>
+          <Toggle checked={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} data-cy='tnc-toggle' />
           <Text tint={termsAccepted ? 100 : 60}>
             <Trans i18nKey='SignUp:terms-label'>
               I accept the
@@ -216,7 +223,12 @@ const SignUp = (props) => {
           </Notice>
         )}
 
-        <Button data-cy='signup-button' onClick={() => createUser()} loading={loading} disabled={loading}>
+        <Button
+          data-cy='signup-button'
+          onClick={() => validator.onSubmit(createUser)}
+          loading={loading}
+          disabled={loading}
+        >
           {t('SignUp:title')}
         </Button>
       </Whitebox>
