@@ -107,6 +107,34 @@ describe('Signup', () => {
 
       signup.errors().should('exist').and('include.text', "Location can't be blank");
     });
+
+    it('with backend error: no email', () => {
+      signupPostRequest(422, 'signup/unsuccessful_no_email.json');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('passWORD1');
+      signup.fields.nickname().type('KittenPrincess');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', "Email can't be blank");
+    });
+
+    it('with backend error: no nickname', () => {
+      signupPostRequest(422, 'signup/unsuccessful_no_nickname.json');
+      signup.fields.email().type('george@mail.com');
+      signup.fields.password().type('passWORD1');
+      signup.fields.passwordConfirmation().type('passWORD1');
+      signup.fields.location().click();
+      signup.fields.locationOption('Alvesta').click();
+      signup.fillCaptcha();
+      signup.fields.tncToggle().click();
+      signup.submit().click();
+
+      signup.errors().should('exist').and('include.text', "Nickname can't be blank");
+    });
   });
 
   context('succesful', () => {

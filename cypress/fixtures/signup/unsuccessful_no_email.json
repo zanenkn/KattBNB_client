@@ -1,0 +1,23 @@
+{
+  "status": "error",
+  "data": {
+    "id": null,
+    "provider": "email",
+    "uid": "",
+    "allow_password_change": false,
+    "name": null,
+    "nickname": null,
+    "image": null,
+    "email": "george@",
+    "created_at": null,
+    "updated_at": null
+  },
+  "errors": {
+    "email": [
+      "can't be blank"
+    ],
+    "full_messages": [
+      "Email can't be blank"
+    ]
+  }
+}
