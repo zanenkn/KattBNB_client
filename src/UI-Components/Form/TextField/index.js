@@ -116,7 +116,7 @@ TextField.propTypes = {
   required: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   type: PropTypes.oneOf(['email', 'text', 'password', 'number']),
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 TextField.defaultProps = {

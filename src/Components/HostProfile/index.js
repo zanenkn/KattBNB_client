@@ -13,7 +13,7 @@ import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components'
 import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
 import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
 
-import MaxCatsUpdateForm from './MaxCatsUpdateForm';
+import MaxCatsUpdateForm from './maxCatsUpdateForm';
 import DescriptionUpdateForm from './descriptionUpdateForm';
 import RateUpdateForm from './rateUpdateForm';
 import SupplementUpdateForm from './supplementUpdateForm';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -13,12 +13,18 @@ import { search } from '../../Modules/addressLocationMatcher';
 import { TextField, Button, Notice, Text, Flexbox } from '../../UI-Components';
 
 const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, location }) => {
-  const { t } = useTranslation(['HostProfileForm']);
+  const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addressError, setAddressError] = useState('');
   const [userInputAddress, setUserInputAddress] = useState(fullAddress);
+
+  useEffect(() => {
+    return () => {
+      setUserInputAddress(fullAddress)
+    }
+  }, [])
 
   const validator = formValidation({
     fields: [

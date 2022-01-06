@@ -29,7 +29,7 @@ const InlineLink = ({ color, disabled, discreet, text, to, noBreak, ...rest }) =
       $discreet={discreet}
       text={text}
       to={disabled ? '#' : to}
-      noBreak={noBreak}
+      $noBreak={noBreak}
       {...rest}
     />
   );

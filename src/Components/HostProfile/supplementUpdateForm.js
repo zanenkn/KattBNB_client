@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,12 @@ const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newSupplement, setNewSupplement] = useState(supplement);
+
+  useEffect(() => {
+    return () => {
+      setNewSupplement(supplement)
+    }
+  }, [])
 
   const validator = formValidation({
     fields: [
@@ -80,8 +86,8 @@ const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => 
         type='number'
         label={t('HostProfileForm:labels.supplement')}
         id='supplement'
-        value={newSupplement.toString()}
-        onChange={(e) => setNewSupplement((Math.abs(e.target.value) || '').toString())}
+        value={newSupplement}
+        onChange={(e) => setNewSupplement(Math.abs(e.target.value) || '')}
         required
         onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updateSupplement)}
       />

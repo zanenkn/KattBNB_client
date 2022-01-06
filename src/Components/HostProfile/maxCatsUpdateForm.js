@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -9,24 +9,24 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 
 import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
-const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
+const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newRate, setNewRate] = useState(rate);
+  const [newMaxCats, setNewMaxCats] = useState(maxCats);
 
   useEffect(() => {
     return () => {
-      setNewRate(rate)
+      setNewMaxCats(maxCats)
     }
   }, [])
 
   const validator = formValidation({
     fields: [
       {
-        condition: validate.nonEmptyString(newRate),
-        error: 'HostProfileForm:errors.rate',
+        condition: validate.nonEmptyString(newMaxCats),
+        error: 'HostProfileForm:errors.max-cats',
       },
       {
         condition: window.navigator.onLine === false,
@@ -36,14 +36,9 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
     errorSetter: (val) => setErrors(val),
   });
 
-  const updateRate = () => {
+  const updateMaxCats = () => {
     const lang = detectLanguage();
     setLoading(true);
-
-    if (newRate === rate) {
-      closeAllForms();
-      return;
-    }
 
     const path = `/api/v1/host_profiles/${id}`;
     const headers = {
@@ -52,44 +47,43 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
       'access-token': window.localStorage.getItem('access-token'),
     };
     const payload = {
-      price_per_day_1_cat: newRate,
+      max_cats_accepted: newMaxCats,
       locale: lang,
     };
     axios
       .patch(path, payload, { headers: headers })
       .then(() => {
-        setElement('rate', newRate);
+        setElement('maxCats', newMaxCats);
         closeAllForms();
         setErrors([]);
       })
       .catch((error) => {
         setLoading(false);
         if (error.response === undefined) {
-          setErrors(['reusable:errors:unknown']);
+          setErrors(['reusable:errors.unknown']);
         } else if (error.response.status === 500) {
-          setErrors(['reusable:errors:500']);
+          setErrors(['reusable:errors.500']);
         } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'));
+          window.alert(t('reusable:errors.401'));
           wipeCredentials('/');
         } else {
           setErrors([error.response.data.error]);
         }
       });
   };
-  
   return (
     <>
-      <Text>{t('HostProfileForm:helpers.rate')}</Text>
+      <Text>{t('HostProfileForm:helpers.max-cats')}</Text>
       <TextField
         space={5}
         min='1'
         type='number'
-        label={t('HostProfileForm:labels.rate')}
-        id='rate'
-        value={newRate}
-        onChange={(e) => setNewRate(Math.abs(e.target.value) || '')}
+        label={t('HostProfileForm:labels.max-cats')}
+        id='max-cats'
+        value={newMaxCats}
+        onChange={(e) => setNewMaxCats(Math.round(Math.abs(e.target.value)) || '')}
         required
-        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updateRate)}
+        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updateMaxCats)}
       />
 
       {errors.length > 0 && (
@@ -102,15 +96,15 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='rate-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' id='maxCats-close-button' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='rate-submit-button'
+          id='maxCats-submit-button'
           color='info'
           loading={loading}
           disabled={loading}
-          onClick={() => validator.onSubmit(updateRate)}
+          onClick={() => validator.onSubmit(updateMaxCats)}
         >
           {t('reusable:cta.save')}
         </Button>
@@ -119,4 +113,4 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
   );
 };
 
-export default RateUpdateForm;
+export default MaxCatsUpdateForm;
