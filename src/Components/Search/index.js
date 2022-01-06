@@ -134,59 +134,60 @@ const Search = ({ history, dispatch, currentSearch }) => {
       </Header>
       <Whitebox>
         <div id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
-          <DayPicker
-            dayPickerRef={fromField}
-            label={t('Search:checkin')}
-            required
-            id='from'
-            value={from ? moment(from).format('LL') : ''}
-            onChange={() => handleFromChange()}
-            format='LL'
-            formatDate={formatDate}
-            parseDate={parseDate}
-            inputProps={{ readOnly: true, placeholder: undefined }}
-            dayPickerProps={{
-              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
-              disabledDays: { after: new Date(to), before: today },
-              fromMonth: today,
-              toMonth: to ? new Date(to) : undefined,
-              numberOfMonths: 1,
-              firstDayOfWeek: 1,
-              localeUtils: MomentLocaleUtils,
-              locale: lang,
-              showWeekNumbers: true,
-              modifiers,
-            }}
-          />
-          <DayPicker
-            dayPickerRef={toField}
-            label={t('Search:checkout')}
-            required
-            id='from'
-            value={to ? moment(to).format('LL') : ''}
-            onChange={() => handleToChange()}
-            space={1}
-            format='LL'
-            formatDate={formatDate}
-            parseDate={parseDate}
-            inputProps={{
-              readOnly: !!from,
-              placeholder: undefined,
-            }}
-            dayPickerProps={{
-              selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
-              disabledDays: { before: from ? new Date(from) : today },
-              firstDayOfWeek: 1,
-              showWeekNumbers: true,
-              month: new Date(from),
-              fromMonth: new Date(from),
-              localeUtils: MomentLocaleUtils,
-              locale: lang,
-              numberOfMonths: 1,
-              modifiers,
-            }}
-          />
-
+          <div className='InputFromTo'>
+            <DayPicker
+              dayPickerRef={fromField}
+              label={t('Search:checkin')}
+              required
+              id='from'
+              value={from ? moment(from).format('LL') : ''}
+              onChange={() => handleFromChange()}
+              format='LL'
+              formatDate={formatDate}
+              parseDate={parseDate}
+              inputProps={{ readOnly: true, placeholder: undefined }}
+              dayPickerProps={{
+                selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
+                disabledDays: { after: new Date(to), before: today },
+                fromMonth: today,
+                toMonth: to ? new Date(to) : undefined,
+                numberOfMonths: 1,
+                firstDayOfWeek: 1,
+                localeUtils: MomentLocaleUtils,
+                locale: lang,
+                showWeekNumbers: true,
+                modifiers: modifiers,
+              }}
+            />
+            <DayPicker
+              dayPickerRef={toField}
+              label={t('Search:checkout')}
+              required
+              id='from'
+              value={to ? moment(to).format('LL') : ''}
+              onChange={() => handleToChange()}
+              space={1}
+              format='LL'
+              formatDate={formatDate}
+              parseDate={parseDate}
+              inputProps={{
+                readOnly: !!from,
+                placeholder: undefined,
+              }}
+              dayPickerProps={{
+                selectedDays: { from: new Date(from), to: to ? new Date(to) : new Date(from) },
+                disabledDays: { before: from ? new Date(from) : today },
+                firstDayOfWeek: 1,
+                showWeekNumbers: true,
+                month: new Date(from),
+                fromMonth: new Date(from),
+                localeUtils: MomentLocaleUtils,
+                locale: lang,
+                numberOfMonths: 1,
+                modifiers: modifiers,
+              }}
+            />
+          </div>
           <Flexbox horizontalAlign='right' space={3} style={{ visibility: !from && !to ? 'hidden' : 'visible' }}>
             <InlineLink onClick={() => clearDates()} text='sm' color='info'>
               {t('Search:reset')}

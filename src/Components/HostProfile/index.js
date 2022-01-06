@@ -18,7 +18,7 @@ import DescriptionUpdateForm from './descriptionUpdateForm';
 import RateUpdateForm from './rateUpdateForm';
 import SupplementUpdateForm from './supplementUpdateForm';
 import AvailabilityUpdateForm from './AvailabilityUpdateForm';
-import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode';
+import AvailabilityViewOnlyMode from './availabilityViewOnlyMode';
 import AddressUpdateForm from './addressUpdateForm';
 
 //Migrated
@@ -239,25 +239,24 @@ const HostProfile = forwardRef((props, ref) => {
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>
+      {!form.editableCalendar && (
+        <AvailabilityViewOnlyMode
+          selectedDays={props.availability.map(function (date) {
+            return new Date(date);
+          })}
+        />
+      )}
 
       <UpdateFormWrapper open={form.editableCalendar}>
-        {form.editableCalendar ? (
-          <AvailabilityUpdateForm
-            selectedDays={props.availability.map(function (date) {
-              return new Date(date);
-            })}
-            availability={props.availability}
-            id={props.id}
-            incomingBookings={props.incomingBookings}
-            closeAllForms={closeAllForms.bind(this)}
-          />
-        ) : (
-          <AvailabilityViewOnlyMode
-            selectedDays={props.availability.map(function (date) {
-              return new Date(date);
-            })}
-          />
-        )}
+        <AvailabilityUpdateForm
+          selectedDays={props.availability.map(function (date) {
+            return new Date(date);
+          })}
+          availability={props.availability}
+          id={props.id}
+          incomingBookings={props.incomingBookings}
+          closeAllForms={closeAllForms.bind(this)}
+        />
       </UpdateFormWrapper>
     </Whitebox>
   );

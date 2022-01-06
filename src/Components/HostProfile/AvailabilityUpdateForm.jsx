@@ -6,7 +6,6 @@ import { withTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import '../../NpmPackageCSS/react-day-picker.css';
 
 class AvailabilityUpdateForm extends Component {
   constructor(props) {
