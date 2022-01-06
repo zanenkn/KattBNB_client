@@ -9,18 +9,18 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 
 import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
-const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
+const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newRate, setNewRate] = useState(rate);
+  const [newSupplement, setNewSupplement] = useState(supplement);
 
   const validator = formValidation({
     fields: [
       {
-        condition: validate.nonEmptyString(newRate),
-        error: 'HostProfileForm:errors.rate',
+        condition: validate.nonEmptyString(newSupplement),
+        error: 'HostProfileForm:errors.supplement',
       },
       {
         condition: window.navigator.onLine === false,
@@ -30,11 +30,11 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
     errorSetter: (val) => setErrors(val),
   });
 
-  const updateRate = () => {
+  const updateSupplement = () => {
     const lang = detectLanguage();
     setLoading(true);
 
-    if (newRate === rate) {
+    if (newSupplement === supplement) {
       closeAllForms();
       return;
     }
@@ -46,44 +46,44 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
       'access-token': window.localStorage.getItem('access-token'),
     };
     const payload = {
-      price_per_day_1_cat: newRate,
+      supplement_price_per_cat_per_day: newSupplement,
       locale: lang,
     };
     axios
       .patch(path, payload, { headers: headers })
       .then(() => {
-        setElement('rate', newRate);
+        setElement('supplement', newSupplement);
         closeAllForms();
         setErrors([]);
       })
       .catch((error) => {
         setLoading(false);
         if (error.response === undefined) {
-          setErrors(['reusable:errors:unknown']);
+          setErrors(['reusable:errors.unknown']);
         } else if (error.response.status === 500) {
-          setErrors(['reusable:errors:500']);
+          setErrors(['reusable:errors.500']);
         } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'));
+          window.alert(t('reusable:errors.401'));
           wipeCredentials('/');
         } else {
           setErrors([error.response.data.error]);
         }
       });
   };
-  
+
   return (
     <>
-      <Text>{t('HostProfileForm:helpers.rate')}</Text>
+      <Text>{t('HostProfileForm:helpers.supplement')}</Text>
       <TextField
         space={5}
         min='1'
         type='number'
-        label={t('HostProfileForm:labels.rate')}
-        id='rate'
-        value={newRate}
-        onChange={(e) => setNewRate((Math.abs(e.target.value) || '').toString())}
+        label={t('HostProfileForm:labels.supplement')}
+        id='supplement'
+        value={newSupplement.toString()}
+        onChange={(e) => setNewSupplement((Math.abs(e.target.value) || '').toString())}
         required
-        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updateRate)}
+        onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(updateSupplement)}
       />
 
       {errors.length > 0 && (
@@ -96,15 +96,15 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='rate-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' id='supplement-close-button' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='rate-submit-button'
+          id='supplement-submit-button'
           color='info'
           loading={loading}
           disabled={loading}
-          onClick={() => validator.onSubmit(updateRate)}
+          onClick={() => validator.onSubmit(updateSupplement)}
         >
           {t('reusable:cta.save')}
         </Button>
@@ -113,4 +113,4 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
   );
 };
 
-export default RateUpdateForm;
+export default SupplementUpdateForm;

@@ -10,7 +10,7 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 import { Flexbox, Text, TextArea, Notice, Button, InlineLink } from '../../UI-Components';
 
 const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) => {
-  const { t } = useTranslation(['HostProfileForm']);
+  const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
