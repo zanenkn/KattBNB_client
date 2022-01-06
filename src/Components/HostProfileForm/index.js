@@ -276,12 +276,11 @@ const HostProfileForm = ({ userId, location }) => {
         <Container>
           <TextField
             space={2}
-            min='1'
             type='number'
             label={t('HostProfileForm:labels.rate')}
             id='rate'
             value={newHost.rate}
-            onChange={(e) => setNewHost((prev) => ({ ...prev, rate: e.target.value }))}
+            onChange={(e) => setNewHost((prev) => ({ ...prev, rate: (Math.abs(e.target.value) || '').toString() }))}
             required
             onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
           />
@@ -292,12 +291,13 @@ const HostProfileForm = ({ userId, location }) => {
         <Container>
           <TextField
             space={2}
-            min='1'
             type='number'
             label={t('HostProfileForm:labels.supplement')}
             id='supplement'
             value={newHost.supplement}
-            onChange={(e) => setNewHost((prev) => ({ ...prev, supplement: e.target.value }))}
+            onChange={(e) =>
+              setNewHost((prev) => ({ ...prev, supplement: (Math.abs(e.target.value) || '').toString() }))
+            }
             required
             onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
           />
@@ -313,7 +313,9 @@ const HostProfileForm = ({ userId, location }) => {
             label={t('HostProfileForm:labels.max-cats')}
             id='maxCats'
             value={newHost.maxCats}
-            onChange={(e) => setNewHost((prev) => ({ ...prev, maxCats: Math.round(e.target.value).toString() }))}
+            onChange={(e) =>
+              setNewHost((prev) => ({ ...prev, maxCats: (Math.round(Math.abs(e.target.value)) || '').toString() }))
+            }
             required
             onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
           />

@@ -15,7 +15,7 @@ import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
 
 import MaxCatsUpdateForm from './MaxCatsUpdateForm';
 import DescriptionUpdateForm from './descriptionUpdateForm';
-import RateUpdateForm from './RateUpdateForm';
+import RateUpdateForm from './rateUpdateForm';
 import SupplementUpdateForm from './SupplementUpdateForm';
 import AvailabilityUpdateForm from './AvailabilityUpdateForm';
 import AvailabilityViewOnlyMode from './AvailabilityViewOnlyMode';
