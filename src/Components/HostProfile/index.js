@@ -17,7 +17,7 @@ import MaxCatsUpdateForm from './maxCatsUpdateForm';
 import DescriptionUpdateForm from './descriptionUpdateForm';
 import RateUpdateForm from './rateUpdateForm';
 import SupplementUpdateForm from './supplementUpdateForm';
-import AvailabilityUpdateForm from './AvailabilityUpdateForm';
+import AvailabilityUpdateForm from './availabilityUpdateForm';
 import AvailabilityViewOnlyMode from './availabilityViewOnlyMode';
 import AddressUpdateForm from './addressUpdateForm';
 
@@ -249,11 +249,9 @@ const HostProfile = forwardRef((props, ref) => {
 
       <UpdateFormWrapper open={form.editableCalendar}>
         <AvailabilityUpdateForm
-          selectedDays={props.availability.map(function (date) {
-            return new Date(date);
-          })}
           availability={props.availability}
           id={props.id}
+          setElement={props.setElement}
           incomingBookings={props.incomingBookings}
           closeAllForms={closeAllForms.bind(this)}
         />
