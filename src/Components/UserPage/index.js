@@ -17,11 +17,11 @@ import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentW
 import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
 import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
 
-import LocationUpdateForm from './LocationUpdateForm';
-import PasswordUpdateForm from './PasswordUpdateForm';
-import AvatarUpdateForm from './AvatarUpdateForm';
-import NotificationsUpdateForm from './NotificationsUpdateForm';
-import LangPrefUpdateForm from './LangPrefUpdateForm';
+import LocationUpdateForm from './locationUpdateForm';
+import PasswordUpdateForm from './passwordUpdateForm';
+import AvatarUpdateForm from './avatarUpdateForm';
+import NotificationsUpdateForm from './notificationsUpdateForm';
+import LangPrefUpdateForm from './langPrefUpdateForm';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/allReviews';
 
