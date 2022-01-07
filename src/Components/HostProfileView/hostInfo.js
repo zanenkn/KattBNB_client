@@ -15,7 +15,7 @@ import { Avatar, Button, Flexbox, Text, Header, InlineLink, Container, Whitebox 
 import { BookingCTAWrapper, ReversibleWrapper } from './styles';
 import { Availabilty, AvailableHost, CreditCard, Location, Review, User, Cat } from '../../icons';
 
-import AllReviews from '../Reviews/AllReviews';
+import AllReviews from '../Reviews/allReviews';
 
 const HostInfo = ({ currentSearch, host }) => {
   const { t, ready } = useTranslation('HostInfo');

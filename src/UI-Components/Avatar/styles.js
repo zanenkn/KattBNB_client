@@ -6,7 +6,7 @@ const { spacing, screens } = theme;
 const sizes = {
   xs: spacing[5],
   sm: spacing[6],
-  md: spacing[12],
+  md: spacing[8],
   lg: spacing[18],
   xl: '150px',
 };

@@ -1,29 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-import withAuth from '../../HOC/withAuth';
-import HostProfile from '../HostProfile';
-import Spinner from '../../common/Spinner';
+import { useState, useEffect, useRef } from 'react';
+
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
+import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
 import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+
+import withAuth from '../../HOC/withAuth';
+import HostProfile from '../HostProfile';
+import Spinner from '../../common/Spinner';
+
+import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
+import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
+import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
+
 import LocationUpdateForm from './LocationUpdateForm';
 import PasswordUpdateForm from './PasswordUpdateForm';
 import AvatarUpdateForm from './AvatarUpdateForm';
 import NotificationsUpdateForm from './NotificationsUpdateForm';
 import LangPrefUpdateForm from './LangPrefUpdateForm';
-import { useTranslation } from 'react-i18next';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
-import AllReviews from '../Reviews/AllReviews';
-import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
-import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
-import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
-import { useHistory } from 'react-router';
+import AllReviews from '../Reviews/allReviews';
+
 //MIGRATION IN PROGRESS
 const UserPage = (props) => {
   const hostProfileElement = useRef();
   const { t, ready } = useTranslation('UserPage');
-  const history = useHistory()
+  const history = useHistory();
 
   const [form, setForm] = useState({
     editLocationForm: false,
@@ -196,7 +202,7 @@ const UserPage = (props) => {
       editLocationForm: false,
       editPasswordForm: false,
       editNotificationsForm: false,
-      editLangPrefForm: false
+      editLangPrefForm: false,
     }));
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms();
@@ -209,17 +215,12 @@ const UserPage = (props) => {
       editLocationForm: false,
       editPasswordForm: false,
       editNotificationsForm: false,
-      editLangPrefForm: false
+      editLangPrefForm: false,
     }));
   };
 
   const formHandler = (e) => {
-    let states = [
-      'editLocationForm',
-      'editPasswordForm',
-      'editNotificationsForm',
-      'editLangPrefForm',
-    ];
+    let states = ['editLocationForm', 'editPasswordForm', 'editNotificationsForm', 'editLangPrefForm'];
     states.forEach((stt) => {
       if (stt === e.target.id) {
         setForm((old) => ({
@@ -520,10 +521,10 @@ const UserPage = (props) => {
       </Whitebox>
       {hostProfile.length === 1 && (
         <Whitebox>
-          <Header as='h2'>{t('UserPage:reviews-header')}</Header>
-          <div>
-            <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
-          </div>
+          <Header level={4} space={5} centered>
+            {t('UserPage:reviews-header')}
+          </Header>
+          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
         </Whitebox>
       )}
       {!deleteDisplayNone && (
