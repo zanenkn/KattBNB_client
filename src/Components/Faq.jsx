@@ -2,12 +2,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../../common/Spinner';
+import Spinner from '../common/Spinner';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import { detectLanguage } from '../Modules/detectLanguage';
 
 const Faq = (props) => {
   const handleClick = (e, titleProps) => {

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import Spinner from '../../common/Spinner';
+import Spinner from '../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import { detectLanguage } from '../Modules/detectLanguage';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 
