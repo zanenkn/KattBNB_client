@@ -4,7 +4,7 @@ import Landing from './Components/Landing';
 import Responsive from './common/Responsive';
 import MobileNav from './Components/Navbar/Mobile';
 import DesktopNav from './Components/Navbar/Desktop';
-import Menu from './Components/Menu/Menu';
+import Menu from './Components/Menu';
 import Search from './Components/Search';
 import SearchResults from './Components/SearchResults';
 import AboutUs from './Components/AboutUs';
