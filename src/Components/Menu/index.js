@@ -37,7 +37,7 @@ const Menu = (props) => {
   const changeLng = (lng) => {
     i18n.changeLanguage(lng);
     window.localStorage.setItem('I18N_LANGUAGE', lng);
-    props.menuVisbilityHandler();
+    props.closeMenu();
   }
 
   if (ready) {
@@ -45,14 +45,14 @@ const Menu = (props) => {
 
     if (props.currentUserIn) {
       userLink = (
-        <Link as={MenuLink}  id='logout' onClick={() => signOut()}>
+        <Link as={MenuLink} id='logout' onClick={() => signOut()}>
           {t('reusable:title.logout')}
         </Link>
       );
     } else {
       userLink = (
         <>
-          <Link as={MenuLink} id='login' to='/login' onClick={() => props.menuVisbilityHandler()}>
+          <Link as={MenuLink} id='login' to='/login' onClick={() => props.closeMenu()}>
             {t('reusable:title.login-signup')}
           </Link>
         </>
@@ -60,32 +60,40 @@ const Menu = (props) => {
     }
     return (
       <MenuWrapper visible={props.menuVisible}>
-        {userLink}
+        {props.menuType === 'main' ?
+          <>
+            {userLink}
 
-        <Link as={MenuLink} id='about' to='/about-us' onClick={() => props.menuVisbilityHandler()}> 
-        {t('reusable:title.about')}
-        </Link>
+            <Link as={MenuLink} id='about' to='/about-us' onClick={() => props.closeMenu()}>
+              {t('reusable:title.about')}
+            </Link>
 
-        <Link as={MenuLink} id='faq' to='faq' onClick={() => props.menuVisbilityHandler()}>
-          {t('reusable:title.faq')}
-        </Link>
-        <Link as={MenuLink} id='contact' to='/contact-us' onClick={() => props.menuVisbilityHandler()}>
-          {t('reusable:title.contact')}
-        </Link>
-        <Link as={MenuLink} id='blog' to='/blog/all/1' onClick={() => props.menuVisbilityHandler()}>
-          {t('reusable:title.stories')}
-        </Link>
-        <Link as={MenuLink}  id='legal' to='/legal' onClick={() => props.menuVisbilityHandler()}>
-          {t('reusable:title.legal')}
-        </Link>
-        <div style={{ display: 'flex', alignSelf: 'center' }}>
-          {/* <Button id='se' className='lng-button' size='mini' onClick={() => changeLng('sv')}>
+            <Link as={MenuLink} id='faq' to='faq' onClick={() => props.closeMenu()}>
+              {t('reusable:title.faq')}
+            </Link>
+            <Link as={MenuLink} id='contact' to='/contact-us' onClick={() => props.closeMenu()}>
+              {t('reusable:title.contact')}
+            </Link>
+            <Link as={MenuLink} id='blog' to='/blog/all/1' onClick={() => props.closeMenu()}>
+              {t('reusable:title.stories')}
+            </Link>
+            <Link as={MenuLink} id='legal' to='/legal' onClick={() => props.closeMenu()}>
+              {t('reusable:title.legal')}
+            </Link>
+            <div style={{ display: 'flex', alignSelf: 'center' }}>
+              {/* <Button id='se' className='lng-button' size='mini' onClick={() => changeLng('sv')}>
             Svenska
             </Button>
           <Button id='en' className='lng-button' size='mini' onClick={() => changeLng('en')}>
             English
             </Button> */}
-        </div>
+            </div>
+          </>
+          :
+          <p>user menu</p>
+
+        }
+
       </MenuWrapper>
     );
   } else {
@@ -95,15 +103,15 @@ const Menu = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    menuVisible: state.animation.menuVisible,
+    menuVisible: state.menu.visible,
+    menuType: state.menu.type,
     currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn,
   };
 };
 
 const mapDispatchToProps = {
-  menuVisbilityHandler: (menuVisible) => ({
-    type: 'CHANGE_VISIBILITY',
-    menuVisbible: menuVisible,
+  closeMenu: () => ({
+    type: 'CLOSE_MENU'
   }),
 };
 
