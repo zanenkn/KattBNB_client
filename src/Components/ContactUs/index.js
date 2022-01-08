@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
-import Spinner from '../../../common/Spinner';
+import Spinner from '../../common/Spinner';
 import {
   Header,
   Whitebox,
@@ -16,7 +16,7 @@ import {
   Button,
   Notice,
   ContentWrapper,
-} from '../../../UI-Components';
+} from '../../UI-Components';
 //MIGRATED
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
