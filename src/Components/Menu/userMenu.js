@@ -1,0 +1,68 @@
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+
+import { wipeCredentials } from '../../Modules/wipeCredentials';
+
+import LanguageSwitcher from '../../common/LanguageSwitcher';
+
+import { MenuWrapper, MenuLink } from './styles';
+
+const UserMenu = ({ userLoggedIn, closeMenu }) => {
+  const { t } = useTranslation();
+
+  const signOut = () => {
+    const path = '/api/v1/auth/sign_out';
+    const headers = {
+      uid: window.localStorage.getItem('uid'),
+      client: window.localStorage.getItem('client'),
+      'access-token': window.localStorage.getItem('access-token'),
+    };
+    axios
+      .delete(path, { headers: headers })
+      .then(() => {
+        wipeCredentials('/');
+      })
+      .catch(() => {
+        wipeCredentials('/login');
+      });
+  };
+
+  if (userLoggedIn) {
+    return (
+      <>
+        <Link as={MenuLink} id='profile' to='/user-page' onClick={() => closeMenu()}>
+          {t('reusable:navigation.user-page')}
+        </Link>
+        <Link as={MenuLink} id='messenger' to='/messenger' onClick={() => closeMenu()}>
+          {t('reusable:navigation.messages')}
+        </Link>
+        <Link as={MenuLink} id='bookings' to='/all-bookings' onClick={() => closeMenu()}>
+          {t('reusable:navigation.bookings')}
+        </Link>
+        <Link as={MenuLink} id='logout' onClick={() => signOut()}>
+          {t('reusable:title.logout')}
+        </Link>
+        <div style={{ minHeight: '200px' }}>
+          <LanguageSwitcher />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Link as={MenuLink} id='login' to='/login' onClick={() => closeMenu()}>
+          {t('reusable:navigation.login')}
+        </Link>
+        <Link as={MenuLink} id='signup' to='/sign-up' onClick={() => closeMenu()}>
+          {t('reusable:navigation.signup')}
+        </Link>
+        <div style={{ minHeight: '200px' }}>
+          <LanguageSwitcher />
+        </div>
+      </>
+    );
+  }
+};
+
+export default UserMenu;
