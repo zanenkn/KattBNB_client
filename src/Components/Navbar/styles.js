@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../Styles/theme';
+import { Avatar } from '../../UI-Components';
 
 const { colors, screens, spacing, navbar } = theme;
 
@@ -37,6 +38,11 @@ export const NavInnerWrap = styled.div`
   @media (min-width: ${screens.xl}) {
     padding: 0;
   }
+  button {
+    border: none;
+    display: flex;
+    background-color: transparent;
+  }
 `;
 
 export const Navlink = styled.div`
@@ -56,4 +62,11 @@ export const IconWrapper = styled.div`
 export const MenuDivider = styled.hr`
   margin: ${spacing[4]} 0;
   border: ${colors.neutral[100]} solid 1px;
+`;
+
+export const MenuAvatar = styled(Avatar)`
+  padding: 1px;
+  border: white solid 2px;
+  box-sizing: border-box;
+  margin: 3px 0;
 `;
