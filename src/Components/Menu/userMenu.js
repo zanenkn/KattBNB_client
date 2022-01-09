@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
 import { Header } from '../../UI-Components';
-import { MenuWrapper, MenuLink } from './styles';
+import { MenuLink } from './styles';
 
-const UserMenu = ({ userLoggedIn, closeMenu }) => {
+const UserMenu = ({ userLoggedIn, closeMenu, activePath }) => {
   const { t } = useTranslation();
 
   const signOut = () => {
@@ -30,17 +30,17 @@ const UserMenu = ({ userLoggedIn, closeMenu }) => {
   if (userLoggedIn) {
     return (
       <>
-        <Header level={3}>
+        <Header level={3} color={activePath === '/user-page' ? 'primary' : 'neutral'}>
           <Link as={MenuLink} id='profile' to='/user-page' onClick={() => closeMenu()}>
             {t('reusable:navigation.user-page')}
           </Link>
         </Header>
-        <Header level={3}>
+        <Header level={3} color={activePath === '/messenger' ? 'primary' : 'neutral'}>
           <Link as={MenuLink} id='messenger' to='/messenger' onClick={() => closeMenu()}>
             {t('reusable:navigation.messages')}
           </Link>
         </Header>
-        <Header level={3} space={10}>
+        <Header level={3} space={10} color={activePath === '/all-bookings' ? 'primary' : 'neutral'}>
           <Link as={MenuLink} id='bookings' to='/all-bookings' onClick={() => closeMenu()}>
             {t('reusable:navigation.bookings')}
           </Link>
@@ -55,12 +55,12 @@ const UserMenu = ({ userLoggedIn, closeMenu }) => {
   } else {
     return (
       <>
-        <Header level={3}>
+        <Header level={3} color={activePath === '/login' ? 'primary' : 'neutral'}>
           <Link as={MenuLink} id='login' to='/login' onClick={() => closeMenu()}>
             {t('reusable:navigation.login')}
           </Link>
         </Header>
-        <Header level={3}>
+        <Header level={3} color={activePath === '/sign-up' ? 'primary' : 'neutral'}>
           <Link as={MenuLink} id='signup' to='/sign-up' onClick={() => closeMenu()}>
             {t('reusable:navigation.signup')}
           </Link>

@@ -188,7 +188,8 @@
   color: #f0f8ff;
 }
 
-.DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
+.DayPicker:not(.DayPicker--interactionDisabled)
+  .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
   background-color: #a6c88c;
 }
 
@@ -217,7 +218,7 @@
 
 .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
   background-color: #f7f7f7 !important;
-  color: #90ACC7;
+  color: #90acc7;
 }
 
 .InputFromTo .DayPicker-Day {
@@ -225,13 +226,13 @@
 }
 
 .InputFromTo .DayPicker-Day--start {
-  background-color: #90ACC7 !important;
+  background-color: #90acc7 !important;
   border-top-left-radius: 50% !important;
   border-bottom-left-radius: 50% !important;
 }
 
 .InputFromTo .DayPicker-Day--end {
-  background-color: #90ACC7 !important;
+  background-color: #90acc7 !important;
   border-top-right-radius: 50% !important;
   border-bottom-right-radius: 50% !important;
 }
@@ -242,8 +243,12 @@
 
 .overflow-hidden {
   overflow: hidden;
+  touch-action: none;
+  -ms-touch-action: none;
 }
 
 .overflow-auto {
   overflow: auto;
+  touch-action: auto;
+  -ms-touch-action: auto;
 }

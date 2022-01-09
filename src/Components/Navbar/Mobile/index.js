@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import { getAvatar } from '../../../Modules/getAvatar';
 
-import { Close, Menu, UserRound, KattBNBMain } from '../../../icons';
+import { Menu, UserRound, KattBNBMain } from '../../../icons';
 import { Flexbox, Container } from '../../../UI-Components';
 import { Nav, NavInnerWrap, MenuAvatar } from '../styles';
 
@@ -29,15 +29,10 @@ const MobileNav = ({ menuVisible, currentUserIn, username, avatar, dispatch }) =
                 <UserRound data-cy='visitor-avatar' fill='white' height={6} />
               )}
             </button>
-            {menuVisible ? (
-              <button type='button' onClick={() => dispatch({ type: 'CLOSE_MENU' })}>
-                <Close fill='white' height={5} />
-              </button>
-            ) : (
-              <button type='button' onClick={() => dispatch({ type: 'OPEN_MAIN_MENU' })}>
-                <Menu fill='white' height={5} />
-              </button>
-            )}
+
+            <button type='button' onClick={() => dispatch({ type: 'OPEN_MAIN_MENU' })}>
+              <Menu fill='white' height={5} />
+            </button>
           </Flexbox>
         </NavInnerWrap>
       </Nav>
