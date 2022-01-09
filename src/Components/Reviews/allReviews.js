@@ -68,7 +68,6 @@ const AllReviews = ({ score, username, hostProfileId }) => {
           setErrors([error.response.data.error]);
         }
       });
-    // eslint-disable-next-line
   }, [reload]);
 
   if (!ready || loading) return <Spinner />;
