@@ -1,24 +1,51 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { theme } from '../../Styles/theme';
 
-const { colors, spacing, navbar, screens } = theme;
+const { colors, spacing } = theme;
 
 export const MenuWrapper = styled.div`
-  display: ${({ visible }) => (visible ? 'flex' : 'none')};
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: ${spacing[6]} 0;
+  padding: ${spacing[6]} ${spacing[6]} ${spacing[6]};
   position: fixed;
   width: 100%;
   z-index: 99999;
   box-sizing: border-box;
   background-color: ${colors['neutral'][20]};
-  height: calc(var(--vh, 1vh) * 100 - ${navbar.sm});
-  top: ${navbar.sm};
-  @media screen and (min-height: ${screens.md}) {
-    height: calc(var(--vh, 1vh) * 100 - ${navbar.md});
-    top: ${navbar.md};
+  height: calc(var(--vh, 1vh) * 100);
+  top: 0;
+  > button {
+    box-sizing: content-box;
+    display: block;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    align-self: flex-end;
+    float: left;
+    background: none;
+    border: none;
+  }
+  animation-name: ${({ visible }) => (visible ? slideIn : slideOut)};
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+`;
+
+const slideIn = keyframes`
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
+`;
+
+const slideOut = keyframes`
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
   }
 `;
 
