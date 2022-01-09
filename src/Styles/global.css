@@ -239,3 +239,11 @@
 .InputFromTo .DayPickerInput-Overlay {
   margin-left: -39px;
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
