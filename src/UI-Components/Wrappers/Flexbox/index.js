@@ -30,7 +30,7 @@ const Flexbox = ({
       spaceItemsY={spaceItemsY}
       verticalAlign={verticalAlign}
       maxWidth={maxWidth}
-      wrap={wrap?.toString()}
+      wrap={wrap ? 1 : undefined}
       {...rest}
     />
   );

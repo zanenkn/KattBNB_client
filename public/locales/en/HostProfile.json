@@ -1,6 +1,6 @@
 {
-  "main-header": "My host profile",
-  "main-title": "This is your <1>host profile</1>. Here you can update all your cat hosting information.",
+  "main-header": "My cat sitter profile",
+  "main-title": "This is your <1>cat sitter profile</1>. Here you can update all your cat hosting information.",
   "availability": "My availability",
   "max-cats": "Maximum cats:",
   "extra": "Extra",

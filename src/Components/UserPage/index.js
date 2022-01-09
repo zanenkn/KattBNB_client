@@ -1,33 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
-import withAuth from '../../HOC/withAuth';
-import HostProfileForm from '../HostProfile/HostProfileForm';
-import HostProfile from '../HostProfile';
-import Spinner from '../../common/Spinner';
+import { useState, useEffect, useRef } from 'react';
+
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import LocationUpdateForm from './LocationUpdateForm';
-import PasswordUpdateForm from './PasswordUpdateForm';
-import AvatarUpdateForm from './AvatarUpdateForm';
-import NotificationsUpdateForm from './NotificationsUpdateForm';
-import LangPrefUpdateForm from './LangPrefUpdateForm';
+import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
+
+import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
-import AllReviews from '../Reviews/AllReviews';
+
+import withAuth from '../../HOC/withAuth';
+import HostProfile from '../HostProfile';
+import Spinner from '../../common/Spinner';
+
 import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
 import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
 import { FlexWrapper, UpdateFormWrapper, SettingsWrapper, MaxWidth } from './styles';
+
+import LocationUpdateForm from './locationUpdateForm';
+import PasswordUpdateForm from './passwordUpdateForm';
+import AvatarUpdateForm from './avatarUpdateForm';
+import NotificationsUpdateForm from './notificationsUpdateForm';
+import LangPrefUpdateForm from './langPrefUpdateForm';
+import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
+import AllReviews from '../Reviews/allReviews';
+
 //MIGRATION IN PROGRESS
 const UserPage = (props) => {
   const hostProfileElement = useRef();
   const { t, ready } = useTranslation('UserPage');
+  const history = useHistory();
 
   const [form, setForm] = useState({
     editLocationForm: false,
     editPasswordForm: false,
-    createHostProfileForm: false,
     editNotificationsForm: false,
     editLangPrefForm: false,
   });
@@ -197,7 +203,6 @@ const UserPage = (props) => {
       editPasswordForm: false,
       editNotificationsForm: false,
       editLangPrefForm: false,
-      createHostProfileForm: false,
     }));
     if (hostProfile.length === 1) {
       hostProfileElement.current.closeAllForms();
@@ -211,18 +216,11 @@ const UserPage = (props) => {
       editPasswordForm: false,
       editNotificationsForm: false,
       editLangPrefForm: false,
-      createHostProfileForm: false,
     }));
   };
 
   const formHandler = (e) => {
-    let states = [
-      'editLocationForm',
-      'editPasswordForm',
-      'createHostProfileForm',
-      'editNotificationsForm',
-      'editLangPrefForm',
-    ];
+    let states = ['editLocationForm', 'editPasswordForm', 'editNotificationsForm', 'editLangPrefForm'];
     states.forEach((stt) => {
       if (stt === e.target.id) {
         setForm((old) => ({
@@ -231,7 +229,6 @@ const UserPage = (props) => {
           editPasswordForm: false,
           editNotificationsForm: false,
           editLangPrefForm: false,
-          createHostProfileForm: false,
           [stt]: !form[stt],
         }));
       }
@@ -440,13 +437,11 @@ const UserPage = (props) => {
         </>
       )}
       {hostProfile.length === 1 && loadingHostProfile === true && <Spinner />}
-      {form.createHostProfileForm && hostProfile.length === 0 && (
-        <HostProfileForm user_id={props.id} closeForm={closeLocationAndPasswordForms} location={props.location} />
-      )}
-      {form.createHostProfileForm === false && hostProfile.length === 0 && (
+
+      {!hostProfile.length && (
         <MaxWidth>
           <Text centered>{t('UserPage:no-host-profile')}</Text>
-          <Button id='createHostProfileForm' onClick={(e) => formHandler(e)}>
+          <Button id='createHostProfileForm' onClick={() => history.push('/create-host-profile')}>
             {t('UserPage:host-profile-cta')}
           </Button>
         </MaxWidth>
@@ -526,10 +521,10 @@ const UserPage = (props) => {
       </Whitebox>
       {hostProfile.length === 1 && (
         <Whitebox>
-          <Header as='h2'>{t('UserPage:reviews-header')}</Header>
-          <div>
-            <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
-          </div>
+          <Header level={4} space={5} centered>
+            {t('UserPage:reviews-header')}
+          </Header>
+          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
         </Whitebox>
       )}
       {!deleteDisplayNone && (

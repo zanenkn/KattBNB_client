@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../../Styles/theme';
-import { Container, Text } from '../../UI-Components';
+import { Container, Divider, Text } from '../../UI-Components';
 
 const { spacing, colors } = theme;
 
@@ -20,13 +20,27 @@ export const FlexWrapper = styled(Container)`
   }
 `;
 
-export const UpdateFormWrapper = styled.div`
+export const StyledUpdateFormWrapper = styled.div`
   max-height: ${({ open }) => (open ? '1000px' : '0px')};
   height: auto;
   overflow: hidden;
   transition: max-height 1s ease-in-out;
+  padding: 0 2px;
 `;
 
+export const UpdateFormWrapper = ({ open, children }) => {
+  return (
+    <StyledUpdateFormWrapper open={open}>
+      {open && (
+        <>
+          <Divider bottom={5} />
+          {children}
+          <Divider bottom={6} />
+        </>
+      )}
+    </StyledUpdateFormWrapper>
+  );
+};
 
 export const DescriptionWrapper = styled(Text)`
   > *:first-child {
@@ -35,7 +49,7 @@ export const DescriptionWrapper = styled(Text)`
   > *:last-child {
     margin-left: ${spacing[2]};
   }
-`
+`;
 
 // PROGRESS BAR //
 

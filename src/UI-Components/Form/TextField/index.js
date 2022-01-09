@@ -26,6 +26,7 @@ const TextField = ({ autoComplete, label, onChange, required, space, type, value
       <Input
         type={type}
         ref={input}
+        onWheel={() => type === 'number' ? input.current.blur() : undefined}
         value={value || ''}
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}
@@ -115,7 +116,7 @@ TextField.propTypes = {
   required: PropTypes.bool,
   space: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   type: PropTypes.oneOf(['email', 'text', 'password', 'number']),
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 TextField.defaultProps = {
