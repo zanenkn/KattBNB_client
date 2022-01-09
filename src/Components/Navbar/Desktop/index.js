@@ -141,7 +141,6 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
 };
 
 const mapStateToProps = (state) => ({
-  menuVisible: state.animation.menuVisible,
   currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn,
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
   username: state.reduxTokenAuth.currentUser.attributes.username,

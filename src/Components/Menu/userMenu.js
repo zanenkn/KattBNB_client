@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
-import LanguageSwitcher from '../../common/LanguageSwitcher';
-
+import { Header } from '../../UI-Components';
 import { MenuWrapper, MenuLink } from './styles';
 
 const UserMenu = ({ userLoggedIn, closeMenu }) => {
@@ -31,35 +30,41 @@ const UserMenu = ({ userLoggedIn, closeMenu }) => {
   if (userLoggedIn) {
     return (
       <>
-        <Link as={MenuLink} id='profile' to='/user-page' onClick={() => closeMenu()}>
-          {t('reusable:navigation.user-page')}
-        </Link>
-        <Link as={MenuLink} id='messenger' to='/messenger' onClick={() => closeMenu()}>
-          {t('reusable:navigation.messages')}
-        </Link>
-        <Link as={MenuLink} id='bookings' to='/all-bookings' onClick={() => closeMenu()}>
-          {t('reusable:navigation.bookings')}
-        </Link>
-        <Link as={MenuLink} id='logout' onClick={() => signOut()}>
-          {t('reusable:title.logout')}
-        </Link>
-        <div style={{ minHeight: '200px' }}>
-          <LanguageSwitcher />
-        </div>
+        <Header level={3}>
+          <Link as={MenuLink} id='profile' to='/user-page' onClick={() => closeMenu()}>
+            {t('reusable:navigation.user-page')}
+          </Link>
+        </Header>
+        <Header level={3}>
+          <Link as={MenuLink} id='messenger' to='/messenger' onClick={() => closeMenu()}>
+            {t('reusable:navigation.messages')}
+          </Link>
+        </Header>
+        <Header level={3} space={10}>
+          <Link as={MenuLink} id='bookings' to='/all-bookings' onClick={() => closeMenu()}>
+            {t('reusable:navigation.bookings')}
+          </Link>
+        </Header>
+        <Header level={3}>
+          <Link as={MenuLink} id='logout' onClick={() => signOut()}>
+            {t('reusable:title.logout')}
+          </Link>
+        </Header>
       </>
     );
   } else {
     return (
       <>
-        <Link as={MenuLink} id='login' to='/login' onClick={() => closeMenu()}>
-          {t('reusable:navigation.login')}
-        </Link>
-        <Link as={MenuLink} id='signup' to='/sign-up' onClick={() => closeMenu()}>
-          {t('reusable:navigation.signup')}
-        </Link>
-        <div style={{ minHeight: '200px' }}>
-          <LanguageSwitcher />
-        </div>
+        <Header level={3}>
+          <Link as={MenuLink} id='login' to='/login' onClick={() => closeMenu()}>
+            {t('reusable:navigation.login')}
+          </Link>
+        </Header>
+        <Header level={3}>
+          <Link as={MenuLink} id='signup' to='/sign-up' onClick={() => closeMenu()}>
+            {t('reusable:navigation.signup')}
+          </Link>
+        </Header>
       </>
     );
   }
