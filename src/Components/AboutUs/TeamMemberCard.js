@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Text, Avatar, Container } from '../../../UI-Components';
+import { Header, Text, Avatar, Container } from '../../UI-Components';
 
 const TeamMemberCard = ({ img, link, name, title, text }) => {
   return (

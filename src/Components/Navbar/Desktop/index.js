@@ -6,8 +6,8 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { KattBNBMain, UserRound } from '../../../icons';
 import { Container, InlineLink, Text, Divider } from '../../../UI-Components';
-import { Nav, NavInnerWrap } from '../styles';
-import { MenuItem, Submenu, SubmenuItem, ItemWrapper, MenuAvatar } from './styles';
+import { Nav, NavInnerWrap, MenuAvatar } from '../styles';
+import { MenuItem, Submenu, SubmenuItem, ItemWrapper } from './styles';
 import LanguageSwitcher from '../../../common/LanguageSwitcher';
 
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
@@ -141,7 +141,6 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
 };
 
 const mapStateToProps = (state) => ({
-  menuVisible: state.animation.menuVisible,
   currentUserIn: state.reduxTokenAuth.currentUser.isSignedIn,
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
   username: state.reduxTokenAuth.currentUser.attributes.username,

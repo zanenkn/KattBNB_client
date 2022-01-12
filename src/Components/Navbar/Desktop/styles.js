@@ -89,10 +89,3 @@ export const SubmenuItem = styled.li`
     text-decoration: none;
   }
 `;
-
-export const MenuAvatar = styled(Avatar)`
-  padding: 1px;
-  border: white solid 2px;
-  box-sizing: border-box;
-  margin: 3px 0;
-`;

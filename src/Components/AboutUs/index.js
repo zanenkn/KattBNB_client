@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../../../common/Spinner';
+import Spinner from '../../common/Spinner';
 import { Helmet } from 'react-helmet';
-import { Header, Text, Container, InlineLink, ContentWrapper } from '../../../UI-Components';
+import { Header, Text, Container, InlineLink, ContentWrapper } from '../../UI-Components';
 import TeamMemberCard from './TeamMemberCard';
 //MIGRATED
 const AboutUs = () => {
