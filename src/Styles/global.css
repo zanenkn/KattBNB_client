@@ -251,3 +251,13 @@
   touch-action: auto;
   -ms-touch-action: auto;
 }
+
+
+/* LANDING */
+/* Lazy load hero image */
+
+.lazy-hero {
+  position: absolute;
+  z-index: -1;
+  max-height: 100%;
+}
