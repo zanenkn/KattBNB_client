@@ -1,8 +1,9 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { spacing } from '../../icons/constants';
 import { theme } from '../../Styles/theme';
+import { Text } from '../../UI-Components';
 
-const { navbar, screens } = theme;
+const { navbar, screens, colors } = theme;
 
 export const LandingHeroMobile = styled.div`
   background-position: center;
@@ -104,21 +105,60 @@ export const LandingHeroDesktop = styled.div`
   }
 `;
 
-export const InnerDesktop = styled.div`
-  max-width: 1024px;
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+export const HeroTextDesktop = styled.div`
+  width: 35%;
+`;
 
-  @media screen and (min-width: 768px) {
-    padding: 4rem 4rem;
+export const LandingItem = styled.div`
+  max-width: ${screens.lg};
+  margin: auto;
+
+  padding: ${spacing[7]} ${spacing[6]};
+
+  @media screen and (min-width: ${screens.md}) {
+    padding: ${spacing[10]} ${spacing[10]};
   }
-  @media screen and (min-width: 1024px) {
-    padding: 6rem 4rem;
+  @media screen and (min-width: ${screens.lg}) {
+    padding: ${spacing[14]} ${spacing[10]};
   }
 `;
 
-export const HeroTextDesktop = styled.div`
-  width: 35%;
+export const InnerDesktop = styled(LandingItem)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+export const LandingSection = styled.div`
+  background-color: ${({ color, tint }) => colors[color][tint]};
+`;
+
+export const LandingGrid = styled.div`
+  display: inline-flex;
+  gap: ${spacing[6]};
+`;
+
+export const ReviewWrapper = styled.div`
+  flex-grow: 1;
+  flex-basis: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: ${spacing[6]};
+  min-height: 338px;
+  height: fit-content;
+  box-sizing: border-box;
+`;
+
+export const TextClamper = styled(Text)`
+  display: -webkit-box;
+  ${({ open }) =>
+    open
+      ? ''
+      : css`
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        `}
 `;

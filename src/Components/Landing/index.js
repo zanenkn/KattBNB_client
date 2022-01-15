@@ -8,6 +8,7 @@ import Responsive from '../../common/Responsive';
 
 import DesktopHero from './src/desktopHero';
 import MobileHero from './src/mobileHero';
+import Reviews from './src/reviews';
 
 const Landing = () => {
   const [ctaVisible, setCtaVisible] = useState(true);
@@ -48,6 +49,7 @@ const Landing = () => {
       <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
         <DesktopHero t={t} />
       </Responsive>
+      <Reviews t={t}/>
     </>
   );
 };

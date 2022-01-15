@@ -89,7 +89,9 @@
     "send-message": "Skicka meddelande",
     "request-to-book": "Förfråga bokning",
     "book": "Boka",
-    "book-host-now": "Boka med {{host}} nu"
+    "book-host-now": "Boka med {{host}} nu",
+    "read-more": "Läs mer",
+    "hide": "Dölj"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"
