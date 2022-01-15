@@ -86,3 +86,39 @@ export const JumpyArrow = styled.div`
 export const HeroTextMobile = styled.div`
   padding: ${spacing[6]};
 `;
+
+export const LandingHeroDesktop = styled.div`
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(Kisse_desktop.jpg);
+  position: relative;
+
+  margin-top: ${navbar.sm};
+
+  @media screen and (min-height: ${screens.md}) {
+    margin-top: ${navbar.md};
+  }
+  @media screen and (min-height: ${screens.lg}) {
+    margin-top: ${navbar.lg};
+  }
+`;
+
+export const InnerDesktop = styled.div`
+  max-width: 1024px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  @media screen and (min-width: 768px) {
+    padding: 4rem 4rem;
+  }
+  @media screen and (min-width: 1024px) {
+    padding: 6rem 4rem;
+  }
+`;
+
+export const HeroTextDesktop = styled.div`
+  width: 35%;
+`;
