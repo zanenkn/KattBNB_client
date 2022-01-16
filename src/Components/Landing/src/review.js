@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { getAvatar } from '../../../Modules/getAvatar';
 
@@ -8,9 +8,13 @@ import { Avatar, Flexbox, Header, InlineLink, Text } from '../../../UI-Component
 import { Location } from '../../../icons';
 import { ReviewWrapper, TextClamper } from '../styles';
 
-const Review = ({ review, t }) => {
+const Review = ({ review, t, prevSlide, index }) => {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [readMoreVisible, setReadMoreVisible] = useState(false);
+
+  useEffect(() => {
+    prevSlide === index && setReviewOpen(false)
+  }, [prevSlide])
 
   const reviewBox = useCallback((node) => {
     if (node !== null) {
