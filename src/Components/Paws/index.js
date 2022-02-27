@@ -7,9 +7,14 @@ import FacebookSimple from '../Icons/FacebookSimple';
 import TwitterSimple from '../Icons/TwitterSimple';
 import LinkedinSimple from '../Icons/LinkedinSimple';
 import Charity from './charity';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import Spinner from '../ReusableComponents/Spinner';
 
 const PawsOfPiece = () => {
-  const { t } = useTranslation('PawsOfPiece');
+  const { t, ready } = useTranslation('PawsOfPiece');
+
+  const locale = detectLanguage().toLowerCase();
+
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const newIndex = activeIndex === index ? -1 : index;
@@ -19,31 +24,26 @@ const PawsOfPiece = () => {
   const fetchData = async () => {
     const Client = Prismic.client(process.env.REACT_APP_PAWS_PRISMIC_REPO);
 
-    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')]);
+    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')], { lang: locale });
     const types = await Client.query([Prismic.Predicates.at('document.type', 'donation-type')]);
     setCharities(response.results);
-    setTypes(types.results)
+    setTypes(types.results);
   };
 
-  //const locale = detectLanguage().toLowerCase();
-
-  useEffect(
-    () => {
-      try {
-        fetchData();
-      } catch (error) {
-        window.alertwindow.alert(t('reusable:errors:500'));
-      }
-    },
-    [
-      //locale
-    ]
-  );
+  useEffect(() => {
+    try {
+      fetchData();
+    } catch (error) {
+      window.alertwindow.alert(t('reusable:errors:500'));
+    }
+  }, [locale]);
 
   const [activeIndex, setActiveIndex] = useState();
   const [charities, setCharities] = useState([]);
-  const [types, setTypes] = useState([])
+  const [types, setTypes] = useState([]);
 
+  if (!ready) return <Spinner />;
+  
   return (
     <>
       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
@@ -82,18 +82,25 @@ const PawsOfPiece = () => {
 
         <Divider style={{ margin: '2rem 0' }} />
         {charities.map((charity, i) => (
-          <Charity 
-          image={charity.data.image.url}
-          activeIndex={activeIndex} 
-          handleClick={handleClick} 
-          indx={i + 1} 
-          title={charity.data.name[0].text}
-          location={charity.data.location_name[0].text}
-          locationLink={charity.data.location_link.url}
-          websiteLink={charity.data.website.url}
-          description={charity.data.description}
-          donationLink={charity.data.donation_link.url}
-          donationDescription={types.filter((donationType) => donationType.data.type[0].text === charity.data.donation_type)[0]?.data.description}
+          <Charity
+            image={charity.data.image.url}
+            activeIndex={activeIndex}
+            handleClick={handleClick}
+            indx={i + 1}
+            title={charity.data.name[0].text}
+            location={charity.data.location_name[0].text}
+            locationLink={charity.data.location_link.url}
+            websiteLink={charity.data.website.url}
+            description={charity.data.description}
+            donationLink={charity.data.donation_link.url}
+            donationDescription={
+              types.filter((donationType) => donationType.data.type[0].text === charity.data.donation_type)[0]?.data
+                .description
+            }
+            added={charity.data.added}
+            verified={charity.data.verified}
+            t={t}
+            locale={locale}
           />
         ))}
       </div>

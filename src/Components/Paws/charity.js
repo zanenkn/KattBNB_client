@@ -14,6 +14,9 @@ const Charity = ({
   activeIndex,
   handleClick,
   indx,
+  added,
+  verified,
+  t
 }) => {
   return (
     <>
@@ -39,15 +42,15 @@ const Charity = ({
               </div>
             </a>
             <a target='_blank' href={websiteLink} className='fake-link-underlined'>
-              Website
+              {t('PawsOfPiece:website')}
             </a>
           </div>
           {RichText.render(description)}
 
           <a target='_blank' href={donationLink}>
-            <Button style={{ margin: 0 }}>Donate</Button>
+            <Button style={{ margin: 0 }}>{t('PawsOfPiece:donate')}</Button>
           </a>
-          <Accordion style={{ marginTop: '2rem' }}>
+          <Accordion style={{ margin: '2rem 0 1rem' }}>
             <Accordion.Title
               active={activeIndex === indx}
               index={indx}
@@ -55,12 +58,15 @@ const Charity = ({
               style={{ color: 'grey', fontWeight: '600' }}
             >
               <Icon name='dropdown' />
-              More about donating this organisation
+              {t('PawsOfPiece:more-about-donating')}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === indx}>{RichText.render(donationDescription)}</Accordion.Content>
           </Accordion>
+          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPiece:added')}: {added}</p>
+          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPiece:verified')}: {verified}</p>
         </div>
       </div>
+
       <Divider style={{ margin: '2rem 0' }} />
     </>
   );
