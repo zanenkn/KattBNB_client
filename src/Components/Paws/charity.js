@@ -17,10 +17,10 @@ const Charity = ({
 }) => {
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <Image src={image} style={{ borderRadius: '50%', height: '100px' }} />
-        <div style={{ marginLeft: '2rem' }}>
-          <div style={{ marginBottom: '2rem' }}>
+      <div className='paws-charity-wrapper'>
+        <Image src={image} />
+        <div className='paws-charity-text-wrapper'>
+          <div className='paws-charity-header-wrapper'>
             <Header as='h3' style={{ marginBottom: 0, textAlign: 'left' }}>
               {title}
             </Header>

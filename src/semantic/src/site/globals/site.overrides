@@ -1601,8 +1601,53 @@ h4 {
   margin: 0;
 }
 
+
+/*******************************
+          paws
+*******************************/
+
 #paws-cta {
   margin-top: 0;
   color: white!important;
   background: darkgray;
+}
+
+.paws-charity-wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+}
+
+.paws-charity-wrapper > img {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px; 
+}
+
+.paws-charity-text-wrapper {
+  margin-left: 0;
+  margin-top: 1rem;
+}
+
+.paws-charity-header-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (min-width: 425px) {
+
+  .paws-charity-wrapper {
+    flex-direction: row; 
+    align-items: flex-start;
+  }
+
+  .paws-charity-text-wrapper {
+    margin-left: 2rem;
+  }
+
+  .paws-charity-header-wrapper {
+    align-items: flex-start;
+  }
 }
