@@ -1600,3 +1600,9 @@ h4 {
   max-width: 100px;
   margin: 0;
 }
+
+#paws-cta {
+  margin-top: 0;
+  color: white!important;
+  background: darkgray;
+}
