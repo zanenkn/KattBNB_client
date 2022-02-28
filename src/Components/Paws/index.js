@@ -10,8 +10,8 @@ import Charity from './charity';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import Spinner from '../ReusableComponents/Spinner';
 
-const PawsOfPiece = () => {
-  const { t, ready } = useTranslation('PawsOfPiece');
+const PawsOfPeace = () => {
+  const { t, ready } = useTranslation('PawsOfPeace');
 
   const locale = detectLanguage().toLowerCase();
 
@@ -47,14 +47,14 @@ const PawsOfPiece = () => {
   return (
     <>
       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
-        <Header as='h1'>{t('PawsOfPiece:title')}</Header>
+        <Header as='h1'>{t('PawsOfPeace:title')}</Header>
       </div>
       <div className='expanding-wrapper' style={{ paddingTop: '0' }}>
-        <p dangerouslySetInnerHTML={{ __html: t('PawsOfPiece:description') }}></p>
+        <p dangerouslySetInnerHTML={{ __html: t('PawsOfPeace:description') }}></p>
 
         <div className='share-icons' style={{ justifyContent: 'center' }}>
           <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-piece`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-peace`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -62,7 +62,7 @@ const PawsOfPiece = () => {
             <FacebookSimple height={'1.75rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-piece`}
+            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-peace`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -70,7 +70,7 @@ const PawsOfPiece = () => {
             <TwitterSimple height={'2rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-piece&title=&summary=&source=`}
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-peace&title=&summary=&source=`}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -78,7 +78,7 @@ const PawsOfPiece = () => {
           </a>
         </div>
 
-        <Header style={{ marginTop: '4rem' }}>{t('PawsOfPiece:charities')}</Header>
+        <Header style={{ marginTop: '4rem' }}>{t('PawsOfPeace:charities')}</Header>
 
         <Divider style={{ margin: '2rem 0' }} />
         {charities.map((charity, i) => (
@@ -108,4 +108,4 @@ const PawsOfPiece = () => {
   );
 };
 
-export default PawsOfPiece;
+export default PawsOfPeace;

@@ -42,13 +42,13 @@ const Charity = ({
               </div>
             </a>
             <a target='_blank' href={websiteLink} className='fake-link-underlined'>
-              {t('PawsOfPiece:website')}
+              {t('PawsOfPeace:website')}
             </a>
           </div>
           {RichText.render(description)}
 
           <a target='_blank' href={donationLink}>
-            <Button style={{ margin: 0 }}>{t('PawsOfPiece:donate')}</Button>
+            <Button style={{ margin: 0 }}>{t('PawsOfPeace:donate')}</Button>
           </a>
           <Accordion style={{ margin: '2rem 0 1rem' }}>
             <Accordion.Title
@@ -58,12 +58,12 @@ const Charity = ({
               style={{ color: 'grey', fontWeight: '600' }}
             >
               <Icon name='dropdown' />
-              {t('PawsOfPiece:more-about-donating')}
+              {t('PawsOfPeace:more-about-donating')}
             </Accordion.Title>
             <Accordion.Content active={activeIndex === indx}>{RichText.render(donationDescription)}</Accordion.Content>
           </Accordion>
-          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPiece:added')}: {added}</p>
-          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPiece:verified')}: {verified}</p>
+          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPeace:added')}: {added}</p>
+          <p style={{ fontStyle: 'italic', fontSize: 'small', marginBottom: '0' }}>{t('PawsOfPeace:verified')}: {verified}</p>
         </div>
       </div>
 

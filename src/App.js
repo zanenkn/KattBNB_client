@@ -43,7 +43,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Prismic from 'prismic-javascript';
 import { useTranslation } from 'react-i18next';
-import PawsOfPiece from './Components/Paws';
+import PawsOfPeace from './Components/Paws';
 
 const App = (props) => {
   const [uids, setUids] = useState([]);
@@ -118,7 +118,7 @@ const App = (props) => {
             {uids.map((uid) => (
               <Route exact path={`/blog/${uid}`} component={BlogPost}></Route>
             ))}
-            <Route exact path='/paws-of-piece' component={PawsOfPiece}></Route>
+            <Route exact path='/paws-of-peace' component={PawsOfPeace}></Route>
           </Switch>
         </ScrollToTop>
         <Menu />
