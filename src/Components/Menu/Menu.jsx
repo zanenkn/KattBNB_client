@@ -40,7 +40,7 @@ const Menu = (props) => {
   if (ready) {
     return (
       <Sidebar id='menu' as={Segment} animation='overlay' direction='left' visible={props.menuVisible}>
-        <Button id='paws-cta' as={Link} to='/paws-of-piece'>Paws of piece 🇺🇦</Button>
+        <Button id='paws-cta' as={Link} to='/paws-of-peace'>Paws of peace 🇺🇦</Button>
         {props.currentUserIn ? (
           <Header id='logout' className='menu-link' as={Link} onClick={signOut}>
             {t('reusable:title.logout')}
