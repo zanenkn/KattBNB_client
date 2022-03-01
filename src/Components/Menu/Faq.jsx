@@ -57,6 +57,7 @@ const Faq = (props) => {
     owner: [],
     privacy: [],
     payments: [],
+    paws: [],
   });
 
   const locale = detectLanguage().toLowerCase();
@@ -67,6 +68,7 @@ const Faq = (props) => {
   const owner = useReturnRef('owner');
   const privacy = useReturnRef('privacy');
   const payments = useReturnRef('payments');
+  const paws = useReturnRef('paws');
 
   useEffect(() => {
     try {
@@ -75,6 +77,7 @@ const Faq = (props) => {
       fetchData('owner');
       fetchData('privacy');
       fetchData('payments');
+      fetchData('paws');
     } catch (error) {
       window.alertwindow.alert(t('reusable:errors:500'));
     }
@@ -220,6 +223,31 @@ const Faq = (props) => {
             </Header>
             <Accordion>
               {questions.payments.map((question) => {
+                return (
+                  <>
+                    <Accordion.Title
+                      active={activeIndex === parseInt(question.data.index)}
+                      index={parseInt(question.data.index)}
+                      onClick={handleClick}
+                      style={{ color: 'grey', fontWeight: '600' }}
+                    >
+                      <Icon name='dropdown' style={{ color: '#c90c61' }} />
+                      {question.data.header[0].text}
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === parseInt(question.data.index)}>
+                      {RichText.render(question.data.body)}
+                    </Accordion.Content>
+                  </>
+                );
+              })}
+            </Accordion>
+          </div>
+          <div ref={paws} style={{ paddingTop: '2rem' }}>
+            <Header as='h3' style={{ textAlign: 'left' }}>
+              {t('Faq:paws')}
+            </Header>
+            <Accordion>
+              {questions.paws.map((question) => {
                 return (
                   <>
                     <Accordion.Title

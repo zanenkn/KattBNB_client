@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Prismic from 'prismic-javascript';
+import { RichText } from 'prismic-reactjs';
 
-import { Header, Divider } from 'semantic-ui-react';
+import { Header, Divider, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import FacebookSimple from '../Icons/FacebookSimple';
 import TwitterSimple from '../Icons/TwitterSimple';
@@ -9,8 +10,9 @@ import LinkedinSimple from '../Icons/LinkedinSimple';
 import Charity from './charity';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import Spinner from '../ReusableComponents/Spinner';
+import i18n from '../../i18n';
 
-const PawsOfPeace = () => {
+const PawsOfPeace = ({ location }) => {
   const { t, ready } = useTranslation('PawsOfPeace');
 
   const locale = detectLanguage().toLowerCase();
@@ -21,18 +23,36 @@ const PawsOfPeace = () => {
     setActiveIndex(newIndex);
   };
 
-  const fetchData = async () => {
+  const fetchData = async (language) => {
     const Client = Prismic.client(process.env.REACT_APP_PAWS_PRISMIC_REPO);
 
-    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')], { lang: locale });
-    const types = await Client.query([Prismic.Predicates.at('document.type', 'donation-type')]);
+    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')], { lang: language });
+    const types = await Client.query([Prismic.Predicates.at('document.type', 'donation-type')], { lang: language });
+    const descr = await Client.query([Prismic.Predicates.at('document.type', 'description')], { lang: language });
     setCharities(response.results);
     setTypes(types.results);
+    setDescription(descr.results[0]?.data?.description);
+  };
+
+  const getLoc = (param) => {
+    return param === 'sv' ? 'sv-se' : 'en-us';
   };
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const paramLang = urlParams.get('lang');
+
+    if (location.search) {
+      if (paramLang) {
+        i18n.changeLanguage(paramLang);
+        paramLang && window.localStorage.setItem('I18N_LANGUAGE', paramLang);
+      }
+    }
+
+    const loc = paramLang ? getLoc(paramLang) : locale;
+
     try {
-      fetchData();
+      fetchData(loc);
     } catch (error) {
       window.alertwindow.alert(t('reusable:errors:500'));
     }
@@ -41,16 +61,22 @@ const PawsOfPeace = () => {
   const [activeIndex, setActiveIndex] = useState();
   const [charities, setCharities] = useState([]);
   const [types, setTypes] = useState([]);
+  const [description, setDescription] = useState([]);
 
   if (!ready) return <Spinner />;
-  
+
   return (
     <>
       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
         <Header as='h1'>{t('PawsOfPeace:title')}</Header>
       </div>
       <div className='expanding-wrapper' style={{ paddingTop: '0' }}>
-        <p dangerouslySetInnerHTML={{ __html: t('PawsOfPeace:description') }}></p>
+        {RichText.render(description)}
+
+        <a target='_blank' href={'https://www.buymeacoffee.com/TanyaL'}>
+          <Button style={{marginBottom: '2rem'}}>{t('PawsOfPeace:support')}</Button>
+        </a>
+        <p>{t('PawsOfPeace:share')}</p>
 
         <div className='share-icons' style={{ justifyContent: 'center' }}>
           <a
