@@ -11,7 +11,7 @@ i18n
   .init({
     fallbackLng,
     ns: ['reusable'],
-    lng: process.env.NODE_ENV === 'production' ? window.localStorage.getItem('I18N_LANGUAGE') || 'sv' : 'en',
+    lng: window.localStorage.getItem('I18N_LANGUAGE') || 'sv',
     debug: process.env.NODE_ENV === 'production' ? false : true,
     whitelist: availableLanguages,
     order: ['navigator', 'querystring', 'cookie', 'localStorage', 'htmlTag', 'path', 'subdomain'],

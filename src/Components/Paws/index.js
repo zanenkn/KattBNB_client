@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Prismic from 'prismic-javascript';
-
-import { Header, Divider } from 'semantic-ui-react';
+import { RichText } from 'prismic-reactjs';
+import { Helmet } from 'react-helmet';
+import { Header, Divider, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import FacebookSimple from '../Icons/FacebookSimple';
 import TwitterSimple from '../Icons/TwitterSimple';
@@ -9,8 +10,9 @@ import LinkedinSimple from '../Icons/LinkedinSimple';
 import Charity from './charity';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import Spinner from '../ReusableComponents/Spinner';
+import i18n from '../../i18n';
 
-const PawsOfPeace = () => {
+const PawsOfPeace = ({ location, history }) => {
   const { t, ready } = useTranslation('PawsOfPeace');
 
   const locale = detectLanguage().toLowerCase();
@@ -21,18 +23,37 @@ const PawsOfPeace = () => {
     setActiveIndex(newIndex);
   };
 
-  const fetchData = async () => {
+  const fetchData = async (language) => {
     const Client = Prismic.client(process.env.REACT_APP_PAWS_PRISMIC_REPO);
 
-    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')], { lang: locale });
-    const types = await Client.query([Prismic.Predicates.at('document.type', 'donation-type')]);
+    const response = await Client.query([Prismic.Predicates.at('document.type', 'charity')], { lang: language });
+    const types = await Client.query([Prismic.Predicates.at('document.type', 'donation-type')], { lang: language });
+    const descr = await Client.query([Prismic.Predicates.at('document.type', 'description')], { lang: language });
     setCharities(response.results);
     setTypes(types.results);
+    setDescription(descr.results[0]?.data?.description);
+  };
+
+  const getLoc = (param) => {
+    return param === 'sv' ? 'sv-se' : 'en-us';
   };
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const paramLang = urlParams.get('lang');
+
+    if (window.location.search && history.action !== 'PUSH') {
+      if (paramLang) {
+        i18n.changeLanguage(paramLang);
+        paramLang && window.localStorage.setItem('I18N_LANGUAGE', paramLang);
+      }
+      window.history.replaceState(null, null, 'paws-of-peace');
+    }
+
+    const loc = window.location.search ? getLoc(paramLang) : locale;
+
     try {
-      fetchData();
+      fetchData(loc);
     } catch (error) {
       window.alertwindow.alert(t('reusable:errors:500'));
     }
@@ -41,20 +62,42 @@ const PawsOfPeace = () => {
   const [activeIndex, setActiveIndex] = useState();
   const [charities, setCharities] = useState([]);
   const [types, setTypes] = useState([]);
+  const [description, setDescription] = useState([]);
 
   if (!ready) return <Spinner />;
-  
+
   return (
     <>
+      <Helmet>
+        <title>Paws of Peace | Help people of Ukraine and their pets</title>
+        <meta
+          name='description'
+          content="If you are a pet owner yourself you probably have been thinking about it. Ukrainian people are suffering from a devastating war and so are their pets. This is how you help."
+        />
+        <link rel='canonical' href='https://kattbnb.se/paws-of-peace' />
+        <meta property='og:title' content='Paws of Peace | Help people of Ukraine and their pets' />
+        <meta property='og:url' content='https://kattbnb.se/paws-of-peace' />
+        <meta property='og:type' content='website' />
+        <meta property='og:description' content='If you are a pet owner yourself you probably have been thinking about it. Ukrainian people are suffering from a devastating war and so are their pets. This is how you help.' />
+        <meta property='og:image' content='https://kattbnb.se/paws_og.jpg' />
+      </Helmet>
+
       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
         <Header as='h1'>{t('PawsOfPeace:title')}</Header>
       </div>
       <div className='expanding-wrapper' style={{ paddingTop: '0' }}>
-        <p dangerouslySetInnerHTML={{ __html: t('PawsOfPeace:description') }}></p>
+        {RichText.render(description)}
+
+        <a target='_blank' href={'https://www.buymeacoffee.com/TanyaL'}>
+          <Button style={{ marginBottom: '2rem' }}>{t('PawsOfPeace:support')}</Button>
+        </a>
+        <p>{t('PawsOfPeace:share')}</p>
 
         <div className='share-icons' style={{ justifyContent: 'center' }}>
           <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-peace`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-peace?lang=${
+              locale.split('-')[0]
+            }`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -62,7 +105,7 @@ const PawsOfPeace = () => {
             <FacebookSimple height={'1.75rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-peace`}
+            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-peace?lang=${locale.split('-')[0]}`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -70,7 +113,9 @@ const PawsOfPeace = () => {
             <TwitterSimple height={'2rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-peace&title=&summary=&source=`}
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-peace?lang=${
+              locale.split('-')[0]
+            }&title=&summary=&source=`}
             target='_blank'
             rel='noopener noreferrer'
           >
