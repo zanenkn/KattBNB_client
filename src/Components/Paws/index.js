@@ -43,6 +43,7 @@ const PawsOfPeace = ({ location }) => {
     const paramLang = urlParams.get('lang');
 
     if (location.search) {
+      debugger
       if (paramLang) {
         i18n.changeLanguage(paramLang);
         paramLang && window.localStorage.setItem('I18N_LANGUAGE', paramLang);
@@ -80,7 +81,7 @@ const PawsOfPeace = ({ location }) => {
 
         <div className='share-icons' style={{ justifyContent: 'center' }}>
           <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-peace`}
+            href={`https://www.facebook.com/sharer/sharer.php?u=https://kattbnb.se/paws-of-peace?lang=${locale.split('-')[0]}`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -88,7 +89,7 @@ const PawsOfPeace = ({ location }) => {
             <FacebookSimple height={'1.75rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-peace`}
+            href={`https://twitter.com/home?status=https://kattbnb.se/paws-of-peace?lang=${locale.split('-')[0]}`}
             target='_blank'
             rel='noopener noreferrer'
             style={{ marginRight: '1rem' }}
@@ -96,7 +97,7 @@ const PawsOfPeace = ({ location }) => {
             <TwitterSimple height={'2rem'} className={'some-icon'} fill={'silver'} />
           </a>
           <a
-            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-peace&title=&summary=&source=`}
+            href={`https://www.linkedin.com/shareArticle?mini=true&url=https://kattbnb.se/paws-of-peace?lang=${locale.split('-')[0]}&title=&summary=&source=`}
             target='_blank'
             rel='noopener noreferrer'
           >
