@@ -1,5 +1,5 @@
 const detectLanguage = () => {
-  if (process.env.NODE_ENV === 'production') {
+  //if (process.env.NODE_ENV === 'production') {
     if (
       window.localStorage.getItem('I18N_LANGUAGE') === null ||
       window.localStorage.getItem('I18N_LANGUAGE') === '' ||
@@ -9,9 +9,9 @@ const detectLanguage = () => {
     } else {
       return 'en-US';
     }
-  } else {
-    return 'en-US';
-  }
+  // } else {
+  //   return 'en-US';
+  // }
 };
 
 export { detectLanguage };
