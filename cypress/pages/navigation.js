@@ -8,6 +8,7 @@ class Navigation {
     login: () => cy.get('[data-cy=nav-login]').click({ force: true }),
     logout: () => cy.get('[data-cy=nav-logout]').click({ force: true }),
     signup: () => cy.get('[data-cy=nav-signup]').click({ force: true }),
+    userPage: () => cy.get('[data-cy=nav-user-page]').click({ force: true }),
   };
 }
 

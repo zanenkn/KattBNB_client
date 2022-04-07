@@ -80,12 +80,22 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
               {currentUserIn ? (
                 <>
                   <SubmenuItem>
-                    <InlineLink as={Link} to='/user-page' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink
+                      data-cy='nav-user-page'
+                      as={Link}
+                      to='/user-page'
+                      onClick={() => setShowSubmenus(false)}
+                    >
                       {t('reusable:navigation.user-page')}
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
-                    <InlineLink data-cy='nav-bookings' as={Link} to='/all-bookings' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink
+                      data-cy='nav-bookings'
+                      as={Link}
+                      to='/all-bookings'
+                      onClick={() => setShowSubmenus(false)}
+                    >
                       {t('reusable:navigation.bookings')}
                     </InlineLink>
                   </SubmenuItem>

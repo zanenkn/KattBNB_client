@@ -1,14 +1,16 @@
-Cypress.Commands.add('login', (response = {}, email, password, status) => {
+Cypress.Commands.add('login', (response = {}, email, password, status, nav = true) => {
   cy.server();
   cy.intercept('POST', 'http://localhost:3007/api/v1/auth/sign_in', {
     statusCode: status,
     fixture: response,
     headers: {
       uid: email,
-    }
+    },
   });
-  cy.visit('http://localhost:3000');
-  cy.get('[data-cy=nav-login]').click({force: true})
+  if (nav) {
+    cy.visit('http://localhost:3000');
+    cy.get('[data-cy=nav-login]').click({ force: true });
+  }
   cy.get('[data-cy=login-form]').within(() => {
     cy.get('[data-cy=email]').type(email);
     cy.get('[data-cy=password]').type(password);

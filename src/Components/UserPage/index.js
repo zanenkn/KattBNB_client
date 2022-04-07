@@ -375,7 +375,7 @@ const UserPage = (props) => {
   }
 
   return (
-    <ContentWrapper>
+    <ContentWrapper data-cy='user-page'>
       <Popup
         modal
         open={errors.length > 0}

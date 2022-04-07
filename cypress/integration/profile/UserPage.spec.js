@@ -1,3 +1,7 @@
+import nav from '../../pages/navigation';
+import login from '../../pages/login';
+import userPage from '../../pages/userPage';
+
 const api = 'http://localhost:3007/api/v1';
 
 function checkWindowAlert(text) {
@@ -111,11 +115,33 @@ function loadUserPageAPICalls() {
   });
 }
 
+describe('User tries to view profile page', () => {
+  it('without logging in', () => {
+    loadUserPageAPICalls();
+    cy.visit('http://localhost:3000/user-page');
+    login.loginForm().should('exist');
+  });
+});
+
+describe('User views profile page when logged in', () => {
+  beforeEach(function () {
+    loadUserPageAPICalls();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+  });
+
+  it('has no host profile', () => {
+    nav.to.userPage();
+    userPage.wrapper().should('exist');
+  });
+
+  it('has host profile', () => {});
+});
+
 describe('User can view their profile page - happy path', () => {
   beforeEach(function () {
     loadUserPageAPICalls();
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#user-icon').click({ force: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
   });
 
   it('successfully', () => {
