@@ -398,13 +398,13 @@ const UserPage = (props) => {
           userId={props.id}
           closeAllForms={avatarFormHandler.bind(this)}
         />
-        <Header level={4} space={2} centered>
+        <Header data-cy='username' level={4} space={2} centered>
           <User height={4} />
           &ensp;{props.username}
         </Header>
         <FlexWrapper centered spaceBetween={1}>
           <Location height={4} />
-          <Text>{element.location}</Text>
+          <Text data-cy='location'>{element.location}</Text>
         </FlexWrapper>
       </Container>
 
@@ -441,12 +441,12 @@ const UserPage = (props) => {
       {!hostProfile.length && (
         <MaxWidth>
           <Text centered>{t('UserPage:no-host-profile')}</Text>
-          <Button id='createHostProfileForm' onClick={() => history.push('/create-host-profile')}>
+          <Button data-cy='create-host-profile-cta' onClick={() => history.push('/create-host-profile')}>
             {t('UserPage:host-profile-cta')}
           </Button>
         </MaxWidth>
       )}
-      <Whitebox>
+      <Whitebox data-cy='settings-section'>
         <Header level={4} space={5} centered>
           {t('UserPage:settings-header')}
         </Header>

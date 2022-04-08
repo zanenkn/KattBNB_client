@@ -123,7 +123,7 @@ describe('User tries to view profile page', () => {
   });
 });
 
-describe('User views profile page when logged in', () => {
+describe.only('User views profile page when logged in', () => {
   beforeEach(function () {
     loadUserPageAPICalls();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -132,9 +132,14 @@ describe('User views profile page when logged in', () => {
   it('has no host profile', () => {
     nav.to.userPage();
     userPage.wrapper().should('exist');
+    userPage.avatar().should('exist');
+    userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
+    userPage.location().should('exist').and('contain.text', 'Stockholm');
+    userPage.settingsSection().should('exist');
+    userPage.createHostProfileCta().should('exist');
   });
 
-  it('has host profile', () => {});
+  xit('has host profile', () => {});
 });
 
 describe('User can view their profile page - happy path', () => {
