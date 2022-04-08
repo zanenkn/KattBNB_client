@@ -1,7 +1,10 @@
+import {client} from '../support/constants'
+
 class Navigation {
   userAvatar = () => cy.get('[data-cy=user-avatar]');
   visitorAvatar = () => cy.get('[data-cy=visitor-avatar]');
-  landing = () => cy.visit('http://localhost:3000');
+  landing = () => cy.visit(`${client}`);
+  userPage = () => cy.visit(`${client}/user-page`);
 
   to = {
     bookings: () => cy.get('[data-cy=nav-bookings]').click({ force: true }),

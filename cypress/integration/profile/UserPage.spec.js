@@ -1,8 +1,8 @@
+import { api } from '../../support/constants';
 import nav from '../../pages/navigation';
 import login from '../../pages/login';
 import userPage from '../../pages/userPage';
-
-const api = 'http://localhost:3007/api/v1';
+import mockAPI from '../../support/api';
 
 function checkWindowAlert(text) {
   cy.on('window:alert', (str) => {
@@ -99,37 +99,17 @@ function stripeCall(status, response) {
   });
 }
 
-function loadUserPageAPICalls() {
-  cy.server();
-  cy.route({
-    method: 'GET',
-    url: `${api}/host_profiles?user_id=66&locale=en-US`,
-    status: 200,
-    response: [],
-  });
-  cy.route({
-    method: 'GET',
-    url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-    status: 200,
-    response: [],
-  });
-}
-
-describe('User tries to view profile page', () => {
+describe.only('User tries to view profile page', () => {
   it('without logging in', () => {
-    loadUserPageAPICalls();
-    cy.visit('http://localhost:3000/user-page');
+    nav.userPage();
     login.loginForm().should('exist');
   });
 });
 
 describe.only('User views profile page when logged in', () => {
-  beforeEach(function () {
-    loadUserPageAPICalls();
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-  });
-
   it('has no host profile', () => {
+    mockAPI.userPageNoHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
     userPage.avatar().should('exist');
@@ -139,7 +119,16 @@ describe.only('User views profile page when logged in', () => {
     userPage.createHostProfileCta().should('exist');
   });
 
-  xit('has host profile', () => {});
+  it('has host profile', () => {
+    mockAPI.userPageWithHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.wrapper().should('exist');
+    userPage.avatar().should('exist');
+    userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
+    userPage.location().should('exist').and('contain.text', 'Stockholm');
+    userPage.settingsSection().should('exist');
+  });
 });
 
 describe('User can view their profile page - happy path', () => {
