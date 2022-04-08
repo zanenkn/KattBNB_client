@@ -99,14 +99,14 @@ function stripeCall(status, response) {
   });
 }
 
-describe.only('User tries to view profile page', () => {
+describe('User tries to view profile page', () => {
   it('without logging in', () => {
     nav.userPage();
     login.loginForm().should('exist');
   });
 });
 
-describe.only('User views profile page when logged in', () => {
+describe('User views profile page when logged in', () => {
   it('has no host profile', () => {
     mockAPI.userPageNoHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -130,6 +130,35 @@ describe.only('User views profile page when logged in', () => {
     userPage.settingsSection().should('exist');
   });
 });
+
+describe('User can change the avatar', () => {
+  it('successfully', () => {
+    mockAPI.userPageNoHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.editAvatar().click()
+    userPage.addPhoto().attachFile('good-picture.png');
+    userPage.saveAvatar().click()
+    //something still needs mocked
+    userPage.errorBox().should('not.exist')
+  });
+
+  it('unsuccessfully - wrong file format', () => {
+    mockAPI.userPageNoHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.editAvatar().click()
+    userPage.addPhoto().attachFile('wrong-format-picture.svg');
+    userPage.saveAvatar().click()
+    userPage.errorBox().should('exist').and('include.text', 'Please select a JPG, JPEG, PNG or GIF image file!')
+  });
+});
+
+
+
+
+
+
 
 describe('User can view their profile page - happy path', () => {
   beforeEach(function () {

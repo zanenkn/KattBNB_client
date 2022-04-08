@@ -134,7 +134,7 @@ class AvatarUpdateForm extends Component {
           modal
           className='avatar-popup'
           trigger={
-            <AvatarEditBtnWrapper>
+            <AvatarEditBtnWrapper data-cy='avatar-update-cta'>
               <Edit height={3} color='neutral' tint={0} />
             </AvatarEditBtnWrapper>
           }
@@ -160,7 +160,13 @@ class AvatarUpdateForm extends Component {
                 <label htmlFor='files' style={{ cursor: 'inherit' }}>
                   <Camera height={7} tint={80} />
                 </label>
-                <input id='files' style={{ display: 'none' }} onChange={this.handleNewImage} type='file' />
+                <input
+                  data-cy='add-photo'
+                  id='files'
+                  style={{ display: 'none' }}
+                  onChange={this.handleNewImage}
+                  type='file'
+                />
               </WithCursorPointer>
               <WithCursorPointer onClick={this.state.image !== '' ? this.rotateLeft : undefined}>
                 <RotateLeft height={7} tint={this.state.image === '' ? 60 : 80} />
@@ -170,7 +176,7 @@ class AvatarUpdateForm extends Component {
               </WithCursorPointer>
             </FlexWrapper>
             {this.state.errors.length > 0 && (
-              <Notice nature='danger'>
+              <Notice data-cy='errors' nature='danger'>
                 <Text bold centered size='sm'>
                   {t('reusable:errors.action-error-header')}
                 </Text>
@@ -185,7 +191,7 @@ class AvatarUpdateForm extends Component {
             )}
             <Button
               space={0}
-              id='avatar-submit-button'
+              data-cy='save-avatar'
               disabled={this.state.loading}
               loading={this.state.loading}
               onClick={this.updateAvatar}
