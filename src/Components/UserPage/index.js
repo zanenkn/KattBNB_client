@@ -520,7 +520,7 @@ const UserPage = (props) => {
         </SettingsWrapper>
       </Whitebox>
       {hostProfile.length === 1 && (
-        <Whitebox>
+        <Whitebox data-cy='reviews'>
           <Header level={4} space={5} centered>
             {t('UserPage:reviews-header')}
           </Header>

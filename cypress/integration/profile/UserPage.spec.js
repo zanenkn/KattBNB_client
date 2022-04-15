@@ -128,6 +128,9 @@ describe('User views profile page when logged in', () => {
     userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
     userPage.location().should('exist').and('contain.text', 'Stockholm');
     userPage.settingsSection().should('exist');
+    userPage.hostProfile.self().should('exist');
+    userPage.hostProfileProgressBar.self().should('exist');
+    userPage.reviewsSection.self().should('exist');
   });
 });
 

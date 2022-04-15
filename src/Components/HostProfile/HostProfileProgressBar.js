@@ -132,7 +132,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
   if (loading || !ready) return <Spinner />;
 
   return (
-    <Container space={8}>
+    <Container space={8} data-cy='host-profile-progress-bar'>
       <ProgressBarWrapper space={5}>
         <Explained>
           <StepIcon active={activeStep >= 1}>

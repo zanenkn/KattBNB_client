@@ -123,7 +123,7 @@ const HostProfile = forwardRef((props, ref) => {
   }
 
   return (
-    <Whitebox>
+    <Whitebox data-cy='host-profile'>
       <Header centered level={4}>
         {t('HostProfile:main-header')}
       </Header>
