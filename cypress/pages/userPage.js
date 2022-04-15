@@ -37,6 +37,8 @@ class UserPage {
     passwordChangeLink: () => this.settingsSection.password().find('#editPasswordForm'),
     notificationsChangeLink: () => this.settingsSection.notifications().find('#editNotificationsForm'),
     langPrefChangeLink: () => this.settingsSection.languagePref().find('#editLangPrefForm'),
+    locationDropdown: () => this.settingsSection.self().find('[data-cy=location-dropdown]'),
+    locationOption: (opt) => cy.get(`[data-cy=location-option-${opt}]`),
   }
 }
 

@@ -158,7 +158,7 @@ describe('User can change the avatar', () => {
 });
 
 describe('My settings', () => {
-  it.only('user can view his settings', () => {
+  it('user can view his settings', () => {
     mockAPI.userPageWithHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
@@ -173,6 +173,16 @@ describe('My settings', () => {
     userPage.settingsSection.languagePref().should('exist').and('include.text', 'Email language');
     userPage.settingsSection.langPrefChangeLink().should('exist');
   });
+
+  it.only('user can change their location', () => {
+    mockAPI.userPageWithHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.settingsSection.locationChangeLink().click();
+    userPage.settingsSection.locationDropdown().click({force: true});
+    //userPage.settingsSection.locationOption('Vaxholm').click();
+
+  })
 });
 
 describe('User can view their profile page - happy path', () => {
