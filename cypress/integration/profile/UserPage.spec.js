@@ -112,7 +112,7 @@ describe('User views profile page when logged in', () => {
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
-    userPage.avatar().should('exist');
+    userPage.avatar.self().should('exist');
     userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
     userPage.location().should('exist').and('contain.text', 'Stockholm');
     userPage.settingsSection().should('exist');
@@ -124,7 +124,7 @@ describe('User views profile page when logged in', () => {
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
-    userPage.avatar().should('exist');
+    userPage.avatar.self().should('exist');
     userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
     userPage.location().should('exist').and('contain.text', 'Stockholm');
     userPage.settingsSection().should('exist');
@@ -136,21 +136,21 @@ describe('User can change the avatar', () => {
     mockAPI.userPageNoHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.editAvatar().click()
-    userPage.addPhoto().attachFile('good-picture.png');
-    userPage.saveAvatar().click()
+    userPage.avatar.edit().click()
+    userPage.avatar.addPhoto().attachFile('good-picture.png');
+    userPage.avatar.save().click()
     //something still needs mocked
-    userPage.errorBox().should('not.exist')
+    userPage.avatar.errorBox().should('not.exist')
   });
 
   it('unsuccessfully - wrong file format', () => {
     mockAPI.userPageNoHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.editAvatar().click()
-    userPage.addPhoto().attachFile('wrong-format-picture.svg');
-    userPage.saveAvatar().click()
-    userPage.errorBox().should('exist').and('include.text', 'Please select a JPG, JPEG, PNG or GIF image file!')
+    userPage.avatar.edit().click()
+    userPage.avatar.addPhoto().attachFile('wrong-format-picture.svg');
+    userPage.avatar.save().click()
+    userPage.avatar.errorBox().should('exist').and('include.text', 'Please select a JPG, JPEG, PNG or GIF image file!')
   });
 });
 
