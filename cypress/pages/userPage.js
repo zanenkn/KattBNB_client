@@ -25,8 +25,19 @@ class UserPage {
   username = () => cy.get('[data-cy=username]');
   location = () => cy.get('[data-cy=location]');
   createHostProfileCta = () => cy.get('[data-cy=create-host-profile-cta]');
-  settingsSection = () => cy.get('[data-cy=settings-section]');
 
+  settingsSection = {
+    self: () => cy.get('[data-cy=settings-section]'),
+    email: () => this.settingsSection.self().find('[data-cy=email]'),
+    location: () => this.settingsSection.self().find('[data-cy=location]'),
+    password: () => this.settingsSection.self().find('[data-cy=password]'),
+    notifications: () => this.settingsSection.self().find('[data-cy=notifications]'),
+    languagePref: () => this.settingsSection.self().find('[data-cy=language-pref]'),
+    locationChangeLink: () => this.settingsSection.location().find('#editLocationForm'),
+    passwordChangeLink: () => this.settingsSection.password().find('#editPasswordForm'),
+    notificationsChangeLink: () => this.settingsSection.notifications().find('#editNotificationsForm'),
+    langPrefChangeLink: () => this.settingsSection.languagePref().find('#editLangPrefForm'),
+  }
 }
 
 module.exports = new UserPage();

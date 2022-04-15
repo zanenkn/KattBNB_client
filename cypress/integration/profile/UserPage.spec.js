@@ -115,7 +115,7 @@ describe('User views profile page when logged in', () => {
     userPage.avatar.self().should('exist');
     userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
     userPage.location().should('exist').and('contain.text', 'Stockholm');
-    userPage.settingsSection().should('exist');
+    userPage.settingsSection.self().should('exist');
     userPage.createHostProfileCta().should('exist');
   });
 
@@ -127,7 +127,7 @@ describe('User views profile page when logged in', () => {
     userPage.avatar.self().should('exist');
     userPage.username().should('exist').and('contain.text', 'GeorgeTheGreek');
     userPage.location().should('exist').and('contain.text', 'Stockholm');
-    userPage.settingsSection().should('exist');
+    userPage.settingsSection.self().should('exist');
     userPage.hostProfile.self().should('exist');
     userPage.hostProfileProgressBar.self().should('exist');
     userPage.reviewsSection.self().should('exist');
@@ -139,29 +139,41 @@ describe('User can change the avatar', () => {
     mockAPI.userPageNoHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.avatar.edit().click()
+    userPage.avatar.edit().click();
     userPage.avatar.addPhoto().attachFile('good-picture.png');
-    userPage.avatar.save().click()
+    userPage.avatar.save().click();
     //something still needs mocked
-    userPage.avatar.errorBox().should('not.exist')
+    userPage.avatar.errorBox().should('not.exist');
   });
 
   it('unsuccessfully - wrong file format', () => {
     mockAPI.userPageNoHostProfile();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.avatar.edit().click()
+    userPage.avatar.edit().click();
     userPage.avatar.addPhoto().attachFile('wrong-format-picture.svg');
-    userPage.avatar.save().click()
-    userPage.avatar.errorBox().should('exist').and('include.text', 'Please select a JPG, JPEG, PNG or GIF image file!')
+    userPage.avatar.save().click();
+    userPage.avatar.errorBox().should('exist').and('include.text', 'Please select a JPG, JPEG, PNG or GIF image file!');
   });
 });
 
-
-
-
-
-
+describe('My settings', () => {
+  it.only('user can view his settings', () => {
+    mockAPI.userPageWithHostProfile();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.settingsSection.self().should('exist');
+    userPage.settingsSection.email().should('exist').and('include.text', 'george@mail.com');
+    userPage.settingsSection.location().should('exist').and('include.text', 'Stockholm');
+    userPage.settingsSection.locationChangeLink().should('exist');
+    userPage.settingsSection.password().should('exist').and('include.text', '******');
+    userPage.settingsSection.passwordChangeLink().should('exist');
+    userPage.settingsSection.notifications().should('exist').and('include.text', 'Notification settings');
+    userPage.settingsSection.notificationsChangeLink().should('exist');
+    userPage.settingsSection.languagePref().should('exist').and('include.text', 'Email language');
+    userPage.settingsSection.langPrefChangeLink().should('exist');
+  });
+});
 
 describe('User can view their profile page - happy path', () => {
   beforeEach(function () {
