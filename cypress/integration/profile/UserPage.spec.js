@@ -3,92 +3,9 @@ import nav from '../../pages/navigation';
 import login from '../../pages/login';
 import userPage from '../../pages/userPage';
 import mockAPI from '../../support/api';
-import assert from '../../support/assertions'
+import assert from '../../support/assertions';
 
-function deviseAuthRoute(method, status, response) {
-  cy.route({
-    method: method,
-    url: `${api}/auth`,
-    status: status,
-    response: response,
-  });
-}
-
-function deviseAuthPassword(status, response) {
-  cy.route({
-    method: 'PUT',
-    url: `${api}/auth/password`,
-    status: status,
-    response: response,
-  });
-}
-
-function getBookingStats(inR, inU, inH, inUnp, outR, outU, outH, outUnp) {
-  cy.route({
-    method: 'GET',
-    url: `${api}/bookings?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`,
-    status: 200,
-    response: {
-      stats: {
-        in_requests: inR,
-        in_upcoming: inU,
-        in_history: inH,
-        in_unpaid: inUnp,
-        out_requests: outR,
-        out_upcoming: outU,
-        out_history: outH,
-        out_unpaid: outUnp,
-      },
-    },
-  });
-}
-
-function deleteAccountAPICalls() {
-  cy.server();
-  cy.route({
-    method: 'GET',
-    url: `${api}/host_profiles?user_id=66&locale=en-US`,
-    status: 200,
-    response: 'fixture:host_profile_index.json',
-  });
-  cy.route({
-    method: 'GET',
-    url: `${api}/host_profiles/1?locale=en-US`,
-    status: 200,
-    response: 'fixture:host_profile_individual.json',
-  });
-  cy.route({
-    method: 'GET',
-    url: `${api}/stripe?locale=en-US&host_profile_id=1&occasion=retrieve`,
-    status: 200,
-    response: { message: 'No account' },
-  });
-  cy.route({
-    method: 'GET',
-    url: `${api}/reviews?host_profile_id=1&locale=en-US`,
-    status: 200,
-    response: 'fixture:one_user_reviews.json',
-  });
-  deviseAuthRoute('DELETE', 200, 'fixture:successful_account_deletion.json');
-  cy.route({
-    method: 'GET',
-    url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-    status: 200,
-    response: [],
-  });
-  getBookingStats('0', '0', '1', '0', '0', '0', '3', '0');
-}
-
-function stripeCall(status, response) {
-  cy.route({
-    method: 'GET',
-    url: `${api}/stripe?locale=en-US&host_profile_id=1&occasion=delete_account`,
-    status: status,
-    response: response,
-  });
-}
-
-describe.only('User tries to view profile page', () => {
+describe('User tries to view profile page', () => {
   it('without logging in', () => {
     nav.userPage();
     userPage.wrapper().should('not.exist');
@@ -96,7 +13,7 @@ describe.only('User tries to view profile page', () => {
   });
 });
 
-describe.only('User views profile page when logged in', () => {
+describe('User views profile page when logged in', () => {
   it('has no host profile', () => {
     mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -124,7 +41,7 @@ describe.only('User views profile page when logged in', () => {
   });
 });
 
-describe.only('User can change the avatar', () => {
+describe('User can change the avatar', () => {
   it('successfully', () => {
     mockAPI.userPage({
       tokenValidation: 'validate_token.json',
@@ -149,8 +66,8 @@ describe.only('User can change the avatar', () => {
   });
 });
 
-describe.only('My settings', () => {
-  it('user can view his settings', () => {
+describe('My settings', () => {
+  it('user can view their settings', () => {
     mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
@@ -176,10 +93,10 @@ describe.only('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.locationChangeLink().click();
-    cy.get('[data-cy="location-dropdown"]').click({ force: true });
+    userPage.settingsSection.locationDropdown().click({ force: true });
     userPage.settingsSection.locationOption('Vaxholm').click();
     userPage.settingsSection.locationSubmit().click();
-    assert.alert('Location succesfully changed!')
+    assert.alert('Location succesfully changed!');
   });
 
   it('user can change their location - host profile address mismatch', () => {
@@ -193,11 +110,61 @@ describe.only('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.locationChangeLink().click();
-    cy.get('[data-cy="location-dropdown"]').click({ force: true });
+    userPage.settingsSection.locationDropdown().click({ force: true });
     userPage.settingsSection.locationOption('Vaxholm').click();
     userPage.settingsSection.locationSubmit().click();
-    assert.confirm('It seems that the location you selected does not match your host profile address. Are you sure you want to continue?')
-    assert.alert('Location succesfully changed!')
+    assert.confirm(
+      'It seems that the location you selected does not match your host profile address. Are you sure you want to continue?'
+    );
+    assert.alert('Location succesfully changed!');
+  });
+
+  it('user can change their password successfully and be redirected to login', () => {
+    mockAPI.userPage({
+      successfulPasswordChange: 'successful_password_change_user_page.json',
+    });
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.passwordChangeLink().click();
+    userPage.settingsSection.currentPassword().type('password', { force: true })
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordSubmit().click()
+    assert.alert('Your password was successfully changed!')
+    login.loginForm().should('exist');
+  });
+
+  it('user can not change their password if current password is incorrect', () => {
+    mockAPI.userPage({
+      unsuccessfulPasswordChange: 'successful_password_change_user_page.json',
+      tokenValidation: 'validate_token.json',
+    });
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.passwordChangeLink().click();
+    userPage.settingsSection.currentPassword().type('wrongpassword', { force: true })
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordSubmit().click()
+
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Current password is invalid')
+  });
+
+  it('user can not change their password if current password is left empty', () => {
+    mockAPI.userPage();
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.passwordChangeLink().click();
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordSubmit().click()
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Please enter your current password')
   });
 });
 
@@ -206,19 +173,6 @@ describe('User can view their profile page - happy path', () => {
     loadUserPageAPICalls();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-  });
-
-  it('successfully', () => {
-    cy.contains('GeorgeTheGreek').should('exist');
-  });
-
-  it('and change location successfully', () => {
-    deviseAuthRoute('PUT', 200, 'fixture:successful_location_change.json');
-    cy.get('#editLocationForm').click();
-    cy.get('#location').click();
-    cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click();
-    cy.get('#location-submit-button').click();
-    checkWindowAlert('Location succesfully changed!');
   });
 
   it('and change password successfully', () => {

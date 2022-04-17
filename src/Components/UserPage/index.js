@@ -480,7 +480,7 @@ const UserPage = (props) => {
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editPasswordForm}>
+          <UpdateFormWrapper open={form.editPasswordForm} data-cy='password-update-form'>
             {form.editPasswordForm && (
               <PasswordUpdateForm closeLocationAndPasswordForms={closeLocationAndPasswordForms} />
             )}

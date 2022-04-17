@@ -89,7 +89,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       <Divider bottom={5} />
       <TextField
         required
-        id='currentPassword'
+        data-cy='current-password'
         value={currentPassword}
         type='password'
         onChange={(e) => setCurrentPassword(e.target.value)}
@@ -99,7 +99,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       />
       <TextField
         required
-        id='newPassword'
+        data-cy='new-password'
         value={newPassword}
         type='password'
         onChange={(e) => setNewPassword(e.target.value)}
@@ -109,7 +109,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       />
       <TextField
         required
-        id='newPasswordConfirmation'
+        data-cy='password-confirmation'
         value={newPasswordConfirmation}
         type='password'
         onChange={(e) => setNewPasswordConfirmation(e.target.value)}
@@ -120,7 +120,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       <Text centered>{t('PasswordUpdateForm:info')}</Text>
 
       {!!errors.length && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='errors'>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -134,7 +134,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='password-submit-button'
+          data-cy='submit'
           color='info'
           disabled={loading}
           loading={loading}
