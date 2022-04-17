@@ -1,85 +1,73 @@
 import { api } from './constants';
 
+const defaultLoggedInUser = require('../fixtures/login/successful.json').data;
+
 class API {
   userPage = ({
-    username = 'GeorgeTheGreek',
-    userId = 66,
+    email = defaultLoggedInUser.email,
+    username = defaultLoggedInUser.nickname,
+    userId = defaultLoggedInUser.id,
     hostProfileId = 1,
     hostProfile = false,
     locationChange = false,
     avatarChange = false,
     tokenValidation = false,
   } = {}) => {
+    
     cy.server();
 
-    cy.route({
-      method: 'GET',
-      url: `${api}/bookings?dates=only&stats=no&host_nickname=${username}&locale=en-US`,
-      status: 200,
-      response: [],
+    cy.intercept('GET', `${api}/bookings?dates=only&stats=no&host_nickname=${username}&locale=en-US`, {
+      statusCode: 200,
+      body: [],
     });
-    cy.route({
-      method: 'GET',
-      url: `${api}/host_profiles?user_id=${userId}&locale=en-US`,
-      status: 200,
-      response: hostProfile ? 'fixture:host_profile_index.json' : [],
+
+    cy.intercept('GET', `${api}/host_profiles?user_id=${userId}&locale=en-US`, {
+      statusCode: 200,
+      fixture: hostProfile ? 'host_profile_index.json' : false,
+      body: !hostProfile ? [] : false,
     });
 
     hostProfile &&
-      cy.route({
-        method: 'GET',
-        url: `${api}/host_profiles/${hostProfileId}?locale=en-US`,
-        status: 200,
-        response: hostProfile,
+      cy.intercept('GET', `${api}/host_profiles/${hostProfileId}?locale=en-US`, {
+        statusCode: 200,
+        fixture: hostProfile,
       });
 
     hostProfile &&
-      cy.route({
-        method: 'GET',
-        url: `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`,
-        status: 200,
-        response: { message: 'No account' },
+      cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`, {
+        statusCode: 200,
+        body: { message: 'No account' },
       });
 
     hostProfile &&
-      cy.route({
-        method: 'GET',
-        url: `${api}/reviews?host_profile_id=${hostProfileId}&locale=en-US`,
-        status: 200,
-        response: 'fixture:one_user_reviews.json',
+      cy.intercept('GET', `${api}/reviews?host_profile_id=${hostProfileId}&locale=en-US`, {
+        statusCode: 200,
+        fixture: 'one_user_reviews.json',
       });
 
     hostProfile &&
-      cy.route({
-        method: 'GET',
-        url: `${api}/bookings?dates=only&stats=no&host_nickname=${username}&locale=en-US`,
-        status: 200,
-        response: [],
+      cy.intercept('GET', `${api}/bookings?dates=only&stats=no&host_nickname=${username}&locale=en-US`, {
+        statusCode: 200,
+        body: [],
       });
 
     locationChange &&
-      cy.route({
-        method: 'PUT',
-        url: `${api}/auth`,
-        status: 200,
-        response: locationChange,
+      cy.intercept('PUT', `${api}/auth`, {
+        statusCode: 200,
+        fixture: locationChange,
       });
+
     tokenValidation &&
-      cy.route({
-        method: 'GET',
-        url: `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=george@mail.com`,
-        status: 200,
-        response: tokenValidation,
+      cy.intercept('GET', `${api}/auth/validate_token?access-token=undefined&client=undefined&uid=${email}`, {
+        statusCode: 200,
+        fixture: tokenValidation,
       });
 
     avatarChange &&
-      cy.route({
-        method: 'PUT',
-        url: `${api}/users/${userId}`,
-        status: 200,
-        response: [],
+      cy.intercept('PUT', `${api}/users/${userId}`, {
+        statusCode: 200,
+        body: [],
       });
-      
   };
 }
 

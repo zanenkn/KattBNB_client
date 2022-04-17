@@ -3,18 +3,7 @@ import nav from '../../pages/navigation';
 import login from '../../pages/login';
 import userPage from '../../pages/userPage';
 import mockAPI from '../../support/api';
-
-function checkWindowAlert(text) {
-  cy.on('window:alert', (str) => {
-    expect(str).to.equal(text);
-  });
-}
-
-function checkWindowConfirm() {
-  cy.on('window:confirm', (str) => {
-    expect(str).to.equal('Do you really want to delete your account?');
-  });
-}
+import assert from '../../support/assertions'
 
 function deviseAuthRoute(method, status, response) {
   cy.route({
@@ -99,7 +88,7 @@ function stripeCall(status, response) {
   });
 }
 
-describe('User tries to view profile page', () => {
+describe.only('User tries to view profile page', () => {
   it('without logging in', () => {
     nav.userPage();
     userPage.wrapper().should('not.exist');
@@ -107,7 +96,7 @@ describe('User tries to view profile page', () => {
   });
 });
 
-describe('User views profile page when logged in', () => {
+describe.only('User views profile page when logged in', () => {
   it('has no host profile', () => {
     mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -121,7 +110,7 @@ describe('User views profile page when logged in', () => {
   });
 
   it('has host profile', () => {
-    mockAPI.userPage({ hostProfile: 'fixture:host_profile_individual.json' });
+    mockAPI.userPage({ hostProfile: 'host_profile_individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
@@ -135,10 +124,10 @@ describe('User views profile page when logged in', () => {
   });
 });
 
-describe('User can change the avatar', () => {
+describe.only('User can change the avatar', () => {
   it('successfully', () => {
     mockAPI.userPage({
-      tokenValidation: 'fixture:validate_token.json',
+      tokenValidation: 'validate_token.json',
       avatarChange: true,
     });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -160,7 +149,7 @@ describe('User can change the avatar', () => {
   });
 });
 
-describe('My settings', () => {
+describe.only('My settings', () => {
   it('user can view his settings', () => {
     mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -177,11 +166,10 @@ describe('My settings', () => {
     userPage.settingsSection.langPrefChangeLink().should('exist');
   });
 
-  it('user can change their location', () => {
+  it('user can change their location - no host profile', () => {
     mockAPI.userPage({
-      hostProfile: 'fixture:host_profile_individual.json',
-      tokenValidation: 'fixture:validate_token.json',
-      locationChange: 'fixture:successful_location_change.json',
+      tokenValidation: 'validate_token.json',
+      locationChange: 'successful_location_change.json',
     });
 
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -189,9 +177,27 @@ describe('My settings', () => {
 
     userPage.settingsSection.locationChangeLink().click();
     cy.get('[data-cy="location-dropdown"]').click({ force: true });
-
     userPage.settingsSection.locationOption('Vaxholm').click();
     userPage.settingsSection.locationSubmit().click();
+    assert.alert('Location succesfully changed!')
+  });
+
+  it('user can change their location - host profile address mismatch', () => {
+    mockAPI.userPage({
+      hostProfile: 'host_profile_individual.json',
+      tokenValidation: 'validate_token.json',
+      locationChange: 'successful_location_change.json',
+    });
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.locationChangeLink().click();
+    cy.get('[data-cy="location-dropdown"]').click({ force: true });
+    userPage.settingsSection.locationOption('Vaxholm').click();
+    userPage.settingsSection.locationSubmit().click();
+    assert.confirm('It seems that the location you selected does not match your host profile address. Are you sure you want to continue?')
+    assert.alert('Location succesfully changed!')
   });
 });
 
