@@ -102,13 +102,14 @@ function stripeCall(status, response) {
 describe('User tries to view profile page', () => {
   it('without logging in', () => {
     nav.userPage();
+    userPage.wrapper().should('not.exist');
     login.loginForm().should('exist');
   });
 });
 
 describe('User views profile page when logged in', () => {
   it('has no host profile', () => {
-    mockAPI.userPageNoHostProfile();
+    mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
@@ -120,7 +121,7 @@ describe('User views profile page when logged in', () => {
   });
 
   it('has host profile', () => {
-    mockAPI.userPageWithHostProfile();
+    mockAPI.userPage({ hostProfile: 'fixture:host_profile_individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
@@ -136,18 +137,20 @@ describe('User views profile page when logged in', () => {
 
 describe('User can change the avatar', () => {
   it('successfully', () => {
-    mockAPI.userPageNoHostProfile();
+    mockAPI.userPage({
+      tokenValidation: 'fixture:validate_token.json',
+      avatarChange: true,
+    });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.avatar.edit().click();
     userPage.avatar.addPhoto().attachFile('good-picture.png');
     userPage.avatar.save().click();
-    //something still needs mocked
     userPage.avatar.errorBox().should('not.exist');
   });
 
   it('unsuccessfully - wrong file format', () => {
-    mockAPI.userPageNoHostProfile();
+    mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.avatar.edit().click();
@@ -159,7 +162,7 @@ describe('User can change the avatar', () => {
 
 describe('My settings', () => {
   it('user can view his settings', () => {
-    mockAPI.userPageWithHostProfile();
+    mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.settingsSection.self().should('exist');
@@ -174,15 +177,22 @@ describe('My settings', () => {
     userPage.settingsSection.langPrefChangeLink().should('exist');
   });
 
-  it.only('user can change their location', () => {
-    mockAPI.userPageWithHostProfile();
+  it('user can change their location', () => {
+    mockAPI.userPage({
+      hostProfile: 'fixture:host_profile_individual.json',
+      tokenValidation: 'fixture:validate_token.json',
+      locationChange: 'fixture:successful_location_change.json',
+    });
+
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.settingsSection.locationChangeLink().click();
-    userPage.settingsSection.locationDropdown().click({force: true});
-    //userPage.settingsSection.locationOption('Vaxholm').click();
 
-  })
+    userPage.settingsSection.locationChangeLink().click();
+    cy.get('[data-cy="location-dropdown"]').click({ force: true });
+
+    userPage.settingsSection.locationOption('Vaxholm').click();
+    userPage.settingsSection.locationSubmit().click();
+  });
 });
 
 describe('User can view their profile page - happy path', () => {

@@ -463,7 +463,7 @@ const UserPage = (props) => {
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editLocationForm}>
+          <UpdateFormWrapper open={form.editLocationForm} data-cy='location-update-form'>
             {form.editLocationForm && (
               <LocationUpdateForm
                 location={element.location}

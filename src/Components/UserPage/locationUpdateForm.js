@@ -117,7 +117,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
         <Button secondary color='neutral' onClick={closeLocationAndPasswordForms}>
           {t('reusable:cta.cancel')}
         </Button>
-        <Button id='location-submit-button' color='info' disabled={loading} loading={loading} onClick={updateLocation}>
+        <Button data-cy='submit' color='info' disabled={loading} loading={loading} onClick={updateLocation}>
           {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>

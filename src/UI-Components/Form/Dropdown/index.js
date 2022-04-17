@@ -80,8 +80,9 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }
           {label}
         </Label>
       )}
-      <div style={{width: '100%'}} data-cy={`${id}-dropdown`}>
+      <div style={{width: '100%'}}>
         <Input
+          data-cy={`${id}-dropdown`}
           ref={input}
           autoComplete='off'
           value={search.text}
