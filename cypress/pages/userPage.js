@@ -7,20 +7,19 @@ class UserPage {
     addPhoto: () => cy.get('[data-cy=add-photo]'),
     save: () => cy.get('[data-cy=save-avatar]'),
     errorBox: () => cy.get('[data-cy=errors]'),
-  }
+  };
 
   hostProfile = {
-    self: () => cy.get('[data-cy=host-profile]')
-  }
+    self: () => cy.get('[data-cy=host-profile]'),
+  };
 
   hostProfileProgressBar = {
-    self: () => cy.get('[data-cy=host-profile-progress-bar]')
-  }
+    self: () => cy.get('[data-cy=host-profile-progress-bar]'),
+  };
 
   reviewsSection = {
-    self: () => cy.get('[data-cy=reviews]')
-  }
-
+    self: () => cy.get('[data-cy=reviews]'),
+  };
 
   username = () => cy.get('[data-cy=username]');
   location = () => cy.get('[data-cy=location]');
@@ -45,17 +44,19 @@ class UserPage {
     passwordConfirmation: () => this.settingsSection.passwordUpdateForm().find('[data-cy=password-confirmation]'),
     passwordSubmit: () => this.settingsSection.passwordUpdateForm().find('[data-cy=submit]'),
     paswordErrors: () => this.settingsSection.passwordUpdateForm().find('[data-cy=errors]'),
-    
+
     notifications: () => this.settingsSection.self().find('[data-cy=notifications]'),
     notificationsChangeLink: () => this.settingsSection.notifications().find('#editNotificationsForm'),
     notificationsUpdateForm: () => this.settingsSection.self().find('[data-cy=notification-update-form]'),
     notificationsToggle: () => this.settingsSection.notificationsUpdateForm().find('[data-cy=toggle]'),
     notificationsSubmit: () => this.settingsSection.notificationsUpdateForm().find('[data-cy=submit]'),
-    
+
     languagePref: () => this.settingsSection.self().find('[data-cy=language-pref]'),
     langPrefChangeLink: () => this.settingsSection.languagePref().find('#editLangPrefForm'),
-
-  }
+    langPrefUpdateForm: () => this.settingsSection.self().find('[data-cy=language-pref-update-form]'),
+    langPrefOption: (option) => this.settingsSection.langPrefUpdateForm().find(`[data-cy=${option}]`),
+    langPrefSubmit: () => this.settingsSection.langPrefUpdateForm().find('[data-cy=submit]'),
+  };
 }
 
 module.exports = new UserPage();

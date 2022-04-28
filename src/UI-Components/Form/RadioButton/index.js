@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 const RadioButton = ({ checked, disabled, label, onChange, value, ...rest }) => {
   return (
     <Label disabled={disabled}>
-      <LabelText checked={checked === value}>{label}</LabelText>
+      <LabelText checked={checked === value} {...rest}>
+        {label}
+      </LabelText>
       <Input
         type='radio'
         role='radio'
@@ -13,7 +15,6 @@ const RadioButton = ({ checked, disabled, label, onChange, value, ...rest }) => 
         disabled={disabled}
         onChange={onChange}
         value={value}
-        {...rest}
       />
       <Indicator />
     </Label>

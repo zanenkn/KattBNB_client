@@ -509,7 +509,7 @@ const UserPage = (props) => {
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editLangPrefForm}>
+          <UpdateFormWrapper open={form.editLangPrefForm} data-cy='language-pref-update-form'>
             {form.editLangPrefForm && (
               <LangPrefUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}

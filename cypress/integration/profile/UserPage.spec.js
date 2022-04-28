@@ -127,11 +127,11 @@ describe('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true })
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordSubmit().click()
-    assert.alert('Your password was successfully changed!')
+    userPage.settingsSection.currentPassword().type('password', { force: true });
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordSubmit().click();
+    assert.alert('Your password was successfully changed!');
     login.loginForm().should('exist');
   });
 
@@ -145,11 +145,11 @@ describe('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('wrongpassword', { force: true })
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordSubmit().click()
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Current password is invalid')
+    userPage.settingsSection.currentPassword().type('wrongpassword', { force: true });
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordSubmit().click();
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Current password is invalid');
   });
 
   it('user can not change their password if current password is left empty', () => {
@@ -159,10 +159,10 @@ describe('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordSubmit().click()
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Please enter your current password')
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordSubmit().click();
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Please enter your current password');
   });
 
   it('user can not change their password if new password is not compliant with password rules', () => {
@@ -172,11 +172,17 @@ describe('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true })
-    userPage.settingsSection.newPassword().type('pass', { force: true })
-    userPage.settingsSection.passwordConfirmation().type('pass', { force: true })
-    userPage.settingsSection.passwordSubmit().click()
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Your new password must be between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!')
+    userPage.settingsSection.currentPassword().type('password', { force: true });
+    userPage.settingsSection.newPassword().type('pass', { force: true });
+    userPage.settingsSection.passwordConfirmation().type('pass', { force: true });
+    userPage.settingsSection.passwordSubmit().click();
+    userPage.settingsSection
+      .paswordErrors()
+      .should('exist')
+      .and(
+        'have.text',
+        'Your new password must be between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!'
+      );
   });
 
   it('user can not change their password if new password does not match confirmation', () => {
@@ -186,93 +192,90 @@ describe('My settings', () => {
     nav.to.userPage();
 
     userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true })
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
-    userPage.settingsSection.passwordConfirmation().type('SomethingEntirelyElse', { force: true })
-    userPage.settingsSection.passwordSubmit().click()
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'The new password and new password confirmation fields does not match, please re-type!')
+    userPage.settingsSection.currentPassword().type('password', { force: true });
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
+    userPage.settingsSection.passwordConfirmation().type('SomethingEntirelyElse', { force: true });
+    userPage.settingsSection.passwordSubmit().click();
+    userPage.settingsSection
+      .paswordErrors()
+      .should('exist')
+      .and('have.text', 'The new password and new password confirmation fields does not match, please re-type!');
   });
 
-  it.only('user can change their notification settings', () => {
+  it('user can change their notification settings', () => {
     mockAPI.userPage({
-      userUpdate: 'successful_user_update.json'      
+      userUpdate: 'successful_user_update.json',
     });
 
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    userPage.settingsSection.notificationsChangeLink().click()
-    userPage.settingsSection.notificationsToggle().click()
-    userPage.settingsSection.notificationsSubmit().click()
-    assert.alert('Message notification settings updated!')
+    userPage.settingsSection.notificationsChangeLink().click();
+    userPage.settingsSection.notificationsToggle().click();
+    userPage.settingsSection.notificationsSubmit().click();
+    assert.alert('Message notification settings updated!');
   });
-});
 
-describe('User can view their profile page - happy path', () => {
-  beforeEach(function () {
-    loadUserPageAPICalls();
+  it('user can change their email language preference', () => {
+    mockAPI.userPage({
+      userUpdate: 'successful_user_update.json',
+    });
+
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-  });
-
-
-  it('and change notification settings successfully', () => {
-    deviseAuthRoute('PUT', 200, 'fixture:successful_user_update.json');
-    cy.get('#editNotificationsForm').click();
-    cy.get('.fitted > label').click();
-    cy.get('#notifications-submit-button').click();
-    checkWindowAlert('Message notification settings updated!');
-  });
-
-  it('and change email language preference settings successfully', () => {
-    deviseAuthRoute('PUT', 200, 'fixture:successful_user_update.json');
-    cy.get('#editLangPrefForm').click();
-    cy.get(':nth-child(2) > .ui > label').click();
-    cy.get('#email-language-submit-button').click();
-    checkWindowAlert('Email language settings updated!');
-  });
-
-  it('and deletes their account - no upcoming and request bookings - no host profile exists', () => {
-    deviseAuthRoute('DELETE', 200, 'fixture:successful_account_deletion.json');
-    getBookingStats('0', '0', '2', '0', '0', '0', '3', '0');
-    cy.get('#delete-account-link').click();
-    checkWindowConfirm();
-    checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!').should('exist');
-  });
-
-  it('and cannot delete their account cause of upcoming and request bookings', () => {
-    getBookingStats('0', '1', '2', '0', '1', '0', '3', '0');
-    cy.get('#delete-account-link').click();
-    checkWindowAlert('To delete your account, you must not have any pending or unpaid bookings!');
-    cy.location('pathname').should('eq', '/user-page');
+    userPage.settingsSection.langPrefChangeLink().click();
+    userPage.settingsSection.langPrefOption('en').click();
+    userPage.settingsSection.langPrefSubmit().click();
+    assert.alert('Email language settings updated!');
   });
 });
 
+// describe('User can view their profile page - happy path', () => {
+//   beforeEach(function () {
+//     loadUserPageAPICalls();
+//     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+//     nav.to.userPage();
+//   });
 
+//   it('and deletes their account - no upcoming and request bookings - no host profile exists', () => {
+//     deviseAuthRoute('DELETE', 200, 'fixture:successful_account_deletion.json');
+//     getBookingStats('0', '0', '2', '0', '0', '0', '3', '0');
+//     cy.get('#delete-account-link').click();
+//     checkWindowConfirm();
+//     checkWindowAlert('Your account was succesfully deleted!');
+//     cy.contains('Welcome to KattBNB!').should('exist');
+//   });
 
-describe('User can view their profile page', () => {
-  it('and delete their account - host profile exists - no Stripe errors', () => {
-    deleteAccountAPICalls();
-    stripeCall(200, { message: 'Success!' });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#user-icon').click({ force: true });
-    cy.get('#delete-account-link').click();
-    checkWindowConfirm();
-    checkWindowAlert('Your account was succesfully deleted!');
-    cy.contains('Welcome to KattBNB!').should('exist');
-  });
-});
+//   it('and cannot delete their account cause of upcoming and request bookings', () => {
+//     getBookingStats('0', '1', '2', '0', '1', '0', '3', '0');
+//     cy.get('#delete-account-link').click();
+//     checkWindowAlert('To delete your account, you must not have any pending or unpaid bookings!');
+//     cy.location('pathname').should('eq', '/user-page');
+//   });
+// });
 
-describe('User can view their profile page', () => {
-  it('and cannot delete their account - host profile exists - Stripe errors', () => {
-    deleteAccountAPICalls();
-    stripeCall(555, { error: 'No success!' });
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#user-icon').click({ force: true });
-    cy.get('#delete-account-link').click();
-    checkWindowConfirm();
-    cy.contains(
-      'Make sure your Stripe account balance is 0 and try again. If this error persists, please contact our support staff.'
-    ).should('exist');
-  });
-});
+// describe('User can view their profile page', () => {
+//   it('and delete their account - host profile exists - no Stripe errors', () => {
+//     deleteAccountAPICalls();
+//     stripeCall(200, { message: 'Success!' });
+//     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
+//     cy.get('#user-icon').click({ force: true });
+//     cy.get('#delete-account-link').click();
+//     checkWindowConfirm();
+//     checkWindowAlert('Your account was succesfully deleted!');
+//     cy.contains('Welcome to KattBNB!').should('exist');
+//   });
+// });
+
+// describe('User can view their profile page', () => {
+//   it('and cannot delete their account - host profile exists - Stripe errors', () => {
+//     deleteAccountAPICalls();
+//     stripeCall(555, { error: 'No success!' });
+//     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
+//     cy.get('#user-icon').click({ force: true });
+//     cy.get('#delete-account-link').click();
+//     checkWindowConfirm();
+//     cy.contains(
+//       'Make sure your Stripe account balance is 0 and try again. If this error persists, please contact our support staff.'
+//     ).should('exist');
+//   });
+// });
