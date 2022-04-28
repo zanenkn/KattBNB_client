@@ -92,7 +92,7 @@ class API {
     userId = defaultLoggedInUser.id,
     hostProfileId = 1,
     hostProfile = false,
-    locationChange = false,
+    userUpdate = false,
     avatarChange = false,
     tokenValidation = false,
     successfulPasswordChange = false,
@@ -135,10 +135,10 @@ class API {
         body: [],
       });
 
-    locationChange &&
+    userUpdate &&
       cy.intercept('PUT', `${api}/auth`, {
         statusCode: 200,
-        fixture: locationChange,
+        fixture: userUpdate,
       });
 
     tokenValidation &&

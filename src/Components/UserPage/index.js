@@ -493,7 +493,7 @@ const UserPage = (props) => {
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editNotificationsForm}>
+          <UpdateFormWrapper open={form.editNotificationsForm} data-cy='notification-update-form'>
             {form.editNotificationsForm && (
               <NotificationsUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}

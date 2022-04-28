@@ -1,4 +1,3 @@
-import { api } from '../../support/constants';
 import nav from '../../pages/navigation';
 import login from '../../pages/login';
 import userPage from '../../pages/userPage';
@@ -86,7 +85,7 @@ describe('My settings', () => {
   it('user can change their location - no host profile', () => {
     mockAPI.userPage({
       tokenValidation: 'validate_token.json',
-      locationChange: 'successful_location_change.json',
+      userUpdate: 'successful_user_update.json',
     });
 
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -103,7 +102,7 @@ describe('My settings', () => {
     mockAPI.userPage({
       hostProfile: 'host_profile_individual.json',
       tokenValidation: 'validate_token.json',
-      locationChange: 'successful_location_change.json',
+      userUpdate: 'successful_user_update.json',
     });
 
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -150,7 +149,6 @@ describe('My settings', () => {
     userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
     userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true })
     userPage.settingsSection.passwordSubmit().click()
-
     userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Current password is invalid')
   });
 
@@ -166,6 +164,47 @@ describe('My settings', () => {
     userPage.settingsSection.passwordSubmit().click()
     userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Please enter your current password')
   });
+
+  it('user can not change their password if new password is not compliant with password rules', () => {
+    mockAPI.userPage();
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.passwordChangeLink().click();
+    userPage.settingsSection.currentPassword().type('password', { force: true })
+    userPage.settingsSection.newPassword().type('pass', { force: true })
+    userPage.settingsSection.passwordConfirmation().type('pass', { force: true })
+    userPage.settingsSection.passwordSubmit().click()
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Your new password must be between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!')
+  });
+
+  it('user can not change their password if new password does not match confirmation', () => {
+    mockAPI.userPage();
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+
+    userPage.settingsSection.passwordChangeLink().click();
+    userPage.settingsSection.currentPassword().type('password', { force: true })
+    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true })
+    userPage.settingsSection.passwordConfirmation().type('SomethingEntirelyElse', { force: true })
+    userPage.settingsSection.passwordSubmit().click()
+    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'The new password and new password confirmation fields does not match, please re-type!')
+  });
+
+  it.only('user can change their notification settings', () => {
+    mockAPI.userPage({
+      userUpdate: 'successful_user_update.json'      
+    });
+
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.settingsSection.notificationsChangeLink().click()
+    userPage.settingsSection.notificationsToggle().click()
+    userPage.settingsSection.notificationsSubmit().click()
+    assert.alert('Message notification settings updated!')
+  });
 });
 
 describe('User can view their profile page - happy path', () => {
@@ -175,18 +214,9 @@ describe('User can view their profile page - happy path', () => {
     nav.to.userPage();
   });
 
-  it('and change password successfully', () => {
-    deviseAuthPassword(200, 'fixture:successful_password_change_user_page.json');
-    cy.get('#editPasswordForm').click();
-    cy.get('#currentPassword').type('password');
-    cy.get('#newPassword').type('SeCuReP@SsWoRd1');
-    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd1', { force: true });
-    cy.get('#password-submit-button').click();
-    cy.contains('Log in').should('exist');
-  });
 
   it('and change notification settings successfully', () => {
-    deviseAuthRoute('PUT', 200, 'fixture:successful_location_change.json');
+    deviseAuthRoute('PUT', 200, 'fixture:successful_user_update.json');
     cy.get('#editNotificationsForm').click();
     cy.get('.fitted > label').click();
     cy.get('#notifications-submit-button').click();
@@ -194,7 +224,7 @@ describe('User can view their profile page - happy path', () => {
   });
 
   it('and change email language preference settings successfully', () => {
-    deviseAuthRoute('PUT', 200, 'fixture:successful_location_change.json');
+    deviseAuthRoute('PUT', 200, 'fixture:successful_user_update.json');
     cy.get('#editLangPrefForm').click();
     cy.get(':nth-child(2) > .ui > label').click();
     cy.get('#email-language-submit-button').click();
@@ -218,58 +248,7 @@ describe('User can view their profile page - happy path', () => {
   });
 });
 
-describe('User can view their profile page - sad path', () => {
-  before(function () {
-    loadUserPageAPICalls();
-    cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-    cy.get('#user-icon').click({ force: true });
-  });
 
-  it('and does not change location successfully', () => {
-    cy.get('#editLocationForm').click();
-    cy.get('#location').click();
-    cy.get('.ui > #location > .visible > .item:nth-child(5) > .text').click();
-    cy.get('#location > .dropdown').click();
-    cy.get('#location-submit-button').click();
-    cy.contains('No location selected or location is unchanged!').should('exist');
-  });
-
-  it('and unsuccessfully tries to change password - invalid new password', () => {
-    cy.get('#editPasswordForm').click();
-    cy.get('#currentPassword').type('passwordD');
-    cy.get('#newPassword').type('SeCuReP@SsWoR');
-    cy.get('#newPasswordConfirmation').type('SeCuReP@SsWoRd', { force: true });
-    cy.get('#password-submit-button').click();
-    cy.contains(
-      "Check that 'new password' fields are an exact match with each other, they are between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!"
-    ).should('exist');
-  });
-
-  it('and unsuccessfully tries to change password - invalid existing password', () => {
-    cy.server();
-    deviseAuthPassword(422, {
-      success: false,
-      errors: { current_password: ['is invalid'], full_messages: ['Current password is invalid'] },
-    });
-    cy.get('#currentPassword').clear().type('passwordD');
-    cy.get('#newPassword').clear().type('SeCuReP@SsWoRd1');
-    cy.get('#newPasswordConfirmation').clear().type('SeCuReP@SsWoRd1', { force: true });
-    cy.get('#password-submit-button').click();
-    cy.contains('Current password is invalid').should('exist');
-  });
-
-  it('and unsuccessfully tries to change notification settings', () => {
-    cy.get('#editNotificationsForm').click();
-    cy.get('#notifications-submit-button').click();
-    cy.contains('No changes made to your settings!').should('exist');
-  });
-
-  it('and unsuccessfully tries to change email language preference settings', () => {
-    cy.get('#editLangPrefForm').click();
-    cy.get('#email-language-submit-button').click();
-    cy.contains('No changes made to your settings!').should('exist');
-  });
-});
 
 describe('User can view their profile page', () => {
   it('and delete their account - host profile exists - no Stripe errors', () => {

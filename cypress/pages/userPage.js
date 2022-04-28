@@ -47,10 +47,12 @@ class UserPage {
     paswordErrors: () => this.settingsSection.passwordUpdateForm().find('[data-cy=errors]'),
     
     notifications: () => this.settingsSection.self().find('[data-cy=notifications]'),
-    languagePref: () => this.settingsSection.self().find('[data-cy=language-pref]'),
-    
-    
     notificationsChangeLink: () => this.settingsSection.notifications().find('#editNotificationsForm'),
+    notificationsUpdateForm: () => this.settingsSection.self().find('[data-cy=notification-update-form]'),
+    notificationsToggle: () => this.settingsSection.notificationsUpdateForm().find('[data-cy=toggle]'),
+    notificationsSubmit: () => this.settingsSection.notificationsUpdateForm().find('[data-cy=submit]'),
+    
+    languagePref: () => this.settingsSection.self().find('[data-cy=language-pref]'),
     langPrefChangeLink: () => this.settingsSection.languagePref().find('#editLangPrefForm'),
 
   }
