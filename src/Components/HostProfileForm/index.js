@@ -9,6 +9,7 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import withAuth from '../../HOC/withAuth';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
@@ -200,7 +201,7 @@ const HostProfileForm = ({ userId, location }) => {
   if (!ready) return <Spinner />;
 
   return (
-    <ContentWrapper>
+    <ContentWrapper data-cy='create-host-profile-form'>
       <Header centered level={3} color='primary' space={2}>
         {t('HostProfileForm:create-profile')}
       </Header>
@@ -248,7 +249,7 @@ const HostProfileForm = ({ userId, location }) => {
       ) : (
         <>
           <Label>{t('HostProfileForm:labels.address')}</Label>
-          <Flexbox spaceItemsX={2} space={2} horizontalAlign='left' space={6}>
+          <Flexbox spaceItemsX={2} horizontalAlign='left' space={6}>
             <Text>{newHost.address}</Text>
             <InlineLink
               color='info'
@@ -377,4 +378,4 @@ const mapStateToProps = (state) => ({
   userId: state.reduxTokenAuth.currentUser.attributes.id,
 });
 
-export default connect(mapStateToProps)(HostProfileForm);
+export default connect(mapStateToProps)(withAuth(HostProfileForm));

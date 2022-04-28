@@ -3,6 +3,7 @@ import login from '../../pages/login';
 import userPage from '../../pages/userPage';
 import mockAPI from '../../support/api';
 import assert from '../../support/assertions';
+import createHostProfile from '../../pages/createHostProfile';
 
 describe('User tries to view profile page', () => {
   it('without logging in', () => {
@@ -226,6 +227,26 @@ describe('My settings', () => {
     userPage.settingsSection.langPrefOption('en').click();
     userPage.settingsSection.langPrefSubmit().click();
     assert.alert('Email language settings updated!');
+  });
+});
+
+describe.only('Cretating host profile', () => {
+  it('without logging in', () => {
+    nav.createHostProfile();
+    login.loginForm().should('exist');
+    createHostProfile.wrapper().should('not.exist');
+  });
+});
+
+describe('Viewing host profile -', () => {
+  it('no host profile', () => {
+    nav.userPage();
+    login.loginForm().should('exist');
+  });
+
+  it('host profile exists', () => {
+    nav.userPage();
+    login.loginForm().should('exist');
   });
 });
 
