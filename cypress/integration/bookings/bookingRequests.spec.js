@@ -33,7 +33,7 @@ describe('User can answer booking request', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/host_profile_individual.json',
     });
 
     cy.intercept('GET', `${auth_token_validation}`, {
@@ -126,7 +126,7 @@ describe('User encounters error when accepting a booking request', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/host_profile_individual.json',
     });
     cy.intercept('GET', `${bookingsRoute}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`, {
       statusCode: 200,
@@ -171,7 +171,7 @@ describe('User cannot accept booking requests', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/host_profile_individual.json',
     });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.bookings();

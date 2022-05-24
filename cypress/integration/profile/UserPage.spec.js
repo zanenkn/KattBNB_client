@@ -1,6 +1,6 @@
 import nav from '../../pages/navigation';
 import login from '../../pages/login';
-import userPage from '../../pages/userPage';
+import userPage, { hostProfile } from '../../pages/userPage';
 import mockAPI from '../../support/api';
 import assert from '../../support/assertions';
 import createHostProfile from '../../pages/createHostProfile';
@@ -27,7 +27,7 @@ describe('User views profile page when logged in', () => {
   });
 
   it('has host profile', () => {
-    mockAPI.userPage({ hostProfile: 'host_profile_individual.json' });
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.wrapper().should('exist');
@@ -101,7 +101,7 @@ describe('My settings', () => {
 
   it('user can change their location - host profile address mismatch', () => {
     mockAPI.userPage({
-      hostProfile: 'host_profile_individual.json',
+      hostProfile: 'hostProfile/host_profile_individual.json',
       tokenValidation: 'validate_token.json',
       userUpdate: 'successful_user_update.json',
     });
@@ -230,7 +230,7 @@ describe('My settings', () => {
   });
 });
 
-describe.only('Cretating host profile', () => {
+describe('Cretating host profile', () => {
   it('without logging in', () => {
     nav.createHostProfile();
     login.loginForm().should('exist');
@@ -240,13 +240,52 @@ describe.only('Cretating host profile', () => {
 
 describe('Viewing host profile -', () => {
   it('no host profile', () => {
-    nav.userPage();
-    login.loginForm().should('exist');
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.self().should('not.exist');
+    userPage.createHostProfileCta().should('exist');
+    userPage.wrapper().should('exist');
   });
 
   it('host profile exists', () => {
-    nav.userPage();
-    login.loginForm().should('exist');
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.self().should('exist');
+    hostProfile.description().should('exist').and('include.text', 'this is a description about me!!!!');
+    hostProfile
+      .address()
+      .should('exist')
+      .and('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+    hostProfile.rate().should('exist').and('include.text', '100 kr/day for 1 cat');
+    hostProfile.supplement().should('exist').and('include.text', 'Extra 35 kr/day per cat');
+    hostProfile.maxCats().should('exist').and('include.text', 'Maximum cats: 3');
+    hostProfile.availability().should('exist');
+    const dates = [23, 24, 25];
+    dates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
+    });
+  });
+});
+
+describe('Host profile progress bar', () => {
+  it('not visible if no host profile', () => {
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.hostProfileProgressBar.self().should('not.exist');
+  });
+
+  it('Stripe onboarding not started', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.hostProfileProgressBar.self().should('exist');
+    userPage.hostProfileProgressBar.getStep(1).should('have.attr', 'data-cy-active', 'true');
+    userPage.hostProfileProgressBar.getStep(2).should('have.attr', 'data-cy-active', 'false');
+    userPage.hostProfileProgressBar.getStep(3).should('have.attr', 'data-cy-active', 'false');
+    userPage.hostProfileProgressBar.cta().should('have.text', 'Enter payment information');
   });
 });
 

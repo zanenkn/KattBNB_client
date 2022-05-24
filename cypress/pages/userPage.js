@@ -11,10 +11,19 @@ class UserPage {
 
   hostProfile = {
     self: () => cy.get('[data-cy=host-profile]'),
+    description: () => cy.get('[data-cy=description]'),
+    rate: () => cy.get('[data-cy=rate]'),
+    supplement: () => cy.get('[data-cy=supplement]'),
+    maxCats: () => cy.get('[data-cy=max-cats]'),
+    address: () => cy.get('[data-cy=address]'),
+    availability: () => cy.get('[data-cy=availability]'),
+    availabilityDate: (date) => this.hostProfile.self().find(`[aria-label$="${date}"]`)
   };
 
   hostProfileProgressBar = {
     self: () => cy.get('[data-cy=host-profile-progress-bar]'),
+    getStep: (step) => this.hostProfileProgressBar.self().find(`[data-cy=step-${step}]`),
+    cta: () => this.hostProfileProgressBar.self().find('[data-cy=progress-bar-cta]'),
   };
 
   reviewsSection = {

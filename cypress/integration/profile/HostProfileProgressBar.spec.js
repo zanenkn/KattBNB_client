@@ -64,7 +64,7 @@ describe('User can see host profile progress bar from User Page', () => {
   });
 
   beforeEach(() => {
-    cy.fixture('host_profile_individual.json').then((host_profile) => {
+    cy.fixture('hostProfile/host_profile_individual.json').then((host_profile) => {
       host_profile.stripe_account_id = 'acct-852147963';
       cy.route({
         method: 'GET',

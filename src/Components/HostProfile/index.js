@@ -140,7 +140,7 @@ const HostProfile = forwardRef((props, ref) => {
         </Notice>
       )}
 
-      <DescriptionWrapper>
+      <DescriptionWrapper data-cy='description'>
         <User />
         {props.description}
         <InlineLink id='editDescriptionForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
@@ -157,7 +157,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <DescriptionWrapper id='address'>
+      <DescriptionWrapper data-cy='address'>
         <Address />
         {props.fullAddress}
         <InlineLink id='editAddress' onClick={(e) => formHandler(e)} text='sm' color='info'>
@@ -175,7 +175,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='rate'>
+      <FlexWrapper spaceBetween={2} data-cy='rate'>
         <Rate />
         <Text>
           {props.rate} {t('reusable:price:total-for-1')}
@@ -194,7 +194,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='supplement'>
+      <FlexWrapper spaceBetween={2} data-cy='supplement'>
         <Supplement />
         <Text>
           {t('HostProfile:extra')} {props.supplement} {t('reusable:price:total-day')}
@@ -213,7 +213,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='maxCats'>
+      <FlexWrapper spaceBetween={2} data-cy='max-cats'>
         <Cat />
         <Text>
           {t('HostProfile:max-cats')} {props.maxCats}
@@ -232,7 +232,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       </UpdateFormWrapper>
 
-      <FlexWrapper spaceBetween={2} id='availability'>
+      <FlexWrapper spaceBetween={2} data-cy='availability'>
         <Availabilty />
         <Text>{t('HostProfile:availability')}</Text>
         <InlineLink id='editableCalendar' onClick={(e) => formHandler(e)} text='sm' color='info'>
