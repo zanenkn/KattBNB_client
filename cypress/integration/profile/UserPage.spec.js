@@ -269,6 +269,74 @@ describe('Viewing host profile -', () => {
   });
 });
 
+describe('Editing host profile -', () => {
+  it('can edit description', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.description().should('include.text', 'this is a description about me!!!!');
+    hostProfile.change('description');
+    hostProfile.new('description', 'Brand new description, yo');
+    hostProfile.submitUpdated('description');
+    hostProfile.description().should('include.text', 'Brand new description, yo');
+  });
+
+  it('can close edited description without saving', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.description().should('include.text', 'this is a description about me!!!!');
+    hostProfile.change('description');
+    hostProfile.new('description', 'Brand new description, yo');
+    hostProfile.closeUpdateForm('description');
+    hostProfile.description().should('include.text', 'this is a description about me!!!!');
+  });
+
+  it('can not save an empty description', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.description().should('include.text', 'this is a description about me!!!!');
+    hostProfile.change('description');
+    hostProfile.clearField('description');
+    hostProfile.submitUpdated('description');
+    hostProfile.error('description').should('exist').and('have.text', 'Please enter a description about yourself');
+  });
+
+  it('can edit rate', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
+    hostProfile.change('rate');
+    hostProfile.new('rate', '666');
+    hostProfile.submitUpdated('rate');
+    hostProfile.rate().should('include.text', '666 kr/day for 1 cat');
+  });
+
+  it('can close edited rate without saving', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
+    hostProfile.change('rate');
+    hostProfile.new('rate', '666');
+    hostProfile.closeUpdateForm('rate');
+    hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
+  });
+
+  it.only('can close edited rate without saving', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
+    hostProfile.change('rate');
+    hostProfile.clearField('rate')
+    hostProfile.submitUpdated('rate');
+    hostProfile.error('rate').should('exist').and('have.text', 'Please enter your daily rate');
+  });
+});
+
 describe('Host profile progress bar', () => {
   it('not visible if no host profile', () => {
     mockAPI.userPage();
@@ -288,10 +356,12 @@ describe('Host profile progress bar', () => {
     userPage.hostProfileProgressBar.cta().should('have.text', 'Enter payment information');
   });
 
-  it.only('Stripe onboarding pending', () => {
-    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', stripeAccount: 'stripe_pending_verification.json' });
+  it('Stripe onboarding pending', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/host_profile_individual.json',
+      stripeAccount: 'stripe_pending_verification.json',
+    });
 
-    
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.hostProfileProgressBar.self().should('exist');

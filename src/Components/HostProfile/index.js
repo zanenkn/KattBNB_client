@@ -143,12 +143,12 @@ const HostProfile = forwardRef((props, ref) => {
       <DescriptionWrapper data-cy='description'>
         <User />
         {props.description}
-        <InlineLink id='editDescriptionForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editDescriptionForm' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </DescriptionWrapper>
 
-      <UpdateFormWrapper open={form.editDescriptionForm}>
+      <UpdateFormWrapper open={form.editDescriptionForm} data-cy='description-update-form'>
         <DescriptionUpdateForm
           description={props.description}
           id={props.id}
@@ -160,7 +160,7 @@ const HostProfile = forwardRef((props, ref) => {
       <DescriptionWrapper data-cy='address'>
         <Address />
         {props.fullAddress}
-        <InlineLink id='editAddress' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editAddress' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </DescriptionWrapper>
@@ -180,12 +180,12 @@ const HostProfile = forwardRef((props, ref) => {
         <Text>
           {props.rate} {t('reusable:price:total-for-1')}
         </Text>
-        <InlineLink id='editRateForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editRateForm' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>
 
-      <UpdateFormWrapper open={form.editRateForm}>
+      <UpdateFormWrapper open={form.editRateForm} data-cy='rate-update-form'>
         <RateUpdateForm
           rate={props.rate}
           id={props.id}
@@ -199,7 +199,7 @@ const HostProfile = forwardRef((props, ref) => {
         <Text>
           {t('HostProfile:extra')} {props.supplement} {t('reusable:price:total-day')}
         </Text>
-        <InlineLink id='editSupplementForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editSupplementForm' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>
@@ -218,7 +218,7 @@ const HostProfile = forwardRef((props, ref) => {
         <Text>
           {t('HostProfile:max-cats')} {props.maxCats}
         </Text>
-        <InlineLink id='editMaxCatsForm' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editMaxCatsForm' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>
@@ -235,7 +235,7 @@ const HostProfile = forwardRef((props, ref) => {
       <FlexWrapper spaceBetween={2} data-cy='availability'>
         <Availabilty />
         <Text>{t('HostProfile:availability')}</Text>
-        <InlineLink id='editableCalendar' onClick={(e) => formHandler(e)} text='sm' color='info'>
+        <InlineLink id='editableCalendar' data-cy='change' onClick={(e) => formHandler(e)} text='sm' color='info'>
           {t('reusable:cta:change')}
         </InlineLink>
       </FlexWrapper>

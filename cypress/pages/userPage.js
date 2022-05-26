@@ -17,7 +17,14 @@ class UserPage {
     maxCats: () => cy.get('[data-cy=max-cats]'),
     address: () => cy.get('[data-cy=address]'),
     availability: () => cy.get('[data-cy=availability]'),
-    availabilityDate: (date) => this.hostProfile.self().find(`[aria-label$="${date}"]`)
+    availabilityDate: (date) => this.hostProfile.self().find(`[aria-label$="${date}"]`),
+    change: (section) => this.hostProfile[section]().find('[data-cy=change]').click({force: true}),
+    updateWrapper: (section) => this.hostProfile.self().find(`[data-cy=${section}-update-form]`),
+    new: (section, text) => this.hostProfile.updateWrapper(section).find('[data-cy=new]').clear().type(text),
+    clearField: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=new]').clear(),
+    submitUpdated: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=submit]').click(),
+    closeUpdateForm: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=close]').click(),
+    error: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=error]')
   };
 
   hostProfileProgressBar = {

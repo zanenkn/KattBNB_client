@@ -98,6 +98,7 @@ class API {
     successfulPasswordChange = false,
     unsuccessfulPasswordChange = false,
     stripeAccount = false,
+    hostProfileUpdate = false,
   } = {}) => {
     cy.server();
 
@@ -175,6 +176,12 @@ class API {
           success: false,
           errors: { current_password: ['is invalid'], full_messages: ['Current password is invalid'] },
         },
+      });
+
+    hostProfileUpdate &&
+      cy.intercept('PATCH', `${api}/host_profiles/1`, {
+        statusCode: 200,
+        fixture: 'hostProfile/successful_host_profile_update.json',
       });
   };
 }
