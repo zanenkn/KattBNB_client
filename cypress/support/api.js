@@ -97,6 +97,7 @@ class API {
     tokenValidation = false,
     successfulPasswordChange = false,
     unsuccessfulPasswordChange = false,
+    stripeAccount = false,
   } = {}) => {
     cy.server();
 
@@ -118,9 +119,17 @@ class API {
       });
 
     hostProfile &&
+      !stripeAccount &&
       cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`, {
         statusCode: 200,
         body: { message: 'No account' },
+      });
+
+    hostProfile &&
+      stripeAccount &&
+      cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`, {
+        statusCode: 200,
+        fixture: stripeAccount,
       });
 
     hostProfile &&

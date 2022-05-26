@@ -287,6 +287,19 @@ describe('Host profile progress bar', () => {
     userPage.hostProfileProgressBar.getStep(3).should('have.attr', 'data-cy-active', 'false');
     userPage.hostProfileProgressBar.cta().should('have.text', 'Enter payment information');
   });
+
+  it.only('Stripe onboarding pending', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', stripeAccount: 'stripe_pending_verification.json' });
+
+    
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.hostProfileProgressBar.self().should('exist');
+    userPage.hostProfileProgressBar.getStep(1).should('have.attr', 'data-cy-active', 'true');
+    userPage.hostProfileProgressBar.getStep(2).should('have.attr', 'data-cy-active', 'true');
+    userPage.hostProfileProgressBar.getStep(3).should('have.attr', 'data-cy-active', 'false');
+    //userPage.hostProfileProgressBar.cta().should('have.text', 'Enter payment information');
+  });
 });
 
 // describe('User can view their profile page - happy path', () => {
