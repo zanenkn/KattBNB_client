@@ -204,7 +204,7 @@ const HostProfile = forwardRef((props, ref) => {
         </InlineLink>
       </FlexWrapper>
 
-      <UpdateFormWrapper open={form.editSupplementForm}>
+      <UpdateFormWrapper open={form.editSupplementForm} data-cy='supplement-update-form'>
         <SupplementUpdateForm
           supplement={props.supplement}
           id={props.id}
@@ -223,7 +223,7 @@ const HostProfile = forwardRef((props, ref) => {
         </InlineLink>
       </FlexWrapper>
 
-      <UpdateFormWrapper open={form.editMaxCatsForm}>
+      <UpdateFormWrapper open={form.editMaxCatsForm} data-cy='max-cats-update-form'>
         <MaxCatsUpdateForm
           maxCats={props.maxCats}
           id={props.id}
@@ -247,7 +247,7 @@ const HostProfile = forwardRef((props, ref) => {
         />
       )}
 
-      <UpdateFormWrapper open={form.editableCalendar}>
+      <UpdateFormWrapper open={form.editableCalendar} data-cy='availability-update-form'>
         <AvailabilityUpdateForm
           availability={props.availability}
           id={props.id}

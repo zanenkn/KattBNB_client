@@ -85,7 +85,7 @@ const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => 
         min='1'
         type='number'
         label={t('HostProfileForm:labels.supplement')}
-        id='supplement'
+        data-cy='new'
         value={newSupplement}
         onChange={(e) => setNewSupplement(Math.abs(e.target.value) || '')}
         required
@@ -93,7 +93,7 @@ const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => 
       />
 
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='error'>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -102,11 +102,11 @@ const SupplementUpdateForm = ({ id, supplement, closeAllForms, setElement }) => 
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='supplement-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='supplement-submit-button'
+          data-cy='submit'
           color='info'
           loading={loading}
           disabled={loading}

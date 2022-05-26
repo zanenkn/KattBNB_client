@@ -315,7 +315,7 @@ describe('Editing host profile -', () => {
   });
 
   it('can close edited rate without saving', () => {
-    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
@@ -325,15 +325,81 @@ describe('Editing host profile -', () => {
     hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
   });
 
-  it.only('can close edited rate without saving', () => {
-    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+  it('can not save an empty rate', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     hostProfile.rate().should('include.text', '100 kr/day for 1 cat');
     hostProfile.change('rate');
-    hostProfile.clearField('rate')
+    hostProfile.clearField('rate');
     hostProfile.submitUpdated('rate');
     hostProfile.error('rate').should('exist').and('have.text', 'Please enter your daily rate');
+  });
+
+  it('can edit supplement', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.supplement().should('include.text', 'Extra 35 kr/day per cat');
+    hostProfile.change('supplement');
+    hostProfile.new('supplement', '66');
+    hostProfile.submitUpdated('supplement');
+    hostProfile.supplement().should('include.text', 'Extra 66 kr/day per cat');
+  });
+
+  it('can close edited supplement without saving', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.supplement().should('include.text', 'Extra 35 kr/day per cat');
+    hostProfile.change('supplement');
+    hostProfile.new('supplement', '666');
+    hostProfile.closeUpdateForm('supplement');
+    hostProfile.supplement().should('include.text', 'Extra 35 kr/day per cat');
+  });
+
+  it('can not save an empty supplement', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.supplement().should('include.text', 'Extra 35 kr/day per cat');
+    hostProfile.change('supplement');
+    hostProfile.clearField('supplement');
+    hostProfile.submitUpdated('supplement');
+    hostProfile.error('supplement').should('exist').and('have.text', 'Please enter your daily supplement for one cat');
+  });
+
+  it('can edit max cats', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.maxCats().should('include.text', 'Maximum cats: 3');
+    hostProfile.change('maxCats');
+    hostProfile.new('max-cats', '5');
+    hostProfile.submitUpdated('max-cats');
+    hostProfile.maxCats().should('include.text', 'Maximum cats: 5');
+  });
+
+  it('can close edited max cats without saving', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.maxCats().should('include.text', 'Maximum cats: 3');
+    hostProfile.change('maxCats');
+    hostProfile.new('max-cats', '5');
+    hostProfile.closeUpdateForm('max-cats');
+    hostProfile.maxCats().should('include.text', 'Maximum cats: 3');
+  });
+
+  it('can not save an empty max cats field', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.maxCats().should('include.text', 'Maximum cats: 3');
+    hostProfile.change('maxCats');
+    hostProfile.clearField('max-cats');
+    hostProfile.submitUpdated('max-cats');
+    hostProfile.error('max-cats').should('exist').and('have.text', 'Please enter the max amount of cats you can host at the same time');
   });
 });
 
