@@ -2,24 +2,6 @@ import { api } from './constants';
 
 const defaultLoggedInUser = require('../fixtures/login/successful.json').data;
 
-// function deviseAuthRoute(method, status, response) {
-//   cy.route({
-//     method: method,
-//     url: `${api}/auth`,
-//     status: status,
-//     response: response,
-//   });
-// }
-
-// function deviseAuthPassword(status, response) {
-//   cy.route({
-//     method: 'PUT',
-//     url: `${api}/auth/password`,
-//     status: status,
-//     response: response,
-//   });
-// }
-
 // function getBookingStats(inR, inU, inH, inUnp, outR, outU, outH, outUnp) {
 //   cy.route({
 //     method: 'GET',
@@ -184,7 +166,7 @@ class API {
     hostProfileUpdate &&
       cy.intercept('PATCH', `${api}/host_profiles/1`, {
         statusCode: 200,
-        fixture: 'hostProfile/successful_host_profile_update.json',
+        fixture: 'hostProfile/update.json',
       });
   };
 }

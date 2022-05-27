@@ -39,7 +39,7 @@ describe('My settings', () => {
 
   it('user can change their location - host profile address mismatch', () => {
     mockAPI.userPage({
-      hostProfile: 'hostProfile/host_profile_individual.json',
+      hostProfile: 'hostProfile/individual.json',
       tokenValidation: 'validate_token.json',
       userUpdate: 'mySettings/user_update.json',
     });

@@ -11,7 +11,7 @@ describe('Host profile progress bar', () => {
   });
 
   it('Stripe onboarding not started', () => {
-    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json' });
+    mockAPI.userPage({ hostProfile: 'hostProfile/individual.json' });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
     userPage.hostProfileProgressBar.self().should('exist');
@@ -23,7 +23,7 @@ describe('Host profile progress bar', () => {
 
   it('Stripe onboarding pending', () => {
     mockAPI.userPage({
-      hostProfile: 'hostProfile/host_profile_individual.json',
+      hostProfile: 'hostProfile/individual.json',
       hostProfileModifications: {
         stripe_account_id: 'acct-123456',
       },
@@ -44,7 +44,7 @@ describe('Host profile progress bar', () => {
 
   it('Stripe onboarding pending - action required', () => {
     mockAPI.userPage({
-      hostProfile: 'hostProfile/host_profile_individual.json',
+      hostProfile: 'hostProfile/individual.json',
       hostProfileModifications: {
         stripe_account_id: 'acct-123456',
       },
@@ -68,7 +68,7 @@ describe('Host profile progress bar', () => {
 
   it('Stripe onboarding successful', () => {
     mockAPI.userPage({
-      hostProfile: 'hostProfile/host_profile_individual.json',
+      hostProfile: 'hostProfile/individual.json',
       hostProfileModifications: {
         stripe_account_id: 'acct-1234567',
       },
