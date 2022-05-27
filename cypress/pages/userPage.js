@@ -18,13 +18,13 @@ class UserPage {
     address: () => cy.get('[data-cy=address]'),
     availability: () => cy.get('[data-cy=availability]'),
     availabilityDate: (date) => this.hostProfile.self().find(`[aria-label$="${date}"]`),
-    change: (section) => this.hostProfile[section]().find('[data-cy=change]').click({force: true}),
+    change: (section) => this.hostProfile[section]().find('[data-cy=change]').click({ force: true }),
     updateWrapper: (section) => this.hostProfile.self().find(`[data-cy=${section}-update-form]`),
     new: (section, text) => this.hostProfile.updateWrapper(section).find('[data-cy=new]').clear().type(text),
     clearField: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=new]').clear(),
     submitUpdated: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=submit]').click(),
     closeUpdateForm: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=close]').click(),
-    error: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=error]')
+    error: (section) => this.hostProfile.updateWrapper(section).find('[data-cy=error]'),
   };
 
   hostProfileProgressBar = {
@@ -35,6 +35,29 @@ class UserPage {
 
   reviewsSection = {
     self: () => cy.get('[data-cy=reviews]'),
+    count: () => cy.get('[data-cy=review-count]'),
+    score: () => cy.get('[data-cy=average-score]').find('[data-cy=score]'),
+    wrapper: () => cy.get('[id=all-reviews]'),
+    review: (id) => {
+      return {
+        self: () => this.reviewsSection.self().find(`[data-cy=${id}]`),
+        avatar: () => this.reviewsSection.review(id).self().find('[data-cy=reviewer-avatar]'),
+        name: () => this.reviewsSection.review(id).self().find('[data-cy=reviewer-name]'),
+        date: () => this.reviewsSection.review(id).self().find('[data-cy=date]'),
+        score: () => this.reviewsSection.review(id).self().find('[data-cy=score]'),
+        body: () => this.reviewsSection.review(id).self().find('[data-cy=review-body]'),
+        reply: () => this.reviewsSection.review(id).self().find('[data-cy=reply]'),
+        replyForm: () => this.reviewsSection.review(id).self().find('[data-cy=reply-form]'),
+        replierAvatar: () => this.reviewsSection.review(id).reply().find('[data-cy=reply-avatar]'),
+        replierName: () => this.reviewsSection.review(id).reply().find('[data-cy=reply-name]'),
+        replyDate: () => this.reviewsSection.review(id).reply().find('[data-cy=reply-date]'),
+        replyBody: () => this.reviewsSection.review(id).reply().find('[data-cy=reply-body]'),
+        replyCTA: () => this.reviewsSection.review(id).replyForm().find('[data-cy=reply-cta]'),
+        replyInput: () => this.reviewsSection.review(id).replyForm().find('[data-cy=host-reply]'),
+        replyErrors: () => this.reviewsSection.review(id).replyForm().find('[data-cy=errors]'),
+        submitReply: () => this.reviewsSection.review(id).replyForm().find('[data-cy=submit]').click(),
+      };
+    },
   };
 
   username = () => cy.get('[data-cy=username]');

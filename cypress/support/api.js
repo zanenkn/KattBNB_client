@@ -82,6 +82,8 @@ class API {
     unsuccessfulPasswordChange = false,
     stripeAccount = false,
     hostProfileUpdate = false,
+    reviews = false,
+    replyReview = false,
   } = {}) => {
     cy.server();
 
@@ -119,9 +121,17 @@ class API {
       });
 
     hostProfile &&
+      reviews &&
       cy.intercept('GET', `${api}/reviews?host_profile_id=${hostProfileId}&locale=en-US`, {
         statusCode: 200,
-        fixture: 'one_user_reviews.json',
+        fixture: reviews,
+      });
+
+    hostProfile &&
+      !reviews &&
+      cy.intercept('GET', `${api}/reviews?host_profile_id=${hostProfileId}&locale=en-US`, {
+        statusCode: 200,
+        body: [],
       });
 
     hostProfile &&
@@ -167,6 +177,12 @@ class API {
       cy.intercept('PATCH', `${api}/host_profiles/1`, {
         statusCode: 200,
         fixture: 'hostProfile/update.json',
+      });
+
+    replyReview &&
+      cy.intercept('PATCH', `${api}/reviews/${replyReview}`, {
+        statusCode: 200,
+        body: '',
       });
   };
 

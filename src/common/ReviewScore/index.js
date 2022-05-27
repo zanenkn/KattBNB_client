@@ -18,10 +18,11 @@ const ReviewScore = ({
   displayNumerical,
   primaryColor,
   secondaryColor,
+  ...rest
 }) => {
   let points = [1, 2, 3, 4, 5];
   return (
-    <FlexWrapper horizontalAlign={center ? 'center' : 'left'} margin={margin} clickable={clickable}>
+    <FlexWrapper horizontalAlign={center ? 'center' : 'left'} margin={margin} clickable={clickable} {...rest}>
       {points.map((sc) => {
         if (score % 1 !== 0 && Math.floor(score) + 1 === sc) {
           return (
@@ -44,7 +45,7 @@ const ReviewScore = ({
           );
         }
       })}
-      {displayNumerical && <Text>({score % 1 !== 0 ? parseFloat(score).toFixed(1) : score}/5)</Text>}
+      {displayNumerical && <Text data-cy='score'>({score % 1 !== 0 ? parseFloat(score).toFixed(1) : score}/5)</Text>}
     </FlexWrapper>
   );
 };
@@ -60,12 +61,12 @@ ReviewScore.defaultProps = {
 };
 
 ReviewScore.propTypes = {
-  margin: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
+  margin: PropTypes.oneOf(Object.keys(spacing).map((k) => +k)),
   center: PropTypes.bool,
   clickable: PropTypes.bool,
   score: PropTypes.number,
   setScore: PropTypes.func,
-  height: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
+  height: PropTypes.oneOf(Object.keys(spacing).map((k) => +k)),
   displayNumerical: PropTypes.bool,
   primaryColor: PropTypes.oneOf(Object.keys(colors)),
   secondaryColor: PropTypes.oneOf(Object.keys(colors)),

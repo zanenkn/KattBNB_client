@@ -1,106 +1,109 @@
-// const api = 'http://localhost:3007/api/v1';
+import nav from '../../pages/navigation';
+import { reviewsSection } from '../../pages/userPage';
+import mockAPI from '../../support/api';
 
-// function updateHostProfile() {
-//   cy.server();
-//   cy.route({
-//     method: 'PATCH',
-//     url: `${api}/host_profiles/1`,
-//     status: 200,
-//     response: 'fixture:successful_host_profile_update.json',
-//   });
-// }
+describe('Reviews', () => {
+  it('not displayed when user has no reviews', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/individual.json' });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.self().should('exist').and('include.text', 'No reviews yet');
+  });
 
-// function checkWindowAlert(text) {
-//   cy.on('window:alert', (str) => {
-//     expect(str).to.equal(text);
-//   });
-// }
+  it('reviews are displayed', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/individual.json',
+      hostProfileModifications: { score: 3.666666666667 },
+      reviews: 'hostProfile/few_reviews.json',
+    });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.count().should('exist').and('have.text', '3 reviews received');
+    reviewsSection.score().should('exist').and('have.text', '(3.7/5)');
+    reviewsSection.wrapper().children().should('have.length', 3);
+    reviewsSection
+      .wrapper()
+      .children()
+      .each((review) => {
+        const reviewId = review[0].attributes['data-cy'].value;
 
-// describe('User can view their host profile', () => {
-//   before(() => {
-//     cy.server();
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/host_profiles?user_id=66&locale=en-US`,
-//       status: 200,
-//       response: 'fixture:host_profile_index.json',
-//     });
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/host_profiles/1?locale=en-US`,
-//       status: 200,
-//       response: 'fixture:host_profile_individual.json',
-//     });
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/stripe?locale=en-US&host_profile_id=1&occasion=retrieve`,
-//       status: 200,
-//       response: { message: 'No account' },
-//     });
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/reviews?host_profile_id=1&locale=en-US`,
-//       status: 200,
-//       response: 'fixture:one_user_reviews.json',
-//     });
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-//       status: 200,
-//       response: [],
-//     });
-//     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-//     cy.get('#user-icon').click({ force: true });
-//   });
+        reviewsSection.review(reviewId).avatar().should('exist');
+        reviewsSection.review(reviewId).name().should('exist');
+        reviewsSection.review(reviewId).date().should('exist');
+        reviewsSection.review(reviewId).score().should('exist');
+        reviewsSection.review(reviewId).body().should('exist');
+      });
+    reviewsSection.wrapper().children().eq(0).should('have.attr', 'data-cy', 'review-33');
+    reviewsSection.wrapper().children().eq(1).should('have.attr', 'data-cy', 'review-11');
+    reviewsSection.wrapper().children().eq(2).should('have.attr', 'data-cy', 'review-22');
+  });
 
-//   it('and see correct amount of reviews sorted by date - latest first', () => {
-//     cy.contains('My reviews').should('exist');
-//     cy.get('#all-reviews').children().first().should('have.id', 'review-33');
-//     cy.get('#all-reviews').children().last().should('have.id', 'review-22');
-//     cy.get('#all-reviews').children().should('have.length', '3');
-//   });
+  it('unanswered review is displayed correctly', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/individual.json',
+      hostProfileModifications: { score: 3.666666666667 },
+      reviews: 'hostProfile/few_reviews.json',
+    });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.review('review-11').avatar().should('exist');
+    reviewsSection.review('review-11').name().should('exist').and('have.text', 'Zane');
+    reviewsSection.review('review-11').date().should('exist');
+    reviewsSection.review('review-11').score().should('exist').and('include.text', '(5/5)');
+    reviewsSection.review('review-11').body().should('exist').and('have.text', 'Very good host, I recommend!');
+    reviewsSection.review('review-11').replyForm().should('exist');
+  });
 
-//   it('and see host profile score displayed', () => {
-//     cy.contains('3.7/5').should('exist');
-//   });
+  it('answered review is displayed correctly', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/individual.json',
+      hostProfileModifications: { score: 3.666666666667 },
+      reviews: 'hostProfile/few_reviews.json',
+    });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.review('review-33').avatar().should('exist');
+    reviewsSection.review('review-33').name().should('exist').and('have.text', 'Boa');
+    reviewsSection.review('review-33').date().should('exist');
+    reviewsSection.review('review-33').score().should('exist').and('include.text', '(2/5)');
+    reviewsSection.review('review-33').body().should('exist').and('have.text', 'A bad review for the sake of it');
+    reviewsSection.review('review-33').reply().should('exist');
+    reviewsSection.review('review-33').replierAvatar().should('exist');
+    reviewsSection.review('review-33').replierName().should('exist').and('have.text', 'GeorgeTheGreek');
+    reviewsSection.review('review-33').replyDate().should('exist');
+    reviewsSection.review('review-33').replyBody().should('exist').and('have.text', 'Sorry you feel that way!');
+  });
 
-//   it("and get a reply form to open when clicking 'Reply'", () => {
-//     cy.get('#review-33 > .fake-link-underlined').click();
-//     cy.get('#host-reply')
-//       .should('have.attr', 'placeholder')
-//       .should('contain', 'Here, you can reply to a review another user has left for you..');
-//   });
+  it('unanswered review can be replied', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/individual.json',
+      hostProfileModifications: { score: 3.666666666667 },
+      reviews: 'hostProfile/few_reviews.json',
+      replyReview: 11,
+    });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.review('review-11').replyCTA().click();
+    reviewsSection.review('review-11').replyInput().type('Thank you <3');
+    reviewsSection.review('review-11').submitReply();
+    reviewsSection.review('review-11').replyErrors().should('not.exist');
+  });
 
-//   it('and unsuccessfully reply to a review cause of no text or text > 1000 characters', () => {
-//     cy.get('#host-reply-submit-button').click();
-//     cy.contains('Reply cannot be empty!').should('exist');
-//     cy.get('#host-reply').type(
-//       'enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters  enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters enters more than 1000 characters and that is very bad apparently'
-//     );
-//     cy.get('#host-reply-submit-button').click();
-//     cy.contains('Reply cannot exceed 1000 characters!').should('exist');
-//   });
-
-//   it('and successfully reply to a review', () => {
-//     cy.server();
-//     cy.fixture('one_user_reviews.json').then((reviews) => {
-//       reviews[2].host_reply = 'Very satisfied';
-//       cy.route({
-//         method: 'GET',
-//         url: `${api}/reviews?host_profile_id=1&locale=en-US`,
-//         status: 200,
-//         response: reviews,
-//       });
-//     });
-//     cy.route({
-//       method: 'PATCH',
-//       url: `${api}/reviews/33`,
-//       status: 200,
-//       response: '',
-//     });
-//     cy.get('#host-reply').clear();
-//     cy.get('#host-reply').type('Very satisfied.');
-//     cy.get('#host-reply-submit-button').click();
-//     checkWindowAlert('You have successfully replied.');
-//   });
-// });
+  it('reply can not be longer than 1000 characters', () => {
+    mockAPI.userPage({
+      hostProfile: 'hostProfile/individual.json',
+      hostProfileModifications: { score: 3.666666666667 },
+      reviews: 'hostProfile/few_reviews.json',
+    });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    reviewsSection.review('review-11').replyCTA().click();
+    reviewsSection.review('review-11').replyInput().type('Thank you <3 '.repeat(100));
+    reviewsSection.review('review-11').submitReply();
+    reviewsSection
+      .review('review-11')
+      .replyErrors()
+      .should('exist')
+      .and('have.text', 'Reply cannot exceed 1000 characters!');
+  });
+});

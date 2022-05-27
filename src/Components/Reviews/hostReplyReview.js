@@ -83,10 +83,12 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
   };
 
   return (
-    <>
+    <div data-cy='reply-form'>
       {!replyFormOpen && (
         <Flexbox horizontalAlign='right' style={{ visibility: replyFormOpen ? 'hidden' : 'visible' }}>
-          <InlineLink onClick={() => setReplyFormOpen(true)} color='info'>{t('reusable:cta:reply')}</InlineLink>
+          <InlineLink onClick={() => setReplyFormOpen(true)} color='info' data-cy='reply-cta'>
+            {t('reusable:cta:reply')}
+          </InlineLink>
         </Flexbox>
       )}
 
@@ -94,7 +96,7 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
         <TextArea
           space={2}
           required
-          id='host-reply'
+          data-cy='host-reply'
           value={reply}
           onChange={(e) => setReply(e.target.value)}
           label={t('HostReplyReview:label')}
@@ -103,7 +105,7 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
           {t('reusable:remaining-chars')} {1000 - reply.length}
         </Text>
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice nature='danger' data-cy='errors'>
             <ul>
               {errors.map((error) => (
                 <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -112,11 +114,11 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
           </Notice>
         )}
         <Flexbox spaceItemsX={2}>
-          <Button secondary color='neutral' id='host-reply-close-button' onClick={() => closeButton()}>
+          <Button secondary color='neutral' data-cy='close' onClick={() => closeButton()}>
             {t('reusable:cta.cancel')}
           </Button>
           <Button
-            id='host-reply-submit-button'
+            data-cy='submit'
             color='info'
             loading={loading}
             disabled={loading}
@@ -126,7 +128,7 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
           </Button>
         </Flexbox>
       </ReplyFormWrapper>
-    </>
+    </div>
   );
 };
 

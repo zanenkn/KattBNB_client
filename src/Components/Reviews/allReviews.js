@@ -87,26 +87,32 @@ const AllReviews = ({ score, username, hostProfileId }) => {
       {score && !reviews.length && <Text italic>{t('reusable:errors:index-no-host-2')}</Text>}
       {score && (
         <>
-          <ReviewScore score={score} displayNumerical />
-          <Text italic space={6}>
+          <ReviewScore score={score} displayNumerical data-cy='average-score' />
+          <Text italic space={6} data-cy='review-count'>
             {t('AllReviews:review-count', { count: reviews.length })}
           </Text>
           <Divider botom={5} />
           <div id='all-reviews' ref={allReviews}>
             {reviews.map((review) => (
-              <Container key={review.id} id={`review-${review.id}`}>
+              <Container key={review.id} data-cy={`review-${review.id}`}>
                 <Flexbox horizontalAlign='left' spaceItemsX={1} space={3}>
                   <Avatar
+                    data-cy='reviewer-avatar'
                     size='md'
                     src={review.user?.profile_avatar ?? getAvatar(review.user && review.user.nickname)}
                   />
                   <Flexbox spaceItemsX={1} verticalAlign='bottom' horizontalAlign='left' wrap={true}>
-                    <Header level={5}>{review.user?.nickname ?? t('reusable:deleted-user')}</Header>
-                    <Text size='sm'>{moment(review.created_at).fromNow()}</Text>
+                    <Header level={5} data-cy='reviewer-name'>
+                      {review.user?.nickname ?? t('reusable:deleted-user')}
+                    </Header>
+                    <Text size='sm' data-cy='date'>
+                      {moment(review.created_at).fromNow()}
+                    </Text>
                   </Flexbox>
                 </Flexbox>
                 <Container space={2}>
                   <ReviewScore
+                    data-cy='score'
                     score={review.score}
                     displayNumerical={true}
                     height={4}
@@ -114,26 +120,33 @@ const AllReviews = ({ score, username, hostProfileId }) => {
                     primaryColor='neutral'
                   />
                 </Container>
-                <Text space={6}>{review.body}</Text>
+                <Text space={6} data-cy='review-body'>
+                  {review.body}
+                </Text>
                 {review.host_reply && (
-                  <ReplyWrapper right={4}>
+                  <ReplyWrapper right={4} data-cy='reply'>
                     <Flexbox horizontalAlign='left' spaceItemsX={1} space={1}>
-                      <Avatar size='xs' src={review.host_avatar ?? getAvatar(review.host_nickname)} />
+                      <Avatar
+                        size='xs'
+                        src={review.host_avatar ?? getAvatar(review.host_nickname)}
+                        data-cy='reply-avatar'
+                      />
                       <Flexbox spaceItemsX={1} verticalAlign='bottom' horizontalAlign='left' wrap={true}>
-                        <Header level={5}>{review.host_nickname}</Header>
-                        <Text size='sm'>{moment(review.updated_at).fromNow()}</Text>
+                        <Header level={5} data-cy='reply-name'>
+                          {review.host_nickname}
+                        </Header>
+                        <Text size='sm' data-cy='reply-date'>
+                          {moment(review.updated_at).fromNow()}
+                        </Text>
                       </Flexbox>
                     </Flexbox>
                     <ReplyWrapper right={6}>
-                      <Text>{review.host_reply}</Text>
+                      <Text data-cy='reply-body'>{review.host_reply}</Text>
                     </ReplyWrapper>
                   </ReplyWrapper>
                 )}
                 {!review.host_reply && review.host_nickname === username && (
-                  <HostReplyReview
-                    reviewId={review.id}
-                    reload={(reply) => setReload(reply)}
-                  />
+                  <HostReplyReview reviewId={review.id} reload={(reply) => setReload(reply)} />
                 )}
                 <Divider top={5} />
               </Container>
