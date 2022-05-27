@@ -190,7 +190,7 @@ class API {
     cy.server();
     cy.intercept('POST', `${api}/host_profiles`, {
       statusCode: 200,
-      fixture: 'successful_host_profile_creation.json',
+      fixture: 'hostProfile/create.json',
     });
   };
 }
