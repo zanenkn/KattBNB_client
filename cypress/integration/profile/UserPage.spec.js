@@ -66,170 +66,6 @@ describe('User can change the avatar', () => {
   });
 });
 
-describe('My settings', () => {
-  it('user can view their settings', () => {
-    mockAPI.userPage();
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-    userPage.settingsSection.self().should('exist');
-    userPage.settingsSection.email().should('exist').and('include.text', 'george@mail.com');
-    userPage.settingsSection.location().should('exist').and('include.text', 'Stockholm');
-    userPage.settingsSection.locationChangeLink().should('exist');
-    userPage.settingsSection.password().should('exist').and('include.text', '******');
-    userPage.settingsSection.passwordChangeLink().should('exist');
-    userPage.settingsSection.notifications().should('exist').and('include.text', 'Notification settings');
-    userPage.settingsSection.notificationsChangeLink().should('exist');
-    userPage.settingsSection.languagePref().should('exist').and('include.text', 'Email language');
-    userPage.settingsSection.langPrefChangeLink().should('exist');
-  });
-
-  it('user can change their location - no host profile', () => {
-    mockAPI.userPage({
-      tokenValidation: 'validate_token.json',
-      userUpdate: 'successful_user_update.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.locationChangeLink().click();
-    userPage.settingsSection.locationDropdown().click({ force: true });
-    userPage.settingsSection.locationOption('Vaxholm').click();
-    userPage.settingsSection.locationSubmit().click();
-    assert.alert('Location succesfully changed!');
-  });
-
-  it('user can change their location - host profile address mismatch', () => {
-    mockAPI.userPage({
-      hostProfile: 'hostProfile/host_profile_individual.json',
-      tokenValidation: 'validate_token.json',
-      userUpdate: 'successful_user_update.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.locationChangeLink().click();
-    userPage.settingsSection.locationDropdown().click({ force: true });
-    userPage.settingsSection.locationOption('Vaxholm').click();
-    userPage.settingsSection.locationSubmit().click();
-    assert.confirm(
-      'It seems that the location you selected does not match your host profile address. Are you sure you want to continue?'
-    );
-    assert.alert('Location succesfully changed!');
-  });
-
-  it('user can change their password successfully and be redirected to login', () => {
-    mockAPI.userPage({
-      successfulPasswordChange: 'successful_password_change_user_page.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true });
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordSubmit().click();
-    assert.alert('Your password was successfully changed!');
-    login.loginForm().should('exist');
-  });
-
-  it('user can not change their password if current password is incorrect', () => {
-    mockAPI.userPage({
-      unsuccessfulPasswordChange: 'successful_password_change_user_page.json',
-      tokenValidation: 'validate_token.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('wrongpassword', { force: true });
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordSubmit().click();
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Current password is invalid');
-  });
-
-  it('user can not change their password if current password is left empty', () => {
-    mockAPI.userPage();
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordConfirmation().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordSubmit().click();
-    userPage.settingsSection.paswordErrors().should('exist').and('have.text', 'Please enter your current password');
-  });
-
-  it('user can not change their password if new password is not compliant with password rules', () => {
-    mockAPI.userPage();
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true });
-    userPage.settingsSection.newPassword().type('pass', { force: true });
-    userPage.settingsSection.passwordConfirmation().type('pass', { force: true });
-    userPage.settingsSection.passwordSubmit().click();
-    userPage.settingsSection
-      .paswordErrors()
-      .should('exist')
-      .and(
-        'have.text',
-        'Your new password must be between 6 to 20 characters and contain at least one numeric digit, one uppercase and one lowercase letter!'
-      );
-  });
-
-  it('user can not change their password if new password does not match confirmation', () => {
-    mockAPI.userPage();
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-
-    userPage.settingsSection.passwordChangeLink().click();
-    userPage.settingsSection.currentPassword().type('password', { force: true });
-    userPage.settingsSection.newPassword().type('SeCuReP@SsWoRd1', { force: true });
-    userPage.settingsSection.passwordConfirmation().type('SomethingEntirelyElse', { force: true });
-    userPage.settingsSection.passwordSubmit().click();
-    userPage.settingsSection
-      .paswordErrors()
-      .should('exist')
-      .and('have.text', 'The new password and new password confirmation fields does not match, please re-type!');
-  });
-
-  it('user can change their notification settings', () => {
-    mockAPI.userPage({
-      userUpdate: 'successful_user_update.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-    userPage.settingsSection.notificationsChangeLink().click();
-    userPage.settingsSection.notificationsToggle().click();
-    userPage.settingsSection.notificationsSubmit().click();
-    assert.alert('Message notification settings updated!');
-  });
-
-  it('user can change their email language preference', () => {
-    mockAPI.userPage({
-      userUpdate: 'successful_user_update.json',
-    });
-
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-    userPage.settingsSection.langPrefChangeLink().click();
-    userPage.settingsSection.langPrefOption('en').click();
-    userPage.settingsSection.langPrefSubmit().click();
-    assert.alert('Email language settings updated!');
-  });
-});
-
 describe('Cretating host profile', () => {
   it('without logging in', () => {
     nav.createHostProfile();
@@ -322,7 +158,9 @@ describe('Editing host profile', () => {
     hostProfile.change('address');
     hostProfile.new('address', 'Göteborg');
     hostProfile.submitUpdated('address');
-    assert.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')
+    assert.confirm(
+      'It seems that the address you selected does not match your profile location. Are you sure you want to continue?'
+    );
     hostProfile.address().should('include.text', 'Göteborg');
   });
 
@@ -334,7 +172,7 @@ describe('Editing host profile', () => {
     hostProfile.change('address');
     hostProfile.clearField('address');
     hostProfile.submitUpdated('address');
-    hostProfile.error('address').should('exist').and('have.text', 'Please enter your address')
+    hostProfile.error('address').should('exist').and('have.text', 'Please enter your address');
   });
 
   it('can close without saving new address', () => {
@@ -444,49 +282,52 @@ describe('Editing host profile', () => {
     hostProfile.change('maxCats');
     hostProfile.clearField('max-cats');
     hostProfile.submitUpdated('max-cats');
-    hostProfile.error('max-cats').should('exist').and('have.text', 'Please enter the max amount of cats you can host at the same time');
+    hostProfile
+      .error('max-cats')
+      .should('exist')
+      .and('have.text', 'Please enter the max amount of cats you can host at the same time');
   });
 
   it('can edit availability', () => {
-    const now = new Date(2019, 8, 1).getTime()
+    const now = new Date(2019, 8, 1).getTime();
     const initiallySelectedDates = [23, 24, 25, 26, 27, 28, 29];
-    const extraDates = [20, 21, 22]
-    const merged = [...initiallySelectedDates, ...extraDates]
+    const extraDates = [20, 21, 22];
+    const merged = [...initiallySelectedDates, ...extraDates];
 
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    cy.clock(now)
+    cy.clock(now);
     initiallySelectedDates.forEach((date) => {
       hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
     });
-    hostProfile.change('availability')
-    extraDates.forEach((date)=> {
-      hostProfile.availabilityDate(`Sep ${date}, 2019`).click()
-    })
-    hostProfile.submitUpdated('availability')
+    hostProfile.change('availability');
+    extraDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).click();
+    });
+    hostProfile.submitUpdated('availability');
     merged.forEach((date) => {
       hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
     });
   });
 
   it('can close without saving availability', () => {
-    const now = new Date(2019, 8, 1).getTime()
+    const now = new Date(2019, 8, 1).getTime();
     const initiallySelectedDates = [23, 24, 25, 26, 27, 28, 29];
-    const extraDates = [20, 21, 22]
+    const extraDates = [20, 21, 22];
 
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
-    cy.clock(now)
+    cy.clock(now);
     initiallySelectedDates.forEach((date) => {
       hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
     });
-    hostProfile.change('availability')
-    extraDates.forEach((date)=> {
-      hostProfile.availabilityDate(`Sep ${date}, 2019`).click()
-    })
-    hostProfile.closeUpdateForm('availability')
+    hostProfile.change('availability');
+    extraDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).click();
+    });
+    hostProfile.closeUpdateForm('availability');
     extraDates.forEach((date) => {
       hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'false');
     });
@@ -495,8 +336,6 @@ describe('Editing host profile', () => {
     });
   });
 });
-
-
 
 // describe('User can view their profile page - happy path', () => {
 //   beforeEach(function () {

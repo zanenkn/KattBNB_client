@@ -169,7 +169,7 @@ class API {
     successfulPasswordChange &&
       cy.intercept('PUT', `${api}/auth/password`, {
         statusCode: 200,
-        fixture: 'successful_password_change_user_page.json',
+        fixture: 'mySettings/password_change.json',
       });
 
     unsuccessfulPasswordChange &&
