@@ -92,6 +92,7 @@ class API {
     userId = defaultLoggedInUser.id,
     hostProfileId = 1,
     hostProfile = false,
+    hostProfileModifications = {},
     userUpdate = false,
     avatarChange = false,
     tokenValidation = false,
@@ -114,9 +115,11 @@ class API {
     });
 
     hostProfile &&
-      cy.intercept('GET', `${api}/host_profiles/${hostProfileId}?locale=en-US`, {
-        statusCode: 200,
-        fixture: hostProfile,
+      cy.fixture(hostProfile).then((fixture) => {
+        cy.intercept('GET', `${api}/host_profiles/${hostProfileId}?locale=en-US`, {
+          statusCode: 200,
+          body: {...fixture, ...hostProfileModifications},
+        });
       });
 
     hostProfile &&

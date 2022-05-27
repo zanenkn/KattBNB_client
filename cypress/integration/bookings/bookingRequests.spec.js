@@ -192,7 +192,7 @@ describe('User cannot accept booking requests', () => {
   });
 
   it('if stripe verification is pending', () => {
-    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe_pending_verification.json' });
+    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe/pending_verification.json' });
 
     bookings.all.ctaToIncoming().click();
     bookings.incoming.bookingRequestCtaSection(0).should('not.exist');
@@ -206,7 +206,7 @@ describe('User cannot accept booking requests', () => {
   });
 
   it('if stripe verification is complete and errors exist', () => {
-    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe_verification_errors.json' });
+    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe/verification_with_errors.json' });
     bookings.all.ctaToIncoming().click();
     bookings.incoming.bookingRequestCtaSection(0).should('not.exist');
     bookings.incoming
