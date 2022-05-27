@@ -238,7 +238,7 @@ describe('Cretating host profile', () => {
   });
 });
 
-describe('Viewing host profile -', () => {
+describe('Viewing host profile', () => {
   it('no host profile', () => {
     mockAPI.userPage();
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -262,14 +262,14 @@ describe('Viewing host profile -', () => {
     hostProfile.supplement().should('exist').and('include.text', 'Extra 35 kr/day per cat');
     hostProfile.maxCats().should('exist').and('include.text', 'Maximum cats: 3');
     hostProfile.availability().should('exist');
-    const dates = [23, 24, 25];
+    const dates = [23, 24, 25, 26, 27, 28, 29];
     dates.forEach((date) => {
       hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
     });
   });
 });
 
-describe('Editing host profile -', () => {
+describe('Editing host profile', () => {
   it('can edit description', () => {
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
@@ -326,7 +326,7 @@ describe('Editing host profile -', () => {
     hostProfile.address().should('include.text', 'Göteborg');
   });
 
-  it.only('can not save blank address', () => {
+  it('can not save blank address', () => {
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.userPage();
@@ -347,8 +347,6 @@ describe('Editing host profile -', () => {
     hostProfile.closeUpdateForm('address');
     hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
   });
-
-
 
   it('can edit rate', () => {
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
@@ -447,6 +445,55 @@ describe('Editing host profile -', () => {
     hostProfile.clearField('max-cats');
     hostProfile.submitUpdated('max-cats');
     hostProfile.error('max-cats').should('exist').and('have.text', 'Please enter the max amount of cats you can host at the same time');
+  });
+
+  it('can edit availability', () => {
+    const now = new Date(2019, 8, 1).getTime()
+    const initiallySelectedDates = [23, 24, 25, 26, 27, 28, 29];
+    const extraDates = [20, 21, 22]
+    const merged = [...initiallySelectedDates, ...extraDates]
+
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now)
+    initiallySelectedDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
+    });
+    hostProfile.change('availability')
+    extraDates.forEach((date)=> {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).click()
+    })
+    hostProfile.submitUpdated('availability')
+    merged.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
+    });
+  });
+
+  it('can close without saving availability', () => {
+    const now = new Date(2019, 8, 1).getTime()
+    const initiallySelectedDates = [23, 24, 25, 26, 27, 28, 29];
+    const extraDates = [20, 21, 22]
+    const merged = [...initiallySelectedDates, ...extraDates]
+
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now)
+    initiallySelectedDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
+    });
+    hostProfile.change('availability')
+    extraDates.forEach((date)=> {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).click()
+    })
+    hostProfile.closeUpdateForm('availability')
+    extraDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'false');
+    });
+    initiallySelectedDates.forEach((date) => {
+      hostProfile.availabilityDate(`Sep ${date}, 2019`).should('have.attr', 'aria-selected', 'true');
+    });
   });
 });
 
