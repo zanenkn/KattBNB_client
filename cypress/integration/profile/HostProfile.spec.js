@@ -36,6 +36,154 @@ describe('Viewing host profile', () => {
   });
 });
 
+describe('Creating host profile', () => {
+  it('without logging in', () => {
+    nav.createHostProfile();
+    login.loginForm().should('exist');
+    createHostProfile.wrapper().should('not.exist');
+  });
+
+  it('successfully', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.rate().type('100');
+    createHostProfile.supplement().type('20');
+    createHostProfile.maxCats().type('2', { force: true });
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile.errors().should('not.exist');
+    cy.location('pathname').should('eq', '/user-page');
+  });
+
+  it('can not be created with blank description', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.rate().type('100');
+    createHostProfile.supplement().type('20');
+    createHostProfile.maxCats().type('2', { force: true });
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile.errors().should('exist').and('include.text', 'Please enter a description about yourself');
+  });
+
+  it('can not be created with blank address', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.rate().type('100');
+    createHostProfile.supplement().type('20');
+    createHostProfile.maxCats().type('2', { force: true });
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile.errors().should('exist').and('include.text', 'Please enter your address');
+  });
+
+  it('can not be created with blank rate', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.supplement().type('20');
+    createHostProfile.maxCats().type('2', { force: true });
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile.errors().should('exist').and('include.text', 'Please enter your daily rate');
+  });
+
+  it('can not be created with blank supplement', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.rate().type('100');
+    createHostProfile.maxCats().type('2', { force: true });
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile.errors().should('exist').and('include.text', 'Please enter your daily supplement for one cat');
+  });
+
+  it('can not be created with blank max cats', () => {
+    const now = new Date(2019, 8, 1).getTime();
+    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    cy.clock(now);
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.rate().type('100');
+    createHostProfile.supplement().type('20');
+    datesToSelect.forEach((date) => {
+      createHostProfile.chooseDate(`Sep ${date}, 2019`);
+    });
+    createHostProfile.submit();
+    createHostProfile
+      .errors()
+      .should('exist')
+      .and('include.text', 'Please enter the max amount of cats you can host at the same time');
+  });
+
+  it('can not be created with blank availability', () => {
+    mockAPI.createHostProfile();
+    mockAPI.userPage();
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    userPage.createHostProfileCta().click();
+    createHostProfile.description().type('Here is a good description about myself');
+    createHostProfile.address().type('Trumpetgatan 20');
+    createHostProfile.rate().type('100');
+    createHostProfile.supplement().type('20');
+    createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.submit();
+    createHostProfile.errors().should('exist').and('include.text', 'Please enter your availability');
+  });
+});
+
 describe('Editing host profile', () => {
   it('can edit description', () => {
     mockAPI.userPage({ hostProfile: 'hostProfile/individual.json', hostProfileUpdate: true });
@@ -268,14 +416,6 @@ describe('Editing host profile', () => {
   });
 });
 
-describe('Creating host profile', () => {
-  it('without logging in', () => {
-    nav.createHostProfile();
-    login.loginForm().should('exist');
-    createHostProfile.wrapper().should('not.exist');
-  });
-});
-
 // describe('User can view their profile page - happy path', () => {
 //   beforeEach(function () {
 //     loadUserPageAPICalls();
@@ -324,76 +464,5 @@ describe('Creating host profile', () => {
 //     cy.contains(
 //       'Make sure your Stripe account balance is 0 and try again. If this error persists, please contact our support staff.'
 //     ).should('exist');
-//   });
-// });
-
-
-
-
-// describe('User can create a host profile', () => {
-//   beforeEach(() => {
-//     cy.server();
-//     cy.route({
-//       method: 'GET',
-//       url: `${host_profiles}?user_id=66&locale=en-US`,
-//       status: 200,
-//       response: [],
-//     });
-//     cy.route({
-//       method: 'GET',
-//       url: `${api}/bookings?dates=only&stats=no&host_nickname=GeorgeTheGreek&locale=en-US`,
-//       status: 200,
-//       response: [],
-//     });
-//     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);
-//     cy.get('#user-icon').click({ force: true });
-//   });
-
-//   it('successfully', () => {
-//     updateProfile(200, 'fixture:successful_host_profile_creation.json');
-//     cy.contains(
-//       'You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.'
-//     ).should('exist');
-//     cy.get('#createHostProfileForm').click();
-//     cy.get('#host-profile-form').within(() => {
-//       let text = [
-//         ['#description', 'I hate people but I love cats! Nerd life chose me!'],
-//         ['#rate', '100'],
-//         ['#maxCats', '3'],
-//         ['#supplement', '35'],
-//       ];
-//       text.forEach((element) => {
-//         cy.get(element[0]).type(element[1]);
-//       });
-//     });
-//     cy.get('#userInputAddress').type('Solståndsgatan 23');
-//     cy.get('#search').click();
-//     pickCalendarDates();
-//     cy.on('window:alert', (str) => {
-//       expect(str).to.equal('You have successfully created your host profile!');
-//     });
-//   });
-
-//   it('unsuccessfully', () => {
-//     updateProfile(422, 'fixture:unsuccessful_host_profile_creation.json');
-//     cy.contains(
-//       'You are not registered as a cat host and do not appear in the search. If you would like to host cats, please create a host profile.'
-//     ).should('exist');
-//     cy.get('#createHostProfileForm').click();
-//     cy.get('#host-profile-form').within(() => {
-//       let text = [
-//         ['#rate', '100'],
-//         ['#maxCats', '3'],
-//         ['#supplement', '250'],
-//       ];
-//       text.forEach((element) => {
-//         cy.get(element[0]).type(element[1]);
-//       });
-//     });
-//     cy.get('#userInputAddress').type('Solståndsgatan 23');
-//     cy.get('#search').click();
-//     pickCalendarDates();
-//     cy.contains("Description can't be blank").should('exist');
-//     cy.contains("Supplement price per cat per day can't be blank").should('exist');
 //   });
 // });

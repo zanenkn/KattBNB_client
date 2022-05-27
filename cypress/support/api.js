@@ -100,7 +100,7 @@ class API {
       cy.fixture(hostProfile).then((fixture) => {
         cy.intercept('GET', `${api}/host_profiles/${hostProfileId}?locale=en-US`, {
           statusCode: 200,
-          body: {...fixture, ...hostProfileModifications},
+          body: { ...fixture, ...hostProfileModifications },
         });
       });
 
@@ -168,6 +168,14 @@ class API {
         statusCode: 200,
         fixture: 'hostProfile/update.json',
       });
+  };
+
+  createHostProfile = () => {
+    cy.server();
+    cy.intercept('POST', `${api}/host_profiles`, {
+      statusCode: 200,
+      fixture: 'successful_host_profile_creation.json',
+    });
   };
 }
 
