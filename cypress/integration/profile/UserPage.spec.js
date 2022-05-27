@@ -303,6 +303,53 @@ describe('Editing host profile -', () => {
     hostProfile.error('description').should('exist').and('have.text', 'Please enter a description about yourself');
   });
 
+  it('can edit address - city same as in settings', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+    hostProfile.change('address');
+    hostProfile.new('address', 'Södermalm');
+    hostProfile.submitUpdated('address');
+    hostProfile.address().should('include.text', 'Södermalm');
+  });
+
+  it('can edit address - city different from settings', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+    hostProfile.change('address');
+    hostProfile.new('address', 'Göteborg');
+    hostProfile.submitUpdated('address');
+    assert.confirm('It seems that the address you selected does not match your profile location. Are you sure you want to continue?')
+    hostProfile.address().should('include.text', 'Göteborg');
+  });
+
+  it.only('can not save blank address', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+    hostProfile.change('address');
+    hostProfile.clearField('address');
+    hostProfile.submitUpdated('address');
+    hostProfile.error('address').should('exist').and('have.text', 'Please enter your address')
+  });
+
+  it('can close without saving new address', () => {
+    mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
+    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
+    nav.to.userPage();
+    hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+    hostProfile.change('address');
+    hostProfile.new('address', 'Göteborg');
+    hostProfile.closeUpdateForm('address');
+    hostProfile.address().should('include.text', 'Charles de Gaulle Airport (CDG), 95700 Roissy-en-France, France');
+  });
+
+
+
   it('can edit rate', () => {
     mockAPI.userPage({ hostProfile: 'hostProfile/host_profile_individual.json', hostProfileUpdate: true });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);

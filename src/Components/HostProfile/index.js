@@ -165,7 +165,7 @@ const HostProfile = forwardRef((props, ref) => {
         </InlineLink>
       </DescriptionWrapper>
 
-      <UpdateFormWrapper open={form.editAddress}>
+      <UpdateFormWrapper open={form.editAddress} data-cy='address-update-form'>
         <AddressUpdateForm
           fullAddress={props.fullAddress}
           id={props.id}

@@ -132,15 +132,14 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
       <Text space={5}>{t('HostProfileForm:helpers.address')}</Text>
       <TextField
         space={5}
-  
+        data-cy='new'
         label={t('HostProfileForm:labels.address')}
         required
-        id='userInputAddress'
         value={userInputAddress}
         onChange={(e) => setUserInputAddress(e.target.value)}
       />
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='error'>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -149,11 +148,11 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='address-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='address-submit-button'
+          data-cy='submit'
           color='info'
           loading={loading}
           disabled={loading}
