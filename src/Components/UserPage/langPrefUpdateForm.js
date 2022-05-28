@@ -75,12 +75,14 @@ const LangPrefUpdateForm = (props) => {
         value='sv-SE'
         checked={langPref}
         onChange={() => handleRadioBtnClick('sv-SE')}
+        data-cy='se'
       />
       <RadioButton
         label='I want to get emails from KattBNB in English'
         value='en-US'
         checked={langPref}
         onChange={() => handleRadioBtnClick('en-US')}
+        data-cy='en'
       />
       {errors.length > 0 && (
         <Notice nature='danger'>
@@ -104,17 +106,11 @@ const LangPrefUpdateForm = (props) => {
           {t('reusable:cta.cancel')}
         </Button>
 
-        <Button
-          id='email-language-submit-button'
-          color='info'
-          loading={loading}
-          disabled={loading}
-          onClick={() => updateLangPref()}
-        >
+        <Button data-cy='submit' color='info' loading={loading} disabled={loading} onClick={() => updateLangPref()}>
           {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
-      <Divider top={5}/>
+      <Divider top={5} />
     </>
   );
 };

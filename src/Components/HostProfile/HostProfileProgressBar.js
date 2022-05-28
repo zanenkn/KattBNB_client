@@ -132,7 +132,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
   if (loading || !ready) return <Spinner />;
 
   return (
-    <Container space={8}>
+    <Container space={8} data-cy='host-profile-progress-bar'>
       <ProgressBarWrapper space={5}>
         <Explained>
           <StepIcon active={activeStep >= 1}>
@@ -147,9 +147,9 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
         </Explained>
         <ProgressStepWrapper>
           <ProgressBarSteps>
-            <ProgressBarStep active={activeStep >= 1}>1</ProgressBarStep>
-            <ProgressBarStep active={activeStep >= 2}>2</ProgressBarStep>
-            <ProgressBarStep active={activeStep >= 3}>3</ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 1} data-cy-active={activeStep >= 1} data-cy="step-1">1</ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 2} data-cy-active={activeStep >= 2} data-cy="step-2">2</ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 3} data-cy-active={activeStep >= 3} data-cy="step-3">3</ProgressBarStep>
           </ProgressBarSteps>
           <ProggressBarLine>
             <InnerLine width={activeStep === 1 ? '25%' : activeStep === 2 ? '75%' : '100%'} />
@@ -185,7 +185,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
           </Text>
 
           <Button
-            id='progress-bar-cta'
+            data-cy='progress-bar-cta'
             onClick={() => window.open(`https://connect.stripe.com/express/oauth/authorize?client_id=${
               process.env.REACT_APP_OFFICIAL === 'yes'
                 ? process.env.REACT_APP_STRIPE_CLIENT_ID
@@ -206,7 +206,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
             onClick={() => fetchStripeDashboardLink()}
             loading={stripeDashboardButtonLoading}
             disabled={stripeDashboardButtonLoading}
-            id='progress-bar-cta'
+            data-cy='progress-bar-cta'
           >
             {t('reusable:stripe:stripe-dashboard-cta')}
           </Button>
@@ -225,7 +225,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
               onClick={() => fetchStripeDashboardLink()}
               loading={stripeDashboardButtonLoading}
               disabled={stripeDashboardButtonLoading}
-              id='progress-bar-cta'
+              data-cy='progress-bar-cta'
             >
               {t('reusable:stripe:stripe-dashboard-cta')}
             </Button>

@@ -398,13 +398,13 @@ const UserPage = (props) => {
           userId={props.id}
           closeAllForms={avatarFormHandler.bind(this)}
         />
-        <Header level={4} space={2} centered>
+        <Header data-cy='username' level={4} space={2} centered>
           <User height={4} />
           &ensp;{props.username}
         </Header>
         <FlexWrapper centered spaceBetween={1}>
           <Location height={4} />
-          <Text>{element.location}</Text>
+          <Text data-cy='location'>{element.location}</Text>
         </FlexWrapper>
       </Container>
 
@@ -441,29 +441,29 @@ const UserPage = (props) => {
       {!hostProfile.length && (
         <MaxWidth>
           <Text centered>{t('UserPage:no-host-profile')}</Text>
-          <Button id='createHostProfileForm' onClick={() => history.push('/create-host-profile')}>
+          <Button data-cy='create-host-profile-cta' onClick={() => history.push('/create-host-profile')}>
             {t('UserPage:host-profile-cta')}
           </Button>
         </MaxWidth>
       )}
-      <Whitebox>
+      <Whitebox data-cy='settings-section'>
         <Header level={4} space={5} centered>
           {t('UserPage:settings-header')}
         </Header>
         <SettingsWrapper>
-          <FlexWrapper spaceBetween={2}>
+          <FlexWrapper spaceBetween={2} data-cy='email'>
             <Email height={4} />
             <Text>{props.email}</Text>
           </FlexWrapper>
 
-          <FlexWrapper spaceBetween={2} id='user-location'>
+          <FlexWrapper spaceBetween={2} data-cy='location'>
             <Location />
             <Text>{element.location}</Text>
             <InlineLink id='editLocationForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editLocationForm}>
+          <UpdateFormWrapper open={form.editLocationForm} data-cy='location-update-form'>
             {form.editLocationForm && (
               <LocationUpdateForm
                 location={element.location}
@@ -473,27 +473,27 @@ const UserPage = (props) => {
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper spaceBetween={2}>
+          <FlexWrapper spaceBetween={2} data-cy='password'>
             <Lock />
             <Text>******</Text>
             <InlineLink id='editPasswordForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editPasswordForm}>
+          <UpdateFormWrapper open={form.editPasswordForm} data-cy='password-update-form'>
             {form.editPasswordForm && (
               <PasswordUpdateForm closeLocationAndPasswordForms={closeLocationAndPasswordForms} />
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper spaceBetween={2}>
+          <FlexWrapper spaceBetween={2} data-cy='notifications'>
             <Notification />
             <Text>{t('UserPage:notifications-header')}</Text>
             <InlineLink id='editNotificationsForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editNotificationsForm}>
+          <UpdateFormWrapper open={form.editNotificationsForm} data-cy='notification-update-form'>
             {form.editNotificationsForm && (
               <NotificationsUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
@@ -502,14 +502,14 @@ const UserPage = (props) => {
             )}
           </UpdateFormWrapper>
 
-          <FlexWrapper spaceBetween={2}>
+          <FlexWrapper spaceBetween={2} data-cy='language-pref'>
             <Globe />
             <Text>{t('UserPage:lang-pref-header')}</Text>
             <InlineLink id='editLangPrefForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
-          <UpdateFormWrapper open={form.editLangPrefForm}>
+          <UpdateFormWrapper open={form.editLangPrefForm} data-cy='language-pref-update-form'>
             {form.editLangPrefForm && (
               <LangPrefUpdateForm
                 closeLocationAndPasswordForms={closeLocationAndPasswordForms}
@@ -520,7 +520,7 @@ const UserPage = (props) => {
         </SettingsWrapper>
       </Whitebox>
       {hostProfile.length === 1 && (
-        <Whitebox>
+        <Whitebox data-cy='reviews'>
           <Header level={4} space={5} centered>
             {t('UserPage:reviews-header')}
           </Header>

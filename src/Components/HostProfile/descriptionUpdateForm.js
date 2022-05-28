@@ -89,12 +89,12 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
       <TextArea
         space={5}
         required
-        id='newDescription'
+        data-cy='new'
         value={newDescription}
         onChange={(e) => setNewDescription(e.target.value)}
       />
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='error'>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -103,11 +103,11 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='description-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='description-submit-button'
+          data-cy='submit'
           color='info'
           loading={loading}
           disabled={loading}

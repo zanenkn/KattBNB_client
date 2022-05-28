@@ -28,9 +28,9 @@ export const StyledUpdateFormWrapper = styled.div`
   padding: 0 2px;
 `;
 
-export const UpdateFormWrapper = ({ open, children }) => {
+export const UpdateFormWrapper = ({ open, children, ...rest }) => {
   return (
-    <StyledUpdateFormWrapper open={open}>
+    <StyledUpdateFormWrapper open={open} {...rest}>
       {open && (
         <>
           <Divider bottom={5} />

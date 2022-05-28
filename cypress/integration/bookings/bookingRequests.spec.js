@@ -33,7 +33,7 @@ describe('User can answer booking request', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/individual.json',
     });
 
     cy.intercept('GET', `${auth_token_validation}`, {
@@ -126,7 +126,7 @@ describe('User encounters error when accepting a booking request', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/individual.json',
     });
     cy.intercept('GET', `${bookingsRoute}?stats=yes&user_id=66&host_nickname=GeorgeTheGreek&locale=en-US`, {
       statusCode: 200,
@@ -171,7 +171,7 @@ describe('User cannot accept booking requests', () => {
 
     cy.intercept('GET', `${api}/host_profiles/1?locale=en-US`, {
       statusCode: 200,
-      fixture: 'host_profile_individual.json',
+      fixture: 'hostProfile/individual.json',
     });
     cy.login('login/successful.json', 'george@mail.com', 'password', 200);
     nav.to.bookings();
@@ -192,7 +192,7 @@ describe('User cannot accept booking requests', () => {
   });
 
   it('if stripe verification is pending', () => {
-    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe_pending_verification.json' });
+    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe/pending_verification.json' });
 
     bookings.all.ctaToIncoming().click();
     bookings.incoming.bookingRequestCtaSection(0).should('not.exist');
@@ -206,7 +206,7 @@ describe('User cannot accept booking requests', () => {
   });
 
   it('if stripe verification is complete and errors exist', () => {
-    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe_verification_errors.json' });
+    cy.intercept('GET', `${url.stripe}`, { statusCode: 200, fixture: 'stripe/verification_with_errors.json' });
     bookings.all.ctaToIncoming().click();
     bookings.incoming.bookingRequestCtaSection(0).should('not.exist');
     bookings.incoming

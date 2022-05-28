@@ -69,7 +69,7 @@ const NotificationsUpdateForm = (props) => {
     <>
       <Divider />
       <NotificationsWrapper>
-        <Toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} />
+        <Toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} data-cy='toggle'/>
         <Text tint={messageNotifications ? 100 : 60}>{t('NotificationsUpdateForm:label')}</Text>
       </NotificationsWrapper>
 
@@ -97,7 +97,7 @@ const NotificationsUpdateForm = (props) => {
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='notifications-submit-button'
+          data-cy='submit'
           color='info'
           disabled={loading}
           loading={loading}

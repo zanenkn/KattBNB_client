@@ -79,7 +79,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
         min='1'
         type='number'
         label={t('HostProfileForm:labels.max-cats')}
-        id='max-cats'
+        data-cy='new'
         value={newMaxCats}
         onChange={(e) => setNewMaxCats(Math.round(Math.abs(e.target.value)) || '')}
         required
@@ -87,7 +87,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
       />
 
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='error'>
           <ul>
             {errors.map((error) => (
               <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
@@ -96,11 +96,11 @@ const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='maxCats-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='maxCats-submit-button'
+          data-cy='submit'
           color='info'
           loading={loading}
           disabled={loading}

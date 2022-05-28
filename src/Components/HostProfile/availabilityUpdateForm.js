@@ -110,11 +110,11 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, closeAllFo
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' id='availability-close-button' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
-          id='availability-submit-button'
+          data-cy='submit'
           color='info'
           loading={loading}
           disabled={loading}

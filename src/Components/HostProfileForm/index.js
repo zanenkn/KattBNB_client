@@ -9,6 +9,7 @@ import MomentLocaleUtils from 'react-day-picker/moment';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import withAuth from '../../HOC/withAuth';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
@@ -200,12 +201,13 @@ const HostProfileForm = ({ userId, location }) => {
   if (!ready) return <Spinner />;
 
   return (
-    <ContentWrapper>
+    <ContentWrapper data-cy='create-host-profile-form'>
       <Header centered level={3} color='primary' space={2}>
         {t('HostProfileForm:create-profile')}
       </Header>
       <Text centered>{t('HostProfileForm:create-profile-main-title')}</Text>
       <TextArea
+        data-cy='description'
         space={2}
         label={t('HostProfileForm:labels.about')}
         value={newHost.description}
@@ -235,7 +237,7 @@ const HostProfileForm = ({ userId, location }) => {
               style={{ flexGrow: 1 }}
               label={t('HostProfileForm:labels.address')}
               required
-              id='userInputAddress'
+              data-cy='address'
               value={userInputAddress}
               onChange={(e) => setUserInputAddress(e.target.value)}
               onBlur={() => (userInputAddress !== '' ? geolocationDataAddress() : undefined)}
@@ -248,7 +250,7 @@ const HostProfileForm = ({ userId, location }) => {
       ) : (
         <>
           <Label>{t('HostProfileForm:labels.address')}</Label>
-          <Flexbox spaceItemsX={2} space={2} horizontalAlign='left' space={6}>
+          <Flexbox spaceItemsX={2} horizontalAlign='left' space={6}>
             <Text>{newHost.address}</Text>
             <InlineLink
               color='info'
@@ -278,7 +280,7 @@ const HostProfileForm = ({ userId, location }) => {
             space={2}
             type='number'
             label={t('HostProfileForm:labels.rate')}
-            id='rate'
+            data-cy='rate'
             value={newHost.rate}
             onChange={(e) => setNewHost((prev) => ({ ...prev, rate: (Math.abs(e.target.value) || '').toString() }))}
             required
@@ -293,7 +295,7 @@ const HostProfileForm = ({ userId, location }) => {
             space={2}
             type='number'
             label={t('HostProfileForm:labels.supplement')}
-            id='supplement'
+            data-cy='supplement'
             value={newHost.supplement}
             onChange={(e) =>
               setNewHost((prev) => ({ ...prev, supplement: (Math.abs(e.target.value) || '').toString() }))
@@ -311,7 +313,7 @@ const HostProfileForm = ({ userId, location }) => {
             min='1'
             type='number'
             label={t('HostProfileForm:labels.max-cats')}
-            id='maxCats'
+            data-cy='max-cats'
             value={newHost.maxCats}
             onChange={(e) =>
               setNewHost((prev) => ({ ...prev, maxCats: (Math.round(Math.abs(e.target.value)) || '').toString() }))
@@ -333,7 +335,7 @@ const HostProfileForm = ({ userId, location }) => {
 
       <Label>{t('HostProfileForm:labels.availability')}</Label>
       <Text>{t('HostProfileForm:helpers.availability')}</Text>
-      <Container space={8}>
+      <Container space={8} data-cy='availability'>
         <DayPicker
           showWeekNumbers
           fromMonth={today}
@@ -346,7 +348,7 @@ const HostProfileForm = ({ userId, location }) => {
         />
       </Container>
       {errors.length > 0 && (
-        <Notice nature='danger'>
+        <Notice nature='danger' data-cy='errors'>
           <Text bold centered>
             {t('HostProfileForm:create-error-title')}
           </Text>
@@ -361,7 +363,7 @@ const HostProfileForm = ({ userId, location }) => {
         {t('HostProfileForm:disclaimer')}
       </Text>
       <Button
-        id='save-host-profile-button'
+        data-cy='submit'
         disabled={loading}
         loading={loading}
         onClick={() => validator.onSubmit(createHostProfile)}
@@ -377,4 +379,4 @@ const mapStateToProps = (state) => ({
   userId: state.reduxTokenAuth.currentUser.attributes.id,
 });
 
-export default connect(mapStateToProps)(HostProfileForm);
+export default connect(mapStateToProps)(withAuth(HostProfileForm));
