@@ -20,7 +20,7 @@ const useReviews = () => {
       return;
     }
     axios
-      .get(`/api/v1/reviews?locale=${lang}`)
+      .get(`/api/v1/random_reviews/reviews?locale=${lang}`)
       .then((resp) => {
         setReviews(reviewTransformer(resp.data));
         setLoading(false);
@@ -53,7 +53,7 @@ const reviewTransformer = (reviews) => {
       location: review.user.location,
       avatar: review.user.profile_avatar,
       created: review.created_at,
-      score: review.score
-    }
-  })
-}
+      score: review.score,
+    };
+  });
+};
