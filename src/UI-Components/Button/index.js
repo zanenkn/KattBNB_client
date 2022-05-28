@@ -3,7 +3,7 @@ import { theme } from '../../Styles/theme';
 import PropTypes from 'prop-types';
 import { Refresh } from '../../icons';
 
-const { colors, spacing } = theme;
+const { colors, spacing, fontSize } = theme;
 
 const Styled = styled.button`
   opacity: ${({ disabled }) => (disabled ? '0.6' : '1')};
@@ -28,6 +28,14 @@ const Flex = styled.div`
   display: flex;
   position: relative;
   margin-bottom: ${({ space }) => spacing[space]};
+  > a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: ${fontSize['sm']};
+    text-align: center;
+    width: ${({fixedWidth}) => fixedWidth ?? 'auto'}
+  }
 `;
 
 const Icon = styled.div`
@@ -39,9 +47,9 @@ const Icon = styled.div`
   cursor: pointer;
 `;
 
-const Button = ({ centered, color, disabled, loading, secondary, space, ...rest }) => {
+const Button = ({ centered, color, disabled, fixedWidth, loading, secondary, space, ...rest }) => {
   return (
-    <Flex space={space}>
+    <Flex space={space} fixedWidth={fixedWidth}>
       {loading && (
         <Icon>
           <div className='spin-it'>

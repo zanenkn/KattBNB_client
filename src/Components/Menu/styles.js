@@ -14,6 +14,7 @@ export const MenuWrapper = styled.div`
   background-color: ${colors['neutral'][20]};
   height: calc(var(--vh, 1vh) * 100);
   top: 0;
+  left: ${({ visible }) => (visible ? '0' : '100%')};
   > button {
     box-sizing: content-box;
     display: block;
@@ -25,28 +26,7 @@ export const MenuWrapper = styled.div`
     background: none;
     border: none;
   }
-  animation-name: ${({ visible }) => (visible ? slideIn : slideOut)};
-  animation-duration: 0.2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-`;
-
-const slideIn = keyframes`
-  from {
-    left: 100%;
-  }
-  to {
-    left: 0;
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    left: 0;
-  }
-  to {
-    left: 100%;
-  }
+  transition: all 0.3s ease;
 `;
 
 export const MenuLink = styled.a`

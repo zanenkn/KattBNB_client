@@ -56,7 +56,7 @@ const App = () => {
       </Responsive>
       <ScrollToTop>
         <Switch>
-          <Route exact path='/' component={Landing}></Route>
+          <Route exact path='/' component={withFooter(Landing)}></Route>
           <Route exact path='/search' component={Search}></Route>
           <Route exact path='/search-results' component={SearchResults}></Route>
           <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
