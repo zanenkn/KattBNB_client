@@ -25,6 +25,7 @@ import List from './list';
 import GoogleMap from './map';
 import Profile from './profile';
 import HostPopup from './HostPopup';
+import RequestToBook from './request';
 
 const SearchResults = ({ id, currentSearch, location }) => {
   const lang = detectLanguage();
@@ -180,7 +181,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
     const href = new URL(window.location.href);
     href.searchParams.set('view', results);
 
-    if (results === 'profile' && hostPopupOpen) {
+    if ((results === 'profile' || results === 'request') && hostPopupOpen) {
       href.searchParams.append('host', hostPopupOpen);
     }
 
@@ -221,6 +222,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
           id={hostPopupOpen}
           onClose={() => onCloseHostPopup()}
           toHostProfile={() => setResults('profile')}
+          requestToBook={() => setResults('request')}
         />
       )}
 
@@ -293,9 +295,10 @@ const SearchResults = ({ id, currentSearch, location }) => {
                 )}
               </Text>
             )}
-            {results === 'profile' && (
+            {(results === 'profile' || results === 'request') && (
               <InlineLink onClick={() => setResults('map')}>{t('SearchResults:back')}</InlineLink>
             )}
+            
           </JustifiedWrapper>
         </SearchCriteriaWrapper>
       </SecondaryStickyHeader>
@@ -324,6 +327,11 @@ const SearchResults = ({ id, currentSearch, location }) => {
       {results === 'profile' && (
         <SearchResultWrapper padding={150}>
           <Profile currentSearch={currentSearch} id={queryString.parse(location.search).host} />
+        </SearchResultWrapper>
+      )}
+      {results === 'request' && (
+        <SearchResultWrapper padding={150}>
+          <RequestToBook currentSearch={currentSearch} id={queryString.parse(location.search).host} />
         </SearchResultWrapper>
       )}
     </>

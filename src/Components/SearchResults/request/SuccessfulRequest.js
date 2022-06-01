@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Spinner from '../../common/Spinner';
+//import Spinner from '../../common/Spinner';
 import moment from 'moment';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -25,9 +25,9 @@ const SuccessfulRequest = ({ history }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (!ready) {
-    return <Spinner />
-  }
+  // if (!ready) {
+  //   return <Spinner />
+  // }
 
   return <div>a</div>
 

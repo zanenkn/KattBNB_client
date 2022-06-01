@@ -19,7 +19,7 @@ import { Badge } from '../styles';
 import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';
 import { Location, User, Review, AvailableHost } from '../../../icons';
 
-const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile }) => {
+const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile, requestToBook }) => {
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
   const history = useHistory();
@@ -139,7 +139,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
           secondary={!isAvailable}
           space={6}
           id='request-to-book'
-          onClick={() => history.push('/request-to-book')}
+          onClick={() => requestToBook()}
           color={isAvailable ? 'primary' : 'neutral'}
         >
           {isAvailable ? t('reusable:cta.book') : t('reusable:request-cta.btn')}

@@ -18,8 +18,7 @@ import SignUp from './Components/Authentication/SignUp';
 import PasswordReset from './Components/Authentication/PasswordReset';
 import ChangePassword from './Components/Authentication/ChangePassword';
 import UserPage from './Components/UserPage';
-import RequestToBook from './Components/RequestToBook';
-import SuccessfulRequest from './Components/RequestToBook/SuccessfulRequest';
+import SuccessfulRequest from './Components/SearchResults/request/SuccessfulRequest';
 import AllBookings from './Components/Bookings/AllBookings';
 import OutgoingBookings from './Components/Bookings/OutgoingBookings';
 import IncomingBookings from './Components/Bookings/IncomingBookings';
@@ -77,7 +76,6 @@ const App = () => {
             path='/password-reset-success'
             render={(props) => <SuccessScreenAuth {...props} translationFile={'PasswordResetSuccess'} />}
           />
-          <Route exact path='/request-to-book' component={RequestToBook}></Route>
           <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
           <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
           <Route exact path='/booking-details' component={BookingDetails}></Route>

@@ -1,4 +1,5 @@
 export { default as Address } from './src/Address';
+export { default as Amex } from './src/Amex';
 export { default as Availabilty } from './src/Availabilty';
 export { default as AvailableHost } from './src/AvailableHost';
 export { default as Camera } from './src/Camera';
@@ -23,6 +24,7 @@ export { default as List } from './src/List';
 export { default as Location } from './src/Location';
 export { default as Lock } from './src/Lock';
 export { default as Map } from './src/Map';
+export { default as Mastercard } from './src/Mastercard';
 export { default as Menu } from './src/Menu';
 export { default as Notification } from './src/Notification';
 export { default as Rate } from './src/Rate';
