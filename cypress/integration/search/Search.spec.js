@@ -1,9 +1,39 @@
-describe('Search', () => {
-  it('successful', () => {
+import nav from '../../pages/navigation';
+import search from '../../pages/search';
+import mockAPI from '../../support/api';
+import {api} from '../../support/constants'
 
+describe('Search', () => {
+  beforeEach(() => {});
+
+  it('successful', () => {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: `${api}/host_profiles?location=Dorotea&startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US`,
+      status: 200,
+      response: { with: [], without: [] },
+    });
+    cy.route({
+      method: 'GET',
+      url: `${api}/host_profiles?startDate=1577059200000&endDate=1577750400000&cats=1&locale=en-US`,
+      status: 200,
+      response: { with: [], without: [] },
+    });
+    nav.landing();
+    const now = new Date(2019, 11, 1).getTime();
+    cy.clock(now);
+    nav.to.search();
+    search.location().click();
+    search.locationOption('Dorotea').click();
+    search.fromField().click();
+    search.pickDate(`Dec 23, 2019`);
+    search.pickDate(`Dec 31, 2019`);
+    search.cats().type('1', { force: true });
+    search.submit()
+    cy.wait(10000)
   });
 });
-
 
 // const api = 'http://localhost:3007/api/v1';
 
@@ -88,7 +118,6 @@ describe('Search', () => {
 //   });
 // });
 
-
 // const api = 'http://localhost:3007/api/v1';
 // const email = 'george@mail.com';
 
@@ -146,10 +175,6 @@ describe('Search', () => {
 //     cy.get('#66').should('not.exist');
 //   });
 // });
-
-
-
-
 
 // const api = 'http://localhost:3007/api/v1';
 

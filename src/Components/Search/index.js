@@ -132,14 +132,14 @@ const Search = ({ history, dispatch, currentSearch }) => {
       <Header color='primary' centered>
         {t('Search:title')}
       </Header>
-      <Whitebox>
+      <Whitebox data-cy='search'>
         <div id='search-form' style={{ margin: 'auto', maxWidth: '177px' }}>
           <div className='InputFromTo'>
             <DayPicker
               dayPickerRef={fromField}
               label={t('Search:checkin')}
               required
-              id='from'
+              data-cy='from'
               value={from ? moment(from).format('LL') : ''}
               onChange={() => handleFromChange()}
               format='LL'
@@ -163,7 +163,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
               dayPickerRef={toField}
               label={t('Search:checkout')}
               required
-              id='from'
+              data-cy='to'
               value={to ? moment(to).format('LL') : ''}
               onChange={() => handleToChange()}
               space={1}
@@ -205,7 +205,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
             label={t('Search:how-many')}
             type='number'
             required
-            id='cats'
+            data-cy='cats'
             value={cats}
             onChange={(e) => setCats(e.target.value)}
             onKeyPress={(e) => listenEnterKeySearch(e)}
@@ -225,7 +225,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
           </Notice>
         )}
 
-        <Button id='search-button' onClick={() => validator.onSubmit(search)}>
+        <Button data-cy='submit' onClick={() => validator.onSubmit(search)}>
           {t('Search:cta')}
         </Button>
         <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

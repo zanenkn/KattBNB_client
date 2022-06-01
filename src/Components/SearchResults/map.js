@@ -7,6 +7,7 @@ import Marker from './marker';
 
 const GoogleMap = ({ allAvailableHosts, byLocationAvailableHosts, handleDatapointClick, onUnmount, config }) => {
   useLayoutEffect(() => {
+    debugger
     return () => {
       onUnmount(mapRef.current.getCenter().lat(), mapRef.current.getCenter().lng(), mapRef.current.zoom);
     };

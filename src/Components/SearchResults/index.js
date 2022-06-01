@@ -142,7 +142,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
         }
         setAvailableByLocation(APIavailableByLocation.concat(APInotAvailableByLocation));
         setLoading(false);
-        setResults(queryString.parse(location.search).view ? queryString.parse(location.search).view : 'map');
+        setResults('list');
         geolocationDataAddress(searchParams.location);
 
         const responseAllLocations = await axios.get(

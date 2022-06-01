@@ -44,7 +44,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
 
         <ItemWrapper>
           <MenuItem>
-            <InlineLink as={Link} to='/search'>
+            <InlineLink as={Link} to='/search' data-cy='nav-search'>
               {t('reusable:navigation.search')}
             </InlineLink>
           </MenuItem>

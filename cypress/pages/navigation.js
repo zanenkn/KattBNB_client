@@ -6,6 +6,7 @@ class Navigation {
   landing = () => cy.visit(`${client}`);
   userPage = () => cy.visit(`${client}/user-page`);
   createHostProfile = () => cy.visit(`${client}/create-host-profile`);
+  search = () => cy.visit(`${client}/search`);
 
   to = {
     bookings: () => cy.get('[data-cy=nav-bookings]').click({ force: true }),
@@ -13,6 +14,7 @@ class Navigation {
     logout: () => cy.get('[data-cy=nav-logout]').click({ force: true }),
     signup: () => cy.get('[data-cy=nav-signup]').click({ force: true }),
     userPage: () => cy.get('[data-cy=nav-user-page]').click({ force: true }),
+    search: () => cy.get('[data-cy=nav-search]').click()
   };
 }
 
