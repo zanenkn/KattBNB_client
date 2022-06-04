@@ -6,20 +6,20 @@ import { Link, useHistory } from 'react-router-dom';
 import { useFetchHost } from '../HostPopup/useFetchHost';
 import { connect } from 'react-redux';
 
-import { Header, TextArea, Notice, Text, Flexbox, Button } from '../../../UI-Components';
-import { Amex, Mastercard } from '../../../icons';
+import { Header, TextArea, Notice, Text, Flexbox, Button, InlineLink } from '../../../UI-Components';
+import { Amex, Mastercard, Visa, Stripe, User } from '../../../icons';
 import Spinner from '../../../common/Spinner';
 import { formValidation } from '../../../Modules/formValidation';
-
-import StripeCardDetails from './stripeCardDetails';
-import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { pricePerDay, hostTotal, finalTotal } from '../../../Modules/PriceCalculations';
-import { InnerResultWrapper } from '../styles';
-import Visa from '../../../icons/src/Visa';
 
-const RequestToBook = ({ id, currentSearch, userId }) => {
+import StripeCardDetails from './stripeCardDetails';
+import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
+
+import { InnerResultWrapper } from '../styles';
+
+const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
   const history = useHistory();
   const { host } = useFetchHost(id);
@@ -98,6 +98,7 @@ const RequestToBook = ({ id, currentSearch, userId }) => {
   };
 
   useEffect(() => {
+    window.scroll(0, 0)
     // what do here? without restricting the url from being accessed directly
 
     // if (history.action === 'POP') {
@@ -232,7 +233,17 @@ const RequestToBook = ({ id, currentSearch, userId }) => {
 
   return (
     <InnerResultWrapper>
-      <Text>You are requesting to book with </Text>
+      <Flexbox spaceItemsX={1} horizontalAlign={'left'} wrap space={4} verticalAlign={'baseline'}>
+        <Header level={4}>Request to book with</Header>
+        <Header level={4}>
+          <InlineLink color={'primary'} onClick={() => toHost(host.userId)}>
+            {host.name}
+          </InlineLink>
+        </Header>
+        <InlineLink onClick={() => toResults()} text={'sm'} color='info'>
+          {t('reusable:cta.change')}
+        </InlineLink>
+      </Flexbox>
 
       <TextArea
         label={t('reusable:plch.message')}
@@ -245,11 +256,11 @@ const RequestToBook = ({ id, currentSearch, userId }) => {
       <Text size='sm' italic right data-cy='remaining-characters'>
         {t('reusable:remaining-chars')} {400 - message.length}
       </Text>
-      <Flexbox spaceItemsX={1}>
+      {/* <Flexbox spaceItemsX={1}>
         <Visa height={5} />
         <Mastercard height={5} />
         <Amex height={5} />
-      </Flexbox>
+      </Flexbox> */}
 
       <>
         <div className='payment-wrapper'>
@@ -279,18 +290,22 @@ const RequestToBook = ({ id, currentSearch, userId }) => {
         >
           {t('reusable:request-cta.pay-btn')} {orderTotal} kr
         </Button>
-        <p className='smallprint' style={{ marginTop: '2rem' }}>
+        <Text>
           <Trans i18nKey='RequestToBook:smallprint'>
-            Our payment provider is <a href='https://stripe.com/about'>Stripe</a>. When you request the booking we
-            reserve the amount shown above from your bank card. Host then will have 3 days to accept or decline your
-            booking request. In an event of cancelled or declined booking request, the reserved amount will be released
-            within 7 days of the initial request date. You can read more on how we handle payments{' '}
-            <Link to='/faq?section=payments&active=503'>in our FAQ</Link>.
+            Text
+            <InlineLink color='info' href='https://stripe.com/about'>
+              Link
+            </InlineLink>
+            text
+            <InlineLink color='info' to='/faq?section=payments&active=503'>
+              link
+            </InlineLink>
+            .
           </Trans>
-        </p>
-        {/* <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1rem' }}>
-              <Stripe height={'2rem'} />
-            </div> */}
+        </Text>
+        <Flexbox>
+          <Stripe height={6} tint={40} />
+        </Flexbox>
 
         {paymentProcessingDisplay && (
           <div

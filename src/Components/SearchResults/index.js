@@ -298,7 +298,6 @@ const SearchResults = ({ id, currentSearch, location }) => {
             {(results === 'profile' || results === 'request') && (
               <InlineLink onClick={() => setResults('map')}>{t('SearchResults:back')}</InlineLink>
             )}
-            
           </JustifiedWrapper>
         </SearchCriteriaWrapper>
       </SecondaryStickyHeader>
@@ -326,12 +325,21 @@ const SearchResults = ({ id, currentSearch, location }) => {
       )}
       {results === 'profile' && (
         <SearchResultWrapper padding={150}>
-          <Profile currentSearch={currentSearch} id={queryString.parse(location.search).host} />
+          <Profile
+            currentSearch={currentSearch}
+            id={queryString.parse(location.search).host}
+            toRequest={() => setResults('request')}
+          />
         </SearchResultWrapper>
       )}
       {results === 'request' && (
         <SearchResultWrapper padding={150}>
-          <RequestToBook currentSearch={currentSearch} id={queryString.parse(location.search).host} />
+          <RequestToBook
+            currentSearch={currentSearch}
+            id={queryString.parse(location.search).host}
+            toHost={() => setResults('profile')}
+            toResults={() => setResults('map')}
+          />
         </SearchResultWrapper>
       )}
     </>

@@ -45,7 +45,7 @@ Flexbox.propTypes = {
   spaceItems: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   spaceItemsX: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
   spaceItemsY: PropTypes.oneOf(Object.keys(spacing).map((key) => parseInt(key))),
-  verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center']),
+  verticalAlign: PropTypes.oneOf(['top', 'bottom', 'center', 'baseline']),
   maxWidth: PropTypes.string,
   wrap: PropTypes.bool,
 };

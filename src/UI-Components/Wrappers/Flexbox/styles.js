@@ -59,6 +59,10 @@ export const StyledFlexbox = styled.div`
           return css`
             align-items: end;
           `;
+        case 'baseline':
+          return css`
+            align-items: baseline;
+          `;
         default:
           return css`
             align-items: center;

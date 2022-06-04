@@ -17,7 +17,7 @@ import { Availabilty, AvailableHost, CreditCard, Location, Review, User, Cat } f
 
 import AllReviews from '../Reviews/allReviews';
 
-const HostInfo = ({ currentSearch, host }) => {
+const HostInfo = ({ currentSearch, host, toRequest }) => {
   const { t, ready } = useTranslation('HostInfo');
   const device = useDeviceInfo();
   const history = useHistory();
@@ -95,7 +95,7 @@ const HostInfo = ({ currentSearch, host }) => {
                 secondary={!isAvailable}
                 color={isAvailable ? 'primary' : 'neutral'}
                 space={2}
-                onClick={() => history.push('/request-to-book')}
+                onClick={() => toRequest()}
               >
                 {isAvailable ? `${t('reusable:cta.book')} - ${orderTotal} kr` : t('reusable:request-cta.btn')}
               </Button>
@@ -146,7 +146,7 @@ const HostInfo = ({ currentSearch, host }) => {
               </Flexbox>
             </Flexbox>
           </BookingCTAWrapper>
-          <Button secondary={!isAvailable} space={2}>
+          <Button secondary={!isAvailable} space={2} onClick={() => toRequest()}>
             {t('reusable:cta.book')} - {orderTotal} kr
           </Button>
         </Whitebox>
