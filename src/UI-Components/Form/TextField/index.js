@@ -63,7 +63,7 @@ const Label = styled.label`
     up &&
     css`
       color: ${colors.neutral[100]};
-      transform: scale(1) translate(-2px, -2px);
+      transform: scale(1) translate(1px, -2px);
       font-weight: 700;
       font-style: normal;
       ${required &&

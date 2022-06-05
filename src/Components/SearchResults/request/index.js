@@ -2,22 +2,22 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useFetchHost } from '../HostPopup/useFetchHost';
 import { connect } from 'react-redux';
+import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-import { Header, TextArea, Notice, Text, Flexbox, Button, InlineLink } from '../../../UI-Components';
-import { Amex, Mastercard, Visa, Stripe, User } from '../../../icons';
-import Spinner from '../../../common/Spinner';
 import { formValidation } from '../../../Modules/formValidation';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { pricePerDay, hostTotal, finalTotal } from '../../../Modules/PriceCalculations';
 
-import StripeCardDetails from './stripeCardDetails';
-import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import Spinner from '../../../common/Spinner';
 
+import { Header, TextArea, Notice, Text, Flexbox, Button, InlineLink } from '../../../UI-Components';
+import { Stripe } from '../../../icons';
 import { InnerResultWrapper } from '../styles';
+import CheckoutForm from './checkoutForm';
 
 const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
@@ -98,7 +98,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   };
 
   useEffect(() => {
-    window.scroll(0, 0)
+    window.scroll(0, 0);
     // what do here? without restricting the url from being accessed directly
 
     // if (history.action === 'POP') {
@@ -225,8 +225,6 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         setPaymentProcessingDisplay(false);
       }
     }
-    //}
-    // }
   };
 
   if (!ready || !host) return <Spinner />;
@@ -247,7 +245,6 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
       <TextArea
         label={t('reusable:plch.message')}
-        //placeholder={t('RequestToBook:message-plch')}
         required
         data-cy='message'
         value={message}
@@ -256,23 +253,13 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       <Text size='sm' italic right data-cy='remaining-characters'>
         {t('reusable:remaining-chars')} {400 - message.length}
       </Text>
-      {/* <Flexbox spaceItemsX={1}>
-        <Visa height={5} />
-        <Mastercard height={5} />
-        <Amex height={5} />
-      </Flexbox> */}
-
       <>
-        <div className='payment-wrapper'>
-          <StripeCardDetails
-            onChangeCardHolder={(e) => setCardholderName(e.target.value)}
-            onChangePostalCode={(e) => setPostalCode(e.target.value)}
-            cardholderName={cardholderName}
-            postalCode={postalCode}
-            stripe={stripe}
-            elements={elements}
-          />
-        </div>
+        <CheckoutForm
+          onChangeCardHolder={(val) => setCardholderName(val)}
+          onChangePostalCode={(val) => setPostalCode(val)}
+          cardholderName={cardholderName}
+          postalCode={postalCode}
+        />
         {errors.length > 0 && (
           <Notice nature='danger' data-cy='error'>
             <ul>
@@ -335,7 +322,6 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
 const mapStateToProps = (state) => ({
   userId: state.reduxTokenAuth.currentUser.attributes.id,
-  locationRedux: state.reduxTokenAuth.currentUser.attributes.location,
   currentSearch: state.currentSearch,
 });
 
