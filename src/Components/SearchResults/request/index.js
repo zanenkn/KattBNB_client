@@ -92,8 +92,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         window.alert(t('RequestToBook:error-555'));
         history.push('/search');
       } else if (response.status === 401) {
-        window.alert(t('reusable:errors.401'));
-        wipeCredentials('/');
+        history.push('/login')
       } else {
         setErrors([response.data.error]);
       }
