@@ -20,6 +20,7 @@ import { Stripe } from '../../../icons';
 import { InnerResultWrapper } from '../styles';
 import CheckoutForm from './checkoutForm';
 import PaymentProcessingDisplay from './paymentProcessingDisplay';
+import { getAvatar } from '../../../Modules/getAvatar';
 
 const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
@@ -101,11 +102,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
   useEffect(() => {
     window.scroll(0, 0);
-    // what do here? without restricting the url from being accessed directly
 
-    // if (history.action === 'POP') {
-    //   history.push({ pathname: '/' });
-    // } else {
     if (host) {
       setPerDay(pricePerDay(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end));
       setOrderTotal(finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end));
@@ -146,10 +143,12 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         history.push({
           pathname: '/successful-request',
           state: {
-            numberOfCats: currentSearch.cats,
-            checkInDate: currentSearch.start,
-            checkOutDate: currentSearch.end,
-            nickname: host.name,
+            cats: currentSearch.cats,
+            start: currentSearch.start,
+            end: currentSearch.end,
+            name: host.name,
+            avatar: host.avatar,
+            place: currentSearch.location,
           },
         });
       })
@@ -239,9 +238,9 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         }}
       />
       <Flexbox spaceItemsX={1} horizontalAlign={'left'} wrap space={4}>
-        <Header level={4}>Request to book with:</Header>
+        <Header level={4}>{t('RequestToBook:request-with')}</Header>
         <Flexbox>
-          <Avatar src={host.avatar} size={'sm'} />
+          <Avatar src={host.avatar ?? getAvatar(host.name)} size={'sm'} />
           <Flexbox verticalAlign={'baseline'} spaceItemsX={1}>
             <Header level={4}>
               <InlineLink onClick={() => toHost(host.userId)}>&nbsp;{host.name}</InlineLink>
@@ -270,6 +269,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
           onChangePostalCode={(val) => setPostalCode(val)}
           cardholderName={cardholderName}
           postalCode={postalCode}
+          t={t}
         />
         {errors.length > 0 && (
           <Notice nature='danger' data-cy='error'>
@@ -282,7 +282,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         )}
         <Button
           onClick={() => validator.onSubmit(createBookingAndPay)}
-          id='request-to-book-button'
+          data-cy='submit'
           disabled={loading}
           loading={loading}
           space={6}

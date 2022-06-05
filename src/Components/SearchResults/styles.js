@@ -7,6 +7,7 @@ const { spacing, colors, screens, navbar, fontSize, fontWeights } = theme;
 export const SearchCriteriaWrapper = styled(Container)`
   display: table;
   margin: auto;
+  margin-bottom: ${({ space }) => (space ? spacing[space] : '0')};
 `;
 
 export const JustifiedWrapper = styled(Flexbox)`

@@ -18,7 +18,7 @@ import SignUp from './Components/Authentication/SignUp';
 import PasswordReset from './Components/Authentication/PasswordReset';
 import ChangePassword from './Components/Authentication/ChangePassword';
 import UserPage from './Components/UserPage';
-import SuccessfulRequest from './Components/SearchResults/request/SuccessfulRequest';
+import SuccessfulRequest from './Components/SearchResults/request/successfulRequest';
 import AllBookings from './Components/Bookings/AllBookings';
 import OutgoingBookings from './Components/Bookings/OutgoingBookings';
 import IncomingBookings from './Components/Bookings/IncomingBookings';
