@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useFetchHost } from '../HostPopup/useFetchHost';
 import { connect } from 'react-redux';
 import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Helmet } from 'react-helmet';
 
 import { formValidation } from '../../../Modules/formValidation';
 import { detectLanguage } from '../../../Modules/detectLanguage';
@@ -14,10 +15,11 @@ import { pricePerDay, hostTotal, finalTotal } from '../../../Modules/PriceCalcul
 
 import Spinner from '../../../common/Spinner';
 
-import { Header, TextArea, Notice, Text, Flexbox, Button, InlineLink } from '../../../UI-Components';
+import { Header, TextArea, Notice, Text, Flexbox, Button, InlineLink, Avatar } from '../../../UI-Components';
 import { Stripe } from '../../../icons';
 import { InnerResultWrapper } from '../styles';
 import CheckoutForm from './checkoutForm';
+import PaymentProcessingDisplay from './paymentProcessingDisplay';
 
 const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
@@ -30,7 +32,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [paymentProcessingDisplay, setPaymentProcessingDisplay] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [perDay, setPerDay] = useState('');
   const [orderTotal, setOrderTotal] = useState('');
   const [paymentIntent, setPaymentIntent] = useState('');
@@ -157,13 +159,13 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
           setErrors(['reusable:errors.unknown']);
         } else if (response.status === 500) {
           setErrors(['reusable:errors:500']);
-          setPaymentProcessingDisplay(false);
+          setPaymentProcessing(false);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
           setErrors(response.data.error);
-          setPaymentProcessingDisplay(false);
+          setPaymentProcessing(false);
         }
       });
   };
@@ -171,7 +173,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const createBookingAndPay = async () => {
     setLoading(true);
     setErrors([]);
-    setPaymentProcessingDisplay(true);
+    setPaymentProcessing(true);
 
     let booking = currentSearch.dates;
     let totalToPayHost = hostTotal(
@@ -204,7 +206,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       });
       if (result.error) {
         setErrors([result.error.message]);
-        setPaymentProcessingDisplay(false);
+        setPaymentProcessing(false);
       } else {
         if (result.paymentIntent.status === 'requires_capture') {
           createBooking(result.paymentIntent.id);
@@ -216,13 +218,13 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         setErrors(['reusable:errors.unknown']);
       } else if (response.status === 555) {
         setErrors([response.data.error]);
-        setPaymentProcessingDisplay(false);
+        setPaymentProcessing(false);
       } else if (response.status === 401) {
         window.alert(t('reusable:errors:401'));
         wipeCredentials('/');
       } else {
         setErrors([response.data.error]);
-        setPaymentProcessingDisplay(false);
+        setPaymentProcessing(false);
       }
     }
   };
@@ -231,16 +233,24 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
   return (
     <InnerResultWrapper>
-      <Flexbox spaceItemsX={1} horizontalAlign={'left'} wrap space={4} verticalAlign={'baseline'}>
-        <Header level={4}>Request to book with</Header>
-        <Header level={4}>
-          <InlineLink color={'primary'} onClick={() => toHost(host.userId)}>
-            {host.name}
-          </InlineLink>
-        </Header>
-        <InlineLink onClick={() => toResults()} text={'sm'} color='info'>
-          {t('reusable:cta.change')}
-        </InlineLink>
+      <Helmet
+        bodyAttributes={{
+          class: paymentProcessing ? 'overflow-hidden' : 'overflow-auto',
+        }}
+      />
+      <Flexbox spaceItemsX={1} horizontalAlign={'left'} wrap space={4}>
+        <Header level={4}>Request to book with:</Header>
+        <Flexbox>
+          <Avatar src={host.avatar} size={'sm'} />
+          <Flexbox verticalAlign={'baseline'} spaceItemsX={1}>
+            <Header level={4}>
+              <InlineLink onClick={() => toHost(host.userId)}>&nbsp;{host.name}</InlineLink>
+            </Header>
+            <InlineLink onClick={() => toResults()} text={'sm'} color='info'>
+              {t('reusable:cta.change')}
+            </InlineLink>
+          </Flexbox>
+        </Flexbox>
       </Flexbox>
 
       <TextArea
@@ -295,28 +305,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         <Flexbox>
           <Stripe height={6} tint={40} />
         </Flexbox>
-
-        {paymentProcessingDisplay && (
-          <div
-            style={{
-              width: '100vw',
-              height: '100vh',
-              position: 'fixed',
-              zIndex: 10000,
-              top: '0',
-              left: '0',
-              backdropFilter: 'blur(2rem)',
-            }}
-          >
-            <div style={{ margin: '13rem auto 0' }}>
-              <Spinner />
-            </div>
-            <div style={{ textAlign: 'center', margin: '2rem auto', maxWidth: '300px' }}>
-              <Header>{t('RequestToBook:payment-processed-header')}</Header>
-              <p>{t('RequestToBook:payment-processed-text')}</p>
-            </div>
-          </div>
-        )}
+        {paymentProcessing && <PaymentProcessingDisplay t={t} />}
       </>
     </InnerResultWrapper>
   );
