@@ -92,7 +92,7 @@ const Input = styled.input`
   }
 `;
 
-const RequiredLabel = styled.div`
+export const RequiredLabel = styled.div`
   position: absolute;
   width: 10px;
   height: 10px;

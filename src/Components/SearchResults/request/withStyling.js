@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { RequiredLabel } from '../../../UI-Components/Form/TextField';
 
 const withStyling = (Component) => ({label, ...rest}) => {
   const [elementClasses, setElementClasses] = useState(['empty', 'input', 'StripeElement']);
@@ -22,6 +23,7 @@ const withStyling = (Component) => ({label, ...rest}) => {
         />
 
         <label>{label}</label>
+        <RequiredLabel focused={elementClasses.includes('focused') || !elementClasses.includes('empty')}/>
       </div>
     </div>
   );

@@ -265,22 +265,48 @@
 
 .flex-50 {
   display: flex;
-  justify-content: space-between;
-  align-items: end;
+  flex-direction: column;
 }
 
 .flex-50 > div {
-  width: calc(50% - 10px);
+  width: 100%;
+}
+
+@media screen and (min-width: 480px) {
+  .flex-50 {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .flex-50 > div {
+    width: calc(50% - 10px);
+  }
 }
 
 .flex-30 {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: end;
 }
 
 .flex-30 > div {
-  width: calc(33% - 10px);
+  width: calc(27% - 10px)
+}
+
+.flex-30 > div:first-child, .flex-30 > div:last-child {
+  width: calc(37% - 10px);
+}
+
+@media screen and (min-width: 375px) {
+  .flex-30 > div, .flex-30 > div:first-child, .flex-30 > div:last-child {
+    width: calc(33% - 10px);
+  }
+}
+
+.mock-field {
+  margin-top: 10px;
 }
 
 .mock-field .field {
@@ -288,7 +314,7 @@
   height: 50px;
   border: 1px solid #a8a5ac;
   border-radius: 3px;
-  margin-top: 25px;
+  margin-top: 17px;
 }
 
 .field.focused {

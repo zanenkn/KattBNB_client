@@ -249,6 +249,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         data-cy='message'
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        space={0}
       />
       <Text size='sm' italic right data-cy='remaining-characters'>
         {t('reusable:remaining-chars')} {400 - message.length}
@@ -274,6 +275,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
           id='request-to-book-button'
           disabled={loading}
           loading={loading}
+          space={6}
         >
           {t('reusable:request-cta.pay-btn')} {orderTotal} kr
         </Button>

@@ -1,6 +1,6 @@
 import { CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
-import { TextField, Header } from '../../../UI-Components';
+import { TextField, Header, Container } from '../../../UI-Components';
 import withStyling from './withStyling';
 
 const StyledCardNumberElement = withStyling(CardNumberElement);
@@ -12,7 +12,7 @@ const CheckoutForm = ({ cardholderName, onChangeCardHolder, postalCode, onChange
 
   if (ready) {
     return (
-      <>
+      <Container>
         <Header level={4}>{t('StripeCardDetails:label')}</Header>
         <div class='flex-50'>
           <div>
@@ -41,7 +41,7 @@ const CheckoutForm = ({ cardholderName, onChangeCardHolder, postalCode, onChange
             space={0}
           />
         </div>
-      </>
+      </Container>
     );
   } else {
     return null;
