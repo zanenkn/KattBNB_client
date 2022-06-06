@@ -1,10 +1,13 @@
 {
-  "error-1": "Skriv ett meddelande till kattvakten!",
-  "error-2": "Meddelandet får inte överstiga 400 tecken!",
-  "error-555": "Det gick inte att ansluta till vår betalningsinfrastruktursleverantör. Vänligen gör om din bokningsförfrågan.",
-  "stripe-elements-error": "Vår betalväxel är för tillfället otillgänglig. Försök igen senare.",
-  "card-details-error": "Du måste ange både kortinnehavarens namn och ett giltigt postnummer!",
-  "error-header": "Bokningsförfrågan kunde inte skickas på grund av följande fel:",
+  "errors": {
+    "empty-message": "Skriv ett meddelande till kattvakten!",
+    "message-length": "Meddelandet får inte överstiga 400 tecken!",
+    "stripe-connection": "Det gick inte att ansluta till vår betalningsinfrastruktursleverantör. Vänligen gör om din bokningsförfrågan.",
+    "stripe-elements": "Vår betalväxel är för tillfället otillgänglig. Försök igen senare.",
+    "cardholder": "Vänligen ange innehavarens namn exakt så som det visas på kortet!",
+    "postcode": "Vänligen ange ditt postnummer!",
+    "header": "Bokningsförfrågan kunde inte skickas på grund av följande fel:"
+  },
   "smallprint": "Vår betalväxel är <1>Stripe</1>. När du skickar en bokningsförfrågan så reserverar vi beloppet som visas ovan från ditt bankkort. Kattvakten har då tre dagar på sig att acceptera eller avvisa din bokningsförfrågan. I en i händelse av avbokad eller avvisad bokningsförfrågan så kommer det reserverade beloppet att frigöras inom sju dagar från det ursprungliga förfrågningsdatumet. Läs mer: <3>hur vi hanterar betalningar</3>.",
   "payment-processed-header": "Din betalning behandlas..",
   "payment-processed-text": "Stäng inte det här fönstret eller klicka på Tillbaka-knappen i din webbläsare.",

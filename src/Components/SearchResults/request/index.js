@@ -48,20 +48,24 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       },
       {
         condition: !stripe || !elements,
-        error: 'RequestToBook:stripe-elements-error',
+        error: 'RequestToBook:errors.stripe-elements',
       },
       {
         condition: !message,
-        error: 'RequestToBook:error-1',
+        error: 'RequestToBook:errors.empty-message',
       },
       {
         condition: message.length > 400,
-        error: 'RequestToBook:error-2',
+        error: 'RequestToBook:errors.message-length',
       },
       {
-        condition: cardholderName === '' || postalCode === '' || postalCode < 0 || postalCode.length !== 5,
-        error: 'RequestToBook:card-details-error',
+        condition: cardholderName === '',
+        error: 'RequestToBook:errors.cardholder',
       },
+      {
+        condition: postalCode === '' || postalCode < 0 || postalCode.length !== 5,
+        error:'RequestToBook:errors.postcode',
+      }
     ],
     errorSetter: (val) => setErrors(val),
   });
@@ -89,10 +93,10 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       if (response === undefined) {
         setErrors(['reusable:errors.unknown']);
       } else if (response.status === 555) {
-        window.alert(t('RequestToBook:error-555'));
+        window.alert(t('RequestToBook:errors.stripe-connection'));
         history.push('/search');
       } else if (response.status === 401) {
-        history.push('/login')
+        history.push('/login');
       } else {
         setErrors([response.data.error]);
       }
@@ -272,6 +276,9 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         />
         {errors.length > 0 && (
           <Notice nature='danger' data-cy='error'>
+            <Header level={5} centered>
+              {t('RequestToBook:errors.header')}
+            </Header>
             <ul>
               {errors.map((error) => (
                 <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
