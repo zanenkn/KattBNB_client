@@ -186,7 +186,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       currentSearch.end
     );
 
-    const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${id}&payment_intent_id=${paymentIntent}`;
+    const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${userId}&payment_intent_id=${paymentIntent}`;
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
