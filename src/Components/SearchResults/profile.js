@@ -3,12 +3,12 @@ import { useFetchHost } from './HostPopup/useFetchHost';
 import Spinner from '../../common/Spinner';
 import { InnerResultWrapper } from './styles';
 
-const Profile = ({ currentSearch, id }) => {
+const Profile = ({ currentSearch, id, toRequest }) => {
   const { host, loading } = useFetchHost(id);
   if (loading) return <Spinner />;
   return (
     <InnerResultWrapper>
-      <HostInfo host={host} currentSearch={currentSearch}/>
+      <HostInfo host={host} currentSearch={currentSearch} toRequest={()=> toRequest()}/>
     </InnerResultWrapper>
   );
 };
