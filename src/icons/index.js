@@ -1,5 +1,6 @@
 export { default as Address } from './src/Address';
 export { default as Amex } from './src/Amex';
+export { default as Arrow } from './src/Arrow';
 export { default as Availabilty } from './src/Availabilty';
 export { default as AvailableHost } from './src/AvailableHost';
 export { default as Camera } from './src/Camera';
@@ -32,8 +33,10 @@ export { default as Refresh } from './src/Refresh';
 export { default as Review } from './src/Review';
 export { default as RotateLeft } from './src/RotateLeft';
 export { default as RotateRight } from './src/RotateRight';
+export { default as Send } from './src/Send';
 export { default as Stripe } from './src/Stripe';
 export { default as Supplement } from './src/Supplement';
+export { default as Trash } from './src/Trash';
 export { default as TwitterSimple } from './src/TwitterSimple';
 export { default as User } from './src/User';
 export { default as UserRound } from './src/UserRound';

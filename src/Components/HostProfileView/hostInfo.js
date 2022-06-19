@@ -17,10 +17,9 @@ import { Availabilty, AvailableHost, CreditCard, Location, Review, User, Cat } f
 
 import AllReviews from '../Reviews/allReviews';
 
-const HostInfo = ({ currentSearch, host, toRequest }) => {
+const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
   const { t, ready } = useTranslation('HostInfo');
   const device = useDeviceInfo();
-  const history = useHistory();
 
   const [isAvailable, setIsAvailable] = useState(false);
 
@@ -82,7 +81,7 @@ const HostInfo = ({ currentSearch, host, toRequest }) => {
             secondary={isAvailable}
             color={isAvailable ? 'neutral' : 'primary'}
             space={2}
-            onClick={() => console.log('TODO: to the messenger i go')}
+            onClick={() => messageHost()}
           >
             {t('reusable:cta.send-message')}
           </Button>

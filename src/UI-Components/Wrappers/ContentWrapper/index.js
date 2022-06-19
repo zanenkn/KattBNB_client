@@ -1,11 +1,19 @@
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import { theme } from '../../../Styles/theme';
 
 const { spacing, screens, navbar } = theme;
 
 const Styled = styled.div`
   box-sizing: border-box;
-  padding: ${({ theme: { spacing } }) => spacing[6]};
+  padding-right: ${() => spacing[6]};
+  padding-left: ${() => spacing[6]};
+  padding-bottom: ${({ noBottomPadding }) => (noBottomPadding ? '0' : spacing[6])};
+  ${({ top }) =>
+    top &&
+    css`
+      padding-top: ${top}px;
+    `}
 
   > *:last-child {
     margin-bottom: 0;
@@ -17,7 +25,17 @@ const Styled = styled.div`
   }
 
   @media screen and (min-width: ${screens.lg}) {
-    padding: ${spacing[8]} 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: ${({ noBottomPadding }) => (noBottomPadding ? '0' : spacing[8])};
+    ${({ top }) =>
+      top
+        ? css`
+            padding-top: ${top}px;
+          `
+        : css`
+            padding-top: ${spacing[8]};
+          `}
   }
 
   margin: 0 auto;
@@ -36,8 +54,17 @@ const Styled = styled.div`
   }
 `;
 
-const ContentWrapper = ({ ...rest }) => {
-  return <Styled {...rest} />;
+const ContentWrapper = ({ top, noBottomPadding, ...rest }) => {
+  return <Styled top={top} noBottomPadding={noBottomPadding} {...rest} />;
+};
+
+ContentWrapper.propTypes = {
+  top: PropTypes.number,
+  noBottomPadding: PropTypes.bool,
+};
+
+ContentWrapper.defaultProps = {
+  noBottomPadding: false,
 };
 
 export default ContentWrapper;

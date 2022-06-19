@@ -4,5 +4,7 @@
   "del-conversation": "Do you really want to delete this conversation?",
   "no-messages-yet": "You don't have any messages in this conversation (yet).",
   "error-message-header": "Could not send the message because of following error(s):",
-  "textarea-plch": "Say something.."
+  "textarea-plch": "Say something..",
+  "nickname-deleted": "Deleted user",
+  "image-alt-txt": "uploaded file"
 }

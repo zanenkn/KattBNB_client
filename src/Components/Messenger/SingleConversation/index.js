@@ -1,113 +1,102 @@
-import React, { useState, useEffect, useRef } from 'react';
-import withAuth from '../../HOC/withAuth';
+import { useState, useEffect, useRef } from 'react';
+
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { connect } from 'react-redux';
-import Spinner from '../../common/Spinner';
-import MessageBubble from '../../common/MessageBubble';
 import Cable from 'actioncable';
 import TextareaAutosize from 'react-textarea-autosize';
 import Popup from 'reactjs-popup';
-import ImageUploadPopup from './ImageUploadPopup';
 import imagenation from 'imagenation';
 import { useTranslation } from 'react-i18next';
 
-const Conversation = ({ id, username, avatar, history, location: { state } }) => {
+import { detectLanguage } from '../../../Modules/detectLanguage';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { getAvatar } from '../../../Modules/getAvatar';
+import withAuth from '../../../HOC/withAuth';
+
+import Spinner from '../../../common/Spinner';
+
+import { Flexbox, Notice, Header, Avatar } from '../../../UI-Components';
+import { Arrow, Camera, Send, Trash } from '../../../icons';
+import MessageBubble from './messageBubble';
+import ImageUploadPopup from '../ImageUploadPopup';
+import { StickyFooter, Inner, MaxWidh, StyledContentWrapper, StyledSecondaryStickyHeader } from './styles';
+
+const Conversation = ({ id, username, match, history }) => {
   const { t, ready } = useTranslation('SingleConversation');
   const lang = detectLanguage();
+  const bottomOfPage = useRef(null);
 
   const [newMessage, setNewMessage] = useState('');
-  // eslint-disable-next-line
-  const [chatLogsLength, setChatLogsLength] = useState(0);
   const [chatLogs, setChatLogs] = useState([]);
   const [messagesHistory, setMessagesHistory] = useState([]);
   const [channel, setChannel] = useState(null);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [footerHeight, setFooterHeight] = useState('38px');
   const [imageUploadPopupOpen, setImageUploadPopupOpen] = useState(false);
-  const [imageUploadButton, setImageUploadButton] = useState(true);
+  const [imageUploadButton, setImageUploadButton] = useState(false);
   const [uploadedImage, setUploadedImage] = useState('');
   const [loadingUploadButton, setLoadingUploadButton] = useState(false);
-  const [secondaryStickyStyle, setSecondaryStickyStyle] = useState({
-    boxShadow: 'none',
-    borderBottom: '1px solid rgba(34,36,38,.15)',
-  });
-
-  let bottomOfPage = useRef(null);
-
-  const handleScroll = (e) => {
-    let newSecondaryStickyStyle =
-      e.target.scrollTop > 0
-        ? { boxShadow: '0 0 20px -5px rgba(0,0,0,.2)', borderBottom: 'none' }
-        : { boxShadow: 'none', borderBottom: '1px solid rgba(34,36,38,.15)' };
-    setSecondaryStickyStyle(newSecondaryStickyStyle);
-  };
+  const [responder, setResponder] = useState({});
 
   useEffect(() => {
-    let channelToSave;
     if (window.navigator.onLine === false) {
       setLoading(false);
       return setErrors(['reusable:errors:window-navigator']);
     }
-    if (window.history.state === null) {
-      window.location.replace('/messenger');
-    }
+
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token'),
     };
-    let pathCable = process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
-    let cable = Cable.createConsumer(
-      `${pathCable}/api/v1/cable/conversation/${state.id}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
+
+    const pathCable =
+      process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
+    const cable = Cable.createConsumer(
+      `${pathCable}/api/v1/cable/conversation/${match.params.conversationId}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
     );
-    channelToSave = cable.subscriptions.create(
+
+    const channelToSave = cable.subscriptions.create(
       {
         channel: 'ConversationsChannel',
-        conversations_id: state.id,
+        conversations_id: match.params.conversationId,
       },
       {
         connected: () => {},
         received: (data) => {
-          let receivedChatLogs = chatLogs;
-          receivedChatLogs.push(data.message);
-          setChatLogs(receivedChatLogs);
-          setChatLogsLength(chatLogs.length);
+          setChatLogs((prev) => [...prev, data.message]);
           bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
         },
       }
     );
+
     setChannel(channelToSave);
-    const path = `/api/v1/conversations/${state.id}?locale=${lang}`;
+
+    const path = `/api/v1/conversations/${match.params.conversationId}?locale=${lang}`;
+
     axios
       .get(path, { headers: headers })
       .then((response) => {
-        const sortedResponse = response.data.message.sort(function (a, b) {
-          let dateA = new Date(a.created_at),
-            dateB = new Date(b.created_at);
-          return dateA - dateB;
-        });
-        setMessagesHistory(sortedResponse);
-        setLoading(false);
-        setErrors([]);
-        bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
+        setResponder(response.data.responder);
+        setMessagesHistory(response.data.message.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
       })
       .catch(({ response }) => {
         if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors(['reusable:errors.unknown']);
         } else if (response.status === 500) {
-          setLoading(false);
           setErrors(['reusable:errors:500']);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setLoading(false);
-          setErrors(response.data.error);
+          setErrors([response.data.error]);
         }
+      })
+      .finally(() => {
+        setLoading(false);
+        bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
       });
+
     return () => {
       channelToSave.unsubscribe();
     };
@@ -152,7 +141,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
             body: newMessage,
             image: uploadedImage,
             user_id: id,
-            conversation_id: state.id,
+            conversation_id: match.params.conversationId,
           });
           setNewMessage('');
           setLoadingUploadButton(true);
@@ -161,21 +150,21 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
             body: newMessage,
             image: uploadedImage,
             user_id: id,
-            conversation_id: state.id,
+            conversation_id: match.params.conversationId,
           });
           setNewMessage('');
         }
       })
       .catch(({ response }) => {
         if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors(['reusable:errors.unknown']);
         } else if (response.status === 500) {
           setErrors(['reusable:errors:500']);
         } else if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
         } else {
-          setErrors(response.data.error);
+          setErrors([response.data.error]);
         }
       });
   };
@@ -184,12 +173,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     setImageUploadPopupOpen(false);
     setLoadingUploadButton(false);
     bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const listenEnterKeyMessage = (event) => {
-    if (event.key === 'Enter') {
-      handleSendEvent(event);
-    }
   };
 
   const clearImage = () => {
@@ -202,7 +185,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
       return setErrors(['reusable:errors:window-navigator']);
     }
     if (window.confirm(t('SingleConversation:del-conversation'))) {
-      const path = `/api/v1/conversations/${state.id}`;
+      const path = `/api/v1/conversations/${match.params.conversationId}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -219,7 +202,7 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
         })
         .catch(({ response }) => {
           if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
+            setErrors(['reusable:errors.unknown']);
           } else if (response.status === 500) {
             setErrors(['reusable:errors:500']);
           } else if (response.status === 401) {
@@ -241,12 +224,112 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
     }
   };
 
-  const onChangeHandler = (e) => {
+  const onMessageType = (e) => {
     setNewMessage(e.target.value);
     setErrors([]);
   };
 
-  return <div>a</div>
+  if (!ready || loading) return <Spinner />;
+
+  return (
+    <>
+      <Popup
+        modal
+        open={imageUploadPopupOpen}
+        closeOnDocumentClick={!loadingUploadButton}
+        onClose={() => {
+          setImageUploadPopupOpen(false);
+          setUploadedImage('');
+          setImageUploadButton(true);
+        }}
+        position='top center'
+      >
+        <div>
+          <ImageUploadPopup
+            onImageDropHandler={onImageDropHandler}
+            imageUploadButton={imageUploadButton}
+            handleSendEvent={handleSendEvent}
+            uploadedImage={uploadedImage}
+            loadingUploadButton={loadingUploadButton}
+            clearImage={clearImage}
+          />
+        </div>
+      </Popup>
+      <StyledSecondaryStickyHeader>
+        <MaxWidh>
+          <Arrow onClick={() => history.push('/messenger')} height={5} direction='left' tint={60} />
+          <Flexbox spaceItemsX={1} onClick={() => console.log('i will eventually go to host profile')}>
+            <Avatar src={responder?.profile_avatar || getAvatar(responder?.nickname)} size={'sm'} />
+            <Header level={3}>{responder?.nickname || t('SingleConversation:nickname-deleted')}</Header>
+          </Flexbox>
+          <Trash onClick={() => deleteConversation()} height={5} tint={60} />
+        </MaxWidh>
+      </StyledSecondaryStickyHeader>
+      <StyledContentWrapper top={88} noBottomPadding>
+        {messagesHistory.length > 0 &&
+          messagesHistory.map((message) => {
+            return (
+              <div key={message.id}>
+                <MessageBubble
+                  lang={lang}
+                  message={message}
+                  scrollDown={scrollDown}
+                  belongsToCurrent={username === message.user.nickname}
+                />
+              </div>
+            );
+          })}
+        {chatLogs.length > 0 &&
+          chatLogs.map((message) => {
+            return (
+              <div key={message.id}>
+                <MessageBubble
+                  lang={lang}
+                  message={message}
+                  scrollDown={scrollDown}
+                  belongsToCurrent={username === message.user.nickname}
+                />
+              </div>
+            );
+          })}
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <Header centered level={5}>
+              {t('SingleConversation:error-message-header')}
+            </Header>
+            <ul id='message-error-list'>
+              {errors.map((error) => (
+                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
+        {!responder && <div>this user exist no more</div>}
+        <div ref={bottomOfPage} style={{ height: '1px' }}></div>
+      </StyledContentWrapper>
+      <StickyFooter>
+        <Inner>
+          <TextareaAutosize
+            minRows={1}
+            maxRows={4}
+            className='expanding-textarea'
+            placeholder={t('SingleConversation:textarea-plch')}
+            value={newMessage}
+            onHeightChange={() => scrollDown()}
+            onChange={onMessageType}
+            onKeyPress={(e) => e.key === 'Enter' && handleSendEvent(e)}
+            disabled={!responder}
+            style={{ paddingRight: '40px' }}
+          />
+          {newMessage ? (
+            <Send height={6} fill='primary' onClick={(e) => handleSendEvent(e)} />
+          ) : (
+            <Camera height={6} tint={60} onClick={() => responder && setImageUploadPopupOpen(true)} />
+          )}
+        </Inner>
+      </StickyFooter>
+    </>
+  );
 
   // if (ready && loading === false) {
   //   let messageLength = 1000 - newMessage.length;
@@ -398,96 +481,96 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
   //         </div>
   //         <div ref={bottomOfPage} style={{ height: '1px' }}></div>
   //       </div>
+  // <div
+  //   style={{
+  //     minHeight: '80px',
+  //     width: '100%',
+  //     position: 'fixed',
+  //     bottom: '0',
+  //     background: 'white',
+  //     zIndex: '100',
+  //     boxShadow: '0 0 20px -5px rgba(0,0,0,.2)',
+  //     paddingTop: '1rem',
+  //   }}
+  // >
+  //   <div className='single-conversation-wrapper'>
+  //     <div style={{ display: 'inline-flex', width: '100%' }}>
+  //       <Icon
+  //         id='upload-image'
+  //         name='photo'
+  //         size='big'
+  //         style={{
+  //           display: (state.user.id === null || newMessage.length > 0) && 'none',
+  //           cursor: 'pointer',
+  //           color: '#d8d8d8',
+  //           fontSize: '2.5em',
+  //           marginRight: '0.5rem',
+  //           alignSelf: 'flex-end',
+  //         }}
+  //         onClick={() => {
+  //           setImageUploadPopupOpen(true);
+  //         }}
+  //       />
   //       <div
   //         style={{
-  //           minHeight: '80px',
   //           width: '100%',
-  //           position: 'fixed',
-  //           bottom: '0',
-  //           background: 'white',
-  //           zIndex: '100',
-  //           boxShadow: '0 0 20px -5px rgba(0,0,0,.2)',
-  //           paddingTop: '1rem',
+  //           alignSelf: 'flex-end',
+  //           minHeight: '2.5em',
+  //           position: 'relative',
+  //           bottom: '0px',
+  //           display: 'flex',
+  //           flexDirection: 'column-reverse',
+  //           height: footerHeight,
   //         }}
   //       >
-  //         <div className='single-conversation-wrapper'>
-  //           <div style={{ display: 'inline-flex', width: '100%' }}>
-  //             <Icon
-  //               id='upload-image'
-  //               name='photo'
-  //               size='big'
-  //               style={{
-  //                 display: (state.user.id === null || newMessage.length > 0) && 'none',
-  //                 cursor: 'pointer',
-  //                 color: '#d8d8d8',
-  //                 fontSize: '2.5em',
-  //                 marginRight: '0.5rem',
-  //                 alignSelf: 'flex-end',
-  //               }}
-  //               onClick={() => {
-  //                 setImageUploadPopupOpen(true);
-  //               }}
-  //             />
-  //             <div
-  //               style={{
-  //                 width: '100%',
-  //                 alignSelf: 'flex-end',
-  //                 minHeight: '2.5em',
-  //                 position: 'relative',
-  //                 bottom: '0px',
-  //                 display: 'flex',
-  //                 flexDirection: 'column-reverse',
-  //                 height: footerHeight,
-  //               }}
-  //             >
-  //               <TextareaAutosize
-  //                 minRows={1}
-  //                 maxRows={6}
-  //                 className='expanding-textarea disable-scrollbars'
-  //                 placeholder={t('SingleConversation:textarea-plch')}
-  //                 id='newMessage'
-  //                 value={newMessage}
-  //                 onChange={onChangeHandler}
-  //                 onKeyPress={listenEnterKeyMessage}
-  //                 onHeightChange={(height) => setFooterHeight(`${height}px`)}
-  //                 disabled={state.user.id === null && true}
-  //                 style={{ paddingRight: '40px' }}
-  //               />
-  //               <div
-  //                 style={{
-  //                   display: newMessage === '' ? 'none' : 'block',
-  //                   zIndex: '4000',
-  //                   alignSelf: 'flex-end',
-  //                   marginBottom: '0.6rem',
-  //                   marginRight: '0.5rem',
-  //                   background: 'white',
-  //                   paddingLeft: '0.5rem',
-  //                   paddingTop: '0.4rem',
-  //                 }}
-  //               >
-  //                 <Icon
-  //                   id='send'
-  //                   name='arrow alternate circle up'
-  //                   link
-  //                   size='large'
-  //                   onClick={(e) => handleSendEvent(e)}
-  //                   style={{ color: '#c90c61' }}
-  //                 />
-  //               </div>
-  //             </div>
-  //           </div>
-  //           <p
-  //             style={{
-  //               textAlign: 'end',
-  //               fontSize: 'smaller',
-  //               fontStyle: 'italic',
-  //               visibility: messageLength < 100 ? 'visible' : 'hidden',
-  //             }}
-  //           >
-  //             {t('reusable:remaining-chars')} {messageLength}
-  //           </p>
+  //         <TextareaAutosize
+  //           minRows={1}
+  //           maxRows={6}
+  //           className='expanding-textarea disable-scrollbars'
+  //           placeholder={t('SingleConversation:textarea-plch')}
+  //           id='newMessage'
+  //           value={newMessage}
+  //           onChange={onMessageType}
+  //           onKeyPress={listenEnterKeyMessage}
+  //           onHeightChange={(height) => setFooterHeight(`${height}px`)}
+  //           disabled={state.user.id === null && true}
+  //           style={{ paddingRight: '40px' }}
+  //         />
+  //         <div
+  //           style={{
+  //             display: newMessage === '' ? 'none' : 'block',
+  //             zIndex: '4000',
+  //             alignSelf: 'flex-end',
+  //             marginBottom: '0.6rem',
+  //             marginRight: '0.5rem',
+  //             background: 'white',
+  //             paddingLeft: '0.5rem',
+  //             paddingTop: '0.4rem',
+  //           }}
+  //         >
+  //           <Icon
+  //             id='send'
+  //             name='arrow alternate circle up'
+  //             link
+  //             size='large'
+  //             onClick={(e) => handleSendEvent(e)}
+  //             style={{ color: '#c90c61' }}
+  //           />
   //         </div>
   //       </div>
+  //     </div>
+  //     <p
+  //       style={{
+  //         textAlign: 'end',
+  //         fontSize: 'smaller',
+  //         fontStyle: 'italic',
+  //         visibility: messageLength < 100 ? 'visible' : 'hidden',
+  //       }}
+  //     >
+  //       {t('reusable:remaining-chars')} {messageLength}
+  //     </p>
+  //   </div>
+  // </div>
   //     </>
   //   );
   // } else {
@@ -497,8 +580,6 @@ const Conversation = ({ id, username, avatar, history, location: { state } }) =>
 
 const mapStateToProps = (state) => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
-  id: state.reduxTokenAuth.currentUser.attributes.id,
-  avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
 });
 
 export default connect(mapStateToProps)(withAuth(Conversation));
