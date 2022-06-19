@@ -6,5 +6,8 @@
   "error-message-header": "Det gick inte att skicka meddelandet på grund av följande fel:",
   "textarea-plch": "Säg någonting..",
   "nickname-deleted": "Raderad användare",
-  "image-alt-txt": "bifogad fil"
+  "image-alt-txt": "bifogad fil",
+  "file-size": "Maximal filstorlek: 5 MB",
+  "supported-formats": "Filformat som stöds: jpg, png",
+  "cta-send": "Skicka"
 }

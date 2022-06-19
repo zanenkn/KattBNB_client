@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Cable from 'actioncable';
 import TextareaAutosize from 'react-textarea-autosize';
 import Popup from 'reactjs-popup';
-import imagenation from 'imagenation';
 import { useTranslation } from 'react-i18next';
 
 import { detectLanguage } from '../../../Modules/detectLanguage';
@@ -18,7 +17,7 @@ import Spinner from '../../../common/Spinner';
 import { Flexbox, Notice, Header, Avatar } from '../../../UI-Components';
 import { Arrow, Camera, Send, Trash } from '../../../icons';
 import MessageBubble from './messageBubble';
-import ImageUploadPopup from '../ImageUploadPopup';
+import ImageUploadPopup from './imageUploadPopup';
 import { StickyFooter, Inner, MaxWidh, StyledContentWrapper, StyledSecondaryStickyHeader } from './styles';
 
 const Conversation = ({ id, username, match, history }) => {
@@ -33,7 +32,6 @@ const Conversation = ({ id, username, match, history }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageUploadPopupOpen, setImageUploadPopupOpen] = useState(false);
-  const [imageUploadButton, setImageUploadButton] = useState(false);
   const [uploadedImage, setUploadedImage] = useState('');
   const [loadingUploadButton, setLoadingUploadButton] = useState(false);
   const [responder, setResponder] = useState({});
@@ -118,7 +116,7 @@ const Conversation = ({ id, username, match, history }) => {
       return setErrors(['reusable:errors:window-navigator']);
     }
 
-    if (newMessage.length < 1 || newMessage.length > 1000) {
+    if ((newMessage.length < 1 || newMessage.length > 1000) && !uploadedImage) {
       return setErrors(['SingleConversation:message-body-error']);
     }
 
@@ -139,7 +137,7 @@ const Conversation = ({ id, username, match, history }) => {
         if (uploadedImage !== '') {
           channel.send({
             body: newMessage,
-            image: uploadedImage,
+            image: [uploadedImage],
             user_id: id,
             conversation_id: match.params.conversationId,
           });
@@ -148,7 +146,7 @@ const Conversation = ({ id, username, match, history }) => {
         } else {
           channel.send({
             body: newMessage,
-            image: uploadedImage,
+            image: [uploadedImage],
             user_id: id,
             conversation_id: match.params.conversationId,
           });
@@ -173,11 +171,6 @@ const Conversation = ({ id, username, match, history }) => {
     setImageUploadPopupOpen(false);
     setLoadingUploadButton(false);
     bottomOfPage.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const clearImage = () => {
-    setImageUploadButton(true);
-    setUploadedImage('');
   };
 
   const deleteConversation = () => {
@@ -215,15 +208,6 @@ const Conversation = ({ id, username, match, history }) => {
     }
   };
 
-  const onImageDropHandler = async (pictureFiles) => {
-    if (pictureFiles.length > 0) {
-      setImageUploadButton(false);
-      setUploadedImage([await imagenation(pictureFiles[0], 750)]);
-    } else {
-      clearImage();
-    }
-  };
-
   const onMessageType = (e) => {
     setNewMessage(e.target.value);
     setErrors([]);
@@ -240,18 +224,17 @@ const Conversation = ({ id, username, match, history }) => {
         onClose={() => {
           setImageUploadPopupOpen(false);
           setUploadedImage('');
-          setImageUploadButton(true);
         }}
         position='top center'
       >
         <div>
           <ImageUploadPopup
-            onImageDropHandler={onImageDropHandler}
-            imageUploadButton={imageUploadButton}
+            t={t}
+            onImageChange={(image) => setUploadedImage(image)}
             handleSendEvent={handleSendEvent}
             uploadedImage={uploadedImage}
             loadingUploadButton={loadingUploadButton}
-            clearImage={clearImage}
+            clearImage={() => setUploadedImage('')}
           />
         </div>
       </Popup>

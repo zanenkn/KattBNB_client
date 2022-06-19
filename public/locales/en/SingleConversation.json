@@ -6,5 +6,8 @@
   "error-message-header": "Could not send the message because of following error(s):",
   "textarea-plch": "Say something..",
   "nickname-deleted": "Deleted user",
-  "image-alt-txt": "uploaded file"
+  "image-alt-txt": "uploaded file",
+  "file-size": "Maximum file size: 5 MB",
+  "supported-formats": "Supported file formats: jpg, png",
+  "cta-send": "Send"
 }
