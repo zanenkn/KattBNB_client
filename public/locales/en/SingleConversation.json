@@ -9,5 +9,12 @@
   "image-alt-txt": "uploaded file",
   "file-size": "Maximum file size: 5 MB",
   "supported-formats": "Supported file formats: jpg, png",
-  "cta-send": "Send"
+  "cta-send": "Send",
+  "errors": {
+    "unsupported-file-format": "Unsupported file format. Please choose a jpg or png file.",
+    "too-large-file": "Photo too large! Please choose a photo under 5MB."
+  },
+  "deleted-user": "This user has deleted their account, therefore you can not send any messages to them.",
+  "send-picture": "Send a picture",
+  "browse": "Browse to upload"
 }

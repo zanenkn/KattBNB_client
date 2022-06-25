@@ -430,3 +430,14 @@
 span.message > a {
   text-decoration: underline;
 }
+
+/* images in messenger */
+.portrait-img {
+  max-height: 50vh;
+  width: 100%;
+}
+
+.landscape-img {
+  max-height: 30vh;
+  width: 100%;
+}

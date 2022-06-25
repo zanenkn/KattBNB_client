@@ -9,5 +9,12 @@
   "image-alt-txt": "bifogad fil",
   "file-size": "Maximal filstorlek: 5 MB",
   "supported-formats": "Filformat som stöds: jpg, png",
-  "cta-send": "Skicka"
+  "cta-send": "Skicka",
+  "errors": {
+    "unsupported-file-format": "Filformatet inte stöds. Välj en jpg- eller png-fil.",
+    "too-large-file": "Fotot är för stort! Välj ett foto under 5 MB."
+  },
+  "deleted-user": "Denna användare har tagit bort sitt konto, därför kan du inte skicka några meddelanden till hen.",
+  "send-picture": "Skicka en bild",
+  "browse": "Bläddra för att ladda upp"
 }

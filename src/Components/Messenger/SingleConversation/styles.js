@@ -116,7 +116,6 @@ export const StyledSecondaryStickyHeader = styled(SecondaryStickyHeader)`
 `;
 
 export const ImageUploadArea = styled(Container)`
-  
   background-color: ${colors['neutral'][10]};
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23C5C3C8FF' stroke-width='9' stroke-dasharray='6%2c25' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
 
@@ -132,12 +131,20 @@ export const ImageUploadArea = styled(Container)`
 
 export const ImagePreview = styled(Container)`
   position: relative;
-  
-  & svg {
-    cursor: pointer;
-    position: absolute;
-    right: -${spacing[3]};
-    top: -${spacing[3]};
-    height: 2rem;
-  }
-`
+`;
+
+export const RoundButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  right: -${spacing[3]};
+  top: -${spacing[3]};
+  height: 2rem;
+  background: ${colors['primary'][100]};
+  border-radius: 50%;
+  width: ${spacing[6]};
+  height: ${spacing[6]};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;

@@ -1,15 +1,29 @@
-import { Camera } from '../../../icons';
-import { Button, Flexbox, Header, Text } from '../../../UI-Components';
+import { useState } from 'react';
 import Resizer from 'react-image-file-resizer';
-import { ImagePreview, ImageUploadArea } from './styles';
+import { Camera, Close } from '../../../icons';
+import { Button, Flexbox, Header, Text, Notice } from '../../../UI-Components';
+import { ImagePreview, ImageUploadArea, RoundButton } from './styles';
 
 const ImageUploadPopup = ({ t, loadingUploadButton, uploadedImage, onImageChange, clearImage, handleSendEvent }) => {
+  const [errors, setErrors] = useState([]);
+  const allowedFileTypes = ['jpg', 'jpeg', 'png'];
+
   const onUpload = (e) => {
+    setErrors([]);
     const reader = new FileReader();
     const file = e.target.files[0];
 
+    if (file.size > 5242880) {
+      setErrors((prev) => [...prev, 'SingleConversation:errors.too-large-file']);
+      return;
+    }
+
+    if (!allowedFileTypes.includes(file.type.split('/')[1])) {
+      setErrors((prev) => [...prev, 'SingleConversation:errors.unsupported-file-format']);
+      return;
+    }
+
     reader.onloadend = () => {
-      // TODO: handle file size and file type errors here
       Resizer.imageFileResizer(
         e.target.files[0],
         750,
@@ -25,26 +39,22 @@ const ImageUploadPopup = ({ t, loadingUploadButton, uploadedImage, onImageChange
         200
       );
     };
-    reader.readAsDataURL(file);
+    file && reader.readAsDataURL(file);
   };
 
   return (
     <>
-      {uploadedImage ? (
+      {uploadedImage && !errors.length ? (
         <ImagePreview>
-          <svg onClick={clearImage} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'>
-            <circle cx='50%' cy='50%' r='50%' fill='#ffffff' />
-            <path
-              fill='#c90c61'
-              d='M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83-1.41-1.41L10 8.59 7.17 5.76 5.76 7.17 8.59 10l-2.83 2.83 1.41 1.41L10 11.41l2.83 2.83 1.41-1.41L11.41 10z'
-            />
-          </svg>
+          <RoundButton onClick={clearImage}>
+            <Close fill={'white'} />
+          </RoundButton>
           <img src={uploadedImage} style={{ maxWidth: '100%' }} />
         </ImagePreview>
       ) : (
         <>
           <Header centered level={4}>
-            Send a picture
+            {t('SingleConversation:send-picture')}
           </Header>
           <ImageUploadArea>
             <label onChange={(e) => onUpload(e)}>
@@ -52,18 +62,29 @@ const ImageUploadPopup = ({ t, loadingUploadButton, uploadedImage, onImageChange
               <Flexbox direction={'column'}>
                 <Camera height={10} fill={'neutral'} tint={40} />
                 <Text color={'neutral'} tint={60} size='base'>
-                  Browse to upload
+                  {t('SingleConversation:browse')}
                 </Text>
               </Flexbox>
             </label>
           </ImageUploadArea>
         </>
       )}
-      <Text centered>
-        {t('SingleConversation:file-size')}
-        <br />
-        {t('SingleConversation:supported-formats')}
-      </Text>
+      {errors.length > 0 ? (
+        <Notice data-cy='error-notice' nature='danger'>
+          <ul id='message-error-list'>
+            {errors.map((error) => (
+              <li key={error}>{t(error)}</li>
+            ))}
+          </ul>
+        </Notice>
+      ) : (
+        <Text centered>
+          {t('SingleConversation:file-size')}
+          <br />
+          {t('SingleConversation:supported-formats')}
+        </Text>
+      )}
+
       <Button
         onClick={handleSendEvent}
         disabled={(uploadedImage === '' || loadingUploadButton) && true}
