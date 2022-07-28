@@ -5,10 +5,10 @@ import { useTranslation, Trans } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
-import { RichText } from 'prismic-reactjs';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { ContentWrapper, Text, Header, InlineLink } from '../../UI-Components';
 import SEO from '../../common/SEO';
+import Question from './question'
 
 const Faq = ({ location }) => {
   const handleClick = (e, titleProps) => {
@@ -106,20 +106,7 @@ const Faq = ({ location }) => {
         <Header level={3}>{t('Faq:general')}</Header>
         {questions.general.map((question) => {
           return (
-            <>
-              <Header
-                level={5}
-                index={parseInt(question.data.index)}
-                onClick={() => setActiveIndex(question.data.index)}
-              >
-                {question.data.header[0].text}
-              </Header>
-              {activeIndex === parseInt(question.data.index) && (
-                <Text active={activeIndex === parseInt(question.data.index)}>
-                  {RichText.render(question.data.body)}
-                </Text>
-              )}
-            </>
+            <Question question={question} activeIndex={activeIndex} onClick={() => setActiveIndex(question.data.index)} />
           );
         })}
       </div>
