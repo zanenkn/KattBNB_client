@@ -3,16 +3,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import Spinner from '../../common/Spinner';
-import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 import { detectLanguage } from '../../Modules/detectLanguage';
-import { ContentWrapper } from '../../UI-Components';
+import { ContentWrapper, Text, Header, InlineLink } from '../../UI-Components';
 import SEO from '../../common/SEO';
 
-const Faq = ({location}) => {
-
+const Faq = ({ location }) => {
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const newIndex = activeIndex === index ? -1 : index;
@@ -52,7 +50,7 @@ const Faq = ({location}) => {
     setQuestions((old) => ({ ...old, [tag]: response.results }));
   };
 
-  const [activeIndex, setActiveIndex] = useState();
+  const [activeIndex, setActiveIndex] = useState(null);
   const [questions, setQuestions] = useState({
     general: [],
     sitter: [],
@@ -92,26 +90,42 @@ const Faq = ({location}) => {
   return (
     <ContentWrapper>
       <SEO page='faq' />
-      <p>new FAQ yay</p>
+      <Header centered color={'primary'}>
+        {t('reusable:title.faq')}
+      </Header>
+      <Text centered>
+        <Trans i18nKey='Faq:to-guidelines'>
+          Have you booked a stay already? Check out our helpful
+          <InlineLink as={Link} to='guidelines' color='info'>
+            guidelines
+          </InlineLink>
+          .
+        </Trans>
+      </Text>
+      <div ref={general} style={{ paddingTop: '2rem' }}>
+        <Header level={3}>{t('Faq:general')}</Header>
+        {questions.general.map((question) => {
+          return (
+            <>
+              <Header
+                level={5}
+                index={parseInt(question.data.index)}
+                onClick={() => setActiveIndex(question.data.index)}
+              >
+                {question.data.header[0].text}
+              </Header>
+              {activeIndex === parseInt(question.data.index) && (
+                <Text active={activeIndex === parseInt(question.data.index)}>
+                  {RichText.render(question.data.body)}
+                </Text>
+              )}
+            </>
+          );
+        })}
+      </div>
     </ContentWrapper>
   );
 
-
-
-
-
-  //       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
-  //         <Header as='h1'>{t('reusable:title.faq')}</Header>
-  //         <p style={{ textAlign: 'center' }}>
-  //           <Trans i18nKey='Faq:to-guidelines'>
-  //             Have you booked a stay already? Check out our helpful
-  //             <Header as={Link} to='guidelines' className='fake-link-underlined-reg'>
-  //               guidelines
-  //             </Header>
-  //             .
-  //           </Trans>
-  //         </p>
-  //       </div>
   //       <div className='expanding-wrapper'>
   //         <div ref={general} style={{ paddingTop: '2rem' }}>
   //           <Header as='h3' style={{ textAlign: 'left' }}>
@@ -241,7 +255,6 @@ const Faq = ({location}) => {
   //       </div>
   //     </>
   //   );
-
 };
 
 export default Faq;
