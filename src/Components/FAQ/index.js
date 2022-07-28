@@ -2,14 +2,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../common/Spinner';
+import Spinner from '../../common/Spinner';
 import { Helmet } from 'react-helmet';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
-import { detectLanguage } from '../Modules/detectLanguage';
+import { detectLanguage } from '../../Modules/detectLanguage';
+import { ContentWrapper } from '../../UI-Components';
+import SEO from '../../common/SEO';
 
-const Faq = (props) => {
+const Faq = ({location}) => {
+
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const newIndex = activeIndex === index ? -1 : index;
@@ -78,28 +81,25 @@ const Faq = (props) => {
       window.alertwindow.alert(t('reusable:errors:500'));
     }
 
-    let query = queryString.parse(props.location.search);
+    let query = queryString.parse(location.search);
     if (query.active) {
       setActiveIndex(parseInt(query.active));
     }
   }, [locale]);
-  return <div>a</div>
-  // if (ready) {
-  //   return (
-  //     <>
-  //       <Helmet>
-  //         <title>KattBNB - äntligen ett svar på kattpassningsfrågan</title>
-  //         <meta
-  //           name='description'
-  //           content='Fullbokat i kattpensionat? Vi känner igen frustrationen. Vi bryr oss om katterna och därför lanserar KattBNB - allt-i-ett kattpassningssida där du kan hitta en perfekt kattvakt till din katt. Frågor på det?'
-  //         />
-  //         <link rel='canonical' href='https://kattbnb.se/faq' />
-  //         <meta property='og:title' content='KattBNB - frågor på det?' />
-  //         <meta property='og:url' content='https://kattbnb.se/faq' />
-  //         <meta property='og:type' content='website' />
-  //         <meta property='og:description' content='KattBNB - äntligen ett svar på kattpassningsfrågan' />
-  //         <meta property='og:image' content='https://kattbnb.se/KattBNB_og.jpg' />
-  //       </Helmet>
+
+  if (!ready) return <Spinner />;
+
+  return (
+    <ContentWrapper>
+      <SEO page='faq' />
+      <p>new FAQ yay</p>
+    </ContentWrapper>
+  );
+
+
+
+
+
   //       <div className='content-wrapper' style={{ marginBottom: '2rem', paddingBottom: '0' }}>
   //         <Header as='h1'>{t('reusable:title.faq')}</Header>
   //         <p style={{ textAlign: 'center' }}>
@@ -241,9 +241,7 @@ const Faq = (props) => {
   //       </div>
   //     </>
   //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+
 };
 
 export default Faq;

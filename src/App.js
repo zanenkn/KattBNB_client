@@ -9,7 +9,7 @@ import Search from './Components/Search';
 import SearchResults from './Components/SearchResults';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
-import Faq from './Components/Faq';
+import Faq from './Components/FAQ';
 import Legal from './Components/Legal';
 import Guidelines from './Components/Guidelines';
 import SuccessScreenAuth from './common/SuccessScreenAuth';
