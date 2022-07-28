@@ -18,7 +18,15 @@ import { Flexbox, Notice, Header, Avatar } from '../../../UI-Components';
 import { Arrow, Camera, Send, Trash } from '../../../icons';
 import MessageBubble from './messageBubble';
 import ImageUploadPopup from './imageUploadPopup';
-import { StickyFooter, Inner, MaxWidh, StyledContentWrapper, StyledSecondaryStickyHeader } from './styles';
+import {
+  StickyFooter,
+  Inner,
+  MaxWidh,
+  ConversationWrapper,
+  StyledSecondaryStickyHeader,
+  MessagesWrapper,
+} from './styles';
+import Helmet from 'react-helmet';
 
 const Conversation = ({ id, username, match, history }) => {
   const { t, ready } = useTranslation('SingleConversation');
@@ -35,6 +43,7 @@ const Conversation = ({ id, username, match, history }) => {
   const [uploadedImage, setUploadedImage] = useState('');
   const [loadingUploadButton, setLoadingUploadButton] = useState(false);
   const [responder, setResponder] = useState({});
+  const [textAreaFocused, setTextAreaFocused] = useState(false)
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -217,6 +226,11 @@ const Conversation = ({ id, username, match, history }) => {
 
   return (
     <>
+      <Helmet
+        bodyAttributes={{
+          class: textAreaFocused ? 'overflow-hidden' : 'overflow-auto',
+        }}
+      />
       <Popup
         modal
         open={imageUploadPopupOpen}
@@ -248,48 +262,50 @@ const Conversation = ({ id, username, match, history }) => {
           <Trash onClick={() => deleteConversation()} height={5} tint={60} />
         </MaxWidh>
       </StyledSecondaryStickyHeader>
-      <StyledContentWrapper top={88} noBottomPadding>
-        {messagesHistory.length > 0 &&
-          messagesHistory.map((message) => {
-            return (
-              <div key={message.id}>
-                <MessageBubble
-                  lang={lang}
-                  message={message}
-                  scrollDown={scrollDown}
-                  belongsToCurrent={username === message.user.nickname}
-                />
-              </div>
-            );
-          })}
-        {chatLogs.length > 0 &&
-          chatLogs.map((message) => {
-            return (
-              <div key={message.id}>
-                <MessageBubble
-                  lang={lang}
-                  message={message}
-                  scrollDown={scrollDown}
-                  belongsToCurrent={username === message.user.nickname}
-                />
-              </div>
-            );
-          })}
-        {errors.length > 0 && (
-          <Notice nature='danger'>
-            <Header centered level={5}>
-              {t('SingleConversation:error-message-header')}
-            </Header>
-            <ul id='message-error-list'>
-              {errors.map((error) => (
-                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
-              ))}
-            </ul>
-          </Notice>
-        )}
-        {!responder && <div>{t('SingleConversation:deleted-user')}</div>}
-        <div ref={bottomOfPage} style={{ height: '1px' }}></div>
-      </StyledContentWrapper>
+      <ConversationWrapper noBottomPadding>
+        <MessagesWrapper>
+          {messagesHistory.length > 0 &&
+            messagesHistory.map((message) => {
+              return (
+                <div key={message.id}>
+                  <MessageBubble
+                    lang={lang}
+                    message={message}
+                    scrollDown={scrollDown}
+                    belongsToCurrent={username === message.user.nickname}
+                  />
+                </div>
+              );
+            })}
+          {chatLogs.length > 0 &&
+            chatLogs.map((message) => {
+              return (
+                <div key={message.id}>
+                  <MessageBubble
+                    lang={lang}
+                    message={message}
+                    scrollDown={scrollDown}
+                    belongsToCurrent={username === message.user.nickname}
+                  />
+                </div>
+              );
+            })}
+          {errors.length > 0 && (
+            <Notice nature='danger'>
+              <Header centered level={5}>
+                {t('SingleConversation:error-message-header')}
+              </Header>
+              <ul id='message-error-list'>
+                {errors.map((error) => (
+                  <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+                ))}
+              </ul>
+            </Notice>
+          )}
+          {!responder && <div>{t('SingleConversation:deleted-user')}</div>}
+          <div ref={bottomOfPage} style={{ height: '1px' }}></div>
+        </MessagesWrapper>
+      </ConversationWrapper>
       <StickyFooter>
         <Inner>
           <TextareaAutosize
@@ -298,6 +314,8 @@ const Conversation = ({ id, username, match, history }) => {
             className='expanding-textarea'
             placeholder={t('SingleConversation:textarea-plch')}
             value={newMessage}
+            onFocus={() => setTextAreaFocused(true)}
+            onBlur={() => setTextAreaFocused(false)}
             onHeightChange={() => scrollDown()}
             onChange={onMessageType}
             onKeyPress={(e) => e.key === 'Enter' && handleSendEvent(e)}

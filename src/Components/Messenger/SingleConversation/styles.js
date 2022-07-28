@@ -79,17 +79,15 @@ export const Message = styled.div`
   overflow-wrap: break-word;
 `;
 
-export const StyledContentWrapper = styled(ContentWrapper)`
-  min-height: calc(var(--vh, 1vh) * 100 - ${navbar.sm} - 88px);
-  padding-top: calc(${navbar.sm} + ${spacing[5]});
+export const ConversationWrapper = styled(ContentWrapper)`
+  padding-top: calc(${navbar.sm});
+  min-height: unset;
 
   @media screen and (min-height: ${screens.md}) {
-    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.md} - 88px);
-    padding-top: calc(${navbar.md} + ${spacing[5]});
+    padding-top: calc(${navbar.md});
   }
   @media screen and (min-height: ${screens.lg}) {
-    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.lg} - 88px);
-    padding-top: calc(${navbar.lg} + ${spacing[5]});
+    padding-top: calc(${navbar.lg});
   }
 
   @media screen and (min-width: ${screens.sm}) {
@@ -102,10 +100,32 @@ export const StyledContentWrapper = styled(ContentWrapper)`
     padding-right: ${spacing[10]};
   }
 `;
+export const AllConversationsWrapper = styled(ConversationWrapper)`
+  min-height: calc(var(--vh, 1vh) * 100 - ${navbar.sm});
+
+  @media screen and (min-height: ${screens.md}) {
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.md});
+  }
+  @media screen and (min-height: ${screens.lg}) {
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.lg});
+  }
+`;
+
+export const MessagesWrapper = styled.div`
+  min-height: calc(var(--vh, 1vh) * 100 - ${navbar.sm}*2 - 88px);
+  padding-top: ${spacing[5]};
+  box-sizing: border-box;
+
+  @media screen and (min-height: ${screens.md}) {
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.md}*2 - 88px);
+  }
+  @media screen and (min-height: ${screens.lg}) {
+    min-height: calc(var(--vh, 1vh) * 100 - ${navbar.lg}*2 - 88px);
+  }
+`;
 
 export const StyledSecondaryStickyHeader = styled(SecondaryStickyHeader)`
   padding: 0;
-
   height: ${navbar.sm};
   @media (min-height: ${screens.md}) {
     height: ${navbar.md};
