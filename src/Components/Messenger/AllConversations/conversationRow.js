@@ -4,8 +4,9 @@ import moment from 'moment';
 import timeFormat from '../../../Modules/dateFormatting';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { getAvatar } from '../../../Modules/getAvatar';
-import { Avatar, Flexbox } from '../../../UI-Components';
+import { Avatar, Divider, Header, Text } from '../../../UI-Components';
 import { useHistory } from 'react-router-dom';
+import { RowWrapper, Textflex } from './styles';
 
 const ConversationRow = ({ conversation, currentUserId, t }) => {
   const [responder, setResponder] = useState({ name: '', avatar: null });
@@ -21,16 +22,25 @@ const ConversationRow = ({ conversation, currentUserId, t }) => {
 
     setResponder({
       name: conversation[respondingUser]?.nickname || t('AllConversations:deleted-user'),
-      avatar: conversation[respondingUser]?.avatar ?? getAvatar(conversation[respondingUser]?.nickname),
+      avatar: conversation[respondingUser]?.profile_avatar ?? getAvatar(conversation[respondingUser]?.nickname),
     });
   }, []);
 
   return (
-    <Flexbox onClick={() => history.push(`/conversation/${conversation.id}`)}>
-      <Avatar src={responder.avatar} size='md' />
-      {responder.name}
-      {moment(conversation.msg_created).format(timeFormat(conversation.msg_created))}
-    </Flexbox>
+    <>
+      <RowWrapper onClick={() => history.push(`/conversation/${conversation.id}`)}>
+        <Avatar src={responder.avatar} size='lg' responsive />
+
+        <Textflex spaceItemsX={3} verticalAlign='baseline'>
+          <div>
+            <Header level={5}>{responder.name}</Header>
+            <Text space={0}>{conversation.msg_body}</Text>
+          </div>
+          <Text space={0}>{moment(conversation.msg_created).format(timeFormat(conversation.msg_created))}</Text>
+        </Textflex>
+      </RowWrapper>
+      <Divider top={0} bottom={0} tint={40} />
+    </>
   );
 };
 

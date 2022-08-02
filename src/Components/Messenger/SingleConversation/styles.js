@@ -101,6 +101,8 @@ export const ConversationWrapper = styled(ContentWrapper)`
   }
 `;
 export const AllConversationsWrapper = styled(ConversationWrapper)`
+  padding-left: 0;
+  padding-right: 0;
   min-height: calc(var(--vh, 1vh) * 100 - ${navbar.sm});
 
   @media screen and (min-height: ${screens.md}) {

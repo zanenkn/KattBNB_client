@@ -4,15 +4,16 @@ import { theme } from '../../../Styles/theme';
 
 const { colors, spacing } = theme;
 
-const Divider = ({ color, top, bottom, thick, ...rest }) => {
-  return <StyledDivider color={color} bottom={bottom} top={top} thick={thick} {...rest} />;
+const Divider = ({ color, top, bottom, thick, tint, ...rest }) => {
+  return <StyledDivider color={color} bottom={bottom} top={top} thick={thick} tint={tint} {...rest} />;
 };
 
 Divider.defaultProps = {
   bottom: 4,
   color: 'neutral',
   top: 4,
-  thick: false
+  thick: false,
+  tint: 100
 };
 
 Divider.propTypes = {
@@ -20,6 +21,7 @@ Divider.propTypes = {
   color: PropTypes.oneOf(Object.keys(colors)),
   top: PropTypes.oneOf(Object.keys(spacing).map(k => +k)),
   thick: PropTypes.bool,
+  tint: PropTypes.oneOf([100, 80, 60, 40, 20, 10, 0])
 };
 
 export default Divider;
