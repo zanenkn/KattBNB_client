@@ -106,7 +106,7 @@ const Faq = ({ location }) => {
         <Header level={3}>{t('Faq:general')}</Header>
         {questions.general.map((question) => {
           return (
-            <Question question={question} activeIndex={activeIndex} onClick={() => setActiveIndex(question.data.index)} />
+            <Question question={question} activeIndex={activeIndex} onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null) } />
           );
         })}
       </div>
