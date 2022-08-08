@@ -6,7 +6,7 @@ import Spinner from '../../common/Spinner';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
 import { detectLanguage } from '../../Modules/detectLanguage';
-import { ContentWrapper, Text, Header, InlineLink } from '../../UI-Components';
+import { Container, ContentWrapper, Text, Header, InlineLink } from '../../UI-Components';
 import SEO from '../../common/SEO';
 import Question from './question';
 
@@ -102,7 +102,7 @@ const Faq = ({ location }) => {
           .
         </Trans>
       </Text>
-      <div ref={general} style={{ paddingTop: '2rem' }}>
+      <Container ref={general} space={6}>
         <Header level={3}>{t('Faq:general')}</Header>
         {questions.general.map((question) => {
           return (
@@ -113,7 +113,55 @@ const Faq = ({ location }) => {
             />
           );
         })}
-      </div>
+      </Container>
+      <Container ref={sitter} space={6}>
+        <Header level={3}>{t('Faq:sitter')}</Header>
+        {questions.sitter.map((question) => {
+          return (
+            <Question
+              question={question}
+              activeIndex={activeIndex}
+              onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+            />
+          );
+        })}
+      </Container>
+      <Container ref={owner} space={6}>
+        <Header level={3}>{t('Faq:owner')}</Header>
+        {questions.owner.map((question) => {
+          return (
+            <Question
+              question={question}
+              activeIndex={activeIndex}
+              onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+            />
+          );
+        })}
+      </Container>
+      <Container ref={privacy} space={6}>
+        <Header level={3}>{t('Faq:privacy')}</Header>
+        {questions.privacy.map((question) => {
+          return (
+            <Question
+              question={question}
+              activeIndex={activeIndex}
+              onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+            />
+          );
+        })}
+      </Container>
+      <Container ref={payments} space={6}>
+        <Header level={3}>{t('Faq:payments')}</Header>
+        {questions.payments.map((question) => {
+          return (
+            <Question
+              question={question}
+              activeIndex={activeIndex}
+              onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+            />
+          );
+        })}
+      </Container>
     </ContentWrapper>
   );
 
