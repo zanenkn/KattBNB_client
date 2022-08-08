@@ -8,7 +8,7 @@ import Prismic from '@prismicio/client';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { ContentWrapper, Text, Header, InlineLink } from '../../UI-Components';
 import SEO from '../../common/SEO';
-import Question from './question'
+import Question from './question';
 
 const Faq = ({ location }) => {
   const handleClick = (e, titleProps) => {
@@ -106,7 +106,11 @@ const Faq = ({ location }) => {
         <Header level={3}>{t('Faq:general')}</Header>
         {questions.general.map((question) => {
           return (
-            <Question question={question} activeIndex={activeIndex} onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null) } />
+            <Question
+              question={question}
+              activeIndex={activeIndex}
+              onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+            />
           );
         })}
       </div>
