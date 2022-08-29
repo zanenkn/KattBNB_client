@@ -178,7 +178,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
           <Text centered space={5}>
             <Trans i18nKey={'reusable:stripe:step-1-text'}>
               text
-              <InlineLink as={Link} to='/faq?section=payments&active=503' color='info'>
+              <InlineLink as={Link} to='/faq?active=503' color='info'>
                 link
               </InlineLink>
             </Trans>
