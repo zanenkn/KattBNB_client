@@ -39,6 +39,11 @@ const Faq = ({ location }) => {
     setQuestions((old) => ({ ...old, [tag]: response.results }));
   };
 
+  const onQuestionClick = (index) => {
+    setActiveIndex(activeIndex !== index ? index : null)
+    window.history.replaceState(null, null, `/faq?active=${index}`);
+  }
+
   const [activeIndex, setActiveIndex] = useState(null);
   const [questions, setQuestions] = useState({
     general: [],
@@ -99,7 +104,7 @@ const Faq = ({ location }) => {
               <Question
                 question={question}
                 activeIndex={activeIndex}
-                onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+                onClick={() => onQuestionClick(question.data.index)}
               />
             );
           })}
@@ -113,7 +118,7 @@ const Faq = ({ location }) => {
               <Question
                 question={question}
                 activeIndex={activeIndex}
-                onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+                onClick={() => onQuestionClick(question.data.index)}
               />
             );
           })}
@@ -127,7 +132,7 @@ const Faq = ({ location }) => {
               <Question
                 question={question}
                 activeIndex={activeIndex}
-                onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+                onClick={() => onQuestionClick(question.data.index)}
               />
             );
           })}
@@ -141,7 +146,7 @@ const Faq = ({ location }) => {
               <Question
                 question={question}
                 activeIndex={activeIndex}
-                onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+                onClick={() => onQuestionClick(question.data.index)}
               />
             );
           })}
@@ -155,7 +160,7 @@ const Faq = ({ location }) => {
               <Question
                 question={question}
                 activeIndex={activeIndex}
-                onClick={() => setActiveIndex(activeIndex !== question.data.index ? question.data.index : null)}
+                onClick={() => onQuestionClick(question.data.index)}
               />
             );
           })}
