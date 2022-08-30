@@ -30,7 +30,6 @@ const ConversationRow = ({ conversation, currentUserId, t }) => {
     <>
       <RowWrapper onClick={() => history.push(`/conversation/${conversation.id}`)}>
         <Avatar src={responder.avatar} size='lg' responsive />
-
         <Textflex spaceItemsX={3} verticalAlign='baseline'>
           <div>
             <Header level={5}>{responder.name}</Header>

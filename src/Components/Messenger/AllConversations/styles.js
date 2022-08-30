@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { theme } from '../../../Styles/theme';
 import { Flexbox } from '../../../UI-Components';
 
@@ -20,8 +20,8 @@ export const RowWrapper = styled(Flexbox)`
 
   @media screen and (max-width: ${screens.xs}) {
     img {
-      width: 2rem;
-      height: 2rem;
+      width: ${spacing[6]};
+      height: ${spacing[6]};
     }
   }
 `;

@@ -47,7 +47,7 @@ const AllConversations = ({ currentUserId }) => {
         })
         .catch(({ response }) => {
           if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
+            setErrors(['reusable:errors.unknown']);
           } else if (response.status === 500) {
             handleAxiosStateChanges(false, ['reusable:errors:500']);
           } else if (response.status === 401) {

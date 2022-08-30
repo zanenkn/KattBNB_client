@@ -13,7 +13,7 @@ export const StickyFooter = styled.div`
   background: white;
   z-index: 100;
   box-shadow: 0 0 20px -5px rgba(0, 0, 0, 0.2);
-  padding: 1rem 0;
+  padding: ${spacing[4]} 0;
   box-sizing: border-box;
 `;
 
@@ -62,7 +62,8 @@ export const Message = styled.div`
   background-color: ${({ belongsToCurrent }) => (belongsToCurrent ? colors.info[110] : colors.neutral[60])};
   color: white;
   margin: ${({ belongsToCurrent }) => (belongsToCurrent ? 'auto 0 auto auto' : '0')};
-  border-radius: ${({ belongsToCurrent }) => (belongsToCurrent ? '1rem 1rem 0 1rem' : '1rem 1rem 1rem 0')};
+  border-radius: ${({ belongsToCurrent }) =>
+    belongsToCurrent ? `${spacing[4]} ${spacing[4]} 0 ${spacing[4]}` : `${spacing[4]} ${spacing[4]} ${spacing[4]} 0`};
   ${({ isImage }) =>
     isImage &&
     css`
@@ -71,7 +72,7 @@ export const Message = styled.div`
       align-items: center;
       overflow: hidden;
     `}
-  padding: ${({ isImage }) => (isImage ? 'none' : '1rem')};
+  padding: ${({ isImage }) => (isImage ? 'none' : `${spacing[4]}`)};
   height: min-content;
   width: fit-content;
   max-width: 70%;
@@ -160,7 +161,7 @@ export const RoundButton = styled.div`
   position: absolute;
   right: -${spacing[3]};
   top: -${spacing[3]};
-  height: 2rem;
+  height: ${spacing[6]};
   background: ${colors['primary'][100]};
   border-radius: 50%;
   width: ${spacing[6]};
