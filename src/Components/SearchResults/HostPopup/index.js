@@ -19,10 +19,19 @@ import { Badge } from '../styles';
 import { Avatar, Flexbox, Text, Header, Container, InlineLink, Button } from '../../../UI-Components';
 import { Location, User, Review, AvailableHost } from '../../../icons';
 
-const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toHostProfile, requestToBook }) => {
+const HostPopup = ({
+  id,
+  open,
+  onClose,
+  currentSearch,
+  host,
+  loggedInUserId,
+  toHostProfile,
+  requestToBook,
+  messageHost,
+}) => {
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
-  const history = useHistory();
   const device = useDeviceInfo().type;
 
   const lang = detectLanguage();
@@ -125,7 +134,7 @@ const HostPopup = ({ id, open, onClose, currentSearch, host, loggedInUserId, toH
         {!isAvailable && (
           <>
             {/* idea: push to messenger with a default message? */}
-            <Button id='message-host' onClick={() => console.log('TODO: to the messenger i go')} space={2}>
+            <Button id='message-host' onClick={() => messageHost(host.userId)} space={2}>
               {t('reusable:cta.send-message')}
             </Button>
 

@@ -1,4 +1,4 @@
-import './Styles/global.css'
+import './Styles/global.css';
 import withFooter from './HOC/withFooter';
 import Landing from './Components/Landing';
 import Responsive from './common/Responsive';
@@ -91,7 +91,7 @@ const App = () => {
           <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
           <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
           <Route exact path='/messenger' component={AllConversations}></Route>
-          <Route exact path='/conversation' component={Conversation}></Route>
+          <Route exact path='/conversation/:conversationId' component={Conversation}></Route>
           <Route exact path='/leave-a-review' component={LeaveReview}></Route>
           <Route exact path='/booking-receipt' component={Receipt}></Route>
           <Route exact path='/area-list' component={AreaList}></Route>

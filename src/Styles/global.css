@@ -292,15 +292,18 @@
 }
 
 .flex-30 > div {
-  width: calc(27% - 10px)
+  width: calc(27% - 10px);
 }
 
-.flex-30 > div:first-child, .flex-30 > div:last-child {
+.flex-30 > div:first-child,
+.flex-30 > div:last-child {
   width: calc(37% - 10px);
 }
 
 @media screen and (min-width: 375px) {
-  .flex-30 > div, .flex-30 > div:first-child, .flex-30 > div:last-child {
+  .flex-30 > div,
+  .flex-30 > div:first-child,
+  .flex-30 > div:last-child {
     width: calc(33% - 10px);
   }
 }
@@ -398,4 +401,43 @@
   appearance: none;
   outline: none;
   border-style: none;
+}
+
+/* Expanding Text Area (messenger) */
+
+.expanding-textarea {
+  font-family: 'Lato', sans-serif;
+  background-color: transparent;
+  box-sizing: border-box;
+  color: inherit;
+  outline: none;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 16px;
+  border: 1px solid #a8a5ac;
+  resize: none;
+}
+
+.expanding-textarea:focus {
+  border: 1px solid #59565e;
+}
+
+.expanding-textarea::placeholder {
+  font-family: 'Lato', sans-serif;
+}
+
+/* links in messenger */
+span.message > a {
+  text-decoration: underline;
+}
+
+/* images in messenger */
+.portrait-img {
+  max-height: 50vh;
+  width: 100%;
+}
+
+.landscape-img {
+  max-height: 30vh;
+  width: 100%;
 }

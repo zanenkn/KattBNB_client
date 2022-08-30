@@ -100,7 +100,7 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                     </InlineLink>
                   </SubmenuItem>
                   <SubmenuItem>
-                    <InlineLink as={Link} to='/messages' onClick={() => setShowSubmenus(false)}>
+                    <InlineLink as={Link} to='/messenger' onClick={() => setShowSubmenus(false)}>
                       {t('reusable:navigation.messages')}
                     </InlineLink>
                   </SubmenuItem>
