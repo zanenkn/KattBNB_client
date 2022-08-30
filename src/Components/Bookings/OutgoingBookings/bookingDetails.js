@@ -42,7 +42,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
   }, []);
 
   const messageHost = () => {
-    const { avatar, hostId, location, nickname } = state;
+    const { hostId } = state;
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
     } else {
@@ -65,21 +65,12 @@ const BookingDetails = ({ history, id, location: { state } }) => {
           .post(path, payload, { headers: headers })
           .then(({ data }) => {
             history.push({
-              pathname: '/conversation',
-              state: {
-                id: data.id,
-                user: {
-                  profile_avatar: avatar,
-                  id: hostId,
-                  location: location,
-                  nickname: nickname,
-                },
-              },
+              pathname: `/conversation/${data.id}`,
             });
           })
           .catch(({ response }) => {
             if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
+              setErrors(['reusable:errors.unknown']);
             } else if (response.status === 500) {
               setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
