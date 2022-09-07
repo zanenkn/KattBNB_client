@@ -143,24 +143,14 @@ const Conversation = ({ id, username, match, history }) => {
     axios
       .get(path, { headers: headers })
       .then(() => {
-        if (uploadedImage !== '') {
-          channel.send({
-            body: newMessage,
-            image: [uploadedImage],
-            user_id: id,
-            conversation_id: match.params.conversationId,
-          });
-          setNewMessage('');
-          setLoadingUploadButton(true);
-        } else {
-          channel.send({
-            body: newMessage,
-            image: [uploadedImage],
-            user_id: id,
-            conversation_id: match.params.conversationId,
-          });
-          setNewMessage('');
-        }
+        channel.send({
+          body: newMessage,
+          image: uploadedImage === '' ? '' : [uploadedImage],
+          user_id: id,
+          conversation_id: match.params.conversationId,
+        });
+        setNewMessage('');
+        uploadedImage !== '' && setLoadingUploadButton(true);
       })
       .catch(({ response }) => {
         if (response === undefined) {
