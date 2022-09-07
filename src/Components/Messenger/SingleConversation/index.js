@@ -262,7 +262,7 @@ const Conversation = ({ id, username, match, history }) => {
                     lang={lang}
                     message={message}
                     scrollDown={scrollDown}
-                    belongsToCurrent={username === message.user.nickname}
+                    belongsToCurrent={username === message.user?.nickname}
                   />
                 </div>
               );
@@ -275,7 +275,7 @@ const Conversation = ({ id, username, match, history }) => {
                     lang={lang}
                     message={message}
                     scrollDown={scrollDown}
-                    belongsToCurrent={username === message.user.nickname}
+                    belongsToCurrent={username === message.user?.nickname}
                   />
                 </div>
               );
