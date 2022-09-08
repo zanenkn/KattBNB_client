@@ -91,7 +91,8 @@
     "book": "Book",
     "book-host-now": "Book {{host}} now",
     "read-more": "Read more",
-    "hide": "Hide"
+    "hide": "Hide",
+    "search": "Search"
   },
   "alerts": {
     "no-match-address": "It seems that the address you selected does not match your profile location. Are you sure you want to continue?"
