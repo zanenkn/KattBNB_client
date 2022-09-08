@@ -10,10 +10,13 @@ const Styled = styled.div`
   padding-left: ${() => spacing[6]};
   padding-bottom: ${({ noBottomPadding }) => (noBottomPadding ? '0' : spacing[6])};
   ${({ top }) =>
-    top &&
-    css`
-      padding-top: ${top}px;
-    `}
+    top
+      ? css`
+          padding-top: ${top}px;
+        `
+      : css`
+          padding-top: ${spacing[6]};
+        `}
 
   > *:last-child {
     margin-bottom: 0;
