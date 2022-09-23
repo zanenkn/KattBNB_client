@@ -26,6 +26,7 @@ const Landing = () => {
   };
 
   useEffect(() => {
+    console.log('wtf is my env', process.env.NODE_ENV)
     window.addEventListener('scroll', onScroll);
     setUnitHeight(document.documentElement.style.getPropertyValue('--vh'));
     return () => window.removeEventListener('scroll', onScroll);
