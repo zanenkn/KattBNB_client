@@ -79,13 +79,8 @@ const SearchResults = ({ id, currentSearch, location }) => {
 
       let searchParams = {};
 
-      if (!!Object.keys(currentSearch).length) {
-        searchParams.from = currentSearch.start;
-        searchParams.to = currentSearch.end;
-        searchParams.location = currentSearch.location;
-        searchParams.cats = currentSearch.cats;
-      } else {
-        searchParams.location = queryString.parse(location.search).location || 'Göteborg';
+      if (queryString.parse(location.search).location) {
+        searchParams.location = queryString.parse(location.search).location;
         searchParams.cats = queryString.parse(location.search).cats || 1;
         searchParams.from = parseInt(queryString.parse(location.search).from) || today + 86400000;
         searchParams.to = parseInt(queryString.parse(location.search).to) || today + 86400000;
@@ -100,6 +95,11 @@ const SearchResults = ({ id, currentSearch, location }) => {
             dates: getDaysArray(searchParams.from, searchParams.to),
           },
         });
+      } else {
+        searchParams.from = currentSearch.start;
+        searchParams.to = currentSearch.end;
+        searchParams.location = currentSearch.location;
+        searchParams.cats = currentSearch.cats;
       }
 
       setFrom(searchParams.from);
