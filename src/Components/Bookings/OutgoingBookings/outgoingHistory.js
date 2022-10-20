@@ -124,6 +124,8 @@ const OutgoingHistory = ({ bookings, history }) => {
                       hostNickname: booking.host_nickname,
                       startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
                       endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
+                      hostLocation: booking.host_location,
+                      cats: booking.number_of_cats,
                     },
                   });
                 },

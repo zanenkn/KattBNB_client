@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../HOC/withAuth';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import axios from 'axios';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import ReviewScore from '../../common/ReviewScore';
 import queryString from 'query-string';
+import { ContentWrapper, Header, Whitebox, Flexbox, Text, TextArea, Notice, Button } from '../../UI-Components';
+import { BookingCTAWrapper } from '../HostProfileView/styles';
+import { Availabilty, Location, Cat } from '../../icons';
+import { useDeviceInfo } from '../../hooks/useDeviceInfo';
+import moment from 'moment';
 
 const LeaveReview = (props) => {
   const { t, ready } = useTranslation('LeaveReview');
+  const device = useDeviceInfo();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -21,6 +27,8 @@ const LeaveReview = (props) => {
   const [profileId, setProfileId] = useState(null);
   const [bookingStart, setBookingStart] = useState(null);
   const [bookingEnd, setBookingEnd] = useState(null);
+  const [hostLocation, setHostLocation] = useState(null);
+  const [cats, setCats] = useState(null);
 
   useEffect(() => {
     window.onpopstate = (e) => {
@@ -33,6 +41,8 @@ const LeaveReview = (props) => {
       setProfileId(props.location.state.hostProfileId);
       setBookingStart(props.location.state.startDate);
       setBookingEnd(props.location.state.endDate);
+      setHostLocation(props.location.state.hostLocation);
+      setCats(props.location.state.cats);
     } else {
       setHostNickname(queryString.parse(props.location.search).hostNickname);
       setUserId(queryString.parse(props.location.search).userId);
@@ -40,13 +50,11 @@ const LeaveReview = (props) => {
       setProfileId(queryString.parse(props.location.search).hostProfileId);
       setBookingStart(queryString.parse(props.location.search).startDate);
       setBookingEnd(queryString.parse(props.location.search).endDate);
+      setHostLocation(queryString.parse(props.location.search).hostLocation);
+      setCats(queryString.parse(props.location.search).cats);
     }
     // eslint-disable-next-line
   }, []);
-
-  const onScoreClick = (e) => {
-    setReviewScore(parseInt(e.currentTarget.id));
-  };
 
   const createReview = () => {
     const lang = detectLanguage();
@@ -87,7 +95,7 @@ const LeaveReview = (props) => {
           })
           .catch((error) => {
             if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm');
+              setErrors(['reusable:errors.unknown']);
             } else if (error.response.status === 500) {
               setLoading(false);
               setErrors(['reusable:errors:500']);
@@ -106,59 +114,68 @@ const LeaveReview = (props) => {
     }
   };
 
-  return <div>a</div>
-  // if (ready) {
-  //   return (
-  //     <div className='content-wrapper'>
-  //       <Header as='h1'>{t('LeaveReview:title')}</Header>
-  //       <Segment className='whitebox'>
-  //         <p className='small-centered-paragraph' style={{ marginBottom: '2rem' }}>
-  //           <Trans i18nKey='LeaveReview:desc'>
-  //             Your cat(s) stayed with <strong style={{ color: '#c90c61' }}>{{ host: hostNickname }}</strong> during the
-  //             dates of <strong style={{ color: '#c90c61' }}>{{ startDate: bookingStart }}</strong> until
-  //             <strong style={{ color: '#c90c61' }}>{{ endDate: bookingEnd }}</strong>. Help us to improve KattBNB
-  //             community by reviewing your experience.
-  //           </Trans>
-  //         </p>
-  //         <Form>
-  //           <div className='required field'>
-  //             <label>{t('LeaveReview:label')}</label>
-  //             <ReviewScore
-  //               setScore={(e) => onScoreClick(e)}
-  //               score={reviewScore}
-  //               clickable={true}
-  //               displayNumerical={true}
-  //             />
-  //             <Form.TextArea
-  //               placeholder={t('LeaveReview:placeholder')}
-  //               required
-  //               id='review-body'
-  //               value={reviewBody}
-  //               onChange={(e) => setReviewBody(e.target.value)}
-  //             />
-  //           </div>
-  //         </Form>
-  //         <p style={{ textAlign: 'end', fontSize: 'smaller', fontStyle: 'italic' }}>
-  //           {t('reusable:remaining-chars')} {1000 - reviewBody.length}
-  //         </p>
-  //         {errors.length > 0 && (
-  //           <Message negative>
-  //             <ul id='message-error-list'>
-  //               {errors.map((error) => (
-  //                 <li key={error}>{t(error)}</li>
-  //               ))}
-  //             </ul>
-  //           </Message>
-  //         )}
-  //         <Button onClick={() => createReview()} className='submit-button' loading={loading} disabled={loading}>
-  //           {t('LeaveReview:cta')}
-  //         </Button>
-  //       </Segment>
-  //     </div>
-  //   );
-  // } else {
-  //   return <Spinner />;
-  // }
+  if (!ready) return <Spinner />;
+
+  return (
+    <ContentWrapper>
+      <Header level={2} centered>
+        {t('LeaveReview:title')}
+      </Header>
+      <Whitebox>
+        <BookingCTAWrapper>
+          <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
+            <Availabilty />
+            <Text>
+              {moment(bookingStart).format(device.width > 375 ? 'LL' : 'll')} -{' '}
+              {moment(bookingEnd).format(device.width > 375 ? 'LL' : 'll')}
+            </Text>
+          </Flexbox>
+          <Flexbox spaceItemsX={2} horizontalAlign='left'>
+            <Flexbox spaceItemsX={1}>
+              <Location />
+              <Text>{hostLocation}</Text>
+            </Flexbox>
+            <Flexbox spaceItemsX={1}>
+              <Cat />
+              <Text>{cats}</Text>
+            </Flexbox>
+          </Flexbox>
+        </BookingCTAWrapper>
+        <Text centered space={7}>
+          {t('LeaveReview:desc')}
+        </Text>
+        <ReviewScore
+          setScore={(e) => setReviewScore(parseInt(e.currentTarget.id))}
+          score={reviewScore}
+          clickable
+          primaryColor={'primary'}
+          secondaryColor={'neutral'}
+        />
+        <TextArea
+          label={t('LeaveReview:label')}
+          required
+          value={reviewBody}
+          onChange={(e) => setReviewBody(e.target.value)}
+          space={1}
+        />
+        <Text right size={'sm'} italic>
+          {t('reusable:remaining-chars')} {1000 - reviewBody.length}
+        </Text>
+        {errors.length > 0 && (
+          <Notice nature='danger'>
+            <ul>
+              {errors.map((error) => (
+                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+              ))}
+            </ul>
+          </Notice>
+        )}
+        <Button onClick={() => createReview()} loading={loading} disabled={loading}>
+          {t('LeaveReview:cta')}
+        </Button>
+      </Whitebox>
+    </ContentWrapper>
+  );
 };
 
 export default withAuth(LeaveReview);
