@@ -12,5 +12,12 @@ export const SeoSrc = {
     href: '/',
     type: 'website',
     image: 'KattBNB_og.jpg'
+  },
+  'faq': {
+    title: 'KattBNB - äntligen ett svar på kattpassningsfrågan',
+    description: 'Fullbokat i kattpensionat? Vi känner igen frustrationen. Vi bryr oss om katterna och därför lanserar KattBNB - allt-i-ett kattpassningssida där du kan hitta en perfekt kattvakt till din katt. Frågor på det?',
+    href: '/faq',
+    type: 'website',
+    image: 'KattBNB_og.jpg'
   }
 }

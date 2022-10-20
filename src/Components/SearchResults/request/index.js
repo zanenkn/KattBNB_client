@@ -302,7 +302,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
               Link
             </InlineLink>
             text
-            <InlineLink color='info' to='/faq?section=payments&active=503'>
+            <InlineLink color='info' to='/faq?active=503'>
               link
             </InlineLink>
             .

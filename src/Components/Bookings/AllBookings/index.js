@@ -174,7 +174,7 @@ const AllBookings = ({ id, history, username, dispatch }) => {
                   pathname: '/incoming-bookings',
                   state: { hostNickname: username },
                 })
-              : history.push('/faq?section=sitter&active=201')
+              : history.push('/faq?active=201')
           }
           ctaIsButton={hasIncomingRequest}
         />
