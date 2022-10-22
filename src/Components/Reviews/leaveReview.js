@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import withAuth from '../../HOC/withAuth';
-import { useTranslation } from 'react-i18next';
-import Spinner from '../../common/Spinner';
+import { useState, useEffect } from 'react';
+
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import queryString from 'query-string';
+
+import withAuth from '../../HOC/withAuth';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+
+import Spinner from '../../common/Spinner';
 import ReviewScore from '../../common/ReviewScore';
-import queryString from 'query-string';
-import { ContentWrapper, Header, Whitebox, Flexbox, Text, TextArea, Notice, Button } from '../../UI-Components';
-import { BookingCTAWrapper } from '../HostProfileView/styles';
-import { Availabilty, Location, Cat } from '../../icons';
-import { useDeviceInfo } from '../../hooks/useDeviceInfo';
-import moment from 'moment';
+import BookingInfo from '../../common/BookingInfo';
+
+import { ContentWrapper, Header, Whitebox, Text, TextArea, Notice, Button, Container } from '../../UI-Components';
 
 const LeaveReview = (props) => {
   const { t, ready } = useTranslation('LeaveReview');
-  const device = useDeviceInfo();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -31,7 +31,7 @@ const LeaveReview = (props) => {
   const [cats, setCats] = useState(null);
 
   useEffect(() => {
-    window.onpopstate = (e) => {
+    window.onpopstate = () => {
       props.history.push('/all-bookings');
     };
     if (props.location.state) {
@@ -121,36 +121,22 @@ const LeaveReview = (props) => {
       <Header level={2} centered>
         {t('LeaveReview:title')}
       </Header>
+      <Text centered space={7}>
+        {t('LeaveReview:desc')}
+      </Text>
       <Whitebox>
-        <BookingCTAWrapper>
-          <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
-            <Availabilty />
-            <Text>
-              {moment(bookingStart).format(device.width > 375 ? 'LL' : 'll')} -{' '}
-              {moment(bookingEnd).format(device.width > 375 ? 'LL' : 'll')}
-            </Text>
-          </Flexbox>
-          <Flexbox spaceItemsX={2} horizontalAlign='left'>
-            <Flexbox spaceItemsX={1}>
-              <Location />
-              <Text>{hostLocation}</Text>
-            </Flexbox>
-            <Flexbox spaceItemsX={1}>
-              <Cat />
-              <Text>{cats}</Text>
-            </Flexbox>
-          </Flexbox>
-        </BookingCTAWrapper>
-        <Text centered space={7}>
-          {t('LeaveReview:desc')}
-        </Text>
-        <ReviewScore
-          setScore={(e) => setReviewScore(parseInt(e.currentTarget.id))}
-          score={reviewScore}
-          clickable
-          primaryColor={'primary'}
-          secondaryColor={'neutral'}
-        />
+        <BookingInfo start={bookingStart} end={bookingEnd} place={hostLocation} cats={cats} space={5} />
+        <Container>
+          <ReviewScore
+            displayNumerical
+            setScore={(e) => setReviewScore(parseInt(e.currentTarget.id))}
+            score={reviewScore}
+            clickable
+            primaryColor={'primary'}
+            secondaryColor={'neutral'}
+            required
+          />
+        </Container>
         <TextArea
           label={t('LeaveReview:label')}
           required
