@@ -32,7 +32,7 @@ import Partners from './Components/Partners';
 import HostEn from './Components/HostEn';
 import HostSe from './Components/HostSe';
 import LeaveReview from './Components/Reviews/leaveReview';
-import SuccessfulReview from './Components/Reviews/SuccessfulReview';
+import SuccessfulReview from './Components/Reviews/successfulReview';
 import Receipt from './Components/Bookings/OutgoingBookings/receipt';
 import AreaList from './Components/AreaList';
 import BlogListing from './Components/Blog/BlogListing';

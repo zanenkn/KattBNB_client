@@ -6,5 +6,10 @@
   "title": "Leave a review",
   "desc": "Thank you for your booking! Help us to improve KattBNB community by reviewing your experience.",
   "label": "Your review",
-  "cta": "Save review"
+  "cta": "Save review",
+  "successful": {
+    "title": "Thank you!",
+    "text": "We really appreciate that you took time to review your experience. It helps KattBNB to become better for everyone. Thank you.",
+    "bookings-cta": "Back to bookings"
+  }
 }

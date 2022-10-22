@@ -6,5 +6,10 @@
   "title": "Lämna en recension",
   "desc": "Tack för din bokning! Hjälp oss att förbättra KattBNB-communityn genom att recensera din upplevelse.",
   "label": "Din recension",
-  "cta": "Spara recension"
+  "cta": "Spara recension",
+  "successful": {
+    "title": "Tack!",
+    "text": "Vi uppskattar verkligen att du tog dig tid att recensera din upplevelse. Det hjälper KattBNB att bli bättre för alla. Tack.",
+    "bookings-cta": "Tillbaka till bokningar"
+  }
 }

@@ -14,7 +14,7 @@ import BookingInfo from '../../common/BookingInfo';
 
 import { ContentWrapper, Header, Whitebox, Text, TextArea, Notice, Button, Container } from '../../UI-Components';
 
-const LeaveReview = (props) => {
+const LeaveReview = ({ history, location }) => {
   const { t, ready } = useTranslation('LeaveReview');
 
   const [loading, setLoading] = useState(false);
@@ -32,26 +32,26 @@ const LeaveReview = (props) => {
 
   useEffect(() => {
     window.onpopstate = () => {
-      props.history.push('/all-bookings');
+      history.push('/all-bookings');
     };
-    if (props.location.state) {
-      setHostNickname(props.location.state.hostNickname);
-      setUserId(props.location.state.userId);
-      setBookingId(props.location.state.bookingId);
-      setProfileId(props.location.state.hostProfileId);
-      setBookingStart(props.location.state.startDate);
-      setBookingEnd(props.location.state.endDate);
-      setHostLocation(props.location.state.hostLocation);
-      setCats(props.location.state.cats);
+    if (location.state) {
+      setHostNickname(location.state.hostNickname);
+      setUserId(location.state.userId);
+      setBookingId(location.state.bookingId);
+      setProfileId(location.state.hostProfileId);
+      setBookingStart(location.state.startDate);
+      setBookingEnd(location.state.endDate);
+      setHostLocation(location.state.hostLocation);
+      setCats(location.state.cats);
     } else {
-      setHostNickname(queryString.parse(props.location.search).hostNickname);
-      setUserId(queryString.parse(props.location.search).userId);
-      setBookingId(queryString.parse(props.location.search).bookingId);
-      setProfileId(queryString.parse(props.location.search).hostProfileId);
-      setBookingStart(queryString.parse(props.location.search).startDate);
-      setBookingEnd(queryString.parse(props.location.search).endDate);
-      setHostLocation(queryString.parse(props.location.search).hostLocation);
-      setCats(queryString.parse(props.location.search).cats);
+      setHostNickname(queryString.parse(location.search).hostNickname);
+      setUserId(queryString.parse(location.search).userId);
+      setBookingId(queryString.parse(location.search).bookingId);
+      setProfileId(queryString.parse(location.search).hostProfileId);
+      setBookingStart(queryString.parse(location.search).startDate);
+      setBookingEnd(queryString.parse(location.search).endDate);
+      setHostLocation(queryString.parse(location.search).hostLocation);
+      setCats(queryString.parse(location.search).cats);
     }
     // eslint-disable-next-line
   }, []);
@@ -91,7 +91,7 @@ const LeaveReview = (props) => {
         axios
           .post(path, payload, { headers: headers })
           .then(() => {
-            props.history.push('/successful-review');
+            history.push('/successful-review');
           })
           .catch((error) => {
             if (error.response === undefined) {
@@ -101,7 +101,7 @@ const LeaveReview = (props) => {
               setErrors(['reusable:errors:500']);
             } else if (error.response.status === 422) {
               window.alert(t('LeaveReview:error-no-host'));
-              props.history.push('/all-bookings');
+              history.push('/all-bookings');
             } else if (error.response.status === 401) {
               window.alert(t('reusable:errors:401'));
               wipeCredentials('/');
