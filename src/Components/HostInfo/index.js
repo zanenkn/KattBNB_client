@@ -2,28 +2,28 @@ import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import moment from 'moment';
 
 import { finalTotal, roundUp } from '../../Modules/PriceCalculations';
-import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 import ReviewScore from '../../common/ReviewScore';
 import HostLocationMap from '../../common/HostLocationMap';
 import Spinner from '../../common/Spinner';
 
 import { Avatar, Button, Flexbox, Text, Header, InlineLink, Container, Whitebox } from '../../UI-Components';
-import { BookingCTAWrapper, ReversibleWrapper } from './styles';
-import { Availabilty, AvailableHost, CreditCard, Location, Review, User, Cat } from '../../icons';
+import { ReversibleWrapper } from './styles';
+import { AvailableHost, CreditCard, Location, Review, User } from '../../icons';
 
 import AllReviews from '../Reviews/allReviews';
+import BookingInfo from '../../common/BookingInfo';
 
 const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
   const { t, ready } = useTranslation('HostInfo');
-  const device = useDeviceInfo();
 
   const [isAvailable, setIsAvailable] = useState(false);
 
-  const orderTotal = currentSearch ? finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end) : null;
+  const orderTotal = currentSearch
+    ? finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end)
+    : null;
 
   useEffect(() => {
     if (currentSearch?.dates?.every((date) => host?.availability?.includes(date))) {
@@ -126,25 +126,14 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
           <Header level={3} centered>
             {t('reusable:cta.book-host-now', { host: host.name })}
           </Header>
-          <BookingCTAWrapper>
-            <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
-              <Availabilty />
-              <Text>
-                {moment(currentSearch.from).format(device.width > 375 ? 'LL' : 'll')} -{' '}
-                {moment(currentSearch.to).format(device.width > 375 ? 'LL' : 'll')}
-              </Text>
-            </Flexbox>
-            <Flexbox spaceItemsX={2} horizontalAlign='left'>
-              <Flexbox spaceItemsX={1}>
-                <Location />
-                <Text>{currentSearch.location}</Text>
-              </Flexbox>
-              <Flexbox spaceItemsX={1}>
-                <Cat />
-                <Text>{currentSearch.cats}</Text>
-              </Flexbox>
-            </Flexbox>
-          </BookingCTAWrapper>
+          <BookingInfo
+            start={currentSearch.from}
+            end={currentSearch.to}
+            cats={currentSearch.cats}
+            place={currentSearch.location}
+            centered
+            space={5}
+          />
           <Button secondary={!isAvailable} space={2} onClick={() => toRequest()}>
             {t('reusable:cta.book')} - {orderTotal} kr
           </Button>
