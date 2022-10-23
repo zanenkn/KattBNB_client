@@ -1,4 +1,4 @@
-import HostInfo from '../HostProfileView/hostInfo';
+import HostInfo from '../HostInfo';
 import { useFetchHost } from './HostPopup/useFetchHost';
 import Spinner from '../../common/Spinner';
 import { InnerResultWrapper } from './styles';

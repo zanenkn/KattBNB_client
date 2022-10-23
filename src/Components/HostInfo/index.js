@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import moment from 'moment';
 
@@ -23,7 +23,7 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
 
   const [isAvailable, setIsAvailable] = useState(false);
 
-  const orderTotal = finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end);
+  const orderTotal = currentSearch ? finalTotal(host.rate, currentSearch.cats, host.supplement, currentSearch.start, currentSearch.end) : null;
 
   useEffect(() => {
     if (currentSearch?.dates?.every((date) => host?.availability?.includes(date))) {
@@ -60,7 +60,7 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
           </Flexbox>
         </Flexbox>
 
-        {host.score && (
+        {host.reviewsCount && (
           <Flexbox spaceItemsX={1} space={1}>
             <Review />
             <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
@@ -121,7 +121,7 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
       <Container space={6}>
         <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
       </Container>
-      {isAvailable && (
+      {isAvailable && currentSearch && (
         <Whitebox responsive={false}>
           <Header level={3} centered>
             {t('reusable:cta.book-host-now', { host: host.name })}
