@@ -245,7 +245,7 @@ const Conversation = ({ id, username, match, history }) => {
       <StyledSecondaryStickyHeader>
         <MaxWidh>
           <Arrow onClick={() => history.push('/messenger')} height={5} direction='left' tint={60} />
-          <Flexbox spaceItemsX={1} onClick={() => console.log('i will eventually go to host profile')}>
+          <Flexbox spaceItemsX={1} onClick={() => history.push(`/user/${responder.id}`)}>
             <Avatar src={responder?.profile_avatar || getAvatar(responder?.nickname)} size={'sm'} />
             <Header level={3}>{responder?.nickname || t('SingleConversation:nickname-deleted')}</Header>
           </Flexbox>

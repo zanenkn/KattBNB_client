@@ -1,38 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import { connect } from 'react-redux';
-import HostInfo from '../../HostProfileView/hostInfo';
-import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
+
 import { priceOfOneAmount } from '../../../Modules/PriceCalculations';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
+
+import { useFetchHost } from '../../SearchResults/HostPopup/useFetchHost';
+import Spinner from '../../../common/Spinner';
+
 import { Header, Text, ContentWrapper, Notice, Whitebox, Flexbox } from '../../../UI-Components';
-import { CenteredTable } from './styles';
 import { Address, Availabilty, Cat, Rate } from '../../../icons';
+import { CenteredTable } from './styles';
+
+import HostInfo from '../../HostInfo';
 
 const BookingDetails = ({ history, id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');
 
   const {
     address,
-    avatar,
-    description,
     endDate,
     hostId,
-    hostProfileId,
-    lat,
-    long,
-    nickname,
     numberOfCats,
     priceTotal,
-    score,
     startDate,
   } = state;
 
   const total = priceOfOneAmount(priceTotal);
   const [errors, setErrors] = useState([]);
+
+  const { host, loading } = useFetchHost(hostId);
 
   useEffect(() => {
     if (state === undefined || history.action === 'POP') {
@@ -86,7 +87,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
     }
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready || loading) return <Spinner />;
 
   return (
     <ContentWrapper>
@@ -137,17 +138,8 @@ const BookingDetails = ({ history, id, location: { state } }) => {
         {t('BookingDetails:about-host')}
       </Header>
       <HostInfo
-        numberOfCats={numberOfCats}
-        hostId={hostId}
-        avatar={avatar}
-        nickname={nickname}
-        description={description}
-        lat={lat}
-        long={long}
-        address={address}
-        hostProfileId={hostProfileId}
-        score={score}
-        messageHost={messageHost}
+        host={host}
+        messageHost={()=>messageHost()}       
       />
     </ContentWrapper>
   );
