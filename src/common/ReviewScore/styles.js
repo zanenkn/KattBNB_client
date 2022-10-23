@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from '../../Styles/theme';
-import { Flexbox } from '../../UI-Components';
+import { Flexbox, Text } from '../../UI-Components';
 
-const { spacing } = theme;
+const { spacing, colors } = theme;
 
 export const FlexWrapper = styled(Flexbox)`
   margin: ${({ margin }) => spacing[margin] || '1rem 0'};
@@ -19,4 +19,15 @@ export const FlexWrapper = styled(Flexbox)`
   & > *:last-child {
     margin-right: 0;
   }
+`;
+
+export const Numerical = styled(Text)`
+  ${({ required }) =>
+    required &&
+    css`
+      ::after {
+        content: ' *';
+        color: ${colors.primary[100]};
+      }
+    `}
 `;

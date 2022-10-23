@@ -4,8 +4,12 @@
   "error-length": "Review message cannot exceed 1000 characters!",
   "error-no-host": "The host you are trying to review have deleted their account! You cannot review this booking.",
   "title": "Leave a review",
-  "desc": "Your cat(s) stayed with <1>{{host}}</1> during the dates of <3>{{startDate}}</3> until <5>{{endDate}}</5>. Help us to improve KattBNB community by reviewing your experience.",
+  "desc": "Thank you for your booking! Help us to improve KattBNB community by reviewing your experience.",
   "label": "Your review",
-  "placeholder": "Describe your experience with this host..",
-  "cta": "Save review"
+  "cta": "Save review",
+  "successful": {
+    "title": "Thank you!",
+    "text": "We really appreciate that you took time to review your experience. It helps KattBNB to become better for everyone. Thank you.",
+    "bookings-cta": "Back to bookings"
+  }
 }

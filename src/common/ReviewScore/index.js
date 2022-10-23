@@ -2,8 +2,7 @@ import React from 'react';
 import HalfPaw from './halfPaw';
 import Paw from './paw';
 import { theme } from '../../Styles/theme';
-import { FlexWrapper } from './styles';
-import { Text } from '../../UI-Components';
+import { FlexWrapper, Numerical } from './styles';
 import PropTypes from 'prop-types';
 
 const { colors, spacing } = theme;
@@ -18,6 +17,7 @@ const ReviewScore = ({
   displayNumerical,
   primaryColor,
   secondaryColor,
+  required,
   ...rest
 }) => {
   let points = [1, 2, 3, 4, 5];
@@ -45,7 +45,11 @@ const ReviewScore = ({
           );
         }
       })}
-      {displayNumerical && <Text data-cy='score'>({score % 1 !== 0 ? parseFloat(score).toFixed(1) : score}/5)</Text>}
+      {displayNumerical && (
+        <Numerical data-cy='score' required={required}>
+          ({score % 1 !== 0 ? parseFloat(score).toFixed(1) : score}/5)
+        </Numerical>
+      )}
     </FlexWrapper>
   );
 };
@@ -58,6 +62,7 @@ ReviewScore.defaultProps = {
   displayNumerical: false,
   primaryColor: 'primary',
   secondaryColor: 'neutral',
+  rerquired: false,
 };
 
 ReviewScore.propTypes = {
@@ -70,6 +75,7 @@ ReviewScore.propTypes = {
   displayNumerical: PropTypes.bool,
   primaryColor: PropTypes.oneOf(Object.keys(colors)),
   secondaryColor: PropTypes.oneOf(Object.keys(colors)),
+  required: PropTypes.bool,
 };
 
 export default ReviewScore;
