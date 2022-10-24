@@ -94,7 +94,7 @@ const AllReviews = ({ score, hostProfileId, withReply, username }) => {
           <Divider botom={5} />
           <div id='all-reviews' ref={allReviews}>
             {reviews.map((review) => (
-              <Container key={review.id} data-cy={`review-${review.id}`}>
+              <Container key={review.id} data-cy={`review-${review.id}`} id={`review-${review.id}`}>
                 <Flexbox horizontalAlign='left' spaceItemsX={1} space={3}>
                   <Avatar
                     data-cy='reviewer-avatar'
