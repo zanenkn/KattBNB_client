@@ -72,9 +72,7 @@ const UserInfo = ({ currentUserId, history }) => {
   }
 
   if (!host) {
-    return (
-      <NoHostUser id={userId} t={t}/>
-    );
+    return <NoHostUser id={userId} t={t} />;
   }
 
   return (
