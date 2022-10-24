@@ -524,7 +524,7 @@ const UserPage = (props) => {
           <Header level={4} space={5} centered>
             {t('UserPage:reviews-header')}
           </Header>
-          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} />
+          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} withReply/>
         </Whitebox>
       )}
       {!deleteDisplayNone && (

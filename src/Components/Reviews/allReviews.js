@@ -17,7 +17,7 @@ import { ReplyWrapper } from './styles';
 
 import HostReplyReview from './hostReplyReview';
 
-const AllReviews = ({ score, username, hostProfileId }) => {
+const AllReviews = ({ score, hostProfileId, withReply, username }) => {
   const { t, ready } = useTranslation('AllReviews');
 
   const allReviews = useCallback((node) => {
@@ -145,7 +145,7 @@ const AllReviews = ({ score, username, hostProfileId }) => {
                     </ReplyWrapper>
                   </ReplyWrapper>
                 )}
-                {!review.host_reply && review.host_nickname === username && (
+                {!review.host_reply && review.host_nickname === username && withReply && (
                   <HostReplyReview reviewId={review.id} reload={(reply) => setReload(reply)} />
                 )}
                 <Divider top={5} />

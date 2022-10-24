@@ -116,7 +116,10 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
       </Container>
       <Container space={6}>
         <Header level={4}>{t('HostInfo:reviews-title')}</Header>
-        <AllReviews />
+        <AllReviews 
+          score={host.score}
+          hostProfileId={host.hostProfileId}
+        />
       </Container>
       <Container space={6}>
         <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
