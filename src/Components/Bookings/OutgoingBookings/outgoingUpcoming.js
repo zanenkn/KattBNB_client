@@ -50,6 +50,7 @@ const OutgoingUpcoming = ({ bookings, history }) => {
                   history.push({
                     pathname: '/booking-details',
                     state: {
+                      hostId: upcoming.host_id,
                       startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
                       endDate: moment(upcoming.dates[upcoming.dates.length - 1]).format('YYYY-MM-DD'),
                       priceTotal: upcoming.price_total,
