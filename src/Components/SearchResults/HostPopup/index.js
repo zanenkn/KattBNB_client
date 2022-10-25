@@ -134,7 +134,7 @@ const HostPopup = ({
         {!isAvailable && (
           <>
             {/* idea: push to messenger with a default message? */}
-            <Button id='message-host' onClick={() => messageHost(host.userId)} space={2}>
+            <Button id='message-host' onClick={() => messageHost()} space={2}>
               {t('reusable:cta.send-message')}
             </Button>
 

@@ -12,7 +12,7 @@ const Profile = ({ currentSearch, id, toRequest, messageHost }) => {
         host={host}
         currentSearch={currentSearch}
         toRequest={() => toRequest()}
-        messageHost={() => messageHost(host.userId)}
+        messageHost={() => messageHost()}
       />
     </InnerResultWrapper>
   );

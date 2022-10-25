@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { connect, useDispatch } from 'react-redux';
 import Geocode from 'react-geocode';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
@@ -10,6 +10,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
 
 import { getDaysArray } from '../../utils/getDaysArray';
+import { useStartConversation } from '../../utils/useStartConversation';
 import { finalTotal } from '../../Modules/PriceCalculations';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { useDeviceInfo } from '../../hooks/useDeviceInfo';
@@ -27,13 +28,13 @@ import Profile from './profile';
 import HostPopup from './HostPopup';
 import RequestToBook from './request';
 
-const SearchResults = ({ id, currentSearch, location }) => {
+const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
   const lang = detectLanguage();
 
   const { t, ready } = useTranslation('SearchResults');
   const dispatch = useDispatch();
   const device = useDeviceInfo();
-  const history = useHistory();
+  const { startConversation } = useStartConversation();
 
   const [listScrollOffset, setListScrollOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -205,38 +206,6 @@ const SearchResults = ({ id, currentSearch, location }) => {
     setHostPopupOpen(false);
   };
 
-  const messageHost = (hostId) => {
-    const path = '/api/v1/conversations';
-    const payload = {
-      user1_id: id,
-      user2_id: hostId,
-      locale: lang,
-    };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
-    axios
-      .post(path, payload, { headers: headers })
-      .then(({ data }) => {
-        history.push({
-          pathname: `/conversation/${data.id}`,
-        });
-      })
-      .catch(({ response }) => {
-        if (response === undefined) {
-          setErrors(['reusable:errors.unknown']);
-        } else if (response.status === 500) {
-          setErrors(['reusable:errors:500']);
-        } else if (response.status === 422) {
-          setErrors(['reusable:errors:422-conversation']);
-        } else {
-          setErrors(response.data.error);
-        }
-      });
-  };
-
   if (!ready || loading) return <Spinner />;
 
   return (
@@ -256,7 +225,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
           onClose={() => onCloseHostPopup()}
           toHostProfile={() => setResults('profile')}
           requestToBook={() => setResults('request')}
-          messageHost={(hostId) => messageHost(hostId)}
+          messageHost={() => startConversation({ userId1: id, userId2: currentHostId })}
         />
       )}
 
@@ -363,7 +332,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
             currentSearch={currentSearch}
             id={queryString.parse(location.search).host}
             toRequest={() => setResults('request')}
-            messageHost={(hostId) => messageHost(hostId)}
+            messageHost={() => startConversation({ userId1: id, userId2: currentHostId })}
           />
         </SearchResultWrapper>
       )}
@@ -384,6 +353,7 @@ const SearchResults = ({ id, currentSearch, location }) => {
 const mapStateToProps = (state) => ({
   id: state.reduxTokenAuth.currentUser.attributes.id,
   currentSearch: state.currentSearch,
+  currentHostId: state.currentHostProfile.userId,
 });
 
 export default connect(mapStateToProps)(SearchResults);
