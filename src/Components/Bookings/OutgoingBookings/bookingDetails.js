@@ -9,7 +9,7 @@ import { priceOfOneAmount } from '../../../Modules/PriceCalculations';
 import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 
-import { useFetchHost } from '../../SearchResults/HostPopup/useFetchHost';
+import { useHostProfile } from '../../../utils/useHostProfile';
 import Spinner from '../../../common/Spinner';
 
 import { Header, Text, ContentWrapper, Notice, Whitebox, Flexbox } from '../../../UI-Components';
@@ -22,18 +22,25 @@ const BookingDetails = ({ history, id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');
 
   const {
-    address,
-    endDate,
-    hostId,
-    numberOfCats,
-    priceTotal,
     startDate,
+    endDate,
+    priceTotal,
+    address,
+    lat,
+    long,
+    numberOfCats,
+    score,
   } = state;
 
   const total = priceOfOneAmount(priceTotal);
   const [errors, setErrors] = useState([]);
 
-  const { host, loading } = useFetchHost(hostId);
+  const { host: fetchedHost, loading, errors: fetchErrors } = useHostProfile(state.hostProfileId);
+
+  const host = {
+    ...fetchedHost,
+    ...{ lat: parseFloat(lat), long: parseFloat(long), address: address, score: score },
+  };
 
   useEffect(() => {
     if (state === undefined || history.action === 'POP') {
@@ -87,7 +94,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
     }
   };
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading ) return <Spinner />;
 
   return (
     <ContentWrapper>
@@ -100,8 +107,8 @@ const BookingDetails = ({ history, id, location: { state } }) => {
       >
         <Notice nature='danger'>
           <ul id='message-error-list'>
-            {errors.map((error) => (
-              <li key={error}>{t(error)}</li>
+            {[...errors, ...fetchErrors].map((error) => (
+              <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
             ))}
           </ul>
         </Notice>
@@ -137,10 +144,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
       <Header level={2} centered>
         {t('BookingDetails:about-host')}
       </Header>
-      <HostInfo
-        host={host}
-        messageHost={()=>messageHost()}       
-      />
+      <HostInfo host={host} messageHost={() => messageHost()} />
     </ContentWrapper>
   );
 };
