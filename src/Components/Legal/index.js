@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import Spinner from '../../common/Spinner';
+import { useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
-import { detectLanguage } from '../../Modules/detectLanguage';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
-import { ContentWrapper, Header } from '../../UI-Components';
+
+import Spinner from '../../common/Spinner';
+import { detectLanguage } from '../../Modules/detectLanguage';
 import SEO from '../../common/SEO';
+
+import { ContentWrapper, Header, PrismicRichText } from '../../UI-Components';
 
 const Legal = () => {
   const { t, ready } = useTranslation();
@@ -32,10 +34,10 @@ const Legal = () => {
   return (
     <ContentWrapper>
       <SEO page='legal' />
-      <Header level={1} centered>
+      <Header level={1} centered color={'primary'}>
         {t('reusable:title.legal')}
       </Header>
-      {RichText.render(content)}
+      <PrismicRichText>{RichText.render(content)}</PrismicRichText>
     </ContentWrapper>
   );
 };
