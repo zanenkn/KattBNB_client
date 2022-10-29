@@ -22,6 +22,10 @@ export const useStartConversation = () => {
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token'),
     };
+    if (!userId1) {
+      history.push('/login');
+      return;
+    }
     axios
       .post(path, payload, { headers: headers })
       .then(({ data }) => {
