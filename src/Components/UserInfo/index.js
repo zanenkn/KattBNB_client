@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 
 import { useFetchHost } from '../SearchResults/HostPopup/useFetchHost';
 import Spinner from '../../common/Spinner';
+import SEO from '../../common/SEO';
+import { useStartConversation } from '../../utils/useStartConversation';
 
 import { ContentWrapper, Notice } from '../../UI-Components';
 
 import NoHostUser from './noHostUser';
 import HostInfo from '../HostInfo';
-import { useStartConversation } from '../../utils/useStartConversation';
 
 const UserInfo = ({ currentUserId }) => {
   const { t } = useTranslation('UserInfo');
@@ -40,6 +41,14 @@ const UserInfo = ({ currentUserId }) => {
 
   return (
     <ContentWrapper>
+      <SEO
+        title={`${host.name} - din kattvakt i ${host.location}`}
+        description={host.description}
+        href={`/user/${userId}`}
+        type='website'
+        dynamicOGimg={`https://kattbnb-og.herokuapp.com/ogimage?name=${host.name}&location=${host.location}${host.avatar ? `&avatar=${encodeURIComponent(host.avatar)}` : ''}`}
+      />
+
       <HostInfo host={host} messageHost={() => startConversation({ userId1: currentUserId, userId2: userId })} />
     </ContentWrapper>
   );
