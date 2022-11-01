@@ -19,5 +19,12 @@ export const SeoSrc = {
     href: '/faq',
     type: 'website',
     image: 'KattBNB_og.jpg'
+  },
+  'legal': {
+    title: 'KattBNB - användarvillkor',
+    description: 'Tack för att du väljer KattBNB. Vi vill att du känner dig trygg med att använda vår webbapp. Här är reglerna som gäller.',
+    href: '/legal',
+    type: 'website',
+    image: 'KattBNB_og.jpg'
   }
 }

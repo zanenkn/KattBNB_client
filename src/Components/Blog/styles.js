@@ -47,36 +47,6 @@ export const AuthorAvatar = styled.img`
   margin-right: ${spacing[2]};
 `;
 
-export const PrismicRichText = styled.div`
-  margin-bottom: ${spacing[10]};
-
-  > .block-img {
-    display: flex;
-  }
-
-  > .block-img > img {
-    width: 100%;
-    height: 100%;
-    max-width: 400px;
-    margin: ${spacing[4]} auto;
-  }
-
-  > p {
-    margin-bottom: ${spacing[4]};
-    line-height: 150%;
-  }
-
-  > p > a {
-    color: ${colors.info[100]};
-    font-weight: ${fontWeights.bold};
-    cursor: pointer;
-    &:hover {
-      color: ${colors.info[110]};
-      text-decoration: underline;
-    }
-  }
-`;
-
 export const ShareIcons = styled.div`
   display: flex;
   flex-direction: row;

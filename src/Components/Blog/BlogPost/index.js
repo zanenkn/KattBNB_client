@@ -5,8 +5,8 @@ import Spinner from '../../../common/Spinner';
 import { Helmet } from 'react-helmet';
 import { FacebookSimple, LinkedinSimple, TwitterSimple } from '../../../icons';
 import { useTranslation } from 'react-i18next';
-import { FeaturedImage, FlexWrapper, AuthorAvatar, PrismicRichText, ShareIcons } from '../styles';
-import { Header, Text, LinkIcon, ContentWrapper } from '../../../UI-Components';
+import { FeaturedImage, FlexWrapper, AuthorAvatar, ShareIcons } from '../styles';
+import { Header, Text, LinkIcon, ContentWrapper, PrismicRichText } from '../../../UI-Components';
 
 const BlogPost = ({ location: { state } }) => {
   const [post, setPost] = useState(null);

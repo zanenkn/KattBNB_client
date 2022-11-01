@@ -26,3 +26,6 @@ export { default as RadioButton } from './Form/RadioButton';
 export { default as TextArea } from './Form/TextArea';
 export { default as TextField } from './Form/TextField';
 export { default as Toggle } from './Form/Toggle';
+
+// prismic
+export { default as PrismicRichText } from './Typography/PrismicRichText';
