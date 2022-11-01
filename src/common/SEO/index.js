@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet';
 import { SeoSrc } from './seoSrc';
 
-const SEO = ({ page, title, description, href, type, image }) => {
+const SEO = ({ page, title, description, href, type, image, dynamicOGimg }) => {
   let seoTitle, seoDescription, seoHref, seoType, seoImage;
 
   if (page) {
@@ -27,7 +27,7 @@ const SEO = ({ page, title, description, href, type, image }) => {
       <meta property='og:url' content={`https://kattbnb.se${seoHref}`} />
       <meta property='og:type' content={seoType} />
       <meta property='og:description' content={seoDescription} />
-      <meta property='og:image' content={`https://kattbnb.se/${seoImage}`} />
+      <meta property='og:image' content={image ? `https://kattbnb.se/${seoImage}` : dynamicOGimg}/>
     </Helmet>
   );
 };

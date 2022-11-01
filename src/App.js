@@ -26,7 +26,7 @@ import RequestAcceptedSuccessfully from './Components/Bookings/IncomingBookings/
 import BookingDetails from './Components/Bookings/OutgoingBookings/bookingDetails';
 import AllConversations from './Components/Messenger/AllConversations';
 import Conversation from './Components/Messenger/SingleConversation';
-import HostProfileViewWrapper from './Components/HostProfileView/HostProfileViewWrapper';
+import UserInfo from './Components/UserInfo';
 import Error503 from './common/Error503';
 import Partners from './Components/Partners';
 import HostEn from './Components/HostEn';
@@ -79,7 +79,7 @@ const App = () => {
           <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
           <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
           <Route exact path='/booking-details' component={BookingDetails}></Route>
-          <Route exact path='/host-profile' component={HostProfileViewWrapper}></Route>
+          <Route exact path='/user/:userId' component={UserInfo}></Route>
           <Route exact path='/partners' component={Partners}></Route>
           <Route exact path='/guidelines' component={Guidelines}></Route>
           <Route exact path='/is-not-available' component={Error503}></Route>

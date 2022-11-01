@@ -158,7 +158,7 @@ const IncomingBookings = ({ location: { state } }) => {
           </Header>
           <IncomingHistory
             bookings={incomingBookings
-              .filter((booking) => booking.dates[booking.dates.length - 1] < today)
+              .filter((booking) => booking.dates[booking.dates.length - 1] < today || (booking.status !== 'accepted' && booking.status !== 'pending'))
               .sort((a, b) => new Date(b.dates[0]).getTime() - new Date(a.dates[0]).getTime())}
           />
         </SectionWrapper>

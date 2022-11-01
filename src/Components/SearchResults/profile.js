@@ -1,4 +1,4 @@
-import HostInfo from '../HostProfileView/hostInfo';
+import HostInfo from '../HostInfo';
 import { useFetchHost } from './HostPopup/useFetchHost';
 import Spinner from '../../common/Spinner';
 import { InnerResultWrapper } from './styles';
@@ -12,7 +12,7 @@ const Profile = ({ currentSearch, id, toRequest, messageHost }) => {
         host={host}
         currentSearch={currentSearch}
         toRequest={() => toRequest()}
-        messageHost={() => messageHost(host.userId)}
+        messageHost={() => messageHost()}
       />
     </InnerResultWrapper>
   );
