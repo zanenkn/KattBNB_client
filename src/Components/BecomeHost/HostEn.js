@@ -1,17 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import SEO from '../../common/SEO';
-import { StyledContentWrapper, VideoWrapper } from './styles';
-import { Button } from '../../UI-Components';
+import { AbsoluteContainer, SkipLink, StyledButton, StyledContentWrapper, VideoWrapper } from './styles';
 
 const HostEn = (props) => {
   const vid = useRef(null);
 
-  const [buttonOpacity, setButtonOpacity] = useState(0);
-  const [skipLinkPosition, setSkipLinkPosition] = useState('3rem');
-  const [skipLinkOpacity, setSkipLinkOpacity] = useState('1');
+  const [videoEnded, setVideoEnded] = useState(false);
 
   useEffect(() => {
     window.localStorage.setItem('I18N_LANGUAGE', 'en');
@@ -19,11 +15,6 @@ const HostEn = (props) => {
     vid.current.play();
   }, []);
 
-  const videoEnded = () => {
-    setButtonOpacity(1);
-    setSkipLinkPosition('0');
-    setSkipLinkOpacity('0');
-  };
   return (
     <StyledContentWrapper>
       <SEO page='host-en' />
@@ -35,43 +26,27 @@ const HostEn = (props) => {
           playsinline='playsinline'
           webkit-playsinline
           autoplay
-          onEnded={() => videoEnded()}
-          style={{ maxWidth: '500px' }}
+          onEnded={() => setVideoEnded(true)}
         >
           <source src='host_480.mp4' type='video/mp4'></source>
         </video>
-        <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
-          <Button
-            style={{
-              opacity: buttonOpacity,
-            }}
-          >
-            {props.currentUserIn ? 'My profile' : 'Sign up'}
-          </Button>
-        </Link>
+        <AbsoluteContainer>
+          <Link to={props.currentUserIn ? '/user-page' : '/sign-up'}>
+            <StyledButton videoEnded={videoEnded}>{props.currentUserIn ? 'My profile' : 'Sign up'}</StyledButton>
+          </Link>
+        </AbsoluteContainer>
       </VideoWrapper>
-      <Link
+      <SkipLink
+        forwardedAs={Link}
+        discreet
+        center
         to={props.currentUserIn ? '/user-page' : '/sign-up'}
-        style={{
-          opacity: skipLinkOpacity,
-          bottom: skipLinkPosition,
-          transition: 'all .35s ease-in-out',
-        }}
+        videoEnded={videoEnded}
       >
-        <p style={{ textTransform: 'uppercase', color: 'silver', textAlign: 'center' }}>Skip this</p>
-      </Link>
+        Skip this
+      </SkipLink>
     </StyledContentWrapper>
   );
-  // return (
-  //   <div
-  //     className='device-height'
-  //     style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-  //   >
-
-  // 
-  
-  //   </div>
-  // );
 };
 
 const mapStateToProps = (state) => ({
