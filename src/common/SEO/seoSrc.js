@@ -26,5 +26,19 @@ export const SeoSrc = {
     href: '/legal',
     type: 'website',
     image: 'KattBNB_og.jpg'
+  },
+  'host-en': {
+    title: 'Become a cat sitter on KattBNB!',
+    description: 'Getting paid for chilling with cats. Sounds like a dream? Sign up today at KattBNB.',
+    href: '/become-host',
+    type: 'website',
+    image: 'bli_kattvakt_og.png'
+  },
+  'host-se': {
+    title: 'Bli kattvakt på KattBNB!',
+    description: 'Få betalt för att gosa med katter. Låter det som en dröm? Registrera dig idag på KattBNB.',
+    href: '/bli-kattvakt',
+    type: 'website',
+    image: 'bli_kattvakt_og.png'
   }
 }
