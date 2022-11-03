@@ -24,19 +24,27 @@ export const Label = styled.p`
 `;
 
 export const StackableWrapper = styled(Flexbox)`
-  justify-content: space-between;
+  justify-content: left;
   align-items: flex-start;
+  flex-wrap: wrap;
 
   > div {
     width: 100%;
   }
 
-  @media (min-width: ${screens.md}) {
+  @media (min-width: ${screens.sm}) {
+    flex-wrap: nowrap;
     > div {
       box-sizing: border-box;
-      padding: 0 ${spacing[2]};
-      max-width: 33%;
+      padding: 0 ${spacing[1]};
+      flex-grow: 1;
     }
+    label {
+      white-space: nowrap;
+    }
+  }
+
+  @media (min-width: ${screens.md}) {
     > div:first-child {
       padding-left: 0;
     }
