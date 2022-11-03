@@ -1,69 +1,22 @@
 import React, { useState } from 'react';
+
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Spinner from '../../../common/Spinner';
 import Popup from 'reactjs-popup';
 import { useTranslation, Trans } from 'react-i18next';
-import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
+
+import Spinner from '../../../common/Spinner';
+import { useStartConversation } from '../../../utils/useStartConversation';
+
 import { Notice, Text } from '../../../UI-Components';
 import Booking from '../common/booking';
 
-const IncomingUpcoming = ({ id, history, bookings }) => {
+const IncomingUpcoming = ({ id, bookings }) => {
   const { t, ready } = useTranslation('IncomingUpcoming');
-
   const [errors, setErrors] = useState([]);
+  const { startConversation } = useStartConversation();
 
-  const messageUser = (userId, userAvatar, userLocation, userNickname) => {
-    if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-    } else {
-      const lang = detectLanguage();
-      const path = '/api/v1/conversations';
-      const payload = {
-        user1_id: id,
-        user2_id: userId,
-        locale: lang,
-      };
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
-      axios
-        .post(path, payload, { headers: headers })
-        .then(({ data }) => {
-          history.push({
-            pathname: '/conversation',
-            state: {
-              id: data.id,
-              user: {
-                profile_avatar: userAvatar,
-                id: userId,
-                location: userLocation,
-                nickname: userNickname,
-              },
-            },
-          });
-        })
-        .catch(({ response }) => {
-          if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (response.status === 500) {
-            setErrors(['reusable:errors:500']);
-          } else if (response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else if (response.status === 422) {
-            setErrors(['reusable:errors:422-conversation']);
-          } else {
-            setErrors(response.data.error);
-          }
-        });
-    }
-  };
   if (!ready) return <Spinner />;
 
   if (bookings.length < 1) {
@@ -117,13 +70,7 @@ const IncomingUpcoming = ({ id, history, bookings }) => {
             links={[
               {
                 text: `${t('IncomingUpcoming:message')} ${upcoming.user.nickname}`,
-                action: () =>
-                  messageUser(
-                    upcoming.user_id,
-                    upcoming.user.profile_avatar,
-                    upcoming.user.location,
-                    upcoming.user.nickname
-                  ),
+                action: () => startConversation({ userId1: id, userId2: upcoming.user_id }),
               },
             ]}
           />
