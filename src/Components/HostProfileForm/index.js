@@ -99,10 +99,10 @@ const HostProfileForm = ({ userId, location }) => {
 
   const handleDayClick = (day) => {
     const today = new Date();
-    const selected = selectedDays.includes(day);
+    const selected = selectedDays.some((selected) => selected.getTime() === day.getTime())
     if (day > today) {
       if (selected) {
-        setSelectedDays((prev) => [...prev.filter((existing) => existing !== selected)]);
+        setSelectedDays((prev) => [...prev.filter((existing) => existing.getTime() !== day.getTime())]);
       } else {
         setSelectedDays((prev) => [...prev, day]);
       }
