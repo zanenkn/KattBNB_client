@@ -1,12 +1,22 @@
-import Footer from "../Components/Footer";
+import { useEffect, useState } from 'react';
+import Footer from '../Components/Footer';
 
 const withFooter = (Component) => (props) => {
+  const [showFooter, setShowFooter] = useState(false);
+  useEffect(() => {
+    // TODO: this is probably a bad solution
+    // look into programmatically checking if children have mounted
+    const delayFooter = setTimeout(() => {
+      setShowFooter(true);
+    }, 1000);
+    return () => clearTimeout(delayFooter);
+  }, []);
   return (
     <>
       <Component {...props} />
-      <Footer />
+      {showFooter && <Footer />}
     </>
   );
 };
 
-export default withFooter
+export default withFooter;
