@@ -1,8 +1,8 @@
 import React from 'react';
 
-const KattBNBLogo = (props) => {
+const KattBNBLogo = ({width}) => {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 360' width={props.width} className={props.class}>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 360' width={width}>
       <path
         fill='#C90B61'
         d='M150,262.33L150,262.33c-72.44,0-131.16-58.72-131.16-131.16v0C18.84,58.72,77.56,0,150,0h0
