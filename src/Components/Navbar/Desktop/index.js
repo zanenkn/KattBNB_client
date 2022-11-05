@@ -104,11 +104,6 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
                       {t('reusable:navigation.messages')}
                     </InlineLink>
                   </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink as={Link} to='/' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.settings')}
-                    </InlineLink>
-                  </SubmenuItem>
                   <Divider thick />
                   <SubmenuItem>
                     <InlineLink data-cy='nav-logout' onClick={() => signOut()}>

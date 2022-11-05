@@ -28,7 +28,6 @@ import AllConversations from './Components/Messenger/AllConversations';
 import Conversation from './Components/Messenger/SingleConversation';
 import UserInfo from './Components/UserInfo';
 import Error503 from './common/Error503';
-import Partners from './Components/Partners';
 import HostEn from './Components/BecomeHost/HostEn';
 import HostSe from './Components/BecomeHost/HostSe';
 import LeaveReview from './Components/Reviews/leaveReview';
@@ -80,7 +79,6 @@ const App = () => {
           <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
           <Route exact path='/booking-details' component={BookingDetails}></Route>
           <Route exact path='/user/:userId' component={withFooter(UserInfo)}></Route>
-          <Route exact path='/partners' component={Partners}></Route>
           <Route exact path='/guidelines' component={withFooter(Guidelines)}></Route>
           <Route exact path='/is-not-available' component={Error503}></Route>
           <Route exact path='/become-host' component={HostEn}></Route>
