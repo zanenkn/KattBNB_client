@@ -89,7 +89,6 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
       setPaymentIntent(response.data.intent_id);
     } catch ({ response }) {
-      setLoading(false);
       if (response === undefined) {
         setErrors(['reusable:errors.unknown']);
       } else if (response.status === 555) {
@@ -100,6 +99,8 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       } else {
         setErrors([response.data.error]);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -228,6 +229,8 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         setErrors([response.data.error]);
         setPaymentProcessing(false);
       }
+    } finally {
+      setLoading(false)
     }
   };
 
