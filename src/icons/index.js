@@ -18,6 +18,7 @@ export { default as FacebookSimple } from './src/FacebookSimple';
 export { default as Globe } from './src/Globe';
 export { default as HostProfile } from './src/HostProfile';
 export { default as InstagramIcon } from './src/InstagramIcon';
+export { default as KattBNBLogo } from './src/KattBNBLogo';
 export { default as KattBNBMain } from './src/KattBNBMain';
 export { default as LinkedinIcon } from './src/LinkedinIcon';
 export { default as LinkedinSimple } from './src/LinkedinSimple';

@@ -99,10 +99,10 @@ const HostProfileForm = ({ userId, location }) => {
 
   const handleDayClick = (day) => {
     const today = new Date();
-    const selected = selectedDays.includes(day);
+    const selected = selectedDays.some((selected) => selected.getTime() === day.getTime())
     if (day > today) {
       if (selected) {
-        setSelectedDays((prev) => [...prev.filter((existing) => existing !== selected)]);
+        setSelectedDays((prev) => [...prev.filter((existing) => existing.getTime() !== day.getTime())]);
       } else {
         setSelectedDays((prev) => [...prev, day]);
       }
@@ -293,23 +293,6 @@ const HostProfileForm = ({ userId, location }) => {
         <Container>
           <TextField
             space={2}
-            type='number'
-            label={t('HostProfileForm:labels.supplement')}
-            data-cy='supplement'
-            value={newHost.supplement}
-            onChange={(e) =>
-              setNewHost((prev) => ({ ...prev, supplement: (Math.abs(e.target.value) || '').toString() }))
-            }
-            required
-            onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
-          />
-          <Text space={6} size='sm'>
-            {t('HostProfileForm:helpers.supplement')}
-          </Text>
-        </Container>
-        <Container>
-          <TextField
-            space={2}
             min='1'
             type='number'
             label={t('HostProfileForm:labels.max-cats')}
@@ -325,6 +308,25 @@ const HostProfileForm = ({ userId, location }) => {
             {t('HostProfileForm:helpers.max-cats')}
           </Text>
         </Container>
+        {newHost.maxCats > 1 && (
+          <Container>
+            <TextField
+              space={2}
+              type='number'
+              label={t('HostProfileForm:labels.supplement')}
+              data-cy='supplement'
+              value={newHost.supplement}
+              onChange={(e) =>
+                setNewHost((prev) => ({ ...prev, supplement: (Math.abs(e.target.value)).toString() }))
+              }
+              required
+              onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
+            />
+            <Text space={6} size='sm'>
+              {t('HostProfileForm:helpers.supplement')}
+            </Text>
+          </Container>
+        )}
       </StackableWrapper>
       <Notice nature='info' space={6}>
         <Text bold space={2}>

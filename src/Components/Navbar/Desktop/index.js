@@ -13,7 +13,7 @@ import LanguageSwitcher from '../../../common/LanguageSwitcher';
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
   const noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
   const [showSubmenus, setShowSubmenus] = useState(true);
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation();
 
   const signOut = () => {
     if (window.navigator.onLine === false) {
@@ -42,109 +42,106 @@ const DesktopNav = ({ avatar, username, currentUserIn }) => {
           <KattBNBMain fill='white' height={6} />
         </Container>
 
-        <ItemWrapper>
-          <MenuItem>
-            <InlineLink as={Link} to='/search'>
-              {t('reusable:navigation.search')}
-            </InlineLink>
-          </MenuItem>
+        {ready && (
+          <ItemWrapper>
+            <MenuItem>
+              <InlineLink as={Link} to='/search'>
+                {t('reusable:navigation.search')}
+              </InlineLink>
+            </MenuItem>
 
-          <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            <Text>{t('reusable:navigation.about')}</Text>
+            <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
+              <Text>{t('reusable:navigation.about')}</Text>
 
-            <Submenu>
-              <SubmenuItem>
-                <InlineLink as={Link} to='/about-us' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:navigation.about-kattbnb')}
-                </InlineLink>
-              </SubmenuItem>
-              <SubmenuItem>
-                <InlineLink as={Link} to='/blog/all/1' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:navigation.blog')}
-                </InlineLink>
-              </SubmenuItem>
-              <SubmenuItem>
-                <InlineLink as={Link} to='/contact-us' onClick={() => setShowSubmenus(false)}>
-                  {t('reusable:navigation.contact')}
-                </InlineLink>
-              </SubmenuItem>
-            </Submenu>
-          </MenuItem>
-          <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
-            {currentUserIn ? (
-              <MenuAvatar data-cy='user-avatar' size='sm' src={avatar || noAvatar} />
-            ) : (
-              <UserRound data-cy='visitor-avatar' fill='white' height={6} />
-            )}
-            <Submenu>
+              <Submenu>
+                <SubmenuItem>
+                  <InlineLink as={Link} to='/about-us' onClick={() => setShowSubmenus(false)}>
+                    {t('reusable:navigation.about-kattbnb')}
+                  </InlineLink>
+                </SubmenuItem>
+                <SubmenuItem>
+                  <InlineLink as={Link} to='/blog/all/1' onClick={() => setShowSubmenus(false)}>
+                    {t('reusable:navigation.blog')}
+                  </InlineLink>
+                </SubmenuItem>
+                <SubmenuItem>
+                  <InlineLink as={Link} to='/contact-us' onClick={() => setShowSubmenus(false)}>
+                    {t('reusable:navigation.contact')}
+                  </InlineLink>
+                </SubmenuItem>
+              </Submenu>
+            </MenuItem>
+            <MenuItem showSubmenus={showSubmenus} onMouseOver={() => setShowSubmenus(true)}>
               {currentUserIn ? (
-                <>
-                  <SubmenuItem>
-                    <InlineLink
-                      data-cy='nav-user-page'
-                      as={Link}
-                      to='/user-page'
-                      onClick={() => setShowSubmenus(false)}
-                    >
-                      {t('reusable:navigation.user-page')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink
-                      data-cy='nav-bookings'
-                      as={Link}
-                      to='/all-bookings'
-                      onClick={() => setShowSubmenus(false)}
-                    >
-                      {t('reusable:navigation.bookings')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink as={Link} to='/messenger' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.messages')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink as={Link} to='/' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.settings')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <Divider thick />
-                  <SubmenuItem>
-                    <InlineLink data-cy='nav-logout' onClick={() => signOut()}>
-                      {t('reusable:navigation.logout')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.faq')}
-                    </InlineLink>
-                  </SubmenuItem>
-                </>
+                <MenuAvatar data-cy='user-avatar' size='sm' src={avatar || noAvatar} />
               ) : (
-                <>
-                  <SubmenuItem>
-                    <InlineLink data-cy='nav-login' as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.login')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink data-cy='nav-signup' as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.signup')}
-                    </InlineLink>
-                  </SubmenuItem>
-                  <SubmenuItem>
-                    <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
-                      {t('reusable:navigation.faq')}
-                    </InlineLink>
-                  </SubmenuItem>
-                </>
+                <UserRound data-cy='visitor-avatar' fill='white' height={6} />
               )}
-              <Divider thick />
-              <LanguageSwitcher />
-            </Submenu>
-          </MenuItem>
-        </ItemWrapper>
+              <Submenu>
+                {currentUserIn ? (
+                  <>
+                    <SubmenuItem>
+                      <InlineLink
+                        data-cy='nav-user-page'
+                        as={Link}
+                        to='/user-page'
+                        onClick={() => setShowSubmenus(false)}
+                      >
+                        {t('reusable:navigation.user-page')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <SubmenuItem>
+                      <InlineLink
+                        data-cy='nav-bookings'
+                        as={Link}
+                        to='/all-bookings'
+                        onClick={() => setShowSubmenus(false)}
+                      >
+                        {t('reusable:navigation.bookings')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <SubmenuItem>
+                      <InlineLink as={Link} to='/messenger' onClick={() => setShowSubmenus(false)}>
+                        {t('reusable:navigation.messages')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <Divider thick />
+                    <SubmenuItem>
+                      <InlineLink data-cy='nav-logout' onClick={() => signOut()}>
+                        {t('reusable:navigation.logout')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <SubmenuItem>
+                      <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
+                        {t('reusable:navigation.faq')}
+                      </InlineLink>
+                    </SubmenuItem>
+                  </>
+                ) : (
+                  <>
+                    <SubmenuItem>
+                      <InlineLink data-cy='nav-login' as={Link} to='/login' onClick={() => setShowSubmenus(false)}>
+                        {t('reusable:navigation.login')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <SubmenuItem>
+                      <InlineLink data-cy='nav-signup' as={Link} to='/sign-up' onClick={() => setShowSubmenus(false)}>
+                        {t('reusable:navigation.signup')}
+                      </InlineLink>
+                    </SubmenuItem>
+                    <SubmenuItem>
+                      <InlineLink as={Link} to='/faq' onClick={() => setShowSubmenus(false)}>
+                        {t('reusable:navigation.faq')}
+                      </InlineLink>
+                    </SubmenuItem>
+                  </>
+                )}
+                <Divider thick />
+                <LanguageSwitcher />
+              </Submenu>
+            </MenuItem>
+          </ItemWrapper>
+        )}
       </NavInnerWrap>
     </Nav>
   );

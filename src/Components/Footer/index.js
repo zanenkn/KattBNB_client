@@ -49,11 +49,6 @@ const Footer = () => {
                 {t('reusable:navigation.terms')}
               </Text>
             </li>
-            <li>
-              <Text as={Link} to='/partners'>
-                {t('reusable:navigation.partners')}
-              </Text>
-            </li>
           </ul>
         </li>
         <li>

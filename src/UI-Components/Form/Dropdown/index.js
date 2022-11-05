@@ -25,12 +25,11 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
 
-
   useEffect(() => {
-    if(defaultValue && search.text === '') {
-      suggestionSelected({name: defaultValue})
+    if (defaultValue && search.text === '') {
+      suggestionSelected({ name: defaultValue });
     }
-  }, [])
+  }, []);
 
   const onTextChanged = (e) => {
     const value = e.target.value;
@@ -66,7 +65,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }
   const onInputBlur = () => {
     setSearch((old) => ({ ...old, text: '' }));
     setIsFocused(false);
-    onChange('')
+    onChange('');
   };
 
   const { suggestions } = search;
@@ -80,7 +79,7 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }
           {label}
         </Label>
       )}
-      <div style={{width: '100%'}}>
+      <div style={{ width: '100%' }}>
         <Input
           data-cy={`${id}-dropdown`}
           ref={input}
@@ -88,11 +87,10 @@ const AutocompleteDropdown = ({ data, onChange, space, label, id, defaultValue }
           value={search.text}
           onChange={onTextChanged}
           onFocus={() => onInputFocus()}
-          onBlur={() => setIsFocused(false)}
           onBlur={() => onInputBlur()}
           type={'text'}
         />
-        <InputIcon isOpen={suggestionsDisplayed}>
+        <InputIcon isOpen={suggestionsDisplayed} onClick={() => (!isFocused && onInputFocus())}>
           <Chevron fill={colors.neutral[60]} />
         </InputIcon>
       </div>

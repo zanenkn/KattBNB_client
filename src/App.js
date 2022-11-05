@@ -28,7 +28,6 @@ import AllConversations from './Components/Messenger/AllConversations';
 import Conversation from './Components/Messenger/SingleConversation';
 import UserInfo from './Components/UserInfo';
 import Error503 from './common/Error503';
-import Partners from './Components/Partners';
 import HostEn from './Components/BecomeHost/HostEn';
 import HostSe from './Components/BecomeHost/HostSe';
 import LeaveReview from './Components/Reviews/leaveReview';
@@ -56,14 +55,14 @@ const App = () => {
       <ScrollToTop>
         <Switch>
           <Route exact path='/' component={withFooter(Landing)}></Route>
-          <Route exact path='/search' component={Search}></Route>
+          <Route exact path='/search' component={withFooter(Search)}></Route>
           <Route exact path='/search-results' component={SearchResults}></Route>
           <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
           <Route exact path='/contact-us' component={withFooter(ContactUs)}></Route>
-          <Route exact path='/faq' component={Faq}></Route>
-          <Route exact path='/legal' component={Legal}></Route>
-          <Route exact path='/login' component={Login}></Route>
-          <Route exact path='/sign-up' component={SignUp}></Route>
+          <Route exact path='/faq' component={withFooter(Faq)}></Route>
+          <Route exact path='/legal' component={withFooter(Legal)}></Route>
+          <Route exact path='/login' component={withFooter(Login)}></Route>
+          <Route exact path='/sign-up' component={withFooter(SignUp)}></Route>
           <Route
             exact
             path='/signup-success'
@@ -79,9 +78,8 @@ const App = () => {
           <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
           <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
           <Route exact path='/booking-details' component={BookingDetails}></Route>
-          <Route exact path='/user/:userId' component={UserInfo}></Route>
-          <Route exact path='/partners' component={Partners}></Route>
-          <Route exact path='/guidelines' component={Guidelines}></Route>
+          <Route exact path='/user/:userId' component={withFooter(UserInfo)}></Route>
+          <Route exact path='/guidelines' component={withFooter(Guidelines)}></Route>
           <Route exact path='/is-not-available' component={Error503}></Route>
           <Route exact path='/become-host' component={HostEn}></Route>
           <Route exact path='/bli-kattvakt' component={HostSe}></Route>
@@ -94,7 +92,7 @@ const App = () => {
           <Route exact path='/conversation/:conversationId' component={Conversation}></Route>
           <Route exact path='/leave-a-review' component={LeaveReview}></Route>
           <Route exact path='/booking-receipt' component={Receipt}></Route>
-          <Route exact path='/area-list' component={AreaList}></Route>
+          <Route exact path='/area-list' component={withFooter(AreaList)}></Route>
           <Route exact path='/create-host-profile' component={HostProfileForm}></Route>
           <Route exact path='/blog/:category/:page' component={withFooter(BlogListing)}></Route>
           <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route>

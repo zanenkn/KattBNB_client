@@ -84,7 +84,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
 
   const listenEnterKeySearch = (event) => {
     if (event.key === 'Enter') {
-      search(event);
+      validator.onSubmit(search)
     }
   };
 
