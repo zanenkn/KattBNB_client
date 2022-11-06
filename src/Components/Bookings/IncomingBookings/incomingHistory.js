@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
-import Spinner from '../../../common/Spinner';
 import Popup from 'reactjs-popup';
-import IncRequestDeclinedPopup from './incRequestDeclinedPopup';
-import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
-import ViewReviewPopup from './viewReviewPopup';
+
 import Booking from '../common/booking';
+import Spinner from '../../../common/Spinner';
+import { useStartConversation } from '../../../utils/useStartConversation';
+
 import { Text, Notice } from '../../../UI-Components';
+
+import IncRequestDeclinedPopup from './incRequestDeclinedPopup';
+import ViewReviewPopup from './viewReviewPopup';
+
 // Completely MIGRATED
 
 const IncomingHistory = ({ bookings, history }) => {
@@ -18,55 +21,8 @@ const IncomingHistory = ({ bookings, history }) => {
 
   const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
   const [viewReviewPopupOpened, setViewReviewPopupOpened] = useState(false);
-  const [errors, setErrors] = useState([]);
 
-  const messageUser = (hostId, userId, userAvatar, userLocation, userNickname) => {
-    if (window.navigator.onLine === false) {
-      setErrors(['reusable:errors:window-navigator']);
-    }
-    const lang = detectLanguage();
-    const path = '/api/v1/conversations';
-    const payload = {
-      user1_id: hostId,
-      user2_id: userId,
-      locale: lang,
-    };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
-    axios
-      .post(path, payload, { headers: headers })
-      .then((response) => {
-        history.push({
-          pathname: '/conversation',
-          state: {
-            id: response.data.id,
-            user: {
-              profile_avatar: userAvatar,
-              id: userId,
-              location: userLocation,
-              nickname: userNickname,
-            },
-          },
-        });
-      })
-      .catch((error) => {
-        if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else if (error.response.status === 500) {
-          setErrors(['reusable:errors:500']);
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
-        } else if (error.response.status === 422) {
-          setErrors(['reusable:errors:422-conversation']);
-        } else {
-          setErrors(error.response.data.error);
-        }
-      });
-  };
+  const { startConversation, errors } = useStartConversation();
 
   if (!ready) return <Spinner />;
 
@@ -77,7 +33,6 @@ const IncomingHistory = ({ bookings, history }) => {
       </Text>
     );
   }
-
   return (
     <>
       <Text centered bold space={6}>
@@ -90,7 +45,6 @@ const IncomingHistory = ({ bookings, history }) => {
         modal
         open={errors.length > 0}
         closeOnDocumentClick={true}
-        onClose={() => setErrors([])}
         position='top center'
       >
         <div>
@@ -173,14 +127,7 @@ const IncomingHistory = ({ bookings, history }) => {
               booking.review_id === null &&
               booking.host_profile_id !== null && {
                 text: t('IncomingHistory:ask-review'),
-                action: () =>
-                  messageUser(
-                    booking.host_id,
-                    booking.user_id,
-                    booking.user.profile_avatar,
-                    booking.user.location,
-                    booking.user.nickname
-                  ),
+                action: () => startConversation({ userId1: booking.host_id, userId2: booking.user_id }),
               }
             }
             links={[
