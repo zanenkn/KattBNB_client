@@ -125,7 +125,7 @@ const UserPage = (props) => {
           )
           .catch(({ response }) => {
             if (response === undefined) {
-              wipeCredentials('/is-not-available?atm');
+              setErrors(['reusable:errors.unknown']);
             } else if (response.status === 500) {
               setErrors(['reusable:errors:500']);
             } else if (response.status === 401) {
@@ -153,7 +153,7 @@ const UserPage = (props) => {
           setErrors([]);
         } catch ({ response }) {
           if (response === undefined) {
-            wipeCredentials('/is-not-available?atm');
+            setErrors(['reusable:errors.unknown']);
           } else if (response.status === 500) {
             setErrors(['reusable:errors:500']);
           } else {
@@ -183,7 +183,7 @@ const UserPage = (props) => {
         setErrors([]);
       } catch ({ response }) {
         if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors(['reusable:errors.unknown']);
         } else if (response.status === 500) {
           setErrors(['reusable:errors:500']);
         } else if (response.status === 401) {
@@ -288,7 +288,7 @@ const UserPage = (props) => {
               })
               .catch(({ response }) => {
                 if (response === undefined) {
-                  wipeCredentials('/is-not-available?atm');
+                  setErrors(['reusable:errors.unknown']);
                 } else {
                   window.alert(t('UserPage:deletion-error'));
                   wipeCredentials('/');
@@ -308,7 +308,7 @@ const UserPage = (props) => {
                   })
                   .catch(({ response }) => {
                     if (response === undefined) {
-                      wipeCredentials('/is-not-available?atm');
+                      setErrors(['reusable:errors.unknown']);
                     } else {
                       window.alert(t('UserPage:deletion-error'));
                       wipeCredentials('/');
@@ -317,7 +317,7 @@ const UserPage = (props) => {
               })
               .catch(({ response }) => {
                 if (response === undefined) {
-                  wipeCredentials('/is-not-available?atm');
+                  setErrors(['reusable:errors.unknown']);
                 } else if (response.status === 555) {
                   setDeleteDisplayNone(false);
                   setErrors([t('UserPage:delete-stripe-account-error')]);
@@ -335,7 +335,7 @@ const UserPage = (props) => {
         }
       } catch ({ response }) {
         if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors(['reusable:errors.unknown']);
         } else if (response.status === 500) {
           setDeleteDisplayNone(false);
           setErrors(['reusable:errors:500']);
@@ -365,7 +365,7 @@ const UserPage = (props) => {
           <Notice nature='danger' space={0}>
             <ul id='message-error-list'>
               {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
+                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
               ))}
             </ul>
           </Notice>
@@ -524,7 +524,7 @@ const UserPage = (props) => {
           <Header level={4} space={5} centered>
             {t('UserPage:reviews-header')}
           </Header>
-          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} withReply/>
+          <AllReviews hostProfileId={hostProfile[0].id} score={hostProfileScore} withReply />
         </Whitebox>
       )}
       {!deleteDisplayNone && (
