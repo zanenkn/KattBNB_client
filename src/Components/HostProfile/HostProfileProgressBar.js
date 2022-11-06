@@ -24,9 +24,10 @@ import {
 } from './styles';
 import { HostProfile, CreditCard, Verified } from '../../icons';
 
-const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfileId}) => {
+const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfileId }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [stripeLink, setStripeLink] = useState('');
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
   const [stripeAccountErrors, setStripeAccountErrors] = useState([]);
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
@@ -65,7 +66,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
         setLoading(false);
       } catch (error) {
         if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setErrors(['reusable:errors.unknown']);
         } else if (error.response.status === 555) {
           setErrors([error.response.data.error]);
           setLoading(false);
@@ -84,8 +85,8 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
     } else {
+      setStripeDashboardButtonLoading(true);
       try {
-        setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
         const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfileId}&occasion=login_link`;
         const headers = {
@@ -94,21 +95,20 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
           'access-token': window.localStorage.getItem('access-token'),
         };
         const response = await axios.get(path, { headers: headers });
-        window.open(response.data.url);
-        setStripeDashboardButtonLoading(false);
+        setStripeLink(response.data.url);
       } catch (error) {
         if (error.response === undefined) {
           setErrors('reusable:errors.unknown');
         } else if (error.response.status === 555) {
           setErrors([error.response.data.error]);
-          setStripeDashboardButtonLoading(false);
         } else if (error.response.status === 401) {
           window.alert(t('reusable:errors.401'));
           wipeCredentials('/');
         } else {
           setErrors([error.response.data.error]);
-          setStripeDashboardButtonLoading(false);
         }
+      } finally {
+        setStripeDashboardButtonLoading(false);
       }
     }
   };
@@ -117,6 +117,10 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
     fetchStripeAccountDetails();
     // eslint-disable-next-line
   }, []);
+  
+  useEffect(() => {
+    payoutSuccess && fetchStripeDashboardLink();
+  }, [payoutSuccess]);
 
   let redirectStripe;
 
@@ -147,9 +151,15 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
         </Explained>
         <ProgressStepWrapper>
           <ProgressBarSteps>
-            <ProgressBarStep active={activeStep >= 1} data-cy-active={activeStep >= 1} data-cy="step-1">1</ProgressBarStep>
-            <ProgressBarStep active={activeStep >= 2} data-cy-active={activeStep >= 2} data-cy="step-2">2</ProgressBarStep>
-            <ProgressBarStep active={activeStep >= 3} data-cy-active={activeStep >= 3} data-cy="step-3">3</ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 1} data-cy-active={activeStep >= 1} data-cy='step-1'>
+              1
+            </ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 2} data-cy-active={activeStep >= 2} data-cy='step-2'>
+              2
+            </ProgressBarStep>
+            <ProgressBarStep active={activeStep >= 3} data-cy-active={activeStep >= 3} data-cy='step-3'>
+              3
+            </ProgressBarStep>
           </ProgressBarSteps>
           <ProggressBarLine>
             <InnerLine width={activeStep === 1 ? '25%' : activeStep === 2 ? '75%' : '100%'} />
@@ -185,16 +195,13 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
           </Text>
 
           <Button
+            as='a'
             data-cy='progress-bar-cta'
-            onClick={() => window.open(`https://connect.stripe.com/express/oauth/authorize?client_id=${
+            href={`https://connect.stripe.com/express/oauth/authorize?client_id=${
               process.env.REACT_APP_OFFICIAL === 'yes'
                 ? process.env.REACT_APP_STRIPE_CLIENT_ID
                 : process.env.REACT_APP_STRIPE_CLIENT_ID_TEST
-            }&response_type=code&state=${
-              stripeState
-            }&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${
-              email
-            }&stripe_user[country]=SE`, '_self')}
+            }&response_type=code&state=${stripeState}&suggested_capabilities[]=transfers&redirect_uri=${redirectStripe}&stripe_user[email]=${email}&stripe_user[country]=SE`}
           >
             {t('HostProfileProgressBar:stripe-onboarding-cta')}
           </Button>
@@ -202,9 +209,10 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
       ) : payoutSuccess ? (
         <>
           <Button
+            as='a'
             color='info'
-            onClick={() => fetchStripeDashboardLink()}
-            loading={stripeDashboardButtonLoading}
+            href={stripeLink}
+            target='_blank'
             disabled={stripeDashboardButtonLoading}
             data-cy='progress-bar-cta'
           >
@@ -221,9 +229,10 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
                 : t('reusable:stripe:step-2-go-to-dashboard')}
             </Text>
             <Button
+              as='a'
               color={stripePendingVerification ? 'info' : 'primary'}
-              onClick={() => fetchStripeDashboardLink()}
-              loading={stripeDashboardButtonLoading}
+              href={stripeLink}
+              target='_blank'
               disabled={stripeDashboardButtonLoading}
               data-cy='progress-bar-cta'
             >
@@ -239,7 +248,7 @@ const HostProfileProgressBar = ({email, stripeAccountId, stripeState, hostProfil
           </Text>
           <ul id='message-error-list'>
             {errors.map((error) => (
-              <li key={error}>{t(error)}</li>
+              <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
             ))}
           </ul>
         </Notice>
