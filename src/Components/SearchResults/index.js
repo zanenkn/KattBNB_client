@@ -184,6 +184,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
     href.searchParams.set('view', results);
 
     if ((results === 'profile' || results === 'request') && hostPopupOpen) {
+      window.scrollTo(0, 0);
       href.searchParams.append('host', hostPopupOpen);
     }
 
