@@ -65,7 +65,7 @@ const RequestAcceptedSuccessfully = ({ history, location: { state } }) => {
   };
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

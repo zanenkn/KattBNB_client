@@ -38,7 +38,7 @@ const BookingDetails = ({ history, id, location: { state } }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner page />;
 
   return (
     <ContentWrapper>

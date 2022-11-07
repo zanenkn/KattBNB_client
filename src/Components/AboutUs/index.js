@@ -9,7 +9,7 @@ const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs');
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

@@ -93,7 +93,7 @@ const SignUp = (props) => {
   }
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page/>;
   }
 
   return (

@@ -14,8 +14,8 @@ const Error503 = (props) => {
     }
   }, []);
 
-  if (!ready) return <Spinner />;
-  
+  if (!ready) return <Spinner page />;
+
   return (
     <ContentWrapper>
       <Header level={1} centered>

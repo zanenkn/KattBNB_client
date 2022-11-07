@@ -77,7 +77,7 @@ const ChangePassword = ({ location: { search } }) => {
   };
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

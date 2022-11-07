@@ -27,7 +27,7 @@ const Receipt = ({ history }) => {
   }, []);
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page/>;
   }
 
   return (

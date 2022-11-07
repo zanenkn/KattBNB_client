@@ -95,7 +95,7 @@ const AllBookings = ({ id, history, username, dispatch }) => {
   }, []);
 
   if (!ready || loading) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

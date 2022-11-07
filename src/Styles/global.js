@@ -225,7 +225,7 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
   }
   .lds-spinner {
-    display: inline-block;
+    margin: auto;
     position: relative;
     width: 80px;
     height: 80px;

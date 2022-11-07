@@ -51,7 +51,7 @@ const BlogPost = ({ location: { state } }) => {
   }, []);
 
   if (!post) {
-    return <Spinner />;
+    return <Spinner page/>;
   }
 
   return (

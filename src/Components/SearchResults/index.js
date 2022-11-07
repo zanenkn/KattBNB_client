@@ -207,7 +207,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
     setHostPopupOpen(false);
   };
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner page />;
 
   return (
     <>

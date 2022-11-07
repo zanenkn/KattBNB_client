@@ -33,7 +33,7 @@ const BlogListing = ({ match }) => {
   }, [match.params.page]);
 
   if (!posts) {
-    return <Spinner />;
+    return <Spinner page />;
   }
   return (
     <ContentWrapper>

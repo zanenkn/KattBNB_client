@@ -19,7 +19,7 @@ const UserInfo = ({ currentUserId }) => {
   const { startConversation, errors } = useStartConversation();
   const { host, loading } = useFetchHost(userId);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner page />;
 
   if (errors.length) {
     return (

@@ -79,7 +79,7 @@ const Faq = ({ location }) => {
     }
   }, [locale]);
 
-  if (!ready) return <Spinner />;
+  if (!ready) return <Spinner page/>;
 
   return (
     <ContentWrapper>

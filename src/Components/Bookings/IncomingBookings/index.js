@@ -89,7 +89,7 @@ const IncomingBookings = ({ location: { state } }) => {
     });
   };
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner page />;
 
   return (
     <>

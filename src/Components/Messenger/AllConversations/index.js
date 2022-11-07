@@ -61,7 +61,7 @@ const AllConversations = ({ currentUserId }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner page />;
   if (errors.length) {
     return (
       <ContentWrapper>

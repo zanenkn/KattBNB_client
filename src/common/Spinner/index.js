@@ -5,6 +5,9 @@ const StyledContentWrapper = styled(ContentWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
+  > *:last-child {
+    margin-bottom: auto;
+  }
 `
 
 const CssSpinner = () => {

@@ -52,7 +52,7 @@ const Login = (props) => {
   };
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page/>;
   }
 
   return (

@@ -124,7 +124,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
     });
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready) return <Spinner page />;
 
   return (
     <ContentWrapper>

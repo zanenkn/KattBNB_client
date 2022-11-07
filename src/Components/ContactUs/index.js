@@ -66,7 +66,7 @@ const ContactUs = (props) => {
     }
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready) return <Spinner page />;
 
   return (
     <ContentWrapper>

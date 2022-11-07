@@ -8,7 +8,7 @@ const Guidelines = () => {
   const { t, ready } = useTranslation('Guidelines');
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

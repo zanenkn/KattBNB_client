@@ -18,7 +18,7 @@ const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
   }
 
   if (!ready) {
-    return <Spinner />;
+    return <Spinner page />;
   }
 
   return (

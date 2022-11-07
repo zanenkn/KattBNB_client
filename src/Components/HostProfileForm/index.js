@@ -198,7 +198,7 @@ const HostProfileForm = ({ userId, location }) => {
       });
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready) return <Spinner page />;
 
   return (
     <ContentWrapper data-cy='create-host-profile-form'>

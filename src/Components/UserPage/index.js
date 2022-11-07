@@ -350,7 +350,7 @@ const UserPage = (props) => {
     }
   };
 
-  if (!ready) return <Spinner />;
+  if (!ready) return <Spinner page />;
 
   if (ready && loading) {
     return (

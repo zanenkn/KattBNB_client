@@ -212,7 +212,7 @@ const Conversation = ({ id, username, match, history }) => {
     setErrors([]);
   };
 
-  if (!ready || loading) return <Spinner />;
+  if (!ready || loading) return <Spinner page />;
 
   return (
     <>
