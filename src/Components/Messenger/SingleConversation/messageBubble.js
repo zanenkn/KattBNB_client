@@ -33,7 +33,6 @@ const MessageBubble = ({ belongsToCurrent, message, scrollDown, lang }) => {
           <a href={message.image} target='_blank' rel='noopener noreferrer' style={{ lineHeight: '0' }}>
             <img
               onLoad={(e) => onImageLoad(e)}
-              style={{ flexShrink: '0', minWidth: '100%', minHeight: '100%' }}
               src={message.image}
             ></img>
           </a>
