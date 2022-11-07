@@ -194,6 +194,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       'access-token': window.localStorage.getItem('access-token'),
     };
     try {
+      setErrors([])
       // eslint-disable-next-line
       const responseUpdateIntent = await axios.get(path, { headers: headers });
       const result = await stripe.confirmCardPayment(paymentIntent, {
