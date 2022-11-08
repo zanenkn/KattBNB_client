@@ -4,7 +4,7 @@ import Spinner from '../../common/Spinner';
 import { Helmet } from 'react-helmet';
 import { Header, Text, Container, InlineLink, ContentWrapper } from '../../UI-Components';
 import TeamMemberCard from './TeamMemberCard';
-//MIGRATED
+
 const AboutUs = () => {
   const { t, ready } = useTranslation('AboutUs');
 

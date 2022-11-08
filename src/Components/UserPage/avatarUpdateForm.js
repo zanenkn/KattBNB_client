@@ -9,7 +9,7 @@ import { withTranslation } from 'react-i18next';
 import { Avatar, Button, Text, Notice, Container } from '../../UI-Components';
 import { Edit, Camera, RotateLeft, RotateRight } from '../../icons';
 import { AvatarEditBtnWrapper, AvatarUpdateFormWrapper, FlexWrapper, WithCursorPointer } from './styles';
-//MIGRATED
+
 class AvatarUpdateForm extends Component {
   state = {
     loading: false,

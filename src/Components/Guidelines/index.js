@@ -3,7 +3,7 @@ import Spinner from '../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import { Header, Text, Container, Whitebox, ContentWrapper } from '../../UI-Components';
-//MIGRATED
+
 const Guidelines = () => {
   const { t, ready } = useTranslation('Guidelines');
 
