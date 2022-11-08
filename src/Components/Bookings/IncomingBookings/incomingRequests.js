@@ -29,7 +29,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=retrieve`;
+        const path = `/api/v1/stripe_actions/retrieve_account_details?locale=${lang}&host_profile_id=${requests[0].host_profile_id}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -81,7 +81,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
       try {
         setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=login_link`;
+        const path = `/api/v1/stripe_actions/retrieve_account_login_link?locale=${lang}&host_profile_id=${requests[0].host_profile_id}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),

@@ -295,7 +295,7 @@ const UserPage = (props) => {
                 }
               });
           } else if (hostProfile.length === 1 && window.confirm(t('UserPage:delete-confirm'))) {
-            const pathStripe = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfile[0].id}&occasion=delete_account`;
+            const pathStripe = `/api/v1/stripe_actions/delete_account?locale=${lang}&host_profile_id=${hostProfile[0].id}`;
             axios
               .get(pathStripe, { headers: headers })
               .then(() => {

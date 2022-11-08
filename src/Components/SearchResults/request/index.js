@@ -79,7 +79,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         currentSearch.start,
         currentSearch.end
       );
-      const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${currentSearch.start}&outDate=${currentSearch.end}&cats=${currentSearch.cats}&host=${host.name}`;
+      const path = `/api/v1/stripe_actions/create_payment_intent?locale=${lang}&amount=${amount}&currency=sek&inDate=${currentSearch.start}&outDate=${currentSearch.end}&cats=${currentSearch.cats}&host=${host.name}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -187,7 +187,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       currentSearch.end
     );
 
-    const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${userId}&payment_intent_id=${paymentIntent}`;
+    const path = `/api/v1/stripe_actions/update_payment_intent?locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${userId}&payment_intent_id=${paymentIntent}`;
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),

@@ -43,7 +43,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfileId}&occasion=retrieve`;
+        const path = `/api/v1/stripe_actions/retrieve_account_details?locale=${lang}&host_profile_id=${hostProfileId}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -88,7 +88,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
       setStripeDashboardButtonLoading(true);
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${hostProfileId}&occasion=login_link`;
+        const path = `/api/v1/stripe_actions/retrieve_account_login_link?locale=${lang}&host_profile_id=${hostProfileId}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
