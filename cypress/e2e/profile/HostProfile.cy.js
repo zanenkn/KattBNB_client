@@ -55,8 +55,8 @@ describe('Creating host profile', () => {
     createHostProfile.description().type('Here is a good description about myself');
     createHostProfile.address().type('Trumpetgatan 20');
     createHostProfile.rate().type('100');
-    createHostProfile.supplement().type('20');
     createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.supplement().type('20');
     datesToSelect.forEach((date) => {
       createHostProfile.chooseDate(`Sep ${date}, 2019`);
     });
