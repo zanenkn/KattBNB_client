@@ -76,8 +76,8 @@ describe('Creating host profile', () => {
     userPage.createHostProfileCta().click();
     createHostProfile.address().type('Trumpetgatan 20');
     createHostProfile.rate().type('100');
-    createHostProfile.supplement().type('20');
     createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.supplement().type('20');
     datesToSelect.forEach((date) => {
       createHostProfile.chooseDate(`Sep ${date}, 2019`);
     });
@@ -96,8 +96,8 @@ describe('Creating host profile', () => {
     userPage.createHostProfileCta().click();
     createHostProfile.description().type('Here is a good description about myself');
     createHostProfile.rate().type('100');
-    createHostProfile.supplement().type('20');
     createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.supplement().type('20');
     datesToSelect.forEach((date) => {
       createHostProfile.chooseDate(`Sep ${date}, 2019`);
     });
@@ -116,33 +116,13 @@ describe('Creating host profile', () => {
     userPage.createHostProfileCta().click();
     createHostProfile.description().type('Here is a good description about myself');
     createHostProfile.address().type('Trumpetgatan 20');
-    createHostProfile.supplement().type('20');
     createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.supplement().type('20');
     datesToSelect.forEach((date) => {
       createHostProfile.chooseDate(`Sep ${date}, 2019`);
     });
     createHostProfile.submit();
     createHostProfile.errors().should('exist').and('include.text', 'Please enter your daily rate');
-  });
-
-  it('can not be created with blank supplement', () => {
-    const now = new Date(2019, 8, 1).getTime();
-    const datesToSelect = [23, 24, 25, 26, 27, 28, 29];
-    mockAPI.createHostProfile();
-    mockAPI.userPage();
-    cy.login('login/successful.json', 'george@mail.com', 'password', 200);
-    nav.to.userPage();
-    cy.clock(now);
-    userPage.createHostProfileCta().click();
-    createHostProfile.description().type('Here is a good description about myself');
-    createHostProfile.address().type('Trumpetgatan 20');
-    createHostProfile.rate().type('100');
-    createHostProfile.maxCats().type('2', { force: true });
-    datesToSelect.forEach((date) => {
-      createHostProfile.chooseDate(`Sep ${date}, 2019`);
-    });
-    createHostProfile.submit();
-    createHostProfile.errors().should('exist').and('include.text', 'Please enter your daily supplement for one cat');
   });
 
   it('can not be created with blank max cats', () => {
@@ -157,7 +137,6 @@ describe('Creating host profile', () => {
     createHostProfile.description().type('Here is a good description about myself');
     createHostProfile.address().type('Trumpetgatan 20');
     createHostProfile.rate().type('100');
-    createHostProfile.supplement().type('20');
     datesToSelect.forEach((date) => {
       createHostProfile.chooseDate(`Sep ${date}, 2019`);
     });
@@ -177,8 +156,8 @@ describe('Creating host profile', () => {
     createHostProfile.description().type('Here is a good description about myself');
     createHostProfile.address().type('Trumpetgatan 20');
     createHostProfile.rate().type('100');
-    createHostProfile.supplement().type('20');
     createHostProfile.maxCats().type('2', { force: true });
+    createHostProfile.supplement().type('20');
     createHostProfile.submit();
     createHostProfile.errors().should('exist').and('include.text', 'Please enter your availability');
   });
