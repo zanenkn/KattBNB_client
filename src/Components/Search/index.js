@@ -215,7 +215,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
         </div>
 
         {errors.length > 0 && (
-          <Notice nature='danger'>
+          <Notice nature='danger' data-cy='error'>
             <Text bold centered>
               {t('Search:error-header')}
             </Text>
