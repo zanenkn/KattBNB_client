@@ -193,6 +193,52 @@ class API {
       fixture: 'hostProfile/create.json',
     });
   };
+
+  search = ({ from, to, location, cats, resultsPerLocation, results }) => {
+    const utcDate = (date) => {
+      const newDate = new Date(date);
+      const utc = Date.UTC(newDate.getUTCFullYear(), newDate.getUTCMonth(), newDate.getUTCDate()) + 86400000;
+      return new Date(utc).getTime();
+    };
+
+    const hostProfilesWithLocation = (fixture) => {
+      return cy.intercept(
+        'GET',
+        `${api}/host_profiles?location=${location}&startDate=${utcDate(from)}&endDate=${utcDate(
+          to
+        )}&cats=${cats}&locale=en-US`,
+        {
+          statusCode: 200,
+          body: fixture,
+        }
+      );
+    };
+
+    const hostProfiles = (fixture) => {
+      cy.intercept(
+        'GET',
+        `${api}/host_profiles?startDate=${utcDate(from)}&endDate=${utcDate(to)}&cats=${cats}&locale=en-US`,
+        {
+          statusCode: 200,
+          body: fixture,
+        }
+      );
+    };
+
+    cy.server();
+
+    resultsPerLocation
+      ? cy.fixture(resultsPerLocation).then((fixture) => {
+          hostProfilesWithLocation(fixture);
+        })
+      : hostProfilesWithLocation({ with: [], without: [] });
+
+    results
+      ? cy.fixture(results).then((fixture) => {
+          hostProfiles(fixture);
+        })
+      : hostProfiles({ with: [], without: [] });
+  };
 }
 
 module.exports = new API();

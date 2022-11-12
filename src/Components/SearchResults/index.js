@@ -247,10 +247,10 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
       </Popup>
 
       <SecondaryStickyHeader>
-        <SearchCriteriaWrapper>
+        <SearchCriteriaWrapper data-cy='search-criteria'>
           <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
             <Availabilty />
-            <Text>
+            <Text data-cy='dates'>
               {moment(from).format(device.width > 375 ? 'LL' : 'll')} -{' '}
               {moment(to).format(device.width > 375 ? 'LL' : 'll')}
             </Text>
@@ -260,15 +260,15 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
             <Flexbox spaceItemsX={2}>
               <Flexbox spaceItemsX={1}>
                 <Location />
-                <Text>{searchLocation}</Text>
+                <Text data-cy='location'>{searchLocation}</Text>
               </Flexbox>
               <Flexbox spaceItemsX={1}>
                 <Cat />
-                <Text>{cats}</Text>
+                <Text data-cy='cats'>{cats}</Text>
               </Flexbox>
             </Flexbox>
             <BackLinkWrapper>
-              <InlineLink color='info' as={Link} to={'/search'}>
+              <InlineLink data-cy='back' color='info' as={Link} to={'/search'}>
                 {device.type === 'mobile' ? t('reusable:cta:change') : t('SearchResults:change-search')}
               </InlineLink>
             </BackLinkWrapper>
@@ -276,10 +276,10 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
 
           <JustifiedWrapper>
             <Flexbox>
-              <RoundButton active={results === 'map'} id='map-button' onClick={() => setResults('map')}>
+              <RoundButton active={results === 'map'} data-cy='map' onClick={() => setResults('map')}>
                 <MapIcon />
               </RoundButton>
-              <RoundButton active={results === 'list'} id='list-button' onClick={() => setResults('list')}>
+              <RoundButton active={results === 'list'} data-cy='list' onClick={() => setResults('list')}>
                 <ListIcon />
               </RoundButton>
             </Flexbox>
@@ -289,7 +289,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
               </Text>
             )}
             {results === 'map' && (
-              <Text>
+              <Text data-cy='result-count'>
                 {allLocationsLoaded ? (
                   <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
                 ) : (
@@ -307,7 +307,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
       </SecondaryStickyHeader>
 
       {results === 'list' && (
-        <SearchResultWrapper padding={150} background='neutral'>
+        <SearchResultWrapper padding={150} background='neutral' data-cy='list'>
           <List
             finalAvailableHosts={availableByLocation}
             handleListItemClick={(id) => setHostPopupOpen(id)}
@@ -317,7 +317,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
         </SearchResultWrapper>
       )}
       {results === 'map' && (
-        <SearchResultWrapper padding={150} map>
+        <SearchResultWrapper padding={150} map data-cy='map'>
           <GoogleMap
             byLocationAvailableHosts={availableByLocation}
             allAvailableHosts={availableAllLocations}
@@ -328,7 +328,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
         </SearchResultWrapper>
       )}
       {results === 'profile' && (
-        <SearchResultWrapper padding={150}>
+        <SearchResultWrapper padding={150} data-cy='profile'>
           <Profile
             currentSearch={currentSearch}
             id={queryString.parse(location.search).host}
@@ -338,7 +338,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
         </SearchResultWrapper>
       )}
       {results === 'request' && (
-        <SearchResultWrapper padding={150}>
+        <SearchResultWrapper padding={150} data-cy='request'>
           <RequestToBook
             currentSearch={currentSearch}
             id={queryString.parse(location.search).host}
