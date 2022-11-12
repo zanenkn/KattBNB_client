@@ -6,6 +6,7 @@ class Navigation {
   landing = () => cy.visit(`${client}`);
   userPage = () => cy.visit(`${client}/user-page`);
   createHostProfile = () => cy.visit(`${client}/create-host-profile`);
+  search = () => cy.visit(`${client}/search`);
 
   to = {
     bookings: () => cy.get('[data-cy=nav-bookings]').click({ force: true }),

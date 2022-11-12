@@ -37,7 +37,7 @@ const DayPicker = ({
           {label}
         </Label>
       )}
-      <div onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} ref={input}>
+      <div onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} ref={input} {...rest}>
         <DayPickerInput
           ref={dayPickerRef}
           value={value}
@@ -47,7 +47,6 @@ const DayPicker = ({
           inputProps={inputProps}
           dayPickerProps={dayPickerProps}
           onDayChange={() => onChange()}
-          {...rest}
         />
       </div>
       {required && !value && <RequiredLabel focused={isFocused} />}
