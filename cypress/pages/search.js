@@ -10,6 +10,7 @@ class Search {
     from: () => this.self().find('[data-cy=from]').find('input'),
     to: () => this.self().find('[data-cy=to]').find('input'),
   };
+  error = () => this.self().find('[data-cy=error]')
 }
 
 module.exports = new Search();
