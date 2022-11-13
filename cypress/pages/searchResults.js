@@ -22,6 +22,22 @@ class SearchResults {
   list = {
     wrapper: () => cy.get('[data-cy=list]'),
     backToMap: () => this.list.wrapper().find('[data-cy=map]'),
+    items: () => this.list.wrapper().find('[data-cy^=list-card]'),
+    getItem: (id) => this.list.wrapper().find(`[data-cy=list-card-${id}]`),
+    innerWrapper: () => this.list.wrapper().find('[data-cy=inner-wrapper]'),
+    result: (id) => {
+      return {
+        getPrice: () => this.list.getItem(id).find('[data-cy=price]'),
+        getBadge: () => this.list.getItem(id).find('[data-cy=badge]'),
+      };
+    },
+    username: () => cy.get('[data-cy=username]'),
+    avatar: () => cy.get('[data-cy=avatar]'),
+    price: () => cy.get('[data-cy=price]'),
+    score: () => cy.get('[data-cy=score]'),
+    badge: () => cy.get('[data-cy=badge]'),
+    available: () => cy.get('[data-cy=available]'),
+    reviews: () => cy.get('[data-cy=reviews]'),
   };
 }
 

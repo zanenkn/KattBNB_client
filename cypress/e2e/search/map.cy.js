@@ -45,8 +45,8 @@ describe('Search results as a map', () => {
     map.getPriceLabel(11).should('have.text', '1116 kr');
     map.getPriceLabel(22).should('have.text', '1261 kr');
     map.getPriceLabel(33).should('have.text', '1261 kr');
-    map.getPriceLabel(44).should('have.text', '2522 kr');
-    map.getPriceLabel(55).should('have.text', '1746 kr');
+    map.getPriceLabel(44).should('have.text', '1746 kr');
+    map.getPriceLabel(55).should('have.text', '2522 kr');
   });
 });
 
@@ -82,8 +82,8 @@ describe('Shareable search url', () => {
     map.getPriceLabel(11).should('have.attr', 'data-cy-available', 'true').and('have.text', '1116 kr');
     map.getPriceLabel(22).should('have.attr', 'data-cy-available', 'true').and('have.text', '1261 kr');
     map.getPriceLabel(33).should('have.attr', 'data-cy-available', 'true').and('have.text', '1261 kr');
-    map.getPriceLabel(44).should('have.attr', 'data-cy-available', 'false').and('have.text', '2522 kr');
-    map.getPriceLabel(55).should('have.attr', 'data-cy-available', 'false').and('have.text', '1746 kr');
+    map.getPriceLabel(44).should('have.attr', 'data-cy-available', 'false').and('have.text', '1746 kr');
+    map.getPriceLabel(55).should('have.attr', 'data-cy-available', 'false').and('have.text', '2522 kr');
   });
 
   it('view defaults to map when no view parameter in url', () => {
