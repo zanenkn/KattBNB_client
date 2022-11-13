@@ -1,6 +1,7 @@
 import { client } from '../support/constants';
 
 class Navigation {
+  toUrl = (url) => cy.visit(`${client}${url}`);
   userAvatar = () => cy.get('[data-cy=user-avatar]');
   visitorAvatar = () => cy.get('[data-cy=visitor-avatar]');
   landing = () => cy.visit(`${client}`);

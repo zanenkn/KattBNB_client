@@ -16,6 +16,7 @@ class SearchResults {
       return cy.get('[data-cy=map]');
     },
     priceLabels: () => this.map.wrapper().find('[data-cy^=price-label]'),
+    getPriceLabel: (id) => this.map.wrapper().find(`[data-cy=price-label-${id}]`),
   };
 
   list = {

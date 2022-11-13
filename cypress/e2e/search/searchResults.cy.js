@@ -46,7 +46,7 @@ describe('Search results', () => {
     map.priceLabels().should('exist').and('have.length', 2);
   });
 
-  it.only('can change between map and list view', () => {
+  it('can change between map and list view', () => {
     map.wrapper().should('exist');
     cy.location().should(({ search }) => {
       expect(search).to.include('view=map');
