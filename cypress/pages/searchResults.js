@@ -9,15 +9,18 @@ class SearchResults {
   resultCount = () => this.criteriaWrapper().find('[data-cy=result-count]');
 
   map = {
-    awaitLoaded: () => cy.get('[aria-label="Zoom in"]').should('exist'),
+    zoomOut: () => cy.get('[aria-label="Zoom out"]'),
+    awaitLoaded: () => this.map.zoomOut().should('exist'),
     wrapper: () => {
       this.map.awaitLoaded();
       return cy.get('[data-cy=map]');
     },
+    priceLabels: () => this.map.wrapper().find('[data-cy^=price-label]'),
   };
 
   list = {
     wrapper: () => cy.get('[data-cy=list]'),
+    backToMap: () => this.list.wrapper().find('[data-cy=map]'),
   };
 }
 

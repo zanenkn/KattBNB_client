@@ -33,7 +33,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
               changing your search criteria
             </InlineLink>
             or
-            <InlineLink onClick={() => switchToMap()} color='info'>
+            <InlineLink onClick={() => switchToMap()} color='info' data-cy='map'>
               go to the map view
             </InlineLink>{' '}
             to find cat sitters in nearby areas.
