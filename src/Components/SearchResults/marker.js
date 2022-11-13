@@ -5,7 +5,7 @@ import { DatapointCounter, MarkerWrapper } from './styles';
 const Marker = ({ cluster, available, id, onClick, total, pointCount }) => {
   return (
     <MarkerWrapper cluster={cluster} onClick={() => onClick(id, available)}>
-      <PriceLabel available={available} id={id}>
+      <PriceLabel available={available} id={id} data-cy={`price-label-${id}`}>
         {total} kr
       </PriceLabel>
 
