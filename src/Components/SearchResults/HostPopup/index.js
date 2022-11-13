@@ -57,13 +57,18 @@ const HostPopup = ({
 
   return (
     <Popup modal open={open} onClose={onClose} position='top center' closeOnDocumentClick={true}>
-      <>
+      <div data-cy='host-popup'>
         {(isAvailable || host?.reviewsCount) && (
-          <Badge nature={isAvailable ? 'availability' : 'reviews'}>
+          <Badge
+            nature={isAvailable ? 'availability' : 'reviews'}
+            data-cy-badge={isAvailable ? 'availability' : 'reviews'}
+          >
             {isAvailable ? <AvailableHost fill={'white'} height={6} /> : <Review fill={'white'} height={6} />}
           </Badge>
         )}
+        <p>{currentSearch.checkInDate}</p>
         <Avatar
+          data-cy='avatar'
           size={device === 'mobile' ? 'md' : 'xl'}
           centered
           space={4}
@@ -73,28 +78,28 @@ const HostPopup = ({
           }
         />
         {host.score && (
-          <Container>
+          <Container data-cy-score={host.score}>
             <ReviewScore score={host.score} center={true} height={6} margin={0} primaryColor='neutral' />
           </Container>
         )}
 
-        <Flexbox spaceItemsX={1} space={2}>
+        <Flexbox spaceItemsX={1} space={2} data-cy='username'>
           <User />
           <Header level={4}>{host.name}</Header>
         </Flexbox>
         <Flexbox spaceItemsX={2} space={2} wrap>
-          <Flexbox spaceItemsX={1}>
+          <Flexbox spaceItemsX={1} data-cy='location'>
             <Location />
             <Text>{host.location}</Text>
           </Flexbox>
           {host.reviewsCount && (
-            <Flexbox spaceItemsX={1}>
+            <Flexbox spaceItemsX={1} data-cy='reviews'>
               <Review />
               <Text>{t('reusable:reviews', { count: parseInt(host.reviewsCount) })}</Text>
             </Flexbox>
           )}
           {isAvailable && (
-            <Flexbox spaceItemsX={1}>
+            <Flexbox spaceItemsX={1} data-cy='available'>
               <AvailableHost />
               <Text>{t('reusable:available')}</Text>
             </Flexbox>
@@ -103,7 +108,7 @@ const HostPopup = ({
 
         {loggedInUserId !== host.userId && (
           <Flexbox space={4}>
-            <InlineLink color={'primary'} onClick={() => toHostProfile()}>
+            <InlineLink color={'primary'} onClick={() => toHostProfile()} data-cy='host-profile'>
               {t('HostPopup:more')}
             </InlineLink>
           </Flexbox>
@@ -122,19 +127,19 @@ const HostPopup = ({
         </Responsive>
 
         <Responsive displayIn={['mobile']}>
-          <Text bold centered space={0}>
+          <Text bold centered space={0} data-cy='price-description'>
             {t('HostPopup:total')}
           </Text>
         </Responsive>
 
-        <Header level={4} centered space={4}>
+        <Header level={4} centered space={4} data-cy='price'>
           {orderTotal} kr
         </Header>
 
         {!isAvailable && (
           <>
             {/* idea: push to messenger with a default message? */}
-            <Button id='message-host' onClick={() => messageHost()} space={2}>
+            <Button data-cy='message-host' onClick={() => messageHost()} space={2}>
               {t('reusable:cta.send-message')}
             </Button>
 
@@ -147,7 +152,7 @@ const HostPopup = ({
         <Button
           secondary={!isAvailable}
           space={6}
-          id='request-to-book'
+          data-cy='request-to-book'
           onClick={() => requestToBook()}
           color={isAvailable ? 'primary' : 'neutral'}
         >
@@ -156,10 +161,12 @@ const HostPopup = ({
 
         {loggedInUserId !== host.userId && !isAvailable && (
           <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
-            <Text size='sm'>{t('HostPopup:host-availability-disclaimer')}</Text>
+            <Text size='sm' data-cy='availability-disclaimer'>
+              {t('HostPopup:host-availability-disclaimer')}
+            </Text>
           </Responsive>
         )}
-      </>
+      </div>
     </Popup>
   );
 };

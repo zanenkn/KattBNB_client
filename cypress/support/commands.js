@@ -19,3 +19,7 @@ Cypress.Commands.add('login', (response = {}, email, password, status, nav = tru
   });
   cy.get('[data-cy=log-in-button]').click();
 });
+
+Cypress.Commands.add('clickOutside', () => {
+  return cy.get('body').click(100, 100);
+});

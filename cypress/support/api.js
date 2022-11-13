@@ -194,7 +194,7 @@ class API {
     });
   };
 
-  search = ({ from, to, location, cats, resultsPerLocation, results }) => {
+  search = ({ from, to, location, cats, resultsPerLocation, results, withProfiles = [] }) => {
     const utcDate = (date) => {
       const newDate = new Date(date);
       const utc = Date.UTC(newDate.getUTCFullYear(), newDate.getUTCMonth(), newDate.getUTCDate()) + 86400000;
@@ -225,6 +225,11 @@ class API {
       );
     };
 
+    const getHostProfile = (id) => {
+      const resultsFixture = require(`../fixtures/${resultsPerLocation ?? results}`);
+      return [...resultsFixture.with, ...resultsFixture.without].filter((host) => host.user.id === id);
+    };
+
     cy.server();
 
     resultsPerLocation
@@ -238,6 +243,14 @@ class API {
           hostProfiles(fixture);
         })
       : hostProfiles({ with: [], without: [] });
+
+    withProfiles.map((id) => {
+      getHostProfile(id);
+      cy.intercept('GET', `${api}/host_profiles?user_id=${id}&locale=en-US`, {
+        statusCode: 200,
+        body: getHostProfile(id),
+      });
+    });
   };
 }
 

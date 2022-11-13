@@ -36,11 +36,11 @@ describe('Search results as a list', () => {
   it('sorted correctly according to availability and reviews', () => {
     list.wrapper().should('exist');
     list.items().should('exist').and('have.length', 5);
-    list.innerWrapper().children().eq(0).should('have.attr', 'data-cy', 'list-card-22');
-    list.innerWrapper().children().eq(1).should('have.attr', 'data-cy', 'list-card-11');
-    list.innerWrapper().children().eq(2).should('have.attr', 'data-cy', 'list-card-33');
-    list.innerWrapper().children().eq(3).should('have.attr', 'data-cy', 'list-card-55');
-    list.innerWrapper().children().eq(4).should('have.attr', 'data-cy', 'list-card-44');
+    list.innerWrapper().children().eq(0).should('have.attr', 'data-cy-list-card', 22);
+    list.innerWrapper().children().eq(1).should('have.attr', 'data-cy-list-card', 11);
+    list.innerWrapper().children().eq(2).should('have.attr', 'data-cy-list-card', 33);
+    list.innerWrapper().children().eq(3).should('have.attr', 'data-cy-list-card', 55);
+    list.innerWrapper().children().eq(4).should('have.attr', 'data-cy-list-card', 44);
   });
 
   it('resolves prices correctly', () => {
@@ -52,11 +52,11 @@ describe('Search results as a list', () => {
   });
 
   it('displays badges correctly', () => {
-    list.result(11).getBadge().should('exist').and('have.attr', 'data-cy-badge-nature', 'availability');
-    list.result(22).getBadge().should('exist').and('have.attr', 'data-cy-badge-nature', 'availability');
-    list.result(33).getBadge().should('exist').and('have.attr', 'data-cy-badge-nature', 'availability');
+    list.result(11).getBadge().should('exist').and('have.attr', 'data-cy-badge', 'availability');
+    list.result(22).getBadge().should('exist').and('have.attr', 'data-cy-badge', 'availability');
+    list.result(33).getBadge().should('exist').and('have.attr', 'data-cy-badge', 'availability');
     list.result(44).getBadge().should('not.exist');
-    list.result(55).getBadge().should('exist').and('have.attr', 'data-cy-badge-nature', 'reviews');
+    list.result(55).getBadge().should('exist').and('have.attr', 'data-cy-badge', 'reviews');
   });
 
   it('displays avatar, name and price for each cat sitter', () => {
@@ -71,13 +71,13 @@ describe('Search results as a list', () => {
 
   it('displays and reviews information correctly', () => {
     list.getItem(11).within(() => {
-      list.score().should('exist').and('include.text', '4/5');
+      list.score().should('exist').and('have.attr', 'data-cy-score', '4');
       list.reviews().should('exist').and('have.text', '2 reviews');
       list.available().should('exist');
     });
 
     list.getItem(22).within(() => {
-      list.score().should('exist').and('include.text', '5/5');
+      list.score().should('exist').and('have.attr', 'data-cy-score', '5');
       list.reviews().should('exist').and('have.text', '3 reviews');
       list.available().should('exist');
     });
@@ -95,7 +95,7 @@ describe('Search results as a list', () => {
     });
 
     list.getItem(55).within(() => {
-      list.score().should('exist').and('include.text', '4.5/5');
+      list.score().should('exist').and('have.attr', 'data-cy-score', '4.5');
       list.reviews().should('exist').and('have.text', '2 reviews');
       list.available().should('not.exist');
     });
@@ -124,11 +124,11 @@ describe('Shareable search url', () => {
 
     list.wrapper().should('exist');
     list.items().should('exist').and('have.length', 5);
-    list.innerWrapper().children().eq(0).should('have.attr', 'data-cy', 'list-card-22');
-    list.innerWrapper().children().eq(1).should('have.attr', 'data-cy', 'list-card-11');
-    list.innerWrapper().children().eq(2).should('have.attr', 'data-cy', 'list-card-33');
-    list.innerWrapper().children().eq(3).should('have.attr', 'data-cy', 'list-card-55');
-    list.innerWrapper().children().eq(4).should('have.attr', 'data-cy', 'list-card-44');
+    list.innerWrapper().children().eq(0).should('have.attr', 'data-cy-list-card', 22);
+    list.innerWrapper().children().eq(1).should('have.attr', 'data-cy-list-card', 11);
+    list.innerWrapper().children().eq(2).should('have.attr', 'data-cy-list-card', 33);
+    list.innerWrapper().children().eq(3).should('have.attr', 'data-cy-list-card', 55);
+    list.innerWrapper().children().eq(4).should('have.attr', 'data-cy-list-card', 44);
 
     list.result(11).getPrice().should('have.text', '1116 kr');
     list.result(22).getPrice().should('have.text', '1261 kr');

@@ -1,4 +1,13 @@
 class SearchResults {
+  general = {
+    username: () => cy.get('[data-cy=username]'),
+    avatar: () => cy.get('[data-cy=avatar]'),
+    price: () => cy.get('[data-cy=price]'),
+    score: () => cy.get('[data-cy-score]'),
+    badge: () => cy.get('[data-cy-badge]'),
+    available: () => cy.get('[data-cy=available]'),
+    reviews: () => cy.get('[data-cy=reviews]'),
+  };
   criteriaWrapper = () => cy.get('[data-cy=search-criteria]');
   dates = () => this.criteriaWrapper().find('[data-cy=dates]');
   location = () => this.criteriaWrapper().find('[data-cy=location]');
@@ -22,22 +31,26 @@ class SearchResults {
   list = {
     wrapper: () => cy.get('[data-cy=list]'),
     backToMap: () => this.list.wrapper().find('[data-cy=map]'),
-    items: () => this.list.wrapper().find('[data-cy^=list-card]'),
-    getItem: (id) => this.list.wrapper().find(`[data-cy=list-card-${id}]`),
+    items: () => this.list.wrapper().find('[data-cy-list-card]'),
+    getItem: (id) => this.list.wrapper().find(`[data-cy-list-card=${id}]`),
     innerWrapper: () => this.list.wrapper().find('[data-cy=inner-wrapper]'),
     result: (id) => {
       return {
         getPrice: () => this.list.getItem(id).find('[data-cy=price]'),
-        getBadge: () => this.list.getItem(id).find('[data-cy=badge]'),
+        getBadge: () => this.list.getItem(id).find('[data-cy-badge]'),
       };
     },
-    username: () => cy.get('[data-cy=username]'),
-    avatar: () => cy.get('[data-cy=avatar]'),
-    price: () => cy.get('[data-cy=price]'),
-    score: () => cy.get('[data-cy=score]'),
-    badge: () => cy.get('[data-cy=badge]'),
-    available: () => cy.get('[data-cy=available]'),
-    reviews: () => cy.get('[data-cy=reviews]'),
+    ...this.general,
+  };
+
+  hostPopup = {
+    wrapper: () => cy.get('[data-cy=host-popup]'),
+    location: () => this.hostPopup.wrapper().find('[data-cy=location]'),
+    messageHostCta: () => this.hostPopup.wrapper().find('[data-cy=message-host]'),
+    requestCta: () => this.hostPopup.wrapper().find('[data-cy=request-to-book]'),
+    toHostProfile: () => this.hostPopup.wrapper().find('[data-cy=host-profile]'),
+    availabilityDisclaimer: () => this.hostPopup.wrapper().find('[data-cy=availability-disclaimer]'),
+    ...this.general,
   };
 }
 
