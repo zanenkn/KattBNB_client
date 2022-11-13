@@ -20,7 +20,11 @@ const useReviews = () => {
       return;
     }
     axios
-      .get(`/api/v1/random_reviews/reviews?locale=${lang}`)
+      .get('/api/v1/random_reviews/reviews', {
+        params: {
+          locale: lang,
+        },
+      })
       .then((resp) => {
         setReviews(reviewTransformer(resp.data));
         setLoading(false);
