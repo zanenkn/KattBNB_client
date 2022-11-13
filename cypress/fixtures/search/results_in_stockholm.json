@@ -68,24 +68,6 @@
 
   "without": [
     {
-      "id": 4,
-      "price_per_day_1_cat": "250.0",
-      "supplement_price_per_cat_per_day": "10.0",
-      "max_cats_accepted": 5,
-      "availability": [1569880800000],
-      "description": "Ciao bella",
-      "lat": "59.306771",
-      "long": "18.143124",
-      "user": {
-        "id": 44,
-        "location": "Stockholm",
-        "nickname": "Laura",
-        "profile_avatar": null
-      },
-      "score": 4.5,
-      "reviews_count": 2
-    },
-    {
       "id": 5,
       "price_per_day_1_cat": "175.0",
       "supplement_price_per_cat_per_day": "5.0",
@@ -95,13 +77,31 @@
       "lat": "59.330611",
       "long": "17.968977",
       "user": {
-        "id": 55,
+        "id": 44,
         "location": "Stockholm",
         "nickname": "Oliver",
         "profile_avatar": null
       },
       "score": null,
       "reviews_count": null
+    },
+    {
+      "id": 4,
+      "price_per_day_1_cat": "250.0",
+      "supplement_price_per_cat_per_day": "10.0",
+      "max_cats_accepted": 5,
+      "availability": [1569880800000],
+      "description": "Ciao bella",
+      "lat": "59.306771",
+      "long": "18.143124",
+      "user": {
+        "id": 55,
+        "location": "Stockholm",
+        "nickname": "Laura",
+        "profile_avatar": null
+      },
+      "score": 4.5,
+      "reviews_count": 2
     }
   ]
 }

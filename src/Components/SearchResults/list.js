@@ -44,23 +44,29 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
   }
 
   return (
-    <InnerResultWrapper>
+    <InnerResultWrapper data-cy='inner-wrapper'>
       {finalAvailableHosts.map((host) => {
         return (
-          <ListItem key={host.id} onClick={() => handleListItemClick(host.id)}>
+          <ListItem key={host.id} onClick={() => handleListItemClick(host.id)} data-cy={`list-card-${host.id}`}>
             {(host.available || host.reviews_count) && (
-              <Badge responsive nature={host.available ? 'availability' : 'reviews'}>
+              <Badge
+                responsive
+                nature={host.available ? 'availability' : 'reviews'}
+                data-cy='badge'
+                data-cy-badge-nature={host.available ? 'availability' : 'reviews'}
+              >
                 {host.available ? <AvailableHost fill='white' height={6} /> : <Review fill='white' height={6} />}
               </Badge>
             )}
             {host.score && (
-              <Container>
+              <Container data-cy='score'>
                 <ReviewScore score={host.score} displayNumerical={true} primaryColor='neutral' margin={0} />
               </Container>
             )}
             <Flexbox horizontalAlign='left' spaceItemsX={4}>
               <Flexbox direction='column'>
                 <Avatar
+                  data-cy='avatar'
                   responsive
                   src={
                     !host.user.profile_avatar
@@ -72,7 +78,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
 
               <Flexbox direction='column' horizontalAlign='left'>
                 <Container space={2}>
-                  <Header level={3}>
+                  <Header level={3} data-cy='price'>
                     {finalTotal(
                       host.price_per_day_1_cat,
                       currentSearch.cats,
@@ -86,7 +92,7 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
                 <Container space={1}>
                   <Flexbox spaceItemsX={1}>
                     <User />
-                    <Text bold level={5}>
+                    <Text bold level={5} data-cy='username'>
                       {host.user.nickname}
                     </Text>
                   </Flexbox>
@@ -94,13 +100,13 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
                 {host.score && (
                   <Flexbox spaceItemsX={1}>
                     <Review />
-                    <Text>{t('reusable:reviews', { count: host.reviews_count })}</Text>
+                    <Text data-cy='reviews'>{t('reusable:reviews', { count: host.reviews_count })}</Text>
                   </Flexbox>
                 )}
                 {host.available && (
                   <Flexbox spaceItemsX={1}>
                     <AvailableHost />
-                    <Text>{t('reusable:available')}</Text>
+                    <Text data-cy='available'>{t('reusable:available')}</Text>
                   </Flexbox>
                 )}
               </Flexbox>

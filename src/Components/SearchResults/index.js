@@ -284,7 +284,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
               </RoundButton>
             </Flexbox>
             {results === 'list' && (
-              <Text>
+              <Text data-cy='result-count'>
                 <Trans values={{ count: availableByLocation.length }} i18nKey='SearchResults:counter' />
               </Text>
             )}
