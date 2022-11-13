@@ -22,9 +22,9 @@ describe('Visitor can search for cat sitters', () => {
       to: dateTo,
       cats: cats,
       location: location,
-      resultsPerLocation: 'search/few_results.json',
+      resultsPerLocation: 'search/results_in_stockholm.json',
     });
-    
+
     cy.clock(new Date(2019, 9, 1).getTime(), ['Date']);
     nav.search();
 
@@ -42,7 +42,7 @@ describe('Visitor can search for cat sitters', () => {
       .and('have.text', `${moment(dateFrom).format('LL')} - ${moment(dateTo).format('LL')}`);
     searchResults.cats().should('exist').and('have.text', cats);
     searchResults.location().should('exist').and('have.text', location);
-    searchResults.resultCount().should('exist').and('have.text', '10 result(s)');
+    searchResults.resultCount().should('exist').and('have.text', '5 result(s)');
     map.wrapper().should('exist');
 
     searchResults.listView().click();
@@ -113,7 +113,7 @@ describe('Visitor can search for cat sitters', () => {
       to: dateTo,
       cats: cats,
       location: location,
-      resultsPerLocation: 'search/few_results.json',
+      resultsPerLocation: 'search/results_in_stockholm.json',
     });
 
     cy.clock(new Date(2019, 9, 1).getTime(), ['Date']);
