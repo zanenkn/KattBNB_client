@@ -47,19 +47,18 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
     <InnerResultWrapper data-cy='inner-wrapper'>
       {finalAvailableHosts.map((host) => {
         return (
-          <ListItem key={host.id} onClick={() => handleListItemClick(host.id)} data-cy={`list-card-${host.id}`}>
+          <ListItem key={host.id} onClick={() => handleListItemClick(host.id)} data-cy-list-card={host.id}>
             {(host.available || host.reviews_count) && (
               <Badge
                 responsive
                 nature={host.available ? 'availability' : 'reviews'}
-                data-cy='badge'
-                data-cy-badge-nature={host.available ? 'availability' : 'reviews'}
+                data-cy-badge={host.available ? 'availability' : 'reviews'}
               >
                 {host.available ? <AvailableHost fill='white' height={6} /> : <Review fill='white' height={6} />}
               </Badge>
             )}
             {host.score && (
-              <Container data-cy='score'>
+              <Container data-cy-score={host.score}>
                 <ReviewScore score={host.score} displayNumerical={true} primaryColor='neutral' margin={0} />
               </Container>
             )}
@@ -90,23 +89,23 @@ const List = ({ currentSearch, finalAvailableHosts, handleListItemClick, onUnmou
                   </Header>
                 </Container>
                 <Container space={1}>
-                  <Flexbox spaceItemsX={1}>
+                  <Flexbox spaceItemsX={1} data-cy='username'>
                     <User />
-                    <Text bold level={5} data-cy='username'>
+                    <Text bold level={5}>
                       {host.user.nickname}
                     </Text>
                   </Flexbox>
                 </Container>
                 {host.score && (
-                  <Flexbox spaceItemsX={1}>
+                  <Flexbox spaceItemsX={1} data-cy='reviews'>
                     <Review />
-                    <Text data-cy='reviews'>{t('reusable:reviews', { count: host.reviews_count })}</Text>
+                    <Text>{t('reusable:reviews', { count: host.reviews_count })}</Text>
                   </Flexbox>
                 )}
                 {host.available && (
-                  <Flexbox spaceItemsX={1}>
+                  <Flexbox spaceItemsX={1} data-cy='available'>
                     <AvailableHost />
-                    <Text data-cy='available'>{t('reusable:available')}</Text>
+                    <Text>{t('reusable:available')}</Text>
                   </Flexbox>
                 )}
               </Flexbox>

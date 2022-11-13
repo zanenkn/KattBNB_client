@@ -40,7 +40,6 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
         };
         const response = await axios.get(path, { params: callParams, headers: headers });
         if (!response.data.message) {
-          console.log(response.data.requirements);
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
           setStripePendingVerification(!!response.data.requirements.pending_verification.length);
