@@ -64,8 +64,8 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       },
       {
         condition: postalCode === '' || postalCode < 0 || postalCode.length !== 5,
-        error:'RequestToBook:errors.postcode',
-      }
+        error: 'RequestToBook:errors.postcode',
+      },
     ],
     errorSetter: (val) => setErrors(val),
   });
@@ -79,26 +79,31 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         currentSearch.start,
         currentSearch.end
       );
-      const path = `/api/v1/stripe_actions/create_payment_intent?locale=${lang}&amount=${amount}&currency=sek&inDate=${currentSearch.start}&outDate=${currentSearch.end}&cats=${currentSearch.cats}&host=${host.name}`;
+      const path = '/api/v1/stripe_actions/create_payment_intent';
+      const callParams = {
+        locale: lang,
+        amount: amount,
+        inDate: currentSearch.start,
+        outDate: currentSearch.end,
+        cats: currentSearch.cats,
+        host: host.name,
+      };
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const response = await axios.get(path, { headers: headers });
-
+      const response = await axios.get(path, { params: callParams, headers: headers });
       setPaymentIntent(response.data.intent_id);
     } catch ({ response }) {
-      if (response === undefined) {
+      if (response === undefined || response.status === 500) {
         setErrors(['reusable:errors.unknown']);
-      } else if (response.status === 555) {
-        window.alert(t('RequestToBook:errors.stripe-connection'));
-        history.push('/search');
-      } else if (response.status === 401) {
-        history.push('/login');
-      } else {
-        setErrors([response.data.error]);
       }
+      if (response.status === 401) {
+        window.alert(t('reusable:errors:401'));
+        wipeCredentials('/login');
+      }
+      setErrors(response.data.errors);
     } finally {
       setLoading(false);
     }
@@ -194,7 +199,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       'access-token': window.localStorage.getItem('access-token'),
     };
     try {
-      setErrors([])
+      setErrors([]);
       // eslint-disable-next-line
       const responseUpdateIntent = await axios.get(path, { headers: headers });
       const result = await stripe.confirmCardPayment(paymentIntent, {
@@ -231,7 +236,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         setPaymentProcessing(false);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
