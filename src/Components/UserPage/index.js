@@ -295,9 +295,12 @@ const UserPage = (props) => {
                 }
               });
           } else if (hostProfile.length === 1 && window.confirm(t('UserPage:delete-confirm'))) {
-            const pathStripe = `/api/v1/stripe_actions/delete_account?locale=${lang}&host_profile_id=${hostProfile[0].id}`;
+            const pathStripe = '/api/v1/stripe_actions/delete_account';
+            const callParams = {
+              locale: lang,
+            };
             axios
-              .get(pathStripe, { headers: headers })
+              .get(pathStripe, { params: callParams, headers: headers })
               .then(() => {
                 const path = '/api/v1/auth';
                 axios
@@ -316,18 +319,15 @@ const UserPage = (props) => {
                   });
               })
               .catch(({ response }) => {
-                if (response === undefined) {
+                if (response === undefined || response.stats === 500) {
                   setErrors(['reusable:errors.unknown']);
-                } else if (response.status === 555) {
-                  setDeleteDisplayNone(false);
-                  setErrors([t('UserPage:delete-stripe-account-error')]);
-                } else if (response.status === 401) {
+                }
+                if (response.stats === 401) {
                   window.alert(t('reusable:errors:401'));
                   wipeCredentials('/');
-                } else {
-                  setDeleteDisplayNone(false);
-                  setErrors([response.data.error]);
                 }
+                setDeleteDisplayNone(false);
+                setErrors(response.data.errors);
               });
           } else {
             setDeleteDisplayNone(false);
