@@ -93,22 +93,21 @@ class AvatarUpdateForm extends Component {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response === undefined) {
-              wipeCredentials('/is-not-available?atm');
-            } else if (error.response.status === 500) {
+            this.setState({
+              loading: false,
+            });
+            if (error.response === undefined || error.response.status === 500) {
               this.setState({
-                loading: false,
-                errors: ['reusable:errors:500'],
-              });
-            } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              this.setState({
-                loading: false,
-                errors: error.response.data.error,
+                errors: ['reusable:errors:unknown'],
               });
             }
+            if (error.response.status === 401) {
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/login');
+            }
+            this.setState({
+              errors: error.response.data.errors,
+            });
           });
       }
     }
@@ -183,7 +182,7 @@ class AvatarUpdateForm extends Component {
                 <Text size='sm'>
                   <ul id='message-error-list'>
                     {this.state.errors.map((error) => (
-                      <li key={error}>{t(error)}</li>
+                      <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
                     ))}
                   </ul>
                 </Text>
