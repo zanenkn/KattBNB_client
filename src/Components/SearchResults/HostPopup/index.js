@@ -113,9 +113,9 @@ const HostPopup = ({
             <Trans i18nKey='reusable:request-cta.txt' count={parseInt(currentSearch.cats)}>
               The stay for <strong>{{ count: currentSearch.cats }} cat</strong> with
               <strong>{{ host: host.name }}</strong> during the dates of
-              <strong>{{ checkin: moment(currentSearch.checkInDate).format('MMMM Do') }}</strong>
+              <strong>{{ checkin: moment(currentSearch.start).format('MMMM Do') }}</strong>
               until
-              <strong>{{ checkout: moment(currentSearch.checkOutDate).format('MMMM Do') }}</strong>
+              <strong>{{ checkout: moment(currentSearch.end).format('MMMM Do') }}</strong>
               would in total cost
             </Trans>
           </Text>
