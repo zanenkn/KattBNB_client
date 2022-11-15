@@ -88,25 +88,26 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
       setStripeDashboardButtonLoading(true);
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe_actions/retrieve_account_login_link?locale=${lang}&host_profile_id=${hostProfileId}`;
+        const path = '/api/v1/stripe_actions/retrieve_account_login_link';
+        const callParams = {
+          locale: lang,
+        };
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const response = await axios.get(path, { headers: headers });
+        const response = await axios.get(path, { params: callParams, headers: headers });
         setStripeLink(response.data.url);
-      } catch (error) {
-        if (error.response === undefined) {
+      } catch ({ response }) {
+        if (response === undefined || response.status === 500) {
           setErrors('reusable:errors.unknown');
-        } else if (error.response.status === 555) {
-          setErrors([error.response.data.error]);
-        } else if (error.response.status === 401) {
+        }
+        if (response.status === 401) {
           window.alert(t('reusable:errors.401'));
           wipeCredentials('/');
-        } else {
-          setErrors([error.response.data.error]);
         }
+        setErrors(response.data.errors);
       } finally {
         setStripeDashboardButtonLoading(false);
       }

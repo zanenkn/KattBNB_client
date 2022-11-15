@@ -82,28 +82,28 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
       try {
         setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
-        const path = `/api/v1/stripe_actions/retrieve_account_login_link?locale=${lang}&host_profile_id=${requests[0].host_profile_id}`;
+        const path = '/api/v1/stripe_actions/retrieve_account_login_link';
+        const callParams = {
+          locale: lang,
+        };
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const response = await axios.get(path, { headers: headers });
+        const response = await axios.get(path, { params: callParams, headers: headers });
         window.open(response.data.url);
         setStripeDashboardButtonLoading(false);
       } catch ({ response }) {
-        if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else if (response.status === 555) {
-          setErrors([response.data.error]);
-          setStripeDashboardButtonLoading(false);
-        } else if (response.status === 401) {
+        setStripeDashboardButtonLoading(false);
+        if (response === undefined || response.status === 500) {
+          setErrors(['reusable:errors.unknown']);
+        }
+        if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
           wipeCredentials('/');
-        } else {
-          setErrors([response.data.error]);
-          setStripeDashboardButtonLoading(false);
         }
+        setErrors(response.data.errors);
       }
     }
   };
