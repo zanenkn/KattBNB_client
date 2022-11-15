@@ -105,7 +105,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
         }
         if (response.status === 401) {
           window.alert(t('reusable:errors.401'));
-          wipeCredentials('/');
+          wipeCredentials('/login');
         }
         setErrors(response.data.errors);
       } finally {

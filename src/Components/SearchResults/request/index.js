@@ -239,7 +239,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       }
       if (response.status === 401) {
         window.alert(t('reusable:errors:401'));
-        wipeCredentials('/');
+        wipeCredentials('/login');
       }
       setPaymentProcessing(false);
       setErrors(response.data.errors);

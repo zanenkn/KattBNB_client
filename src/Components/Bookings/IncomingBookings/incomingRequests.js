@@ -101,7 +101,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
         }
         if (response.status === 401) {
           window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
+          wipeCredentials('/login');
         }
         setErrors(response.data.errors);
       }
