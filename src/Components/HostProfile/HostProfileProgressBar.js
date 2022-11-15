@@ -43,13 +43,16 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe_actions/retrieve_account_details?locale=${lang}&host_profile_id=${hostProfileId}`;
+        const path = '/api/v1/stripe_actions/retrieve_account_details';
+        const callParams = {
+          locale: lang,
+        };
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const response = await axios.get(path, { headers: headers });
+        const response = await axios.get(path, { params: callParams, headers: headers });
         if (!response.data.message) {
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
@@ -64,19 +67,16 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
           }
         }
         setLoading(false);
-      } catch (error) {
-        if (error.response === undefined) {
+      } catch ({ response }) {
+        setLoading(false);
+        if (response === undefined || response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (error.response.status === 555) {
-          setErrors([error.response.data.error]);
-          setLoading(false);
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
-        } else {
-          setErrors([error.response.data.error]);
-          setLoading(false);
         }
+        if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       }
     }
   };
@@ -117,7 +117,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
     fetchStripeAccountDetails();
     // eslint-disable-next-line
   }, []);
-  
+
   useEffect(() => {
     payoutSuccess && fetchStripeDashboardLink();
   }, [payoutSuccess]);
