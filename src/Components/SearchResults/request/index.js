@@ -192,7 +192,18 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       currentSearch.end
     );
 
-    const path = `/api/v1/stripe_actions/update_payment_intent?locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${userId}&payment_intent_id=${paymentIntent}`;
+    const path = '/api/v1/stripe_actions/update_payment_intent';
+    const callParams = {
+      locale: lang,
+      number_of_cats: currentSearch.cats,
+      message: message,
+      dates: booking,
+      host_nickname: host.name,
+      price_per_day: perDay,
+      price_total: totalToPayHost,
+      user_id: userId,
+      payment_intent_id: paymentIntent,
+    };
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
@@ -201,7 +212,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
     try {
       setErrors([]);
       // eslint-disable-next-line
-      const responseUpdateIntent = await axios.get(path, { headers: headers });
+      const responseUpdateIntent = await axios.get(path, { params: callParams, headers: headers });
       const result = await stripe.confirmCardPayment(paymentIntent, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -223,18 +234,15 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       }
     } catch ({ response }) {
       setLoading(false);
-      if (response === undefined) {
+      if (response === undefined || response.status === 500) {
         setErrors(['reusable:errors.unknown']);
-      } else if (response.status === 555) {
-        setErrors([response.data.error]);
-        setPaymentProcessing(false);
-      } else if (response.status === 401) {
+      }
+      if (response.status === 401) {
         window.alert(t('reusable:errors:401'));
         wipeCredentials('/');
-      } else {
-        setErrors([response.data.error]);
-        setPaymentProcessing(false);
       }
+      setPaymentProcessing(false);
+      setErrors(response.data.errors);
     } finally {
       setLoading(false);
     }
