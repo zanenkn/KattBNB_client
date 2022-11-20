@@ -17,7 +17,7 @@ import {
   Notice,
   ContentWrapper,
 } from '../../UI-Components';
-//MIGRATED
+
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
 

@@ -21,7 +21,6 @@ import AvailabilityUpdateForm from './availabilityUpdateForm';
 import AvailabilityViewOnlyMode from './availabilityViewOnlyMode';
 import AddressUpdateForm from './addressUpdateForm';
 
-//Migrated
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
