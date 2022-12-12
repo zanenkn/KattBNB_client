@@ -48,20 +48,27 @@ const ContactUs = (props) => {
           setLoading(false);
         } else {
           const lang = detectLanguage();
-          const path = `/api/v1/contactus?locale=${lang}&name=${name}&email=${email}&message=${message}`;
-          const response = await axios.get(path);
+          const path = '/api/v1/contact_us';
+          const callParams = {
+            locale: lang,
+            name: name,
+            email: email,
+            message: message,
+          };
+          const response = await axios.get(path, { params: callParams });
           if (response.status === 200) {
             window.alert(t('ContactUs:thankyou-msg'));
             props.history.push('/search');
           }
         }
       } catch ({ response }) {
-        if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else {
-          setErrors([response.data.error]);
-          setLoading(false);
+        setLoading(false);
+
+        if (response === undefined || response.status === 500) {
+          setErrors(['reusable:errors.unknown']);
         }
+
+        setErrors(response.data.errors);
       }
     }
   };
@@ -102,9 +109,12 @@ const ContactUs = (props) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           label={t('ContactUs:name-placeholder')}
-          space={4}
+          space={1}
           type='text'
         />
+        <Text size='sm' right space={0} italic>
+          {t('reusable:remaining-chars')} {100 - name.length}
+        </Text>
         <TextField
           required
           id='email'
@@ -120,7 +130,7 @@ const ContactUs = (props) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           label={t('ContactUs:message-placeholder')}
-          space={2}
+          space={1}
         />
         <Text size='sm' right space={0} italic>
           {t('reusable:remaining-chars')} {1000 - message.length}
@@ -148,7 +158,7 @@ const ContactUs = (props) => {
           <Notice nature='danger'>
             <ul id='message-error-list'>
               {errors.map((error) => (
-                <li key={error}>{t(error)}</li>
+                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
               ))}
             </ul>
           </Notice>
