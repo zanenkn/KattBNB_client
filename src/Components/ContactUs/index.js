@@ -109,7 +109,7 @@ const ContactUs = (props) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           label={t('ContactUs:name-placeholder')}
-          space={4}
+          space={1}
           type='text'
         />
         <Text size='sm' right space={0} italic>
@@ -130,7 +130,7 @@ const ContactUs = (props) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           label={t('ContactUs:message-placeholder')}
-          space={2}
+          space={1}
         />
         <Text size='sm' right space={0} italic>
           {t('reusable:remaining-chars')} {1000 - message.length}
