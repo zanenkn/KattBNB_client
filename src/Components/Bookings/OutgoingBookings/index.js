@@ -51,6 +51,7 @@ const OutgoingBookings = ({ location: { state } }) => {
   };
 
   useEffect(() => {
+    console.log('wtf is today', today)
     window.addEventListener('scroll', handleScroll);
     const lang = detectLanguage();
     if (window.navigator.onLine === false) {
@@ -158,7 +159,7 @@ const OutgoingBookings = ({ location: { state } }) => {
           </Header>
           <OutgoingHistory
             bookings={outgoingBookings
-              .filter((booking) => booking.dates[booking.dates.length - 1] < today || (booking.status !== 'accepted' && booking.status !== 'pending'))
+              .filter((booking) => booking.dates[booking.dates.length - 1] <= today || (booking.status !== 'accepted' && booking.status !== 'pending'))
               .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
           />
         </SectionWrapper>
