@@ -77,7 +77,8 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         currentSearch.cats,
         host?.supplement,
         currentSearch.start,
-        currentSearch.end
+        currentSearch.end,
+        false
       );
       const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${currentSearch.start}&outDate=${currentSearch.end}&cats=${currentSearch.cats}&host=${host.name}`;
       const headers = {
