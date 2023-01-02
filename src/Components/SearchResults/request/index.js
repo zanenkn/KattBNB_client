@@ -64,8 +64,8 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       },
       {
         condition: postalCode === '' || postalCode < 0 || postalCode.length !== 5,
-        error:'RequestToBook:errors.postcode',
-      }
+        error: 'RequestToBook:errors.postcode',
+      },
     ],
     errorSetter: (val) => setErrors(val),
   });
@@ -80,26 +80,31 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         currentSearch.end,
         false
       );
-      const path = `/api/v1/stripe?locale=${lang}&occasion=create_payment_intent&amount=${amount}&currency=sek&inDate=${currentSearch.start}&outDate=${currentSearch.end}&cats=${currentSearch.cats}&host=${host.name}`;
+      const path = '/api/v1/stripe_actions/create_payment_intent';
+      const callParams = {
+        locale: lang,
+        amount: amount,
+        inDate: currentSearch.start,
+        outDate: currentSearch.end,
+        cats: currentSearch.cats,
+        host: host.name,
+      };
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const response = await axios.get(path, { headers: headers });
-
+      const response = await axios.get(path, { params: callParams, headers: headers });
       setPaymentIntent(response.data.intent_id);
     } catch ({ response }) {
-      if (response === undefined) {
+      if (response === undefined || response.status === 500) {
         setErrors(['reusable:errors.unknown']);
-      } else if (response.status === 555) {
-        window.alert(t('RequestToBook:errors.stripe-connection'));
-        history.push('/search');
-      } else if (response.status === 401) {
-        history.push('/login');
-      } else {
-        setErrors([response.data.error]);
       }
+      if (response.status === 401) {
+        window.alert(t('reusable:errors:401'));
+        wipeCredentials('/login');
+      }
+      setErrors(response.data.errors);
     } finally {
       setLoading(false);
     }
@@ -188,16 +193,27 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       currentSearch.end
     );
 
-    const path = `/api/v1/stripe?occasion=update_payment_intent&locale=${lang}&number_of_cats=${currentSearch.cats}&message=${message}&dates=${booking}&host_nickname=${host.name}&price_per_day=${perDay}&price_total=${totalToPayHost}&user_id=${userId}&payment_intent_id=${paymentIntent}`;
+    const path = '/api/v1/stripe_actions/update_payment_intent';
+    const callParams = {
+      locale: lang,
+      number_of_cats: currentSearch.cats,
+      message: message,
+      dates: booking,
+      host_nickname: host.name,
+      price_per_day: perDay,
+      price_total: totalToPayHost,
+      user_id: userId,
+      payment_intent_id: paymentIntent,
+    };
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
       'access-token': window.localStorage.getItem('access-token'),
     };
     try {
-      setErrors([])
+      setErrors([]);
       // eslint-disable-next-line
-      const responseUpdateIntent = await axios.get(path, { headers: headers });
+      const responseUpdateIntent = await axios.get(path, { params: callParams, headers: headers });
       const result = await stripe.confirmCardPayment(paymentIntent, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -219,20 +235,17 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       }
     } catch ({ response }) {
       setLoading(false);
-      if (response === undefined) {
+      if (response === undefined || response.status === 500) {
         setErrors(['reusable:errors.unknown']);
-      } else if (response.status === 555) {
-        setErrors([response.data.error]);
-        setPaymentProcessing(false);
-      } else if (response.status === 401) {
-        window.alert(t('reusable:errors:401'));
-        wipeCredentials('/');
-      } else {
-        setErrors([response.data.error]);
-        setPaymentProcessing(false);
       }
+      if (response.status === 401) {
+        window.alert(t('reusable:errors:401'));
+        wipeCredentials('/login');
+      }
+      setPaymentProcessing(false);
+      setErrors(response.data.errors);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 

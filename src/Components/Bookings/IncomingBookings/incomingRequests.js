@@ -21,7 +21,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
   const [stripeAccountID, setStripeAccountID] = useState('');
   const [stripePendingVerification, setStripePendingVerification] = useState(false);
   const [stripeDashboardButtonLoading, setStripeDashboardButtonLoading] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
@@ -29,35 +29,36 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     } else {
       try {
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=retrieve`;
+        const path = '/api/v1/stripe_actions/retrieve_account_details';
+        const callParams = {
+          locale: lang,
+        };
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const response = await axios.get(path, { headers: headers });
+        const response = await axios.get(path, { params: callParams, headers: headers });
         if (!response.data.message) {
-          console.log(response.data.requirements)
+          console.log(response.data.requirements);
           setPayoutSuccess(response.data.payouts_enabled);
           setStripeAccountErrors(response.data.requirements.errors);
           setStripePendingVerification(!!response.data.requirements.pending_verification.length);
-          setLoading(false)
+          setLoading(false);
         } else {
           setStripeAccountID(null);
-          setLoading(false)
+          setLoading(false);
         }
       } catch ({ response }) {
-        setLoading(false)
-        if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else if (response.status === 555) {
-          setErrors([response.data.error]);
-        } else if (response.status === 401) {
-          window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
-        } else {
-          setErrors([response.data.error]);
+        setLoading(false);
+        if (response === undefined || response.status === 500) {
+          setErrors(['reusable:errors.unknown']);
         }
+        if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       }
     }
   };
@@ -70,7 +71,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
       fetchStripeAccountDetails();
       return;
     }
-    setLoading(false)
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -81,28 +82,28 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
       try {
         setStripeDashboardButtonLoading(true);
         const lang = detectLanguage();
-        const path = `/api/v1/stripe?locale=${lang}&host_profile_id=${requests[0].host_profile_id}&occasion=login_link`;
+        const path = '/api/v1/stripe_actions/retrieve_account_login_link';
+        const callParams = {
+          locale: lang,
+        };
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const response = await axios.get(path, { headers: headers });
+        const response = await axios.get(path, { params: callParams, headers: headers });
         window.open(response.data.url);
         setStripeDashboardButtonLoading(false);
       } catch ({ response }) {
-        if (response === undefined) {
-          wipeCredentials('/is-not-available?atm');
-        } else if (response.status === 555) {
-          setErrors([response.data.error]);
-          setStripeDashboardButtonLoading(false);
-        } else if (response.status === 401) {
-          window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
-        } else {
-          setErrors([response.data.error]);
-          setStripeDashboardButtonLoading(false);
+        setStripeDashboardButtonLoading(false);
+        if (response === undefined || response.status === 500) {
+          setErrors(['reusable:errors.unknown']);
         }
+        if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       }
     }
   };
@@ -131,7 +132,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
           </Text>
           <ul id='message-error-list'>
             {errors.map((error) => (
-              <li key={error}>{t(error)}</li>
+              <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
             ))}
           </ul>
         </Notice>

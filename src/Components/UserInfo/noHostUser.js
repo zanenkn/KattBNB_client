@@ -24,8 +24,12 @@ const NoHostUser = ({ id, t }) => {
           avatar: data.profile_avatar,
         });
       })
-      .catch(() => {
-        setErrors(['reusable:errors.unknown']);
+      .catch((error) => {
+        if (error.response === undefined || error.response.status === 500) {
+          setErrors(['reusable:errors.unknown']);
+        } else {
+          setErrors(error.response.data.errors);
+        }
       });
   }, []);
 

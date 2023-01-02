@@ -20,22 +20,21 @@ const useReviews = () => {
       return;
     }
     axios
-      .get(`/api/v1/random_reviews/reviews?locale=${lang}`)
+      .get('/api/v1/random_reviews/reviews', {
+        params: {
+          locale: lang,
+        },
+      })
       .then((resp) => {
         setReviews(reviewTransformer(resp.data));
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
-        if (error.response === undefined) {
+        if (error.response === undefined || error.response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (error.response.status === 500) {
-          setErrors(['reusable:errors.500']);
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors.401'));
-          wipeCredentials('/');
         } else {
-          setErrors([error.response.data.error]);
+          setErrors(error.response.data.errors);
         }
       });
   }, []);

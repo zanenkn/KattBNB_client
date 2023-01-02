@@ -69,7 +69,7 @@
     "index-no-host-1": "Denna kattvakt finns inte! Vänligen uppdatera sidan.",
     "index-no-host-2": "Denna kattvakt finns inte! Vänligen sök igen för att få uppdaterade resultat.",
     "captcha": "Du matade inte in kontrollkoden korrekt, vänligen försök igen!",
-    "unknown": "Något gick fel! Försök igen vid ett senare tillfälle. Om problemet kvarstår, vänligen meddela oss, och gärna skicka med denna tidsstämpel: {{timestamp}}"
+    "unknown": "Vi uppdaterar för närvarande våra tjänster eller något gick fel. Försök igen vid ett senare tillfälle. Om problemet kvarstår, vänligen meddela oss, och gärna skicka med denna tidsstämpel: {{timestamp}}"
   },
   "remaining-chars": "Återstående tecken:",
   "reviews": "{{count}} recension",
