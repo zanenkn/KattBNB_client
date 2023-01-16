@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import { detectLanguage } from '../Modules/detectLanguage';
+import { wipeCredentials } from '../Modules/wipeCredentials';
 
 export const useStartConversation = () => {
   const [errors, setErrors] = useState([]);
@@ -34,15 +35,13 @@ export const useStartConversation = () => {
         });
       })
       .catch(({ response }) => {
-        if (response === undefined) {
+        if (response === undefined || response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (response.status === 500) {
-          setErrors(['reusable:errors:500']);
-        } else if (response.status === 422) {
-          setErrors(['reusable:errors:422-conversation']);
-        } else {
-          setErrors(response.data.error);
         }
+        if (response.status === 401) {
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       });
   };
 
