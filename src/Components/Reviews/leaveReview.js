@@ -93,22 +93,16 @@ const LeaveReview = ({ history, location }) => {
           .then(() => {
             history.push('/successful-review');
           })
-          .catch((error) => {
-            if (error.response === undefined) {
+          .catch(({ response }) => {
+            setLoading(false);
+            if (response === undefined || response.status === 500) {
               setErrors(['reusable:errors.unknown']);
-            } else if (error.response.status === 500) {
-              setLoading(false);
-              setErrors(['reusable:errors:500']);
-            } else if (error.response.status === 422) {
-              window.alert(t('LeaveReview:error-no-host'));
-              history.push('/all-bookings');
-            } else if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/');
-            } else {
-              setLoading(false);
-              setErrors([error.response.data.error]);
             }
+            if (response.status === 401) {
+              window.alert(t('reusable:errors:401'));
+              wipeCredentials('/login');
+            }
+            setErrors(response.data.errors);
           });
       }
     }

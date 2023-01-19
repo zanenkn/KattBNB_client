@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 import { detectLanguage } from '../../Modules/detectLanguage';
+import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
 import { ReplyFormWrapper } from './styles';
@@ -70,15 +71,16 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
       .then(() => {
         reload(reply);
       })
-      .catch((error) => {
+      .catch(({ response }) => {
         setLoading(false);
-        if (error.response === undefined) {
+        if (response === undefined || response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (error.response.status === 500) {
-          setErrors(['reusable:errors.500']);
-        } else {
-          setErrors([error.response.data.error]);
         }
+        if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       });
   };
 

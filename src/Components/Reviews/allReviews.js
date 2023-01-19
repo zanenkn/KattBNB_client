@@ -47,25 +47,21 @@ const AllReviews = ({ score, hostProfileId, withReply, username }) => {
       setErrors(['reusable:errors:window-navigator']);
       return;
     }
+    const path = '/api/v1/reviews';
+    const callParams = {
+      host_profile_id: hostProfileId,
+      locale: lang,
+    };
     axios
-      .get(`/api/v1/reviews?host_profile_id=${hostProfileId}&locale=${lang}`)
+      .get(path, { params: callParams })
       .then((resp) => {
-        let sortedReviews = resp.data;
-        sortedReviews.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        setReviews(sortedReviews);
+        setReviews(resp.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(({ response }) => {
         setLoading(false);
-        if (error.response === undefined) {
+        if (response === undefined || response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (error.response.status === 500) {
-          setErrors(['reusable:errors.500']);
-        } else if (error.response.status === 401) {
-          window.alert(t('reusable:errors.401'));
-          wipeCredentials('/');
-        } else {
-          setErrors([error.response.data.error]);
         }
       });
   }, [reload]);
