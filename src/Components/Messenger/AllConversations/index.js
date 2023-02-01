@@ -33,29 +33,25 @@ const AllConversations = ({ currentUserId }) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const path = `/api/v1/conversations?user_id=${currentUserId}&locale=${lang}`;
+      const callParams = {
+        locale: lang,
+      };
+      const path = '/api/v1/conversations';
       axios
-        .get(path, { headers: headers })
+        .get(path, { params: callParams, headers: headers })
         .then(({ data }) => {
-          setConversations(
-            data
-              .filter((conversation) => conversation.hidden !== currentUserId && conversation.msg_created !== null)
-              .sort((a, b) => new Date(b.msg_created) - new Date(a.msg_created))
-          );
-
+          setConversations(data);
           handleAxiosStateChanges(false, []);
         })
         .catch(({ response }) => {
-          if (response === undefined) {
+          if (response === undefined || response.status === 500) {
             setErrors(['reusable:errors.unknown']);
-          } else if (response.status === 500) {
-            handleAxiosStateChanges(false, ['reusable:errors:500']);
-          } else if (response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else {
-            handleAxiosStateChanges(false, response.data.error);
           }
+          if (response.status === 401) {
+            window.alert(t('reusable:errors:401'));
+            wipeCredentials('/login');
+          }
+          handleAxiosStateChanges(false, response.data.errors);
         });
     }
     // eslint-disable-next-line

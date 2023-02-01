@@ -43,7 +43,7 @@ const Conversation = ({ id, username, match, history }) => {
   const [uploadedImage, setUploadedImage] = useState('');
   const [loadingUploadButton, setLoadingUploadButton] = useState(false);
   const [responder, setResponder] = useState({});
-  const [textAreaFocused, setTextAreaFocused] = useState(false)
+  const [textAreaFocused, setTextAreaFocused] = useState(false);
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -79,25 +79,26 @@ const Conversation = ({ id, username, match, history }) => {
 
     setChannel(channelToSave);
 
-    const path = `/api/v1/conversations/${match.params.conversationId}?locale=${lang}`;
+    const path = `/api/v1/conversations/${match.params.conversationId}`;
+    const callParams = {
+      locale: lang,
+    };
 
     axios
-      .get(path, { headers: headers })
+      .get(path, { params: callParams, headers: headers })
       .then((response) => {
         setResponder(response.data.responder);
-        setMessagesHistory(response.data.message.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
+        setMessagesHistory(response.data.message);
       })
       .catch(({ response }) => {
-        if (response === undefined) {
+        if (response === undefined || response.status === 500) {
           setErrors(['reusable:errors.unknown']);
-        } else if (response.status === 500) {
-          setErrors(['reusable:errors:500']);
-        } else if (response.status === 401) {
-          window.alert(t('reusable:errors:401'));
-          wipeCredentials('/');
-        } else {
-          setErrors([response.data.error]);
         }
+        if (response.status === 401) {
+          window.alert(t('reusable:errors:401'));
+          wipeCredentials('/login');
+        }
+        setErrors(response.data.errors);
       })
       .finally(() => {
         setLoading(false);
@@ -184,7 +185,6 @@ const Conversation = ({ id, username, match, history }) => {
         'access-token': window.localStorage.getItem('access-token'),
       };
       const payload = {
-        hidden: id,
         locale: lang,
       };
       axios
@@ -193,16 +193,14 @@ const Conversation = ({ id, username, match, history }) => {
           window.location.replace('/messenger');
         })
         .catch(({ response }) => {
-          if (response === undefined) {
+          if (response === undefined || response.status === 500) {
             setErrors(['reusable:errors.unknown']);
-          } else if (response.status === 500) {
-            setErrors(['reusable:errors:500']);
-          } else if (response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else {
-            setErrors(response.data.error);
           }
+          if (response.status === 401) {
+            window.alert(t('reusable:errors:401'));
+            wipeCredentials('/login');
+          }
+          setErrors(response.data.errors);
         });
     }
   };
