@@ -2,7 +2,6 @@
   "error-no-score": "Vänligen välj ett betyg från 1 (dåligt) till 5 (utmärkt) för din recension!",
   "error-empty": "Vänligen lämna en kort beskrivning av din vistelse!",
   "error-length": "Recensionen får inte överstiga 1000 tecken!",
-  "error-no-host": "Den kattvakt som du försöker recensera har tagit bort sitt konto! Du kan inte recensera den här bokningen.",
   "title": "Lämna en recension",
   "desc": "Tack för din bokning! Hjälp oss att förbättra KattBNB-communityn genom att recensera din upplevelse.",
   "label": "Din recension",

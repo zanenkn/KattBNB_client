@@ -35,9 +35,11 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
-      const payload = { locale: lang };
+      const callParams = {
+        locale: lang,
+      };
       axios
-        .get(path, payload, { headers: headers })
+        .get(path, { params: callParams, headers: headers })
         .then((resp) => {
           if (resp.data.user === null) {
             setNickname('Deleted user');
@@ -54,17 +56,15 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
           setHostReply(resp.data.host_reply);
           setReviewUpdatedAt(resp.data.updated_at);
         })
-        .catch((error) => {
-          if (error.response === undefined) {
-            wipeCredentials('/is-not-available?atm');
-          } else if (error.response.status === 500) {
-            setErrors(['reusable:errors:500']);
-          } else if (error.response.status === 401) {
-            window.alert(t('reusable:errors:401'));
-            wipeCredentials('/');
-          } else {
-            setErrors([error.response.data.error]);
+        .catch(({ response }) => {
+          if (response === undefined || response.status === 500) {
+            setErrors(['reusable:errors:unknown']);
           }
+          if (response.status === 401) {
+            window.alert(t('reusable:errors:401'));
+            wipeCredentials('/login');
+          }
+          setErrors(response.data.errors);
         });
     }
     // eslint-disable-next-line
@@ -75,7 +75,11 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
   if (errors) {
     return (
       <Notice nature='danger'>
-        <Text centered>{t(errors[0])}</Text>
+        <ul>
+          {errors.map((error) => (
+            <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+          ))}
+        </ul>
       </Notice>
     );
   }
