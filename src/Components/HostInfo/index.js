@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 
-import { finalTotal, roundUp } from '../../Modules/PriceCalculations';
+import { finalTotal, priceOfOneAmount, roundUp } from '../../Modules/PriceCalculations';
 
 import ReviewScore from '../../common/ReviewScore';
 import HostLocationMap from '../../common/HostLocationMap';
@@ -56,7 +56,7 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
           </Flexbox>
           <Flexbox spaceItemsX={1} space={1}>
             <CreditCard />
-            <Text>{t('reusable:price.from-per-day', { rate: roundUp(host.rate) })}</Text>
+            <Text>{t('reusable:price.from-per-day', { rate: roundUp(priceOfOneAmount(host.rate)) })}</Text>
           </Flexbox>
         </Flexbox>
 
@@ -116,10 +116,7 @@ const HostInfo = ({ currentSearch, host, toRequest, messageHost }) => {
       </Container>
       <Container space={6}>
         <Header level={4}>{t('HostInfo:reviews-title')}</Header>
-        <AllReviews 
-          score={host.score}
-          hostProfileId={host.hostProfileId}
-        />
+        <AllReviews score={host.score} hostProfileId={host.hostProfileId} />
       </Container>
       <Container space={6}>
         <HostLocationMap lat={host.lat} long={host.long} nickname={host.name} address={host.address} />
