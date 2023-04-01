@@ -91,7 +91,9 @@
     "book-host-now": "Boka med {{host}} nu",
     "read-more": "Läs mer",
     "hide": "Dölj",
-    "search": "Sök"
+    "search": "Sök",
+    "copy": "Kopiera",
+    "share-post": "Dela inlägget:"
   },
   "alerts": {
     "no-match-address": "Det verkar som om adressen du valt inte stämmer med adressen i din profil. Är du säker på att du vill fortsätta?"

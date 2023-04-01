@@ -46,13 +46,3 @@ export const AuthorAvatar = styled.img`
   border-radius: 50%;
   margin-right: ${spacing[2]};
 `;
-
-export const ShareIcons = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  > a {
-    margin-right: ${spacing[3]};
-  }
-`;

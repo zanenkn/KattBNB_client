@@ -8,8 +8,10 @@ import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
 import Spinner from '../../common/Spinner';
+import Responsive from '../../common/Responsive';
+import Share from '../../common/Share';
 
-import { Header, Text, Whitebox, InlineLink, Notice } from '../../UI-Components';
+import { Header, Text, Whitebox, InlineLink, Notice, Divider } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
 import { Address, Cat, Rate, Supplement, Availabilty, User } from '../../icons';
 
@@ -20,7 +22,6 @@ import SupplementUpdateForm from './supplementUpdateForm';
 import AvailabilityUpdateForm from './availabilityUpdateForm';
 import AvailabilityViewOnlyMode from './availabilityViewOnlyMode';
 import AddressUpdateForm from './addressUpdateForm';
-
 
 const HostProfile = forwardRef((props, ref) => {
   const { t, ready } = useTranslation('HostProfile');
@@ -255,6 +256,13 @@ const HostProfile = forwardRef((props, ref) => {
           closeAllForms={closeAllForms.bind(this)}
         />
       </UpdateFormWrapper>
+
+      <Divider top={5} bottom={5} />
+      <Share link={`https://kattbnb.se/user/${props.id}`} title={t('HostProfile:share')} />
+
+      <Responsive displayIn={['mobile']}>
+        <Divider top={5} />
+      </Responsive>
     </Whitebox>
   );
 });

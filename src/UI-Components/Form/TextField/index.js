@@ -5,7 +5,7 @@ import { theme } from '../../../Styles/theme';
 
 const { colors, spacing } = theme;
 
-const TextField = ({ autoComplete, label, onChange, required, space, type, value, ...rest }) => {
+const TextField = ({ autoComplete, flexGrow, label, onChange, required, space, type, value, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
 
@@ -17,7 +17,7 @@ const TextField = ({ autoComplete, label, onChange, required, space, type, value
   };
 
   return (
-    <TextFieldWrapper space={space}>
+    <TextFieldWrapper space={space} flexGrow={flexGrow}>
       {label && (
         <Label up={isFocused || value} required={required} onClick={() => handleLabelClick()}>
           {label}
@@ -26,7 +26,7 @@ const TextField = ({ autoComplete, label, onChange, required, space, type, value
       <Input
         type={type}
         ref={input}
-        onWheel={() => type === 'number' ? input.current.blur() : undefined}
+        onWheel={() => (type === 'number' ? input.current.blur() : undefined)}
         value={value || ''}
         onChange={(e) => onChange(e)}
         onFocus={() => setIsFocused(true)}
@@ -50,6 +50,7 @@ const TextFieldWrapper = styled.div`
   color: ${colors.neutral[100]};
   margin-bottom: ${({ space }) => spacing[space]};
   position: relative;
+  flex-grow: ${({ flexGrow }) => flexGrow};
 `;
 
 const Label = styled.label`
@@ -111,6 +112,7 @@ export const RequiredLabel = styled.div`
 
 TextField.propTypes = {
   autoComplete: PropTypes.oneOf(['on', 'off']),
+  flexGrow: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
@@ -121,6 +123,7 @@ TextField.propTypes = {
 
 TextField.defaultProps = {
   autoComplete: 'on',
+  flexGrow: 'unset',
   required: false,
   space: 4,
   type: 'text',

@@ -5,5 +5,6 @@
   "max-cats": "Max antal katter:",
   "extra": "Extra",
   "reviews-title": "Här kan du se och svara på <1>recensionerna</1> som andra har skrivit om sina bokningar med dig.",
-  "stripe-success": "Betalningsinformation uppdaterad!"
+  "stripe-success": "Betalningsinformation uppdaterad!",
+  "share": "Dela din kattvaktsprofil:"
 }
