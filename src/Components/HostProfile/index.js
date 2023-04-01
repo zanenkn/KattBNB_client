@@ -3,6 +3,7 @@ import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'rea
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -258,7 +259,7 @@ const HostProfile = forwardRef((props, ref) => {
       </UpdateFormWrapper>
 
       <Divider top={5} bottom={5} />
-      <Share link={`https://kattbnb.se/user/${props.id}`} title={t('HostProfile:share')} />
+      <Share link={`https://kattbnb.se/user/${props.loggedInUserId}`} title={t('HostProfile:share')} />
 
       <Responsive displayIn={['mobile']}>
         <Divider top={5} />
@@ -269,4 +270,8 @@ const HostProfile = forwardRef((props, ref) => {
 
 HostProfile.displayName = 'HostProfile';
 
-export default HostProfile;
+const mapStateToProps = (state) => ({
+  loggedInUserId: state.reduxTokenAuth.currentUser.attributes.id,
+});
+
+export default connect(mapStateToProps)(HostProfile);
