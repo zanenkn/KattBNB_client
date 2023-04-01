@@ -19,7 +19,7 @@ const Share = ({ link, title }) => {
         >
           <FacebookIcon height={7} tint={40} />
         </LinkIcon>
-        <LinkIcon href={`https://twitter.com/home?status=${link}`} target='_blank' rel='noopener noreferrer'>
+        <LinkIcon href={`https://twitter.com/intent/tweet?url=${link}`} target='_blank' rel='noopener noreferrer'>
           <TwitterIcon height={7} tint={40} />
         </LinkIcon>
         <LinkIcon
