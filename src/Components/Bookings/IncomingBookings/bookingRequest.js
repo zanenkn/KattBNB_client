@@ -111,39 +111,41 @@ const BookingRequest = ({
           </Trans>
         </Text>
         <Container space={6}>
-        {payoutSuccess ? (
-          <Flexbox spaceItemsX={3} data-cy='booking-request-cta-section'>
-            <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)} data-cy='decline-request'>
-              {t('reusable:cta:decline')}
-            </Button>
-            <Button onClick={(e) => acceptRequest(e, request)} data-cy='accept-request' id={request.id}>
-              {t('reusable:cta:accept')}
-            </Button>
-          </Flexbox>
-        ) : stripeAccountID === null ? (
-          <div data-cy='stripe-alert'>
-            <Header level={5} centered color='primary'>
-              {t('reusable:important')}
-            </Header>
-            <Text centered>{t('IncomingRequests:stripe-step1')}</Text>
-            <Button onClick={() => window.open(onboardingUrl, '_self')}>{t('reusable:stripe:onboarding-cta')}</Button>
-          </div>
-        ) : stripeAccountErrors.length > 0 && stripePendingVerification ? (
-          <Text data-cy='stripe-alert' centered>
-            {t('IncomingRequests:stripe-step2-pending')}
-          </Text>
-        ) : stripeAccountErrors.length > 0 && !stripePendingVerification ? (
-          <div data-cy='stripe-alert'>
-            <Header level={5} centered color='primary'>
-              {t('reusable:important')}
-            </Header>
-            <Text centered>{t('IncomingRequests:stripe-step2-complete-verification')}</Text>
-            <Button onClick={() => fetchStripeDashboardLink()}>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
-          </div>
-        ) : null}
+          {payoutSuccess ? (
+            <Flexbox spaceItemsX={3} data-cy='booking-request-cta-section'>
+              <Button color='neutral' secondary onClick={() => setDeclinePopupOpen(true)} data-cy='decline-request'>
+                {t('reusable:cta:decline')}
+              </Button>
+              <Button onClick={(e) => acceptRequest(e, request)} data-cy='accept-request' id={request.id}>
+                {t('reusable:cta:accept')}
+              </Button>
+            </Flexbox>
+          ) : stripeAccountID === null ? (
+            <div data-cy='stripe-alert'>
+              <Header level={5} centered color='primary'>
+                {t('reusable:important')}
+              </Header>
+              <Text centered>{t('IncomingRequests:stripe-step1')}</Text>
+              <Button onClick={() => window.open(onboardingUrl, '_self')}>{t('reusable:stripe:onboarding-cta')}</Button>
+            </div>
+          ) : stripeAccountErrors.length > 0 && stripePendingVerification ? (
+            <Text data-cy='stripe-alert' centered>
+              {t('IncomingRequests:stripe-step2-pending')}
+            </Text>
+          ) : stripeAccountErrors.length > 0 && !stripePendingVerification ? (
+            <div data-cy='stripe-alert'>
+              <Header level={5} centered color='primary'>
+                {t('reusable:important')}
+              </Header>
+              <Text centered>{t('IncomingRequests:stripe-step2-complete-verification')}</Text>
+              <Button onClick={() => fetchStripeDashboardLink()}>{t('reusable:stripe:stripe-dashboard-cta')}</Button>
+            </div>
+          ) : null}
         </Container>
 
-        <InlineLink color='info' onClick={() => setUserMessagePopupOpen(true)}>{t('IncomingRequests:view-message')}</InlineLink>
+        <InlineLink color='info' onClick={() => setUserMessagePopupOpen(true)}>
+          {t('IncomingRequests:view-message')}
+        </InlineLink>
 
         <IncRequestPopup
           open={userMessagePopupOpen}
@@ -154,6 +156,7 @@ const BookingRequest = ({
           endDate={moment(request.dates[request.dates.length - 1]).format('YYYY-MM-DD')}
           message={request.message}
           avatar={request.user.profile_avatar}
+          bookerId={request.user.id}
         />
 
         <DeclineRequestPopup

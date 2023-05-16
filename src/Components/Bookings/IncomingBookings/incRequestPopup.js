@@ -1,12 +1,28 @@
 import React from 'react';
-import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import Popup from 'reactjs-popup';
-import { Header, Text, Avatar } from '../../../UI-Components';
+
+import Spinner from '../../../common/Spinner';
+import { useStartConversation } from '../../../utils/useStartConversation';
+
+import { Header, Text, Avatar, InlineLink, Flexbox } from '../../../UI-Components';
 import { PopupHeaderWrapper, FlexWrapper } from '../common/styles';
 
-const IncRequestPopup = ({ open, onClose, numberOfCats, startDate, endDate, nickname, message, avatar }) => {
+const IncRequestPopup = ({
+  open,
+  onClose,
+  numberOfCats,
+  startDate,
+  endDate,
+  nickname,
+  message,
+  avatar,
+  bookerId,
+  currentUserId,
+}) => {
   const { t, ready } = useTranslation('IncRequestPopup');
+  const { startConversation } = useStartConversation();
 
   if (!ready) return <Spinner />;
 
@@ -36,11 +52,16 @@ const IncRequestPopup = ({ open, onClose, numberOfCats, startDate, endDate, nick
         <Header level={5}>{nickname}</Header>
       </FlexWrapper>
 
-      <Text italic space={0}>
-        {message}
-      </Text>
+      <Text italic>{message}</Text>
+      <Flexbox horizontalAlign={'right'}>
+        <InlineLink color='info' onClick={() => startConversation({ userId1: currentUserId, userId2: bookerId })}>
+          {t('IncRequestPopup:question-to-booker', { booker: nickname })}
+        </InlineLink>
+      </Flexbox>
     </Popup>
   );
 };
 
-export default IncRequestPopup;
+const mapStateToProps = (state) => ({ currentUserId: state.reduxTokenAuth.currentUser.attributes.id });
+
+export default connect(mapStateToProps)(IncRequestPopup);
