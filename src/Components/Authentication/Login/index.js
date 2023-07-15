@@ -43,7 +43,6 @@ const Login = (props) => {
       })
       .catch((error) => {
         if (error.response === undefined) {
-          console.log('login error', error)
           setLoading(false);
           setErrors(['reusable:errors:unknown']);
         } else if (error.response.status === 500) {
