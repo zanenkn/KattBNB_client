@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signInUser } from '../../../reduxTokenAuthConfig';
 import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../common/Spinner';
@@ -32,7 +31,11 @@ const Login = (props) => {
         setErrors([]);
         if (history === undefined) {
           window.location.reload();
-        } else if (history.length <= 2) {
+        } else if (
+          history.length <= 2 ||
+          document.refferer.includes('/signup-success') ||
+          !document.refferer.includes('kattbnb.se')
+        ) {
           history.push('/');
         } else {
           history.go(-1);
@@ -40,7 +43,8 @@ const Login = (props) => {
       })
       .catch((error) => {
         if (error.response === undefined) {
-          wipeCredentials('/is-not-available?atm');
+          setLoading(false);
+          setErrors(['reusable:errors:unknown']);
         } else if (error.response.status === 500) {
           setLoading(false);
           setErrors(t('reusable:errors:500'));
@@ -52,7 +56,7 @@ const Login = (props) => {
   };
 
   if (!ready) {
-    return <Spinner page/>;
+    return <Spinner page />;
   }
 
   return (
@@ -99,7 +103,11 @@ const Login = (props) => {
 
         {errors.length > 0 && (
           <Notice nature='danger' data-cy='login-errors'>
-            <Text>{errors}</Text>
+            <ul>
+              {errors.map((error) => (
+                <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+              ))}
+            </ul>
           </Notice>
         )}
 
