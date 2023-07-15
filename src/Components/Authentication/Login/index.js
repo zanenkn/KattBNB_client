@@ -50,7 +50,7 @@ const Login = (props) => {
           setErrors(t('reusable:errors:500'));
         } else {
           setLoading(false);
-          setErrors(error.response.data.errors[0]);
+          setErrors(error.response.data.errors);
         }
       });
   };
