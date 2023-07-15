@@ -33,8 +33,8 @@ const Login = (props) => {
           window.location.reload();
         } else if (
           history.length <= 2 ||
-          document.refferer.includes('/signup-success') ||
-          !document.refferer.includes('kattbnb.se')
+          document.referrer.includes('/signup-success') ||
+          !document.referrer.includes('kattbnb.se')
         ) {
           history.push('/');
         } else {
@@ -43,6 +43,7 @@ const Login = (props) => {
       })
       .catch((error) => {
         if (error.response === undefined) {
+          console.log('login error', error)
           setLoading(false);
           setErrors(['reusable:errors:unknown']);
         } else if (error.response.status === 500) {

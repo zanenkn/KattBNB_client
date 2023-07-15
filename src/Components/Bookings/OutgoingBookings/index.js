@@ -51,7 +51,6 @@ const OutgoingBookings = ({ location: { state } }) => {
   };
 
   useEffect(() => {
-    console.log('wtf is today', today)
     window.addEventListener('scroll', handleScroll);
     const lang = detectLanguage();
     if (window.navigator.onLine === false) {
