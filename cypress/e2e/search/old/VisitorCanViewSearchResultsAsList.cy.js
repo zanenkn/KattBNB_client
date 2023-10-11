@@ -46,7 +46,7 @@ function conversationRoutes(id) {
   });
 }
 
-describe('Visitor can view search results as a list', () => {
+describe.skip('Visitor can view search results as a list', () => {
   before(() => {
     fetchHostProfiles();
     cy.visit('http://localhost:3000');

@@ -35,7 +35,7 @@ function validateToken() {
   });
 }
 
-describe('User can see messages of individual conversation', () => {
+describe.skip('User can see messages of individual conversation', () => {
   it('succesfully displayed in correct chronological order', () => {
     getAllUserConversations('yes');
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);

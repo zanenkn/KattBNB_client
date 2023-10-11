@@ -5,7 +5,6 @@ import signup from '../../pages/signup';
 const api = 'http://localhost:3007/api/v1';
 
 function signupPostRequest(status, response) {
-  cy.server();
   cy.intercept('POST', `${api}/auth`, {
     statusCode: status,
     fixture: response,

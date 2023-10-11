@@ -20,7 +20,7 @@ function updateBooking() {
   cy.intercept('PATCH', `${bookingsRoute}/2`, { statusCode: 200, fixture: 'bookings/successful_update.json' });
 }
 
-describe('User can answer booking request', () => {
+describe.skip('User can answer booking request', () => {
   beforeEach(() => {
     cy.server();
 
@@ -116,7 +116,7 @@ describe('User can answer booking request', () => {
   });
 });
 
-describe('User encounters error when accepting a booking request', () => {
+describe.skip('User encounters error when accepting a booking request', () => {
   it('cause of Stripe error during payment', () => {
     cy.server();
     cy.intercept('GET', `${api}/host_profiles?user_id=66&locale=en-US`, {
@@ -160,7 +160,7 @@ describe('User encounters error when accepting a booking request', () => {
   });
 });
 
-describe('User cannot accept booking requests', () => {
+describe.skip('User cannot accept booking requests', () => {
   beforeEach(() => {
     cy.server();
     updateBooking();

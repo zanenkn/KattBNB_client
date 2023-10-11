@@ -5,7 +5,6 @@ import { api, client } from '../../support/constants';
 
 describe('User can reset password', () => {
   beforeEach(() => {
-    cy.server();
     nav.landing();
     nav.to.login();
     login.passwordResetLink().click();

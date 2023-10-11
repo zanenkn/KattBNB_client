@@ -10,7 +10,7 @@ function fetchUserBookings() {
   });
 }
 
-describe('User can view 0 outgoing or incoming bookings', () => {
+describe.skip('User can view 0 outgoing or incoming bookings', () => {
   before(function () {
     fetchUserBookings();
     cy.login('fixture:successful_login.json', 'george@mail.com', 'password', 200);

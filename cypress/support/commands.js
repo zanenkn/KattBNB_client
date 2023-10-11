@@ -1,7 +1,6 @@
 import 'cypress-file-upload';
 
 Cypress.Commands.add('login', (response = {}, email, password, status, nav = true) => {
-  cy.server();
   cy.intercept('POST', 'http://localhost:3007/api/v1/auth/sign_in', {
     statusCode: status,
     fixture: response,

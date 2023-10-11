@@ -5,6 +5,7 @@ import mockAPI from '../../support/api';
 import assert from '../../support/assertions';
 import createHostProfile from '../../pages/createHostProfile';
 
+
 describe('Viewing host profile', () => {
   it('no host profile', () => {
     mockAPI.userPage();

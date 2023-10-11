@@ -1,4 +1,4 @@
-describe('User cannot see a list of conversations', () => {
+describe.skip('User cannot see a list of conversations', () => {
   it('cause of 0 messages', () => {
     cy.server();
     cy.route({

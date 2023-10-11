@@ -7,9 +7,6 @@ const errors = {
 };
 
 describe('Login and logout', () => {
-  beforeEach(() => {
-    cy.server();
-  });
 
   context('login', () => {
     it('succesfully', () => {

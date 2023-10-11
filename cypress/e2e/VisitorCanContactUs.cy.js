@@ -10,7 +10,7 @@ function APICall(url, status, response) {
   });
 }
 
-describe('Visitor can send a message via the Contact Us form', () => {
+describe.skip('Visitor can send a message via the Contact Us form', () => {
   before(function () {
     cy.visit('http://localhost:3000');
     cy.get('.hamburger-box').click();

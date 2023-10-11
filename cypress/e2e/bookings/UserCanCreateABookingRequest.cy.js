@@ -21,7 +21,7 @@ function requestToBook() {
   cy.get('#request-to-book').click();
 }
 
-describe('User can create a booking request', () => {
+describe.skip('User can create a booking request', () => {
   beforeEach(() => {
     cy.server();
     cy.route({

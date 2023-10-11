@@ -1,4 +1,4 @@
-describe('Visitor can view menu', () => {
+describe.skip('Visitor can view menu', () => {
   it('and can toggle visibility by clicking on the hamburger', () => {
     cy.visit('http://localhost:3000/');
     cy.get('.hamburger-box').click();

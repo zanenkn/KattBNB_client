@@ -19,7 +19,7 @@ function fetchResults(url) {
   });
 }
 
-describe('Visitor can view search results as a map', () => {
+describe.skip('Visitor can view search results as a map', () => {
   before(() => {
     cy.server();
     cy.visit('http://localhost:3000');

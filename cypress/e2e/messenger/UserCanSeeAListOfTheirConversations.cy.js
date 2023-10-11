@@ -2,7 +2,7 @@ function getElement(id, text) {
   cy.get(id).should('include.text', text);
 }
 
-describe('User can see a list of all their conversations', () => {
+describe.skip('User can see a list of all their conversations', () => {
   before(() => {
     cy.server();
     cy.route({

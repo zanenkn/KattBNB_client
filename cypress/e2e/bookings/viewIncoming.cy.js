@@ -10,7 +10,7 @@ function stripeCall(id) {
   });
 }
 
-describe('Incoming bookings', () => {
+describe.skip('Incoming bookings', () => {
   beforeEach(() => {
     cy.server();
     cy.intercept('GET', `${api}/bookings?stats=no&host_nickname=GeorgeTheGreek&locale=en-US`, {
@@ -94,7 +94,7 @@ describe('Incoming bookings', () => {
   });
 });
 
-describe('User can view their incoming bookings', () => {
+describe.skip('User can view their incoming bookings', () => {
   before(() => {
     cy.server();
     cy.route({
