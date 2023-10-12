@@ -94,7 +94,7 @@ describe.skip('User can answer booking request', () => {
       .and('include.text', "Message can't be blank or contain more than 200 characters");
   });
 
-  it.only('and unsuccessfully decline cause they enter a message longer than 200 characters', () => {
+  it('and unsuccessfully decline cause they enter a message longer than 200 characters', () => {
     cy.route({
       method: 'GET',
       url: `${api}/reviews/null`,

@@ -53,7 +53,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cy:open": "npm start --silent & cypress open",
+    "cy:open": "cypress open",
     "cy:run": "BROWSER=none npm start & cypress run",
     "sitemap": "babel-node src/Sitemap/sitemap-generator.js"
   },

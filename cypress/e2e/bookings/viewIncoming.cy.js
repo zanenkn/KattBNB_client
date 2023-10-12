@@ -40,7 +40,7 @@ describe.skip('Incoming bookings', () => {
     bookings.incoming.getUpcomingBooking(1).should('have.id', '8');
   });
 
-  it.only('and see requested bookings displayed in correct chronological order', () => {
+  it('and see requested bookings displayed in correct chronological order', () => {
     // chronologically by created_at date - latest first
     bookings.incoming.getBookingRequest(0).should('have.id', '2');
     bookings.incoming.getBookingRequest(1).should('have.id', '1');

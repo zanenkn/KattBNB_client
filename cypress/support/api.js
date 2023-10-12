@@ -108,14 +108,14 @@ class API {
 
     hostProfile &&
       !stripeAccount &&
-      cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`, {
+      cy.intercept('GET', `${api}/stripe_actions/retrieve_account_details?locale=en-US`, {
         statusCode: 200,
         body: { message: 'No account' },
       });
 
     hostProfile &&
       stripeAccount &&
-      cy.intercept('GET', `${api}/stripe?locale=en-US&host_profile_id=${hostProfileId}&occasion=retrieve`, {
+      cy.intercept('GET', `${api}/stripe_actions/retrieve_account_details?locale=en-US`, {
         statusCode: 200,
         fixture: stripeAccount,
       });
