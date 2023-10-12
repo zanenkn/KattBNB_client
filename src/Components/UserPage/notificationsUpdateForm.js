@@ -93,7 +93,7 @@ const NotificationsUpdateForm = (props) => {
       )}
 
       <ButtonWrapper>
-        <Button secondary color='neutral' onClick={() => props.closeLocationAndPasswordForms()}>
+        <Button secondary color='neutral' onClick={() => props.toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

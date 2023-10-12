@@ -9,7 +9,7 @@ import { Button, Notice, Dropdown, Text, Divider } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
 // Migrated, Waiting for dropdown
 
-const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, location }) => {
+const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
   const { t, ready } = useTranslation('LocationUpdateForm');
 
   const [newLocation, setNewLocation] = useState('');
@@ -114,7 +114,7 @@ const LocationUpdateForm = ({ closeLocationAndPasswordForms, fullAddress, locati
       )}
 
       <ButtonWrapper>
-        <Button secondary color='neutral' onClick={closeLocationAndPasswordForms}>
+        <Button secondary color='neutral' onClick={toggleForm}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button data-cy='submit' color='info' disabled={loading} loading={loading} onClick={updateLocation}>

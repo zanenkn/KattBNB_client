@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -26,17 +26,25 @@ import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/allReviews';
 
 //MIGRATION IN PROGRESS
-const UserPage = (props) => {
-  const hostProfileElement = useRef();
+const UserPage = ({ username, location, email, userId, avatar, messageNotifications, langPref }) => {
   const { t, ready } = useTranslation('UserPage');
   const history = useHistory();
 
   const [form, setForm] = useState({
+    editAvatar: false,
+    editDescriptionForm: false,
+    editMaxCatsForm: false,
+    editRateForm: false,
+    editSupplementForm: false,
+    editableCalendar: false,
+    editAddress: false,
+
     editLocationForm: false,
     editPasswordForm: false,
     editNotificationsForm: false,
     editLangPrefForm: false,
   });
+
   const [hostProfile, setHostProfile] = useState([]);
   const [element, setElement] = useState({
     description: '',
@@ -45,9 +53,9 @@ const UserPage = (props) => {
     maxCats: '',
     supplement: '',
     availability: [],
-    location: props.location,
-    messageNotifications: props.messageNotifications,
-    langPref: props.langPref,
+    location: location,
+    messageNotifications: messageNotifications,
+    langPref: langPref,
     stripeAccountId: null,
   });
   const [hostProfileScore, setHostProfileScore] = useState(null);
@@ -112,9 +120,9 @@ const UserPage = (props) => {
                 maxCats: max_cats_accepted,
                 supplement: finalSupplement,
                 availability: availability,
-                location: props.location,
-                messageNotifications: props.messageNotifications,
-                langPref: props.langPref,
+                location: location,
+                messageNotifications: messageNotifications,
+                langPref: langPref,
                 stripeAccountId: stripe_account_id,
               });
               setHostStripeState(stripe_state);
@@ -137,7 +145,7 @@ const UserPage = (props) => {
           });
       }
     }
-  }, [hostProfile, props.messageNotifications, props.location, props.langPref, t]);
+  }, [hostProfile, messageNotifications, location, langPref, t]);
 
   useEffect(() => {
     fetchIncomingBookings();
@@ -147,7 +155,7 @@ const UserPage = (props) => {
       } else {
         try {
           const lang = detectLanguage();
-          const response = await axios.get(`/api/v1/host_profiles?user_id=${props.id}&locale=${lang}`);
+          const response = await axios.get(`/api/v1/host_profiles?user_id=${userId}&locale=${lang}`);
           setHostProfile(response.data);
           setLoading(false);
           setErrors([]);
@@ -177,7 +185,7 @@ const UserPage = (props) => {
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${props.username}&locale=${lang}`;
+        const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${username}&locale=${lang}`;
         const responseIncoming = await axios.get(pathIncoming, { headers: headers });
         setIncomingBookings(responseIncoming.data);
         setErrors([]);
@@ -196,46 +204,29 @@ const UserPage = (props) => {
     }
   };
 
-  const avatarFormHandler = () => {
-    setForm((old) => ({
-      ...old,
-      editLocationForm: false,
-      editPasswordForm: false,
-      editNotificationsForm: false,
-      editLangPrefForm: false,
-    }));
-    if (hostProfile.length === 1) {
-      hostProfileElement.current.closeAllForms();
+  const toggleForm = (id) => {
+    if (!form[id]) {
+      setForm((prev) =>
+        Object.keys(prev).reduce((acc, key) => {
+          acc[key] = key === id;
+          return acc;
+        }, {})
+      );
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [id]: false,
+      }));
     }
   };
 
-  const closeLocationAndPasswordForms = () => {
-    setForm((old) => ({
-      ...old,
-      editLocationForm: false,
-      editPasswordForm: false,
-      editNotificationsForm: false,
-      editLangPrefForm: false,
-    }));
-  };
-
-  const formHandler = (e) => {
-    let states = ['editLocationForm', 'editPasswordForm', 'editNotificationsForm', 'editLangPrefForm'];
-    states.forEach((stt) => {
-      if (stt === e.target.id) {
-        setForm((old) => ({
-          ...old,
-          editLocationForm: false,
-          editPasswordForm: false,
-          editNotificationsForm: false,
-          editLangPrefForm: false,
-          [stt]: !form[stt],
-        }));
-      }
-    });
-    if (hostProfile.length === 1) {
-      hostProfileElement.current.closeAllForms();
-    }
+  const closeAllForms = () => {
+    setForm((prev) =>
+      Object.keys(prev).reduce((acc, key) => {
+        acc[key] = false;
+        return acc;
+      }, {})
+    );
   };
 
   const elementUpdateHandler = (elementName, newState) => {
@@ -248,14 +239,14 @@ const UserPage = (props) => {
   };
 
   const destroyAccount = async () => {
-    avatarFormHandler();
+    closeAllForms();
     setDeleteDisplayNone(true);
     if (window.navigator.onLine === false) {
       setDeleteDisplayNone(false);
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const lang = detectLanguage();
-      const bookings = `/api/v1/bookings?stats=yes&user_id=${props.id}&host_nickname=${props.username}&locale=${lang}`;
+      const bookings = `/api/v1/bookings?stats=yes&user_id=${userId}&host_nickname=${username}&locale=${lang}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -392,15 +383,10 @@ const UserPage = (props) => {
         </Notice>
       </Popup>
       <Container space={8}>
-        <AvatarUpdateForm
-          avatar={props.avatar}
-          username={props.username}
-          userId={props.id}
-          closeAllForms={avatarFormHandler.bind(this)}
-        />
+        <AvatarUpdateForm avatar={avatar} username={username} userId={userId} closeAllForms={closeAllForms} />
         <Header data-cy='username' level={4} space={2} centered>
           <User height={4} />
-          &ensp;{props.username}
+          &ensp;{username}
         </Header>
         <FlexWrapper centered spaceBetween={1}>
           <Location height={4} />
@@ -414,25 +400,22 @@ const UserPage = (props) => {
             stripeAccountId={element.stripeAccountId}
             hostProfileId={hostProfile[0].id}
             stripeState={hostStripeState}
-            email={props.email}
+            email={email}
           />
           <HostProfile
-            id={hostProfile[0].id}
-            email={props.email}
+            hostProfileId={hostProfile[0].id}
             description={element.description}
             fullAddress={element.fullAddress}
             rate={element.rate}
             maxCats={element.maxCats}
             supplement={element.supplement}
             availability={element.availability}
-            score={hostProfileScore}
-            location={props.location}
+            location={location}
             incomingBookings={incomingBookings}
             stripeState={hostStripeState}
-            stripeAccountId={element.stripeAccountId}
-            closeLocPasForms={closeLocationAndPasswordForms}
-            ref={hostProfileElement}
             setElement={elementUpdateHandler.bind(this)}
+            form={form}
+            toggleForm={toggleForm}
           />
         </>
       )}
@@ -453,13 +436,13 @@ const UserPage = (props) => {
         <SettingsWrapper>
           <FlexWrapper spaceBetween={2} data-cy='email'>
             <Email height={4} />
-            <Text>{props.email}</Text>
+            <Text>{email}</Text>
           </FlexWrapper>
 
           <FlexWrapper spaceBetween={2} data-cy='location'>
             <Location />
             <Text>{element.location}</Text>
-            <InlineLink id='editLocationForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
+            <InlineLink id='editLocationForm' onClick={(e) => toggleForm(e.target.id)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
@@ -468,7 +451,7 @@ const UserPage = (props) => {
               <LocationUpdateForm
                 location={element.location}
                 fullAddress={element.fullAddress}
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms}
+                toggleForm={() => toggleForm('editLocationForm')}
               />
             )}
           </UpdateFormWrapper>
@@ -476,27 +459,25 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2} data-cy='password'>
             <Lock />
             <Text>******</Text>
-            <InlineLink id='editPasswordForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
+            <InlineLink id='editPasswordForm' onClick={(e) => toggleForm(e.target.id)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
           <UpdateFormWrapper open={form.editPasswordForm} data-cy='password-update-form'>
-            {form.editPasswordForm && (
-              <PasswordUpdateForm closeLocationAndPasswordForms={closeLocationAndPasswordForms} />
-            )}
+            {form.editPasswordForm && <PasswordUpdateForm toggleForm={() => toggleForm('editPasswordForm')} />}
           </UpdateFormWrapper>
 
           <FlexWrapper spaceBetween={2} data-cy='notifications'>
             <Notification />
             <Text>{t('UserPage:notifications-header')}</Text>
-            <InlineLink id='editNotificationsForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
+            <InlineLink id='editNotificationsForm' onClick={(e) => toggleForm(e.target.id)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
           <UpdateFormWrapper open={form.editNotificationsForm} data-cy='notification-update-form'>
             {form.editNotificationsForm && (
               <NotificationsUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms}
+                toggleForm={() => toggleForm('editNotificationsForm')}
                 messageNotifications={element.messageNotifications}
               />
             )}
@@ -505,16 +486,13 @@ const UserPage = (props) => {
           <FlexWrapper spaceBetween={2} data-cy='language-pref'>
             <Globe />
             <Text>{t('UserPage:lang-pref-header')}</Text>
-            <InlineLink id='editLangPrefForm' onClick={(e) => formHandler(e)} text={'sm'} color='info'>
+            <InlineLink id='editLangPrefForm' onClick={(e) => toggleForm(e.target.id)} text={'sm'} color='info'>
               {t('reusable:cta.change')}
             </InlineLink>
           </FlexWrapper>
           <UpdateFormWrapper open={form.editLangPrefForm} data-cy='language-pref-update-form'>
             {form.editLangPrefForm && (
-              <LangPrefUpdateForm
-                closeLocationAndPasswordForms={closeLocationAndPasswordForms}
-                langPref={element.langPref}
-              />
+              <LangPrefUpdateForm toggleForm={() => toggleForm('editLangPrefForm')} langPref={element.langPref} />
             )}
           </UpdateFormWrapper>
         </SettingsWrapper>
@@ -542,7 +520,7 @@ const mapStateToProps = (state) => ({
   username: state.reduxTokenAuth.currentUser.attributes.username,
   location: state.reduxTokenAuth.currentUser.attributes.location,
   email: state.reduxTokenAuth.currentUser.attributes.uid,
-  id: state.reduxTokenAuth.currentUser.attributes.id,
+  userId: state.reduxTokenAuth.currentUser.attributes.id,
   avatar: state.reduxTokenAuth.currentUser.attributes.avatar,
   messageNotifications: state.reduxTokenAuth.currentUser.attributes.messageNotifications,
   langPref: state.reduxTokenAuth.currentUser.attributes.langPref,

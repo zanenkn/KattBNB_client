@@ -9,7 +9,7 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 
 import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
-const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
+const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
@@ -54,7 +54,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
       .patch(path, payload, { headers: headers })
       .then(() => {
         setElement('maxCats', newMaxCats);
-        closeAllForms();
+        toggleForm();
         setErrors([]);
       })
       .catch((error) => {
@@ -96,7 +96,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, closeAllForms, setElement }) => {
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

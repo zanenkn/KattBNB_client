@@ -12,7 +12,7 @@ import Spinner from '../../common/Spinner';
 import { Divider, TextField, Text, Notice, Button } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
 
-const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
+const PasswordUpdateForm = ({ toggleForm }) => {
   const { t, ready } = useTranslation('PasswordUpdateForm');
 
   const [currentPassword, setCurrentPassword] = useState('');
@@ -130,7 +130,7 @@ const PasswordUpdateForm = ({ closeLocationAndPasswordForms }) => {
       )}
 
       <ButtonWrapper>
-        <Button secondary color='neutral' onClick={() => closeLocationAndPasswordForms()}>
+        <Button secondary color='neutral' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

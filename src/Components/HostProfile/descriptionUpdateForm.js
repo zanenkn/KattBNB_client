@@ -9,7 +9,7 @@ import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 import { Flexbox, Text, TextArea, Notice, Button, InlineLink } from '../../UI-Components';
 
-const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) => {
+const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
@@ -41,7 +41,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
     setLoading(true);
 
     if (newDescription === description) {
-      closeAllForms();
+      toggleForm();
       return;
     }
 
@@ -59,7 +59,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
       .patch(path, payload, { headers: headers })
       .then(() => {
         setElement('description', newDescription);
-        closeAllForms();
+        toggleForm();
       })
       .catch((error) => {
         setLoading(false);
@@ -103,7 +103,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, closeAllForms }) =
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

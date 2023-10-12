@@ -54,7 +54,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cy:open": "cypress open",
-    "cy:run": "BROWSER=none npm start & cypress run",
+    "cy:run": "cypress run",
     "sitemap": "babel-node src/Sitemap/sitemap-generator.js"
   },
   "eslintConfig": {

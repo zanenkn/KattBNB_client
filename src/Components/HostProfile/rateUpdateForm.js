@@ -9,7 +9,7 @@ import { formValidation, conditions as validate } from '../../Modules/formValida
 
 import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
-const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
+const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
@@ -41,7 +41,7 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
     setLoading(true);
 
     if (newRate === rate) {
-      closeAllForms();
+      toggleForm();
       return;
     }
 
@@ -59,7 +59,7 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
       .patch(path, payload, { headers: headers })
       .then(() => {
         setElement('rate', newRate);
-        closeAllForms();
+        toggleForm();
         setErrors([]);
       })
       .catch((error) => {
@@ -102,7 +102,7 @@ const RateUpdateForm = ({ id, rate, closeAllForms, setElement }) => {
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

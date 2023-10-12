@@ -11,7 +11,7 @@ import { formValidation } from '../../Modules/formValidation';
 
 import { Flexbox, Text, Notice, Button } from '../../UI-Components';
 
-const AvailabilityUpdateForm = ({ id, availability, incomingBookings, closeAllForms, setElement }) => {
+const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
   const lang = detectLanguage();
 
@@ -50,7 +50,7 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, closeAllFo
     setLoading(true);
 
     if (availability.length === newAvailability.length && availability.every((el) => newAvailability.includes(el))) {
-      closeAllForms();
+      toggleForm();
       return;
     }
 
@@ -70,7 +70,7 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, closeAllFo
       .patch(path, payload, { headers: headers })
       .then(() => {
         setElement('availability', payload.availability);
-        closeAllForms();
+        toggleForm();
       })
       .catch((error) => {
         setLoading(false);
@@ -110,7 +110,7 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, closeAllFo
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button

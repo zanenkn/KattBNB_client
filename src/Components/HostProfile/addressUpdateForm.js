@@ -12,7 +12,7 @@ import { search } from '../../Modules/addressLocationMatcher';
 
 import { TextField, Button, Notice, Text, Flexbox } from '../../UI-Components';
 
-const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, location }) => {
+const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }) => {
   const { t } = useTranslation('HostProfileForm');
 
   const [errors, setErrors] = useState([]);
@@ -22,9 +22,9 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
 
   useEffect(() => {
     return () => {
-      setUserInputAddress(fullAddress)
-    }
-  }, [])
+      setUserInputAddress(fullAddress);
+    };
+  }, []);
 
   const validator = formValidation({
     fields: [
@@ -45,7 +45,7 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
     setLoading(true);
 
     if (address === fullAddress) {
-      closeAllForms();
+      toggleForm();
       return;
     }
     const path = `/api/v1/host_profiles/${id}`;
@@ -66,7 +66,7 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
       .patch(path, payload, { headers: headers })
       .then(() => {
         setElement('fullAddress', address);
-        closeAllForms();
+        toggleForm();
         setErrors([]);
       })
       .catch((error) => {
@@ -148,7 +148,7 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, closeAllForms, locatio
         </Notice>
       )}
       <Flexbox spaceItemsX={2}>
-        <Button secondary color='neutral' data-cy='close' onClick={() => closeAllForms()}>
+        <Button secondary color='neutral' data-cy='close' onClick={() => toggleForm()}>
           {t('reusable:cta.cancel')}
         </Button>
         <Button
