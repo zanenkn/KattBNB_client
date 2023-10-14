@@ -15,7 +15,7 @@ import { CheveronUp } from '../../../icons';
 
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [scrollYPosition, setScrollYPosition] = useState(0);
   const [outgoingBookings, setOutgoingBookings] = useState([]);
@@ -59,11 +59,6 @@ const OutgoingBookings = ({ location: { state } }) => {
       window.location.replace('/all-bookings');
     } else {
       const outBookings = `/api/v1/bookings?stats=no&user_id=${state.userId}&locale=${locale}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
       axios
         .get(outBookings, { headers: headers })
         .then(({ data }) => {

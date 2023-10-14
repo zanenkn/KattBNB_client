@@ -11,7 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,11 +46,7 @@ const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
     }
 
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const payload = {
       supplement_price_per_cat_per_day: newSupplement,
       locale: locale,

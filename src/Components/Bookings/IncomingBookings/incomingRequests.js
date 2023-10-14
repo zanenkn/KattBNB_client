@@ -13,7 +13,7 @@ import BookingRequest from './bookingRequest';
 
 const IncomingRequests = ({ history, requests, stripeState, email }) => {
   const { t, ready } = useTranslation('IncomingRequests');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [payoutSuccess, setPayoutSuccess] = useState(false);
@@ -32,11 +32,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
         const callParams = {
           locale: locale,
         };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
+
         const response = await axios.get(path, { params: callParams, headers: headers });
         if (!response.data.message) {
           setPayoutSuccess(response.data.payouts_enabled);
@@ -82,11 +78,6 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
         const path = '/api/v1/stripe_actions/retrieve_account_login_link';
         const callParams = {
           locale: locale,
-        };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
         };
         const response = await axios.get(path, { params: callParams, headers: headers });
         window.open(response.data.url);

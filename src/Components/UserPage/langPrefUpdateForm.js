@@ -14,7 +14,7 @@ const LangPrefUpdateForm = (props) => {
   const [langPref, setLangPref] = useState(props.langPref);
 
   const { t, ready } = useTranslation('LangPrefUpdateForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const updateLangPref = () => {
     setLoading(true);
@@ -32,11 +32,7 @@ const LangPrefUpdateForm = (props) => {
       lang_pref: langPref,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .put(path, payload, { headers: headers })
       .then(() => {

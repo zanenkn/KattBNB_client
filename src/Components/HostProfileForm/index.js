@@ -55,7 +55,7 @@ const HostProfileForm = ({ userId, location }) => {
   const [addressErrors, setAddressError] = useState(null);
 
   const today = new Date();
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const validator = formValidation({
     fields: [
@@ -171,11 +171,7 @@ const HostProfileForm = ({ userId, location }) => {
       latitude: newHost.latitude,
       longitude: newHost.longitude,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .post(path, payload, { headers: headers })
       .then(() => {

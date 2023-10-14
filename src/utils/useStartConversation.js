@@ -9,7 +9,7 @@ import { wipeCredentials } from '../Modules/wipeCredentials';
 export const useStartConversation = () => {
   const [errors, setErrors] = useState([]);
   const history = useHistory();
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const startConversation = ({ userId1, userId2 }) => {
     const path = '/api/v1/conversations';
@@ -18,11 +18,7 @@ export const useStartConversation = () => {
       user2_id: userId2,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     if (!userId1) {
       history.push('/login');
       return;

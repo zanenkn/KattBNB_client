@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import Spinner from '../../common/Spinner';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { Text, ContentWrapper, Avatar, Flexbox, Header, Notice } from '../../UI-Components';
 import { User, Location } from '../../icons';
 
@@ -9,12 +10,9 @@ const NoHostUser = ({ id, t }) => {
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
 
+  const { headers } = useCurrentScope();
+
   useEffect(() => {
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
     axios
       .get(`/api/v1/users/${id}`, { headers: headers })
       .then(({ data }) => {

@@ -12,7 +12,7 @@ import { Header, Text, Avatar, Divider, Notice } from '../../../UI-Components';
 
 const ViewYourReviewPopup = ({ id, open, onClose, startDate, endDate }) => {
   const { t, ready } = useTranslation('ViewYourReviewPopup');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
   moment.locale(locale);
 
   const [nickname, setNickname] = useState(null);
@@ -29,11 +29,7 @@ const ViewYourReviewPopup = ({ id, open, onClose, startDate, endDate }) => {
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const path = `/api/v1/reviews/${id}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+
       const callParams = {
         locale: locale,
       };

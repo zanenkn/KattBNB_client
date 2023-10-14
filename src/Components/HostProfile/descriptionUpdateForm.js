@@ -11,7 +11,7 @@ import { Flexbox, Text, TextArea, Notice, Button, InlineLink } from '../../UI-Co
 
 const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,11 +46,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
     }
 
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const payload = {
       description: newDescription,
       locale: locale,

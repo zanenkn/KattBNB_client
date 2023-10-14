@@ -11,7 +11,7 @@ import { Header, Text, TextArea, Button, Notice } from '../../../UI-Components';
 
 const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -29,11 +29,6 @@ const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }
     if (window.confirm(t('DeclineRequestPopup:confirm-decline'))) {
       if (message !== '' && message.length < 201) {
         const path = `/api/v1/bookings/${id}`;
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
         const payload = {
           host_message: message,
           status: 'declined',

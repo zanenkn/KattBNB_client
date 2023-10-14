@@ -16,7 +16,7 @@ import { ContentWrapper, Header, Whitebox, Text, TextArea, Notice, Button, Conta
 
 const LeaveReview = ({ history, location }) => {
   const { t, ready } = useTranslation('LeaveReview');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -83,11 +83,7 @@ const LeaveReview = ({ history, location }) => {
           host_profile_id: profileId,
           locale: locale,
         };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
+
         axios
           .post(path, payload, { headers: headers })
           .then(() => {

@@ -11,7 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,11 +41,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
     setLoading(true);
 
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const payload = {
       max_cats_accepted: newMaxCats,
       locale: locale,

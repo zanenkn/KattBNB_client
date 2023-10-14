@@ -11,7 +11,7 @@ import { Edit, Camera, RotateLeft, RotateRight } from '../../icons';
 import { AvatarEditBtnWrapper, AvatarUpdateFormWrapper, FlexWrapper, WithCursorPointer } from './styles';
 
 const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
   const { t, ready } = useTranslation('AvatarUpdateForm');
 
   const [avatar, setAvatar] = useState({
@@ -81,11 +81,7 @@ const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
       setLoading(true);
       const img = editor.current.getImageScaledToCanvas().toDataURL();
       const path = `/api/v1/users/${userId}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+
       const payload = {
         profile_avatar: Array.from(new Set([img])),
         locale: locale,

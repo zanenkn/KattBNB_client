@@ -35,7 +35,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
   const [activeStep, setActiveStep] = useState(1);
 
   const { t, ready } = useTranslation('HostProfileProgressBar');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
@@ -47,11 +47,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
         const callParams = {
           locale: locale,
         };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
+
         const response = await axios.get(path, { params: callParams, headers: headers });
         if (!response.data.message) {
           setPayoutSuccess(response.data.payouts_enabled);
@@ -91,11 +87,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
         const callParams = {
           locale: locale,
         };
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
+
         const response = await axios.get(path, { params: callParams, headers: headers });
         setStripeLink(response.data.url);
       } catch ({ response }) {

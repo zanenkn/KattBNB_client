@@ -13,7 +13,7 @@ import { Flexbox, Text, Notice, Button } from '../../UI-Components';
 
 const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const today = new Date();
 
@@ -55,11 +55,6 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm
     }
 
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
 
     const payload = {
       availability: newAvailability.filter((date) => date > today.getTime()).sort((a, b) => a - b),

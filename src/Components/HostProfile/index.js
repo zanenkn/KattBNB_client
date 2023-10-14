@@ -41,7 +41,7 @@ const HostProfile = ({
   loggedInUserId,
 }) => {
   const { t, ready } = useTranslation('HostProfile');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,11 +53,7 @@ const HostProfile = ({
     }
     try {
       const path = `/api/v1/host_profiles/${hostProfileId}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+      
       const payload = {
         code: queryString.parse(window.location.search).code,
         locale: locale,

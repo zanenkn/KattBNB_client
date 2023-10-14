@@ -30,7 +30,7 @@ import Helmet from 'react-helmet';
 
 const Conversation = ({ id, username, match, history }) => {
   const { t, ready } = useTranslation('SingleConversation');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
   const bottomOfPage = useRef(null);
 
   const [newMessage, setNewMessage] = useState('');
@@ -50,12 +50,6 @@ const Conversation = ({ id, username, match, history }) => {
       setLoading(false);
       return setErrors(['reusable:errors:window-navigator']);
     }
-
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
 
     const pathCable =
       process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
@@ -135,11 +129,6 @@ const Conversation = ({ id, username, match, history }) => {
     }
 
     const path = '/api/v1/auth/validate_token';
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
 
     axios
       .get(path, { headers: headers })
@@ -179,11 +168,7 @@ const Conversation = ({ id, username, match, history }) => {
     }
     if (window.confirm(t('SingleConversation:del-conversation'))) {
       const path = `/api/v1/conversations/${match.params.conversationId}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+
       const payload = {
         locale: locale,
       };

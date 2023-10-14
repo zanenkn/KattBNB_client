@@ -11,7 +11,7 @@ import { ButtonWrapper } from './styles';
 
 const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
   const { t, ready } = useTranslation('LocationUpdateForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [newLocation, setNewLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,11 +31,7 @@ const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
 
   const axiosCall = () => {
     setLoading(true);
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const path = '/api/v1/auth/';
     const payload = {
       location: newLocation,

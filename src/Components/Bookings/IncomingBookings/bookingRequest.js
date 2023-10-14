@@ -26,7 +26,7 @@ const BookingRequest = ({
   const [userMessagePopupOpen, setUserMessagePopupOpen] = useState(false);
   const [errors, setErrors] = useState([]);
 
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const formatPrice = (price) => {
     const priceWithDecimalsString = price.toFixed(2);
@@ -47,11 +47,6 @@ const BookingRequest = ({
     }
     if (window.confirm(t('IncomingRequests:accept-request'))) {
       const path = `/api/v1/bookings/${e.target.id}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
       const payload = {
         status: 'accepted',
         host_message: 'accepted by host',

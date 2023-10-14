@@ -9,22 +9,20 @@ import { Container, InlineLink, Text, Divider } from '../../../UI-Components';
 import { Nav, NavInnerWrap, MenuAvatar } from '../styles';
 import { MenuItem, Submenu, SubmenuItem, ItemWrapper } from './styles';
 import LanguageSwitcher from '../../../common/LanguageSwitcher';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 
 const DesktopNav = ({ avatar, username, currentUserIn }) => {
   const noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
   const [showSubmenus, setShowSubmenus] = useState(true);
   const { t, ready } = useTranslation();
+  const { headers } = useCurrentScope();
 
   const signOut = () => {
     if (window.navigator.onLine === false) {
       window.alert(t('reusable:errors:window-navigator'));
     }
     const path = '/api/v1/auth/sign_out';
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .delete(path, { headers: headers })
       .then(() => {

@@ -28,7 +28,7 @@ import AllReviews from '../Reviews/allReviews';
 const UserPage = ({ username, location, email, userId, avatar, messageNotifications, langPref }) => {
   const { t, ready } = useTranslation('UserPage');
   const history = useHistory();
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [form, setForm] = useState({
     editAvatar: false,
@@ -72,11 +72,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
     } else {
       if (hostProfile.length === 1) {
         const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${locale}`;
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
+
         axios
           .get(path, { headers: headers })
           .then(
@@ -177,11 +173,6 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
         const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${username}&locale=${locale}`;
         const responseIncoming = await axios.get(pathIncoming, { headers: headers });
         setIncomingBookings(responseIncoming.data);
@@ -243,11 +234,6 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const bookings = `/api/v1/bookings?stats=yes&user_id=${userId}&host_nickname=${username}&locale=${locale}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
       try {
         const {
           data: {

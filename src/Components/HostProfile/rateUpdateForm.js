@@ -11,7 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -46,11 +46,7 @@ const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
     }
 
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const payload = {
       price_per_day_1_cat: newRate,
       locale: locale,

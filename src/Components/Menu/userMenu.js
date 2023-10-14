@@ -3,20 +3,18 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { Header } from '../../UI-Components';
 import { MenuLink } from './styles';
 
 const UserMenu = ({ userLoggedIn, closeMenu, activePath }) => {
   const { t } = useTranslation();
+  const { headers } = useCurrentScope();
 
   const signOut = () => {
     const path = '/api/v1/auth/sign_out';
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .delete(path, { headers: headers })
       .then(() => {

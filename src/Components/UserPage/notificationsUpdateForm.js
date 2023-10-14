@@ -9,7 +9,7 @@ import { ButtonWrapper, NotificationsWrapper } from './styles';
 
 const NotificationsUpdateForm = (props) => {
   const { t, ready } = useTranslation('NotificationsUpdateForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -33,11 +33,7 @@ const NotificationsUpdateForm = (props) => {
       message_notification: messageNotifications,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .put(path, payload, { headers: headers })
       .then(() => {

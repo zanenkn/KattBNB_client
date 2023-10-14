@@ -14,7 +14,7 @@ import { TextField, Button, Notice, Text, Flexbox } from '../../UI-Components';
 
 const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }) => {
   const { t } = useTranslation('HostProfileForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -49,11 +49,7 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }
       return;
     }
     const path = `/api/v1/host_profiles/${id}`;
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     const payload = {
       full_address: address,
       lat: lat,

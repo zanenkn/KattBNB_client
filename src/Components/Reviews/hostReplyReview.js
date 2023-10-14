@@ -12,7 +12,7 @@ import { Flexbox, InlineLink, Text, TextArea, Notice, Button } from '../../UI-Co
 
 const HostReplyReviewForm = ({ reviewId, reload }) => {
   const { t } = useTranslation('HostReplyReview');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [replyFormOpen, setReplyFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,11 +61,7 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
       host_reply: reply,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .patch(path, payload, { headers: headers })
       .then(() => {

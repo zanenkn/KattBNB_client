@@ -16,7 +16,7 @@ import IncomingHistory from './incomingHistory';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [scrollYPosition, setScrollYPosition] = useState(0);
   const [incomingBookings, setIncomingBookings] = useState([]);
@@ -52,11 +52,6 @@ const IncomingBookings = ({ location: { state } }) => {
       window.location.replace('/all-bookings');
     } else {
       const inBookings = `/api/v1/bookings?stats=no&host_nickname=${state.hostNickname}&locale=${locale}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
       axios
         .get(inBookings, { headers: headers })
         .then(({ data }) => {

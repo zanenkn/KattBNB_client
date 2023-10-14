@@ -26,7 +26,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
   const history = useHistory();
   const { host } = useFetchHost(id);
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -89,11 +89,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
         cats: currentSearch.cats,
         host: host.name,
       };
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+
       const response = await axios.get(path, { params: callParams, headers: headers });
       setPaymentIntent(response.data.intent_id);
     } catch ({ response }) {
@@ -142,11 +138,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       payment_intent_id: paymentIntentId,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .post(path, payload, { headers: headers })
       .then(() => {
@@ -205,11 +197,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       user_id: userId,
       payment_intent_id: paymentIntent,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     try {
       setErrors([]);
       // eslint-disable-next-line

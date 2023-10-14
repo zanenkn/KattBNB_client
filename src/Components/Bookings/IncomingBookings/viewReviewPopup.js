@@ -13,7 +13,7 @@ import { PopupHeaderWrapper, FlexWrapper, ScrollWrapper } from '../common/styles
 
 const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
   const { t, ready } = useTranslation('ViewReviewPopup');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
   moment.locale(locale);
 
   const [nickname, setNickname] = useState(null);
@@ -30,11 +30,7 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
       setErrors(['reusable:errors:window-navigator']);
     } else {
       const path = `/api/v1/reviews/${id}`;
-      const headers = {
-        uid: window.localStorage.getItem('uid'),
-        client: window.localStorage.getItem('client'),
-        'access-token': window.localStorage.getItem('access-token'),
-      };
+
       const callParams = {
         locale: locale,
       };

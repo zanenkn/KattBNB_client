@@ -14,7 +14,7 @@ import { ButtonWrapper } from './styles';
 
 const PasswordUpdateForm = ({ toggleForm }) => {
   const { t, ready } = useTranslation('PasswordUpdateForm');
-  const { locale } = useCurrentScope();
+  const { locale, headers } = useCurrentScope();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -53,11 +53,7 @@ const PasswordUpdateForm = ({ toggleForm }) => {
       password_confirmation: newPasswordConfirmation,
       locale: locale,
     };
-    const headers = {
-      uid: window.localStorage.getItem('uid'),
-      client: window.localStorage.getItem('client'),
-      'access-token': window.localStorage.getItem('access-token'),
-    };
+
     axios
       .put(path, payload, { headers: headers })
       .then(() => {
