@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import AvatarEditor from 'react-avatar-editor';
 import Popup from 'reactjs-popup';
@@ -11,6 +11,7 @@ import { Edit, Camera, RotateLeft, RotateRight } from '../../icons';
 import { AvatarEditBtnWrapper, AvatarUpdateFormWrapper, FlexWrapper, WithCursorPointer } from './styles';
 
 const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
+  const { locale } = useCurrentScope();
   const { t, ready } = useTranslation('AvatarUpdateForm');
 
   const [avatar, setAvatar] = useState({
@@ -77,7 +78,6 @@ const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
       setLoading(false);
       setErrors(['AvatarUpdateForm:file-type-error']);
     } else {
-      const lang = detectLanguage();
       setLoading(true);
       const img = editor.current.getImageScaledToCanvas().toDataURL();
       const path = `/api/v1/users/${userId}`;
@@ -88,7 +88,7 @@ const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
       };
       const payload = {
         profile_avatar: Array.from(new Set([img])),
-        locale: lang,
+        locale: locale,
         client: window.localStorage.getItem('client'),
         'access-token': window.localStorage.getItem('access-token'),
       };
