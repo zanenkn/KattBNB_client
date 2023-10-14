@@ -379,7 +379,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
         </Notice>
       </Popup>
       <Container space={8}>
-        <AvatarUpdateForm avatar={avatar} username={username} userId={userId} closeAllForms={closeAllForms} />
+        <AvatarUpdateForm image={avatar} username={username} userId={userId} closeAllForms={closeAllForms} />
         <Header data-cy='username' level={4} space={2} centered>
           <User height={4} />
           &ensp;{username}

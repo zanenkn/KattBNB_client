@@ -1,207 +1,196 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
-import ReactAvatarEditor from 'react-avatar-editor';
+import AvatarEditor from 'react-avatar-editor';
 import Popup from 'reactjs-popup';
 import Spinner from '../../common/Spinner';
-import { withTranslation } from 'react-i18next';
 import { Avatar, Button, Text, Notice, Container } from '../../UI-Components';
 import { Edit, Camera, RotateLeft, RotateRight } from '../../icons';
 import { AvatarEditBtnWrapper, AvatarUpdateFormWrapper, FlexWrapper, WithCursorPointer } from './styles';
 
-class AvatarUpdateForm extends Component {
-  state = {
-    loading: false,
-    errors: [],
+const AvatarUpdateForm = ({ image, userId, username, closeAllForms }) => {
+  const { t, ready } = useTranslation('AvatarUpdateForm');
+
+  const [avatar, setAvatar] = useState({
     image: '',
     position: { x: 0.5, y: 0.5 },
     scale: 1,
     rotate: 0,
-  };
+  });
 
-  setEditorRef = (editor) => {
-    if (editor) this.editor = editor;
-  };
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-  handleNewImage = (e) => {
-    this.setState({
+  const editor = useRef(null);
+  const noAvatar = `https://ui-avatars.com/api/?name=${username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
+
+  const handleNewImage = (e) => {
+    setAvatar((prev) => ({
+      ...prev,
+
       image: e.target.files[0],
       position: { x: 0.5, y: 0.5 },
-      errors: '',
-    });
+    }));
+    setErrors([]);
   };
 
-  rotateLeft = (e) => {
-    e.preventDefault();
-    this.setState({ rotate: this.state.rotate - 90 });
-  };
+  const rotateLeft = () => {
+    if (avatar.image !== '') {
+      setAvatar((prev) => ({
+        ...prev,
 
-  rotateRight = (e) => {
-    e.preventDefault();
-    this.setState({ rotate: this.state.rotate + 90 });
-  };
-
-  handlePositionChange = (position) => {
-    this.setState({ position });
-  };
-
-  updateAvatar = (e) => {
-    const { t } = this.props;
-    if (window.navigator.onLine === false) {
-      this.setState({
-        loading: false,
-        errors: ['reusable:errors:window-navigator'],
-      });
-    } else {
-      if (this.state.image === '') {
-        this.setState({
-          loading: false,
-          errors: ['AvatarUpdateForm:no-avatar-error'],
-        });
-      } else if (
-        this.state.image.type !== 'image/jpeg' &&
-        this.state.image.type !== 'image/jpg' &&
-        this.state.image.type !== 'image/png' &&
-        this.state.image.type !== 'image/gif'
-      ) {
-        this.setState({
-          loading: false,
-          errors: ['AvatarUpdateForm:file-type-error'],
-        });
-      } else {
-        e.preventDefault();
-        const lang = detectLanguage();
-        this.setState({ loading: true });
-        const img = this.editor.getImageScaledToCanvas().toDataURL();
-        const path = `/api/v1/users/${this.props.userId}`;
-        const headers = {
-          uid: window.localStorage.getItem('uid'),
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        const payload = {
-          profile_avatar: Array.from(new Set([img])),
-          locale: lang,
-          client: window.localStorage.getItem('client'),
-          'access-token': window.localStorage.getItem('access-token'),
-        };
-        axios
-          .put(path, payload, { headers: headers })
-          .then(() => {
-            this.setState({ errors: '' });
-            window.location.reload();
-          })
-          .catch((error) => {
-            this.setState({
-              loading: false,
-            });
-            if (error.response === undefined || error.response.status === 500) {
-              this.setState({
-                errors: ['reusable:errors:unknown'],
-              });
-            }
-            if (error.response.status === 401) {
-              window.alert(t('reusable:errors:401'));
-              wipeCredentials('/login');
-            }
-            this.setState({
-              errors: error.response.data.errors,
-            });
-          });
-      }
+        rotate: prev.rotate - 90,
+      }));
     }
   };
 
-  closeModal = () => {
-    this.setState({
-      errors: '',
-      image: '',
-    });
+  const rotateRight = () => {
+    if (avatar.image !== '') {
+      setAvatar((prev) => ({
+        ...prev,
+
+        rotate: prev.rotate + 90,
+      }));
+    }
   };
 
-  render() {
-    const { t, tReady } = this.props;
-    const noAvatar = `https://ui-avatars.com/api/?name=${this.props.username}&size=150&length=3&font-size=0.3&rounded=true&background=d8d8d8&color=c90c61&uppercase=false`;
+  const handlePositionChange = (position) => {
+    setAvatar((prev) => ({
+      ...prev,
 
-    if (!tReady) return <Spinner />;
+      position: position,
+    }));
+  };
 
-    return (
-      <AvatarUpdateFormWrapper onClick={this.props.closeAllForms}>
-        <Avatar data-cy='avatar' centered src={this.props.avatar === null ? noAvatar : this.props.avatar} />
-        <Popup
-          modal
-          className='avatar-popup'
-          trigger={
-            <AvatarEditBtnWrapper data-cy='avatar-update-cta'>
-              <Edit height={3} color='neutral' tint={0} />
-            </AvatarEditBtnWrapper>
+  const updateAvatar = (e) => {
+    if (avatar.image === '') {
+      setLoading(false);
+      setErrors(['AvatarUpdateForm:no-avatar-error']);
+    } else if (
+      avatar.image.type !== 'image/jpeg' &&
+      avatar.image.type !== 'image/jpg' &&
+      avatar.image.type !== 'image/png' &&
+      avatar.image.type !== 'image/gif'
+    ) {
+      setLoading(false);
+      setErrors(['AvatarUpdateForm:file-type-error']);
+    } else {
+      const lang = detectLanguage();
+      setLoading(true);
+      const img = editor.current.getImageScaledToCanvas().toDataURL();
+      const path = `/api/v1/users/${userId}`;
+      const headers = {
+        uid: window.localStorage.getItem('uid'),
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token'),
+      };
+      const payload = {
+        profile_avatar: Array.from(new Set([img])),
+        locale: lang,
+        client: window.localStorage.getItem('client'),
+        'access-token': window.localStorage.getItem('access-token'),
+      };
+      axios
+        .put(path, payload, { headers: headers })
+        .then(() => {
+          setErrors([]);
+          window.location.reload();
+        })
+        .catch((error) => {
+          setLoading(false);
+
+          if (error.response === undefined || error.response.status === 500) {
+            setErrors(['reusable:errors:unknown']);
+            return;
           }
-          position='top center'
-          closeOnDocumentClick={true}
-          onClose={this.closeModal}
-        >
-          <Container space={2}>
-            <ReactAvatarEditor
-              ref={this.setEditorRef}
-              width={258}
-              height={258}
-              position={this.state.position}
-              onPositionChange={this.handlePositionChange}
-              rotate={parseFloat(this.state.rotate)}
-              borderRadius={129}
-              image={this.state.image}
-              className='editor-canvas'
-            />
+          if (error.response.status === 401) {
+            window.alert(t('reusable:errors:401'));
+            wipeCredentials('/login');
+            return;
+          }
+          setErrors(error.response.data.errors);
+        });
+    }
+  };
 
-            <FlexWrapper centered spaceBetween={6} space={6}>
-              <WithCursorPointer>
-                <label htmlFor='files' style={{ cursor: 'inherit' }}>
-                  <Camera height={7} tint={80} />
-                </label>
-                <input
-                  data-cy='add-photo'
-                  id='files'
-                  style={{ display: 'none' }}
-                  onChange={this.handleNewImage}
-                  type='file'
-                />
-              </WithCursorPointer>
-              <WithCursorPointer onClick={this.state.image !== '' ? this.rotateLeft : undefined}>
-                <RotateLeft height={7} tint={this.state.image === '' ? 60 : 80} />
-              </WithCursorPointer>
-              <WithCursorPointer onClick={this.state.image !== '' ? this.rotateRight : undefined}>
-                <RotateRight height={7} tint={this.state.image === '' ? 60 : 80} />
-              </WithCursorPointer>
-            </FlexWrapper>
-            {this.state.errors.length > 0 && (
-              <Notice data-cy='errors' nature='danger'>
-                <Text bold centered size='sm'>
-                  {t('reusable:errors.action-error-header')}
-                </Text>
-                <Text size='sm'>
-                  <ul id='message-error-list'>
-                    {this.state.errors.map((error) => (
-                      <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
-                    ))}
-                  </ul>
-                </Text>
-              </Notice>
-            )}
-            <Button
-              space={0}
-              data-cy='save-avatar'
-              disabled={this.state.loading}
-              loading={this.state.loading}
-              onClick={this.updateAvatar}
-            >
-              {t('reusable:cta:save')}
-            </Button>
-          </Container>
-        </Popup>
-      </AvatarUpdateFormWrapper>
-    );
-  }
-}
+  const closeModal = () => {
+    setLoading(false);
+    setErrors([]);
+  };
 
-export default withTranslation('AvatarUpdateForm')(AvatarUpdateForm);
+  if (!ready) return <Spinner />;
+
+  return (
+    <AvatarUpdateFormWrapper onClick={closeAllForms}>
+      <Avatar data-cy='avatar' centered src={image === null ? noAvatar : image} />
+      <Popup
+        modal
+        className='avatar-popup'
+        trigger={
+          <AvatarEditBtnWrapper data-cy='avatar-update-cta'>
+            <Edit height={3} color='neutral' tint={0} />
+          </AvatarEditBtnWrapper>
+        }
+        position='top center'
+        closeOnDocumentClick={true}
+        onClose={closeModal}
+      >
+        <Container space={2}>
+          <AvatarEditor
+            ref={editor}
+            width={258}
+            height={258}
+            position={avatar.position}
+            onPositionChange={() => handlePositionChange()}
+            rotate={parseFloat(avatar.rotate)}
+            borderRadius={129}
+            image={avatar.image}
+            className='editor-canvas'
+          />
+
+          <FlexWrapper centered spaceBetween={6} space={6}>
+            <WithCursorPointer>
+              <label htmlFor='files' style={{ cursor: 'inherit' }}>
+                <Camera height={7} tint={80} />
+              </label>
+              <input
+                data-cy='add-photo'
+                id='files'
+                style={{ display: 'none' }}
+                onChange={(e) => handleNewImage(e)}
+                type='file'
+              />
+            </WithCursorPointer>
+            <WithCursorPointer onClick={() => rotateLeft()}>
+              <RotateLeft height={7} tint={avatar.image === '' ? 60 : 80} />
+            </WithCursorPointer>
+            <WithCursorPointer onClick={() => rotateRight()}>
+              <RotateRight height={7} tint={avatar.image === '' ? 60 : 80} />
+            </WithCursorPointer>
+          </FlexWrapper>
+          {errors.length > 0 && (
+            <Notice data-cy='errors' nature='danger'>
+              <Text bold centered size='sm'>
+                {t('reusable:errors.action-error-header')}
+              </Text>
+              <Text size='sm'>
+                <ul id='message-error-list'>
+                  {errors.map((error) => (
+                    <li key={error}>{t(error, { timestamp: new Date().getTime() })}</li>
+                  ))}
+                </ul>
+              </Text>
+            </Notice>
+          )}
+          <Button space={0} data-cy='save-avatar' disabled={loading} loading={loading} onClick={updateAvatar}>
+            {t('reusable:cta:save')}
+          </Button>
+        </Container>
+      </Popup>
+    </AvatarUpdateFormWrapper>
+  );
+};
+
+export default AvatarUpdateForm;
