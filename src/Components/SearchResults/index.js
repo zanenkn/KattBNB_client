@@ -13,7 +13,6 @@ import { getDaysArray } from '../../utils/getDaysArray';
 import { useStartConversation } from '../../utils/useStartConversation';
 import { finalTotal } from '../../Modules/PriceCalculations';
 import useCurrentScope from '../../hooks/useCurrentScope';
-import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
@@ -29,11 +28,9 @@ import HostPopup from './HostPopup';
 import RequestToBook from './request';
 
 const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
-  const { locale } = useCurrentScope();
-
+  const { locale, device } = useCurrentScope();
   const { t, ready } = useTranslation('SearchResults');
   const dispatch = useDispatch();
-  const device = useDeviceInfo();
   const { startConversation } = useStartConversation();
 
   const [listScrollOffset, setListScrollOffset] = useState(0);

@@ -8,7 +8,6 @@ import Popup from 'reactjs-popup';
 import { finalTotal } from '../../../Modules/PriceCalculations';
 import useCurrentScope from '../../../hooks/useCurrentScope';
 import { useFetchHost } from './useFetchHost';
-import { useDeviceInfo } from '../../../hooks/useDeviceInfo';
 
 import ReviewScore from '../../../common/ReviewScore';
 import Responsive from '../../../common/Responsive';
@@ -29,11 +28,11 @@ const HostPopup = ({
   requestToBook,
   messageHost,
 }) => {
+
   const { t, ready } = useTranslation('HostPopup');
   const { loading } = useFetchHost(id);
-  const device = useDeviceInfo().type;
+  const { locale, device } = useCurrentScope();
 
-  const { locale } = useCurrentScope();
   moment.locale(locale);
 
   const [isAvailable, setIsAvailable] = useState(false);
@@ -68,7 +67,7 @@ const HostPopup = ({
         <p>{currentSearch.checkInDate}</p>
         <Avatar
           data-cy='avatar'
-          size={device === 'mobile' ? 'md' : 'xl'}
+          size={device.type === 'mobile' ? 'md' : 'xl'}
           centered
           space={4}
           src={

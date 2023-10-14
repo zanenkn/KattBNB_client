@@ -5,7 +5,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import Spinner from '../../../common/Spinner';
 import { getAvatar } from '../../../Modules/getAvatar';
-import { useDeviceInfo } from '../../../hooks/useDeviceInfo';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 
 import { ContentWrapper, Avatar, Whitebox, Header, Flexbox, Text, InlineLink } from '../../../UI-Components';
 import { User, Availabilty, Location, Cat } from '../../../icons';
@@ -13,7 +13,7 @@ import { SearchCriteriaWrapper, JustifiedWrapper } from '../styles';
 
 const SuccessfulRequest = ({ history }) => {
   const { t, ready } = useTranslation('SuccessfulRequest');
-  const device = useDeviceInfo();
+  const { device } = useCurrentScope();
 
   const { start, end, name, cats, avatar, place } = history.location.state;
 

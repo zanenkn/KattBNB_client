@@ -1,7 +1,9 @@
-import { useDeviceInfo } from '../../hooks/useDeviceInfo';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 const Responsive = ({ displayIn, children }) => {
-  const { type } = useDeviceInfo();
+  const {
+    device: { type },
+  } = useCurrentScope();
   return <>{displayIn.includes(type) ? children : null}</>;
 };
 

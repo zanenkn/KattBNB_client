@@ -1,12 +1,13 @@
 import moment from 'moment';
-import { useDeviceInfo } from '../../hooks/useDeviceInfo';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { Flexbox, Text } from '../../UI-Components';
 import { Availabilty, Cat, Location } from '../../icons';
 import { JustifiedWrapper, BookingInfoWrapper } from './styles';
 
 const BookingInfo = ({ start, end, cats, place, centered, space }) => {
-  const device = useDeviceInfo();
+  const { device } = useCurrentScope();
+  
   return (
     <BookingInfoWrapper centered={centered} space={space}>
       <Flexbox spaceItemsX={1} horizontalAlign='left' space={2}>
