@@ -4,16 +4,17 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import Geocode from 'react-geocode';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { TextField, Button, Notice, Text, Flexbox } from '../../UI-Components';
 
 const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }) => {
   const { t } = useTranslation('HostProfileForm');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,7 +42,6 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }
   });
 
   const updateAddress = (address, lat, long, latitude, longitude) => {
-    const lang = detectLanguage();
     setLoading(true);
 
     if (address === fullAddress) {
@@ -60,7 +60,7 @@ const AddressUpdateForm = ({ fullAddress, id, setElement, toggleForm, location }
       long: long,
       latitude: latitude,
       longitude: longitude,
-      locale: lang,
+      locale: locale,
     };
     axios
       .patch(path, payload, { headers: headers })

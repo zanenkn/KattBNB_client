@@ -7,9 +7,9 @@ import TextareaAutosize from 'react-textarea-autosize';
 import Popup from 'reactjs-popup';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { getAvatar } from '../../../Modules/getAvatar';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import withAuth from '../../../HOC/withAuth';
 
 import Spinner from '../../../common/Spinner';
@@ -30,7 +30,7 @@ import Helmet from 'react-helmet';
 
 const Conversation = ({ id, username, match, history }) => {
   const { t, ready } = useTranslation('SingleConversation');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
   const bottomOfPage = useRef(null);
 
   const [newMessage, setNewMessage] = useState('');
@@ -60,7 +60,7 @@ const Conversation = ({ id, username, match, history }) => {
     const pathCable =
       process.env.NODE_ENV === 'development' ? 'ws://localhost:3007' : process.env.REACT_APP_API_ENDPOINT;
     const cable = Cable.createConsumer(
-      `${pathCable}/api/v1/cable/conversation/${match.params.conversationId}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${lang}`
+      `${pathCable}/api/v1/cable/conversation/${match.params.conversationId}?token=${headers['access-token']}&uid=${headers.uid}&client=${headers.client}&locale=${locale}`
     );
 
     const channelToSave = cable.subscriptions.create(
@@ -81,7 +81,7 @@ const Conversation = ({ id, username, match, history }) => {
 
     const path = `/api/v1/conversations/${match.params.conversationId}`;
     const callParams = {
-      locale: lang,
+      locale: locale,
     };
 
     axios
@@ -185,7 +185,7 @@ const Conversation = ({ id, username, match, history }) => {
         'access-token': window.localStorage.getItem('access-token'),
       };
       const payload = {
-        locale: lang,
+        locale: locale,
       };
       axios
         .patch(path, payload, { headers: headers })
@@ -257,7 +257,7 @@ const Conversation = ({ id, username, match, history }) => {
               return (
                 <div key={message.id}>
                   <MessageBubble
-                    lang={lang}
+                    lang={locale}
                     message={message}
                     scrollDown={scrollDown}
                     belongsToCurrent={username === message.user?.nickname}
@@ -270,7 +270,7 @@ const Conversation = ({ id, username, match, history }) => {
               return (
                 <div key={message.id}>
                   <MessageBubble
-                    lang={lang}
+                    lang={locale}
                     message={message}
                     scrollDown={scrollDown}
                     belongsToCurrent={username === message.user?.nickname}

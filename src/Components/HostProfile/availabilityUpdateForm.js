@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation } from '../../Modules/formValidation';
 
@@ -13,7 +13,7 @@ import { Flexbox, Text, Notice, Button } from '../../UI-Components';
 
 const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const today = new Date();
 
@@ -63,7 +63,7 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm
 
     const payload = {
       availability: newAvailability.filter((date) => date > today.getTime()).sort((a, b) => a - b),
-      locale: lang,
+      locale: locale,
     };
 
     axios
@@ -98,7 +98,7 @@ const AvailabilityUpdateForm = ({ id, availability, incomingBookings, toggleForm
         disabledDays={[{ before: today }, ...incomingBookings.map((date) => new Date(date))]}
         onDayClick={(day, { selected, disabled }) => handleDayClick(day, { selected, disabled })}
         localeUtils={MomentLocaleUtils}
-        locale={lang}
+        locale={locale}
       />
       {errors.length > 0 && (
         <Notice nature='danger'>

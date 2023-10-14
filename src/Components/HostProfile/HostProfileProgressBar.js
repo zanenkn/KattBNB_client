@@ -4,7 +4,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
 import Spinner from '../../common/Spinner';
@@ -35,6 +35,7 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
   const [activeStep, setActiveStep] = useState(1);
 
   const { t, ready } = useTranslation('HostProfileProgressBar');
+  const { locale } = useCurrentScope();
 
   const fetchStripeAccountDetails = async () => {
     if (window.navigator.onLine === false) {
@@ -42,10 +43,9 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
       setLoading(false);
     } else {
       try {
-        const lang = detectLanguage();
         const path = '/api/v1/stripe_actions/retrieve_account_details';
         const callParams = {
-          locale: lang,
+          locale: locale,
         };
         const headers = {
           uid: window.localStorage.getItem('uid'),
@@ -87,10 +87,9 @@ const HostProfileProgressBar = ({ email, stripeAccountId, stripeState, hostProfi
     } else {
       setStripeDashboardButtonLoading(true);
       try {
-        const lang = detectLanguage();
         const path = '/api/v1/stripe_actions/retrieve_account_login_link';
         const callParams = {
-          locale: lang,
+          locale: locale,
         };
         const headers = {
           uid: window.localStorage.getItem('uid'),

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import Spinner from '../../common/Spinner';
 import {
   Header,
@@ -20,6 +19,7 @@ import {
 
 const ContactUs = (props) => {
   const { t, ready } = useTranslation('ContactUs');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -47,10 +47,9 @@ const ContactUs = (props) => {
           setErrors(['reusable:errors:captcha']);
           setLoading(false);
         } else {
-          const lang = detectLanguage();
           const path = '/api/v1/contact_us';
           const callParams = {
-            locale: lang,
+            locale: locale,
             name: name,
             email: email,
             message: message,

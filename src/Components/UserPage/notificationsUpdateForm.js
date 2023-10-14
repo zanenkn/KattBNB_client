@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { Button, Notice, Divider, Text, Toggle } from '../../UI-Components';
 import { ButtonWrapper, NotificationsWrapper } from './styles';
-// Migrated
 
 const NotificationsUpdateForm = (props) => {
   const { t, ready } = useTranslation('NotificationsUpdateForm');
+  const { locale } = useCurrentScope();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -28,11 +28,10 @@ const NotificationsUpdateForm = (props) => {
     }
 
     setLoading(true);
-    const lang = detectLanguage();
     const path = '/api/v1/auth/';
     const payload = {
       message_notification: messageNotifications,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),
@@ -69,7 +68,11 @@ const NotificationsUpdateForm = (props) => {
     <>
       <Divider />
       <NotificationsWrapper>
-        <Toggle checked={messageNotifications} onClick={() => setMessageNotifications(!messageNotifications)} data-cy='toggle'/>
+        <Toggle
+          checked={messageNotifications}
+          onClick={() => setMessageNotifications(!messageNotifications)}
+          data-cy='toggle'
+        />
         <Text tint={messageNotifications ? 100 : 60}>{t('NotificationsUpdateForm:label')}</Text>
       </NotificationsWrapper>
 
@@ -106,7 +109,7 @@ const NotificationsUpdateForm = (props) => {
           {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
-      <Divider top={5} bottom={6}/>
+      <Divider top={5} bottom={6} />
     </>
   );
 };

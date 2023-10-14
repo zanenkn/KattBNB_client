@@ -5,12 +5,12 @@ import queryString from 'query-string';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
 import Spinner from '../../common/Spinner';
 import Responsive from '../../common/Responsive';
 import Share from '../../common/Share';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { Header, Text, Whitebox, InlineLink, Notice, Divider } from '../../UI-Components';
 import { FlexWrapper, UpdateFormWrapper, DescriptionWrapper } from './styles';
@@ -41,6 +41,7 @@ const HostProfile = ({
   loggedInUserId,
 }) => {
   const { t, ready } = useTranslation('HostProfile');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +52,6 @@ const HostProfile = ({
       return setErrors(['reusable:errors:window-navigator']);
     }
     try {
-      const lang = detectLanguage();
       const path = `/api/v1/host_profiles/${hostProfileId}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
@@ -60,7 +60,7 @@ const HostProfile = ({
       };
       const payload = {
         code: queryString.parse(window.location.search).code,
-        locale: lang,
+        locale: locale,
       };
       const response = await axios.patch(path, payload, { headers: headers });
       setElement('stripeAccountId', response.data.id);

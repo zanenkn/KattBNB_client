@@ -3,20 +3,20 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-import { detectLanguage } from '../Modules/detectLanguage';
+import useCurrentScope from '../hooks/useCurrentScope';
 import { wipeCredentials } from '../Modules/wipeCredentials';
 
 export const useStartConversation = () => {
   const [errors, setErrors] = useState([]);
   const history = useHistory();
+  const { locale } = useCurrentScope();
 
   const startConversation = ({ userId1, userId2 }) => {
-    const lang = detectLanguage();
     const path = '/api/v1/conversations';
     const payload = {
       user1_id: userId1,
       user2_id: userId2,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),

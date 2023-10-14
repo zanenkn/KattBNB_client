@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { detectLanguage } from '../Modules/detectLanguage';
+import useCurrentScope from '../hooks/useCurrentScope';
 
 export const useHostProfile = (hostProfileId) => {
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
   const [errors, setErrors] = useState([]);
   const [host, setHost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ export const useHostProfile = (hostProfileId) => {
   }
   useEffect(() => {
     axios
-      .get(`/api/v1/host_profiles/${hostProfileId}?locale=${lang}`)
+      .get(`/api/v1/host_profiles/${hostProfileId}?locale=${locale}`)
       .then(({ data }) => {
         const transformedResponse = transformResponseToHost(data);
         setHost(transformedResponse);

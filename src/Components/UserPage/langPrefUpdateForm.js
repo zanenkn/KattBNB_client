@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { RadioButton, Button, Text, Notice, Divider } from '../../UI-Components';
 import { ButtonWrapper } from './styles';
@@ -14,6 +14,7 @@ const LangPrefUpdateForm = (props) => {
   const [langPref, setLangPref] = useState(props.langPref);
 
   const { t, ready } = useTranslation('LangPrefUpdateForm');
+  const { locale } = useCurrentScope();
 
   const updateLangPref = () => {
     setLoading(true);
@@ -26,11 +27,10 @@ const LangPrefUpdateForm = (props) => {
       return setInfo(['LangPrefUpdateForm:update-error']);
     }
 
-    const lang = detectLanguage();
     const path = '/api/v1/auth/';
     const payload = {
       lang_pref: langPref,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),

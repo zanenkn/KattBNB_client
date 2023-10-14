@@ -10,7 +10,6 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import withAuth from '../../HOC/withAuth';
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { generateRandomNumber } from '../../Modules/locationRandomizer';
 import { search } from '../../Modules/addressLocationMatcher';
@@ -31,6 +30,7 @@ import {
   Container,
 } from '../../UI-Components';
 import { AddressSearchWrapper, Label, StackableWrapper } from './styles';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 const HostProfileForm = ({ userId, location }) => {
   const { t, ready } = useTranslation('HostProfileForm');
@@ -55,7 +55,7 @@ const HostProfileForm = ({ userId, location }) => {
   const [addressErrors, setAddressError] = useState(null);
 
   const today = new Date();
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const validator = formValidation({
     fields: [
@@ -99,7 +99,7 @@ const HostProfileForm = ({ userId, location }) => {
 
   const handleDayClick = (day) => {
     const today = new Date();
-    const selected = selectedDays.some((selected) => selected.getTime() === day.getTime())
+    const selected = selectedDays.some((selected) => selected.getTime() === day.getTime());
     if (day > today) {
       if (selected) {
         setSelectedDays((prev) => [...prev.filter((existing) => existing.getTime() !== day.getTime())]);
@@ -155,7 +155,6 @@ const HostProfileForm = ({ userId, location }) => {
 
   const createHostProfile = () => {
     setLoading(true);
-    const lang = detectLanguage();
 
     const path = '/api/v1/host_profiles';
     const payload = {
@@ -165,7 +164,7 @@ const HostProfileForm = ({ userId, location }) => {
       supplement_price_per_cat_per_day: newHost.supplement ?? 0,
       max_cats_accepted: newHost.maxCats,
       user_id: userId,
-      locale: lang,
+      locale: locale,
       availability: selectedDays.map((day) => convertToMs(day)).sort((a, b) => a - b),
       lat: newHost.lat,
       long: newHost.long,
@@ -316,9 +315,7 @@ const HostProfileForm = ({ userId, location }) => {
               label={t('HostProfileForm:labels.supplement')}
               data-cy='supplement'
               value={newHost.supplement}
-              onChange={(e) =>
-                setNewHost((prev) => ({ ...prev, supplement: (Math.abs(e.target.value)).toString() }))
-              }
+              onChange={(e) => setNewHost((prev) => ({ ...prev, supplement: Math.abs(e.target.value).toString() }))}
               required
               onKeyPress={(e) => e.key === 'Enter' && validator.onSubmit(createHostProfile)}
             />
@@ -346,7 +343,7 @@ const HostProfileForm = ({ userId, location }) => {
           selectedDays={selectedDays}
           onDayClick={(day) => handleDayClick(day)}
           localeUtils={MomentLocaleUtils}
-          locale={lang}
+          locale={locale}
         />
       </Container>
       {errors.length > 0 && (

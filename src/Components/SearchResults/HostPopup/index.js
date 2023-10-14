@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router';
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
 import Popup from 'reactjs-popup';
 
 import { finalTotal } from '../../../Modules/PriceCalculations';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { useFetchHost } from './useFetchHost';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { useDeviceInfo } from '../../../hooks/useDeviceInfo';
 
 import ReviewScore from '../../../common/ReviewScore';
@@ -34,8 +33,8 @@ const HostPopup = ({
   const { loading } = useFetchHost(id);
   const device = useDeviceInfo().type;
 
-  const lang = detectLanguage();
-  moment.locale(lang);
+  const { locale } = useCurrentScope();
+  moment.locale(locale);
 
   const [isAvailable, setIsAvailable] = useState(false);
 

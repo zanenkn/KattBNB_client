@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
 import withAuth from '../../HOC/withAuth';
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import Spinner from '../../common/Spinner';
 import ReviewScore from '../../common/ReviewScore';
@@ -16,6 +16,7 @@ import { ContentWrapper, Header, Whitebox, Text, TextArea, Notice, Button, Conta
 
 const LeaveReview = ({ history, location }) => {
   const { t, ready } = useTranslation('LeaveReview');
+  const { locale } = useCurrentScope();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -57,7 +58,6 @@ const LeaveReview = ({ history, location }) => {
   }, []);
 
   const createReview = () => {
-    const lang = detectLanguage();
     setLoading(true);
     if (window.navigator.onLine === false) {
       setLoading(false);
@@ -81,7 +81,7 @@ const LeaveReview = ({ history, location }) => {
           user_id: userId,
           booking_id: bookingId,
           host_profile_id: profileId,
-          locale: lang,
+          locale: locale,
         };
         const headers = {
           uid: window.localStorage.getItem('uid'),

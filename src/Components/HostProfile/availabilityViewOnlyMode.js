@@ -2,15 +2,15 @@ import { useTranslation } from 'react-i18next';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { Text } from '../../UI-Components';
 
 const AvailabilityViewOnlyMode = ({ selectedDays }) => {
   const { t } = useTranslation('AvailabilityViewOnlyMode');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
-  if (!selectedDays.length) return <Text>{t('AvailabilityViewOnlyMode:no-dates-selected')}</Text>
+  if (!selectedDays.length) return <Text>{t('AvailabilityViewOnlyMode:no-dates-selected')}</Text>;
 
   return (
     <DayPicker
@@ -21,7 +21,7 @@ const AvailabilityViewOnlyMode = ({ selectedDays }) => {
       fromMonth={selectedDays[0]}
       toMonth={selectedDays[selectedDays.length - 1]}
       localeUtils={MomentLocaleUtils}
-      locale={lang}
+      locale={locale}
     />
   );
 };

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import DeclineRequestPopup from './declineRequestPopup';
-import IncRequestPopup from './incRequestPopup';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Text, Header, Button, Flexbox, InlineLink, Container } from '../../../UI-Components';
 import { Trans } from 'react-i18next';
 import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { BoxShadow, Section } from '../common/styles';
-import { withRouter } from 'react-router-dom';
+import { Text, Header, Button, Flexbox, InlineLink, Container } from '../../../UI-Components';
+import DeclineRequestPopup from './declineRequestPopup';
+import IncRequestPopup from './incRequestPopup';
 
 const BookingRequest = ({
   t,
@@ -25,6 +26,8 @@ const BookingRequest = ({
   const [userMessagePopupOpen, setUserMessagePopupOpen] = useState(false);
   const [errors, setErrors] = useState([]);
 
+  const { locale } = useCurrentScope();
+
   const formatPrice = (price) => {
     const priceWithDecimalsString = price.toFixed(2);
     if (
@@ -38,7 +41,6 @@ const BookingRequest = ({
   };
 
   const acceptRequest = (e, requestData) => {
-    const lang = detectLanguage();
     if (window.navigator.onLine === false) {
       setErrors(['reusable:errors:window-navigator']);
       return;
@@ -53,7 +55,7 @@ const BookingRequest = ({
       const payload = {
         status: 'accepted',
         host_message: 'accepted by host',
-        locale: lang,
+        locale: locale,
       };
       axios
         .patch(path, payload, { headers: headers })

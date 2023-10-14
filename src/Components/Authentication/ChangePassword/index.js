@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { passwordCheck } from '../../../Modules/passwordCheck';
 import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import Spinner from '../../../common/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
-// Completely MIGRATED
 
 const ChangePassword = ({ location: { search } }) => {
   const { t, ready } = useTranslation('ChangePassword');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [successDisplay, setSuccessDisplay] = useState(false);
@@ -51,7 +50,7 @@ const ChangePassword = ({ location: { search } }) => {
       uid: queryString.parse(search).uid,
       'access-token': queryString.parse(search).token,
       client: queryString.parse(search).client,
-      locale: lang,
+      locale: locale,
     };
     axios
       .put(path, payload)

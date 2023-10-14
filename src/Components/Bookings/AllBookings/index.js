@@ -3,14 +3,14 @@ import withAuth from '../../../HOC/withAuth';
 import Spinner from '../../../common/Spinner';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
-import { ReversibleWrapper } from './styles';
+
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { Header, Text, Notice, Container, Accent, ContentWrapper } from '../../../UI-Components';
+import { ReversibleWrapper } from './styles';
 import BookingSegment from './bookingSegment';
-// Completely MIGRATED
 
 const AllBookings = ({ id, history, username, dispatch }) => {
   const { t, ready } = useTranslation('AllBookings');
@@ -18,7 +18,7 @@ const AllBookings = ({ id, history, username, dispatch }) => {
   const [errors, setErrors] = useState([]);
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   let outgoingRequests = parseInt(stats.out_requests);
   let outgoingUpcoming = parseInt(stats.out_upcoming);
@@ -49,9 +49,8 @@ const AllBookings = ({ id, history, username, dispatch }) => {
       'access-token': window.localStorage.getItem('access-token'),
     };
 
-    const lang = detectLanguage();
-    axios.get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`).then((res) => {
-      axios.get(`/api/v1/host_profiles/${res.data[0].id}?locale=${lang}`, { headers: headers }).then((response) => {
+    axios.get(`/api/v1/host_profiles?user_id=${id}&locale=${locale}`).then((res) => {
+      axios.get(`/api/v1/host_profiles/${res.data[0].id}?locale=${locale}`, { headers: headers }).then((response) => {
         dispatch({ type: 'HOST_PROFILE_FETCHED', hostProfile: response.data });
       });
     });
@@ -62,7 +61,7 @@ const AllBookings = ({ id, history, username, dispatch }) => {
       return axiosCallErrorHandling(['reusable:errors:window-navigator']);
     }
 
-    const bookings = `/api/v1/bookings?stats=yes&user_id=${id}&host_nickname=${username}&locale=${lang}`;
+    const bookings = `/api/v1/bookings?stats=yes&user_id=${id}&host_nickname=${username}&locale=${locale}`;
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),

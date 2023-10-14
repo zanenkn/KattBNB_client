@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signInUser } from '../../../reduxTokenAuthConfig';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import Spinner from '../../../common/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
-// Completely MIGRATED
 
 const Login = (props) => {
   const { t, ready } = useTranslation('Login');
-  const locale = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

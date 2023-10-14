@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import withAuth from '../../../HOC/withAuth';
-import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import moment from 'moment';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+
+import withAuth from '../../../HOC/withAuth';
+import Spinner from '../../../common/Spinner';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
-import IncomingRequests from './incomingRequests';
-import IncomingUpcoming from './incomingUpcoming';
-import IncomingHistory from './incomingHistory';
 import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
 import { SectionWrapper, StyledContentWrapper, ScrollToTop } from '../common/styles';
 import { CheveronUp } from '../../../icons';
+import IncomingRequests from './incomingRequests';
+import IncomingUpcoming from './incomingUpcoming';
+import IncomingHistory from './incomingHistory';
 
 const IncomingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('IncomingBookings');
+  const { locale } = useCurrentScope();
 
   const [scrollYPosition, setScrollYPosition] = useState(0);
   const [incomingBookings, setIncomingBookings] = useState([]);
@@ -43,13 +45,13 @@ const IncomingBookings = ({ location: { state } }) => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    const lang = detectLanguage();
+
     if (window.navigator.onLine === false) {
       axiosCallStateHandling(false, ['reusable:errors:window-navigator']);
     } else if (window.history.state === null) {
       window.location.replace('/all-bookings');
     } else {
-      const inBookings = `/api/v1/bookings?stats=no&host_nickname=${state.hostNickname}&locale=${lang}`;
+      const inBookings = `/api/v1/bookings?stats=no&host_nickname=${state.hostNickname}&locale=${locale}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),

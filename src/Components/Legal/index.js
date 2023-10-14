@@ -6,20 +6,22 @@ import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 
 import Spinner from '../../common/Spinner';
-import { detectLanguage } from '../../Modules/detectLanguage';
 import SEO from '../../common/SEO';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { ContentWrapper, Header, PrismicRichText } from '../../UI-Components';
 
 const Legal = () => {
   const { t, ready } = useTranslation();
   const [content, setContent] = useState({});
-  const locale = detectLanguage().toLowerCase();
+  const { locale } = useCurrentScope();
 
   useEffect(() => {
     const fetchData = async () => {
       const Client = Prismic.client(process.env.REACT_APP_PRISMIC_REPO);
-      const response = await Client.query(Prismic.Predicates.at('document.type', 'terms'), { lang: locale });
+      const response = await Client.query(Prismic.Predicates.at('document.type', 'terms'), {
+        lang: locale.toLowerCase(),
+      });
       setContent(response.results[0].data.body);
     };
     try {

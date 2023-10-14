@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Spinner from '../../../common/Spinner';
-import { useTranslation, Trans } from 'react-i18next';
-// import IncRequestPopup from '../IncRequestPopup';
-import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { withRouter } from 'react-router-dom';
-import { Text, Notice, Button } from '../../../UI-Components';
-import BookingRequest from './bookingRequest';
 import { connect } from 'react-redux';
+import { useTranslation, Trans } from 'react-i18next';
+import axios from 'axios';
+
+import Spinner from '../../../common/Spinner';
 import { getRedirectBase } from '../../../utils/getRedirectBase';
+import useCurrentScope from '../../../hooks/useCurrentScope';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { Text, Notice } from '../../../UI-Components';
+import BookingRequest from './bookingRequest';
 
 const IncomingRequests = ({ history, requests, stripeState, email }) => {
   const { t, ready } = useTranslation('IncomingRequests');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [payoutSuccess, setPayoutSuccess] = useState(false);
@@ -28,10 +28,9 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
-        const lang = detectLanguage();
         const path = '/api/v1/stripe_actions/retrieve_account_details';
         const callParams = {
-          locale: lang,
+          locale: locale,
         };
         const headers = {
           uid: window.localStorage.getItem('uid'),
@@ -80,10 +79,9 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     } else {
       try {
         setStripeDashboardButtonLoading(true);
-        const lang = detectLanguage();
         const path = '/api/v1/stripe_actions/retrieve_account_login_link';
         const callParams = {
-          locale: lang,
+          locale: locale,
         };
         const headers = {
           uid: window.localStorage.getItem('uid'),

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
@@ -12,6 +12,7 @@ import { Flexbox, InlineLink, Text, TextArea, Notice, Button } from '../../UI-Co
 
 const HostReplyReviewForm = ({ reviewId, reload }) => {
   const { t } = useTranslation('HostReplyReview');
+  const { locale } = useCurrentScope();
 
   const [replyFormOpen, setReplyFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,13 +54,12 @@ const HostReplyReviewForm = ({ reviewId, reload }) => {
   };
 
   const hostReplyReview = () => {
-    const lang = detectLanguage();
     setLoading(true);
 
     const path = `/api/v1/reviews/${reviewId}`;
     const payload = {
       host_reply: reply,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
@@ -11,6 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,9 +19,9 @@ const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
 
   useEffect(() => {
     return () => {
-      setNewSupplement(supplement)
-    }
-  }, [])
+      setNewSupplement(supplement);
+    };
+  }, []);
 
   const validator = formValidation({
     fields: [
@@ -37,7 +38,6 @@ const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
   });
 
   const updateSupplement = () => {
-    const lang = detectLanguage();
     setLoading(true);
 
     if (newSupplement === supplement) {
@@ -53,7 +53,7 @@ const SupplementUpdateForm = ({ id, supplement, toggleForm, setElement }) => {
     };
     const payload = {
       supplement_price_per_cat_per_day: newSupplement,
-      locale: lang,
+      locale: locale,
     };
     axios
       .patch(path, payload, { headers: headers })

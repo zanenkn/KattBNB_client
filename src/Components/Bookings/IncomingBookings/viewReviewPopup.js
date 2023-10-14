@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Spinner from '../../../common/Spinner';
-import ReviewScore from '../../../common/ReviewScore';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import moment from 'moment';
 import Popup from 'reactjs-popup';
+import useCurrentScope from '../../../hooks/useCurrentScope';
+import Spinner from '../../../common/Spinner';
+import ReviewScore from '../../../common/ReviewScore';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Header, Text, Avatar, Divider, InlineLink, Notice } from '../../../UI-Components';
 import { PopupHeaderWrapper, FlexWrapper, ScrollWrapper } from '../common/styles';
 
 const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
   const { t, ready } = useTranslation('ViewReviewPopup');
-  const lang = detectLanguage();
-  moment.locale(lang);
+  const { locale } = useCurrentScope();
+  moment.locale(locale);
 
   const [nickname, setNickname] = useState(null);
   const [message, setMessage] = useState(null);
@@ -36,7 +36,7 @@ const ViewReviewPopup = ({ open, onClose, id, startDate, endDate }) => {
         'access-token': window.localStorage.getItem('access-token'),
       };
       const callParams = {
-        locale: lang,
+        locale: locale,
       };
       axios
         .get(path, { params: callParams, headers: headers })

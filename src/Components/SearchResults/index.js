@@ -12,7 +12,7 @@ import queryString from 'query-string';
 import { getDaysArray } from '../../utils/getDaysArray';
 import { useStartConversation } from '../../utils/useStartConversation';
 import { finalTotal } from '../../Modules/PriceCalculations';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 
 import Spinner from '../../common/Spinner';
@@ -29,7 +29,7 @@ import HostPopup from './HostPopup';
 import RequestToBook from './request';
 
 const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const { t, ready } = useTranslation('SearchResults');
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
 
   const today = moment.utc().hours(0).minutes(0).seconds(0).milliseconds(0).valueOf();
 
-  moment.locale(lang);
+  moment.locale(locale);
 
   const geolocationDataAddress = (place) => {
     Geocode.setApiKey(process.env.REACT_APP_API_KEY_GOOGLE);
@@ -131,7 +131,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
         let APIavailableAllLocations = [];
         let APInotAvailableAllLocations = [];
         const responseByLocation = await axios.get(
-          `/api/v1/host_profiles?location=${searchParams.location}&startDate=${searchParams.from}&endDate=${searchParams.to}&cats=${searchParams.cats}&locale=${lang}`
+          `/api/v1/host_profiles?location=${searchParams.location}&startDate=${searchParams.from}&endDate=${searchParams.to}&cats=${searchParams.cats}&locale=${locale}`
         );
         if (responseByLocation.data.with.length > 0) {
           APIavailableByLocation = responseByLocation.data.with.filter((host) => host.user.id !== id);
@@ -149,7 +149,7 @@ const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
         geolocationDataAddress(searchParams.location);
 
         const responseAllLocations = await axios.get(
-          `/api/v1/host_profiles?startDate=${searchParams.from}&endDate=${searchParams.to}&cats=${searchParams.cats}&locale=${lang}`
+          `/api/v1/host_profiles?startDate=${searchParams.from}&endDate=${searchParams.to}&cats=${searchParams.cats}&locale=${locale}`
         );
         if (responseAllLocations.data !== '' && responseAllLocations.data.with.length > 0) {
           APIavailableAllLocations = responseAllLocations.data.with.filter((host) => host.user.id !== id);

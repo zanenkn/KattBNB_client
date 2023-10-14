@@ -4,13 +4,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 import { Flexbox, Text, TextArea, Notice, Button, InlineLink } from '../../UI-Components';
 
 const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
   const { t } = useTranslation('HostProfileForm');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,9 +19,9 @@ const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
 
   useEffect(() => {
     return () => {
-      setNewDescription(description)
-    }
-  }, [])
+      setNewDescription(description);
+    };
+  }, []);
 
   const validator = formValidation({
     fields: [
@@ -37,7 +38,6 @@ const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
   });
 
   const updateDescription = () => {
-    const lang = detectLanguage();
     setLoading(true);
 
     if (newDescription === description) {
@@ -53,7 +53,7 @@ const DescriptionUpdateForm = ({ description, id, setElement, toggleForm }) => {
     };
     const payload = {
       description: newDescription,
-      locale: lang,
+      locale: locale,
     };
     axios
       .patch(path, payload, { headers: headers })

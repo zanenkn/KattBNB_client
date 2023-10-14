@@ -5,10 +5,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
-import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { getAvatar } from '../../Modules/getAvatar';
-
+import useCurrentScope from '../../hooks/useCurrentScope';
 import Spinner from '../../common/Spinner';
 import ReviewScore from '../../common/ReviewScore';
 
@@ -37,8 +35,8 @@ const AllReviews = ({ score, hostProfileId, withReply, username }) => {
   const [errors, setErrors] = useState([]);
   const [reload, setReload] = useState('');
 
-  const lang = detectLanguage();
-  moment.locale(lang);
+  const { locale } = useCurrentScope();
+  moment.locale(locale);
 
   useEffect(() => {
     setLoading(true);
@@ -50,7 +48,7 @@ const AllReviews = ({ score, hostProfileId, withReply, username }) => {
     const path = '/api/v1/reviews';
     const callParams = {
       host_profile_id: hostProfileId,
-      locale: lang,
+      locale: locale,
     };
     axios
       .get(path, { params: callParams })

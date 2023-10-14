@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import Popup from 'reactjs-popup';
-import { Header, Text, TextArea, Button, Notice } from '../../../UI-Components';
+
+import Spinner from '../../../common/Spinner';
 import { PopupHeaderWrapper } from '../common/styles';
+import useCurrentScope from '../../../hooks/useCurrentScope';
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { Header, Text, TextArea, Button, Notice } from '../../../UI-Components';
 
 const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }) => {
   const { t, ready } = useTranslation('DeclineRequestPopup');
+  const { locale } = useCurrentScope();
 
   const [closeOnDocumentClick, setCloseOnDocumentClick] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,6 @@ const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }
 
   const declineBooking = (e) => {
     e.preventDefault();
-    const lang = detectLanguage();
     setLoading(true);
     setCloseOnDocumentClick(false);
     if (window.navigator.onLine === false) {
@@ -36,7 +37,7 @@ const DeclineRequestPopup = ({ open, onClose, startDate, endDate, nickname, id }
         const payload = {
           host_message: message,
           status: 'declined',
-          locale: lang,
+          locale: locale,
         };
         axios
           .patch(path, payload, { headers: headers })

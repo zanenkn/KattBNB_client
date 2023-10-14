@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import axios from 'axios';
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
@@ -11,6 +11,7 @@ import { ButtonWrapper } from './styles';
 
 const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
   const { t, ready } = useTranslation('LocationUpdateForm');
+  const { locale } = useCurrentScope();
 
   const [newLocation, setNewLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,6 @@ const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
 
   const axiosCall = () => {
     setLoading(true);
-    const lang = detectLanguage();
     const headers = {
       uid: window.localStorage.getItem('uid'),
       client: window.localStorage.getItem('client'),
@@ -39,7 +39,7 @@ const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
     const path = '/api/v1/auth/';
     const payload = {
       location: newLocation,
-      locale: lang,
+      locale: locale,
     };
     axios
       .put(path, payload, { headers: headers })
@@ -85,7 +85,7 @@ const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
 
   return (
     <>
-      <Divider bottom={5}/>
+      <Divider bottom={5} />
       <Dropdown
         label={t('LocationUpdateForm:new-location-plch')}
         data={LOCATION_OPTIONS}
@@ -121,7 +121,7 @@ const LocationUpdateForm = ({ toggleForm, fullAddress, location }) => {
           {t('reusable:cta.save')}
         </Button>
       </ButtonWrapper>
-      <Divider top={5} bottom={6}/>
+      <Divider top={5} bottom={6} />
     </>
   );
 };

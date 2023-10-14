@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { useTranslation } from 'react-i18next';
+
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import Spinner from '../../../common/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
-// Completely MIGRATED
 
 const PasswordReset = ({ history }) => {
   const { t, ready } = useTranslation('PasswordReset');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
@@ -39,7 +39,7 @@ const PasswordReset = ({ history }) => {
     const payload = {
       redirect_url: url,
       email: email,
-      locale: lang,
+      locale: locale,
     };
     axios
       .post(path, payload)
@@ -59,7 +59,7 @@ const PasswordReset = ({ history }) => {
   };
 
   if (!ready) {
-    return <Spinner page/>;
+    return <Spinner page />;
   }
 
   return (

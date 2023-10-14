@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
@@ -11,6 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,9 +19,9 @@ const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
 
   useEffect(() => {
     return () => {
-      setNewMaxCats(maxCats)
-    }
-  }, [])
+      setNewMaxCats(maxCats);
+    };
+  }, []);
 
   const validator = formValidation({
     fields: [
@@ -37,7 +38,6 @@ const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
   });
 
   const updateMaxCats = () => {
-    const lang = detectLanguage();
     setLoading(true);
 
     const path = `/api/v1/host_profiles/${id}`;
@@ -48,7 +48,7 @@ const MaxCatsUpdateForm = ({ id, maxCats, toggleForm, setElement }) => {
     };
     const payload = {
       max_cats_accepted: newMaxCats,
-      locale: lang,
+      locale: locale,
     };
     axios
       .patch(path, payload, { headers: headers })

@@ -6,12 +6,12 @@ import Popup from 'reactjs-popup';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 
 import withAuth from '../../HOC/withAuth';
 import HostProfile from '../HostProfile';
 import Spinner from '../../common/Spinner';
+import useCurrentScope from '../../hooks/useCurrentScope';
 
 import { Header, Notice, Text, Button, Container, Whitebox, InlineLink, ContentWrapper } from '../../UI-Components';
 import { User, Location, Email, Lock, Notification, Globe } from '../../icons';
@@ -25,10 +25,10 @@ import LangPrefUpdateForm from './langPrefUpdateForm';
 import HostProfileProgressBar from '../HostProfile/HostProfileProgressBar';
 import AllReviews from '../Reviews/allReviews';
 
-//MIGRATION IN PROGRESS
 const UserPage = ({ username, location, email, userId, avatar, messageNotifications, langPref }) => {
   const { t, ready } = useTranslation('UserPage');
   const history = useHistory();
+  const { locale } = useCurrentScope();
 
   const [form, setForm] = useState({
     editAvatar: false,
@@ -71,8 +71,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       setErrors(['reusable:errors:window-navigator']);
     } else {
       if (hostProfile.length === 1) {
-        const lang = detectLanguage();
-        const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${lang}`;
+        const path = `/api/v1/host_profiles/${hostProfile[0].id}?locale=${locale}`;
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
@@ -154,8 +153,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
         setErrors(['reusable:errors:window-navigator']);
       } else {
         try {
-          const lang = detectLanguage();
-          const response = await axios.get(`/api/v1/host_profiles?user_id=${userId}&locale=${lang}`);
+          const response = await axios.get(`/api/v1/host_profiles?user_id=${userId}&locale=${locale}`);
           setHostProfile(response.data);
           setLoading(false);
           setErrors([]);
@@ -179,13 +177,12 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       setErrors(['reusable:errors:window-navigator']);
     } else {
       try {
-        const lang = detectLanguage();
         const headers = {
           uid: window.localStorage.getItem('uid'),
           client: window.localStorage.getItem('client'),
           'access-token': window.localStorage.getItem('access-token'),
         };
-        const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${username}&locale=${lang}`;
+        const pathIncoming = `/api/v1/bookings?dates=only&stats=no&host_nickname=${username}&locale=${locale}`;
         const responseIncoming = await axios.get(pathIncoming, { headers: headers });
         setIncomingBookings(responseIncoming.data);
         setErrors([]);
@@ -245,8 +242,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       setDeleteDisplayNone(false);
       setErrors(['reusable:errors:window-navigator']);
     } else {
-      const lang = detectLanguage();
-      const bookings = `/api/v1/bookings?stats=yes&user_id=${userId}&host_nickname=${username}&locale=${lang}`;
+      const bookings = `/api/v1/bookings?stats=yes&user_id=${userId}&host_nickname=${username}&locale=${locale}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -288,7 +284,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
           } else if (hostProfile.length === 1 && window.confirm(t('UserPage:delete-confirm'))) {
             const pathStripe = '/api/v1/stripe_actions/delete_account';
             const callParams = {
-              locale: lang,
+              locale: locale,
             };
             axios
               .get(pathStripe, { params: callParams, headers: headers })

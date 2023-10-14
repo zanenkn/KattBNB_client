@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import withAuth from '../../../HOC/withAuth';
-import Spinner from '../../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import moment from 'moment';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import withAuth from '../../../HOC/withAuth';
+import { ScrollToTop, SectionWrapper, StyledContentWrapper } from '../common/styles';
+import Spinner from '../../../common/Spinner';
+import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
 import OutgoingRequests from './outgoingRequests';
 import OutgoingUpcoming from './outgoingUpcoming';
 import OutgoingHistory from './outgoingHistory';
-import { SecondaryStickyHeader, Header, Button, Text, Notice } from '../../../UI-Components';
-import { ScrollToTop, SectionWrapper, StyledContentWrapper } from '../common/styles';
 import { CheveronUp } from '../../../icons';
 
 const OutgoingBookings = ({ location: { state } }) => {
   const { t, ready } = useTranslation('OutgoingBookings');
+  const { locale } = useCurrentScope();
 
   const [scrollYPosition, setScrollYPosition] = useState(0);
   const [outgoingBookings, setOutgoingBookings] = useState([]);
@@ -52,13 +53,12 @@ const OutgoingBookings = ({ location: { state } }) => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    const lang = detectLanguage();
     if (window.navigator.onLine === false) {
       axiosCallStateHandling(false, ['reusable:errors:window-navigator']);
     } else if (window.history.state === null) {
       window.location.replace('/all-bookings');
     } else {
-      const outBookings = `/api/v1/bookings?stats=no&user_id=${state.userId}&locale=${lang}`;
+      const outBookings = `/api/v1/bookings?stats=no&user_id=${state.userId}&locale=${locale}`;
       const headers = {
         uid: window.localStorage.getItem('uid'),
         client: window.localStorage.getItem('client'),
@@ -158,7 +158,11 @@ const OutgoingBookings = ({ location: { state } }) => {
           </Header>
           <OutgoingHistory
             bookings={outgoingBookings
-              .filter((booking) => booking.dates[booking.dates.length - 1] <= today || (booking.status !== 'accepted' && booking.status !== 'pending'))
+              .filter(
+                (booking) =>
+                  booking.dates[booking.dates.length - 1] <= today ||
+                  (booking.status !== 'accepted' && booking.status !== 'pending')
+              )
               .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())}
           />
         </SectionWrapper>

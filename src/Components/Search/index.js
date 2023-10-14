@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 
+import useCurrentScope from '../../hooks/useCurrentScope';
 import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import { getDaysArray } from '../../utils/getDaysArray';
-import { detectLanguage } from '../../Modules/detectLanguage';
 import { formValidation } from '../../Modules/formValidation';
 
 import Spinner from '../../common/Spinner';
@@ -30,7 +30,7 @@ import {
 
 const Search = ({ history, dispatch, currentSearch }) => {
   const { t, ready } = useTranslation('Search');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const toField = useRef(null);
   const fromField = useRef(null);
@@ -84,7 +84,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
 
   const listenEnterKeySearch = (event) => {
     if (event.key === 'Enter') {
-      validator.onSubmit(search)
+      validator.onSubmit(search);
     }
   };
 
@@ -155,7 +155,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
                 numberOfMonths: 1,
                 firstDayOfWeek: 1,
                 localeUtils: MomentLocaleUtils,
-                locale: lang,
+                locale: locale,
                 showWeekNumbers: true,
                 modifiers: modifiers,
               }}
@@ -184,7 +184,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
                 month: new Date(from),
                 fromMonth: new Date(from),
                 localeUtils: MomentLocaleUtils,
-                locale: lang,
+                locale: locale,
                 numberOfMonths: 1,
                 modifiers: modifiers,
               }}

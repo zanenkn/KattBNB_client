@@ -9,9 +9,9 @@ import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-
 import { Helmet } from 'react-helmet';
 
 import { formValidation } from '../../../Modules/formValidation';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { pricePerDay, hostTotal, finalTotal } from '../../../Modules/PriceCalculations';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 
 import Spinner from '../../../common/Spinner';
 
@@ -26,7 +26,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
   const history = useHistory();
   const { host } = useFetchHost(id);
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -82,7 +82,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       );
       const path = '/api/v1/stripe_actions/create_payment_intent';
       const callParams = {
-        locale: lang,
+        locale: locale,
         amount: amount,
         inDate: currentSearch.start,
         outDate: currentSearch.end,
@@ -140,7 +140,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
       price_total: totalToPayHost,
       user_id: userId,
       payment_intent_id: paymentIntentId,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),
@@ -195,7 +195,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
 
     const path = '/api/v1/stripe_actions/update_payment_intent';
     const callParams = {
-      locale: lang,
+      locale: locale,
       number_of_cats: currentSearch.cats,
       message: message,
       dates: booking,

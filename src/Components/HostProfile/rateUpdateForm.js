@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
@@ -11,6 +11,7 @@ import { Flexbox, Text, TextField, Notice, Button } from '../../UI-Components';
 
 const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
   const { t } = useTranslation('HostProfileForm');
+  const { locale } = useCurrentScope();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,9 +19,9 @@ const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
 
   useEffect(() => {
     return () => {
-      setNewRate(rate)
-    }
-  }, [])
+      setNewRate(rate);
+    };
+  }, []);
 
   const validator = formValidation({
     fields: [
@@ -37,7 +38,6 @@ const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
   });
 
   const updateRate = () => {
-    const lang = detectLanguage();
     setLoading(true);
 
     if (newRate === rate) {
@@ -53,7 +53,7 @@ const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
     };
     const payload = {
       price_per_day_1_cat: newRate,
-      locale: lang,
+      locale: locale,
     };
     axios
       .patch(path, payload, { headers: headers })
@@ -76,7 +76,7 @@ const RateUpdateForm = ({ id, rate, toggleForm, setElement }) => {
         }
       });
   };
-  
+
   return (
     <>
       <Text>{t('HostProfileForm:helpers.rate')}</Text>

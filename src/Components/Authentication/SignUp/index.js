@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import LOCATION_OPTIONS from '../../../Modules/locationData.json';
 import { registerUser } from '../../../reduxTokenAuthConfig';
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
-import { passwordCheck } from '../../../Modules/passwordCheck';
-import { formValidation } from '../../../Modules/formValidation';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import ClientCaptcha from 'react-client-captcha';
-import Spinner from '../../../common/Spinner';
 import { Helmet } from 'react-helmet';
+
+import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import { passwordCheck } from '../../../Modules/passwordCheck';
+import { formValidation } from '../../../Modules/formValidation';
+import useCurrentScope from '../../../hooks/useCurrentScope';
+import Spinner from '../../../common/Spinner';
 import {
   Dropdown,
   TextField,
@@ -25,12 +26,10 @@ import {
   ContentWrapper,
 } from '../../../UI-Components';
 import { FlexWrapper } from './styles';
-// MIGRATION IN PROGRESS: pending ui dependencies: Dropdown (wip)
 
 const SignUp = (props) => {
   const { t, ready } = useTranslation('SignUp');
-  const langPref = detectLanguage();
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,7 +69,7 @@ const SignUp = (props) => {
     const { history, registerUser } = props;
     const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
 
-    registerUser({ email, password, passwordConfirmation, location, nickname, url, lang, langPref })
+    registerUser({ email, password, passwordConfirmation, location, nickname, url, locale, locale })
       .then(() => {
         setErrors([]);
         history.push('/signup-success');
@@ -93,7 +92,7 @@ const SignUp = (props) => {
   }
 
   if (!ready) {
-    return <Spinner page/>;
+    return <Spinner page />;
   }
 
   return (

@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-
-import { detectLanguage } from '../../../Modules/detectLanguage';
-import { wipeCredentials } from '../../../Modules/wipeCredentials';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 
 const useReviews = () => {
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const { t } = useTranslation('reusable');
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
   useEffect(() => {
     if (window.navigator.onLine === false) {
@@ -22,7 +18,7 @@ const useReviews = () => {
     axios
       .get('/api/v1/random_reviews/reviews', {
         params: {
-          locale: lang,
+          locale: locale,
         },
       })
       .then((resp) => {

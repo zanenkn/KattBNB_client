@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { detectLanguage } from '../../../Modules/detectLanguage';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 
 export const useFetchHost = (id) => {
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
   const [errors, setErrors] = useState([]);
   const [host, setHost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ export const useFetchHost = (id) => {
       setLoading(false);
     } else {
       axios
-        .get(`/api/v1/host_profiles?user_id=${id}&locale=${lang}`)
+        .get(`/api/v1/host_profiles?user_id=${id}&locale=${locale}`)
         .then(({ data }) => {
           if (!data.length) {
             setErrors((prev) => [...prev, 'reusable:errors:index-no-host-1']);

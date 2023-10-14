@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-import { detectLanguage } from '../../Modules/detectLanguage';
+import useCurrentScope from '../../hooks/useCurrentScope';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
 import { formValidation, conditions as validate } from '../../Modules/formValidation';
 
@@ -14,6 +14,7 @@ import { ButtonWrapper } from './styles';
 
 const PasswordUpdateForm = ({ toggleForm }) => {
   const { t, ready } = useTranslation('PasswordUpdateForm');
+  const { locale } = useCurrentScope();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -45,13 +46,12 @@ const PasswordUpdateForm = ({ toggleForm }) => {
 
   const updatePassword = () => {
     setLoading(true);
-    const lang = detectLanguage();
     const path = '/api/v1/auth/password';
     const payload = {
       current_password: currentPassword,
       password: newPassword,
       password_confirmation: newPasswordConfirmation,
-      locale: lang,
+      locale: locale,
     };
     const headers = {
       uid: window.localStorage.getItem('uid'),

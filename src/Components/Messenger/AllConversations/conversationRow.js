@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 
 import timeFormat from '../../../Modules/dateFormatting';
-import { detectLanguage } from '../../../Modules/detectLanguage';
 import { getAvatar } from '../../../Modules/getAvatar';
+import useCurrentScope from '../../../hooks/useCurrentScope';
 import { Avatar, Divider, Header, Text } from '../../../UI-Components';
 import { useHistory } from 'react-router-dom';
 import { RowWrapper, Textflex } from './styles';
@@ -11,9 +11,9 @@ import { RowWrapper, Textflex } from './styles';
 const ConversationRow = ({ conversation, currentUserId, t }) => {
   const [responder, setResponder] = useState({ name: '', avatar: null });
   const history = useHistory();
-  const lang = detectLanguage();
+  const { locale } = useCurrentScope();
 
-  moment.locale(lang);
+  moment.locale(locale);
 
   useEffect(() => {
     const respondingUser = Object.keys(conversation)
