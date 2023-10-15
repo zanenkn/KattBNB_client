@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import ClientCaptcha from 'react-client-captcha';
+import withFooter from '../../HOC/withFooter';
 import useCurrentScope from '../../hooks/useCurrentScope';
 import Spinner from '../../common/Spinner';
 import {
@@ -170,4 +171,4 @@ const ContactUs = (props) => {
   );
 };
 
-export default ContactUs;
+export default withFooter(ContactUs);

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -27,8 +27,9 @@ import AllReviews from '../Reviews/allReviews';
 
 const UserPage = ({ username, location, email, userId, avatar, messageNotifications, langPref }) => {
   const { t, ready } = useTranslation('UserPage');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { locale, headers } = useCurrentScope();
+  
 
   const [form, setForm] = useState({
     editAvatar: false,
@@ -406,7 +407,7 @@ const UserPage = ({ username, location, email, userId, avatar, messageNotificati
       {!hostProfile.length && (
         <MaxWidth>
           <Text centered>{t('UserPage:no-host-profile')}</Text>
-          <Button data-cy='create-host-profile-cta' onClick={() => history.push('/create-host-profile')}>
+          <Button data-cy='create-host-profile-cta' onClick={() => navigate('/create-host-profile')}>
             {t('UserPage:host-profile-cta')}
           </Button>
         </MaxWidth>

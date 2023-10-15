@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import queryString from 'query-string';
 import Prismic from '@prismicio/client';
+import withFooter from '../../HOC/withFooter';
 import useCurrentScope from '../../hooks/useCurrentScope';
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
 import { ContentWrapper, Text, Header, InlineLink, Container } from '../../UI-Components';
 import Question from './question';
 
-const Faq = ({ location }) => {
+const Faq = () => {
+  const location = useLocation();
+
   const useReturnRef = (key) => {
     const ref = useCallback(
       (node) => {
@@ -90,7 +93,7 @@ const Faq = ({ location }) => {
       <Text centered>
         <Trans i18nKey='Faq:to-guidelines'>
           Have you booked a stay already? Check out our helpful
-          <InlineLink as={Link} to='guidelines' color='info'>
+          <InlineLink as={Link} to='/guidelines' color='info'>
             guidelines
           </InlineLink>
           .
@@ -170,4 +173,4 @@ const Faq = ({ location }) => {
   );
 };
 
-export default Faq;
+export default withFooter(Faq);

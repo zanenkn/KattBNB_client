@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import withFooter from '../../HOC/withFooter';
 import { Container, Header, InlineLink, TextField } from '../../UI-Components';
 import { Grid, WideContentWrapper } from './styles';
 import useFilteredLocations from './useFilteredLocations';
@@ -43,4 +44,4 @@ const AreaList = () => {
   );
 };
 
-export default AreaList;
+export default withFooter(AreaList);

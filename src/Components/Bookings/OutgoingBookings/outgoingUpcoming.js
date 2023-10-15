@@ -2,12 +2,13 @@ import React from 'react';
 import moment from 'moment';
 import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Booking from '../common/booking';
 import { Text } from '../../../UI-Components';
 
 const OutgoingUpcoming = ({ bookings, history }) => {
   const { t, ready } = useTranslation('OutgoingUpcoming');
+  const navigate = useNavigate()
 
   if (!ready) return <Spinner />;
 
@@ -47,8 +48,7 @@ const OutgoingUpcoming = ({ bookings, history }) => {
               {
                 text: t('OutgoingUpcoming:details'),
                 action: () => {
-                  history.push({
-                    pathname: '/booking-details',
+                  navigate('/booking-details', {
                     state: {
                       hostId: upcoming.host_id,
                       startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
@@ -67,8 +67,7 @@ const OutgoingUpcoming = ({ bookings, history }) => {
               {
                 text: t('reusable:cta:view-receipt'),
                 action: () => {
-                  history.push({
-                    pathname: '/booking-receipt',
+                  navigate('/booking-receipt', {
                     state: {
                       nickname: upcoming.host_nickname,
                       startDate: moment(upcoming.dates[0]).format('YYYY-MM-DD'),
@@ -89,4 +88,4 @@ const OutgoingUpcoming = ({ bookings, history }) => {
   );
 };
 
-export default withRouter(OutgoingUpcoming);
+export default OutgoingUpcoming;

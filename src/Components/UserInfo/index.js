@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { useFetchHost } from './useFetchHost';
+import withFooter from '../../HOC/withFooter';
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
 import { useStartConversation } from '../../utils/useStartConversation';
@@ -56,4 +57,4 @@ const UserInfo = ({ currentUserId }) => {
 
 const mapStateToProps = (state) => ({ currentUserId: state.reduxTokenAuth.currentUser.attributes.id });
 
-export default connect(mapStateToProps)(UserInfo);
+export default withFooter(connect(mapStateToProps)(UserInfo));

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -82,4 +81,4 @@ const IncomingUpcoming = ({ id, bookings }) => {
 
 const mapStateToProps = (state) => ({ id: state.reduxTokenAuth.currentUser.attributes.id });
 
-export default withRouter(connect(mapStateToProps)(IncomingUpcoming));
+export default connect(mapStateToProps)(IncomingUpcoming);

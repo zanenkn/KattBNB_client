@@ -12,7 +12,7 @@ const SuccessfulReview = ( ) => {
       </Header>
       <Whitebox>
         <Text>{t('LeaveReview:successful.text')}</Text>
-        <InlineLink as={Link} to='all-bookings' color='info'>
+        <InlineLink as={Link} to='/all-bookings' color='info'>
           {t('LeaveReview:successful.bookings-cta')}
         </InlineLink>
       </Whitebox>

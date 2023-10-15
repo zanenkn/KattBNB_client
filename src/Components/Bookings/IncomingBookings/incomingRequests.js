@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useNavigate, useNavigationType } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import axios from 'axios';
@@ -11,9 +11,11 @@ import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { Text, Notice } from '../../../UI-Components';
 import BookingRequest from './bookingRequest';
 
-const IncomingRequests = ({ history, requests, stripeState, email }) => {
+const IncomingRequests = ({ requests, stripeState, email }) => {
   const { t, ready } = useTranslation('IncomingRequests');
   const { locale, headers } = useCurrentScope();
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   const [errors, setErrors] = useState([]);
   const [payoutSuccess, setPayoutSuccess] = useState(false);
@@ -58,8 +60,8 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
   };
 
   useEffect(() => {
-    if (history.action === 'POP') {
-      history.push({ pathname: '/all-bookings' });
+    if (navigationType === 'POP') {
+      navigate('/all-bookings');
     }
     if (requests.length > 0) {
       fetchStripeAccountDetails();
@@ -67,7 +69,7 @@ const IncomingRequests = ({ history, requests, stripeState, email }) => {
     }
     setLoading(false);
     // eslint-disable-next-line
-  }, []);
+  }, [navigationType]);
 
   const fetchStripeDashboardLink = async () => {
     if (window.navigator.onLine === false) {
@@ -151,4 +153,4 @@ const mapStateToProps = (state) => ({
   stripeState: state.hostProfile.data.stripe_state,
 });
 
-export default connect(mapStateToProps)(withRouter(IncomingRequests));
+export default connect(mapStateToProps)(IncomingRequests);

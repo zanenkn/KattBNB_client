@@ -1,5 +1,6 @@
+import { Route, Routes } from 'react-router-dom';
+
 import './Styles/global.css';
-import withFooter from './HOC/withFooter';
 import Landing from './Components/Landing';
 import Responsive from './common/Responsive';
 import MobileNav from './Components/Navbar/Mobile';
@@ -37,7 +38,6 @@ import AreaList from './Components/AreaList';
 import BlogListing from './Components/Blog/BlogListing';
 import BlogPost from './Components/Blog/BlogPost';
 import ScrollToTop from './Modules/ScrollToTop';
-import { Switch, Route } from 'react-router-dom';
 import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
 import HostProfileForm from './Components/HostProfileForm';
@@ -53,50 +53,49 @@ const App = () => {
         <DesktopNav />
       </Responsive>
       <ScrollToTop>
-        <Switch>
-          <Route exact path='/' component={withFooter(Landing)}></Route>
-          <Route exact path='/search' component={withFooter(Search)}></Route>
-          <Route exact path='/search-results' component={SearchResults}></Route>
-          <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
-          <Route exact path='/contact-us' component={withFooter(ContactUs)}></Route>
-          <Route exact path='/faq' component={withFooter(Faq)}></Route>
-          <Route exact path='/legal' component={withFooter(Legal)}></Route>
-          <Route exact path='/login' component={withFooter(Login)}></Route>
-          <Route exact path='/sign-up' component={withFooter(SignUp)}></Route>
+        <Routes>
+          <Route path='/' element={<Landing />}></Route>
+
+          <Route path='/search' element={<Search />}></Route>
+          <Route path='/search-results' element={SearchResults}></Route>
+          <Route path='/about-us' element={<AboutUs />}></Route>
+          <Route path='/contact-us' element={<ContactUs />}></Route>
+          <Route path='/faq' element={<Faq />}></Route>
+          <Route path='/legal' element={<Legal />}></Route>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='/sign-up' element={<SignUp />}></Route>
           <Route
-            exact
             path='/signup-success'
             render={(props) => <SuccessScreenAuth {...props} translationFile={'SignupSuccess'} />}
           />
-          <Route exact path='/password-reset' component={PasswordReset}></Route>
-          <Route exact path='/change-password' component={ChangePassword}></Route>
+          <Route path='/password-reset' element={<PasswordReset />}></Route>
+          <Route path='/change-password' element={<ChangePassword />}></Route>
           <Route
-            exact
             path='/password-reset-success'
             render={(props) => <SuccessScreenAuth {...props} translationFile={'PasswordResetSuccess'} />}
           />
-          <Route exact path='/successful-request' component={SuccessfulRequest}></Route>
-          <Route exact path='/request-accepted-success' component={RequestAcceptedSuccessfully}></Route>
-          <Route exact path='/booking-details' component={BookingDetails}></Route>
-          <Route exact path='/user/:userId' component={withFooter(UserInfo)}></Route>
-          <Route exact path='/guidelines' component={withFooter(Guidelines)}></Route>
-          <Route exact path='/is-not-available' component={Error503}></Route>
-          <Route exact path='/become-host' component={HostEn}></Route>
-          <Route exact path='/bli-kattvakt' component={HostSe}></Route>
-          <Route exact path='/successful-review' component={SuccessfulReview}></Route>
-          <Route exact path='/user-page' component={UserPage}></Route>
-          <Route exact path='/all-bookings' component={AllBookings}></Route>
-          <Route exact path='/outgoing-bookings' component={OutgoingBookings}></Route>
-          <Route exact path='/incoming-bookings' component={IncomingBookings}></Route>
-          <Route exact path='/messenger' component={AllConversations}></Route>
-          <Route exact path='/conversation/:conversationId' component={Conversation}></Route>
-          <Route exact path='/leave-a-review' component={LeaveReview}></Route>
-          <Route exact path='/booking-receipt' component={Receipt}></Route>
-          <Route exact path='/area-list' component={withFooter(AreaList)}></Route>
-          <Route exact path='/create-host-profile' component={HostProfileForm}></Route>
-          <Route exact path='/blog/:category/:page' component={withFooter(BlogListing)}></Route>
-          <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route>
-        </Switch>
+          <Route path='/successful-request' element={<SuccessfulRequest />}></Route>
+          <Route path='/request-accepted-success' element={<RequestAcceptedSuccessfully />}></Route>
+          <Route path='/booking-details' element={<BookingDetails />}></Route>
+          <Route path='/user/:userId' element={<UserInfo />}></Route>
+          <Route path='/guidelines' element={<Guidelines />}></Route>
+          <Route path='/is-not-available' element={<Error503/>}></Route>
+          <Route path='/become-host' element={<HostEn />}></Route>
+          <Route path='/bli-kattvakt' element={<HostSe/>}></Route>
+          <Route path='/successful-review' element={<SuccessfulReview/>}></Route>
+          <Route path='/user-page' element={<UserPage />}></Route>
+          <Route path='/all-bookings' element={<AllBookings/>}></Route>
+          <Route path='/outgoing-bookings' element={<OutgoingBookings />}></Route>
+          <Route path='/incoming-bookings' element={<IncomingBookings/>}></Route>
+          <Route path='/messenger' element={<AllConversations />}></Route>
+          <Route path='/conversation/:conversationId' element={<Conversation />}></Route>
+          <Route path='/leave-a-review' element={<LeaveReview/>}></Route>
+          <Route path='/booking-receipt' element={<Receipt />}></Route>
+          <Route path='/area-list' element={<AreaList/>}></Route>
+          <Route path='/create-host-profile' element={<HostProfileForm/>}></Route>
+          <Route path='/blog/:category/:page' element={<BlogListing/>}></Route>
+          <Route path={'/blog/:uid'} element={<BlogPost/>}></Route>
+        </Routes>
       </ScrollToTop>
       <Menu />
     </Theme>

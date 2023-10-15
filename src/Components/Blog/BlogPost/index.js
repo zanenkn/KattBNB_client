@@ -4,6 +4,7 @@ import Prismic from '@prismicio/client';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
+import withFooter from '../../../HOC/withFooter';
 import Share from '../../../common/Share';
 import Spinner from '../../../common/Spinner';
 import { FeaturedImage, FlexWrapper, AuthorAvatar } from '../styles';
@@ -83,4 +84,4 @@ const BlogPost = ({ location: { state } }) => {
   );
 };
 
-export default BlogPost;
+export default withFooter(BlogPost);

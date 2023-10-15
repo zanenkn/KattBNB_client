@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-reactjs';
 
+import withFooter from '../../HOC/withFooter';
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
 import useCurrentScope from '../../hooks/useCurrentScope';
@@ -44,4 +45,4 @@ const Legal = () => {
   );
 };
 
-export default Legal;
+export default withFooter(Legal);

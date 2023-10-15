@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../../common/Spinner';
 import SEO from '../../common/SEO';
 import Responsive from '../../common/Responsive';
+import withFooter from '../../HOC/withFooter';
 
 import DesktopHero from './src/desktopHero';
 import MobileHero from './src/mobileHero';
@@ -54,4 +55,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default withFooter(Landing);

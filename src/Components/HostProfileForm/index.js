@@ -6,8 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import DayPicker from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import withAuth from '../../HOC/withAuth';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -34,7 +33,7 @@ import useCurrentScope from '../../hooks/useCurrentScope';
 
 const HostProfileForm = ({ userId, location }) => {
   const { t, ready } = useTranslation('HostProfileForm');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [newHost, setNewHost] = useState({
     description: '',
@@ -175,7 +174,7 @@ const HostProfileForm = ({ userId, location }) => {
     axios
       .post(path, payload, { headers: headers })
       .then(() => {
-        history.push('/user-page');
+        navigate('/user-page');
       })
       .catch((error) => {
         if (error.response === undefined) {

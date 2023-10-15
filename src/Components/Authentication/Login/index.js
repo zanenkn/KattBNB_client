@@ -4,6 +4,7 @@ import { signInUser } from '../../../reduxTokenAuthConfig';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useCurrentScope from '../../../hooks/useCurrentScope';
+import withFooter from '../../../HOC/withFooter';
 import Spinner from '../../../common/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 
@@ -92,7 +93,7 @@ const Login = (props) => {
           <InlineLink
             as={Link}
             data-cy='password-reset-link'
-            to='password-reset'
+            to='/password-reset'
             color='info'
             disabled={successDisplay}
           >
@@ -125,7 +126,7 @@ const Login = (props) => {
         </Text>
 
         <Text centered>
-          <InlineLink as={Link} to='sign-up' data-cy='create-account' color='primary' disabled={successDisplay}>
+          <InlineLink as={Link} to='/sign-up' data-cy='create-account' color='primary' disabled={successDisplay}>
             {t('Login:signup-link')}
           </InlineLink>
         </Text>
@@ -134,4 +135,4 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { signInUser })(Login);
+export default withFooter(connect(null, { signInUser })(Login));

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment';
 
+import withFooter from '../../HOC/withFooter';
 import useCurrentScope from '../../hooks/useCurrentScope';
 import LOCATION_OPTIONS from '../../Modules/locationData.json';
 import { getDaysArray } from '../../utils/getDaysArray';
@@ -245,4 +246,4 @@ const mapStateToProps = (state) => ({
   currentSearch: state.currentSearch,
 });
 
-export default connect(mapStateToProps)(Search);
+export default withFooter(connect(mapStateToProps)(Search));

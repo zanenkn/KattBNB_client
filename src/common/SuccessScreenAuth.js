@@ -30,7 +30,7 @@ const SuccessScreenAuth = ({ translationFile, currentUserIn }) => {
         <Text centered>
           <Trans i18nKey={`${translationFile}:p`}>
             text
-            <InlineLink as={Link} to='faq' color='info'>
+            <InlineLink as={Link} to='/faq' color='info'>
               link
             </InlineLink>
             .

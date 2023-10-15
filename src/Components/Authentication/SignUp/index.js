@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LOCATION_OPTIONS from '../../../Modules/locationData.json';
 import { registerUser } from '../../../reduxTokenAuthConfig';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useNavigationType } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import ClientCaptcha from 'react-client-captcha';
 import { Helmet } from 'react-helmet';
@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet';
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { passwordCheck } from '../../../Modules/passwordCheck';
 import { formValidation } from '../../../Modules/formValidation';
+import withFooter from '../../../HOC/withFooter';
 import useCurrentScope from '../../../hooks/useCurrentScope';
 import Spinner from '../../../common/Spinner';
 import {
@@ -27,9 +28,11 @@ import {
 } from '../../../UI-Components';
 import { FlexWrapper } from './styles';
 
-const SignUp = (props) => {
+const SignUp = ({ registerUser }) => {
   const { t, ready } = useTranslation('SignUp');
   const { locale } = useCurrentScope();
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,13 +69,12 @@ const SignUp = (props) => {
 
   const createUser = () => {
     setLoading(true);
-    const { history, registerUser } = props;
     const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_SIGNUP : 'http://localhost:3000/login';
 
     registerUser({ email, password, passwordConfirmation, location, nickname, url, locale, locale })
       .then(() => {
         setErrors([]);
-        history.push('/signup-success');
+        navigate('/signup-success');
       })
       .catch((error) => {
         if (error.response === undefined) {
@@ -87,8 +89,8 @@ const SignUp = (props) => {
       });
   };
 
-  if (props.history.action === 'POP') {
-    props.history.push({ pathname: '/' });
+  if (navigationType === 'POP') {
+    navigate('/');
   }
 
   if (!ready) {
@@ -202,7 +204,7 @@ const SignUp = (props) => {
           <Text tint={termsAccepted ? 100 : 60}>
             <Trans i18nKey='SignUp:terms-label'>
               I accept the
-              <InlineLink as={Link} to='legal' target='_blank' color='info'>
+              <InlineLink as={Link} to='/legal' target='_blank' color='info'>
                 Terms & Conditions
               </InlineLink>
             </Trans>
@@ -235,4 +237,4 @@ const SignUp = (props) => {
   );
 };
 
-export default connect(null, { registerUser })(SignUp);
+export default withFooter(connect(null, { registerUser })(SignUp));

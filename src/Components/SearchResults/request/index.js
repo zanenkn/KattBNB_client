@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFetchHost } from '../HostPopup/useFetchHost';
 import { connect } from 'react-redux';
 import { CardNumberElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -24,7 +24,7 @@ import { getAvatar } from '../../../Modules/getAvatar';
 
 const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
   const { t, ready } = useTranslation('RequestToBook');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { host } = useFetchHost(id);
   const { locale, headers } = useCurrentScope();
   const stripe = useStripe();
@@ -142,8 +142,7 @@ const RequestToBook = ({ id, currentSearch, userId, toHost, toResults }) => {
     axios
       .post(path, payload, { headers: headers })
       .then(() => {
-        history.push({
-          pathname: '/successful-request',
+        navigate('/successful-request', {
           state: {
             cats: currentSearch.cats,
             start: currentSearch.start,

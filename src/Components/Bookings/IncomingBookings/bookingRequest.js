@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Trans } from 'react-i18next';
 import axios from 'axios';
@@ -13,7 +13,6 @@ import IncRequestPopup from './incRequestPopup';
 
 const BookingRequest = ({
   t,
-  history,
   request,
   payoutSuccess,
   fetchStripeDashboardLink,
@@ -27,6 +26,7 @@ const BookingRequest = ({
   const [errors, setErrors] = useState([]);
 
   const { locale, headers } = useCurrentScope();
+  const navigate = useNavigate();
 
   const formatPrice = (price) => {
     const priceWithDecimalsString = price.toFixed(2);
@@ -55,8 +55,7 @@ const BookingRequest = ({
       axios
         .patch(path, payload, { headers: headers })
         .then(() => {
-          history.push({
-            pathname: '/request-accepted-success',
+          navigate('/request-accepted-success', {
             state: {
               cats: requestData.number_of_cats,
               inDate: new Date(requestData.dates[0]),
@@ -73,7 +72,7 @@ const BookingRequest = ({
             setErrors(['reusable:errors:500']);
           } else if (response.status === 555 || response.status === 427) {
             window.alert(response.data.error);
-            history.push('/all-bookings');
+            navigate('/all-bookings');
           } else if (response.status === 401) {
             window.alert(t('reusable:errors:401'));
             wipeCredentials('/');
@@ -169,4 +168,4 @@ const BookingRequest = ({
   );
 };
 
-export default withRouter(BookingRequest);
+export default BookingRequest;

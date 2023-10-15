@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import ViewYourReviewPopup from './viewYourReviewPopup';
 import OutRequestDeclinedPopup from './outRequestDeclinedPopup';
 import OutRequestCancelledPopup from './outRequestCancelledPopup';
-import { withRouter } from 'react-router-dom';
 import Booking from '../common/booking';
 import { Text } from '../../../UI-Components';
 
-const OutgoingHistory = ({ bookings, history }) => {
+const OutgoingHistory = ({ bookings }) => {
   const { t, ready } = useTranslation('OutgoingHistory');
+  const navigate = useNavigate();
 
   const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
   const [bookingCanceledPopupOpened, setBookingCanceledPopupOpened] = useState(false);
@@ -115,8 +116,7 @@ const OutgoingHistory = ({ bookings, history }) => {
               booking.host_profile_id !== null && {
                 text: t('OutgoingHistory:leave-review'),
                 action: () => {
-                  history.push({
-                    pathname: '/leave-a-review',
+                  navigate('/leave-a-review', {
                     state: {
                       userId: booking.user_id,
                       hostProfileId: booking.host_profile_id,
@@ -126,8 +126,8 @@ const OutgoingHistory = ({ bookings, history }) => {
                       endDate: moment(booking.dates[booking.dates.length - 1]).format('YYYY-MM-DD'),
                       hostLocation: booking.host_location,
                       cats: booking.number_of_cats,
-                    },
-                  });
+                    }
+                  })
                 },
               }
             }
@@ -139,8 +139,7 @@ const OutgoingHistory = ({ bookings, history }) => {
               {
                 text: t('reusable:cta:view-receipt'),
                 action: () => {
-                  history.push({
-                    pathname: '/booking-receipt',
+                  navigate('/booking-receipt', {
                     state: {
                       nickname: booking.host_nickname,
                       startDate: moment(booking.dates[0]).format('YYYY-MM-DD'),
@@ -171,4 +170,4 @@ const OutgoingHistory = ({ bookings, history }) => {
   );
 };
 
-export default withRouter(OutgoingHistory);
+export default OutgoingHistory;

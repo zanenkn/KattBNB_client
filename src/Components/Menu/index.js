@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import LanguageSwitcher from '../../common/LanguageSwitcher';
@@ -10,8 +10,9 @@ import { MenuWrapper, InnerWrapper, SwitcherWrapper } from './styles';
 import MainMenu from './mainMenu';
 import UserMenu from './userMenu';
 
-const Menu = ({ menuType, menuVisible, userLoggedIn, closeMenu, location }) => {
+const Menu = ({ menuType, menuVisible, userLoggedIn, closeMenu }) => {
   const { ready } = useTranslation();
+  const location = useLocation()
 
   if (!ready) return null;
   return (
@@ -51,4 +52,4 @@ const mapDispatchToProps = {
   }),
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu));
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

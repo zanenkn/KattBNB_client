@@ -5,12 +5,12 @@ import timeFormat from '../../../Modules/dateFormatting';
 import { getAvatar } from '../../../Modules/getAvatar';
 import useCurrentScope from '../../../hooks/useCurrentScope';
 import { Avatar, Divider, Header, Text } from '../../../UI-Components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RowWrapper, Textflex } from './styles';
 
 const ConversationRow = ({ conversation, currentUserId, t }) => {
   const [responder, setResponder] = useState({ name: '', avatar: null });
-  const history = useHistory();
+  const navigate = useNavigate();
   const { locale } = useCurrentScope();
 
   moment.locale(locale);
@@ -28,7 +28,7 @@ const ConversationRow = ({ conversation, currentUserId, t }) => {
 
   return (
     <>
-      <RowWrapper onClick={() => history.push(`/conversation/${conversation.id}`)}>
+      <RowWrapper onClick={() => navigate(`/conversation/${conversation.id}`)}>
         <Avatar src={responder.avatar} size='lg' responsive />
         <Textflex spaceItemsX={3} verticalAlign='baseline'>
           <div>

@@ -1,7 +1,8 @@
 import React from 'react';
-import Spinner from '../../common/Spinner';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
+import Spinner from '../../common/Spinner';
+import withFooter from '../../HOC/withFooter';
 import { Header, Text, Container, Whitebox, ContentWrapper } from '../../UI-Components';
 
 const Guidelines = () => {
@@ -85,4 +86,4 @@ const Guidelines = () => {
   );
 };
 
-export default Guidelines;
+export default withFooter(Guidelines);

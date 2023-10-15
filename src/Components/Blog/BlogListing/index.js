@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Prismic from '@prismicio/client';
 import { useTranslation } from 'react-i18next';
+import withFooter from '../../../HOC/withFooter';
 import Spinner from '../../../common/Spinner';
 import { Link } from 'react-router-dom';
 import { PostWrapper, PostImage } from '../styles';
@@ -63,4 +64,4 @@ const BlogListing = ({ match }) => {
   );
 };
 
-export default BlogListing;
+export default withFooter(BlogListing);

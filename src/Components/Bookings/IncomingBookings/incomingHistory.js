@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
 import Popup from 'reactjs-popup';
-import { withRouter } from 'react-router-dom';
 
 import Booking from '../common/booking';
 import Spinner from '../../../common/Spinner';
@@ -16,7 +15,7 @@ import ViewReviewPopup from './viewReviewPopup';
 
 // Completely MIGRATED
 
-const IncomingHistory = ({ bookings, history }) => {
+const IncomingHistory = ({ bookings }) => {
   const { t, ready } = useTranslation('IncomingHistory');
 
   const [bookingDeclinedPopupOpened, setBookingDeclinedPopupOpened] = useState(false);
@@ -153,4 +152,4 @@ const IncomingHistory = ({ bookings, history }) => {
   );
 };
 
-export default withRouter(IncomingHistory);
+export default IncomingHistory;

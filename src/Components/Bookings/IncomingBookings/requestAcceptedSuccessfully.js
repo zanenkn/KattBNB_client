@@ -79,7 +79,7 @@ const RequestAcceptedSuccessfully = ({ history, location: { state } }) => {
             You have successfully accepted a booking request. The person who requested this booking has been notified
             about your decision and has received an access to your full address. You can message them using your
             Incoming Bookings dashboard. Questions? Check out our
-            <InlineLink as={Link} to='faq' color='info'>
+            <InlineLink as={Link} to='/faq' color='info'>
               FAQ
             </InlineLink>
             .

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useCurrentScope from '../hooks/useCurrentScope';
 import { wipeCredentials } from '../Modules/wipeCredentials';
 
 export const useStartConversation = () => {
   const [errors, setErrors] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { locale, headers } = useCurrentScope();
 
   const startConversation = ({ userId1, userId2 }) => {
@@ -20,15 +20,13 @@ export const useStartConversation = () => {
     };
 
     if (!userId1) {
-      history.push('/login');
+      navigate('/login');
       return;
     }
     axios
       .post(path, payload, { headers: headers })
       .then(({ data }) => {
-        history.push({
-          pathname: `/conversation/${data.id}`,
-        });
+        navigate(`/conversation/${data.id}`);
       })
       .catch(({ response }) => {
         if (response === undefined || response.status === 500) {
