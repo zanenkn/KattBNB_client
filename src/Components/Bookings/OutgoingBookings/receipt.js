@@ -6,6 +6,7 @@ import { formatPrice, priceOfOneAmount } from '../../../Modules/PriceCalculation
 import { useTranslation, Trans } from 'react-i18next';
 import { ContentWrapper, Divider, Header, Whitebox, Flexbox, Text } from '../../../UI-Components';
 import styled from 'styled-components';
+import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 
 const StyledFlexbox = styled(Flexbox)`
   justify-content: space-between;
@@ -16,18 +17,22 @@ const StyledFlexbox = styled(Flexbox)`
 
 const Receipt = ({ history }) => {
   const { t, ready } = useTranslation('Receipt');
-  const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = history.location.state;
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const location = useLocation();
+
+  const { createdAt, numberOfCats, bookingId, nickname, startDate, endDate, priceTotal } = location.state;
   const swedishVAT = priceOfOneAmount(priceTotal) - formatPrice(priceTotal) - formatPrice(priceTotal * 0.17);
 
   useEffect(() => {
-    if (history.location.state === undefined || history.action === 'POP') {
-      history.push({ pathname: '/all-bookings' });
+    if (location.state === undefined || navigationType === 'POP') {
+      navigate('/all-bookings');
     }
     // eslint-disable-next-line
   }, []);
 
   if (!ready) {
-    return <Spinner page/>;
+    return <Spinner page />;
   }
 
   return (

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import useCurrentScope from '../../../hooks/useCurrentScope';
 import Spinner from '../../../common/Spinner';
 import { Header, Container, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 
-const PasswordReset = ({ history }) => {
+const PasswordReset = () => {
   const { t, ready } = useTranslation('PasswordReset');
   const { locale } = useCurrentScope();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
@@ -45,7 +47,7 @@ const PasswordReset = ({ history }) => {
       .post(path, payload)
       .then(() => {
         setErrors([]);
-        history.push('/password-reset-success');
+        navigate('/password-reset-success');
       })
       .catch(({ response }) => {
         if (response === undefined) {

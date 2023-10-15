@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import withAuth from '../../HOC/withAuth';
 import { wipeCredentials } from '../../Modules/wipeCredentials';
@@ -14,9 +15,11 @@ import BookingInfo from '../../common/BookingInfo';
 
 import { ContentWrapper, Header, Whitebox, Text, TextArea, Notice, Button, Container } from '../../UI-Components';
 
-const LeaveReview = ({ history, location }) => {
+const LeaveReview = () => {
   const { t, ready } = useTranslation('LeaveReview');
   const { locale, headers } = useCurrentScope();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -33,7 +36,7 @@ const LeaveReview = ({ history, location }) => {
 
   useEffect(() => {
     window.onpopstate = () => {
-      history.push('/all-bookings');
+      navigate('/all-bookings');
     };
     if (location.state) {
       setHostNickname(location.state.hostNickname);
@@ -87,7 +90,7 @@ const LeaveReview = ({ history, location }) => {
         axios
           .post(path, payload, { headers: headers })
           .then(() => {
-            history.push('/successful-review');
+            navigate('/successful-review');
           })
           .catch(({ response }) => {
             setLoading(false);

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import moment from 'moment';
 import { useTranslation, Trans } from 'react-i18next';
+import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 
 import Spinner from '../../../common/Spinner';
 import { getAvatar } from '../../../Modules/getAvatar';
@@ -11,19 +12,22 @@ import { ContentWrapper, Avatar, Whitebox, Header, Flexbox, Text, InlineLink } f
 import { User, Availabilty, Location, Cat } from '../../../icons';
 import { SearchCriteriaWrapper, JustifiedWrapper } from '../styles';
 
-const SuccessfulRequest = ({ history }) => {
+const SuccessfulRequest = () => {
   const { t, ready } = useTranslation('SuccessfulRequest');
   const { device } = useCurrentScope();
+  const navigate = useNavigate()
+  const navigationType = useNavigationType()
+  const location = useLocation()
 
-  const { start, end, name, cats, avatar, place } = history.location.state;
+  const { start, end, name, cats, avatar, place } = location.state;
 
   useEffect(() => {
-    if (!history.location.state || history.action === 'POP') {
-      history.push({ pathname: '/' });
+    if (!location.state || navigationType === 'POP') {
+      navigate('/');
       return;
     }
     window.onpopstate = () => {
-      history.replace('/');
+      window.history.replace('/');
     };
     // eslint-disable-next-line
   }, []);

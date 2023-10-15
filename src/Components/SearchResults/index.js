@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { connect, useDispatch } from 'react-redux';
 import Geocode from 'react-geocode';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
@@ -27,9 +27,10 @@ import Profile from './profile';
 import HostPopup from './HostPopup';
 import RequestToBook from './request';
 
-const SearchResults = ({ id, currentSearch, currentHostId, location }) => {
+const SearchResults = ({ id, currentSearch, currentHostId }) => {
   const { locale, device } = useCurrentScope();
   const { t, ready } = useTranslation('SearchResults');
+  const location = useLocation();
   const dispatch = useDispatch();
   const { startConversation } = useStartConversation();
 

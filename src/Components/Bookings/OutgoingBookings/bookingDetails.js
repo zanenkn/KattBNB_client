@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Popup from 'reactjs-popup';
+import { useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 
 import { priceOfOneAmount } from '../../../Modules/PriceCalculations';
 import { useStartConversation } from '../../../utils/useStartConversation';
@@ -16,8 +17,11 @@ import { CenteredTable } from './styles';
 
 import HostInfo from '../../HostInfo';
 
-const BookingDetails = ({ history, id, location: { state } }) => {
+const BookingDetails = ({ id, location: { state } }) => {
   const { t, ready } = useTranslation('BookingDetails');
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const location = useLocation();
 
   const { startDate, endDate, priceTotal, address, lat, long, numberOfCats, score, hostId } = state;
 
@@ -32,8 +36,8 @@ const BookingDetails = ({ history, id, location: { state } }) => {
   };
 
   useEffect(() => {
-    if (state === undefined || history.action === 'POP') {
-      history.push({ pathname: '/' });
+    if (location.state === undefined || navigationType === 'POP') {
+      navigate('/');
     }
     // eslint-disable-next-line
   }, []);

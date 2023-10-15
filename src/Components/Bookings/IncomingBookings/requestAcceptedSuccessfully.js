@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import Spinner from '../../../common/Spinner';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useNavigationType } from 'react-router-dom';
 import ICalendarLink from 'react-icalendar-link';
 import { Whitebox, ContentWrapper, Header, Text, InlineLink, Flexbox } from '../../../UI-Components';
 import styled from 'styled-components';
@@ -19,16 +19,20 @@ const StyledFlexbox = styled(Flexbox)`
   }
 `;
 
-const RequestAcceptedSuccessfully = ({ history, location: { state } }) => {
+const RequestAcceptedSuccessfully = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+
   useEffect(() => {
-    if (history.action === 'POP') {
-      history.push({ pathname: '/all-bookings' });
+    if (navigationType === 'POP') {
+      navigate('/all-bookings');
     }
     // eslint-disable-next-line
   }, []);
 
   const { t, ready } = useTranslation('RequestAcceptedSuccessfully');
-  const { cats, inDate, outDate, price, user } = state;
+  const { cats, inDate, outDate, price, user } = location.state;
 
   let total;
   let priceWithDecimalsString = price.toFixed(2);

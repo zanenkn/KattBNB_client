@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -29,9 +29,10 @@ import {
   ContentWrapper,
 } from '../../UI-Components';
 
-const Search = ({ history, dispatch, currentSearch }) => {
+const Search = ({ dispatch, currentSearch }) => {
   const { t, ready } = useTranslation('Search');
   const { locale } = useCurrentScope();
+  const navigate = useNavigate();
 
   const toField = useRef(null);
   const fromField = useRef(null);
@@ -119,10 +120,7 @@ const Search = ({ history, dispatch, currentSearch }) => {
       },
     });
 
-    history.push({
-      pathname: '/search-results',
-      search: `?from=${from}&to=${to}&cats=${cats}&location=${searchLocation}&view=map`,
-    });
+    navigate(`/search-results`, { search: `?from=${from}&to=${to}&cats=${cats}&location=${searchLocation}&view=map` });
   };
 
   if (!ready) return <Spinner page />;

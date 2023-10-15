@@ -5,6 +5,7 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import { connect } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import useCurrentScope from '../../../hooks/useCurrentScope';
@@ -12,8 +13,9 @@ import { Header, Text, Notice, Container, Accent, ContentWrapper } from '../../.
 import { ReversibleWrapper } from './styles';
 import BookingSegment from './bookingSegment';
 
-const AllBookings = ({ id, history, username, dispatch }) => {
+const AllBookings = ({ id, username, dispatch }) => {
   const { t, ready } = useTranslation('AllBookings');
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState([]);
   const [stats, setStats] = useState({});
@@ -127,11 +129,10 @@ const AllBookings = ({ id, history, username, dispatch }) => {
           cta={userHasOutgoingBookings ? t('AllBookings:view') : t('AllBookings:outgoing-cta')}
           ctaAction={() =>
             userHasOutgoingBookings
-              ? history.push({
-                  pathname: '/outgoing-bookings',
+              ? navigate('/outgoing-bookings', {
                   state: { userId: id },
                 })
-              : history.push('/search')
+              : navigate('/search')
           }
         />
         <BookingSegment
@@ -158,11 +159,10 @@ const AllBookings = ({ id, history, username, dispatch }) => {
           cta={userHasIncomingBookings ? t('AllBookings:view') : t('AllBookings:incoming-cta')}
           ctaAction={() =>
             userHasIncomingBookings
-              ? history.push({
-                  pathname: '/incoming-bookings',
+              ? navigate('/incoming-bookings', {
                   state: { hostNickname: username },
                 })
-              : history.push('/faq?active=201')
+              : navigate('/faq?active=201')
           }
           ctaIsButton={hasIncomingRequest}
         />

@@ -6,6 +6,8 @@ import Cable from 'actioncable';
 import TextareaAutosize from 'react-textarea-autosize';
 import Popup from 'reactjs-popup';
 import { useTranslation } from 'react-i18next';
+import Helmet from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 
 import { wipeCredentials } from '../../../Modules/wipeCredentials';
 import { getAvatar } from '../../../Modules/getAvatar';
@@ -26,12 +28,12 @@ import {
   StyledSecondaryStickyHeader,
   MessagesWrapper,
 } from './styles';
-import Helmet from 'react-helmet';
 
 const Conversation = ({ id, username, match, history }) => {
   const { t, ready } = useTranslation('SingleConversation');
   const { locale, headers } = useCurrentScope();
   const bottomOfPage = useRef(null);
+  const navigate = useNavigate();
 
   const [newMessage, setNewMessage] = useState('');
   const [chatLogs, setChatLogs] = useState([]);
@@ -227,8 +229,8 @@ const Conversation = ({ id, username, match, history }) => {
       </Popup>
       <StyledSecondaryStickyHeader>
         <MaxWidh>
-          <Arrow onClick={() => history.push('/messenger')} height={5} direction='left' tint={60} />
-          <Flexbox spaceItemsX={1} onClick={() => history.push(`/user/${responder.id}`)}>
+          <Arrow onClick={() => navigate('/messenger')} height={5} direction='left' tint={60} />
+          <Flexbox spaceItemsX={1} onClick={() => navigate(`/user/${responder.id}`)}>
             <Avatar src={responder?.profile_avatar || getAvatar(responder?.nickname)} size={'sm'} />
             <Header level={3}>{responder?.nickname || t('SingleConversation:nickname-deleted')}</Header>
           </Flexbox>

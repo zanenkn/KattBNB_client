@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import ClientCaptcha from 'react-client-captcha';
 import withFooter from '../../HOC/withFooter';
 import useCurrentScope from '../../hooks/useCurrentScope';
@@ -18,9 +19,10 @@ import {
   ContentWrapper,
 } from '../../UI-Components';
 
-const ContactUs = (props) => {
+const ContactUs = () => {
   const { t, ready } = useTranslation('ContactUs');
   const { locale } = useCurrentScope();
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ const ContactUs = (props) => {
           const response = await axios.get(path, { params: callParams });
           if (response.status === 200) {
             window.alert(t('ContactUs:thankyou-msg'));
-            props.history.push('/search');
+            navigate('/search');
           }
         }
       } catch ({ response }) {
