@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signInUser } from '../../../reduxTokenAuthConfig';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useCurrentScope from '../../../hooks/useCurrentScope';
 import withFooter from '../../../HOC/withFooter';
 import Spinner from '../../../common/Spinner';
 import { Header, InlineLink, Text, TextField, Whitebox, Button, Notice, ContentWrapper } from '../../../UI-Components';
 
-const Login = (props) => {
+const Login = ({ signInUser }) => {
   const { t, ready } = useTranslation('Login');
   const { locale } = useCurrentScope();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,21 +25,20 @@ const Login = (props) => {
     }
 
     setLoading(true);
-    const { history, signInUser } = props;
     signInUser({ email, password, locale })
       .then(() => {
         setSuccessDisplay(true);
         setErrors([]);
-        if (history === undefined) {
+        if (window.history === undefined) {
           window.location.reload();
         } else if (
-          history.length <= 2 ||
+          window.history.length <= 2 ||
           document.referrer.includes('/signup-success') ||
-          !document.referrer.includes('kattbnb.se')
+          !document.referrer.includes('kattbnb')
         ) {
-          history.push('/');
+          navigate('/');
         } else {
-          history.go(-1);
+          navigate(-1);
         }
       })
       .catch((error) => {
