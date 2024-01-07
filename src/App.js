@@ -41,6 +41,7 @@ import { Switch, Route } from 'react-router-dom';
 import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
 import HostProfileForm from './Components/HostProfileForm';
+import Unavailable from './Components/Unavailable';
 
 const App = () => {
   return (
@@ -55,8 +56,8 @@ const App = () => {
       <ScrollToTop>
         <Switch>
           <Route exact path='/' component={withFooter(Landing)}></Route>
-          <Route exact path='/search' component={withFooter(Search)}></Route>
-          <Route exact path='/search-results' component={SearchResults}></Route>
+          <Route exact path='/search' component={withFooter(Unavailable)}></Route>
+          <Route exact path='/search-results' component={withFooter(Unavailable)}></Route>
           <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
           <Route exact path='/contact-us' component={withFooter(ContactUs)}></Route>
           <Route exact path='/faq' component={withFooter(Faq)}></Route>
