@@ -42,20 +42,22 @@ import GlobalStyles from './Styles/global';
 import Theme from './Styles/theme';
 import HostProfileForm from './Components/HostProfileForm';
 import Unavailable from './Components/Unavailable';
+import Final from './Components/Final'
 
 const App = () => {
   return (
     <Theme>
       <GlobalStyles />
-      <Responsive displayIn={['mobile']}>
+      {/* <Responsive displayIn={['mobile']}>
         <MobileNav />
       </Responsive>
       <Responsive displayIn={['tablet', 'laptop', 'desktop']}>
         <DesktopNav />
-      </Responsive>
+      </Responsive> */}
       <ScrollToTop>
         <Switch>
-          <Route exact path='/' component={withFooter(Landing)}></Route>
+          <Route exact path='/' component={Final}></Route>
+          {/* <Route exact path='/' component={withFooter(Landing)}></Route>
           <Route exact path='/search' component={withFooter(Unavailable)}></Route>
           <Route exact path='/search-results' component={withFooter(Unavailable)}></Route>
           <Route exact path='/about-us' component={withFooter(AboutUs)}></Route>
@@ -96,7 +98,7 @@ const App = () => {
           <Route exact path='/area-list' component={withFooter(AreaList)}></Route>
           <Route exact path='/create-host-profile' component={HostProfileForm}></Route>
           <Route exact path='/blog/:category/:page' component={withFooter(BlogListing)}></Route>
-          <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route>
+          <Route exact path={'/blog/:uid'} component={withFooter(BlogPost)}></Route> */}
         </Switch>
       </ScrollToTop>
       <Menu />
